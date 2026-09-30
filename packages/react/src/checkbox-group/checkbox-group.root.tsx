@@ -1,11 +1,18 @@
 import { CheckboxGroup } from "@base-ui/react/checkbox-group";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { CheckboxGroupContext } from "./checkbox-group.context.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type CheckboxGroupContextSize,
+  type CheckboxGroupContextColor,
+  type CheckboxGroupContextRadius,
+  type CheckboxGroupContextVariant,
+  type CheckboxGroupContextOrientation,
+  CheckboxGroupContext,
+} from "./checkbox-group.context.js";
 
 /**
  * チェックボックスグループの選択状態が変更されたイベントの詳細です。
@@ -20,7 +27,7 @@ export type CheckboxGroupRootChangeEventReason = CheckboxGroup.ChangeEventReason
 /**
  * チェックボックスの配色です。
  */
-export type CheckboxGroupRootColor = Color;
+export type CheckboxGroupRootColor = CheckboxGroupContextColor;
 
 /**
  * チェックボックス群の向きです。
@@ -28,7 +35,7 @@ export type CheckboxGroupRootColor = Color;
  * - `"horizontal"`: 横並び
  * - `"vertical"`: 縦並び
  */
-export type CheckboxGroupRootOrientation = "horizontal" | "vertical";
+export type CheckboxGroupRootOrientation = CheckboxGroupContextOrientation;
 
 /**
  * チェックボックスの角丸です。
@@ -40,7 +47,7 @@ export type CheckboxGroupRootOrientation = "horizontal" | "vertical";
  * - `"full"`: 丸形
  * - `"circle"`: 完全な丸形
  */
-export type CheckboxGroupRootRadius = "none" | Size | "full" | "circle";
+export type CheckboxGroupRootRadius = CheckboxGroupContextRadius;
 
 /**
  * チェックボックスの大きさです。
@@ -49,7 +56,7 @@ export type CheckboxGroupRootRadius = "none" | Size | "full" | "circle";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type CheckboxGroupRootSize = Size;
+export type CheckboxGroupRootSize = CheckboxGroupContextSize;
 
 /**
  * チェックボックスの主な外観です。
@@ -57,12 +64,12 @@ export type CheckboxGroupRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type CheckboxGroupRootVariant = "naked" | "liquid";
+export type CheckboxGroupRootVariant = CheckboxGroupContextVariant;
 
 /**
  * {@link CheckboxGroupRoot} が持つ状態です。
  */
-export type CheckboxGroupRootState = CheckboxGroup.State;
+export type CheckboxGroupRootState = Override<CheckboxGroupContext, CheckboxGroup.State>;
 
 export namespace CheckboxGroupRootProps {
   export type Render = RenderProps<CheckboxGroupRootState>;
@@ -152,7 +159,9 @@ export const CheckboxGroupRoot: ICheckboxGroupRoot = function SuiCheckboxGroupRo
   const {
     size = "md",
     color = "grey",
+    style,
     radius = size,
+    render,
     variant = "liquid",
     disabled,
     outlined = false,
@@ -170,26 +179,34 @@ export const CheckboxGroupRoot: ICheckboxGroupRoot = function SuiCheckboxGroupRo
       variant,
       disabled,
       outlined,
+      orientation,
     }),
-    [size, color, radius, variant, disabled, outlined],
+    [size, color, radius, variant, disabled, outlined, orientation],
   );
 
   return (
     <CheckboxGroupContext value={ctx}>
       <CheckboxGroup
         {...otherProps}
-        disabled={disabled}
-        className={cn(
-          className,
-          "sui_checkbox_group",
-          `sui_checkbox_group-orientation_${orientation}`,
-          (state) => state.dirty && "sui_checkbox_group-dirty",
-          (state) => state.valid === true && "sui_checkbox_group-valid",
-          (state) => state.filled && "sui_checkbox_group-filled",
-          (state) => state.focused && "sui_checkbox_group-focused",
-          (state) => state.touched && "sui_checkbox_group-touched",
-          (state) => state.disabled && "sui_checkbox_group-disabled",
+        {...proxyRenderProps<CheckboxGroup.State, CheckboxGroupRootState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn<CheckboxGroupRootState>(
+              className,
+              "sui_checkbox_group",
+              (state) => `sui_checkbox_group-orientation_${state.orientation}`,
+              (state) => state.dirty && "sui_checkbox_group-dirty",
+              (state) => state.valid === true && "sui_checkbox_group-valid",
+              (state) => state.filled && "sui_checkbox_group-filled",
+              (state) => state.focused && "sui_checkbox_group-focused",
+              (state) => state.touched && "sui_checkbox_group-touched",
+              (state) => state.disabled && "sui_checkbox_group-disabled",
+            ),
+          },
         )}
+        disabled={disabled}
         data-scope={dataScope}
       />
     </CheckboxGroupContext>

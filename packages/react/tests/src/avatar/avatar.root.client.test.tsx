@@ -2,6 +2,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/avatar/avatar.parts.js";
+import { AvatarGroupRoot } from "../../../src/avatar-group/avatar-group.root.jsx";
 import { AvatarRoot } from "../../../src/avatar/avatar.root.jsx";
 import "../_locators.js";
 
@@ -110,6 +111,27 @@ describe("AvatarRoot", () => {
 
     // 検証
     expect(screen.getByClassName("sui_avatar").element().tagName).toBe("SECTION");
+  });
+
+  test("render の関数へグループと自身の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AvatarGroupRoot color="blue" size="lg" radius="sm" reverse>
+        <AvatarRoot
+          render={(props, state) => (
+            <span
+              {...props}
+              data-probe={`${state.size}/${String(state.color)}/${state.radius}/${String(state.reverse)}`}
+            />
+          )}
+        />
+      </AvatarGroupRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_avatar").element().getAttribute("data-probe")).toBe(
+      "lg/blue/sm/true",
+    );
   });
 
   test("子要素を描画する", async ({ expect }) => {

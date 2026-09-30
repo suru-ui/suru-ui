@@ -7,19 +7,20 @@ import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
+import { type DialogPopupContext, useDialogPopupContext } from "./dialog.popup.context.js";
 
 /**
  * {@link DialogTitle} が持つ状態です。
  */
-export type DialogTitleState = Override<Card.CardTitleState, Dialog.Title.State>;
+export type DialogTitleState = Override<Card.Title.State & DialogPopupContext, Dialog.Title.State>;
 
 export namespace DialogTitleProps {
   export type Render = RenderProps<DialogTitleState>;
 
-  export type SuruUI = Card.CardTitleProps.SuruUI;
+  export type SuruUI = Card.Title.Props.SuruUI;
 
   export type BaseUI = Override<
-    Card.CardTitleProps.BaseUI,
+    Card.Title.Props.BaseUI,
     Pick<
       React.ComponentProps<typeof Dialog.Title>,
       Exclude<
@@ -53,6 +54,7 @@ export type IDialogTitle = IComponent<DialogTitleProps>;
  * 見た目はカードの見出しとして描画され、ポップアップのラベルに関連付けます。
  */
 export const DialogTitle: IDialogTitle = function SuiDialogTitle(props) {
+  const ctx = useDialogPopupContext();
   const {
     style,
     // oxlint-disable-next-line jsx-a11y/heading-has-content
@@ -64,15 +66,18 @@ export const DialogTitle: IDialogTitle = function SuiDialogTitle(props) {
   return (
     <Dialog.Title
       {...otherProps}
-      render={(htmlProps: {}, titleState) => (
+      render={(htmlProps: {}) => (
         <Card.Title
           {...mergeProps<typeof Card.Title>([
             htmlProps,
-            proxyRenderProps(titleState, {
-              style,
-              render,
-              className: cn(className, "sui_dialog_title"),
-            }),
+            proxyRenderProps<Card.Title.State, DialogTitleState>(
+              (state) => ({ ...ctx, ...state }),
+              {
+                style,
+                render,
+                className: cn<DialogTitleState>(className, "sui_dialog_title"),
+              },
+            ),
           ])}
         />
       )}

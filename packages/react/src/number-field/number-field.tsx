@@ -152,6 +152,16 @@ export type NumberFieldProps = NumberFieldProps.NumberField &
   NumberFieldProps.Root &
   NumberFieldProps.Input;
 
+export interface IUseNumberFieldAPI {
+  /**
+   * {@link NumberFieldAPI} を作成します。
+   *
+   * @param props {@link NumberField} の props です。
+   * @returns 数値入力欄の API です
+   */
+  (props: NumberFieldProps): NumberFieldAPI;
+}
+
 // API
 // ---
 
@@ -351,16 +361,6 @@ export class NumberFieldAPI {
       yield callback(addon, index++);
     }
   }
-}
-
-export interface IUseNumberFieldAPI {
-  /**
-   * {@link NumberFieldAPI} を作成します。
-   *
-   * @param props {@link NumberField} の props です。
-   * @returns 数値入力欄の API です
-   */
-  (props: NumberFieldProps): NumberFieldAPI;
 }
 
 /**

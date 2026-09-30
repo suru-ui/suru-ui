@@ -88,4 +88,25 @@ describe("HoverCardPositioner", () => {
     expect(positioner.tagName).toBe("DIV");
     expect(positioner.classList.contains("sui_hover_card_positioner")).toBe(true);
   });
+
+  test("render の関数へルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <HoverCardRoot defaultOpen size="lg" radius="sm" outlined>
+        <HoverCardPortal>
+          <HoverCardPositioner
+            render={(props, state) => (
+              <div {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`} />
+            )}
+          >
+            <HoverCardContent>内容</HoverCardContent>
+          </HoverCardPositioner>
+        </HoverCardPortal>
+      </HoverCardRoot>,
+    );
+
+    // 検証
+    const positioner = screen.getByClassName("sui_hover_card_positioner").element();
+    expect(positioner.getAttribute("data-probe")).toBe("lg/sm/true");
+  });
 });

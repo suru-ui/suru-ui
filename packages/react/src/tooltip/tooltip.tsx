@@ -137,6 +137,17 @@ export type TooltipProps<TPayload = any> = TooltipProps.Tooltip<TPayload> &
   UseAnchorPositioningSharedParameters &
   TooltipProps.Content;
 
+export interface IUseTooltipAPI {
+  /**
+   * {@link TooltipAPI} を作成します。
+   *
+   * @template TPayload トリガーが送信するデータの型です。
+   * @param props {@link Tooltip} の props です。
+   * @returns ツールチップの API です
+   */
+  <TPayload = any>(props: TooltipProps<TPayload>): TooltipAPI<TPayload>;
+}
+
 // API
 // ---
 
@@ -330,17 +341,6 @@ export class TooltipAPI<TPayload = any> {
 
     return null;
   }
-}
-
-export interface IUseTooltipAPI {
-  /**
-   * {@link TooltipAPI} を作成します。
-   *
-   * @template TPayload トリガーが送信するデータの型です。
-   * @param props {@link Tooltip} の props です。
-   * @returns ツールチップの API です
-   */
-  <TPayload = any>(props: TooltipProps<TPayload>): TooltipAPI<TPayload>;
 }
 
 /**

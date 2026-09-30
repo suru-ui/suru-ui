@@ -4,6 +4,7 @@ import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
 import { TooltipContext, useTooltipContext } from "../../../src/tooltip/tooltip.context.js";
+import { TooltipRoot } from "../../../src/tooltip/tooltip.root.jsx";
 
 describe("useTooltipContext", () => {
   test("提供された値を返す", async ({ expect }) => {
@@ -24,6 +25,25 @@ describe("useTooltipContext", () => {
 
     // 検証
     expect(screen.getByText("lg/sm/true").query()?.textContent).toBe("lg/sm/true");
+  });
+
+  test("ルートの状態を返す", async ({ expect }) => {
+    // 準備
+    function Probe() {
+      const ctx = useTooltipContext();
+
+      return <span>{`${ctx.size}/${ctx.radius}/${ctx.outlined}`}</span>;
+    }
+
+    // 実行
+    const screen = await render(
+      <TooltipRoot size="lg" radius="none" outlined>
+        <Probe />
+      </TooltipRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("lg/none/true").query()?.textContent).toBe("lg/none/true");
   });
 
   test("提供がないときはエラーを投げる", async ({ expect }) => {

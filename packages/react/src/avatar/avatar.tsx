@@ -79,6 +79,16 @@ export type AvatarProps = AvatarProps.Avatar & AvatarProps.Root;
 
 export type IAvatar = IComponent<AvatarProps>;
 
+export interface IUseAvatarAPI {
+  /**
+   * {@link AvatarAPI} を作成します。
+   *
+   * @param props {@link Avatar} の props です。
+   * @returns アバターの API です
+   */
+  (props: AvatarProps): AvatarAPI;
+}
+
 // API
 // ---
 
@@ -148,16 +158,6 @@ export class AvatarAPI {
   public getRootProps(): AvatarProps.Root {
     return this.rootProps;
   }
-}
-
-export interface IUseAvatarAPI {
-  /**
-   * {@link AvatarAPI} を作成します。
-   *
-   * @param props {@link Avatar} の props です。
-   * @returns アバターの API です
-   */
-  (props: AvatarProps): AvatarAPI;
 }
 
 /**

@@ -103,4 +103,25 @@ describe("CollapsibleContent", () => {
     // 検証
     expect(screen.getByClassName("sui_collapsible_content").element().tagName).toBe("SECTION");
   });
+
+  test("render の関数へルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <CollapsibleRoot size="lg" defaultOpen>
+        <CollapsibleTrigger>{renderTrigger()}</CollapsibleTrigger>
+        <CollapsibleContent
+          render={(props, state) => (
+            <section {...props} data-probe={`${state.size}/${String(state.open)}`} />
+          )}
+        >
+          内容
+        </CollapsibleContent>
+      </CollapsibleRoot>,
+    );
+
+    // 検証
+    const content = screen.getByClassName("sui_collapsible_content").element();
+    expect(content.tagName).toBe("SECTION");
+    expect(content.getAttribute("data-probe")).toBe("lg/true");
+  });
 });

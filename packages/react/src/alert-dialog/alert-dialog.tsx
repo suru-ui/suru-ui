@@ -277,6 +277,17 @@ namespace AlertDialogProps {
 export type AlertDialogProps<TPayload = any> = AlertDialogProps.AlertDialog<TPayload> &
   AlertDialogProps.Root<TPayload>;
 
+export interface IUseAlertDialogAPI {
+  /**
+   * {@link AlertDialogAPI} を作成します。
+   *
+   * @template TPayload トリガーが送信するデータの型です。
+   * @param props {@link AlertDialog} の props です。
+   * @returns アラートダイアログの API です
+   */
+  <TPayload = any>(props: AlertDialogProps<TPayload>): AlertDialogAPI<TPayload>;
+}
+
 // API
 // ---
 
@@ -658,17 +669,6 @@ export class AlertDialogAPI<TPayload = any> {
 
     return props;
   }
-}
-
-export interface IUseAlertDialogAPI {
-  /**
-   * {@link AlertDialogAPI} を作成します。
-   *
-   * @template TPayload トリガーが送信するデータの型です。
-   * @param props {@link AlertDialog} の props です。
-   * @returns アラートダイアログの API です
-   */
-  <TPayload = any>(props: AlertDialogProps<TPayload>): AlertDialogAPI<TPayload>;
 }
 
 /**

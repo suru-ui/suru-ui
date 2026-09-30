@@ -107,4 +107,32 @@ describe("TreeItem", () => {
     // 検証
     expect(screen.getByRole("treeitem").element().classList.contains("custom")).toBe(true);
   });
+
+  test("render と className の関数へスタイル情報と項目の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TreeRoot defaultExpandedValue={["src"]} defaultValue={["src"]} radius="full" size="lg">
+        <TreeItem
+          hasItems
+          id="src"
+          level={1}
+          className={(state) => (state.selected ? "probe-selected" : undefined)}
+          render={(props, state) => (
+            <div
+              {...props}
+              data-probe={`${state.size}/${state.radius}/${String(state.expanded)}/${String(state.selected)}/${String(state.disabled)}`}
+            />
+          )}
+        >
+          src
+        </TreeItem>
+      </TreeRoot>,
+    );
+
+    // 検証
+    const item = screen.getByRole("treeitem").element();
+    expect(item.tagName).toBe("DIV");
+    expect(item.getAttribute("data-probe")).toBe("lg/full/true/true/false");
+    expect(item.classList.contains("probe-selected")).toBe(true);
+  });
 });

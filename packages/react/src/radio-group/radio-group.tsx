@@ -44,6 +44,17 @@ export type RadioGroupState = RadioGroupRootState;
  */
 export type RadioGroupProps<TValue = any> = RadioGroupRootProps<TValue>;
 
+export interface IUseRadioGroupAPI {
+  /**
+   * {@link RadioGroupAPI} を作成します。
+   *
+   * @template TValue 項目の値の型です。
+   * @param props {@link RadioGroup} の props です。
+   * @returns ラジオボタングループの API です
+   */
+  <TValue = any>(props: RadioGroupProps<TValue>): RadioGroupAPI<TValue>;
+}
+
 // API
 // ---
 
@@ -69,17 +80,6 @@ export class RadioGroupAPI<TValue = any> {
   public getRootProps(): RadioGroupRootProps<TValue> {
     return this.rootProps;
   }
-}
-
-export interface IUseRadioGroupAPI {
-  /**
-   * {@link RadioGroupAPI} を作成します。
-   *
-   * @template TValue 項目の値の型です。
-   * @param props {@link RadioGroup} の props です。
-   * @returns ラジオボタングループの API です
-   */
-  <TValue = any>(props: RadioGroupProps<TValue>): RadioGroupAPI<TValue>;
 }
 
 /**

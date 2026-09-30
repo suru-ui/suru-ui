@@ -4,12 +4,13 @@ import * as React from "react";
 import { CheckIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import { getItemKey } from "../_item.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { isItemObjectGroup, isLabeledItemObject } from "./_select.jsx";
-import { useSelectContext } from "./select.context.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 import { SelectGroupLabel } from "./select.group-label.jsx";
 import { SelectGroup } from "./select.group.jsx";
 import { SelectItemIndicator } from "./select.item-indicator.jsx";
@@ -74,7 +75,7 @@ export interface ISelectListItemRenderer<TValue = any> {
 /**
  * {@link SelectList} が持つ状態です。
  */
-export type SelectListState = BaseSelect.List.State;
+export type SelectListState = Override<SelectContext, BaseSelect.List.State>;
 
 export namespace SelectListProps {
   export type Render = RenderProps<SelectListState>;
@@ -127,10 +128,20 @@ export interface ISelectList extends IComponent<SelectListProps> {
  */
 export const SelectList: ISelectList = function SuiSelectList(props: SelectListProps) {
   const ctx = useSelectContext();
-  const { children = defaultListItemRenderer, className, ...otherProps } = props;
+  const { style, render, children = defaultListItemRenderer, className, ...otherProps } = props;
 
   return (
-    <BaseSelect.List {...otherProps} className={cn(className, "sui_select_list")}>
+    <BaseSelect.List
+      {...otherProps}
+      {...proxyRenderProps<BaseSelect.List.State, SelectListState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_list"),
+        },
+      )}
+    >
       {typeof children === "function" ? renderListItems(ctx.items ?? [], children) : children}
     </BaseSelect.List>
   );

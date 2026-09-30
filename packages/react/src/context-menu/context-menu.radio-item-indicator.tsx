@@ -1,14 +1,19 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * {@link ContextMenuRadioItemIndicator} が持つ状態です。
  */
-export type ContextMenuRadioItemIndicatorState = ContextMenu.RadioItemIndicator.State;
+export type ContextMenuRadioItemIndicatorState = Override<
+  ContextMenuContext,
+  ContextMenu.RadioItemIndicator.State
+>;
 
 export namespace ContextMenuRadioItemIndicatorProps {
   export type Render = RenderProps<ContextMenuRadioItemIndicatorState>;
@@ -46,17 +51,25 @@ export type IContextMenuRadioItemIndicator = IComponent<ContextMenuRadioItemIndi
  */
 export const ContextMenuRadioItemIndicator: IContextMenuRadioItemIndicator =
   function SuiContextMenuRadioItemIndicator(props) {
-    const { className, keepMounted = true, ...otherProps } = props;
+    const ctx = useContextMenuContext();
+    const { style, render, className, keepMounted = true, ...otherProps } = props;
 
     return (
       <ContextMenu.RadioItemIndicator
         {...otherProps}
-        className={cn(
-          className,
-          "sui_context_menu_item_indicator",
-          "sui_context_menu_radio_item_indicator",
-          (state) => !state.checked && "sui_context_menu_item_indicator-unchecked",
-        )}
+        {...proxyRenderProps<
+          ContextMenu.RadioItemIndicator.State,
+          ContextMenuRadioItemIndicatorState
+        >((state) => ({ ...ctx, ...state }), {
+          style,
+          render,
+          className: cn<ContextMenuRadioItemIndicatorState>(
+            className,
+            "sui_context_menu_item_indicator",
+            "sui_context_menu_radio_item_indicator",
+            (state) => !state.checked && "sui_context_menu_item_indicator-unchecked",
+          ),
+        })}
         keepMounted={keepMounted}
       />
     );

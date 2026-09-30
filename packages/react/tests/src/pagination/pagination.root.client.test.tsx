@@ -169,4 +169,46 @@ describe("PaginationRoot", () => {
     // 検証
     expect(screen.getByRole("navigation").element().classList.contains("custom")).toBe(true);
   });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PaginationRoot
+        color="blue"
+        defaultPage={3}
+        radius="full"
+        size="lg"
+        totalPages={10}
+        render={(props, state) => (
+          <nav
+            {...props}
+            data-probe={`${state.size}/${state.color}/${state.radius}/${state.page}/${state.totalPages}/${String(state.disabled)}`}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_pagination").element();
+    expect(root.tagName).toBe("NAV");
+    expect(root.getAttribute("data-probe")).toBe("lg/blue/full/3/10/false");
+  });
+
+  test("className と style の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PaginationRoot
+        className={(state) => `probe-size_${state.size}`}
+        disabled
+        size="lg"
+        style={(state) => ({ opacity: state.disabled ? "0.5" : "1" })}
+        totalPages={5}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByRole("navigation").element();
+    expect(root.classList.contains("probe-size_lg")).toBe(true);
+    expect(root.style.opacity).toBe("0.5");
+  });
 });

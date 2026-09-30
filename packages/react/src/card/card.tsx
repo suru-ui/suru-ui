@@ -110,6 +110,16 @@ namespace CardProps {
  */
 export type CardProps = CardProps.Card & CardProps.Root;
 
+export interface IUseCardAPI {
+  /**
+   * {@link CardAPI} を作成します。
+   *
+   * @param props {@link Card} の props です。
+   * @returns カードの API です
+   */
+  (props: CardProps): CardAPI;
+}
+
 // API
 // ---
 
@@ -255,16 +265,6 @@ export class CardAPI {
 
     return null;
   }
-}
-
-export interface IUseCardAPI {
-  /**
-   * {@link CardAPI} を作成します。
-   *
-   * @param props {@link Card} の props です。
-   * @returns カードの API です
-   */
-  (props: CardProps): CardAPI;
 }
 
 /**

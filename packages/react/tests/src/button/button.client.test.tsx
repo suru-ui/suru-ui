@@ -184,6 +184,45 @@ describe("Button", () => {
     expect(fill?.getAttribute("stroke-width")).toBe("2px");
   });
 
+  test("子パーツの render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Button
+        pending
+        color="blue"
+        size="lg"
+        slotProps={{
+          content: {
+            render: (props, state) => (
+              <span
+                {...props}
+                data-probe={`${state.size}/${state.color}/${String(state.pending)}`}
+              />
+            ),
+          },
+          pending: {
+            render: (props, state) => (
+              <span
+                {...props}
+                data-probe={`${state.size}/${String(state.disabled)}/${String(state.pending)}`}
+              />
+            ),
+          },
+        }}
+      >
+        送信
+      </Button>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_button_content").element().getAttribute("data-probe")).toBe(
+      "lg/blue/true",
+    );
+    expect(screen.getByClassName("sui_button_pending").element().getAttribute("data-probe")).toBe(
+      "lg/true/true",
+    );
+  });
+
   test("keepMounted を指定すると保留中でなくてもスピナーを保持する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

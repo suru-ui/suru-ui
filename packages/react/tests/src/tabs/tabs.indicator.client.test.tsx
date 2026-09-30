@@ -78,4 +78,25 @@ describe("TabsIndicator", () => {
       true,
     );
   });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TabsRoot defaultValue="overview" size="lg" variant="segments">
+        <TabsList>
+          <TabsTab value="overview">概要</TabsTab>
+          <TabsIndicator
+            render={(props, state) => (
+              <span {...props} data-probe={`${state.size}/${state.variant}/${state.orientation}`} />
+            )}
+          />
+        </TabsList>
+      </TabsRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_tabs_indicator").element().getAttribute("data-probe")).toBe(
+      "lg/segments/horizontal",
+    );
+  });
 });

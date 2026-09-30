@@ -10,6 +10,14 @@ import type { IUseContext } from "../types.js";
 export type CheckboxGroupContextColor = Color;
 
 /**
+ * チェックボックス群の向きです。
+ *
+ * - `"horizontal"`: 横並び
+ * - `"vertical"`: 縦並び
+ */
+export type CheckboxGroupContextOrientation = "horizontal" | "vertical";
+
+/**
  * チェックボックスの角丸です。
  *
  * - `"none"`: 直角
@@ -51,6 +59,11 @@ export type CheckboxGroupContext = {
    * グループ全体を無効にするかどうかです。
    */
   readonly disabled: boolean | undefined;
+
+  /**
+   * チェックボックス群の向きです。
+   */
+  readonly orientation: CheckboxGroupContextOrientation;
 
   /**
    * 枠線を表示するかどうかです。
@@ -101,6 +114,8 @@ export { CheckboxGroupContext as Context, useCheckboxGroupContext as useContext 
 
 export namespace Context {
   export type Color = CheckboxGroupContextColor;
+
+  export type Orientation = CheckboxGroupContextOrientation;
 
   export type Radius = CheckboxGroupContextRadius;
 

@@ -1,16 +1,17 @@
 import * as React from "react";
 
 import { ChevronRightIcon } from "../_icons.jsx";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { usePaginationContext } from "./pagination.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type PaginationContext, usePaginationContext } from "./pagination.context.js";
 
 /**
  * {@link PaginationNextButton} が持つ状態です。
  */
-export type PaginationNextButtonState = {};
+export type PaginationNextButtonState = Override<PaginationContext, Button.Root.State>;
 
 export namespace PaginationNextButtonProps {
   export type Render = RenderProps<PaginationNextButtonState>;
@@ -46,21 +47,23 @@ export type IPaginationNextButton = IComponent<PaginationNextButtonProps>;
 /**
  * 次のページへ移動するボタンコンポーネントです。
  *
- * 最後のページでは無効になります。
+ * 最後のページでは無効になります。大きさ・配色・角丸は {@link PaginationRoot} から引き継ぎます。
  */
 export const PaginationNextButton: IPaginationNextButton = function SuiPaginationNextButton(props) {
-  const ctx = usePaginationContext(true);
+  const ctx = usePaginationContext();
   const {
+    style,
+    render,
     onClick,
     disabled = false,
     className,
     "aria-label": ariaLabel = "次のページへ",
     ...otherProps
   } = props;
-  const isDisabled = disabled || (ctx !== null && (ctx.disabled || ctx.page >= ctx.totalPages));
+  const isDisabled = disabled || ctx.disabled || ctx.page >= ctx.totalPages;
   const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
     onClick?.(event);
-    if (!event.defaultPrevented && !isDisabled && ctx !== null) {
+    if (!event.defaultPrevented && !isDisabled) {
       ctx.goToPage(ctx.page + 1, { event, reason: "next" });
     }
   };
@@ -68,14 +71,21 @@ export const PaginationNextButton: IPaginationNextButton = function SuiPaginatio
   return (
     <Button.Root
       {...otherProps}
-      size={ctx?.size ?? "md"}
-      color={ctx?.color ?? "grey"}
-      radius={ctx?.radius}
+      {...proxyRenderProps<Button.Root.State, PaginationNextButtonState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_pagination_next"),
+        },
+      )}
+      size={ctx.size}
+      color={ctx.color}
+      radius={ctx.radius}
       onClick={handleClick}
       squared
       variant="naked"
       disabled={isDisabled}
-      className={cn(className, "sui_pagination_next")}
       aria-label={ariaLabel}
     >
       <ChevronRightIcon />

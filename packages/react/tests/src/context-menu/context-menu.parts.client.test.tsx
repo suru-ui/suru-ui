@@ -381,6 +381,105 @@ describe("ContextMenuTrigger", () => {
   });
 });
 
+describe("ContextMenu の状態伝播", () => {
+  test("ポータルの render へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <ContextMenuRoot defaultOpen size="lg" radius="sm" outlined>
+        <ContextMenuPortal
+          render={(props, state) => (
+            <div
+              {...props}
+              data-probe={`${state.size}/${state.radius}/${String(state.outlined)}`}
+            />
+          )}
+        >
+          <ContextMenuPositioner>
+            <ContextMenuContent>
+              <ContextMenuItem>項目</ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenuPositioner>
+        </ContextMenuPortal>
+      </ContextMenuRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_context_menu_portal").element().getAttribute("data-probe"),
+    ).toBe("lg/sm/true");
+  });
+
+  test("コンテンツの render へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <ContextMenuRoot defaultOpen size="lg" radius="sm" variant="liquid">
+        <ContextMenuPortal>
+          <ContextMenuPositioner>
+            <ContextMenuContent
+              render={(props, state) => (
+                <div {...props} data-probe={`${state.size}/${state.radius}/${state.variant}`} />
+              )}
+            >
+              <ContextMenuItem>項目</ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenuPositioner>
+        </ContextMenuPortal>
+      </ContextMenuRoot>,
+    );
+
+    // 検証
+    expect(screen.getByRole("menu").element().getAttribute("data-probe")).toBe("lg/sm/liquid");
+  });
+
+  test("項目の render へスタイル情報と項目の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <ContextMenuRoot defaultOpen size="lg" radius="sm">
+        <ContextMenuPortal>
+          <ContextMenuPositioner>
+            <ContextMenuContent>
+              <ContextMenuItem
+                disabled
+                render={(props, state) => (
+                  <div
+                    {...props}
+                    data-probe={`${state.size}/${state.radius}/${String(state.disabled)}`}
+                  />
+                )}
+              >
+                項目
+              </ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenuPositioner>
+        </ContextMenuPortal>
+      </ContextMenuRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_context_menu_item").element().getAttribute("data-probe"),
+    ).toBe("lg/sm/true");
+  });
+
+  test("トリガーの children へスタイル情報とトリガーの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <ContextMenuRoot size="lg" radius="sm">
+        <ContextMenuTrigger>
+          {(props, state) => (
+            <div {...props} data-probe={`${state.size}/${state.radius}/${state.depth}`}>
+              右クリック領域
+            </div>
+          )}
+        </ContextMenuTrigger>
+      </ContextMenuRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("右クリック領域").element().getAttribute("data-probe")).toBe("lg/sm/1");
+  });
+});
+
 describe("ContextMenu", () => {
   test("合成した項目一覧を表示する", async ({ expect }) => {
     // 準備と実行

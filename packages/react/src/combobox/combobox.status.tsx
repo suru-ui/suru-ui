@@ -3,14 +3,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxStatus} が持つ状態です。
+ * {@link ComboboxStatus} の状態です。
  */
-export type ComboboxStatusState = Combobox.Status.State;
+export type ComboboxStatusState = Override<ComboboxContext, Combobox.Status.State>;
 
 export namespace ComboboxStatusProps {
   export type Render = RenderProps<ComboboxStatusState>;
@@ -47,9 +49,22 @@ export type IComboboxStatus = IComponent<ComboboxStatusProps>;
  * 非同期検索などの状態を読み上げる要素です。
  */
 export const ComboboxStatus: IComboboxStatus = function SuiComboboxStatus(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Combobox.Status {...otherProps} className={cn(className, "sui_combobox_status")} />;
+  return (
+    <Combobox.Status
+      {...otherProps}
+      {...proxyRenderProps<Combobox.Status.State, ComboboxStatusState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxStatusState>(className, "sui_combobox_status"),
+        },
+      )}
+    />
+  );
 };
 
 export { ComboboxStatus as Status };

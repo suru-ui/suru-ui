@@ -1,11 +1,14 @@
 import { Menu } from "@base-ui/react/menu";
-import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import * as Button from "../button/button.parts.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import type { MenuCheckboxItemProps } from "./menu.checkbox-item.jsx";
-import { MenuContext } from "./menu.context.js";
+import {
+  type MenuContextSize,
+  type MenuContextRadius,
+  type MenuContextVariant,
+  MenuContext,
+} from "./menu.context.js";
 import type { MenuGroupLabelProps } from "./menu.group-label.jsx";
 import type { MenuGroupProps } from "./menu.group.jsx";
 import type { MenuHandle } from "./menu.handle.js";
@@ -206,7 +209,7 @@ export type MenuRootItemObject =
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type MenuRootRadius = "none" | Size;
+export type MenuRootRadius = MenuContextRadius;
 
 /**
  * メニューの大きさです。
@@ -215,7 +218,7 @@ export type MenuRootRadius = "none" | Size;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type MenuRootSize = Size;
+export type MenuRootSize = MenuContextSize;
 
 /**
  * メニューの項目の主な外観です。
@@ -224,12 +227,12 @@ export type MenuRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type MenuRootVariant = Button.Root.Variant;
+export type MenuRootVariant = MenuContextVariant;
 
 /**
  * {@link MenuRoot} が持つ状態です。
  */
-export type MenuRootState = Menu.Root.State;
+export type MenuRootState = Override<MenuContext, Menu.Root.State>;
 
 export namespace MenuRootProps {
   export type Render = {};

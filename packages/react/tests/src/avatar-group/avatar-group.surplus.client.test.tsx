@@ -28,7 +28,7 @@ describe("AvatarGroupSurplus", () => {
     expect(surplus.classList.contains("sui_avatar-radius_none")).toBe(true);
   });
 
-  test("既定で灰色にする", async ({ expect }) => {
+  test("グループの色を引き継ぐ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <AvatarGroupRoot aria-label="仲間" color="blue">
@@ -38,7 +38,31 @@ describe("AvatarGroupSurplus", () => {
 
     // 検証
     const surplus = screen.container.querySelector<HTMLElement>("#surplus")!;
-    expect(surplus.classList.contains("sui_avatar-color_grey")).toBe(true);
+    expect(surplus.classList.contains("sui_avatar-color_blue")).toBe(true);
+  });
+
+  test("render の関数へグループの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AvatarGroupRoot aria-label="仲間" size="lg" color="blue" radius="none" reverse>
+        <AvatarGroupSurplus
+          id="surplus"
+          render={(props, state) => (
+            <span
+              {...props}
+              data-probe={`${state.size}/${state.color}/${state.radius}/${String(state.reverse)}/${state.imageLoadingStatus}`}
+            />
+          )}
+        >
+          +3
+        </AvatarGroupSurplus>
+      </AvatarGroupRoot>,
+    );
+
+    // 検証
+    const surplus = screen.container.querySelector<HTMLElement>("#surplus")!;
+    expect(surplus.tagName).toBe("SPAN");
+    expect(surplus.getAttribute("data-probe")).toBe("lg/blue/none/true/idle");
   });
 
   test("指定した色を優先する", async ({ expect }) => {

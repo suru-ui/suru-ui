@@ -1,14 +1,16 @@
 import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type HoverCardContext, useHoverCardContext } from "./hover-card.context.js";
 
 /**
  * {@link HoverCardBackdrop} が持つ状態です。
  */
-export type HoverCardBackdropState = PreviewCard.Backdrop.State;
+export type HoverCardBackdropState = Override<HoverCardContext, PreviewCard.Backdrop.State>;
 
 export namespace HoverCardBackdropProps {
   export type Render = RenderProps<HoverCardBackdropState>;
@@ -45,17 +47,25 @@ export type IHoverCardBackdrop = IComponent<HoverCardBackdropProps>;
  * ポップアップの背後に表示されるオーバーレイ要素です。
  */
 export const HoverCardBackdrop: IHoverCardBackdrop = function SuiHoverCardBackdrop(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useHoverCardContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <PreviewCard.Backdrop
       {...otherProps}
-      className={cn(
-        className,
-        "sui_hover_card_backdrop",
-        (state) =>
-          state.transitionStatus !== undefined &&
-          `sui_hover_card_backdrop-transition_status_${state.transitionStatus}`,
+      {...proxyRenderProps<PreviewCard.Backdrop.State, HoverCardBackdropState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<HoverCardBackdropState>(
+            className,
+            "sui_hover_card_backdrop",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_hover_card_backdrop-transition_status_${state.transitionStatus}`,
+          ),
+        },
       )}
     />
   );

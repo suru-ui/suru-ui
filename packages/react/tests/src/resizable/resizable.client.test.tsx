@@ -50,6 +50,21 @@ describe("Resizable", () => {
     expect(screen.getByClassName("sui_resizable").query()).not.toBe(null);
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Resizable
+        orientation="vertical"
+        render={(props, state) => <section {...props} data-probe={state.orientation} />}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_resizable").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("vertical");
+  });
+
   test("useContext で向きを読み取れる", async ({ expect }) => {
     // 準備
     function Probe() {

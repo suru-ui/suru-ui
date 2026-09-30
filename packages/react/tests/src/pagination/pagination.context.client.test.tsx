@@ -83,6 +83,25 @@ describe("usePaginationContext", () => {
     expect(screen.getByText("1").query()?.textContent).toBe("1");
   });
 
+  test("無効状態を返す", async ({ expect }) => {
+    // 準備
+    function Probe() {
+      const ctx = usePaginationContext();
+
+      return <span>{String(ctx.disabled)}</span>;
+    }
+
+    // 実行
+    const screen = await render(
+      <PaginationRoot disabled totalPages={5}>
+        <Probe />
+      </PaginationRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("true").query()?.textContent).toBe("true");
+  });
+
   test("提供がないときはエラーを投げる", async ({ expect }) => {
     // 準備
     function Probe() {

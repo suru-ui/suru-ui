@@ -229,6 +229,17 @@ export type ContextMenuProps<TItem = any> = ContextMenuProps.ContextMenu &
   ContextMenuProps.Root<TItem> &
   ContextMenuProps.Content;
 
+export interface IUseContextMenuAPI {
+  /**
+   * {@link ContextMenuAPI} を作成します。
+   *
+   * @template TItem 項目の型です。
+   * @param props {@link ContextMenu} の props です。
+   * @returns コンテキストメニューの API です。
+   */
+  <TItem = any>(props: ContextMenuProps<TItem>): ContextMenuAPI<TItem>;
+}
+
 // API
 // ---
 
@@ -705,17 +716,6 @@ export class ContextMenuAPI<TItem = any> {
 
     return null;
   }
-}
-
-export interface IUseContextMenuAPI {
-  /**
-   * {@link ContextMenuAPI} を作成します。
-   *
-   * @template TItem 項目の型です。
-   * @param props {@link ContextMenu} の props です。
-   * @returns コンテキストメニューの API です。
-   */
-  <TItem = any>(props: ContextMenuProps<TItem>): ContextMenuAPI<TItem>;
 }
 
 /**

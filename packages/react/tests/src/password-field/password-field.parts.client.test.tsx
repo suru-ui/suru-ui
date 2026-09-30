@@ -97,6 +97,29 @@ describe("PasswordFieldRoot", () => {
     // 検証
     expect(screen.getByClassName("sui_password_field").element().tagName).toBe("SECTION");
   });
+
+  test("render の関数へ表示状態とスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PasswordFieldRoot
+        color="blue"
+        outlined
+        size="lg"
+        visible
+        render={(props, state) => (
+          <section
+            {...props}
+            data-probe={`${String(state.visible)}/${state.size}/${state.color}/${String(state.outlined)}/${String("setVisible" in state)}`}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_password_field").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("true/lg/blue/true/false");
+  });
 });
 
 describe("PasswordFieldInput", () => {
@@ -157,6 +180,28 @@ describe("PasswordFieldInput", () => {
     expect(input.classList.contains("custom")).toBe(true);
     expect(input.classList.contains("sui_text_field_input")).toBe(true);
   });
+
+  test("render の関数へ表示状態とスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PasswordFieldRoot color="blue" size="lg" visible>
+        <PasswordFieldInput
+          aria-label="パスワード"
+          render={(props, state) => (
+            <input
+              {...props}
+              data-probe={`${String(state.visible)}/${state.size}/${state.color}`}
+            />
+          )}
+        />
+      </PasswordFieldRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_text_field_input").element().getAttribute("data-probe")).toBe(
+      "true/lg/blue",
+    );
+  });
 });
 
 describe("PasswordFieldAddon", () => {
@@ -205,6 +250,26 @@ describe("PasswordFieldAddon", () => {
 
     // 検証
     expect(document.activeElement?.tagName).not.toBe("INPUT");
+  });
+
+  test("render の関数へ表示状態とスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PasswordFieldRoot color="blue" size="lg" visible>
+        <PasswordFieldAddon
+          render={(props, state) => (
+            <span {...props} data-probe={`${String(state.visible)}/${state.size}/${state.color}`} />
+          )}
+        >
+          🔒
+        </PasswordFieldAddon>
+      </PasswordFieldRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_password_field_addon").element().getAttribute("data-probe"),
+    ).toBe("true/lg/blue");
   });
 });
 
@@ -317,6 +382,44 @@ describe("PasswordFieldToggleButton", () => {
 
     // 検証
     expect(screen.getByClassName("sui_password_field_toggle").element().tagName).toBe("SPAN");
+  });
+
+  test("render の関数へ表示状態とボタンの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PasswordFieldRoot visible>
+        <PasswordFieldToggleButton
+          disabled
+          render={(props, state) => (
+            <button {...props} data-probe={`${String(state.visible)}/${String(state.disabled)}`} />
+          )}
+        />
+      </PasswordFieldRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_password_field_toggle").element().getAttribute("data-probe"),
+    ).toBe("true/true");
+  });
+
+  test("className の関数へ表示状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PasswordFieldRoot visible>
+        <PasswordFieldToggleButton
+          className={(state) => (state.visible ? "probe-visible" : "probe-hidden")}
+        />
+      </PasswordFieldRoot>,
+    );
+
+    // 検証
+    expect(
+      screen
+        .getByClassName("sui_password_field_toggle")
+        .element()
+        .classList.contains("probe-visible"),
+    ).toBe(true);
   });
 });
 

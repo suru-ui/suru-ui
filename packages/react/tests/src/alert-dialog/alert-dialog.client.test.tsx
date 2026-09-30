@@ -225,6 +225,47 @@ describe("AlertDialog", () => {
     expect(screen.getByClassName("sui_alert_dialog_header").element().id).toBe("header");
   });
 
+  test("slotProps の render へポップアップとアイコンの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertDialog
+        defaultOpen
+        icon="!"
+        outlined
+        title="見出し"
+        size="sm"
+        radius="lg"
+        variant="stacked"
+        slotProps={{
+          popup: {
+            render: (props, state) => (
+              <section
+                {...props}
+                data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+              />
+            ),
+          },
+          icon: {
+            size: "sm",
+            radius: "full",
+            variant: "solid",
+            render: (props, state) => (
+              <div {...props} data-probe={`${state.size}/${state.radius}/${state.variant}`} />
+            ),
+          },
+        }}
+      />,
+    );
+
+    // 検証
+    const popup = screen.getByClassName("sui_alert_dialog_popup").element();
+    expect(popup.tagName).toBe("SECTION");
+    expect(popup.getAttribute("data-probe")).toBe("sm/lg/stacked/true");
+    expect(
+      screen.getByClassName("sui_alert_dialog_icon").element().getAttribute("data-probe"),
+    ).toBe("sm/full/solid");
+  });
+
   test("外側を押しても閉じない", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<AlertDialog defaultOpen title="見出し" />);

@@ -32,6 +32,16 @@ export type ChipProps = ChipRootProps;
 
 export type IChip = IComponent<ChipProps>;
 
+export interface IUseChipAPI {
+  /**
+   * {@link ChipAPI} を作成します。
+   *
+   * @param props {@link Chip} の props です。
+   * @returns チップの API です
+   */
+  (props: ChipProps): ChipAPI;
+}
+
 // API
 // ---
 
@@ -55,16 +65,6 @@ export class ChipAPI {
   public getRootProps(): ChipRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseChipAPI {
-  /**
-   * {@link ChipAPI} を作成します。
-   *
-   * @param props {@link Chip} の props です。
-   * @returns チップの API です
-   */
-  (props: ChipProps): ChipAPI;
 }
 
 /**

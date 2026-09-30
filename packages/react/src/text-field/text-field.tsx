@@ -100,6 +100,16 @@ namespace TextFieldProps {
  */
 export type TextFieldProps = TextFieldProps.TextField & TextFieldProps.Root & TextFieldProps.Input;
 
+export interface IUseTextFieldAPI {
+  /**
+   * {@link TextFieldAPI} を作成します。
+   *
+   * @param props {@link TextField} の props です。
+   * @returns 文字入力欄の API です
+   */
+  (props: TextFieldProps): TextFieldAPI;
+}
+
 // API
 // ---
 
@@ -222,16 +232,6 @@ export class TextFieldAPI {
       yield callback(addon, index++);
     }
   }
-}
-
-export interface IUseTextFieldAPI {
-  /**
-   * {@link TextFieldAPI} を作成します。
-   *
-   * @param props {@link TextField} の props です。
-   * @returns 文字入力欄の API です
-   */
-  (props: TextFieldProps): TextFieldAPI;
 }
 
 /**

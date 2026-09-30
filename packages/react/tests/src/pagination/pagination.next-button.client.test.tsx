@@ -100,4 +100,25 @@ describe("PaginationNextButton", () => {
         .disabled,
     ).toBe(true);
   });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PaginationRoot color="blue" defaultPage={5} radius="full" size="lg" totalPages={5}>
+        <PaginationNextButton
+          render={(props, state) => (
+            <button
+              {...props}
+              data-probe={`${state.size}/${state.color}/${state.radius}/${state.page}/${state.totalPages}/${String(state.disabled)}`}
+            />
+          )}
+        />
+      </PaginationRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByRole("button", { name: "次のページへ" }).element().getAttribute("data-probe"),
+    ).toBe("lg/blue/full/5/5/true");
+  });
 });

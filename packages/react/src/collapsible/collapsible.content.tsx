@@ -1,14 +1,16 @@
 import { Collapsible } from "@base-ui/react/collapsible";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type CollapsibleContext, useCollapsibleContext } from "./collapsible.context.js";
 
 /**
  * {@link CollapsibleContent} が持つ状態です。
  */
-export type CollapsibleContentState = Collapsible.Panel.State;
+export type CollapsibleContentState = Override<CollapsibleContext, Collapsible.Panel.State>;
 
 export namespace CollapsibleContentProps {
   export type Render = RenderProps<CollapsibleContentState>;
@@ -45,9 +47,22 @@ export type ICollapsibleContent = IComponent<CollapsibleContentProps>;
  * コラプシブルのコンテンツコンポーネントです。
  */
 export const CollapsibleContent: ICollapsibleContent = function SuiCollapsibleContent(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useCollapsibleContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Collapsible.Panel {...otherProps} className={cn(className, "sui_collapsible_content")} />;
+  return (
+    <Collapsible.Panel
+      {...otherProps}
+      {...proxyRenderProps<Collapsible.Panel.State, CollapsibleContentState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_collapsible_content"),
+        },
+      )}
+    />
+  );
 };
 
 export { CollapsibleContent as Content };

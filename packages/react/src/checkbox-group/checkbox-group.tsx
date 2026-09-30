@@ -42,6 +42,16 @@ export type CheckboxGroupState = CheckboxGroupRootState;
  */
 export type CheckboxGroupProps = CheckboxGroupRootProps;
 
+export interface IUseCheckboxGroupAPI {
+  /**
+   * {@link CheckboxGroupAPI} を作成します。
+   *
+   * @param props {@link CheckboxGroup} の props です。
+   * @returns チェックボックスグループの API です
+   */
+  (props: CheckboxGroupProps): CheckboxGroupAPI;
+}
+
 // API
 // ---
 
@@ -65,16 +75,6 @@ export class CheckboxGroupAPI {
   public getRootProps(): CheckboxGroupRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseCheckboxGroupAPI {
-  /**
-   * {@link CheckboxGroupAPI} を作成します。
-   *
-   * @param props {@link CheckboxGroup} の props です。
-   * @returns チェックボックスグループの API です
-   */
-  (props: CheckboxGroupProps): CheckboxGroupAPI;
 }
 
 /**

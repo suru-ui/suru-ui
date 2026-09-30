@@ -13,25 +13,25 @@ describe("useAvatarGroupContext", () => {
     // 準備
     function Probe() {
       const ctx = useAvatarGroupContext();
-      return <span>{[ctx.size, ctx.color, ctx.radius].join(",")}</span>;
+      return <span>{[ctx.size, ctx.color, ctx.radius, String(ctx.reverse)].join(",")}</span>;
     }
 
     // 実行
     const screen = await render(
-      <AvatarGroupRoot aria-label="仲間" size="lg" color="blue" radius="none">
+      <AvatarGroupRoot aria-label="仲間" size="lg" color="blue" radius="none" reverse>
         <Probe />
       </AvatarGroupRoot>,
     );
 
     // 検証
-    expect(screen.getByText("lg,blue,none").query()?.textContent).toBe("lg,blue,none");
+    expect(screen.getByText("lg,blue,none,true").query()?.textContent).toBe("lg,blue,none,true");
   });
 
   test("既定値を補完する", async ({ expect }) => {
     // 準備
     function Probe() {
       const ctx = useAvatarGroupContext();
-      return <span>{[ctx.size, ctx.color, ctx.radius].join(",")}</span>;
+      return <span>{[ctx.size, ctx.color, ctx.radius, String(ctx.reverse)].join(",")}</span>;
     }
 
     // 実行
@@ -42,7 +42,7 @@ describe("useAvatarGroupContext", () => {
     );
 
     // 検証
-    expect(screen.getByText("md,blue,full").query()?.textContent).toBe("md,blue,full");
+    expect(screen.getByText("md,blue,full,false").query()?.textContent).toBe("md,blue,full,false");
   });
 
   test("色を自動で割り当てる", async ({ expect }) => {
@@ -94,7 +94,7 @@ describe("useAvatarGroupContext", () => {
 
   test("直接提供した値を返す", async ({ expect }) => {
     // 準備
-    const provided = { size: "sm", color: "red", radius: "sm" } as const;
+    const provided = { size: "sm", color: "red", radius: "sm", reverse: true } as const;
     function Probe() {
       const ctx = useAvatarGroupContext();
       return <span>{ctx === provided ? "同一" : "別物"}</span>;

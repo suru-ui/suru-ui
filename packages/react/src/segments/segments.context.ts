@@ -1,7 +1,42 @@
+import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
+
+/**
+ * 選択中のセグメントの主な外観です。
+ *
+ * - `"solid"`: 塗りつぶし
+ * - `"naked"`: 背景なし
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type SegmentsContextActiveVariant = ColorTemplate;
+
+/**
+ * Segments の配色です。
+ */
+export type SegmentsContextColor = Color;
+
+/**
+ * Segments の角丸の大きさです。
+ *
+ * - `"none"`: 直角
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ * - `"full"`: 円形
+ */
+export type SegmentsContextRadius = "none" | Size | "full";
+
+/**
+ * Segments の大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type SegmentsContextSize = Size;
 
 /**
  * {@link SegmentsRoot} が子パーツへ提供するコンテキストです。
@@ -10,9 +45,29 @@ import type { IUseContext } from "../types.js";
  */
 export type SegmentsContext<TItem = any> = {
   /**
+   * 選択中のセグメントの主な外観です。
+   */
+  readonly activeVariant: SegmentsContextActiveVariant;
+
+  /**
+   * Segments の配色です。
+   */
+  readonly color: SegmentsContextColor;
+
+  /**
    * セグメントに表示する項目の一覧です。
    */
   readonly items: readonly TItem[];
+
+  /**
+   * Segments の角丸の大きさです。
+   */
+  readonly radius: SegmentsContextRadius;
+
+  /**
+   * Segments の大きさです。
+   */
+  readonly size: SegmentsContextSize;
 };
 
 /**
@@ -49,3 +104,13 @@ export const useSegmentsContext: IUseSegmentsContext = function useSuiSegmentsCo
 };
 
 export { SegmentsContext as Context, useSegmentsContext as useContext };
+
+export namespace Context {
+  export type ActiveVariant = SegmentsContextActiveVariant;
+
+  export type Color = SegmentsContextColor;
+
+  export type Radius = SegmentsContextRadius;
+
+  export type Size = SegmentsContextSize;
+}

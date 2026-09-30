@@ -1,14 +1,16 @@
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type PopoverContext, usePopoverContext } from "./popover.context.js";
 
 /**
  * {@link PopoverArrow} が持つ状態です。
  */
-export type PopoverArrowState = Popover.Arrow.State;
+export type PopoverArrowState = Override<PopoverContext, Popover.Arrow.State>;
 
 export namespace PopoverArrowProps {
   export type Render = RenderProps<PopoverArrowState>;
@@ -45,15 +47,23 @@ export type IPopoverArrow = IComponent<PopoverArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const PopoverArrow: IPopoverArrow = function SuiPopoverArrow(props) {
-  const { className, ...otherProps } = props;
+  const ctx = usePopoverContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Popover.Arrow
       {...otherProps}
-      className={cn(
-        className,
-        "sui_popover_arrow",
-        (state) => `sui_popover_arrow-side_${state.side}`,
+      {...proxyRenderProps<Popover.Arrow.State, PopoverArrowState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<PopoverArrowState>(
+            className,
+            "sui_popover_arrow",
+            (state) => `sui_popover_arrow-side_${state.side}`,
+          ),
+        },
       )}
     />
   );

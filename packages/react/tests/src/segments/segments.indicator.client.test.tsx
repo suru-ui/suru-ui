@@ -78,4 +78,25 @@ describe("SegmentsIndicator", () => {
       screen.getByClassName("sui_segments_indicator").element().classList.contains("custom"),
     ).toBe(true);
   });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <SegmentsRoot defaultValue="day" size="lg">
+        <SegmentsList>
+          <SegmentsItem value="day">日</SegmentsItem>
+          <SegmentsIndicator
+            render={(props, state) => (
+              <span {...props} data-probe={`${state.size}/${state.orientation}`} />
+            )}
+          />
+        </SegmentsList>
+      </SegmentsRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_segments_indicator").element().getAttribute("data-probe"),
+    ).toBe("lg/horizontal");
+  });
 });

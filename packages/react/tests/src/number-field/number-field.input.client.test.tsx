@@ -105,4 +105,25 @@ describe("NumberFieldInput", () => {
     expect(input.tagName).toBe("TEXTAREA");
     expect(input.classList.contains("sui_number_field_input")).toBe(true);
   });
+
+  test("render の関数へスタイル情報と入力欄の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <NumberFieldRoot color="blue" outlined size="lg">
+        <NumberFieldInput
+          render={(props, state) => (
+            <input
+              {...props}
+              data-probe={`${state.size}/${state.color}/${String(state.outlined)}/${String(state.valid === null)}`}
+            />
+          )}
+        />
+      </NumberFieldRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_number_field_input").element().getAttribute("data-probe"),
+    ).toBe("lg/blue/true/true");
+  });
 });

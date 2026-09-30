@@ -1,17 +1,25 @@
 import { useControlled } from "@base-ui/utils/useControlled";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import { type TextFieldRootProps, TextFieldRoot } from "../text-field/text-field.parts.js";
-import type { IComponent } from "../types.js";
-import { PasswordFieldContext } from "./password-field.context.js";
+import {
+  type TextFieldRootSize,
+  type TextFieldRootColor,
+  type TextFieldRootProps,
+  type TextFieldRootState,
+  type TextFieldRootRadius,
+  type TextFieldRootVariant,
+  TextFieldRoot,
+} from "../text-field/text-field.parts.js";
+import type { Override, IComponent } from "../types.js";
+import { type PasswordFieldContextState, PasswordFieldContext } from "./password-field.context.js";
 
 /**
  * パスワード入力欄の配色です。
  */
-export type PasswordFieldRootColor = Color;
+export type PasswordFieldRootColor = TextFieldRootColor;
 
 /**
  * パスワード入力欄の角丸です。
@@ -22,7 +30,7 @@ export type PasswordFieldRootColor = Color;
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type PasswordFieldRootRadius = "none" | Size | "full";
+export type PasswordFieldRootRadius = TextFieldRootRadius;
 
 /**
  * パスワード入力欄の大きさです。
@@ -31,7 +39,7 @@ export type PasswordFieldRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type PasswordFieldRootSize = Size;
+export type PasswordFieldRootSize = TextFieldRootSize;
 
 /**
  * パスワード入力欄の主な外観の種類です。
@@ -39,12 +47,14 @@ export type PasswordFieldRootSize = Size;
  * - `"naked"`: 背景のないパスワード入力欄
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type PasswordFieldRootVariant = "naked" | "liquid";
+export type PasswordFieldRootVariant = TextFieldRootVariant;
 
 /**
  * {@link PasswordFieldRoot} の状態です。
+ *
+ * スタイル情報は {@link TextFieldRoot} が持つため、その状態と合成します。
  */
-export type PasswordFieldRootState = {};
+export type PasswordFieldRootState = Override<PasswordFieldContextState, TextFieldRootState>;
 
 export namespace PasswordFieldRootProps {
   export type Render = RenderProps<PasswordFieldRootState>;
@@ -139,7 +149,9 @@ export const PasswordFieldRoot: IPasswordFieldRoot = function SuiPasswordFieldRo
   const {
     size = "md",
     color = "grey",
+    style,
     radius = size,
+    render,
     variant = "liquid",
     visible: visibleProp,
     outlined = false,
@@ -187,14 +199,21 @@ export const PasswordFieldRoot: IPasswordFieldRoot = function SuiPasswordFieldRo
         radius={radius}
         variant={variant}
         outlined={outlined}
-        className={cn(
-          className,
-          "sui_password_field",
-          `sui_password_field-size_${size}`,
-          `sui_password_field-color_${color}`,
-          `sui_password_field-radius_${radius}`,
-          `sui_password_field-variant_${variant}`,
-          outlined && "sui_password_field-outlined",
+        {...proxyRenderProps<TextFieldRootState, PasswordFieldRootState>(
+          (state) => ({ ...state, visible }),
+          {
+            style,
+            render,
+            className: cn<PasswordFieldRootState>(
+              className,
+              "sui_password_field",
+              (state) => `sui_password_field-size_${state.size}`,
+              (state) => `sui_password_field-color_${state.color}`,
+              (state) => `sui_password_field-radius_${state.radius}`,
+              (state) => `sui_password_field-variant_${state.variant}`,
+              (state) => state.outlined && "sui_password_field-outlined",
+            ),
+          },
         )}
         data-scope={dataScope}
       />

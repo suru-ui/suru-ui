@@ -1,14 +1,16 @@
 import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * {@link MenuRadioItemIndicator} が持つ状態です。
  */
-export type MenuRadioItemIndicatorState = Menu.RadioItemIndicator.State;
+export type MenuRadioItemIndicatorState = Override<MenuContext, Menu.RadioItemIndicator.State>;
 
 export namespace MenuRadioItemIndicatorProps {
   export type Render = RenderProps<MenuRadioItemIndicatorState>;
@@ -47,16 +49,24 @@ export type IMenuRadioItemIndicator = IComponent<MenuRadioItemIndicatorProps>;
 export const MenuRadioItemIndicator: IMenuRadioItemIndicator = function SuiMenuRadioItemIndicator(
   props,
 ) {
-  const { className, keepMounted = true, ...otherProps } = props;
+  const ctx = useMenuContext();
+  const { style, render, className, keepMounted = true, ...otherProps } = props;
 
   return (
     <Menu.RadioItemIndicator
       {...otherProps}
-      className={cn(
-        className,
-        "sui_menu_item_indicator",
-        "sui_menu_radio_item_indicator",
-        (state) => !state.checked && "sui_menu_item_indicator-unchecked",
+      {...proxyRenderProps<Menu.RadioItemIndicator.State, MenuRadioItemIndicatorState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<MenuRadioItemIndicatorState>(
+            className,
+            "sui_menu_item_indicator",
+            "sui_menu_radio_item_indicator",
+            (state) => !state.checked && "sui_menu_item_indicator-unchecked",
+          ),
+        },
       )}
       keepMounted={keepMounted}
     />

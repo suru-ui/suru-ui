@@ -225,6 +225,17 @@ namespace DrawerProps {
  */
 export type DrawerProps<TPayload = any> = DrawerProps.Drawer<TPayload> & DrawerProps.Root<TPayload>;
 
+export interface IUseDrawerAPI {
+  /**
+   * {@link DrawerAPI} を作成します。
+   *
+   * @template TPayload トリガーが送信するデータの型です。
+   * @param props {@link Drawer} の props です。
+   * @returns ドロワーの API です。
+   */
+  <TPayload = any>(props: DrawerProps<TPayload>): DrawerAPI<TPayload>;
+}
+
 // API
 // ---
 
@@ -580,17 +591,6 @@ export class DrawerAPI<TPayload = any> {
 
     return props ?? null;
   }
-}
-
-export interface IUseDrawerAPI {
-  /**
-   * {@link DrawerAPI} を作成します。
-   *
-   * @template TPayload トリガーが送信するデータの型です。
-   * @param props {@link Drawer} の props です。
-   * @returns ドロワーの API です。
-   */
-  <TPayload = any>(props: DrawerProps<TPayload>): DrawerAPI<TPayload>;
 }
 
 /**

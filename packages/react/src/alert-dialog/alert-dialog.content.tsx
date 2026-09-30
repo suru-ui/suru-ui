@@ -1,12 +1,17 @@
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type AlertDialogPopupContext,
+  useAlertDialogPopupContext,
+} from "./alert-dialog.popup.context.js";
 
 /**
  * {@link AlertDialogContent} が持つ状態です。
  */
-export type AlertDialogContentState = Card.Content.State;
+export type AlertDialogContentState = Override<Card.Content.State, AlertDialogPopupContext>;
 
 export namespace AlertDialogContentProps {
   export type Render = RenderProps<AlertDialogContentState>;
@@ -32,7 +37,22 @@ export type IAlertDialogContent = IComponent<AlertDialogContentProps>;
  * アラートダイアログの本文を表示するコンポーネントです。
  */
 export const AlertDialogContent: IAlertDialogContent = function SuiAlertDialogContent(props) {
-  return <Card.Content {...props} className={cn(props.className, "sui_alert_dialog_content")} />;
+  const ctx = useAlertDialogPopupContext();
+  const { style, render, className, ...otherProps } = props;
+
+  return (
+    <Card.Content
+      {...otherProps}
+      {...proxyRenderProps<Card.Content.State, AlertDialogContentState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AlertDialogContentState>(className, "sui_alert_dialog_content"),
+        },
+      )}
+    />
+  );
 };
 
 export { AlertDialogContent as Content };

@@ -225,6 +225,17 @@ namespace MenuProps {
  */
 export type MenuProps<TItem = any> = MenuProps.Menu & MenuProps.Root<TItem> & MenuProps.Content;
 
+export interface IUseMenuAPI {
+  /**
+   * {@link MenuAPI} を作成します。
+   *
+   * @template TItem 項目の型です。
+   * @param props {@link Menu} の props です。
+   * @returns メニューの API です。
+   */
+  <TItem = any>(props: MenuProps<TItem>): MenuAPI<TItem>;
+}
+
 // API
 // ---
 
@@ -694,17 +705,6 @@ export class MenuAPI<TItem = any> {
 
     return null;
   }
-}
-
-export interface IUseMenuAPI {
-  /**
-   * {@link MenuAPI} を作成します。
-   *
-   * @template TItem 項目の型です。
-   * @param props {@link Menu} の props です。
-   * @returns メニューの API です。
-   */
-  <TItem = any>(props: MenuProps<TItem>): MenuAPI<TItem>;
 }
 
 /**

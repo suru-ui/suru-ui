@@ -33,7 +33,7 @@ export interface IComboboxCollectionItemRenderer<TItem = any> {
 }
 
 /**
- * {@link ComboboxCollection} が持つ状態です。
+ * {@link ComboboxCollection} の状態です。
  */
 export type ComboboxCollectionState = {};
 

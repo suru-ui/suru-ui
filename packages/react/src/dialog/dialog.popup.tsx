@@ -35,12 +35,15 @@ export type DialogPopupVariant = DialogPopupContextVariant;
 /**
  * {@link DialogPopup} が持つ状態です。
  */
-export type DialogPopupState = Override<Card.CardRootState, Dialog.Popup.State>;
+export type DialogPopupState = Override<
+  Card.Root.State & { variant: DialogPopupVariant },
+  Dialog.Popup.State
+>;
 
 export namespace DialogPopupProps {
   export type Render = RenderProps<DialogPopupState>;
 
-  export type SuruUI = Card.CardRootProps.SuruUI & {
+  export type SuruUI = Card.Root.Props.SuruUI & {
     /**
      * ダイアログの主な外観を指定します。
      *
@@ -52,7 +55,7 @@ export namespace DialogPopupProps {
   };
 
   export type BaseUI = Override<
-    Card.CardRootProps.BaseUI,
+    Card.Root.Props.BaseUI,
     Pick<
       React.ComponentProps<typeof Dialog.Popup>,
       Exclude<
@@ -106,7 +109,7 @@ export const DialogPopup: IDialogPopup = function SuiDialogPopup(props) {
       <Dialog.Popup
         {...otherProps}
         render={(htmlProps: {}, popupState) => {
-          const cardRootProps: Required<Card.CardRootProps.SuruUI> = {
+          const cardRootProps: Required<Card.Root.Props.SuruUI> = {
             size,
             radius,
             outlined,
@@ -117,15 +120,18 @@ export const DialogPopup: IDialogPopup = function SuiDialogPopup(props) {
               {...mergeProps<typeof Card.Root>([
                 htmlProps,
                 cardRootProps,
-                proxyRenderProps(popupState, {
-                  style,
-                  render,
-                  className: cn(
-                    className,
-                    "sui_dialog_popup",
-                    `sui_dialog_popup-variant_${variant}`,
-                  ),
-                }),
+                proxyRenderProps<Dialog.Popup.State, DialogPopupState>(
+                  (state) => ({ ...ctx, outlined, ...popupState, ...state }),
+                  {
+                    style,
+                    render,
+                    className: cn<DialogPopupState>(
+                      className,
+                      "sui_dialog_popup",
+                      (state) => `sui_dialog_popup-variant_${state.variant}`,
+                    ),
+                  },
+                ),
               ])}
             />
           );

@@ -2,6 +2,7 @@ import { Collapsible } from "@base-ui/react/collapsible";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import RenderElement from "../_render-element.jsx";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
@@ -30,7 +31,7 @@ export type CollapsibleRootSize = Size;
 /**
  * {@link CollapsibleRoot} が持つ状態です。
  */
-export type CollapsibleRootState = Collapsible.Root.State;
+export type CollapsibleRootState = CollapsibleContext;
 
 export namespace CollapsibleRootProps {
   export type Render = RenderProps<CollapsibleRootState>;
@@ -78,6 +79,7 @@ export type ICollapsibleRoot = IComponent<CollapsibleRootProps>;
 export const CollapsibleRoot: ICollapsibleRoot = function SuiCollapsibleRoot(props) {
   const {
     size = "md",
+    style,
     render,
     className,
     // @ts-expect-error
@@ -88,20 +90,31 @@ export const CollapsibleRoot: ICollapsibleRoot = function SuiCollapsibleRoot(pro
   return (
     <Collapsible.Root
       {...otherProps}
-      render={(htmlProps, state) => (
-        <CollapsibleContext value={state}>
-          <RenderElement state={state} render={render} htmlProps={htmlProps} defaultTagName="div" />
-        </CollapsibleContext>
-      )}
-      className={cn(
-        className,
-        "sui_collapsible",
-        `sui_collapsible-size_${size}`,
-        (state) => state.open && "sui_collapsible-open",
-        (state) =>
-          state.transitionStatus !== undefined &&
-          `sui_collapsible-transition_status_${state.transitionStatus}`,
-        (state) => state.disabled && "sui_collapsible-disabled",
+      {...proxyRenderProps<Collapsible.Root.State, CollapsibleRootState>(
+        (state) => ({ size, ...state }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <CollapsibleContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </CollapsibleContext>
+          ),
+          className: cn<CollapsibleRootState>(
+            className,
+            "sui_collapsible",
+            (state) => `sui_collapsible-size_${state.size}`,
+            (state) => state.open && "sui_collapsible-open",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_collapsible-transition_status_${state.transitionStatus}`,
+            (state) => state.disabled && "sui_collapsible-disabled",
+          ),
+        },
       )}
       data-scope={dataScope}
     />

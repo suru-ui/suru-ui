@@ -93,6 +93,16 @@ export type MeterProps = MeterProps.Meter & MeterProps.Root;
 
 export type IMeter = IComponent<MeterProps>;
 
+export interface IUseMeterAPI {
+  /**
+   * {@link MeterAPI} を作成します。
+   *
+   * @param props {@link Meter} の props です。
+   * @returns メーターの API です
+   */
+  (props: MeterProps): MeterAPI;
+}
+
 // API
 // ---
 
@@ -181,16 +191,6 @@ export class MeterAPI {
 
     return null;
   }
-}
-
-export interface IUseMeterAPI {
-  /**
-   * {@link MeterAPI} を作成します。
-   *
-   * @param props {@link Meter} の props です。
-   * @returns メーターの API です
-   */
-  (props: MeterProps): MeterAPI;
 }
 
 /**

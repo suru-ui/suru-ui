@@ -6,6 +6,10 @@ import {
   DialogPopupContext,
   useDialogPopupContext,
 } from "../../../src/dialog/dialog.popup.context.js";
+import { DialogPopup } from "../../../src/dialog/dialog.popup.jsx";
+import { DialogPortal } from "../../../src/dialog/dialog.portal.jsx";
+import { DialogRoot } from "../../../src/dialog/dialog.root.jsx";
+import { DialogViewport } from "../../../src/dialog/dialog.viewport.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useDialogPopupContext", () => {
@@ -27,6 +31,31 @@ describe("useDialogPopupContext", () => {
 
     // 検証
     expect(screen.getByText("lg").query()?.textContent).toBe("lg");
+  });
+
+  test("ルートの状態を返す", async ({ expect }) => {
+    // 準備
+    function Probe() {
+      const ctx = useDialogPopupContext();
+
+      return <span>{`${ctx.size}/${ctx.radius}/${ctx.variant}`}</span>;
+    }
+
+    // 実行
+    const screen = await render(
+      <DialogRoot defaultOpen>
+        <DialogPortal>
+          <DialogViewport>
+            <DialogPopup size="sm" radius="lg" variant="stacked">
+              <Probe />
+            </DialogPopup>
+          </DialogViewport>
+        </DialogPortal>
+      </DialogRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("sm/lg/stacked").query()?.textContent).toBe("sm/lg/stacked");
   });
 
   test("提供がないときはエラーを投げる", async ({ expect }) => {

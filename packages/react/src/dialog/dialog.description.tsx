@@ -7,19 +7,23 @@ import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
+import { type DialogPopupContext, useDialogPopupContext } from "./dialog.popup.context.js";
 
 /**
  * {@link DialogDescription} が持つ状態です。
  */
-export type DialogDescriptionState = Override<Card.CardDescriptionState, Dialog.Description.State>;
+export type DialogDescriptionState = Override<
+  Card.Description.State & DialogPopupContext,
+  Dialog.Description.State
+>;
 
 export namespace DialogDescriptionProps {
   export type Render = RenderProps<DialogDescriptionState>;
 
-  export type SuruUI = Card.CardDescriptionProps.SuruUI;
+  export type SuruUI = Card.Description.Props.SuruUI;
 
   export type BaseUI = Override<
-    Card.CardDescriptionProps.BaseUI,
+    Card.Description.Props.BaseUI,
     Pick<
       React.ComponentProps<typeof Dialog.Description>,
       Exclude<
@@ -53,20 +57,24 @@ export type IDialogDescription = IComponent<DialogDescriptionProps>;
  * 見た目はカードの説明文として描画され、ポップアップの説明に関連付けます。
  */
 export const DialogDescription: IDialogDescription = function SuiDialogDescription(props) {
+  const ctx = useDialogPopupContext();
   const { style, render = <p />, className, ...otherProps } = props;
 
   return (
     <Dialog.Description
       {...otherProps}
-      render={(htmlProps: {}, descriptionState) => (
+      render={(htmlProps: {}) => (
         <Card.Description
           {...mergeProps<typeof Card.Description>([
             htmlProps,
-            proxyRenderProps(descriptionState, {
-              style,
-              render,
-              className: cn(className, "sui_dialog_description"),
-            }),
+            proxyRenderProps<Card.Description.State, DialogDescriptionState>(
+              (state) => ({ ...ctx, ...state }),
+              {
+                style,
+                render,
+                className: cn<DialogDescriptionState>(className, "sui_dialog_description"),
+              },
+            ),
           ])}
         />
       )}

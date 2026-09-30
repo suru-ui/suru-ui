@@ -81,6 +81,27 @@ describe("FileUploadTrigger", () => {
     ).toBe(true);
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <FileUploadRoot size="lg">
+        <FileUploadTrigger
+          disabled
+          render={(props, state) => (
+            <button {...props} data-probe={`${state.size}/${String(state.disabled)}`} />
+          )}
+        >
+          ファイルを選択
+        </FileUploadTrigger>
+      </FileUploadRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_file_upload_trigger").element().getAttribute("data-probe"),
+    ).toBe("lg/true");
+  });
+
   test("render で要素を置き換える", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

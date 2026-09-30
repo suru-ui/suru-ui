@@ -91,6 +91,16 @@ export type StatProps = StatProps.Stat & StatProps.Root;
 
 export type IStat = IComponent<StatProps>;
 
+export interface IUseStatAPI {
+  /**
+   * {@link StatAPI} を作成します。
+   *
+   * @param props {@link Stat} の props です。
+   * @returns 統計の API です
+   */
+  (props: StatProps): StatAPI;
+}
+
 // API
 // ---
 
@@ -197,16 +207,6 @@ export class StatAPI {
 
     return null;
   }
-}
-
-export interface IUseStatAPI {
-  /**
-   * {@link StatAPI} を作成します。
-   *
-   * @param props {@link Stat} の props です。
-   * @returns 統計の API です
-   */
-  (props: StatProps): StatAPI;
 }
 
 /**

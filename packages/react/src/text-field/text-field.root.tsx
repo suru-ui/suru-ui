@@ -1,17 +1,22 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { DISABLE_FOCUS_ON_CLICK_DATA } from "./_text-field.jsx";
-import { TextFieldContext } from "./text-field.context.js";
+import {
+  type TextFieldContextSize,
+  type TextFieldContextColor,
+  type TextFieldContextRadius,
+  type TextFieldContextVariant,
+  TextFieldContext,
+} from "./text-field.context.js";
 
 /**
  * 文字入力欄の配色です。
  */
-export type TextFieldRootColor = Color;
+export type TextFieldRootColor = TextFieldContextColor;
 
 /**
  * 文字入力欄の角丸です。
@@ -22,7 +27,7 @@ export type TextFieldRootColor = Color;
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type TextFieldRootRadius = "none" | Size | "full";
+export type TextFieldRootRadius = TextFieldContextRadius;
 
 /**
  * 文字入力欄の大きさです。
@@ -31,7 +36,7 @@ export type TextFieldRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type TextFieldRootSize = Size;
+export type TextFieldRootSize = TextFieldContextSize;
 
 /**
  * 文字入力欄の主な外観の種類です。
@@ -39,12 +44,12 @@ export type TextFieldRootSize = Size;
  * - `"naked"`: 背景のない文字入力欄
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type TextFieldRootVariant = "naked" | "liquid";
+export type TextFieldRootVariant = TextFieldContextVariant;
 
 /**
  * {@link TextFieldRoot} が持つ状態です。
  */
-export type TextFieldRootState = {};
+export type TextFieldRootState = TextFieldContext;
 
 export namespace TextFieldRootProps {
   export type Render = RenderProps<TextFieldRootState>;
@@ -148,17 +153,18 @@ export const TextFieldRoot: ITextFieldRoot = function SuiTextFieldRoot(props) {
       otherDivProps,
       {
         onClick: handleClick,
-        className: cn(
+        className: cn<TextFieldRootState>(
           "sui_text_field",
-          `sui_text_field-size_${size}`,
-          `sui_text_field-color_${color}`,
-          `sui_text_field-radius_${radius}`,
-          `sui_text_field-variant_${variant}`,
-          outlined && "sui_text_field-outlined",
+          (state) => `sui_text_field-size_${state.size}`,
+          (state) => `sui_text_field-color_${state.color}`,
+          (state) => `sui_text_field-radius_${state.radius}`,
+          (state) => `sui_text_field-variant_${state.variant}`,
+          (state) => state.outlined && "sui_text_field-outlined",
         ),
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 

@@ -68,6 +68,30 @@ describe("FileUploadItemDeleteTrigger", () => {
     ).toBe(true);
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <FileUploadRoot size="lg" defaultValue={[textFile]}>
+        <FileUploadItem file={textFile}>
+          <FileUploadItemDeleteTrigger
+            aria-label="削除"
+            render={(props, state) => (
+              <button {...props} data-probe={`${state.size}/${state.file.name}`} />
+            )}
+          />
+        </FileUploadItem>
+      </FileUploadRoot>,
+    );
+
+    // 検証
+    expect(
+      screen
+        .getByClassName("sui_file_upload_item_delete_trigger")
+        .element()
+        .getAttribute("data-probe"),
+    ).toBe("lg/hello.txt");
+  });
+
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

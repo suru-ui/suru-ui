@@ -38,6 +38,16 @@ export type BadgeProps = BadgeRootProps;
 
 export type IBadge = IComponent<BadgeProps>;
 
+export interface IUseBadgeAPI {
+  /**
+   * {@link BadgeAPI} を作成します。
+   *
+   * @param props {@link Badge} の props です。
+   * @returns バッジの API です
+   */
+  (props: BadgeProps): BadgeAPI;
+}
+
 // API
 // ---
 
@@ -61,16 +71,6 @@ export class BadgeAPI {
   public getRootProps(): BadgeRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseBadgeAPI {
-  /**
-   * {@link BadgeAPI} を作成します。
-   *
-   * @param props {@link Badge} の props です。
-   * @returns バッジの API です
-   */
-  (props: BadgeProps): BadgeAPI;
 }
 
 /**

@@ -1,15 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useSelectContext } from "./select.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectPortal} が持つ状態です。
  */
-export type SelectPortalState = BaseSelect.Portal.State;
+export type SelectPortalState = Override<SelectContext, BaseSelect.Portal.State>;
 
 export namespace SelectPortalProps {
   export type Render = RenderProps<SelectPortalState>;
@@ -50,6 +51,8 @@ export type ISelectPortal = IComponent<SelectPortalProps>;
 export const SelectPortal: ISelectPortal = function SuiSelectPortal(props) {
   const ctx = useSelectContext();
   const {
+    style,
+    render,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
@@ -59,11 +62,18 @@ export const SelectPortal: ISelectPortal = function SuiSelectPortal(props) {
   return (
     <BaseSelect.Portal
       {...otherProps}
-      className={cn(
-        className,
-        "sui_select_portal",
-        `sui_select_portal-size_${ctx.size}`,
-        `sui_select_portal-radius_${ctx.radius}`,
+      {...proxyRenderProps<BaseSelect.Portal.State, SelectPortalState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SelectPortalState>(
+            className,
+            "sui_select_portal",
+            (state) => `sui_select_portal-size_${state.size}`,
+            (state) => `sui_select_portal-radius_${state.radius}`,
+          ),
+        },
       )}
       data-scope={dataScope}
     />

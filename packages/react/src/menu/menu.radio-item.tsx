@@ -9,7 +9,7 @@ import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { getItemVariant } from "./_menu.utils.jsx";
-import { useMenuContext } from "./menu.context.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * ラジオ項目の配色です。
@@ -33,7 +33,10 @@ export type MenuRadioItemVariant = Button.Root.Variant;
 /**
  * {@link MenuRadioItem} が持つ状態です。
  */
-export type MenuRadioItemState = Override<Button.Root.State, Menu.RadioItem.State>;
+export type MenuRadioItemState = Override<
+  MenuContext,
+  Override<Button.Root.State, Menu.RadioItem.State>
+>;
 
 export namespace MenuRadioItemProps {
   export type Render = RenderProps<MenuRadioItemState>;
@@ -136,7 +139,7 @@ export const MenuRadioItem: IMenuRadioItem = function SuiMenuRadioItem(props) {
     <Menu.RadioItem
       {...otherProps}
       {...baseuiProps}
-      render={(htmlProps: {}, state) => {
+      render={(htmlProps: {}, itemState) => {
         const buttonRootProps: Required<
           Button.Root.Props.SuruUI &
             Button.Root.Props.BaseUI &
@@ -149,8 +152,8 @@ export const MenuRadioItem: IMenuRadioItem = function SuiMenuRadioItem(props) {
           radius,
           pending: undefined,
           squared: undefined,
-          variant: getItemVariant(state, variant),
-          disabled: state.disabled,
+          variant: getItemVariant(itemState, variant),
+          disabled: itemState.disabled,
           outlined: undefined,
           nativeButton,
           focusableWhenDisabled,
@@ -161,18 +164,21 @@ export const MenuRadioItem: IMenuRadioItem = function SuiMenuRadioItem(props) {
             {...mergeProps<typeof Button.Root>([
               htmlProps,
               buttonRootProps,
-              proxyRenderProps(state, {
-                style,
-                render: render ?? <div />,
-                className: cn(
-                  className,
-                  "sui_menu_item",
-                  "sui_menu_radio_item",
-                  (state) => state.checked && "sui_menu_item-checked",
-                  (state) => state.disabled && "sui_menu_item-disabled",
-                  (state) => state.highlighted && "sui_menu_item-highlighted",
-                ),
-              }),
+              proxyRenderProps<Button.Root.State, MenuRadioItemState>(
+                (state) => ({ ...ctx, ...state, ...itemState }),
+                {
+                  style,
+                  render: render ?? <div />,
+                  className: cn<MenuRadioItemState>(
+                    className,
+                    "sui_menu_item",
+                    "sui_menu_radio_item",
+                    (state) => state.checked && "sui_menu_item-checked",
+                    (state) => state.disabled && "sui_menu_item-disabled",
+                    (state) => state.highlighted && "sui_menu_item-highlighted",
+                  ),
+                },
+              ),
             ])}
           />
         );

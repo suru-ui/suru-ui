@@ -18,7 +18,7 @@ export interface IComboboxItemLabelRenderer<TItem = any> {
 }
 
 /**
- * {@link ComboboxItemLabel} が持つ状態です。
+ * {@link ComboboxItemLabel} の状態です。
  */
 export type ComboboxItemLabelState = {};
 

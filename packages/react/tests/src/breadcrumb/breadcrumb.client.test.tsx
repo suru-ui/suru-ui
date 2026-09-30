@@ -13,7 +13,6 @@ import { BreadcrumbLink } from "../../../src/breadcrumb/breadcrumb.link.jsx";
 import { BreadcrumbList } from "../../../src/breadcrumb/breadcrumb.list.jsx";
 import { BreadcrumbRoot } from "../../../src/breadcrumb/breadcrumb.root.jsx";
 import { BreadcrumbSeparator } from "../../../src/breadcrumb/breadcrumb.separator.jsx";
-import { ContextMissingError } from "../../../src/errors.js";
 import "../_locators.js";
 
 const items = [
@@ -69,6 +68,25 @@ describe("BreadcrumbRoot", () => {
     // 検証
     expect(screen.getByLabelText("現在地").element().tagName).toBe("SECTION");
   });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <BreadcrumbRoot
+        color="blue"
+        items={[...items]}
+        size="lg"
+        render={(props, state) => (
+          <nav {...props} data-probe={`${state.size}/${state.color}/${state.items.length}`} />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_breadcrumb").element();
+    expect(root.tagName).toBe("NAV");
+    expect(root.getAttribute("data-probe")).toBe("lg/blue/3");
+  });
 });
 
 describe("BreadcrumbList", () => {
@@ -122,6 +140,22 @@ describe("BreadcrumbList", () => {
     // 検証
     expect(screen.getByRole("listitem").element().textContent).toBe("単独");
   });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <BreadcrumbRoot color="blue" items={[...items]} size="lg">
+        <BreadcrumbList
+          render={(props, state) => (
+            <ol {...props} data-probe={`${state.size}/${state.color}/${state.items.length}`} />
+          )}
+        />
+      </BreadcrumbRoot>,
+    );
+
+    // 検証
+    expect(screen.getByRole("list").element().getAttribute("data-probe")).toBe("lg/blue/3");
+  });
 });
 
 describe("BreadcrumbItem", () => {
@@ -133,6 +167,22 @@ describe("BreadcrumbItem", () => {
     const item = screen.getByTestId("crumb").element();
     expect(item.tagName).toBe("LI");
     expect(item.classList.contains("sui_breadcrumb_item")).toBe(true);
+  });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <BreadcrumbRoot color="blue" size="lg">
+        <BreadcrumbItem
+          render={(props, state) => <li {...props} data-probe={`${state.size}/${state.color}`} />}
+        />
+      </BreadcrumbRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_breadcrumb_item").element().getAttribute("data-probe")).toBe(
+      "lg/blue",
+    );
   });
 });
 
@@ -205,6 +255,29 @@ describe("BreadcrumbLink", () => {
     expect(event.defaultPrevented).toBe(false);
     expect(onClick).toHaveBeenCalledTimes(1);
   });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <BreadcrumbRoot color="blue" size="lg">
+        <BreadcrumbLink
+          current
+          disabled
+          render={(props, state) => (
+            <span
+              {...props}
+              data-probe={`${state.size}/${state.color}/${String(state.current)}/${String(state.disabled)}`}
+            />
+          )}
+        >
+          現在
+        </BreadcrumbLink>
+      </BreadcrumbRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("現在").element().getAttribute("data-probe")).toBe("lg/blue/true/true");
+  });
 });
 
 describe("BreadcrumbSeparator", () => {
@@ -227,6 +300,22 @@ describe("BreadcrumbSeparator", () => {
     const separator = screen.getByClassName("sui_breadcrumb_separator").element();
     expect(separator.textContent).toBe("／");
     expect(separator.getAttribute("aria-hidden")).toBe("true");
+  });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <BreadcrumbRoot color="blue" size="lg">
+        <BreadcrumbSeparator
+          render={(props, state) => <li {...props} data-probe={`${state.size}/${state.color}`} />}
+        />
+      </BreadcrumbRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_breadcrumb_separator").element().getAttribute("data-probe"),
+    ).toBe("lg/blue");
   });
 });
 
@@ -308,33 +397,6 @@ describe("Breadcrumb", () => {
 
     // 検証
     expect(screen.container.querySelectorAll(".sui_breadcrumb_link").length).toBe(0);
-  });
-});
-
-describe("useBreadcrumbContext", () => {
-  test("提供がないときはエラーを投げる", async ({ expect }) => {
-    // 準備
-    function Probe() {
-      useBreadcrumbContext();
-      return null;
-    }
-
-    // 実行と検証
-    await expect(render(<Probe />)).rejects.toThrow(ContextMissingError);
-  });
-
-  test("任意指定では提供がないときに null を返す", async ({ expect }) => {
-    // 準備
-    function Probe() {
-      const ctx = useBreadcrumbContext(true);
-      return <span>{ctx === null ? "なし" : "あり"}</span>;
-    }
-
-    // 実行
-    const screen = await render(<Probe />);
-
-    // 検証
-    expect(screen.getByText("なし").query()?.textContent).toBe("なし");
   });
 });
 

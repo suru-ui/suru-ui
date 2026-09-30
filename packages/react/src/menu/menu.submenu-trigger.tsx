@@ -8,7 +8,7 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { useMenuContext } from "./menu.context.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * サブメニュー項目の配色です。
@@ -32,7 +32,10 @@ export type MenuSubmenuTriggerVariant = Button.Root.Variant;
 /**
  * {@link MenuSubmenuTrigger} が持つ状態です。
  */
-export type MenuSubmenuTriggerState = Override<Button.Root.State, Menu.SubmenuTrigger.State>;
+export type MenuSubmenuTriggerState = Override<
+  MenuContext,
+  Override<Button.Root.State, Menu.SubmenuTrigger.State>
+>;
 
 export namespace MenuSubmenuTriggerProps {
   export type Render = RenderProps<MenuSubmenuTriggerState>;
@@ -136,7 +139,7 @@ export const MenuSubmenuTrigger: IMenuSubmenuTrigger = function SuiMenuSubmenuTr
     <Menu.SubmenuTrigger
       {...otherProps}
       {...baseuiProps}
-      render={(htmlProps: {}, state) => {
+      render={(htmlProps: {}, itemState) => {
         const buttonRootProps: Required<
           Button.Root.Props.SuruUI &
             Button.Root.Props.BaseUI &
@@ -150,7 +153,7 @@ export const MenuSubmenuTrigger: IMenuSubmenuTrigger = function SuiMenuSubmenuTr
           pending: undefined,
           squared: undefined,
           variant,
-          disabled: state.disabled,
+          disabled: itemState.disabled,
           outlined: undefined,
           nativeButton,
           focusableWhenDisabled,
@@ -161,18 +164,21 @@ export const MenuSubmenuTrigger: IMenuSubmenuTrigger = function SuiMenuSubmenuTr
             {...mergeProps<typeof Button.Root>([
               htmlProps,
               buttonRootProps,
-              proxyRenderProps(state, {
-                style,
-                render,
-                className: cn(
-                  className,
-                  "sui_menu_item",
-                  "sui_menu_submenu_trigger",
-                  (state) => state.disabled && "sui_menu_item-disabled",
-                  (state) => state.highlighted && "sui_menu_item-highlighted",
-                  (state) => state.open && "sui_menu_item-open",
-                ),
-              }),
+              proxyRenderProps<Button.Root.State, MenuSubmenuTriggerState>(
+                (state) => ({ ...ctx, ...state, ...itemState }),
+                {
+                  style,
+                  render,
+                  className: cn<MenuSubmenuTriggerState>(
+                    className,
+                    "sui_menu_item",
+                    "sui_menu_submenu_trigger",
+                    (state) => state.disabled && "sui_menu_item-disabled",
+                    (state) => state.highlighted && "sui_menu_item-highlighted",
+                    (state) => state.open && "sui_menu_item-open",
+                  ),
+                },
+              ),
             ])}
           />
         );

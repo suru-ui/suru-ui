@@ -34,6 +34,16 @@ export type ResizableState = ResizableRootState;
  */
 export type ResizableProps = ResizableRootProps;
 
+export interface IUseResizableAPI {
+  /**
+   * {@link ResizableAPI} を作成します。
+   *
+   * @param props {@link Resizable} の props です。
+   * @returns リサイズ可能なパネル群の API です
+   */
+  (props: ResizableProps): ResizableAPI;
+}
+
 // API
 // ---
 
@@ -57,16 +67,6 @@ export class ResizableAPI {
   public getRootProps(): ResizableRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseResizableAPI {
-  /**
-   * {@link ResizableAPI} を作成します。
-   *
-   * @param props {@link Resizable} の props です。
-   * @returns リサイズ可能なパネル群の API です
-   */
-  (props: ResizableProps): ResizableAPI;
 }
 
 /**

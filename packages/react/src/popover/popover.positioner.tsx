@@ -1,14 +1,16 @@
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type PopoverContext, usePopoverContext } from "./popover.context.js";
 
 /**
  * {@link PopoverPositioner} が持つ状態です。
  */
-export type PopoverPositionerState = Popover.Positioner.State;
+export type PopoverPositionerState = Override<PopoverContext, Popover.Positioner.State>;
 
 export namespace PopoverPositionerProps {
   export type Render = RenderProps<PopoverPositionerState>;
@@ -56,9 +58,22 @@ export type IPopoverPositioner = IComponent<PopoverPositionerProps>;
  * トリガーを基準にポップアップを配置する要素です。
  */
 export const PopoverPositioner: IPopoverPositioner = function SuiPopoverPositioner(props) {
-  const { className, ...otherProps } = props;
+  const ctx = usePopoverContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Popover.Positioner {...otherProps} className={cn(className, "sui_popover_positioner")} />;
+  return (
+    <Popover.Positioner
+      {...otherProps}
+      {...proxyRenderProps<Popover.Positioner.State, PopoverPositionerState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_popover_positioner"),
+        },
+      )}
+    />
+  );
 };
 
 export { PopoverPositioner as Positioner };

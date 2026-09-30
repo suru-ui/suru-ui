@@ -65,6 +65,16 @@ export type FormatNumberProps = FormatNumberRootProps;
 
 export type IFormatNumber = IComponent<FormatNumberProps>;
 
+export interface IUseFormatNumberAPI {
+  /**
+   * {@link FormatNumberAPI} を作成します。
+   *
+   * @param props {@link FormatNumber} の props です。
+   * @returns 数値書式の API です
+   */
+  (props: FormatNumberProps): FormatNumberAPI;
+}
+
 // API
 // ---
 
@@ -88,16 +98,6 @@ export class FormatNumberAPI {
   public getRootProps(): FormatNumberRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseFormatNumberAPI {
-  /**
-   * {@link FormatNumberAPI} を作成します。
-   *
-   * @param props {@link FormatNumber} の props です。
-   * @returns 数値書式の API です
-   */
-  (props: FormatNumberProps): FormatNumberAPI;
 }
 
 /**

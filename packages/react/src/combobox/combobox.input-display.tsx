@@ -4,12 +4,12 @@ import * as React from "react";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { useComboboxContext } from "./combobox.context.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxInputDisplay} が持つ状態です。
+ * {@link ComboboxInputDisplay} の状態です。
  */
-export type ComboboxInputDisplayState = {};
+export type ComboboxInputDisplayState = ComboboxContext;
 
 export namespace ComboboxInputDisplayProps {
   export type Render = RenderProps<ComboboxInputDisplayState>;
@@ -67,6 +67,7 @@ export const ComboboxInputDisplay: IComboboxInputDisplay = function SuiComboboxI
         ),
       },
     ],
+    state: ctx,
     defaultTagName: "span",
   });
 };

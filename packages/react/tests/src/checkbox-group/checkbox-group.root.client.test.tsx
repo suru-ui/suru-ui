@@ -74,6 +74,30 @@ describe("CheckboxGroupRoot", () => {
     expect(root.getAttribute("data-scope")).toBe("");
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <CheckboxGroupRoot
+        color="blue"
+        orientation="horizontal"
+        outlined
+        render={(props, state) => (
+          <section
+            {...props}
+            data-probe={`${state.size}/${state.color}/${state.variant}/${String(state.outlined)}/${state.orientation}`}
+          />
+        )}
+        size="lg"
+        variant="naked"
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_checkbox_group").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("lg/blue/naked/true/horizontal");
+  });
+
   test("既定値の選択状態を子へ伝える", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

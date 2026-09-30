@@ -111,6 +111,17 @@ namespace TabsProps {
  */
 export type TabsProps<TItem = any> = TabsProps.Tabs & TabsProps.Root<TItem>;
 
+export interface IUseTabsAPI {
+  /**
+   * {@link TabsAPI} を作成します。
+   *
+   * @template TItem 項目の型です。
+   * @param props {@link Tabs} の props です。
+   * @returns タブの API です。
+   */
+  <TItem = any>(props: TabsProps<TItem>): TabsAPI<TItem>;
+}
+
 // API
 // ---
 
@@ -221,17 +232,6 @@ export class TabsAPI<TItem = any> {
 
     return mergeProps<typeof TabsTab>([{ ...props, value: itemProps.value }, itemProps]);
   }
-}
-
-export interface IUseTabsAPI {
-  /**
-   * {@link TabsAPI} を作成します。
-   *
-   * @template TItem 項目の型です。
-   * @param props {@link Tabs} の props です。
-   * @returns タブの API です。
-   */
-  <TItem = any>(props: TabsProps<TItem>): TabsAPI<TItem>;
 }
 
 /**

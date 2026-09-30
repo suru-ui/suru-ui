@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectScrollUpArrow} が持つ状態です。
  */
-export type SelectScrollUpArrowState = BaseSelect.ScrollUpArrow.State;
+export type SelectScrollUpArrowState = Override<SelectContext, BaseSelect.ScrollUpArrow.State>;
 
 export namespace SelectScrollUpArrowProps {
   export type Render = RenderProps<SelectScrollUpArrowState>;
@@ -45,12 +47,20 @@ export type ISelectScrollUpArrow = IComponent<SelectScrollUpArrowProps>;
  * 上方向へスクロールできることを示す要素です。
  */
 export const SelectScrollUpArrow: ISelectScrollUpArrow = function SuiSelectScrollUpArrow(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <BaseSelect.ScrollUpArrow
       {...otherProps}
-      className={cn(className, "sui_select_scroll_up_arrow")}
+      {...proxyRenderProps<BaseSelect.ScrollUpArrow.State, SelectScrollUpArrowState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_scroll_up_arrow"),
+        },
+      )}
     />
   );
 };

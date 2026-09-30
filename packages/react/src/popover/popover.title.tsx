@@ -1,14 +1,16 @@
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type PopoverContext, usePopoverContext } from "./popover.context.js";
 
 /**
  * {@link PopoverTitle} が持つ状態です。
  */
-export type PopoverTitleState = Popover.Title.State;
+export type PopoverTitleState = Override<PopoverContext, Popover.Title.State>;
 
 export namespace PopoverTitleProps {
   export type Render = RenderProps<PopoverTitleState>;
@@ -45,9 +47,22 @@ export type IPopoverTitle = IComponent<PopoverTitleProps>;
  * ポップオーバーのタイトルを表示する見出し要素です。
  */
 export const PopoverTitle: IPopoverTitle = function SuiPopoverTitle(props) {
-  const { className, ...otherProps } = props;
+  const ctx = usePopoverContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Popover.Title {...otherProps} className={cn(className, "sui_popover_title")} />;
+  return (
+    <Popover.Title
+      {...otherProps}
+      {...proxyRenderProps<Popover.Title.State, PopoverTitleState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_popover_title"),
+        },
+      )}
+    />
+  );
 };
 
 export { PopoverTitle as Title };

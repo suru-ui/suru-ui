@@ -47,6 +47,29 @@ describe("useSidebarContext", () => {
     expect(screen.getByText("icon").query()?.textContent).toBe("icon");
   });
 
+  test("ルートのスタイル情報を引き継ぐ", async ({ expect }) => {
+    // 準備
+    function Probe() {
+      const ctx = useSidebarContext();
+
+      return <span>{[ctx.collapsible, ctx.side, ctx.variant].join(",")}</span>;
+    }
+
+    // 実行
+    const screen = await render(
+      <SidebarProvider>
+        <SidebarRoot collapsible="icon" side="right" variant="floating">
+          <Probe />
+        </SidebarRoot>
+      </SidebarProvider>,
+    );
+
+    // 検証
+    expect(screen.getByText("icon,right,floating").query()?.textContent).toBe(
+      "icon,right,floating",
+    );
+  });
+
   test("toggle と setOpen で状態を更新する", async ({ expect }) => {
     // 準備
     function Probe() {

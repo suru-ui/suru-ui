@@ -3,11 +3,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import { ChevronRightIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { defaultBreadcrumbContext } from "./_breadcrumb.jsx";
+import { type BreadcrumbContext, useBreadcrumbContext } from "./breadcrumb.context.js";
 
 /**
  * {@link BreadcrumbSeparator} が持つ状態です。
  */
-export type BreadcrumbSeparatorState = {};
+export type BreadcrumbSeparatorState = BreadcrumbContext;
 
 export namespace BreadcrumbSeparatorProps {
   export type Render = RenderProps<BreadcrumbSeparatorState>;
@@ -36,6 +38,7 @@ export type IBreadcrumbSeparator = IComponent<BreadcrumbSeparatorProps>;
  * パンくずの項目を区切るセパレーターコンポーネントです。
  */
 export const BreadcrumbSeparator: IBreadcrumbSeparator = function SuiBreadcrumbSeparator(props) {
+  const ctx = useBreadcrumbContext(true);
   const {
     children = <ChevronRightIcon />,
     "aria-hidden": ariaHidden = true,
@@ -51,6 +54,7 @@ export const BreadcrumbSeparator: IBreadcrumbSeparator = function SuiBreadcrumbS
         "aria-hidden": ariaHidden,
       },
     ],
+    state: { ...defaultBreadcrumbContext, ...ctx },
     defaultTagName: "li",
   });
 };

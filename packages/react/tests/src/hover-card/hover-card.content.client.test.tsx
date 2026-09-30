@@ -70,4 +70,30 @@ describe("HoverCardContent", () => {
     // 検証
     expect(screen.getByClassName("sui_hover_card_content").element().id).toBe("content");
   });
+
+  test("render の関数へルートと内容の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <HoverCardRoot defaultOpen size="lg" radius="sm" outlined>
+        <HoverCardPortal>
+          <HoverCardPositioner>
+            <HoverCardContent
+              render={(props, state) => (
+                <div
+                  {...props}
+                  data-probe={`${state.size}/${state.radius}/${state.outlined}/${String(state.open)}`}
+                />
+              )}
+            >
+              内容
+            </HoverCardContent>
+          </HoverCardPositioner>
+        </HoverCardPortal>
+      </HoverCardRoot>,
+    );
+
+    // 検証
+    const content = screen.getByClassName("sui_hover_card_content").element();
+    expect(content.getAttribute("data-probe")).toBe("lg/sm/true/true");
+  });
 });

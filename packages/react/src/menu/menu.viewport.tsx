@@ -1,14 +1,16 @@
 import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * {@link MenuViewport} が持つ状態です。
  */
-export type MenuViewportState = Menu.Viewport.State;
+export type MenuViewportState = Override<MenuContext, Menu.Viewport.State>;
 
 export namespace MenuViewportProps {
   export type Render = RenderProps<MenuViewportState>;
@@ -45,9 +47,22 @@ export type IMenuViewport = IComponent<MenuViewportProps>;
  * トリガーの切り替えに伴うメニュー内容のアニメーション用ビューポートです。
  */
 export const MenuViewport: IMenuViewport = function SuiMenuViewport(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useMenuContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Menu.Viewport {...otherProps} className={cn(className, "sui_menu_viewport")} />;
+  return (
+    <Menu.Viewport
+      {...otherProps}
+      {...proxyRenderProps<Menu.Viewport.State, MenuViewportState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_menu_viewport"),
+        },
+      )}
+    />
+  );
 };
 
 export { MenuViewport as Viewport };

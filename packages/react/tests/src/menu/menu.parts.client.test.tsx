@@ -355,6 +355,105 @@ describe("MenuTrigger", () => {
   });
 });
 
+describe("Menu の状態伝播", () => {
+  test("ポータルの render へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <MenuRoot defaultOpen size="lg" radius="sm" outlined>
+        <MenuPortal
+          render={(props, state) => (
+            <div
+              {...props}
+              data-probe={`${state.size}/${state.radius}/${String(state.outlined)}`}
+            />
+          )}
+        >
+          <MenuPositioner>
+            <MenuContent>
+              <MenuItem>項目</MenuItem>
+            </MenuContent>
+          </MenuPositioner>
+        </MenuPortal>
+      </MenuRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_menu_portal").element().getAttribute("data-probe")).toBe(
+      "lg/sm/true",
+    );
+  });
+
+  test("コンテンツの render へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <MenuRoot defaultOpen size="lg" radius="sm" variant="liquid">
+        <MenuPortal>
+          <MenuPositioner>
+            <MenuContent
+              render={(props, state) => (
+                <div {...props} data-probe={`${state.size}/${state.radius}/${state.variant}`} />
+              )}
+            >
+              <MenuItem>項目</MenuItem>
+            </MenuContent>
+          </MenuPositioner>
+        </MenuPortal>
+      </MenuRoot>,
+    );
+
+    // 検証
+    expect(screen.getByRole("menu").element().getAttribute("data-probe")).toBe("lg/sm/liquid");
+  });
+
+  test("項目の render へスタイル情報と項目の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <MenuRoot defaultOpen size="lg" radius="sm">
+        <MenuPortal>
+          <MenuPositioner>
+            <MenuContent>
+              <MenuItem
+                disabled
+                render={(props, state) => (
+                  <div
+                    {...props}
+                    data-probe={`${state.size}/${state.radius}/${String(state.disabled)}`}
+                  />
+                )}
+              >
+                項目
+              </MenuItem>
+            </MenuContent>
+          </MenuPositioner>
+        </MenuPortal>
+      </MenuRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_menu_item").element().getAttribute("data-probe")).toBe(
+      "lg/sm/true",
+    );
+  });
+
+  test("トリガーの children へスタイル情報とトリガーの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <MenuRoot size="lg" radius="sm">
+        <MenuTrigger>
+          {(props, state) => (
+            <button {...props} data-probe={`${state.size}/${state.radius}/${state.depth}`}>
+              メニューを開く
+            </button>
+          )}
+        </MenuTrigger>
+      </MenuRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("メニューを開く").element().getAttribute("data-probe")).toBe("lg/sm/1");
+  });
+});
+
 describe("Menu", () => {
   test("合成した項目一覧を表示する", async ({ expect }) => {
     // 準備と実行

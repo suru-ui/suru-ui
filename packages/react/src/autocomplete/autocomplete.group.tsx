@@ -1,15 +1,16 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompleteGroup} の状態です。
  */
-export type AutocompleteGroupState = Autocomplete.Group.State;
+export type AutocompleteGroupState = Override<AutocompleteContext, Autocomplete.Group.State>;
 
 export namespace AutocompleteGroupProps {
   export type Render = RenderProps<AutocompleteGroupState>;
@@ -54,7 +55,7 @@ export type IAutocompleteGroup = IComponent<AutocompleteGroupProps>;
  */
 export const AutocompleteGroup: IAutocompleteGroup = function SuiAutocompleteGroup(props) {
   const ctx = useAutocompleteContext();
-  const { items, className, ...otherProps } = props;
+  const { items, style, render, className, ...otherProps } = props;
   // items が未指定であっても上位の items が透過しないように、必ず新しい items を子要素に伝搬します。
   const groupCtx = React.useMemo<AutocompleteContext>(() => ({ ...ctx, items }), [ctx, items]);
 
@@ -63,7 +64,14 @@ export const AutocompleteGroup: IAutocompleteGroup = function SuiAutocompleteGro
       <Autocomplete.Group
         {...otherProps}
         items={items}
-        className={cn(className, "sui_autocomplete_group")}
+        {...proxyRenderProps<Autocomplete.Group.State, AutocompleteGroupState>(
+          (state) => ({ ...groupCtx, ...state }),
+          {
+            style,
+            render,
+            className: cn<AutocompleteGroupState>(className, "sui_autocomplete_group"),
+          },
+        )}
       />
     </AutocompleteContext>
   );

@@ -7,9 +7,9 @@ import type {
 } from "../../../src/resizable/resizable.parts.js";
 
 describe("Resizable の公開 props", () => {
-  test("render を公開しない", () => {
-    expectTypeOf<ResizableRootProps>().not.toHaveProperty("render");
-    expectTypeOf<ResizablePanelProps>().not.toHaveProperty("render");
-    expectTypeOf<ResizableHandleProps>().not.toHaveProperty("render");
+  test("render を公開する", () => {
+    expectTypeOf<ResizableRootProps>().toHaveProperty("render");
+    expectTypeOf<ResizablePanelProps>().toHaveProperty("render");
+    expectTypeOf<ResizableHandleProps>().toHaveProperty("render");
   });
 });

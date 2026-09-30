@@ -1,14 +1,19 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * {@link ContextMenuCheckboxItemIndicator} が持つ状態です。
  */
-export type ContextMenuCheckboxItemIndicatorState = ContextMenu.CheckboxItemIndicator.State;
+export type ContextMenuCheckboxItemIndicatorState = Override<
+  ContextMenuContext,
+  ContextMenu.CheckboxItemIndicator.State
+>;
 
 export namespace ContextMenuCheckboxItemIndicatorProps {
   export type Render = RenderProps<ContextMenuCheckboxItemIndicatorState>;
@@ -46,17 +51,25 @@ export type IContextMenuCheckboxItemIndicator = IComponent<ContextMenuCheckboxIt
  */
 export const ContextMenuCheckboxItemIndicator: IContextMenuCheckboxItemIndicator =
   function SuiContextMenuCheckboxItemIndicator(props) {
-    const { className, ...otherProps } = props;
+    const ctx = useContextMenuContext();
+    const { style, render, className, ...otherProps } = props;
 
     return (
       <ContextMenu.CheckboxItemIndicator
         {...otherProps}
-        className={cn(
-          className,
-          "sui_context_menu_item_indicator",
-          "sui_context_menu_checkbox_item_indicator",
-          (state) => !state.checked && "sui_context_menu_item_indicator-unchecked",
-        )}
+        {...proxyRenderProps<
+          ContextMenu.CheckboxItemIndicator.State,
+          ContextMenuCheckboxItemIndicatorState
+        >((state) => ({ ...ctx, ...state }), {
+          style,
+          render,
+          className: cn<ContextMenuCheckboxItemIndicatorState>(
+            className,
+            "sui_context_menu_item_indicator",
+            "sui_context_menu_checkbox_item_indicator",
+            (state) => !state.checked && "sui_context_menu_item_indicator-unchecked",
+          ),
+        })}
       />
     );
   };

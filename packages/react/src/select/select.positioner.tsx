@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectPositioner} が持つ状態です。
  */
-export type SelectPositionerState = BaseSelect.Positioner.State;
+export type SelectPositionerState = Override<SelectContext, BaseSelect.Positioner.State>;
 
 export namespace SelectPositionerProps {
   export type Render = RenderProps<SelectPositionerState>;
@@ -58,10 +60,21 @@ export type ISelectPositioner = IComponent<SelectPositionerProps>;
  * ポップアップをトリガーへ位置合わせする要素です。
  */
 export const SelectPositioner: ISelectPositioner = function SuiSelectPositioner(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
-    <BaseSelect.Positioner {...otherProps} className={cn(className, "sui_select_positioner")} />
+    <BaseSelect.Positioner
+      {...otherProps}
+      {...proxyRenderProps<BaseSelect.Positioner.State, SelectPositionerState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_positioner"),
+        },
+      )}
+    />
   );
 };
 

@@ -2,10 +2,14 @@ import { Avatar } from "@base-ui/react/avatar";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
-import { useAvatarGroupContext } from "../avatar-group/avatar-group.context.js";
+import {
+  type AvatarGroupContext,
+  useAvatarGroupContext,
+} from "../avatar-group/avatar-group.context.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 
 /**
  * アバターの配色です。
@@ -36,7 +40,7 @@ export type AvatarRootSize = Size;
 /**
  * {@link AvatarRoot} が持つ状態です。
  */
-export type AvatarRootState = Avatar.Root.State;
+export type AvatarRootState = Override<AvatarGroupContext, Avatar.Root.State>;
 
 export namespace AvatarRootProps {
   export type Render = RenderProps<AvatarRootState>;
@@ -96,29 +100,42 @@ export type IAvatarRoot = IComponent<AvatarRootProps>;
  * 画像の読み込み状態を管理し、大きさ・配色・角丸を子パーツへ伝播します。
  */
 export const AvatarRoot: IAvatarRoot = function SuiAvatarRoot(props) {
-  const group = useAvatarGroupContext(true);
+  const ctx = useAvatarGroupContext(true);
   const {
     size: sizeProp = "md",
     color: colorProp,
+    style,
     radius: radiusProp,
+    render,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const size = group?.size ?? sizeProp;
-  const color = colorProp ?? group?.color ?? "grey";
-  const radius = radiusProp ?? group?.radius ?? "full";
+  const size = ctx?.size ?? sizeProp;
+  const color = colorProp ?? ctx?.color ?? "grey";
+  const radius = radiusProp ?? ctx?.radius ?? "full";
+  const styleState = React.useMemo(
+    () => ({ size, color, radius, reverse: ctx?.reverse ?? false }),
+    [color, ctx, radius, size],
+  );
 
   return (
     <Avatar.Root
       {...otherProps}
-      className={cn(
-        className,
-        "sui_avatar",
-        `sui_avatar-size_${size}`,
-        `sui_avatar-color_${color}`,
-        `sui_avatar-radius_${radius}`,
+      {...proxyRenderProps<Avatar.Root.State, AvatarRootState>(
+        (state) => ({ ...styleState, ...state }),
+        {
+          style,
+          render,
+          className: cn<AvatarRootState>(
+            className,
+            "sui_avatar",
+            (state) => `sui_avatar-size_${state.size}`,
+            (state) => `sui_avatar-color_${state.color}`,
+            (state) => `sui_avatar-radius_${state.radius}`,
+          ),
+        },
       )}
       data-scope={dataScope}
     />

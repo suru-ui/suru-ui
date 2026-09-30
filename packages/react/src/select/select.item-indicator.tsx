@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectItemIndicator} が持つ状態です。
  */
-export type SelectItemIndicatorState = BaseSelect.ItemIndicator.State;
+export type SelectItemIndicatorState = Override<SelectContext, BaseSelect.ItemIndicator.State>;
 
 export namespace SelectItemIndicatorProps {
   export type Render = RenderProps<SelectItemIndicatorState>;
@@ -45,12 +47,20 @@ export type ISelectItemIndicator = IComponent<SelectItemIndicatorProps>;
  * 選択された項目を示す要素です。
  */
 export const SelectItemIndicator: ISelectItemIndicator = function SuiSelectItemIndicator(props) {
-  const { className, keepMounted = true, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, keepMounted = true, ...otherProps } = props;
 
   return (
     <BaseSelect.ItemIndicator
       {...otherProps}
-      className={cn(className, "sui_select_item_indicator")}
+      {...proxyRenderProps<BaseSelect.ItemIndicator.State, SelectItemIndicatorState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_item_indicator"),
+        },
+      )}
       keepMounted={keepMounted}
     />
   );

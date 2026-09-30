@@ -163,4 +163,27 @@ describe("PaginationItem", () => {
       true,
     );
   });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PaginationRoot color="blue" defaultPage={2} radius="full" size="lg" totalPages={5}>
+        <PaginationItem
+          page={2}
+          selected
+          render={(props, state) => (
+            <button
+              {...props}
+              data-probe={`${state.size}/${state.color}/${state.radius}/${state.page}/${String(state.selected)}`}
+            />
+          )}
+        />
+      </PaginationRoot>,
+    );
+
+    // 検証
+    expect(screen.getByRole("button", { name: "2" }).element().getAttribute("data-probe")).toBe(
+      "lg/blue/full/2/true",
+    );
+  });
 });

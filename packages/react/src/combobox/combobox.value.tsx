@@ -39,7 +39,7 @@ export interface IComboboxValueRenderer<
 }
 
 /**
- * {@link ComboboxValue} が持つ状態です。
+ * {@link ComboboxValue} の状態です。
  */
 export type ComboboxValueState = Combobox.Value.State;
 

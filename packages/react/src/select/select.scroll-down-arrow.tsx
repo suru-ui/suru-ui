@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectScrollDownArrow} が持つ状態です。
  */
-export type SelectScrollDownArrowState = BaseSelect.ScrollDownArrow.State;
+export type SelectScrollDownArrowState = Override<SelectContext, BaseSelect.ScrollDownArrow.State>;
 
 export namespace SelectScrollDownArrowProps {
   export type Render = RenderProps<SelectScrollDownArrowState>;
@@ -47,12 +49,20 @@ export type ISelectScrollDownArrow = IComponent<SelectScrollDownArrowProps>;
 export const SelectScrollDownArrow: ISelectScrollDownArrow = function SuiSelectScrollDownArrow(
   props,
 ) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <BaseSelect.ScrollDownArrow
       {...otherProps}
-      className={cn(className, "sui_select_scroll_down_arrow")}
+      {...proxyRenderProps<BaseSelect.ScrollDownArrow.State, SelectScrollDownArrowState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_scroll_down_arrow"),
+        },
+      )}
     />
   );
 };

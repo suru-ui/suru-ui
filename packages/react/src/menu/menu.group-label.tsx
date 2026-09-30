@@ -1,14 +1,16 @@
 import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * {@link MenuGroupLabel} が持つ状態です。
  */
-export type MenuGroupLabelState = Menu.GroupLabel.State;
+export type MenuGroupLabelState = Override<MenuContext, Menu.GroupLabel.State>;
 
 export namespace MenuGroupLabelProps {
   export type Render = RenderProps<MenuGroupLabelState>;
@@ -45,9 +47,22 @@ export type IMenuGroupLabel = IComponent<MenuGroupLabelProps>;
  * グループに自動的に対応付けられるラベル要素です。
  */
 export const MenuGroupLabel: IMenuGroupLabel = function SuiMenuGroupLabel(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useMenuContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Menu.GroupLabel {...otherProps} className={cn(className, "sui_menu_group_label")} />;
+  return (
+    <Menu.GroupLabel
+      {...otherProps}
+      {...proxyRenderProps<Menu.GroupLabel.State, MenuGroupLabelState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_menu_group_label"),
+        },
+      )}
+    />
+  );
 };
 
 export { MenuGroupLabel as GroupLabel };

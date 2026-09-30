@@ -26,6 +26,16 @@ export type ImageProps = ImageRootProps;
 
 export type IImage = IComponent<ImageProps>;
 
+export interface IUseImageAPI {
+  /**
+   * {@link ImageAPI} を作成します。
+   *
+   * @param props {@link Image} の props です。
+   * @returns 画像の API です
+   */
+  (props: ImageProps): ImageAPI;
+}
+
 // API
 // ---
 
@@ -49,16 +59,6 @@ export class ImageAPI {
   public getRootProps(): ImageRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseImageAPI {
-  /**
-   * {@link ImageAPI} を作成します。
-   *
-   * @param props {@link Image} の props です。
-   * @returns 画像の API です
-   */
-  (props: ImageProps): ImageAPI;
 }
 
 /**

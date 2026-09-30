@@ -1,15 +1,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxGroup} が持つ状態です。
+ * {@link ComboboxGroup} の状態です。
  */
-export type ComboboxGroupState = Combobox.Group.State;
+export type ComboboxGroupState = Override<ComboboxContext, Combobox.Group.State>;
 
 export namespace ComboboxGroupProps {
   export type Render = RenderProps<ComboboxGroupState>;
@@ -52,7 +53,7 @@ export type IComboboxGroup = IComponent<ComboboxGroupProps>;
  */
 export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
   const ctx = useComboboxContext();
-  const { items, className, ...otherProps } = props;
+  const { items, style, render, className, ...otherProps } = props;
   // items が未指定であっても上位の items が透過しないように、必ず新しい items を子要素に伝搬します。
   const groupCtx = React.useMemo<ComboboxContext>(() => ({ ...ctx, items }), [ctx, items]);
 
@@ -61,7 +62,14 @@ export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
       <Combobox.Group
         {...otherProps}
         items={items}
-        className={cn(className, "sui_combobox_group")}
+        {...proxyRenderProps<Combobox.Group.State, ComboboxGroupState>(
+          (state) => ({ ...groupCtx, ...state }),
+          {
+            style,
+            render,
+            className: cn<ComboboxGroupState>(className, "sui_combobox_group"),
+          },
+        )}
       />
     </ComboboxContext>
   );

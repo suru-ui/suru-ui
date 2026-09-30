@@ -1,21 +1,23 @@
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type DialogPopupContext, useDialogPopupContext } from "./dialog.popup.context.js";
 
 /**
  * {@link DialogContent} が持つ状態です。
  */
-export type DialogContentState = Card.CardContentState;
+export type DialogContentState = Override<Card.Content.State, DialogPopupContext>;
 
 export namespace DialogContentProps {
   export type Render = RenderProps<DialogContentState>;
 
-  export type SuruUI = Card.CardContentProps.SuruUI;
+  export type SuruUI = Card.Content.Props.SuruUI;
 
-  export type BaseUI = Card.CardContentProps.BaseUI;
+  export type BaseUI = Card.Content.Props.BaseUI;
 
-  export type HTML = Card.CardContentProps.HTML;
+  export type HTML = Card.Content.Props.HTML;
 }
 
 /**
@@ -32,7 +34,22 @@ export type IDialogContent = IComponent<DialogContentProps>;
  * ダイアログの本文を表示するコンポーネントです。
  */
 export const DialogContent: IDialogContent = function SuiDialogContent(props) {
-  return <Card.Content {...props} className={cn(props.className, "sui_dialog_content")} />;
+  const ctx = useDialogPopupContext();
+  const { style, render, className, ...otherProps } = props;
+
+  return (
+    <Card.Content
+      {...otherProps}
+      {...proxyRenderProps<Card.Content.State, DialogContentState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<DialogContentState>(className, "sui_dialog_content"),
+        },
+      )}
+    />
+  );
 };
 
 export { DialogContent as Content };

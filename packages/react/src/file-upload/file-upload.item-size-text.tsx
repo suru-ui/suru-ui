@@ -4,11 +4,12 @@ import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import { formatFileSize } from "./_file-upload.jsx";
 import { useFileUploadItemContext } from "./file-upload.item.context.js";
+import { type FileUploadItemState } from "./file-upload.item.jsx";
 
 /**
  * {@link FileUploadItemSizeText} が持つ状態です。
  */
-export type FileUploadItemSizeTextState = {};
+export type FileUploadItemSizeTextState = FileUploadItemState;
 
 export namespace FileUploadItemSizeTextProps {
   export type Render = RenderProps<FileUploadItemSizeTextState>;
@@ -50,6 +51,7 @@ export const FileUploadItemSizeText: IFileUploadItemSizeText = function SuiFileU
         className: "sui_file_upload_item_size_text",
       },
     ],
+    state: ctx,
     defaultTagName: "span",
   });
 };

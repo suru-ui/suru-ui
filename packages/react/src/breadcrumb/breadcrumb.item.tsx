@@ -2,11 +2,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { defaultBreadcrumbContext } from "./_breadcrumb.jsx";
+import { type BreadcrumbContext, useBreadcrumbContext } from "./breadcrumb.context.js";
 
 /**
  * {@link BreadcrumbItem} が持つ状態です。
  */
-export type BreadcrumbItemState = {};
+export type BreadcrumbItemState = BreadcrumbContext;
 
 export namespace BreadcrumbItemProps {
   export type Render = RenderProps<BreadcrumbItemState>;
@@ -35,6 +37,8 @@ export type IBreadcrumbItem = IComponent<BreadcrumbItemProps>;
  * パンくずの項目コンポーネントです。
  */
 export const BreadcrumbItem: IBreadcrumbItem = function SuiBreadcrumbItem(props) {
+  const ctx = useBreadcrumbContext(true);
+
   return useRender({
     props: [
       props,
@@ -42,6 +46,7 @@ export const BreadcrumbItem: IBreadcrumbItem = function SuiBreadcrumbItem(props)
         className: "sui_breadcrumb_item",
       },
     ],
+    state: { ...defaultBreadcrumbContext, ...ctx },
     defaultTagName: "li",
   });
 };

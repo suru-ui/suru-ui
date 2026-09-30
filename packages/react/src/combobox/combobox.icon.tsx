@@ -2,14 +2,16 @@ import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
 import { ChevronIcon } from "../_icons.jsx";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxIcon} が持つ状態です。
+ * {@link ComboboxIcon} の状態です。
  */
-export type ComboboxIconState = Combobox.Icon.State;
+export type ComboboxIconState = Override<ComboboxContext, Combobox.Icon.State>;
 
 export namespace ComboboxIconProps {
   export type Render = RenderProps<ComboboxIconState>;
@@ -46,10 +48,21 @@ export type IComboboxIcon = IComponent<ComboboxIconProps>;
  * トリガーの操作を示すアイコンのラッパー要素です。
  */
 export const ComboboxIcon: IComboboxIcon = function SuiComboboxIcon(props) {
-  const { children = <ChevronIcon />, className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { style, render, children = <ChevronIcon />, className, ...otherProps } = props;
 
   return (
-    <Combobox.Icon {...otherProps} className={cn(className, "sui_combobox_icon")}>
+    <Combobox.Icon
+      {...otherProps}
+      {...proxyRenderProps<Combobox.Icon.State, ComboboxIconState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxIconState>(className, "sui_combobox_icon"),
+        },
+      )}
+    >
       {children}
     </Combobox.Icon>
   );

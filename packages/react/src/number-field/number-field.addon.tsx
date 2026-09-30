@@ -3,11 +3,12 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import { DISABLE_FOCUS_ON_CLICK_DATA } from "./_number-field.jsx";
+import { type NumberFieldContext, useNumberFieldContext } from "./number-field.context.js";
 
 /**
  * {@link NumberFieldAddon} が持つ状態です。
  */
-export type NumberFieldAddonState = {};
+export type NumberFieldAddonState = NumberFieldContext;
 
 export namespace NumberFieldAddonProps {
   export type Render = RenderProps<NumberFieldAddonState>;
@@ -39,13 +40,23 @@ export type NumberFieldAddonProps = NumberFieldAddonProps.Render &
 
 export type INumberFieldAddon = IComponent<NumberFieldAddonProps>;
 
+const defaultNumberFieldContext: NumberFieldContext = {
+  size: "md",
+  color: "grey",
+  radius: "md",
+  variant: "liquid",
+  outlined: false,
+};
+
 /**
  * 入力欄の左右に表示する補助コンポーネントです。
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
 export const NumberFieldAddon: INumberFieldAddon = function SuiNumberFieldAddon(props) {
+  const ctx = useNumberFieldContext(true);
   const { disableFocusOnClick = false, ...otherSpanProps } = props;
+  const state = ctx ?? defaultNumberFieldContext;
 
   return useRender({
     props: [
@@ -55,6 +66,7 @@ export const NumberFieldAddon: INumberFieldAddon = function SuiNumberFieldAddon(
         [DISABLE_FOCUS_ON_CLICK_DATA]: disableFocusOnClick ? "true" : undefined,
       },
     ],
+    state,
     defaultTagName: "span",
   });
 };

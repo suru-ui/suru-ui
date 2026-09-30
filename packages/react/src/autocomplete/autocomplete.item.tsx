@@ -8,13 +8,16 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { useAutocompleteContext } from "./autocomplete.context.js";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 import { AutocompleteItemContext } from "./autocomplete.item.context.js";
 
 /**
  * {@link AutocompleteItem} の状態です。
  */
-export type AutocompleteItemState = Override<Button.Root.State, Autocomplete.Item.State>;
+export type AutocompleteItemState = Override<
+  AutocompleteContext,
+  Override<Button.Root.State, Autocomplete.Item.State>
+>;
 
 export namespace AutocompleteItemProps {
   export type Render = RenderProps<AutocompleteItemState>;
@@ -102,7 +105,7 @@ export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
       <Autocomplete.Item
         {...otherProps}
         {...baseuiProps}
-        render={(htmlProps: {}, state) => {
+        render={(htmlProps: {}, itemState) => {
           const buttonRootProps: Required<
             Button.Root.Props.SuruUI &
               Button.Root.Props.BaseUI &
@@ -116,7 +119,7 @@ export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
             pending: undefined,
             squared: undefined,
             variant: "naked",
-            disabled: state.disabled,
+            disabled: itemState.disabled,
             outlined: undefined,
             nativeButton,
             focusableWhenDisabled,
@@ -127,16 +130,19 @@ export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
               {...mergeProps<typeof Button.Root>([
                 htmlProps,
                 buttonRootProps,
-                proxyRenderProps(state, {
-                  style,
-                  render,
-                  className: cn(
-                    className,
-                    "sui_autocomplete_item",
-                    (state) => state.disabled && "sui_autocomplete_item-disabled",
-                    (state) => state.highlighted && "sui_autocomplete_item-highlighted",
-                  ),
-                }),
+                proxyRenderProps<Button.Root.State, AutocompleteItemState>(
+                  (state) => ({ ...ctx, ...state, ...itemState }),
+                  {
+                    style,
+                    render,
+                    className: cn<AutocompleteItemState>(
+                      className,
+                      "sui_autocomplete_item",
+                      (state) => state.disabled && "sui_autocomplete_item-disabled",
+                      (state) => state.highlighted && "sui_autocomplete_item-highlighted",
+                    ),
+                  },
+                ),
               ])}
             />
           );

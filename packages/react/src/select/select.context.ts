@@ -14,7 +14,7 @@ import type { SelectRootItems } from "./select.root.jsx";
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
  */
-type SelectContextRadius = "none" | Size | "full";
+export type SelectContextRadius = "none" | Size | "full";
 
 /**
  * 選択欄とリスト項目のサイズです。
@@ -23,7 +23,7 @@ type SelectContextRadius = "none" | Size | "full";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-type SelectContextSize = Size;
+export type SelectContextSize = Size;
 
 /**
  * 選択欄の主な外観です。
@@ -31,7 +31,7 @@ type SelectContextSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-type SelectContextVariant = "naked" | "liquid";
+export type SelectContextVariant = "naked" | "liquid";
 
 /**
  * {@link SelectRoot} が子パーツへ提供する状態です。

@@ -8,7 +8,7 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { useMenuContext } from "./menu.context.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * メニューの操作項目の配色です。
@@ -32,7 +32,7 @@ export type MenuItemVariant = Button.Root.Variant;
 /**
  * {@link MenuItem} が持つ状態です。
  */
-export type MenuItemState = Override<Button.Root.State, Menu.Item.State>;
+export type MenuItemState = Override<MenuContext, Override<Button.Root.State, Menu.Item.State>>;
 
 export namespace MenuItemProps {
   export type Render = RenderProps<MenuItemState>;
@@ -130,7 +130,7 @@ export const MenuItem: IMenuItem = function SuiMenuItem(props) {
     <Menu.Item
       {...otherProps}
       {...baseuiProps}
-      render={(htmlProps: {}, state) => {
+      render={(htmlProps: {}, itemState) => {
         const buttonRootProps: Required<
           Button.Root.Props.SuruUI &
             Button.Root.Props.BaseUI &
@@ -144,7 +144,7 @@ export const MenuItem: IMenuItem = function SuiMenuItem(props) {
           pending: undefined,
           squared: undefined,
           variant,
-          disabled: state.disabled,
+          disabled: itemState.disabled,
           outlined: undefined,
           nativeButton,
           focusableWhenDisabled,
@@ -155,16 +155,19 @@ export const MenuItem: IMenuItem = function SuiMenuItem(props) {
             {...mergeProps<typeof Button.Root>([
               htmlProps,
               buttonRootProps,
-              proxyRenderProps(state, {
-                style,
-                render: render ?? <div />,
-                className: cn(
-                  className,
-                  "sui_menu_item",
-                  (state) => state.disabled && "sui_menu_item-disabled",
-                  (state) => state.highlighted && "sui_menu_item-highlighted",
-                ),
-              }),
+              proxyRenderProps<Button.Root.State, MenuItemState>(
+                (state) => ({ ...ctx, ...state, ...itemState }),
+                {
+                  style,
+                  render: render ?? <div />,
+                  className: cn<MenuItemState>(
+                    className,
+                    "sui_menu_item",
+                    (state) => state.disabled && "sui_menu_item-disabled",
+                    (state) => state.highlighted && "sui_menu_item-highlighted",
+                  ),
+                },
+              ),
             ])}
           />
         );

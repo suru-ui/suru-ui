@@ -1,14 +1,16 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * {@link ContextMenuArrow} が持つ状態です。
  */
-export type ContextMenuArrowState = ContextMenu.Arrow.State;
+export type ContextMenuArrowState = Override<ContextMenuContext, ContextMenu.Arrow.State>;
 
 export namespace ContextMenuArrowProps {
   export type Render = RenderProps<ContextMenuArrowState>;
@@ -45,9 +47,22 @@ export type IContextMenuArrow = IComponent<ContextMenuArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useContextMenuContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <ContextMenu.Arrow {...otherProps} className={cn(className, "sui_context_menu_arrow")} />;
+  return (
+    <ContextMenu.Arrow
+      {...otherProps}
+      {...proxyRenderProps<ContextMenu.Arrow.State, ContextMenuArrowState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_context_menu_arrow"),
+        },
+      )}
+    />
+  );
 };
 
 export { ContextMenuArrow as Arrow };

@@ -3,8 +3,8 @@ import { Separator } from "react-resizable-panels";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useResizableContext } from "./resizable.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type ResizableContext, useResizableContext } from "./resizable.context.js";
 
 /**
  * ハンドルの向きです。
@@ -17,25 +17,28 @@ export type ResizableHandleDirection = "horizontal" | "vertical";
 /**
  * {@link ResizableHandle} が持つ状態です。
  */
-export type ResizableHandleState = {
-  /**
-   * ハンドルの向きです。
-   */
-  readonly direction: ResizableHandleDirection;
+export type ResizableHandleState = Override<
+  ResizableContext,
+  {
+    /**
+     * ハンドルの向きです。
+     */
+    readonly direction: ResizableHandleDirection;
 
-  /**
-   * ハンドルが無効かどうかです。
-   */
-  readonly disabled: boolean;
+    /**
+     * ハンドルが無効かどうかです。
+     */
+    readonly disabled: boolean;
 
-  /**
-   * ハンドルを非表示にするかどうかです。
-   */
-  readonly invisible: boolean;
-};
+    /**
+     * ハンドルを非表示にするかどうかです。
+     */
+    readonly invisible: boolean;
+  }
+>;
 
 export namespace ResizableHandleProps {
-  export type Render = Omit<RenderProps<ResizableHandleState>, "render">;
+  export type Render = RenderProps<ResizableHandleState>;
 
   export type SuruUI = {
     /**
@@ -79,30 +82,25 @@ export type IResizableHandle = IComponent<ResizableHandleProps>;
  */
 export const ResizableHandle: IResizableHandle = function SuiResizableHandle(props) {
   const ctx = useResizableContext();
-  const { disabled = false, invisible = false, ...otherProps } = props;
+  const { render = <Separator />, disabled = false, invisible = false, ...otherProps } = props;
   // ハンドルはパネル群と直交するため、ルートの orientation とは逆の向きになります。
   const direction = ctx.orientation === "horizontal" ? "vertical" : "horizontal";
 
   return useRender({
     props: [
-      otherProps,
+      { ...otherProps, render },
       {
-        render: <Separator />,
         disabled,
         className: cn<ResizableHandleState>(
           "sui_resizable_handle",
-          `sui_resizable_handle-direction_${direction}`,
+          (state) => `sui_resizable_handle-direction_${state.direction}`,
           (state) => state.invisible && "sui_resizable_handle-invisible",
           (state) => state.disabled && "sui_resizable_handle-disabled",
         ),
         "aria-orientation": direction,
       },
     ],
-    state: {
-      disabled,
-      direction,
-      invisible,
-    },
+    state: { ...ctx, disabled, direction, invisible },
     defaultTagName: "div",
   });
 };

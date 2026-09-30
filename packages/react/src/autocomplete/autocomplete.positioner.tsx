@@ -1,14 +1,19 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompletePositioner} の状態です。
  */
-export type AutocompletePositionerState = Autocomplete.Positioner.State;
+export type AutocompletePositionerState = Override<
+  AutocompleteContext,
+  Autocomplete.Positioner.State
+>;
 
 export namespace AutocompletePositionerProps {
   export type Render = RenderProps<AutocompletePositionerState>;
@@ -58,21 +63,37 @@ export type IAutocompletePositioner = IComponent<AutocompletePositionerProps>;
 export const AutocompletePositioner: IAutocompletePositioner = function SuiAutocompletePositioner(
   props,
 ) {
-  const { side = "bottom", align = "start", className, sideOffset = 8, ...otherProps } = props;
+  const ctx = useAutocompleteContext();
+  const {
+    side = "bottom",
+    align = "start",
+    style,
+    render,
+    className,
+    sideOffset = 8,
+    ...otherProps
+  } = props;
 
   return (
     <Autocomplete.Positioner
       {...otherProps}
       side={side}
       align={align}
-      className={cn(
-        className,
-        "sui_autocomplete_positioner",
-        (state) => state.open && "sui_autocomplete_positioner-open",
-        (state) => `sui_autocomplete_positioner-side_${state.side.replaceAll("-", "_")}`,
-        (state) => `sui_autocomplete_positioner-align_${state.align}`,
-        (state) => state.anchorHidden && "sui_autocomplete_positioner-anchorhidden",
-        (state) => state.empty && "sui_autocomplete_positioner-empty",
+      {...proxyRenderProps<Autocomplete.Positioner.State, AutocompletePositionerState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AutocompletePositionerState>(
+            className,
+            "sui_autocomplete_positioner",
+            (state) => state.open && "sui_autocomplete_positioner-open",
+            (state) => `sui_autocomplete_positioner-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_autocomplete_positioner-align_${state.align}`,
+            (state) => state.anchorHidden && "sui_autocomplete_positioner-anchorhidden",
+            (state) => state.empty && "sui_autocomplete_positioner-empty",
+          ),
+        },
       )}
       sideOffset={sideOffset}
     />

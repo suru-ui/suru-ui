@@ -144,19 +144,46 @@ describe("ResizableHandle", () => {
     expect(style.outlineWidth).toBe("3px");
   });
 
-  test("className を状態に応じて解決する", async ({ expect }) => {
+  test("className と style を状態に応じて解決する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <ResizableRoot>
         <ResizablePanel defaultSize={50}>左</ResizablePanel>
-        <ResizableHandle className={(state) => `custom-${state.direction}`} />
+        <ResizableHandle
+          className={(state) => `custom-${state.direction}`}
+          style={(state) => ({ opacity: state.direction === "vertical" ? "0.5" : "1" })}
+        />
         <ResizablePanel defaultSize={50}>右</ResizablePanel>
       </ResizableRoot>,
     );
 
     // 検証
-    expect(screen.getByRole("separator").element().classList.contains("custom-vertical")).toBe(
-      true,
+    const handle = screen.getByRole("separator").element();
+    expect(handle.classList.contains("custom-vertical")).toBe(true);
+    expect(handle.style.opacity).toBe("0.5");
+  });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <ResizableRoot orientation="vertical">
+        <ResizablePanel defaultSize={50}>上</ResizablePanel>
+        <ResizableHandle
+          invisible
+          render={(props, state) => (
+            <div
+              {...props}
+              data-probe={`${state.orientation}/${state.direction}/${String(state.disabled)}/${String(state.invisible)}`}
+            />
+          )}
+        />
+        <ResizablePanel defaultSize={50}>下</ResizablePanel>
+      </ResizableRoot>,
     );
+
+    // 検証
+    const handle = screen.getByClassName("sui_resizable_handle").element();
+    expect(handle.tagName).toBe("DIV");
+    expect(handle.getAttribute("data-probe")).toBe("vertical/horizontal/false/true");
   });
 });

@@ -72,6 +72,16 @@ namespace CollapsibleProps {
  */
 export type CollapsibleProps = CollapsibleProps.Collapsible & CollapsibleProps.Root;
 
+export interface IUseCollapsibleAPI {
+  /**
+   * {@link CollapsibleAPI} を作成します。
+   *
+   * @param props {@link Collapsible} の props です。
+   * @returns コラプシブルの API です
+   */
+  (props: CollapsibleProps): CollapsibleAPI;
+}
+
 // API
 // ---
 
@@ -140,16 +150,6 @@ export class CollapsibleAPI {
       children: trigger,
     };
   }
-}
-
-export interface IUseCollapsibleAPI {
-  /**
-   * {@link CollapsibleAPI} を作成します。
-   *
-   * @param props {@link Collapsible} の props です。
-   * @returns コラプシブルの API です
-   */
-  (props: CollapsibleProps): CollapsibleAPI;
 }
 
 /**

@@ -112,4 +112,20 @@ describe("NumberFieldGroup", () => {
     // 検証
     expect(called).toBe(true);
   });
+
+  test("render の関数へスタイル情報とグループの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <NumberFieldRoot color="blue" size="lg">
+        <NumberFieldGroup
+          render={(props, state) => (
+            <div {...props} data-probe={`${state.size}/${state.color}/${String(state.disabled)}`} />
+          )}
+        />
+      </NumberFieldRoot>,
+    );
+
+    // 検証
+    expect(screen.getByRole("group").element().getAttribute("data-probe")).toBe("lg/blue/false");
+  });
 });

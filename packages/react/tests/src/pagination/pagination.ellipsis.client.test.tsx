@@ -270,4 +270,27 @@ describe("PaginationEllipsis", () => {
     // 検証
     expect(screen.getByRole("button", { name: "ページを指定" }).query()).not.toBe(null);
   });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PaginationRoot radius="full" size="lg" totalPages={10}>
+        <PaginationEllipsis
+          end={5}
+          start={2}
+          render={(props, state) => (
+            <button
+              {...props}
+              data-probe={`${state.size}/${state.radius}/${state.page}/${state.totalPages}`}
+            />
+          )}
+        />
+      </PaginationRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByRole("button", { name: "2〜5ページへ移動" }).element().getAttribute("data-probe"),
+    ).toBe("lg/full/1/10");
+  });
 });

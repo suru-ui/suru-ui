@@ -7,6 +7,7 @@ import {
   HoverCardContext,
   useHoverCardContext,
 } from "../../../src/hover-card/hover-card.context.js";
+import { HoverCardRoot } from "../../../src/hover-card/hover-card.root.jsx";
 
 describe("useHoverCardContext", () => {
   test("提供された値を返す", async ({ expect }) => {
@@ -27,6 +28,25 @@ describe("useHoverCardContext", () => {
 
     // 検証
     expect(screen.getByText("lg/sm/true").query()?.textContent).toBe("lg/sm/true");
+  });
+
+  test("ルートの状態を返す", async ({ expect }) => {
+    // 準備
+    function Probe() {
+      const ctx = useHoverCardContext();
+
+      return <span>{`${ctx.size}/${ctx.radius}/${ctx.outlined}`}</span>;
+    }
+
+    // 実行
+    const screen = await render(
+      <HoverCardRoot size="lg" radius="none" outlined>
+        <Probe />
+      </HoverCardRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("lg/none/true").query()?.textContent).toBe("lg/none/true");
   });
 
   test("提供がないときはエラーを投げる", async ({ expect }) => {

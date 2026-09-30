@@ -8,13 +8,16 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { useComboboxContext } from "./combobox.context.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 import { ComboboxItemContext } from "./combobox.item.context.js";
 
 /**
- * {@link ComboboxItem} が持つ状態です。
+ * {@link ComboboxItem} の状態です。
  */
-export type ComboboxItemState = Override<Button.Root.State, Combobox.Item.State>;
+export type ComboboxItemState = Override<
+  ComboboxContext,
+  Override<Button.Root.State, Combobox.Item.State>
+>;
 
 export namespace ComboboxItemProps {
   export type Render = RenderProps<ComboboxItemState>;
@@ -100,7 +103,7 @@ export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: Combo
       <Combobox.Item
         {...otherProps}
         {...baseuiProps}
-        render={(htmlProps: {}, state) => {
+        render={(htmlProps: {}, itemState) => {
           const buttonRootProps: Required<
             Button.Root.Props.SuruUI &
               Button.Root.Props.BaseUI &
@@ -114,7 +117,7 @@ export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: Combo
             pending: undefined,
             squared: undefined,
             variant: "naked",
-            disabled: state.disabled,
+            disabled: itemState.disabled,
             outlined: undefined,
             nativeButton,
             focusableWhenDisabled,
@@ -125,17 +128,20 @@ export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: Combo
               {...mergeProps<typeof Button.Root>([
                 htmlProps,
                 buttonRootProps,
-                proxyRenderProps(state, {
-                  style,
-                  render,
-                  className: cn(
-                    className,
-                    "sui_combobox_item",
-                    (state) => state.disabled && "sui_combobox_item-disabled",
-                    (state) => state.selected && "sui_combobox_item-selected",
-                    (state) => state.highlighted && "sui_combobox_item-highlighted",
-                  ),
-                }),
+                proxyRenderProps<Button.Root.State, ComboboxItemState>(
+                  (state) => ({ ...ctx, ...state, ...itemState }),
+                  {
+                    style,
+                    render,
+                    className: cn<ComboboxItemState>(
+                      className,
+                      "sui_combobox_item",
+                      (state) => state.disabled && "sui_combobox_item-disabled",
+                      (state) => state.selected && "sui_combobox_item-selected",
+                      (state) => state.highlighted && "sui_combobox_item-highlighted",
+                    ),
+                  },
+                ),
               ])}
             />
           );

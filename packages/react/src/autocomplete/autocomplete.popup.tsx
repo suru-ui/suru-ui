@@ -1,15 +1,16 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompletePopup} の状態です。
  */
-export type AutocompletePopupState = Autocomplete.Popup.State;
+export type AutocompletePopupState = Override<AutocompleteContext, Autocomplete.Popup.State>;
 
 export namespace AutocompletePopupProps {
   export type Render = RenderProps<AutocompletePopupState>;
@@ -54,7 +55,7 @@ export type IAutocompletePopup = IComponent<AutocompletePopupProps>;
  */
 export const AutocompletePopup: IAutocompletePopup = function SuiAutocompletePopup(props) {
   const ctx = useAutocompleteContext();
-  const { outlined = ctx.outlined, className, ...otherProps } = props;
+  const { style, render, outlined = ctx.outlined, className, ...otherProps } = props;
   const childCtx = React.useMemo<AutocompleteContext>(
     () => ({ ...ctx, outlined }),
     [ctx, outlined],
@@ -64,10 +65,17 @@ export const AutocompletePopup: IAutocompletePopup = function SuiAutocompletePop
     <AutocompleteContext value={childCtx}>
       <Autocomplete.Popup
         {...otherProps}
-        className={cn(
-          className,
-          "sui_autocomplete_popup",
-          outlined && "sui_autocomplete_popup-outlined",
+        {...proxyRenderProps<Autocomplete.Popup.State, AutocompletePopupState>(
+          (state) => ({ ...childCtx, ...state }),
+          {
+            style,
+            render,
+            className: cn<AutocompletePopupState>(
+              className,
+              "sui_autocomplete_popup",
+              (state) => state.outlined && "sui_autocomplete_popup-outlined",
+            ),
+          },
         )}
       />
     </AutocompleteContext>

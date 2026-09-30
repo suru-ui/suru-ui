@@ -7,11 +7,18 @@ import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
+import {
+  type AlertDialogPopupContext,
+  useAlertDialogPopupContext,
+} from "./alert-dialog.popup.context.js";
 
 /**
  * {@link AlertDialogTitle} が持つ状態です。
  */
-export type AlertDialogTitleState = Override<Card.Title.State, AlertDialog.Title.State>;
+export type AlertDialogTitleState = Override<
+  Card.Title.State & AlertDialogPopupContext,
+  AlertDialog.Title.State
+>;
 
 export namespace AlertDialogTitleProps {
   export type Render = RenderProps<AlertDialogTitleState>;
@@ -53,6 +60,7 @@ export type IAlertDialogTitle = IComponent<AlertDialogTitleProps>;
  * 見た目はカードの見出しとして描画され、ポップアップのラベルに関連付けます。
  */
 export const AlertDialogTitle: IAlertDialogTitle = function SuiAlertDialogTitle(props) {
+  const ctx = useAlertDialogPopupContext();
   const {
     style,
     // oxlint-disable-next-line jsx-a11y/heading-has-content
@@ -64,15 +72,18 @@ export const AlertDialogTitle: IAlertDialogTitle = function SuiAlertDialogTitle(
   return (
     <AlertDialog.Title
       {...otherProps}
-      render={(htmlProps: {}, titleState) => (
+      render={(htmlProps: {}) => (
         <Card.Title
           {...mergeProps<typeof Card.Title>([
             htmlProps,
-            proxyRenderProps(titleState, {
-              style,
-              render,
-              className: cn(className, "sui_alert_dialog_title"),
-            }),
+            proxyRenderProps<Card.Title.State, AlertDialogTitleState>(
+              (state) => ({ ...ctx, ...state }),
+              {
+                style,
+                render,
+                className: cn<AlertDialogTitleState>(className, "sui_alert_dialog_title"),
+              },
+            ),
           ])}
         />
       )}

@@ -38,6 +38,16 @@ export type TextareaProps = TextareaRootProps;
 
 export type ITextarea = IComponent<TextareaProps>;
 
+export interface IUseTextareaAPI {
+  /**
+   * {@link TextareaAPI} を作成します。
+   *
+   * @param props {@link Textarea} の props です。
+   * @returns テキストエリアの API です
+   */
+  (props: TextareaProps): TextareaAPI;
+}
+
 // API
 // ---
 
@@ -61,16 +71,6 @@ export class TextareaAPI {
   public getRootProps(): TextareaRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseTextareaAPI {
-  /**
-   * {@link TextareaAPI} を作成します。
-   *
-   * @param props {@link Textarea} の props です。
-   * @returns テキストエリアの API です
-   */
-  (props: TextareaProps): TextareaAPI;
 }
 
 /**

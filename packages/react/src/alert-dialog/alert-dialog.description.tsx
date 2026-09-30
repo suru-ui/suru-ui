@@ -7,12 +7,16 @@ import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
+import {
+  type AlertDialogPopupContext,
+  useAlertDialogPopupContext,
+} from "./alert-dialog.popup.context.js";
 
 /**
  * {@link AlertDialogDescription} が持つ状態です。
  */
 export type AlertDialogDescriptionState = Override<
-  Card.Description.State,
+  Card.Description.State & AlertDialogPopupContext,
   AlertDialog.Description.State
 >;
 
@@ -58,20 +62,27 @@ export type IAlertDialogDescription = IComponent<AlertDialogDescriptionProps>;
 export const AlertDialogDescription: IAlertDialogDescription = function SuiAlertDialogDescription(
   props,
 ) {
+  const ctx = useAlertDialogPopupContext();
   const { style, render = <p />, className, ...otherProps } = props;
 
   return (
     <AlertDialog.Description
       {...otherProps}
-      render={(htmlProps: {}, descriptionState) => (
+      render={(htmlProps: {}) => (
         <Card.Description
           {...mergeProps<typeof Card.Description>([
             htmlProps,
-            proxyRenderProps(descriptionState, {
-              style,
-              render,
-              className: cn(className, "sui_alert_dialog_description"),
-            }),
+            proxyRenderProps<Card.Description.State, AlertDialogDescriptionState>(
+              (state) => ({ ...ctx, ...state }),
+              {
+                style,
+                render,
+                className: cn<AlertDialogDescriptionState>(
+                  className,
+                  "sui_alert_dialog_description",
+                ),
+              },
+            ),
           ])}
         />
       )}

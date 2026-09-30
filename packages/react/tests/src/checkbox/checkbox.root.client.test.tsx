@@ -157,6 +157,27 @@ describe("CheckboxRoot", () => {
     expect(root.classList.contains("sui_checkbox-variant_naked")).toBe(true);
   });
 
+  test("render の関数へグループと自身の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <CheckboxGroupRoot color="blue" size="lg" variant="naked" outlined orientation="horizontal">
+        <CheckboxRoot
+          render={(props, state) => (
+            <span
+              {...props}
+              data-probe={`${state.size}/${String(state.color)}/${state.variant}/${String(state.outlined)}/${state.orientation}`}
+            />
+          )}
+        />
+      </CheckboxGroupRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_checkbox").element().getAttribute("data-probe")).toBe(
+      "lg/blue/naked/true/horizontal",
+    );
+  });
+
   test("CheckboxGroup の無効を引き継ぐ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

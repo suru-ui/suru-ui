@@ -6,19 +6,26 @@ import type { IUseContext } from "../types.js";
 /**
  * {@link PasswordFieldRoot} が子パーツへ提供する表示状態です。
  */
-export type PasswordFieldContext = {
-  /**
-   * パスワードの表示状態を更新します。
-   *
-   * 関数を渡すと、現在の表示状態から次の表示状態を計算できます。
-   */
-  readonly setVisible: (value: boolean | ((prevValue: boolean) => boolean)) => void;
-
+export type PasswordFieldContextState = {
   /**
    * パスワードを表示しているかどうかです。
    */
   readonly visible: boolean;
 };
+
+/**
+ * {@link PasswordFieldRoot} が子パーツへ提供するコンテキストです。
+ */
+export type PasswordFieldContext = Readonly<
+  PasswordFieldContextState & {
+    /**
+     * パスワードの表示状態を更新します。
+     *
+     * 関数を渡すと、現在の表示状態から次の表示状態を計算できます。
+     */
+    readonly setVisible: (value: boolean | ((prevValue: boolean) => boolean)) => void;
+  }
+>;
 
 /**
  * PasswordField の表示状態を子パーツへ伝播するコンテキストです。

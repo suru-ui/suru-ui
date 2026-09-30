@@ -1,21 +1,28 @@
 import { Combobox } from "@base-ui/react/combobox";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { ComboboxContext, useComboboxContext } from "./combobox.context.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type ComboboxContextSize,
+  type ComboboxContextColor,
+  type ComboboxContextRadius,
+  type ComboboxContextVariant,
+  ComboboxContext,
+  useComboboxContext,
+} from "./combobox.context.js";
 
 /**
- * {@link ComboboxInputGroup} が持つ状態です。
+ * {@link ComboboxInputGroup} の状態です。
  */
-export type ComboboxInputGroupState = Combobox.InputGroup.State;
+export type ComboboxInputGroupState = Override<ComboboxContext, Combobox.InputGroup.State>;
 
 /**
  * 入力グループの配色です。
  */
-export type ComboboxInputGroupColor = Color;
+export type ComboboxInputGroupColor = ComboboxContextColor;
 
 /**
  * 入力グループの角丸の大きさです。
@@ -26,7 +33,7 @@ export type ComboboxInputGroupColor = Color;
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
  */
-export type ComboboxInputGroupRadius = "none" | Size | "full";
+export type ComboboxInputGroupRadius = ComboboxContextRadius;
 
 /**
  * 入力グループの大きさです。
@@ -35,7 +42,7 @@ export type ComboboxInputGroupRadius = "none" | Size | "full";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type ComboboxInputGroupSize = Size;
+export type ComboboxInputGroupSize = ComboboxContextSize;
 
 /**
  * 入力グループの主な外観の種類です。
@@ -43,7 +50,7 @@ export type ComboboxInputGroupSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ComboboxInputGroupVariant = "naked" | "liquid";
+export type ComboboxInputGroupVariant = ComboboxContextVariant;
 
 export namespace ComboboxInputGroupProps {
   export type Render = RenderProps<ComboboxInputGroupState>;
@@ -114,7 +121,9 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
   const {
     size = ctx.size,
     color = ctx.color,
+    style,
     radius = ctx.radius,
+    render,
     variant = ctx.variant,
     className,
     // @ts-expect-error
@@ -130,29 +139,36 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
     <ComboboxContext value={childCtx}>
       <Combobox.InputGroup
         {...otherProps}
-        className={cn(
-          className,
-          "sui_combobox",
-          `sui_combobox-size_${size}`,
-          `sui_combobox-color_${color}`,
-          `sui_combobox-radius_${radius}`,
-          `sui_combobox-variant_${variant}`,
-          childCtx.outlined && "sui_combobox-outlined",
-          (state) => state.disabled && "sui_combobox-disabled",
-          (state) => state.touched && "sui_combobox-touched",
-          (state) => state.dirty && "sui_combobox-dirty",
-          (state) => state.valid === false && "sui_combobox-invalid",
-          (state) => state.valid === true && "sui_combobox-valid",
-          (state) => state.valid === null && "sui_combobox-unverified",
-          (state) => state.filled && "sui_combobox-filled",
-          (state) => state.focused && "sui_combobox-focused",
-          (state) => state.open && "sui_combobox-open",
-          (state) => state.readOnly && "sui_combobox-readonly",
-          (state) =>
-            state.popupSide !== null &&
-            `sui_combobox-popupside_${state.popupSide.replaceAll("-", "_")}`,
-          (state) => state.listEmpty && "sui_combobox-listempty",
-          (state) => state.placeholder && "sui_combobox-placeholder",
+        {...proxyRenderProps<Combobox.InputGroup.State, ComboboxInputGroupState>(
+          (state) => ({ ...childCtx, ...state }),
+          {
+            style,
+            render,
+            className: cn<ComboboxInputGroupState>(
+              className,
+              "sui_combobox",
+              (state) => `sui_combobox-size_${state.size}`,
+              (state) => `sui_combobox-color_${state.color}`,
+              (state) => `sui_combobox-radius_${state.radius}`,
+              (state) => `sui_combobox-variant_${state.variant}`,
+              (state) => state.outlined && "sui_combobox-outlined",
+              (state) => state.disabled && "sui_combobox-disabled",
+              (state) => state.touched && "sui_combobox-touched",
+              (state) => state.dirty && "sui_combobox-dirty",
+              (state) => state.valid === false && "sui_combobox-invalid",
+              (state) => state.valid === true && "sui_combobox-valid",
+              (state) => state.valid === null && "sui_combobox-unverified",
+              (state) => state.filled && "sui_combobox-filled",
+              (state) => state.focused && "sui_combobox-focused",
+              (state) => state.open && "sui_combobox-open",
+              (state) => state.readOnly && "sui_combobox-readonly",
+              (state) =>
+                state.popupSide !== null &&
+                `sui_combobox-popupside_${state.popupSide.replaceAll("-", "_")}`,
+              (state) => state.listEmpty && "sui_combobox-listempty",
+              (state) => state.placeholder && "sui_combobox-placeholder",
+            ),
+          },
         )}
         data-scope={dataScope}
       />

@@ -4,23 +4,21 @@ import * as React from "react";
 import { SidebarIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { type SidebarOpenState, useSidebarContext } from "./sidebar.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type SidebarContextState, useSidebarContext } from "./sidebar.context.js";
 
 /**
  * {@link SidebarTrigger} の状態です。
  */
-export type SidebarTriggerState = {
-  /**
-   * サイドバーを無効にするかどうかです。
-   */
-  readonly disabled: boolean;
-
-  /**
-   * サイドバーの開閉状態です。
-   */
-  readonly state: SidebarOpenState;
-};
+export type SidebarTriggerState = Override<
+  SidebarContextState,
+  {
+    /**
+     * この切り替えボタンを無効にするかどうかです。
+     */
+    readonly disabled: boolean;
+  }
+>;
 
 export namespace SidebarTriggerProps {
   export type Render = RenderProps<SidebarTriggerState>;
@@ -72,8 +70,15 @@ export const SidebarTrigger: ISidebarTrigger = function SuiSidebarTrigger(props)
     }
   };
   const renderState = React.useMemo<SidebarTriggerState>(
-    () => ({ state: ctx.state, disabled: triggerDisabled }),
-    [ctx.state, triggerDisabled],
+    () => ({
+      open: ctx.open,
+      side: ctx.side,
+      state: ctx.state,
+      variant: ctx.variant,
+      disabled: triggerDisabled,
+      collapsible: ctx.collapsible,
+    }),
+    [ctx, triggerDisabled],
   );
 
   return useRender({

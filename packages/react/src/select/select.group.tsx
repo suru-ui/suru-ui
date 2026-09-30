@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectGroup} が持つ状態です。
  */
-export type SelectGroupState = BaseSelect.Group.State;
+export type SelectGroupState = Override<SelectContext, BaseSelect.Group.State>;
 
 export namespace SelectGroupProps {
   export type Render = RenderProps<SelectGroupState>;
@@ -45,9 +47,22 @@ export type ISelectGroup = IComponent<SelectGroupProps>;
  * 関連する選択肢をまとめるグループ要素です。
  */
 export const SelectGroup: ISelectGroup = function SuiSelectGroup(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <BaseSelect.Group {...otherProps} className={cn(className, "sui_select_group")} />;
+  return (
+    <BaseSelect.Group
+      {...otherProps}
+      {...proxyRenderProps<BaseSelect.Group.State, SelectGroupState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_group"),
+        },
+      )}
+    />
+  );
 };
 
 export { SelectGroup as Group };

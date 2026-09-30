@@ -26,6 +26,16 @@ export type SkeletonProps = SkeletonRootProps;
 
 export type ISkeleton = IComponent<SkeletonProps>;
 
+export interface IUseSkeletonAPI {
+  /**
+   * {@link SkeletonAPI} を作成します。
+   *
+   * @param props {@link Skeleton} の props です。
+   * @returns スケルトンの API です
+   */
+  (props: SkeletonProps): SkeletonAPI;
+}
+
 // API
 // ---
 
@@ -49,16 +59,6 @@ export class SkeletonAPI {
   public getRootProps(): SkeletonRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseSkeletonAPI {
-  /**
-   * {@link SkeletonAPI} を作成します。
-   *
-   * @param props {@link Skeleton} の props です。
-   * @returns スケルトンの API です
-   */
-  (props: SkeletonProps): SkeletonAPI;
 }
 
 /**

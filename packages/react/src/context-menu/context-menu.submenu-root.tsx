@@ -1,7 +1,7 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
@@ -17,7 +17,10 @@ export type ContextMenuSubmenuRootChangeEventReason = ContextMenu.SubmenuRoot.Ch
 /**
  * {@link ContextMenuSubmenuRoot} が持つ状態です。
  */
-export type ContextMenuSubmenuRootState = ContextMenu.SubmenuRoot.State;
+export type ContextMenuSubmenuRootState = Override<
+  ContextMenuContext,
+  ContextMenu.SubmenuRoot.State
+>;
 
 export namespace ContextMenuSubmenuRootProps {
   export type Render = {};

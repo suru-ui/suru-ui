@@ -1,14 +1,16 @@
 import { NumberField } from "@base-ui/react/number-field";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type NumberFieldContext, useNumberFieldContext } from "./number-field.context.js";
 
 /**
  * {@link NumberFieldScrubArea} が持つ状態です。
  */
-export type NumberFieldScrubAreaState = NumberField.ScrubArea.State;
+export type NumberFieldScrubAreaState = Override<NumberFieldContext, NumberField.ScrubArea.State>;
 
 export namespace NumberFieldScrubAreaProps {
   export type Render = RenderProps<NumberFieldScrubAreaState>;
@@ -45,12 +47,20 @@ export type INumberFieldScrubArea = IComponent<NumberFieldScrubAreaProps>;
  * ドラッグで値を変更できる領域を提供するコンポーネントです。
  */
 export const NumberFieldScrubArea: INumberFieldScrubArea = function SuiNumberFieldScrubArea(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useNumberFieldContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <NumberField.ScrubArea
       {...otherProps}
-      className={cn(className, "sui_number_field_scrub_area")}
+      {...proxyRenderProps<NumberField.ScrubArea.State, NumberFieldScrubAreaState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_number_field_scrub_area"),
+        },
+      )}
     />
   );
 };

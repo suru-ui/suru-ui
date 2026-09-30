@@ -2,7 +2,11 @@ import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
-import type { SidebarRootCollapsible } from "./sidebar.root.jsx";
+import type {
+  SidebarRootSide,
+  SidebarRootVariant,
+  SidebarRootCollapsible,
+} from "./sidebar.root.jsx";
 
 /**
  * サイドバーの開閉状態です。
@@ -13,18 +17,13 @@ import type { SidebarRootCollapsible } from "./sidebar.root.jsx";
 export type SidebarOpenState = "expanded" | "collapsed";
 
 /**
- * {@link SidebarProvider} が子パーツへ提供するコンテキストの型です。
+ * {@link SidebarProvider} が子パーツへ提供する状態です。
  */
-export type SidebarContext = {
+export type SidebarContextState = {
   /**
    * サイドバーが開いているかどうかです。
    */
   readonly open: boolean;
-
-  /**
-   * サイドバーの開閉状態を設定します。
-   */
-  readonly setOpen: (open: boolean) => void;
 
   /**
    * サイドバーの開閉状態です。
@@ -32,17 +31,43 @@ export type SidebarContext = {
   readonly state: SidebarOpenState;
 
   /**
-   * サイドバーの開閉状態を切り替えます。
-   */
-  readonly toggle: () => void;
-
-  /**
    * 折りたたみの方法です。
    *
    * {@link SidebarRoot} の内側ではその値が入ります。外側では `undefined` です。
    */
   readonly collapsible?: SidebarRootCollapsible | undefined;
+
+  /**
+   * サイドバーを配置する辺です。
+   *
+   * {@link SidebarRoot} の内側ではその値が入ります。外側では `undefined` です。
+   */
+  readonly side?: SidebarRootSide | undefined;
+
+  /**
+   * サイドバーの外観バリアントです。
+   *
+   * {@link SidebarRoot} の内側ではその値が入ります。外側では `undefined` です。
+   */
+  readonly variant?: SidebarRootVariant | undefined;
 };
+
+/**
+ * {@link SidebarProvider} が子パーツへ提供するコンテキストの型です。
+ */
+export type SidebarContext = Readonly<
+  SidebarContextState & {
+    /**
+     * サイドバーの開閉状態を設定します。
+     */
+    readonly setOpen: (open: boolean) => void;
+
+    /**
+     * サイドバーの開閉状態を切り替えます。
+     */
+    readonly toggle: () => void;
+  }
+>;
 
 /**
  * {@link SidebarProvider} が子パーツへ提供するコンテキストです。
@@ -75,4 +100,8 @@ export namespace Context {
   export type Collapsible = SidebarRootCollapsible;
 
   export type OpenState = SidebarOpenState;
+
+  export type Side = SidebarRootSide;
+
+  export type Variant = SidebarRootVariant;
 }

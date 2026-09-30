@@ -100,6 +100,16 @@ export type ButtonProps = ButtonProps.Button &
   ButtonProps.Content &
   ButtonProps.CircularProgress;
 
+export interface IUseButtonAPI {
+  /**
+   * {@link ButtonAPI} を作成します。
+   *
+   * @param props {@link Button} の props です。
+   * @returns ボタンの API です。
+   */
+  (props: ButtonProps): ButtonAPI;
+}
+
 // API
 // ---
 
@@ -196,16 +206,6 @@ export class ButtonAPI {
   public getRootProps(): Omit<ButtonRootProps, "children"> {
     return this.rootProps;
   }
-}
-
-export interface IUseButtonAPI {
-  /**
-   * {@link ButtonAPI} を作成します。
-   *
-   * @param props {@link Button} の props です。
-   * @returns ボタンの API です。
-   */
-  (props: ButtonProps): ButtonAPI;
 }
 
 /**

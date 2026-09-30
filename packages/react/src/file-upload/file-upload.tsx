@@ -110,6 +110,16 @@ export type FileUploadProps = FileUploadProps.FileUpload &
 
 export type IFileUpload = IComponent<FileUploadProps>;
 
+export interface IUseFileUploadAPI {
+  /**
+   * {@link FileUploadAPI} を作成します。
+   *
+   * @param props {@link FileUpload} の props です。
+   * @returns ファイルアップロードの API です
+   */
+  (props: FileUploadProps): FileUploadAPI;
+}
+
 // API
 // ---
 
@@ -219,16 +229,6 @@ export class FileUploadAPI {
   }
 }
 
-export interface IUseFileUploadAPI {
-  /**
-   * {@link FileUploadAPI} を作成します。
-   *
-   * @param props {@link FileUpload} の props です。
-   * @returns ファイルアップロードの API です
-   */
-  (props: FileUploadProps): FileUploadAPI;
-}
-
 /**
  * {@link FileUploadAPI} を作成するフックです。
  */
@@ -288,9 +288,9 @@ function FileUploadItems(props: {
   readonly itemGroupProps: Omit<FileUploadItemGroupProps, "children">;
 }): React.ReactElement | null {
   const { api, itemGroupProps } = props;
-  const ctx = useFileUploadContext(true);
+  const ctx = useFileUploadContext();
 
-  if (ctx === null || ctx.files.length === 0) {
+  if (ctx.files.length === 0) {
     return null;
   }
 

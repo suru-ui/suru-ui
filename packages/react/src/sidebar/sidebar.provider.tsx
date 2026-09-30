@@ -4,17 +4,16 @@ import * as React from "react";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { type SidebarOpenState, SidebarContext } from "./sidebar.context.js";
+import {
+  type SidebarOpenState,
+  type SidebarContextState,
+  SidebarContext,
+} from "./sidebar.context.js";
 
 /**
  * {@link SidebarProvider} の状態です。
  */
-export type SidebarProviderState = {
-  /**
-   * サイドバーの開閉状態です。
-   */
-  readonly state: SidebarOpenState;
-};
+export type SidebarProviderState = SidebarContextState;
 
 export namespace SidebarProviderProps {
   export type Render = RenderProps<SidebarProviderState>;
@@ -88,14 +87,11 @@ export const SidebarProvider: ISidebarProvider = function SuiSidebarProvider(pro
   const toggle = React.useCallback(() => {
     setOpen(!openRef.current);
   }, [setOpen]);
-  const openStateValue: SidebarOpenState = open ? "expanded" : "collapsed";
-  const renderState = React.useMemo<SidebarProviderState>(
-    () => ({ state: openStateValue }),
-    [openStateValue],
-  );
+  const state: SidebarOpenState = open ? "expanded" : "collapsed";
+  const renderState = React.useMemo<SidebarProviderState>(() => ({ open, state }), [open, state]);
   const ctx = React.useMemo<SidebarContext>(
-    () => ({ open, state: openStateValue, toggle, setOpen }),
-    [open, openStateValue, setOpen, toggle],
+    () => ({ open, state, toggle, setOpen }),
+    [open, setOpen, state, toggle],
   );
 
   const element = useRender({

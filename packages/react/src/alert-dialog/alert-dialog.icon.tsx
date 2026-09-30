@@ -3,7 +3,11 @@ import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type AlertDialogPopupContext,
+  useAlertDialogPopupContext,
+} from "./alert-dialog.popup.context.js";
 
 /**
  * アラートダイアログのアイコンの配色です。
@@ -42,7 +46,40 @@ export type AlertDialogIconVariant = ColorTemplate;
 /**
  * {@link AlertDialogIcon} が持つ状態です。
  */
-export type AlertDialogIconState = {};
+export type AlertDialogIconState = Override<
+  AlertDialogPopupContext,
+  {
+    /**
+     * アイコンの配色です。
+     */
+    readonly color: AlertDialogIconColor;
+
+    /**
+     * アイコンの背景色を控えめにするかどうかです。
+     */
+    readonly muted: boolean;
+
+    /**
+     * アイコンに枠線を表示するかどうかです。
+     */
+    readonly outlined: boolean;
+
+    /**
+     * アイコンの角丸の大きさです。
+     */
+    readonly radius: AlertDialogIconRadius;
+
+    /**
+     * アイコンの大きさです。
+     */
+    readonly size: AlertDialogIconSize;
+
+    /**
+     * アイコンの主な外観です。
+     */
+    readonly variant: AlertDialogIconVariant;
+  }
+>;
 
 export namespace AlertDialogIconProps {
   export type Render = RenderProps<AlertDialogIconState>;
@@ -113,6 +150,7 @@ export type IAlertDialogIcon = IComponent<AlertDialogIconProps>;
  * アラートダイアログのアイコンコンポーネントです。
  */
 export const AlertDialogIcon: IAlertDialogIcon = function SuiAlertDialogIcon(props) {
+  const ctx = useAlertDialogPopupContext(true);
   const {
     size = "md",
     color = "red",
@@ -128,18 +166,19 @@ export const AlertDialogIcon: IAlertDialogIcon = function SuiAlertDialogIcon(pro
     props: [
       otherDivProps,
       {
-        className: cn(
+        className: cn<AlertDialogIconState>(
           "sui_alert_dialog_icon",
-          `sui_alert_dialog_icon-size_${size}`,
-          `sui_alert_dialog_icon-color_${color}`,
-          `sui_alert_dialog_icon-radius_${radius}`,
-          `sui_alert_dialog_icon-variant_${variant}`,
-          muted && "sui_alert_dialog_icon-muted",
-          outlined && "sui_alert_dialog_icon-outlined",
+          (state) => `sui_alert_dialog_icon-size_${state.size}`,
+          (state) => `sui_alert_dialog_icon-color_${state.color}`,
+          (state) => `sui_alert_dialog_icon-radius_${state.radius}`,
+          (state) => `sui_alert_dialog_icon-variant_${state.variant}`,
+          (state) => state.muted && "sui_alert_dialog_icon-muted",
+          (state) => state.outlined && "sui_alert_dialog_icon-outlined",
         ),
         "aria-hidden": ariaHidden,
       },
     ],
+    state: { ...ctx, size, color, muted, radius, variant, outlined },
     defaultTagName: "div",
   });
 };

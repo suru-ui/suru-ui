@@ -1,14 +1,16 @@
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type PopoverContext, usePopoverContext } from "./popover.context.js";
 
 /**
  * {@link PopoverBackdrop} が持つ状態です。
  */
-export type PopoverBackdropState = Popover.Backdrop.State;
+export type PopoverBackdropState = Override<PopoverContext, Popover.Backdrop.State>;
 
 export namespace PopoverBackdropProps {
   export type Render = RenderProps<PopoverBackdropState>;
@@ -45,17 +47,25 @@ export type IPopoverBackdrop = IComponent<PopoverBackdropProps>;
  * ポップアップの背後に表示されるオーバーレイ要素です。
  */
 export const PopoverBackdrop: IPopoverBackdrop = function SuiPopoverBackdrop(props) {
-  const { className, ...otherProps } = props;
+  const ctx = usePopoverContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Popover.Backdrop
       {...otherProps}
-      className={cn(
-        className,
-        "sui_popover_backdrop",
-        (state) =>
-          state.transitionStatus !== undefined &&
-          `sui_popover_backdrop-transition_status_${state.transitionStatus}`,
+      {...proxyRenderProps<Popover.Backdrop.State, PopoverBackdropState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<PopoverBackdropState>(
+            className,
+            "sui_popover_backdrop",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_popover_backdrop-transition_status_${state.transitionStatus}`,
+          ),
+        },
       )}
     />
   );

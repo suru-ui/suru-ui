@@ -59,6 +59,16 @@ export type StatusProps = StatusProps.Status & StatusProps.Root;
 
 export type IStatus = IComponent<StatusProps>;
 
+export interface IUseStatusAPI {
+  /**
+   * {@link StatusAPI} を作成します。
+   *
+   * @param props {@link Status} の props です。
+   * @returns ステータスの API です
+   */
+  (props: StatusProps): StatusAPI;
+}
+
 // API
 // ---
 
@@ -105,16 +115,6 @@ export class StatusAPI {
   public getRootProps(): StatusProps.Root {
     return this.rootProps;
   }
-}
-
-export interface IUseStatusAPI {
-  /**
-   * {@link StatusAPI} を作成します。
-   *
-   * @param props {@link Status} の props です。
-   * @returns ステータスの API です
-   */
-  (props: StatusProps): StatusAPI;
 }
 
 /**

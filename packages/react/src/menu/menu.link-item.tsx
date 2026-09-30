@@ -7,7 +7,7 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { useMenuContext } from "./menu.context.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * メニューのリンク項目の配色です。
@@ -31,7 +31,10 @@ export type MenuLinkItemVariant = Button.Root.Variant;
 /**
  * {@link MenuLinkItem} が持つ状態です。
  */
-export type MenuLinkItemState = Override<Button.Root.State, Menu.LinkItem.State>;
+export type MenuLinkItemState = Override<
+  MenuContext,
+  Override<Button.Root.State, Menu.LinkItem.State>
+>;
 
 export namespace MenuLinkItemProps {
   export type Render = RenderProps<MenuLinkItemState>;
@@ -130,7 +133,7 @@ export const MenuLinkItem: IMenuLinkItem = function SuiMenuLinkItem(props) {
     <Menu.LinkItem
       {...otherProps}
       {...baseuiProps}
-      render={(htmlProps: {}, state) => {
+      render={(htmlProps: {}, itemState) => {
         const buttonRootProps: Required<
           Button.Root.Props.SuruUI &
             Button.Root.Props.BaseUI &
@@ -155,17 +158,20 @@ export const MenuLinkItem: IMenuLinkItem = function SuiMenuLinkItem(props) {
             {...mergeProps<typeof Button.Root>([
               htmlProps,
               buttonRootProps,
-              proxyRenderProps(state, {
-                style,
-                // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-                render,
-                className: cn(
-                  className,
-                  "sui_menu_item",
-                  "sui_menu_link_item",
-                  (state) => state.highlighted && "sui_menu_item-highlighted",
-                ),
-              }),
+              proxyRenderProps<Button.Root.State, MenuLinkItemState>(
+                (state) => ({ ...ctx, ...state, ...itemState }),
+                {
+                  style,
+                  // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
+                  render,
+                  className: cn<MenuLinkItemState>(
+                    className,
+                    "sui_menu_item",
+                    "sui_menu_link_item",
+                    (state) => state.highlighted && "sui_menu_item-highlighted",
+                  ),
+                },
+              ),
             ])}
           />
         );

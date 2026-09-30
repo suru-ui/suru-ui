@@ -1,21 +1,23 @@
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type DialogPopupContext, useDialogPopupContext } from "./dialog.popup.context.js";
 
 /**
  * {@link DialogFooter} が持つ状態です。
  */
-export type DialogFooterState = Card.CardFooterState;
+export type DialogFooterState = Override<Card.Footer.State, DialogPopupContext>;
 
 export namespace DialogFooterProps {
   export type Render = RenderProps<DialogFooterState>;
 
-  export type SuruUI = Card.CardFooterProps.SuruUI;
+  export type SuruUI = Card.Footer.Props.SuruUI;
 
-  export type BaseUI = Card.CardFooterProps.BaseUI;
+  export type BaseUI = Card.Footer.Props.BaseUI;
 
-  export type HTML = Card.CardFooterProps.HTML;
+  export type HTML = Card.Footer.Props.HTML;
 }
 
 /**
@@ -34,7 +36,22 @@ export type IDialogFooter = IComponent<DialogFooterProps>;
  * 積み上げ式では内容を等幅の 2 列に並べます。
  */
 export const DialogFooter: IDialogFooter = function SuiDialogFooter(props) {
-  return <Card.Footer {...props} className={cn(props.className, "sui_dialog_footer")} />;
+  const ctx = useDialogPopupContext();
+  const { style, render, className, ...otherProps } = props;
+
+  return (
+    <Card.Footer
+      {...otherProps}
+      {...proxyRenderProps<Card.Footer.State, DialogFooterState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<DialogFooterState>(className, "sui_dialog_footer"),
+        },
+      )}
+    />
+  );
 };
 
 export { DialogFooter as Footer };

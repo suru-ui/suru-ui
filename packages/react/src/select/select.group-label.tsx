@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectGroupLabel} が持つ状態です。
  */
-export type SelectGroupLabelState = BaseSelect.GroupLabel.State;
+export type SelectGroupLabelState = Override<SelectContext, BaseSelect.GroupLabel.State>;
 
 export namespace SelectGroupLabelProps {
   export type Render = RenderProps<SelectGroupLabelState>;
@@ -45,10 +47,21 @@ export type ISelectGroupLabel = IComponent<SelectGroupLabelProps>;
  * 選択肢グループの見出し要素です。
  */
 export const SelectGroupLabel: ISelectGroupLabel = function SuiSelectGroupLabel(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
-    <BaseSelect.GroupLabel {...otherProps} className={cn(className, "sui_select_group_label")} />
+    <BaseSelect.GroupLabel
+      {...otherProps}
+      {...proxyRenderProps<BaseSelect.GroupLabel.State, SelectGroupLabelState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_group_label"),
+        },
+      )}
+    />
   );
 };
 

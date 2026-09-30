@@ -1,6 +1,7 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
@@ -8,13 +9,14 @@ import {
   type IAutocompleteCollectionItemRenderer,
   AutocompleteCollection,
 } from "./autocomplete.collection.jsx";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 export type IAutocompleteListItemRenderer<TItem = any> = IAutocompleteCollectionItemRenderer<TItem>;
 
 /**
  * {@link AutocompleteList} の状態です。
  */
-export type AutocompleteListState = Autocomplete.List.State;
+export type AutocompleteListState = Override<AutocompleteContext, Autocomplete.List.State>;
 
 export namespace AutocompleteListProps {
   export type Render = RenderProps<AutocompleteListState>;
@@ -64,7 +66,10 @@ export interface IAutocompleteList extends IComponent<AutocompleteListProps> {
 export const AutocompleteList: IAutocompleteList = function SuiAutocompleteList(
   props: AutocompleteListProps,
 ) {
+  const ctx = useAutocompleteContext();
   const {
+    style,
+    render,
     // children の既定値は、AutocompleteCollection の defaultItemRenderer とします。
     children = <AutocompleteCollection />,
     className,
@@ -72,7 +77,17 @@ export const AutocompleteList: IAutocompleteList = function SuiAutocompleteList(
   } = props;
 
   return (
-    <Autocomplete.List {...otherProps} className={cn(className, "sui_autocomplete_list")}>
+    <Autocomplete.List
+      {...otherProps}
+      {...proxyRenderProps<Autocomplete.List.State, AutocompleteListState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AutocompleteListState>(className, "sui_autocomplete_list"),
+        },
+      )}
+    >
       {children}
     </Autocomplete.List>
   );

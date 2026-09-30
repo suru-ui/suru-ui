@@ -82,6 +82,16 @@ export type TreeProps = TreeProps.Tree & TreeProps.Root;
 
 export type ITree = IComponent<TreeProps>;
 
+export interface IUseTreeAPI {
+  /**
+   * {@link TreeAPI} を作成します。
+   *
+   * @param props {@link Tree} の props です。
+   * @returns ツリーの API です
+   */
+  (props: TreeProps): TreeAPI;
+}
+
 // API
 // ---
 
@@ -189,16 +199,6 @@ export class TreeAPI {
       children,
     };
   }
-}
-
-export interface IUseTreeAPI {
-  /**
-   * {@link TreeAPI} を作成します。
-   *
-   * @param props {@link Tree} の props です。
-   * @returns ツリーの API です
-   */
-  (props: TreeProps): TreeAPI;
 }
 
 /**

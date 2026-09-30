@@ -2,9 +2,10 @@ import { Combobox } from "@base-ui/react/combobox";
 import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { ComboboxContext, useComboboxContext } from "./combobox.context.js";
 import { ComboboxItemContext } from "./combobox.item.context.js";
 
@@ -34,9 +35,14 @@ export type ComboboxChipRadius = "none" | Size | "full";
 export type ComboboxChipVariant = ColorTemplate;
 
 /**
- * {@link ComboboxChip} が持つ状態です。
+ * {@link ComboboxChip} の状態です。
  */
-export type ComboboxChipState = Combobox.Chip.State;
+export type ComboboxChipState = Override<
+  Override<ComboboxContext, Combobox.Chip.State>,
+  {
+    variant: ComboboxChipVariant;
+  }
+>;
 
 export namespace ComboboxChipProps {
   export type Render = RenderProps<ComboboxChipState>;
@@ -116,8 +122,10 @@ export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: Combo
   const ctx = useComboboxContext();
   const {
     color = ctx.color,
+    style,
     value,
     radius = ctx.radius,
+    render,
     variant = "solid",
     outlined = false,
     className,
@@ -131,13 +139,20 @@ export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: Combo
       <ComboboxItemContext value={itemCtx}>
         <Combobox.Chip
           {...otherProps}
-          className={cn(
-            className,
-            "sui_combobox_chip",
-            `sui_combobox_chip-color_${color}`,
-            `sui_combobox_chip-radius_${radius}`,
-            `sui_combobox_chip-variant_${variant}`,
-            outlined && "sui_combobox_chip-outlined",
+          {...proxyRenderProps<Combobox.Chip.State, ComboboxChipState>(
+            (state) => ({ ...ctx, color, radius, variant, outlined, ...state }),
+            {
+              style,
+              render,
+              className: cn<ComboboxChipState>(
+                className,
+                "sui_combobox_chip",
+                (state) => `sui_combobox_chip-color_${state.color}`,
+                (state) => `sui_combobox_chip-radius_${state.radius}`,
+                (state) => `sui_combobox_chip-variant_${state.variant}`,
+                (state) => state.outlined && "sui_combobox_chip-outlined",
+              ),
+            },
           )}
         />
       </ComboboxItemContext>

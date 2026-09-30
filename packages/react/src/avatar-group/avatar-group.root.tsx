@@ -1,18 +1,23 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import { type Size, type Color, COLORS } from "@suru-ui/theme";
+import { COLORS } from "@suru-ui/theme";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { AvatarGroupContext } from "./avatar-group.context.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type AvatarGroupContextSize,
+  type AvatarGroupContextColor,
+  type AvatarGroupContextRadius,
+  AvatarGroupContext,
+} from "./avatar-group.context.js";
 
 /**
  * 各アバターの配色です。
  *
  * `"auto"` を指定すると、子アバターごとに色を自動で割り当てます。
  */
-export type AvatarGroupRootColor = "auto" | Color;
+export type AvatarGroupRootColor = "auto" | AvatarGroupContextColor;
 
 /**
  * 各アバターの角丸です。
@@ -24,7 +29,7 @@ export type AvatarGroupRootColor = "auto" | Color;
  * - `"full"`: 丸形
  * - `"circle"`: 完全な丸形
  */
-export type AvatarGroupRootRadius = "none" | Size | "full" | "circle";
+export type AvatarGroupRootRadius = AvatarGroupContextRadius;
 
 /**
  * 各アバターの大きさです。
@@ -33,12 +38,22 @@ export type AvatarGroupRootRadius = "none" | Size | "full" | "circle";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type AvatarGroupRootSize = Size;
+export type AvatarGroupRootSize = AvatarGroupContextSize;
 
 /**
  * {@link AvatarGroupRoot} が持つ状態です。
  */
-export type AvatarGroupRootState = {};
+export type AvatarGroupRootState = Override<
+  AvatarGroupContext,
+  {
+    /**
+     * 各アバターの背景配色です。
+     *
+     * `"auto"` のときは子アバターごとに自動で割り当てます。
+     */
+    readonly color: AvatarGroupRootColor;
+  }
+>;
 
 export namespace AvatarGroupRootProps {
   export type Render = RenderProps<AvatarGroupRootState>;
@@ -118,6 +133,10 @@ export const AvatarGroupRoot: IAvatarGroupRoot = function SuiAvatarGroupRoot(pro
     "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
+  const ctx = React.useMemo<AvatarGroupRootState>(
+    () => ({ size, color, radius, reverse }),
+    [size, color, radius, reverse],
+  );
   const children = React.Children.map(childrenProp, (child, i) => {
     if (!React.isValidElement(child)) {
       return child;
@@ -126,9 +145,8 @@ export const AvatarGroupRoot: IAvatarGroupRoot = function SuiAvatarGroupRoot(pro
     return (
       <AvatarGroupContext
         value={{
-          size,
+          ...ctx,
           color: color === "auto" ? (colors[i % colors.length] ?? "grey") : color,
-          radius,
         }}
       >
         {child}
@@ -141,15 +159,16 @@ export const AvatarGroupRoot: IAvatarGroupRoot = function SuiAvatarGroupRoot(pro
       otherDivProps,
       {
         children,
-        className: cn(
+        className: cn<AvatarGroupRootState>(
           className,
           "sui_avatar_group",
-          reverse && "sui_avatar_group-reverse",
-          !reverse && "sui_avatar_group-forward",
+          (state) => state.reverse && "sui_avatar_group-reverse",
+          (state) => !state.reverse && "sui_avatar_group-forward",
         ),
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

@@ -3,14 +3,16 @@ import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import { ClearIcon } from "../_icons.jsx";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompleteClear} の状態です。
  */
-export type AutocompleteClearState = Autocomplete.Clear.State;
+export type AutocompleteClearState = Override<AutocompleteContext, Autocomplete.Clear.State>;
 
 export namespace AutocompleteClearProps {
   export type Render = RenderProps<AutocompleteClearState>;
@@ -52,7 +54,10 @@ export type IAutocompleteClear = IComponent<AutocompleteClearProps>;
  * 入力値があるときだけ表示されます。
  */
 export const AutocompleteClear: IAutocompleteClear = function SuiAutocompleteClear(props) {
+  const ctx = useAutocompleteContext();
   const {
+    style,
+    render,
     children = <ClearIcon />,
     className,
     "aria-label": ariaLabel = "入力値を消去",
@@ -62,7 +67,14 @@ export const AutocompleteClear: IAutocompleteClear = function SuiAutocompleteCle
   return (
     <Autocomplete.Clear
       {...otherProps}
-      className={cn(className, "sui_autocomplete_clear")}
+      {...proxyRenderProps<Autocomplete.Clear.State, AutocompleteClearState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AutocompleteClearState>(className, "sui_autocomplete_clear"),
+        },
+      )}
       aria-label={ariaLabel}
     >
       {children}

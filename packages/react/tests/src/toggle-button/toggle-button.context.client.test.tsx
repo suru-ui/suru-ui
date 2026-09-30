@@ -21,18 +21,30 @@ describe("useToggleButtonContext", () => {
     // 準備
     function Probe() {
       const ctx = useToggleButtonContext();
-      return <span>{String(ctx.pending)}</span>;
+      return <span>{[String(ctx.pending), ctx.size, ctx.color].join(",")}</span>;
     }
+
+    const provided: ToggleButtonContext = {
+      color: "blue",
+      disabled: false,
+      outlined: true,
+      pending: true,
+      pressed: false,
+      radius: "full",
+      size: "lg",
+      squared: false,
+      variant: "naked",
+    };
 
     // 実行
     const screen = await render(
-      <ToggleButtonContext value={{ disabled: false, pending: true, pressed: false }}>
+      <ToggleButtonContext value={provided}>
         <Probe />
       </ToggleButtonContext>,
     );
 
     // 検証
-    expect(screen.getByText("true").query()?.textContent).toBe("true");
+    expect(screen.getByText("true,lg,blue").query()?.textContent).toBe("true,lg,blue");
   });
 
   test("提供がないときはプロバイダー名を含むエラーを投げる", async ({ expect }) => {

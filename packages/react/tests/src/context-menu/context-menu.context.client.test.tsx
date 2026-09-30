@@ -7,6 +7,7 @@ import {
   useContextMenuContext,
 } from "../../../src/context-menu/context-menu.context.js";
 import { ContextMenuRoot } from "../../../src/context-menu/context-menu.root.jsx";
+import { ContextMenuSubmenuRoot } from "../../../src/context-menu/context-menu.submenu-root.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useContextMenuContext", () => {
@@ -50,6 +51,26 @@ describe("useContextMenuContext", () => {
 
     // 検証
     expect(screen.getByText("md,md,naked,false").query()?.textContent).toBe("md,md,naked,false");
+  });
+
+  test("サブメニューでは深さを増やす", async ({ expect }) => {
+    // 準備
+    function Probe() {
+      const ctx = useContextMenuContext();
+      return <span>{String(ctx.depth)}</span>;
+    }
+
+    // 実行
+    const screen = await render(
+      <ContextMenuRoot>
+        <ContextMenuSubmenuRoot>
+          <Probe />
+        </ContextMenuSubmenuRoot>
+      </ContextMenuRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("2").query()?.textContent).toBe("2");
   });
 
   test("提供がないときはエラーを投げる", async ({ expect }) => {

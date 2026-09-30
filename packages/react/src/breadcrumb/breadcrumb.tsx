@@ -13,6 +13,7 @@ import {
   type BreadcrumbRootColor,
   type BreadcrumbRootProps,
   type BreadcrumbRootState,
+  type IUseBreadcrumbContext,
   type BreadcrumbRootItemObject,
   type BreadcrumbSeparatorProps,
   type IBreadcrumbListItemRenderer,
@@ -21,6 +22,7 @@ import {
   BreadcrumbList,
   BreadcrumbRoot,
   BreadcrumbSeparator,
+  useBreadcrumbContext,
 } from "./breadcrumb.parts.js";
 import { decomposeItemObject } from "./breadcrumb.utils.js";
 
@@ -97,6 +99,17 @@ namespace BreadcrumbProps {
 export type BreadcrumbProps<TItem = any> = BreadcrumbProps.Breadcrumb<TItem> &
   BreadcrumbProps.Root<TItem> &
   BreadcrumbProps.List<TItem>;
+
+export interface IUseBreadcrumbAPI {
+  /**
+   * {@link BreadcrumbAPI} を作成します。
+   *
+   * @template TItem 項目の型です。
+   * @param props {@link Breadcrumb} の props です。
+   * @returns パンくずリストの API です
+   */
+  <TItem = any>(props: BreadcrumbProps<TItem>): BreadcrumbAPI<TItem>;
+}
 
 // API
 // ---
@@ -210,17 +223,6 @@ export class BreadcrumbAPI<TItem = any> {
   }
 }
 
-export interface IUseBreadcrumbAPI {
-  /**
-   * {@link BreadcrumbAPI} を作成します。
-   *
-   * @template TItem 項目の型です。
-   * @param props {@link Breadcrumb} の props です。
-   * @returns パンくずリストの API です
-   */
-  <TItem = any>(props: BreadcrumbProps<TItem>): BreadcrumbAPI<TItem>;
-}
-
 /**
  * {@link BreadcrumbAPI} を作成するフックです。
  */
@@ -238,6 +240,8 @@ export interface IBreadcrumb extends IComponent<BreadcrumbProps> {
    * @template TItem 項目の型です。
    */
   <TItem = any>(props: BreadcrumbProps<TItem>): IComponent.Return;
+
+  readonly useContext: IUseBreadcrumbContext;
 }
 
 /**
@@ -245,15 +249,20 @@ export interface IBreadcrumb extends IComponent<BreadcrumbProps> {
  *
  * {@link BreadcrumbRootProps.items|items} を順に並べ、最後の項目を現在のページとして表示します。
  */
-export const Breadcrumb: IBreadcrumb = function SuiBreadcrumb(props: BreadcrumbProps) {
-  const api = useBreadcrumbAPI(props);
+export const Breadcrumb: IBreadcrumb = Object.assign(
+  function SuiBreadcrumb(props: BreadcrumbProps) {
+    const api = useBreadcrumbAPI(props);
 
-  return (
-    <BreadcrumbRoot {...api.getRootProps()}>
-      <BreadcrumbList {...api.getListProps()} />
-    </BreadcrumbRoot>
-  );
-};
+    return (
+      <BreadcrumbRoot {...api.getRootProps()}>
+        <BreadcrumbList {...api.getListProps()} />
+      </BreadcrumbRoot>
+    );
+  },
+  {
+    useContext: useBreadcrumbContext,
+  },
+);
 
 export namespace Breadcrumb {
   export type State = BreadcrumbState;

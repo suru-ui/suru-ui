@@ -1,14 +1,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxArrow} が持つ状態です。
+ * {@link ComboboxArrow} の状態です。
  */
-export type ComboboxArrowState = Combobox.Arrow.State;
+export type ComboboxArrowState = Override<ComboboxContext, Combobox.Arrow.State>;
 
 export namespace ComboboxArrowProps {
   export type Render = RenderProps<ComboboxArrowState>;
@@ -45,15 +47,23 @@ export type IComboboxArrow = IComponent<ComboboxArrowProps>;
  * ポップアップと入力欄をつなぐ矢印要素です。
  */
 export const ComboboxArrow: IComboboxArrow = function SuiComboboxArrow(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Combobox.Arrow
       {...otherProps}
-      className={cn(
-        className,
-        "sui_combobox_arrow",
-        (state) => `sui_combobox_arrow-side_${state.side}`,
+      {...proxyRenderProps<Combobox.Arrow.State, ComboboxArrowState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxArrowState>(
+            className,
+            "sui_combobox_arrow",
+            (state) => `sui_combobox_arrow-side_${state.side}`,
+          ),
+        },
       )}
     />
   );

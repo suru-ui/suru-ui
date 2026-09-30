@@ -46,6 +46,30 @@ describe("AvatarGroupRoot", () => {
     expect(screen.getByLabelText("仲間").element().tagName).toBe("SECTION");
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AvatarGroupRoot
+        aria-label="仲間"
+        size="lg"
+        color="blue"
+        radius="none"
+        reverse
+        render={(props, state) => (
+          <section
+            {...props}
+            data-probe={`${state.size}/${state.color}/${state.radius}/${String(state.reverse)}`}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_avatar_group").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("lg/blue/none/true");
+  });
+
   test("スタイル起点として data-scope を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<AvatarGroupRoot aria-label="仲間" />);

@@ -98,6 +98,24 @@ describe("CollapsibleRoot", () => {
     expect(screen.getByClassName("sui_collapsible").element().tagName).toBe("SECTION");
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <CollapsibleRoot
+        size="lg"
+        defaultOpen
+        render={(props, state) => (
+          <section {...props} data-probe={`${state.size}/${String(state.open)}`} />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_collapsible").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("lg/true");
+  });
+
   test("子要素を描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

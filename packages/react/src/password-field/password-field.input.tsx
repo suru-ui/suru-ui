@@ -1,3 +1,4 @@
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import {
   type TextFieldInputProps,
@@ -6,8 +7,11 @@ import {
   type TextFieldInputChangeEventDetails,
   TextFieldInput,
 } from "../text-field/text-field.parts.js";
-import type { IComponent } from "../types.js";
-import { usePasswordFieldContext } from "./password-field.context.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type PasswordFieldContextState,
+  usePasswordFieldContext,
+} from "./password-field.context.js";
 
 /**
  * {@link PasswordFieldInput} の値が変更されたイベントの詳細です。
@@ -22,7 +26,7 @@ export type PasswordFieldInputChangeEventReason = TextFieldInputChangeEventReaso
 /**
  * {@link PasswordFieldInput} の状態です。
  */
-export type PasswordFieldInputState = TextFieldInputState;
+export type PasswordFieldInputState = Override<PasswordFieldContextState, TextFieldInputState>;
 
 export namespace PasswordFieldInputProps {
   export type Render = RenderProps<PasswordFieldInputState>;
@@ -61,9 +65,23 @@ export type IPasswordFieldInput = IComponent<PasswordFieldInputProps>;
  */
 export const PasswordFieldInput: IPasswordFieldInput = function SuiPasswordFieldInput(props) {
   const ctx = usePasswordFieldContext();
+  const { style, render, className, ...otherProps } = props;
 
   // 表示状態は必ずコンテキストから決まるため、利用者の指定より優先します。
-  return <TextFieldInput {...props} type={ctx.visible ? "text" : "password"} />;
+  return (
+    <TextFieldInput
+      {...otherProps}
+      type={ctx.visible ? "text" : "password"}
+      {...proxyRenderProps<TextFieldInputState, PasswordFieldInputState>(
+        (state) => ({ ...state, visible: ctx.visible }),
+        {
+          style,
+          render,
+          className,
+        },
+      )}
+    />
+  );
 };
 
 export { PasswordFieldInput as Input };

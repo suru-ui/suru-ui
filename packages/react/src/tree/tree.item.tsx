@@ -1,11 +1,12 @@
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { getSelectAction } from "./_tree.jsx";
-import { useTreeContext } from "./tree.context.js";
+import { type TreeContextState, useTreeContext } from "./tree.context.js";
 
 /**
  * ツリーの項目の配色です。
@@ -33,7 +34,30 @@ export type TreeItemVariant = "liquid" | "solid";
 /**
  * {@link TreeItem} が持つ状態です。
  */
-export type TreeItemState = {};
+export type TreeItemState = Override<
+  TreeContextState,
+  {
+    /**
+     * 項目が無効かどうかです。
+     */
+    readonly disabled: boolean;
+
+    /**
+     * 項目が展開されているかどうかです。
+     */
+    readonly expanded: boolean;
+
+    /**
+     * 項目の角丸です。
+     */
+    readonly radius: TreeItemRadius;
+
+    /**
+     * 項目が選択されているかどうかです。
+     */
+    readonly selected: boolean;
+  }
+>;
 
 export namespace TreeItemProps {
   export type Render = RenderProps<TreeItemState>;
@@ -180,6 +204,21 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
   const domId = ctx.getItemId(itemId);
   const expanded = ctx.expanded.has(itemId);
   const selected = ctx.selected.has(itemId);
+  const state = React.useMemo<TreeItemState>(
+    () => ({
+      size,
+      color,
+      muted,
+      radius,
+      variant,
+      activeId: ctx.activeId,
+      disabled,
+      expanded,
+      outlined,
+      selected,
+    }),
+    [color, ctx.activeId, disabled, expanded, muted, outlined, radius, selected, size, variant],
+  );
 
   const levelStyle = (state: TreeItemState): React.CSSProperties => {
     const result: React.CSSProperties = {};
@@ -210,27 +249,29 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
   return (
     <Button.Root
       {...otherProps}
+      {...proxyRenderProps<Button.Root.State, TreeItemState>(state, {
+        style: levelStyle,
+        render,
+        className: cn<TreeItemState>(
+          className,
+          "sui_tree_item",
+          (state) => state.expanded && "sui_tree_item-expanded",
+          (state) => state.selected && "sui_tree_item-selected",
+          (state) => state.disabled && "sui_tree_item-disabled",
+        ),
+      })}
       id={domId}
       item
       role={role}
       size={size}
       color={selected ? color : "grey"}
       muted={muted}
-      style={levelStyle}
       radius={radius}
-      render={render}
       onClick={handleClick}
       variant={selected ? variant : "naked"}
       disabled={disabled}
       outlined={selected && outlined}
       tabIndex={tabIndex}
-      className={cn(
-        className,
-        "sui_tree_item",
-        expanded && "sui_tree_item-expanded",
-        selected && "sui_tree_item-selected",
-        disabled && "sui_tree_item-disabled",
-      )}
       nativeButton={nativeButton}
       aria-level={level}
       aria-setsize={setSize}

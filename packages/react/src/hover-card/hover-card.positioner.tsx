@@ -1,14 +1,16 @@
 import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type HoverCardContext, useHoverCardContext } from "./hover-card.context.js";
 
 /**
  * {@link HoverCardPositioner} が持つ状態です。
  */
-export type HoverCardPositionerState = PreviewCard.Positioner.State;
+export type HoverCardPositionerState = Override<HoverCardContext, PreviewCard.Positioner.State>;
 
 export namespace HoverCardPositionerProps {
   export type Render = RenderProps<HoverCardPositionerState>;
@@ -56,12 +58,20 @@ export type IHoverCardPositioner = IComponent<HoverCardPositionerProps>;
  * トリガーを基準にポップアップを配置する要素です。
  */
 export const HoverCardPositioner: IHoverCardPositioner = function SuiHoverCardPositioner(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useHoverCardContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <PreviewCard.Positioner
       {...otherProps}
-      className={cn(className, "sui_hover_card_positioner")}
+      {...proxyRenderProps<PreviewCard.Positioner.State, HoverCardPositionerState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_hover_card_positioner"),
+        },
+      )}
     />
   );
 };

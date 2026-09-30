@@ -1,13 +1,22 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
+import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
-import type { IComponent } from "../types.js";
-import { useFileUploadContext } from "./file-upload.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type FileUploadContextState, useFileUploadContext } from "./file-upload.context.js";
 
 /**
  * {@link FileUploadClearTrigger} が持つ状態です。
  */
-export type FileUploadClearTriggerState = {};
+export type FileUploadClearTriggerState = Override<
+  FileUploadContextState,
+  {
+    /**
+     * このボタンを無効にするかどうかです。
+     */
+    readonly disabled: boolean;
+  }
+>;
 
 export namespace FileUploadClearTriggerProps {
   export type Render = RenderProps<FileUploadClearTriggerState>;
@@ -40,12 +49,24 @@ export type IFileUploadClearTrigger = IComponent<FileUploadClearTriggerProps>;
 export const FileUploadClearTrigger: IFileUploadClearTrigger = function SuiFileUploadClearTrigger(
   props,
 ) {
-  const ctx = useFileUploadContext(true);
+  const ctx = useFileUploadContext();
   const { disabled: disabledProp, ...otherButtonProps } = props;
-  const disabled =
-    ctx === null
-      ? (disabledProp ?? false)
-      : ctx.disabled || (disabledProp ?? false) || ctx.files.length === 0;
+  const disabled = ctx.disabled || (disabledProp ?? false) || ctx.files.length === 0;
+  const state = React.useMemo<FileUploadClearTriggerState>(
+    () => ({
+      name: ctx.name,
+      size: ctx.size,
+      color: ctx.color,
+      files: ctx.files,
+      accept: ctx.accept,
+      radius: ctx.radius,
+      variant: ctx.variant,
+      disabled,
+      multiple: ctx.multiple,
+      required: ctx.required,
+    }),
+    [ctx, disabled],
+  );
 
   return useRender({
     props: [
@@ -54,13 +75,14 @@ export const FileUploadClearTrigger: IFileUploadClearTrigger = function SuiFileU
         type: "button",
         onClick() {
           if (!disabled) {
-            ctx?.clear();
+            ctx.clear();
           }
         },
         disabled,
         className: "sui_file_upload_clear_trigger",
       },
     ],
+    state,
     defaultTagName: "button",
   });
 };

@@ -1,15 +1,16 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useContextMenuContext } from "./context-menu.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * {@link ContextMenuPositioner} が持つ状態です。
  */
-export type ContextMenuPositionerState = ContextMenu.Positioner.State;
+export type ContextMenuPositionerState = Override<ContextMenuContext, ContextMenu.Positioner.State>;
 
 export namespace ContextMenuPositionerProps {
   export type Render = RenderProps<ContextMenuPositionerState>;
@@ -64,6 +65,8 @@ export const ContextMenuPositioner: IContextMenuPositioner = function SuiContext
     // ルートメニューは上下優先、サブメニューは左右優先にします。
     side = ctx.depth === 1 ? "bottom" : "right",
     align = "start",
+    style,
+    render,
     className,
     ...otherProps
   } = props;
@@ -73,7 +76,14 @@ export const ContextMenuPositioner: IContextMenuPositioner = function SuiContext
       {...otherProps}
       side={side}
       align={align}
-      className={cn(className, "sui_context_menu_positioner")}
+      {...proxyRenderProps<ContextMenu.Positioner.State, ContextMenuPositionerState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_context_menu_positioner"),
+        },
+      )}
     />
   );
 };

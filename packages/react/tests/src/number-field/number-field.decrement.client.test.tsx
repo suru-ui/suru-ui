@@ -68,4 +68,28 @@ describe("NumberFieldDecrement", () => {
     // 検証
     expect(screen.getByRole("button", { name: "数量を減らす" }).query()).not.toBe(null);
   });
+
+  test("render の関数へスタイル情報とボタンの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <NumberFieldRoot color="blue" size="lg">
+        <NumberFieldGroup>
+          <NumberFieldInput />
+          <NumberFieldDecrement
+            render={(props, state) => (
+              <button
+                {...props}
+                data-probe={`${state.size}/${state.color}/${String(state.disabled)}`}
+              />
+            )}
+          />
+        </NumberFieldGroup>
+      </NumberFieldRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_number_field_decrement").element().getAttribute("data-probe"),
+    ).toBe("lg/blue/false");
+  });
 });

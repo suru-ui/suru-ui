@@ -1,17 +1,18 @@
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { createItemRenderer, getSegmentsItemLabel, getSegmentsItemProps } from "./_segments.jsx";
-import { useSegmentsContext } from "./segments.context.js";
+import { type SegmentsContext, useSegmentsContext } from "./segments.context.js";
 import type { SegmentsRootItemObject, ISegmentsRootItemRenderer } from "./segments.root.jsx";
 
 /**
  * {@link SegmentsList} が持つ状態です。
  */
-export type SegmentsListState = BaseTabs.List.State;
+export type SegmentsListState = Override<SegmentsContext, BaseTabs.List.State>;
 
 export namespace SegmentsListProps {
   export type Render = RenderProps<SegmentsListState>;
@@ -64,19 +65,28 @@ export interface ISegmentsList extends IComponent<SegmentsListProps> {
  * {@link SegmentsRoot} の `items` を読み取り、`children` を省略した場合は既定の並びで表示します。
  */
 export const SegmentsList: ISegmentsList = function SuiSegmentsList(props: SegmentsListProps) {
-  const ctx = useSegmentsContext(true);
+  const ctx = useSegmentsContext();
   const {
+    style,
+    render,
     children = defaultListItemRenderer,
     className,
     "aria-label": ariaLabel = "セグメント",
     ...otherProps
   } = props;
-  const items = ctx?.items ?? [];
+  const items = ctx.items;
 
   return (
     <BaseTabs.List
       {...otherProps}
-      className={cn(className, "sui_segments_list")}
+      {...proxyRenderProps<BaseTabs.List.State, SegmentsListState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SegmentsListState>(className, "sui_segments_list"),
+        },
+      )}
       aria-label={ariaLabel}
     >
       {typeof children === "function" ? items.map(children) : children}

@@ -1,14 +1,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxTriggerLabel} が持つ状態です。
+ * {@link ComboboxTriggerLabel} の状態です。
  */
-export type ComboboxTriggerLabelState = Combobox.Label.State;
+export type ComboboxTriggerLabelState = Override<ComboboxContext, Combobox.Label.State>;
 
 export namespace ComboboxTriggerLabelProps {
   export type Render = RenderProps<ComboboxTriggerLabelState>;
@@ -45,15 +47,23 @@ export type IComboboxTriggerLabel = IComponent<ComboboxTriggerLabelProps>;
  * トリガーに対応する表示ラベルです。
  */
 export const ComboboxTriggerLabel: IComboboxTriggerLabel = function SuiComboboxTriggerLabel(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Combobox.Label
       {...otherProps}
-      className={cn(
-        className,
-        "sui_combobox_trigger_label",
-        (state) => state.disabled && "sui_combobox_trigger_label-disabled",
+      {...proxyRenderProps<Combobox.Label.State, ComboboxTriggerLabelState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxTriggerLabelState>(
+            className,
+            "sui_combobox_trigger_label",
+            (state) => state.disabled && "sui_combobox_trigger_label-disabled",
+          ),
+        },
       )}
     />
   );

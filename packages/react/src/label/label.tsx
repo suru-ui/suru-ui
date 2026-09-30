@@ -26,6 +26,16 @@ export type LabelProps = LabelRootProps;
 
 export type ILabel = IComponent<LabelProps>;
 
+export interface IUseLabelAPI {
+  /**
+   * {@link LabelAPI} を作成します。
+   *
+   * @param props {@link Label} の props です。
+   * @returns ラベルの API です
+   */
+  (props: LabelProps): LabelAPI;
+}
+
 // API
 // ---
 
@@ -49,16 +59,6 @@ export class LabelAPI {
   public getRootProps(): LabelRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseLabelAPI {
-  /**
-   * {@link LabelAPI} を作成します。
-   *
-   * @param props {@link Label} の props です。
-   * @returns ラベルの API です
-   */
-  (props: LabelProps): LabelAPI;
 }
 
 /**

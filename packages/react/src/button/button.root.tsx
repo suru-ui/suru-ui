@@ -1,18 +1,24 @@
 import { Button } from "@base-ui/react/button";
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
-import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import RenderElement from "../_render-element.jsx";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { ButtonContext } from "./button.context.js";
+import {
+  type ButtonContextSize,
+  type ButtonContextColor,
+  type ButtonContextRadius,
+  type ButtonContextVariant,
+  ButtonContext,
+} from "./button.context.js";
 
 /**
  * ボタンの配色です。
  */
-export type ButtonRootColor = Color;
+export type ButtonRootColor = ButtonContextColor;
 
 /**
  * ボタンの角丸の大きさです。
@@ -24,7 +30,7 @@ export type ButtonRootColor = Color;
  * - `"full"`: 丸形
  * - `"circle"`: 完全な丸形
  */
-export type ButtonRootRadius = "none" | Size | "full" | "circle";
+export type ButtonRootRadius = ButtonContextRadius;
 
 /**
  * ボタンの大きさです。
@@ -33,7 +39,7 @@ export type ButtonRootRadius = "none" | Size | "full" | "circle";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type ButtonRootSize = Size;
+export type ButtonRootSize = ButtonContextSize;
 
 /**
  * ボタンの主な外観です。
@@ -42,12 +48,12 @@ export type ButtonRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ButtonRootVariant = ColorTemplate;
+export type ButtonRootVariant = ButtonContextVariant;
 
 /**
  * {@link ButtonRoot} が持つ状態です。
  */
-export type ButtonRootState = Button.State;
+export type ButtonRootState = ButtonContext;
 
 export namespace ButtonRootProps {
   export type Render = RenderProps<ButtonRootState>;
@@ -161,6 +167,7 @@ export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
     type = "button",
     color = "grey",
     muted = false,
+    style,
     radius = size,
     render,
     pending = false,
@@ -178,32 +185,49 @@ export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
   return (
     <Button
       {...otherProps}
+      {...proxyRenderProps<Button.State, ButtonRootState>(
+        (state) => ({
+          item,
+          size,
+          color,
+          muted,
+          radius,
+          pending,
+          squared,
+          variant,
+          outlined,
+          ...state,
+        }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <ButtonContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </ButtonContext>
+          ),
+          className: cn<ButtonRootState>(
+            className,
+            "sui_button",
+            (state) => `sui_button-size_${state.size}`,
+            (state) => `sui_button-color_${state.color}`,
+            (state) => `sui_button-radius_${state.radius}`,
+            (state) => `sui_button-variant_${state.variant}`,
+            (state) => state.item && "sui_button-item",
+            (state) => state.muted && "sui_button-muted",
+            (state) => state.outlined && "sui_button-outlined",
+            (state) => state.pending && "sui_button-pending",
+            (state) => state.squared && "sui_button-squared",
+            (state) => state.disabled && !state.pending && "sui_button-disabled",
+          ),
+        },
+      )}
       type={type}
-      render={(htmlProps, state) => (
-        <ButtonContext value={{ ...state, pending }}>
-          <RenderElement
-            state={state}
-            render={render}
-            htmlProps={htmlProps}
-            defaultTagName="button"
-          />
-        </ButtonContext>
-      )}
       disabled={disabled || pending}
-      className={cn(
-        className,
-        "sui_button",
-        `sui_button-size_${size}`,
-        `sui_button-color_${color}`,
-        `sui_button-radius_${radius}`,
-        `sui_button-variant_${variant}`,
-        item && "sui_button-item",
-        muted && "sui_button-muted",
-        outlined && "sui_button-outlined",
-        pending && "sui_button-pending",
-        squared && "sui_button-squared",
-        (state) => state.disabled && !pending && "sui_button-disabled",
-      )}
       focusableWhenDisabled={focusableWhenDisabled}
       data-scope={dataScope}
     />

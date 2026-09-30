@@ -7,6 +7,8 @@ import "../../../src/file-upload/file-upload.parts.js";
 import { FileUploadRoot } from "../../../src/file-upload/file-upload.root.jsx";
 import "../_locators.js";
 
+const textFile = new File(["hello"], "hello.txt", { type: "text/plain" });
+
 describe("FileUploadRoot", () => {
   test("既定の基底クラスとスコープの始点を持つ", async ({ expect }) => {
     // 準備と実行
@@ -70,6 +72,33 @@ describe("FileUploadRoot", () => {
     // 検証
     const root = screen.getByClassName("sui_file_upload").element();
     expect(root.classList.contains("sui_file_upload-radius_sm")).toBe(true);
+  });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <FileUploadRoot
+        size="lg"
+        color="blue"
+        radius="full"
+        variant="naked"
+        multiple
+        defaultValue={[textFile]}
+        render={(props, state) => (
+          <div
+            {...props}
+            data-probe={`${state.size}/${state.color}/${state.radius}/${state.variant}/${String(
+              state.multiple,
+            )}/${state.files.map((file) => file.name).join(",")}`}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_file_upload").element().getAttribute("data-probe")).toBe(
+      "lg/blue/full/naked/true/hello.txt",
+    );
   });
 
   test("無効を指定すると状態クラスを付ける", async ({ expect }) => {

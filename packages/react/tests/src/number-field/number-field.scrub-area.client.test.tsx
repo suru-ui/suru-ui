@@ -35,4 +35,27 @@ describe("NumberFieldScrubArea", () => {
     expect(area.classList.contains("custom")).toBe(true);
     expect(area.classList.contains("sui_number_field_scrub_area")).toBe(true);
   });
+
+  test("render の関数へスタイル情報とスクラブの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <NumberFieldRoot color="blue" size="lg">
+        <NumberFieldScrubArea
+          render={(props, state) => (
+            <span
+              {...props}
+              data-probe={`${state.size}/${state.color}/${String(state.scrubbing)}`}
+            />
+          )}
+        >
+          数量
+        </NumberFieldScrubArea>
+      </NumberFieldRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_number_field_scrub_area").element().getAttribute("data-probe"),
+    ).toBe("lg/blue/false");
+  });
 });

@@ -10,6 +10,14 @@ import type { IUseContext } from "../types.js";
 export type RadioGroupContextColor = Color;
 
 /**
+ * ラジオボタン群の向きです。
+ *
+ * - `"horizontal"`: 横並び
+ * - `"vertical"`: 縦並び
+ */
+export type RadioGroupContextOrientation = "horizontal" | "vertical";
+
+/**
  * ラジオボタンの角丸の大きさです。
  *
  * - `"none"`: 直角
@@ -51,6 +59,11 @@ export type RadioGroupContext = {
    * グループ全体を無効にするかどうかです。
    */
   readonly disabled: boolean | undefined;
+
+  /**
+   * ラジオボタン群の向きです。
+   */
+  readonly orientation: RadioGroupContextOrientation;
 
   /**
    * 枠線を表示するかどうかです。
@@ -102,6 +115,8 @@ export { RadioGroupContext as Context, useRadioGroupContext as useContext };
 
 export namespace Context {
   export type Color = RadioGroupContextColor;
+
+  export type Orientation = RadioGroupContextOrientation;
 
   export type Radius = RadioGroupContextRadius;
 

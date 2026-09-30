@@ -3,12 +3,12 @@ import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
-import { useFileUploadContext } from "./file-upload.context.js";
+import { type FileUploadContextState, useFileUploadContext } from "./file-upload.context.js";
 
 /**
  * {@link FileUploadHiddenInput} が持つ状態です。
  */
-export type FileUploadHiddenInputState = {};
+export type FileUploadHiddenInputState = FileUploadContextState;
 
 export namespace FileUploadHiddenInputProps {
   export type Render = RenderProps<FileUploadHiddenInputState>;
@@ -44,6 +44,21 @@ export const FileUploadHiddenInput: IFileUploadHiddenInput = function SuiFileUpl
   props,
 ) {
   const ctx = useFileUploadContext();
+  const state = React.useMemo<FileUploadHiddenInputState>(
+    () => ({
+      name: ctx.name,
+      size: ctx.size,
+      color: ctx.color,
+      files: ctx.files,
+      accept: ctx.accept,
+      radius: ctx.radius,
+      variant: ctx.variant,
+      disabled: ctx.disabled,
+      multiple: ctx.multiple,
+      required: ctx.required,
+    }),
+    [ctx],
+  );
 
   return useRender({
     props: [
@@ -65,6 +80,7 @@ export const FileUploadHiddenInput: IFileUploadHiddenInput = function SuiFileUpl
         className: "sui_file_upload_hidden_input",
       },
     ],
+    state,
     defaultTagName: "input",
   });
 };

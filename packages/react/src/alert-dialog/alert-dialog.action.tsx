@@ -1,12 +1,17 @@
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type AlertDialogPopupContext,
+  useAlertDialogPopupContext,
+} from "./alert-dialog.popup.context.js";
 
 /**
  * {@link AlertDialogAction} が持つ状態です。
  */
-export type AlertDialogActionState = Card.Action.State;
+export type AlertDialogActionState = Override<Card.Action.State, AlertDialogPopupContext>;
 
 export namespace AlertDialogActionProps {
   export type Render = RenderProps<AlertDialogActionState>;
@@ -34,7 +39,22 @@ export type IAlertDialogAction = IComponent<AlertDialogActionProps>;
  * 積み上げ式では右上へ重ねて配置します。
  */
 export const AlertDialogAction: IAlertDialogAction = function SuiAlertDialogAction(props) {
-  return <Card.Action {...props} className={cn(props.className, "sui_alert_dialog_action")} />;
+  const ctx = useAlertDialogPopupContext();
+  const { style, render, className, ...otherProps } = props;
+
+  return (
+    <Card.Action
+      {...otherProps}
+      {...proxyRenderProps<Card.Action.State, AlertDialogActionState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AlertDialogActionState>(className, "sui_alert_dialog_action"),
+        },
+      )}
+    />
+  );
 };
 
 export { AlertDialogAction as Action };

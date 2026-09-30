@@ -97,6 +97,16 @@ export type AlertProps = AlertProps.Alert & AlertProps.Root;
 
 export type IAlert = IComponent<AlertProps>;
 
+export interface IUseAlertAPI {
+  /**
+   * {@link AlertAPI} を作成します。
+   *
+   * @param props {@link Alert} の props です。
+   * @returns アラートの API です
+   */
+  (props: AlertProps): AlertAPI;
+}
+
 // API
 // ---
 
@@ -203,16 +213,6 @@ export class AlertAPI {
 
     return null;
   }
-}
-
-export interface IUseAlertAPI {
-  /**
-   * {@link AlertAPI} を作成します。
-   *
-   * @param props {@link Alert} の props です。
-   * @returns アラートの API です
-   */
-  (props: AlertProps): AlertAPI;
 }
 
 /**

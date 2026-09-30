@@ -82,6 +82,16 @@ namespace SidebarProps {
  */
 export type SidebarProps = SidebarProps.Sidebar & SidebarProps.Provider;
 
+export interface IUseSidebarAPI {
+  /**
+   * {@link SidebarAPI} を作成します。
+   *
+   * @param props {@link Sidebar} の props です。
+   * @returns サイドバーの API です
+   */
+  (props: SidebarProps): SidebarAPI;
+}
+
 // API
 // ---
 
@@ -114,16 +124,6 @@ export class SidebarAPI {
       ...props,
     };
   }
-}
-
-export interface IUseSidebarAPI {
-  /**
-   * {@link SidebarAPI} を作成します。
-   *
-   * @param props {@link Sidebar} の props です。
-   * @returns サイドバーの API です
-   */
-  (props: SidebarProps): SidebarAPI;
 }
 
 /**
@@ -229,19 +229,10 @@ export const Sidebar: ISidebar = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Sidebar {
-  /**
-   * {@link SidebarState} です。
-   */
   export type State = SidebarState;
 
-  /**
-   * {@link SidebarProps} です。
-   */
   export type Props = SidebarProps;
 
-  /**
-   * {@link SidebarSlotProps} です。
-   */
   export type SlotProps = SidebarSlotProps;
 
   export type Context = SidebarContext;

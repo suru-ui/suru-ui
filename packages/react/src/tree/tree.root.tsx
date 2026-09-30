@@ -9,7 +9,7 @@ import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { isItemObject, getSelectAction } from "./_tree.jsx";
-import { type TreeSelectAction, TreeContext } from "./tree.context.js";
+import { type TreeContextState, type TreeSelectAction, TreeContext } from "./tree.context.js";
 import { TreeItemIndicator } from "./tree.indicator.jsx";
 import { type TreeItemProps, TreeItem } from "./tree.item.jsx";
 import { decomposeItemObject } from "./tree.utils.js";
@@ -100,22 +100,25 @@ export type TreeRootVariant = "liquid" | "solid";
 /**
  * {@link TreeRoot} の状態です。
  */
-export type TreeRootState = {
-  /**
-   * キーボードフォーカスの対象になっているノードの識別子です。
-   */
-  readonly activeId: string | null;
+export type TreeRootState = Override<
+  TreeContextState,
+  {
+    /**
+     * キーボードフォーカスの対象になっているノードの識別子です。
+     */
+    readonly activeId: string | null;
 
-  /**
-   * 展開されているノードの識別子の一覧です。
-   */
-  readonly expanded: readonly string[];
+    /**
+     * 展開されているノードの識別子の一覧です。
+     */
+    readonly expanded: readonly string[];
 
-  /**
-   * 選択されているノードの識別子の一覧です。
-   */
-  readonly value: readonly string[];
-};
+    /**
+     * 選択されているノードの識別子の一覧です。
+     */
+    readonly value: readonly string[];
+  }
+>;
 
 export namespace TreeRootProps {
   export type Render = RenderProps<TreeRootState>;
@@ -411,6 +414,22 @@ export const TreeRoot: ITreeRoot = function SuiTreeRoot(props) {
     ],
   );
 
+  const state = React.useMemo<TreeRootState>(
+    () => ({
+      size,
+      color,
+      muted,
+      value,
+      radius,
+      variant,
+      activeId,
+      expanded: expandedValue,
+      outlined,
+      selected,
+    }),
+    [activeId, color, expandedValue, muted, outlined, radius, selected, size, value, variant],
+  );
+
   const activateElement = React.useCallback((element: HTMLElement) => {
     const itemId = element.dataset["id"] ?? null;
     setActiveId(itemId);
@@ -565,8 +584,8 @@ export const TreeRoot: ITreeRoot = function SuiTreeRoot(props) {
         tabIndex: 0,
         className: cn<TreeRootState>(
           "sui_tree",
-          `sui_tree-radius_${radius}`,
-          `sui_tree-size_${size}`,
+          (state) => `sui_tree-radius_${state.radius}`,
+          (state) => `sui_tree-size_${state.size}`,
         ),
         onKeyDown: handleKeyDown,
         "aria-multiselectable": true,
@@ -574,11 +593,7 @@ export const TreeRoot: ITreeRoot = function SuiTreeRoot(props) {
         "data-scope": dataScope,
       },
     ],
-    state: {
-      value,
-      activeId,
-      expanded: expandedValue,
-    },
+    state,
     defaultTagName: "div",
   });
 

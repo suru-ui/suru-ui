@@ -99,6 +99,16 @@ export type ScrollAreaProps = ScrollAreaProps.ScrollArea & ScrollAreaProps.Root;
 
 export type IScrollArea = IComponent<ScrollAreaProps>;
 
+export interface IUseScrollAreaAPI {
+  /**
+   * {@link ScrollAreaAPI} を作成します。
+   *
+   * @param props {@link ScrollArea} の props です。
+   * @returns スクロール領域の API です
+   */
+  (props: ScrollAreaProps): ScrollAreaAPI;
+}
+
 // API
 // ---
 
@@ -216,16 +226,6 @@ export class ScrollAreaAPI {
 
     return props;
   }
-}
-
-export interface IUseScrollAreaAPI {
-  /**
-   * {@link ScrollAreaAPI} を作成します。
-   *
-   * @param props {@link ScrollArea} の props です。
-   * @returns スクロール領域の API です
-   */
-  (props: ScrollAreaProps): ScrollAreaAPI;
 }
 
 /**

@@ -4,10 +4,11 @@ import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ClearIcon } from "../_icons.jsx";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useComboboxContext } from "./combobox.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 import { useComboboxItemContext } from "./combobox.item.context.js";
 
 /**
@@ -22,9 +23,9 @@ import { useComboboxItemContext } from "./combobox.item.context.js";
 export type ComboboxChipRemoveRadius = "none" | Size | "full";
 
 /**
- * {@link ComboboxChipRemove} が持つ状態です。
+ * {@link ComboboxChipRemove} の状態です。
  */
-export type ComboboxChipRemoveState = Combobox.ChipRemove.State;
+export type ComboboxChipRemoveState = Override<ComboboxContext, Combobox.ChipRemove.State>;
 
 export namespace ComboboxChipRemoveProps {
   export type Render = RenderProps<ComboboxChipRemoveState>;
@@ -74,7 +75,9 @@ export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipR
   const itemCtx = useComboboxItemContext();
   const label = ctx.itemToStringLabel(itemCtx.value);
   const {
+    style,
     radius = ctx.radius,
+    render,
     children = <ClearIcon />,
     className,
     "aria-label": ariaLabel = label ? `${label}を削除` : "選択値を削除",
@@ -84,10 +87,17 @@ export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipR
   return (
     <Combobox.ChipRemove
       {...otherProps}
-      className={cn(
-        className,
-        "sui_combobox_chip_remove",
-        `sui_combobox_chip_remove-radius_${radius}`,
+      {...proxyRenderProps<Combobox.ChipRemove.State, ComboboxChipRemoveState>(
+        (state) => ({ ...ctx, radius, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxChipRemoveState>(
+            className,
+            "sui_combobox_chip_remove",
+            (state) => `sui_combobox_chip_remove-radius_${state.radius}`,
+          ),
+        },
       )}
       aria-label={ariaLabel}
     >

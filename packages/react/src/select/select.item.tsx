@@ -8,12 +8,15 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { useSelectContext } from "./select.context.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectItem} が持つ状態です。
  */
-export type SelectItemState = Override<Button.ButtonRootState, BaseSelect.Item.State>;
+export type SelectItemState = Override<
+  SelectContext,
+  Override<Button.Root.State, BaseSelect.Item.State>
+>;
 
 export namespace SelectItemProps {
   export type Render = RenderProps<SelectItemState>;
@@ -21,7 +24,7 @@ export namespace SelectItemProps {
   export type SuruUI = {};
 
   export type BaseUI = Override<
-    Button.ButtonRootProps.BaseUI,
+    Button.Root.Props.BaseUI,
     Pick<
       React.ComponentProps<typeof BaseSelect.Item>,
       Exclude<
@@ -87,11 +90,11 @@ export const SelectItem: ISelectItem = function SuiSelectItem(props) {
     <BaseSelect.Item
       {...otherProps}
       {...baseuiProps}
-      render={(htmlProps: {}, state) => {
+      render={(htmlProps: {}, itemState) => {
         const buttonRootProps: Required<
-          Button.ButtonRootProps.SuruUI &
-            Button.ButtonRootProps.BaseUI &
-            Pick<Button.ButtonRootProps.HTML, "disabled">
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
         > = {
           item: true,
           size: ctx.size,
@@ -101,7 +104,7 @@ export const SelectItem: ISelectItem = function SuiSelectItem(props) {
           pending: undefined,
           squared: undefined,
           variant: "naked",
-          disabled: state.disabled,
+          disabled: itemState.disabled,
           outlined: undefined,
           nativeButton,
           focusableWhenDisabled,
@@ -112,17 +115,20 @@ export const SelectItem: ISelectItem = function SuiSelectItem(props) {
             {...mergeProps<typeof Button.Root>([
               htmlProps,
               buttonRootProps,
-              proxyRenderProps(state, {
-                style,
-                render,
-                className: cn(
-                  className,
-                  "sui_select_item",
-                  (state) => state.disabled && "sui_select_item-disabled",
-                  (state) => state.selected && "sui_select_item-selected",
-                  (state) => state.highlighted && "sui_select_item-highlighted",
-                ),
-              }),
+              proxyRenderProps<Button.Root.State, SelectItemState>(
+                (state) => ({ ...ctx, ...state, ...itemState }),
+                {
+                  style,
+                  render,
+                  className: cn<SelectItemState>(
+                    className,
+                    "sui_select_item",
+                    (state) => state.disabled && "sui_select_item-disabled",
+                    (state) => state.selected && "sui_select_item-selected",
+                    (state) => state.highlighted && "sui_select_item-highlighted",
+                  ),
+                },
+              ),
             ])}
           />
         );

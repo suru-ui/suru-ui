@@ -1,14 +1,19 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompleteGroupLabel} の状態です。
  */
-export type AutocompleteGroupLabelState = Autocomplete.GroupLabel.State;
+export type AutocompleteGroupLabelState = Override<
+  AutocompleteContext,
+  Autocomplete.GroupLabel.State
+>;
 
 export namespace AutocompleteGroupLabelProps {
   export type Render = RenderProps<AutocompleteGroupLabelState>;
@@ -47,12 +52,20 @@ export type IAutocompleteGroupLabel = IComponent<AutocompleteGroupLabelProps>;
 export const AutocompleteGroupLabel: IAutocompleteGroupLabel = function SuiAutocompleteGroupLabel(
   props,
 ) {
-  const { className, ...otherProps } = props;
+  const ctx = useAutocompleteContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Autocomplete.GroupLabel
       {...otherProps}
-      className={cn(className, "sui_autocomplete_group_label")}
+      {...proxyRenderProps<Autocomplete.GroupLabel.State, AutocompleteGroupLabelState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AutocompleteGroupLabelState>(className, "sui_autocomplete_group_label"),
+        },
+      )}
     />
   );
 };

@@ -173,19 +173,40 @@ describe("ResizablePanel", () => {
     },
   );
 
-  test("className を状態に応じて解決する", async ({ expect }) => {
+  test("className と style を状態に応じて解決する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <div style={{ height: 100, width: 400 }}>
         <ResizableRoot orientation="vertical">
-          <ResizablePanel className={(state) => `custom-${state.orientation}`} />
+          <ResizablePanel
+            className={(state) => `custom-${state.orientation}`}
+            style={(state) => ({ opacity: state.orientation === "vertical" ? "0.5" : "1" })}
+          />
         </ResizableRoot>
       </div>,
     );
 
     // 検証
-    expect(
-      screen.getByClassName("sui_resizable_panel").element().classList.contains("custom-vertical"),
-    ).toBe(true);
+    const panel = screen.getByClassName("sui_resizable_panel").element();
+    expect(panel.classList.contains("custom-vertical")).toBe(true);
+    expect(panel.style.opacity).toBe("0.5");
+  });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <div style={{ height: 100, width: 400 }}>
+        <ResizableRoot orientation="vertical">
+          <ResizablePanel
+            render={(props, state) => <section {...props} data-probe={state.orientation} />}
+          />
+        </ResizableRoot>
+      </div>,
+    );
+
+    // 検証
+    const panel = screen.getByClassName("sui_resizable_panel").element();
+    expect(panel.tagName).toBe("SECTION");
+    expect(panel.getAttribute("data-probe")).toBe("vertical");
   });
 });

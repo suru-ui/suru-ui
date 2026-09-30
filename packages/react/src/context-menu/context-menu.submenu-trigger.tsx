@@ -8,7 +8,7 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { useContextMenuContext } from "./context-menu.context.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * サブメニュー項目の配色です。
@@ -33,8 +33,8 @@ export type ContextMenuSubmenuTriggerVariant = Button.Root.Variant;
  * {@link ContextMenuSubmenuTrigger} が持つ状態です。
  */
 export type ContextMenuSubmenuTriggerState = Override<
-  Button.Root.State,
-  ContextMenu.SubmenuTrigger.State
+  ContextMenuContext,
+  Override<Button.Root.State, ContextMenu.SubmenuTrigger.State>
 >;
 
 export namespace ContextMenuSubmenuTriggerProps {
@@ -140,7 +140,7 @@ export const ContextMenuSubmenuTrigger: IContextMenuSubmenuTrigger =
       <ContextMenu.SubmenuTrigger
         {...otherProps}
         {...baseuiProps}
-        render={(htmlProps: {}, state) => {
+        render={(htmlProps: {}, itemState) => {
           const buttonRootProps: Required<
             Button.Root.Props.SuruUI &
               Button.Root.Props.BaseUI &
@@ -154,7 +154,7 @@ export const ContextMenuSubmenuTrigger: IContextMenuSubmenuTrigger =
             pending: undefined,
             squared: undefined,
             variant,
-            disabled: state.disabled,
+            disabled: itemState.disabled,
             outlined: undefined,
             nativeButton,
             focusableWhenDisabled,
@@ -165,18 +165,21 @@ export const ContextMenuSubmenuTrigger: IContextMenuSubmenuTrigger =
               {...mergeProps<typeof Button.Root>([
                 htmlProps,
                 buttonRootProps,
-                proxyRenderProps(state, {
-                  style,
-                  render,
-                  className: cn(
-                    className,
-                    "sui_context_menu_item",
-                    "sui_context_menu_submenu_trigger",
-                    (state) => state.disabled && "sui_context_menu_item-disabled",
-                    (state) => state.highlighted && "sui_context_menu_item-highlighted",
-                    (state) => state.open && "sui_context_menu_item-open",
-                  ),
-                }),
+                proxyRenderProps<Button.Root.State, ContextMenuSubmenuTriggerState>(
+                  (state) => ({ ...ctx, ...state, ...itemState }),
+                  {
+                    style,
+                    render,
+                    className: cn<ContextMenuSubmenuTriggerState>(
+                      className,
+                      "sui_context_menu_item",
+                      "sui_context_menu_submenu_trigger",
+                      (state) => state.disabled && "sui_context_menu_item-disabled",
+                      (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                      (state) => state.open && "sui_context_menu_item-open",
+                    ),
+                  },
+                ),
               ])}
             />
           );

@@ -1,14 +1,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxGroupLabel} が持つ状態です。
+ * {@link ComboboxGroupLabel} の状態です。
  */
-export type ComboboxGroupLabelState = Combobox.GroupLabel.State;
+export type ComboboxGroupLabelState = Override<ComboboxContext, Combobox.GroupLabel.State>;
 
 export namespace ComboboxGroupLabelProps {
   export type Render = RenderProps<ComboboxGroupLabelState>;
@@ -45,10 +47,21 @@ export type IComboboxGroupLabel = IComponent<ComboboxGroupLabelProps>;
  * 候補グループの見出し要素です。
  */
 export const ComboboxGroupLabel: IComboboxGroupLabel = function SuiComboboxGroupLabel(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
-    <Combobox.GroupLabel {...otherProps} className={cn(className, "sui_combobox_group_label")} />
+    <Combobox.GroupLabel
+      {...otherProps}
+      {...proxyRenderProps<Combobox.GroupLabel.State, ComboboxGroupLabelState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxGroupLabelState>(className, "sui_combobox_group_label"),
+        },
+      )}
+    />
   );
 };
 

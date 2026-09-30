@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectLabel} が持つ状態です。
  */
-export type SelectLabelState = BaseSelect.Label.State;
+export type SelectLabelState = Override<SelectContext, BaseSelect.Label.State>;
 
 export namespace SelectLabelProps {
   export type Render = RenderProps<SelectLabelState>;
@@ -45,9 +47,22 @@ export type ISelectLabel = IComponent<SelectLabelProps>;
  * 選択欄に対応する表示ラベルです。
  */
 export const SelectLabel: ISelectLabel = function SuiSelectLabel(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <BaseSelect.Label {...otherProps} className={cn(className, "sui_select_label")} />;
+  return (
+    <BaseSelect.Label
+      {...otherProps}
+      {...proxyRenderProps<BaseSelect.Label.State, SelectLabelState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_label"),
+        },
+      )}
+    />
+  );
 };
 
 export { SelectLabel as Label };

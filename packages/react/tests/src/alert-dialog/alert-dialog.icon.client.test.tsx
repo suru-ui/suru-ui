@@ -99,4 +99,46 @@ describe("AlertDialogIcon", () => {
     // 検証
     expect(screen.getByClassName("sui_alert_dialog_icon").element().tagName).toBe("SPAN");
   });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertDialogIcon
+        color="blue"
+        muted
+        outlined
+        radius="full"
+        size="lg"
+        variant="solid"
+        render={(props, state) => (
+          <div
+            {...props}
+            data-probe={`${state.size}/${state.color}/${state.radius}/${state.variant}/${state.muted}/${state.outlined}`}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_alert_dialog_icon").element().getAttribute("data-probe"),
+    ).toBe("lg/blue/full/solid/true/true");
+  });
+
+  test("className と style の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertDialogIcon
+        muted
+        variant="solid"
+        className={(state) => `probe-variant_${state.variant}`}
+        style={(state) => ({ opacity: state.muted ? "0.5" : "1" })}
+      />,
+    );
+
+    // 検証
+    const icon = screen.getByClassName("sui_alert_dialog_icon").element();
+    expect(icon.classList.contains("probe-variant_solid")).toBe(true);
+    expect(icon.style.opacity).toBe("0.5");
+  });
 });

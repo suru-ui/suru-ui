@@ -58,6 +58,17 @@ namespace MenubarProps {
  */
 export type MenubarProps<TItem = any> = MenubarProps.Menubar & MenubarProps.Root<TItem>;
 
+export interface IUseMenubarAPI {
+  /**
+   * {@link MenubarAPI} を作成します。
+   *
+   * @template TItem 項目の型です。
+   * @param props {@link Menubar} の props です。
+   * @returns メニューバーの API です。
+   */
+  <TItem = any>(props: MenubarProps<TItem>): MenubarAPI<TItem>;
+}
+
 // API
 // ---
 
@@ -124,17 +135,6 @@ export class MenubarAPI<TItem = any> {
       children,
     };
   }
-}
-
-export interface IUseMenubarAPI {
-  /**
-   * {@link MenubarAPI} を作成します。
-   *
-   * @template TItem 項目の型です。
-   * @param props {@link Menubar} の props です。
-   * @returns メニューバーの API です。
-   */
-  <TItem = any>(props: MenubarProps<TItem>): MenubarAPI<TItem>;
 }
 
 /**

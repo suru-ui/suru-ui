@@ -69,6 +69,16 @@ namespace AvatarGroupProps {
  */
 export type AvatarGroupProps = AvatarGroupProps.AvatarGroup & AvatarGroupProps.Root;
 
+export interface IUseAvatarGroupAPI {
+  /**
+   * {@link AvatarGroupAPI} を作成します。
+   *
+   * @param props {@link AvatarGroup} の props です。
+   * @returns アバターグループの API です
+   */
+  (props: AvatarGroupProps): AvatarGroupAPI;
+}
+
 // API
 // ---
 
@@ -129,16 +139,6 @@ export class AvatarGroupAPI {
   private getVisibleCount(childCount: number): number {
     return childCount > this.max ? Math.max(0, this.max - 1) : Math.max(0, this.max);
   }
-}
-
-export interface IUseAvatarGroupAPI {
-  /**
-   * {@link AvatarGroupAPI} を作成します。
-   *
-   * @param props {@link AvatarGroup} の props です。
-   * @returns アバターグループの API です
-   */
-  (props: AvatarGroupProps): AvatarGroupAPI;
 }
 
 /**

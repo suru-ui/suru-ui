@@ -63,6 +63,16 @@ export type CheckboxProps = CheckboxProps.Checkbox & CheckboxProps.Root & Checkb
 
 export type ICheckbox = IComponent<CheckboxProps>;
 
+export interface IUseCheckboxAPI {
+  /**
+   * {@link CheckboxAPI} を作成します。
+   *
+   * @param props {@link Checkbox} の props です。
+   * @returns チェックボックスの API です。
+   */
+  (props: CheckboxProps): CheckboxAPI;
+}
+
 // API
 // ---
 
@@ -105,16 +115,6 @@ export class CheckboxAPI {
   public getRootProps(): Omit<CheckboxRootProps, "children"> {
     return this.rootProps;
   }
-}
-
-export interface IUseCheckboxAPI {
-  /**
-   * {@link CheckboxAPI} を作成します。
-   *
-   * @param props {@link Checkbox} の props です。
-   * @returns チェックボックスの API です。
-   */
-  (props: CheckboxProps): CheckboxAPI;
 }
 
 /**

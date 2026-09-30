@@ -9,8 +9,7 @@ import {
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { useResizableContext } from "./resizable.context.js";
-import type { ResizableRootOrientation } from "./resizable.root.jsx";
+import { type ResizableContext, useResizableContext } from "./resizable.context.js";
 
 /**
  * リサイズ可能なパネルのサイズです。
@@ -22,15 +21,10 @@ export type ResizablePanelSize = number | string;
 /**
  * {@link ResizablePanel} が持つ状態です。
  */
-export type ResizablePanelState = {
-  /**
-   * パネル群の向きです。
-   */
-  readonly orientation: ResizableRootOrientation;
-};
+export type ResizablePanelState = ResizableContext;
 
 export namespace ResizablePanelProps {
-  export type Render = Omit<RenderProps<ResizablePanelState>, "render">;
+  export type Render = RenderProps<ResizablePanelState>;
 
   export type SuruUI = {
     /**
@@ -118,6 +112,7 @@ export const ResizablePanel: IResizablePanel = function SuiResizablePanel(props)
   const ctx = useResizableContext();
   const {
     size: sizeProp,
+    render = <ExternalPanel />,
     maxSize,
     minSize,
     children,
@@ -147,9 +142,8 @@ export const ResizablePanel: IResizablePanel = function SuiResizablePanel(props)
 
   return useRender({
     props: [
-      otherProps,
+      { ...otherProps, render },
       {
-        render: <ExternalPanel />,
         maxSize: normalizePanelSize(maxSize),
         minSize: normalizePanelSize(minSize),
         children,
@@ -159,9 +153,7 @@ export const ResizablePanel: IResizablePanel = function SuiResizablePanel(props)
         defaultSize: normalizePanelSize(defaultSize ?? sizeProp),
       },
     ],
-    state: {
-      orientation: ctx.orientation,
-    },
+    state: ctx,
     defaultTagName: "div",
   });
 };

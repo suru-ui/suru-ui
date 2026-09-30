@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectValue} が持つ状態です。
  */
-export type SelectValueState = BaseSelect.Value.State;
+export type SelectValueState = Override<SelectContext, BaseSelect.Value.State>;
 
 export namespace SelectValueProps {
   export type Render = RenderProps<SelectValueState>;
@@ -45,15 +47,23 @@ export type ISelectValue = IComponent<SelectValueProps>;
  * 現在の選択値またはプレースホルダーを表示する要素です。
  */
 export const SelectValue: ISelectValue = function SuiSelectValue(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <BaseSelect.Value
       {...otherProps}
-      className={cn(
-        className,
-        "sui_select_value",
-        (state) => state.placeholder && "sui_select_value-placeholder",
+      {...proxyRenderProps<BaseSelect.Value.State, SelectValueState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SelectValueState>(
+            className,
+            "sui_select_value",
+            (state) => state.placeholder && "sui_select_value-placeholder",
+          ),
+        },
       )}
     />
   );

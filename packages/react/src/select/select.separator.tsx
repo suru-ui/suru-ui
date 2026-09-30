@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectSeparator} が持つ状態です。
  */
-export type SelectSeparatorState = BaseSelect.Separator.State;
+export type SelectSeparatorState = Override<SelectContext, BaseSelect.Separator.State>;
 
 export namespace SelectSeparatorProps {
   export type Render = RenderProps<SelectSeparatorState>;
@@ -45,9 +47,22 @@ export type ISelectSeparator = IComponent<SelectSeparatorProps>;
  * 項目やグループを区切る要素です。
  */
 export const SelectSeparator: ISelectSeparator = function SuiSelectSeparator(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <BaseSelect.Separator {...otherProps} className={cn(className, "sui_select_separator")} />;
+  return (
+    <BaseSelect.Separator
+      {...otherProps}
+      {...proxyRenderProps<BaseSelect.Separator.State, SelectSeparatorState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_separator"),
+        },
+      )}
+    />
+  );
 };
 
 export { SelectSeparator as Separator };

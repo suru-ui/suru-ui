@@ -117,6 +117,31 @@ describe("FileUploadDropzone", () => {
     });
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備
+    const screen = await render(
+      <FileUploadRoot size="lg">
+        <FileUploadDropzone
+          render={(props, state) => (
+            <button {...props} data-probe={`${state.size}/${String(state.dragging)}`} />
+          )}
+        />
+      </FileUploadRoot>,
+    );
+    const dropzone = screen.getByClassName("sui_file_upload_dropzone").element();
+
+    // 検証
+    expect(dropzone.getAttribute("data-probe")).toBe("lg/false");
+
+    // 実行
+    dropzone.dispatchEvent(createDragEvent("dragenter", []));
+
+    // 検証
+    await vi.waitFor(() => {
+      expect(dropzone.getAttribute("data-probe")).toBe("lg/true");
+    });
+  });
+
   test("ドロップしたファイルを選択する", async ({ expect }) => {
     // 準備
     const screen = await render(

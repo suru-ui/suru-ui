@@ -41,6 +41,16 @@ export type InputProps = InputRootProps;
 
 export type IInput = IComponent<InputProps>;
 
+export interface IUseInputAPI {
+  /**
+   * {@link InputAPI} を作成します。
+   *
+   * @param props {@link Input} の props です。
+   * @returns テキスト入力欄の API です
+   */
+  (props: InputProps): InputAPI;
+}
+
 // API
 // ---
 
@@ -64,16 +74,6 @@ export class InputAPI {
   public getRootProps(): InputRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseInputAPI {
-  /**
-   * {@link InputAPI} を作成します。
-   *
-   * @param props {@link Input} の props です。
-   * @returns テキスト入力欄の API です
-   */
-  (props: InputProps): InputAPI;
 }
 
 /**

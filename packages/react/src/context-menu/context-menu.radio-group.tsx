@@ -3,10 +3,12 @@ import * as React from "react";
 
 import { CheckIcon } from "../_icons.jsx";
 import { getItemKey } from "../_item.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { isRadioItemObject } from "./_context-menu.utils.jsx";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 import { ContextMenuRadioItemIndicator } from "./context-menu.radio-item-indicator.jsx";
 import { ContextMenuRadioItem } from "./context-menu.radio-item.jsx";
 
@@ -40,7 +42,7 @@ export interface IContextMenuRadioGroupItemRenderer<TItem = any> {
 /**
  * {@link ContextMenuRadioGroup} が持つ状態です。
  */
-export type ContextMenuRadioGroupState = ContextMenu.RadioGroup.State;
+export type ContextMenuRadioGroupState = Override<ContextMenuContext, ContextMenu.RadioGroup.State>;
 
 export namespace ContextMenuRadioGroupProps {
   export type Render = RenderProps<ContextMenuRadioGroupState>;
@@ -96,15 +98,23 @@ export interface IContextMenuRadioGroup extends IComponent<ContextMenuRadioGroup
 export const ContextMenuRadioGroup: IContextMenuRadioGroup = function SuiContextMenuRadioGroup(
   props: ContextMenuRadioGroupProps,
 ) {
-  const { items, children = defaultItemRenderer, className, ...otherProps } = props;
+  const ctx = useContextMenuContext();
+  const { items, style, render, children = defaultItemRenderer, className, ...otherProps } = props;
 
   return (
     <ContextMenu.RadioGroup
       {...otherProps}
-      className={cn(
-        className,
-        "sui_context_menu_radio_group",
-        (state) => state.disabled && "sui_context_menu_radio_group-disabled",
+      {...proxyRenderProps<ContextMenu.RadioGroup.State, ContextMenuRadioGroupState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ContextMenuRadioGroupState>(
+            className,
+            "sui_context_menu_radio_group",
+            (state) => state.disabled && "sui_context_menu_radio_group-disabled",
+          ),
+        },
       )}
     >
       {typeof children === "function" ? items?.map(children) : children}

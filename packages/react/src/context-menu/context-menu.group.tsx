@@ -1,14 +1,16 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * {@link ContextMenuGroup} が持つ状態です。
  */
-export type ContextMenuGroupState = ContextMenu.Group.State;
+export type ContextMenuGroupState = Override<ContextMenuContext, ContextMenu.Group.State>;
 
 export namespace ContextMenuGroupProps {
   export type Render = RenderProps<ContextMenuGroupState>;
@@ -45,9 +47,22 @@ export type IContextMenuGroup = IComponent<ContextMenuGroupProps>;
  * 関連するコンテキストメニュー項目をまとめるグループ要素です。
  */
 export const ContextMenuGroup: IContextMenuGroup = function SuiContextMenuGroup(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useContextMenuContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <ContextMenu.Group {...otherProps} className={cn(className, "sui_context_menu_group")} />;
+  return (
+    <ContextMenu.Group
+      {...otherProps}
+      {...proxyRenderProps<ContextMenu.Group.State, ContextMenuGroupState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_context_menu_group"),
+        },
+      )}
+    />
+  );
 };
 
 export { ContextMenuGroup as Group };

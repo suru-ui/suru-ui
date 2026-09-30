@@ -1,15 +1,17 @@
 import { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type TooltipContext, useTooltipContext } from "./tooltip.context.js";
 import type { TooltipHandle } from "./tooltip.handle.js";
 
 /**
  * {@link TooltipTrigger} が持つ状態です。
  */
-export type TooltipTriggerState = Tooltip.Trigger.State;
+export type TooltipTriggerState = Override<TooltipContext, Tooltip.Trigger.State>;
 
 export namespace TooltipTriggerProps {
   export type Render = Omit<RenderProps<TooltipTriggerState>, "render">;
@@ -20,7 +22,7 @@ export namespace TooltipTriggerProps {
      *
      * Base UI の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
      */
-    children: NonNullable<Tooltip.Trigger.Props<TPayload>["render"]>;
+    children: NonNullable<RenderProps<TooltipTriggerState>["render"]>;
 
     /**
      * ツールチップを関連付けるハンドルです。
@@ -83,14 +85,21 @@ export interface ITooltipTrigger extends IComponent<TooltipTriggerProps> {
 export const TooltipTrigger: ITooltipTrigger = function SuiTooltipTrigger<TPayload>(
   props: TooltipTriggerProps<TPayload>,
 ) {
-  const { handle, children, className, keepOpenOnClick = false, ...otherProps } = props;
+  const ctx = useTooltipContext(true);
+  const { style, handle, children, className, keepOpenOnClick = false, ...otherProps } = props;
 
   return (
     <Tooltip.Trigger
       {...otherProps}
       handle={handle}
-      render={children}
-      className={cn(className, "sui_tooltip_trigger")}
+      {...proxyRenderProps<Tooltip.Trigger.State, TooltipTriggerState>(
+        (state) => ({ size: "md", radius: "md", outlined: false, ...ctx, ...state }),
+        {
+          style,
+          render: children,
+          className: cn(className, "sui_tooltip_trigger"),
+        },
+      )}
       closeOnClick={!keepOpenOnClick}
     />
   );

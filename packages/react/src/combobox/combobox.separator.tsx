@@ -3,14 +3,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxSeparator} が持つ状態です。
+ * {@link ComboboxSeparator} の状態です。
  */
-export type ComboboxSeparatorState = Combobox.Separator.State;
+export type ComboboxSeparatorState = Override<ComboboxContext, Combobox.Separator.State>;
 
 export namespace ComboboxSeparatorProps {
   export type Render = RenderProps<ComboboxSeparatorState>;
@@ -47,9 +49,22 @@ export type IComboboxSeparator = IComponent<ComboboxSeparatorProps>;
  * 項目やグループを区切る要素です。
  */
 export const ComboboxSeparator: IComboboxSeparator = function SuiComboboxSeparator(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Combobox.Separator {...otherProps} className={cn(className, "sui_combobox_separator")} />;
+  return (
+    <Combobox.Separator
+      {...otherProps}
+      {...proxyRenderProps<Combobox.Separator.State, ComboboxSeparatorState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxSeparatorState>(className, "sui_combobox_separator"),
+        },
+      )}
+    />
+  );
 };
 
 export { ComboboxSeparator as Separator };

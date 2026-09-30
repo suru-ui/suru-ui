@@ -1,7 +1,7 @@
 import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
@@ -17,7 +17,7 @@ export type MenuSubmenuRootChangeEventReason = Menu.SubmenuRoot.ChangeEventReaso
 /**
  * {@link MenuSubmenuRoot} が持つ状態です。
  */
-export type MenuSubmenuRootState = Menu.SubmenuRoot.State;
+export type MenuSubmenuRootState = Override<MenuContext, Menu.SubmenuRoot.State>;
 
 export namespace MenuSubmenuRootProps {
   export type Render = {};

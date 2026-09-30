@@ -2,13 +2,22 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type FileUploadContextState, useFileUploadContext } from "./file-upload.context.js";
 import { FileUploadItemContext } from "./file-upload.item.context.js";
 
 /**
  * {@link FileUploadItem} が持つ状態です。
  */
-export type FileUploadItemState = {};
+export type FileUploadItemState = Override<
+  FileUploadContextState,
+  {
+    /**
+     * 表示対象のファイルです。
+     */
+    readonly file: File;
+  }
+>;
 
 export namespace FileUploadItemProps {
   export type Render = RenderProps<FileUploadItemState>;
@@ -41,11 +50,27 @@ export type IFileUploadItem = IComponent<FileUploadItemProps>;
 /**
  * 選択済みファイル 1 件を表示する項目です。
  *
- * 子パーツへファイルを伝播します。
+ * 子パーツへファイルとルートの状態を伝播します。
  */
 export const FileUploadItem: IFileUploadItem = function SuiFileUploadItem(props) {
+  const ctx = useFileUploadContext();
   const { file, ...otherLiProps } = props;
-  const ctx = React.useMemo<FileUploadItemContext>(() => ({ file }), [file]);
+  const state = React.useMemo<FileUploadItemState>(
+    () => ({
+      file,
+      name: ctx.name,
+      size: ctx.size,
+      color: ctx.color,
+      files: ctx.files,
+      accept: ctx.accept,
+      radius: ctx.radius,
+      variant: ctx.variant,
+      disabled: ctx.disabled,
+      multiple: ctx.multiple,
+      required: ctx.required,
+    }),
+    [ctx, file],
+  );
   const element = useRender({
     props: [
       otherLiProps,
@@ -53,10 +78,11 @@ export const FileUploadItem: IFileUploadItem = function SuiFileUploadItem(props)
         className: "sui_file_upload_item",
       },
     ],
+    state,
     defaultTagName: "li",
   });
 
-  return <FileUploadItemContext value={ctx}>{element}</FileUploadItemContext>;
+  return <FileUploadItemContext value={state}>{element}</FileUploadItemContext>;
 };
 
 export { FileUploadItem as Item };

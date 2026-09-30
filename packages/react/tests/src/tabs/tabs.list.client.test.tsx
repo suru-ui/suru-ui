@@ -74,6 +74,26 @@ describe("TabsList", () => {
     expect(screen.getByRole("tablist", { name: "表示切り替え" }).query()).not.toBe(null);
   });
 
+  test("render と className の関数へスタイル情報と項目を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TabsRoot items={[...items]} size="lg">
+        <TabsList
+          className={(state) => `probe-size_${state.size}`}
+          render={(props, state) => (
+            <div {...props} data-probe={`${state.size}/${state.items.length}`} />
+          )}
+        />
+      </TabsRoot>,
+    );
+
+    // 検証
+    const list = screen.getByRole("tablist").element();
+    expect(list.tagName).toBe("DIV");
+    expect(list.getAttribute("data-probe")).toBe("lg/3");
+    expect(list.classList.contains("probe-size_lg")).toBe(true);
+  });
+
   test("関数の children に項目とインデックスと項目一覧を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

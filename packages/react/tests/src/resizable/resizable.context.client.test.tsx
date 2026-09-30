@@ -68,6 +68,29 @@ describe("useResizableContext", () => {
     expect(screen.getByText("なし").query()?.textContent).toBe("なし");
   });
 
+  test("向きの変更を再提供する", async ({ expect }) => {
+    // 準備
+    function Probe() {
+      const ctx = useResizableContext();
+      return <span>{ctx.orientation}</span>;
+    }
+    const screen = await render(
+      <ResizableRoot orientation="horizontal">
+        <Probe />
+      </ResizableRoot>,
+    );
+
+    // 実行
+    await screen.rerender(
+      <ResizableRoot orientation="vertical">
+        <Probe />
+      </ResizableRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("vertical").query()?.textContent).toBe("vertical");
+  });
+
   test("直接提供した値を返す", async ({ expect }) => {
     // 準備
     const provided = { orientation: "vertical" } as const;

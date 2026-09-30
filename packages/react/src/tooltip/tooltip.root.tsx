@@ -1,7 +1,7 @@
 import { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import type { TooltipContextSize, TooltipContextRadius } from "./tooltip.context.js";
 import { TooltipContext } from "./tooltip.context.js";
 import type { TooltipHandle } from "./tooltip.handle.js";
@@ -43,7 +43,7 @@ export type TooltipRootSize = TooltipContextSize;
 /**
  * {@link TooltipRoot} が持つ状態です。
  */
-export type TooltipRootState = Tooltip.Root.State;
+export type TooltipRootState = Override<TooltipContext, Tooltip.Root.State>;
 
 export namespace TooltipRootProps {
   export type Render = {};

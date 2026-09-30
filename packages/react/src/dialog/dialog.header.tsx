@@ -1,21 +1,23 @@
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type DialogPopupContext, useDialogPopupContext } from "./dialog.popup.context.js";
 
 /**
  * {@link DialogHeader} が持つ状態です。
  */
-export type DialogHeaderState = Card.CardHeaderState;
+export type DialogHeaderState = Override<Card.Header.State, DialogPopupContext>;
 
 export namespace DialogHeaderProps {
   export type Render = RenderProps<DialogHeaderState>;
 
-  export type SuruUI = Card.CardHeaderProps.SuruUI;
+  export type SuruUI = Card.Header.Props.SuruUI;
 
-  export type BaseUI = Card.CardHeaderProps.BaseUI;
+  export type BaseUI = Card.Header.Props.BaseUI;
 
-  export type HTML = Card.CardHeaderProps.HTML;
+  export type HTML = Card.Header.Props.HTML;
 }
 
 /**
@@ -32,7 +34,22 @@ export type IDialogHeader = IComponent<DialogHeaderProps>;
  * ダイアログの見出し・説明・操作をまとめるコンポーネントです。
  */
 export const DialogHeader: IDialogHeader = function SuiDialogHeader(props) {
-  return <Card.Header {...props} className={cn(props.className, "sui_dialog_header")} />;
+  const ctx = useDialogPopupContext();
+  const { style, render, className, ...otherProps } = props;
+
+  return (
+    <Card.Header
+      {...otherProps}
+      {...proxyRenderProps<Card.Header.State, DialogHeaderState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<DialogHeaderState>(className, "sui_dialog_header"),
+        },
+      )}
+    />
+  );
 };
 
 export { DialogHeader as Header };

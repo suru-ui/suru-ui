@@ -212,6 +212,35 @@ describe("Dialog", () => {
     expect(screen.getByClassName("sui_card_title").element().id).toBe("title");
   });
 
+  test("slotProps の render へポップアップの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Dialog
+        defaultOpen
+        outlined
+        title="見出し"
+        size="sm"
+        radius="lg"
+        variant="stacked"
+        slotProps={{
+          popup: {
+            render: (props, state) => (
+              <section
+                {...props}
+                data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+              />
+            ),
+          },
+        }}
+      />,
+    );
+
+    // 検証
+    const popup = screen.getByClassName("sui_dialog_popup").element();
+    expect(popup.tagName).toBe("SECTION");
+    expect(popup.getAttribute("data-probe")).toBe("sm/lg/stacked/true");
+  });
+
   test("外側を押すと閉じる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Dialog defaultOpen title="見出し" />);

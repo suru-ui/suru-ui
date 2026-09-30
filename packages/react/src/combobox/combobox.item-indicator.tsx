@@ -2,14 +2,16 @@ import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
 import { CheckIcon } from "../_icons.jsx";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxItemIndicator} が持つ状態です。
+ * {@link ComboboxItemIndicator} の状態です。
  */
-export type ComboboxItemIndicatorState = Combobox.ItemIndicator.State;
+export type ComboboxItemIndicatorState = Override<ComboboxContext, Combobox.ItemIndicator.State>;
 
 export namespace ComboboxItemIndicatorProps {
   export type Render = RenderProps<ComboboxItemIndicatorState>;
@@ -48,12 +50,20 @@ export type IComboboxItemIndicator = IComponent<ComboboxItemIndicatorProps>;
 export const ComboboxItemIndicator: IComboboxItemIndicator = function SuiComboboxItemIndicator(
   props,
 ) {
-  const { children = <CheckIcon />, className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { style, render, children = <CheckIcon />, className, ...otherProps } = props;
 
   return (
     <Combobox.ItemIndicator
       {...otherProps}
-      className={cn(className, "sui_combobox_item_indicator")}
+      {...proxyRenderProps<Combobox.ItemIndicator.State, ComboboxItemIndicatorState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxItemIndicatorState>(className, "sui_combobox_item_indicator"),
+        },
+      )}
     >
       {children}
     </Combobox.ItemIndicator>

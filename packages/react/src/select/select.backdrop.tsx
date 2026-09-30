@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectBackdrop} が持つ状態です。
  */
-export type SelectBackdropState = BaseSelect.Backdrop.State;
+export type SelectBackdropState = Override<SelectContext, BaseSelect.Backdrop.State>;
 
 export namespace SelectBackdropProps {
   export type Render = RenderProps<SelectBackdropState>;
@@ -45,17 +47,25 @@ export type ISelectBackdrop = IComponent<SelectBackdropProps>;
  * ポップアップの背後に表示される要素です。
  */
 export const SelectBackdrop: ISelectBackdrop = function SuiSelectBackdrop(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <BaseSelect.Backdrop
       {...otherProps}
-      className={cn(
-        className,
-        "sui_select_backdrop",
-        (state) =>
-          state.transitionStatus !== undefined &&
-          `sui_select_backdrop-transition_status_${state.transitionStatus}`,
+      {...proxyRenderProps<BaseSelect.Backdrop.State, SelectBackdropState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SelectBackdropState>(
+            className,
+            "sui_select_backdrop",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_select_backdrop-transition_status_${state.transitionStatus}`,
+          ),
+        },
       )}
     />
   );

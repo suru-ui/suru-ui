@@ -81,6 +81,35 @@ describe("TabsRoot", () => {
     expect(screen.getByClassName("sui_tabs").element().tagName).toBe("SECTION");
   });
 
+  test("render と className と style の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TabsRoot
+        activeVariant="solid"
+        items={["overview", "projects"]}
+        outlined
+        radius="lg"
+        size="sm"
+        variant="segments"
+        className={(state) => `probe-size_${state.size}`}
+        style={(state) => ({ opacity: state.outlined ? "0.5" : "1" })}
+        render={(props, state) => (
+          <section
+            {...props}
+            data-probe={`${state.size}/${state.radius}/${state.variant}/${state.activeVariant}/${String(state.outlined)}/${state.items.length}`}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_tabs").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("sm/lg/segments/solid/true/2");
+    expect(root.classList.contains("probe-size_sm")).toBe(true);
+    expect(root.style.opacity).toBe("0.5");
+  });
+
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<TabsRoot className="custom" />);

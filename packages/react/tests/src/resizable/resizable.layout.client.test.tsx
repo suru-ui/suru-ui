@@ -149,6 +149,28 @@ describe("Resizable の配置", () => {
     expect(right!.getBoundingClientRect().width / rootWidth).toBeCloseTo(0.7, 1);
   });
 
+  test("向きの変更を配置とクラスへ反映する", async ({ expect }) => {
+    // 準備
+    const renderGroup = (orientation: "horizontal" | "vertical") => (
+      <div style={{ height: 200, width: 400 }}>
+        <ResizableRoot orientation={orientation}>
+          <ResizablePanel defaultSize={50}>左</ResizablePanel>
+          <ResizableHandle />
+          <ResizablePanel defaultSize={50}>右</ResizablePanel>
+        </ResizableRoot>
+      </div>
+    );
+    const screen = await render(renderGroup("horizontal"));
+
+    // 実行
+    await screen.rerender(renderGroup("vertical"));
+
+    // 検証
+    const root = screen.getByClassName("sui_resizable").element();
+    expect(getComputedStyle(root).flexDirection).toBe("column");
+    expect(root.classList.contains("sui_resizable-orientation_vertical")).toBe(true);
+  });
+
   test.skipIf(!supportsCustomFunctions())("ハンドルに太さを持たせる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

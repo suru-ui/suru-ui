@@ -44,6 +44,24 @@ describe("FileUploadHiddenInput", () => {
     expect(input.hasAttribute("disabled")).toBe(true);
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <FileUploadRoot size="lg" accept="image/*">
+        <FileUploadHiddenInput
+          render={(props, state) => (
+            <input {...props} data-probe={`${state.size}/${state.accept ?? ""}`} />
+          )}
+        />
+      </FileUploadRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_file_upload_hidden_input").element().getAttribute("data-probe"),
+    ).toBe("lg/image/*");
+  });
+
   test("選んだファイルを状態へ反映する", async ({ expect }) => {
     // 準備
     const screen = await render(

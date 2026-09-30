@@ -126,6 +126,19 @@ namespace SliderProps {
 export type SliderProps<TValue extends number | readonly number[] = number | readonly number[]> =
   SliderProps.Slider & SliderProps.Root<TValue>;
 
+export interface IUseSliderAPI {
+  /**
+   * {@link SliderAPI} を作成します。
+   *
+   * @template TValue 値の型です。
+   * @param props {@link Slider} の props です。
+   * @returns スライダーの API です
+   */
+  <TValue extends number | readonly number[] = number | readonly number[]>(
+    props: SliderProps<TValue>,
+  ): SliderAPI<TValue>;
+}
+
 // API
 // ---
 
@@ -240,19 +253,6 @@ export class SliderAPI<TValue extends number | readonly number[] = number | read
 
     return this.slotProps.value ? props : null;
   }
-}
-
-export interface IUseSliderAPI {
-  /**
-   * {@link SliderAPI} を作成します。
-   *
-   * @template TValue 値の型です。
-   * @param props {@link Slider} の props です。
-   * @returns スライダーの API です
-   */
-  <TValue extends number | readonly number[] = number | readonly number[]>(
-    props: SliderProps<TValue>,
-  ): SliderAPI<TValue>;
 }
 
 /**

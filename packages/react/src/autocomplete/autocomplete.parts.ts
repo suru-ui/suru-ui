@@ -1,6 +1,7 @@
 import "./autocomplete.css";
 
 export * from "./autocomplete.context.js";
+export * from "./autocomplete.item.context.js";
 export * from "./autocomplete.root.jsx";
 export * from "./autocomplete.input-group.jsx";
 export * from "./autocomplete.input.jsx";
@@ -17,7 +18,6 @@ export * from "./autocomplete.collection.jsx";
 export * from "./autocomplete.group.jsx";
 export * from "./autocomplete.group-label.jsx";
 export * from "./autocomplete.separator.jsx";
-export * from "./autocomplete.item.context.js";
 export * from "./autocomplete.item.jsx";
 export * from "./autocomplete.row.jsx";
 export * from "./autocomplete.use-filter.js";

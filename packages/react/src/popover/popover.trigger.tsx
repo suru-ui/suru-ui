@@ -2,15 +2,17 @@ import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type PopoverContext, usePopoverContext } from "./popover.context.js";
 import type { PopoverHandle } from "./popover.handle.js";
 
 /**
  * {@link PopoverTrigger} が持つ状態です。
  */
-export type PopoverTriggerState = Popover.Trigger.State;
+export type PopoverTriggerState = Override<PopoverContext, Popover.Trigger.State>;
 
 export namespace PopoverTriggerProps {
   export type Render = Omit<RenderProps<PopoverTriggerState>, "render">;
@@ -21,7 +23,7 @@ export namespace PopoverTriggerProps {
      *
      * Base UI の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
      */
-    children: NonNullable<Popover.Trigger.Props<TPayload>["render"]>;
+    children: NonNullable<RenderProps<PopoverTriggerState>["render"]>;
 
     /**
      * ポップオーバー ({@link Root}) を関連付けるハンドルです。
@@ -81,14 +83,21 @@ export interface IPopoverTrigger extends IComponent<PopoverTriggerProps> {
 export const PopoverTrigger: IPopoverTrigger = function SuiPopoverTrigger<TPayload>(
   props: PopoverTriggerProps<TPayload>,
 ) {
-  const { handle, children, className, ...otherProps } = props;
+  const ctx = usePopoverContext(true);
+  const { style, handle, children, className, ...otherProps } = props;
 
   return (
     <Popover.Trigger
       {...otherProps}
       handle={handle}
-      render={children}
-      className={cn(className, "sui_popover_trigger")}
+      {...proxyRenderProps<Popover.Trigger.State, PopoverTriggerState>(
+        (state) => ({ size: "md", radius: "md", outlined: false, ...ctx, ...state }),
+        {
+          style,
+          render: children,
+          className: cn(className, "sui_popover_trigger"),
+        },
+      )}
     />
   );
 };

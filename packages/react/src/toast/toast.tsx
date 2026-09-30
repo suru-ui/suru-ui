@@ -197,6 +197,28 @@ namespace ToastListProps {
 export type ToastListProps<TData extends object = any> = ToastListProps.List<TData> &
   ToastListProps.Portal;
 
+export interface IUseToastAPI {
+  /**
+   * {@link ToastAPI} を作成します。
+   *
+   * @template TData 通知に含める追加データの型です。
+   * @param props {@link Toast} の props です。
+   * @returns トーストの API です
+   */
+  <TData extends object = any>(props: ToastProps<TData>): ToastAPI<TData>;
+}
+
+export interface IUseToastListAPI {
+  /**
+   * {@link ToastListAPI} を作成します。
+   *
+   * @template TData 通知に含める追加データの型です。
+   * @param props {@link ToastList} の props です。
+   * @returns トースト一覧の API です
+   */
+  <TData extends object = any>(props: ToastListProps<TData>): ToastListAPI<TData>;
+}
+
 // API
 // ---
 
@@ -376,17 +398,6 @@ export class ToastAPI<TData extends object = any> {
   }
 }
 
-export interface IUseToastAPI {
-  /**
-   * {@link ToastAPI} を作成します。
-   *
-   * @template TData 通知に含める追加データの型です。
-   * @param props {@link Toast} の props です。
-   * @returns トーストの API です
-   */
-  <TData extends object = any>(props: ToastProps<TData>): ToastAPI<TData>;
-}
-
 /**
  * {@link ToastAPI} を作成するフックです。
  */
@@ -449,17 +460,6 @@ export class ToastListAPI<TData extends object = any> {
           : (toReactNode(children) ?? toasts.map((t) => <Toast key={t.id} toast={t} />)),
     };
   }
-}
-
-export interface IUseToastListAPI {
-  /**
-   * {@link ToastListAPI} を作成します。
-   *
-   * @template TData 通知に含める追加データの型です。
-   * @param props {@link ToastList} の props です。
-   * @returns トースト一覧の API です
-   */
-  <TData extends object = any>(props: ToastListProps<TData>): ToastListAPI<TData>;
 }
 
 /**

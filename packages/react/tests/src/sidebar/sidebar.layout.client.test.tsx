@@ -96,6 +96,25 @@ describe("Sidebar の配置", () => {
     expect(inset.getBoundingClientRect().right).toBeCloseTo(root.getBoundingClientRect().left, 0);
   });
 
+  test("修飾の変更をクラスと配置へ反映する", async ({ expect }) => {
+    // 準備
+    const screen = await render(<FullSidebar collapsible="icon" />);
+
+    // 実行
+    await screen.rerender(<FullSidebar collapsible="icon" side="right" variant="floating" />);
+
+    // 検証
+    const root = screen.getByClassName("sui_sidebar").element();
+    expect(root.classList.contains("sui_sidebar-side_right")).toBe(true);
+    expect(root.classList.contains("sui_sidebar-variant_floating")).toBe(true);
+    expect(root.classList.contains("sui_sidebar-collapsible_icon")).toBe(true);
+
+    const inset = screen.getByClassName("sui_sidebar_inset").element();
+    expect(inset.getBoundingClientRect().right).toBeLessThanOrEqual(
+      root.getBoundingClientRect().left,
+    );
+  });
+
   test("公開変数で幅を上書きできる", async ({ expect }) => {
     // 準備
     const screen = await render(<FullSidebar />);

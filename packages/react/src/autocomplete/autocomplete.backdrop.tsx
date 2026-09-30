@@ -3,14 +3,16 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompleteBackdrop} が持つ状態です。
  */
-export type AutocompleteBackdropState = Autocomplete.Backdrop.State;
+export type AutocompleteBackdropState = Override<AutocompleteContext, Autocomplete.Backdrop.State>;
 
 export namespace AutocompleteBackdropProps {
   export type Render = RenderProps<AutocompleteBackdropState>;
@@ -47,10 +49,21 @@ export type IAutocompleteBackdrop = IComponent<AutocompleteBackdropProps>;
  * ポップアップの背後に表示される要素です。
  */
 export const AutocompleteBackdrop: IAutocompleteBackdrop = function SuiAutocompleteBackdrop(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useAutocompleteContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
-    <Autocomplete.Backdrop {...otherProps} className={cn(className, "sui_autocomplete_backdrop")} />
+    <Autocomplete.Backdrop
+      {...otherProps}
+      {...proxyRenderProps<Autocomplete.Backdrop.State, AutocompleteBackdropState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AutocompleteBackdropState>(className, "sui_autocomplete_backdrop"),
+        },
+      )}
+    />
   );
 };
 

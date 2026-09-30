@@ -93,6 +93,49 @@ describe("TextFieldRoot", () => {
     expect(screen.getByClassName("sui_text_field").element().tagName).toBe("SECTION");
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TextFieldRoot
+        color="blue"
+        outlined
+        radius="none"
+        size="lg"
+        variant="naked"
+        render={(props, state) => (
+          <section
+            {...props}
+            data-probe={`${state.size}/${state.color}/${state.radius}/${state.variant}/${String(state.outlined)}`}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_text_field").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("lg/blue/none/naked/true");
+  });
+
+  test("className の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TextFieldRoot
+        className={(state) => `probe-size_${state.size}-color_${state.color}`}
+        color="blue"
+        size="lg"
+      />,
+    );
+
+    // 検証
+    expect(
+      screen
+        .getByClassName("sui_text_field")
+        .element()
+        .classList.contains("probe-size_lg-color_blue"),
+    ).toBe(true);
+  });
+
   test("入力欄の外側のクリックで入力欄へフォーカスする", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
@@ -255,6 +298,29 @@ describe("TextFieldInput", () => {
     expect(input.tagName).toBe("TEXTAREA");
     expect(input.classList.contains("sui_text_field_input")).toBe(true);
   });
+
+  test("render の関数へスタイル情報と入力欄の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TextFieldRoot color="blue" outlined size="lg">
+        <TextFieldInput
+          aria-label="名前"
+          disabled
+          render={(props, state) => (
+            <input
+              {...props}
+              data-probe={`${state.size}/${state.color}/${String(state.outlined)}/${String(state.disabled)}`}
+            />
+          )}
+        />
+      </TextFieldRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_text_field_input").element().getAttribute("data-probe")).toBe(
+      "lg/blue/true/true",
+    );
+  });
 });
 
 describe("TextFieldAddon", () => {
@@ -302,6 +368,24 @@ describe("TextFieldAddon", () => {
 
     // 検証
     expect(document.activeElement?.tagName).not.toBe("INPUT");
+  });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TextFieldRoot color="blue" size="lg">
+        <TextFieldAddon
+          render={(props, state) => <span {...props} data-probe={`${state.size}/${state.color}`} />}
+        >
+          🔒
+        </TextFieldAddon>
+      </TextFieldRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_text_field_addon").element().getAttribute("data-probe")).toBe(
+      "lg/blue",
+    );
   });
 });
 

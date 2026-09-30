@@ -105,6 +105,17 @@ namespace SegmentsProps {
  */
 export type SegmentsProps<TItem = any> = SegmentsProps.Segments<TItem> & SegmentsProps.Root<TItem>;
 
+export interface IUseSegmentsAPI {
+  /**
+   * {@link SegmentsAPI} を作成します。
+   *
+   * @template TItem 項目の型です。
+   * @param props {@link Segments} の props です。
+   * @returns セグメントの API です。
+   */
+  <TItem = any>(props: SegmentsProps<TItem>): SegmentsAPI<TItem>;
+}
+
 // API
 // ---
 
@@ -197,17 +208,6 @@ export class SegmentsAPI<TItem = any> {
   public getRootProps(): SegmentsProps.Root<TItem> {
     return this.rootProps;
   }
-}
-
-export interface IUseSegmentsAPI {
-  /**
-   * {@link SegmentsAPI} を作成します。
-   *
-   * @template TItem 項目の型です。
-   * @param props {@link Segments} の props です。
-   * @returns セグメントの API です。
-   */
-  <TItem = any>(props: SegmentsProps<TItem>): SegmentsAPI<TItem>;
 }
 
 /**

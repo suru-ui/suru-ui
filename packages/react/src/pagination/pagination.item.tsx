@@ -1,15 +1,24 @@
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { usePaginationContext } from "./pagination.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type PaginationContext, usePaginationContext } from "./pagination.context.js";
 
 /**
  * {@link PaginationItem} が持つ状態です。
  */
-export type PaginationItemState = {};
+export type PaginationItemState = Override<
+  Override<PaginationContext, Button.Root.State>,
+  {
+    /**
+     * 現在のページかどうかです。
+     */
+    readonly selected: boolean;
+  }
+>;
 
 export namespace PaginationItemProps {
   export type Render = RenderProps<PaginationItemState>;
@@ -56,12 +65,14 @@ export type IPaginationItem = IComponent<PaginationItemProps>;
 /**
  * ページ番号のボタンコンポーネントです。
  *
- * 子要素を指定しない場合、{@link PaginationItemProps.page|page} をラベルとして表示します。現在のページは `aria-current="page"` で示します。
+ * 子要素を指定しない場合、{@link PaginationItemProps.page|page} をラベルとして表示します。現在のページは `aria-current="page"` で示します。大きさ・角丸は {@link PaginationRoot} から引き継ぎ、選択中は配色も引き継ぎます。
  */
 export const PaginationItem: IPaginationItem = function SuiPaginationItem(props) {
-  const ctx = usePaginationContext(true);
+  const ctx = usePaginationContext();
   const {
     page,
+    style,
+    render,
     onClick,
     children = page,
     disabled = false,
@@ -69,10 +80,10 @@ export const PaginationItem: IPaginationItem = function SuiPaginationItem(props)
     className,
     ...otherProps
   } = props;
-  const isDisabled = ctx?.disabled || disabled;
+  const isDisabled = ctx.disabled || disabled;
   const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
     onClick?.(event);
-    if (!event.defaultPrevented && !isDisabled && ctx !== null) {
+    if (!event.defaultPrevented && !isDisabled) {
       ctx.goToPage(page, { event, reason: "item" });
     }
   };
@@ -80,14 +91,25 @@ export const PaginationItem: IPaginationItem = function SuiPaginationItem(props)
   return (
     <Button.Root
       {...otherProps}
-      size={ctx?.size ?? "md"}
-      color={selected ? (ctx?.color ?? "grey") : "grey"}
-      radius={ctx?.radius}
+      {...proxyRenderProps<Button.Root.State, PaginationItemState>(
+        (state) => ({ ...ctx, ...state, selected }),
+        {
+          style,
+          render,
+          className: cn<PaginationItemState>(
+            className,
+            "sui_pagination_item",
+            (state) => state.selected && "sui_pagination_item-selected",
+          ),
+        },
+      )}
+      size={ctx.size}
+      color={selected ? ctx.color : "grey"}
+      radius={ctx.radius}
       onClick={handleClick}
       squared
       variant={selected ? "solid" : "naked"}
       disabled={isDisabled}
-      className={cn(className, "sui_pagination_item", selected && "sui_pagination_item-selected")}
       aria-current={selected ? "page" : undefined}
     >
       {children}

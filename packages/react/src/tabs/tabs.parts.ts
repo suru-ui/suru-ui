@@ -6,3 +6,4 @@ export * from "./tabs.list.jsx";
 export * from "./tabs.tab.jsx";
 export * from "./tabs.indicator.jsx";
 export * from "./tabs.panel.jsx";
+export * from "./tabs.utils.js";

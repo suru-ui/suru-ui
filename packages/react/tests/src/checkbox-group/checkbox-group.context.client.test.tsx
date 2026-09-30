@@ -118,6 +118,7 @@ describe("useCheckboxGroupContext", () => {
     const provided = {
       color: "red",
       disabled: false,
+      orientation: "horizontal",
       outlined: true,
       radius: "sm",
       size: "sm",

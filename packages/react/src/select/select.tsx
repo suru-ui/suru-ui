@@ -228,6 +228,20 @@ export type SelectProps<
   TMultiple extends boolean | undefined = boolean | undefined,
 > = SelectProps.Select<TValue> & SelectProps.Root<TValue, TMultiple> & SelectProps.Trigger;
 
+export interface IUseSelectAPI {
+  /**
+   * {@link SelectAPI} を作成します。
+   *
+   * @template TValue 項目の値の型です。
+   * @template TMultiple 複数選択を有効にするかどうかです。
+   * @param props {@link Select} の props です。
+   * @returns セレクトの API です。
+   */
+  <TValue = any, const TMultiple extends boolean | undefined = undefined>(
+    props: SelectProps<TValue, TMultiple>,
+  ): SelectAPI<TValue, TMultiple>;
+}
+
 // API
 // ---
 
@@ -596,20 +610,6 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
       ...props,
     };
   }
-}
-
-export interface IUseSelectAPI {
-  /**
-   * {@link SelectAPI} を作成します。
-   *
-   * @template TValue 項目の値の型です。
-   * @template TMultiple 複数選択を有効にするかどうかです。
-   * @param props {@link Select} の props です。
-   * @returns セレクトの API です。
-   */
-  <TValue = any, const TMultiple extends boolean | undefined = undefined>(
-    props: SelectProps<TValue, TMultiple>,
-  ): SelectAPI<TValue, TMultiple>;
 }
 
 /**

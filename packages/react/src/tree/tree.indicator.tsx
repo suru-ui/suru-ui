@@ -1,14 +1,16 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
+import * as React from "react";
 
 import { ChevronRightIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { type TreeContextState, useTreeContext } from "./tree.context.js";
 
 /**
  * {@link TreeItemIndicator} が持つ状態です。
  */
-export type TreeItemIndicatorState = {};
+export type TreeItemIndicatorState = TreeContextState;
 
 export namespace TreeItemIndicatorProps {
   export type Render = RenderProps<TreeItemIndicatorState>;
@@ -48,7 +50,22 @@ export type ITreeItemIndicator = IComponent<TreeItemIndicatorProps>;
  * 既定では右向きのシェブロンアイコンを表示し、展開時には下向きに回転します。
  */
 export const TreeItemIndicator: ITreeItemIndicator = function SuiTreeItemIndicator(props) {
+  const ctx = useTreeContext();
   const { visible = true, children = <ChevronRightIcon />, ...otherSpanProps } = props;
+  const state = React.useMemo<TreeItemIndicatorState>(
+    () => ({
+      size: ctx.size,
+      color: ctx.color,
+      muted: ctx.muted,
+      radius: ctx.radius,
+      variant: ctx.variant,
+      activeId: ctx.activeId,
+      expanded: ctx.expanded,
+      outlined: ctx.outlined,
+      selected: ctx.selected,
+    }),
+    [ctx],
+  );
 
   return useRender({
     props: [
@@ -61,6 +78,7 @@ export const TreeItemIndicator: ITreeItemIndicator = function SuiTreeItemIndicat
         ),
       },
     ],
+    state,
     defaultTagName: "span",
   });
 };

@@ -1,14 +1,16 @@
 import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type HoverCardContext, useHoverCardContext } from "./hover-card.context.js";
 
 /**
  * {@link HoverCardContent} が持つ状態です。
  */
-export type HoverCardContentState = PreviewCard.Popup.State;
+export type HoverCardContentState = Override<HoverCardContext, PreviewCard.Popup.State>;
 
 export namespace HoverCardContentProps {
   export type Render = RenderProps<HoverCardContentState>;
@@ -45,17 +47,25 @@ export type IHoverCardContent = IComponent<HoverCardContentProps>;
  * ホバーカードの内容を表示するポップアップ要素です。
  */
 export const HoverCardContent: IHoverCardContent = function SuiHoverCardContent(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useHoverCardContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <PreviewCard.Popup
       {...otherProps}
-      className={cn(
-        className,
-        "sui_hover_card_content",
-        (state) =>
-          state.transitionStatus !== undefined &&
-          `sui_hover_card_content-transition_status_${state.transitionStatus}`,
+      {...proxyRenderProps<PreviewCard.Popup.State, HoverCardContentState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<HoverCardContentState>(
+            className,
+            "sui_hover_card_content",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_hover_card_content-transition_status_${state.transitionStatus}`,
+          ),
+        },
       )}
     />
   );

@@ -1,14 +1,16 @@
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type TabsContext, useTabsContext } from "./tabs.context.js";
 
 /**
  * {@link TabsIndicator} が持つ状態です。
  */
-export type TabsIndicatorState = BaseTabs.Indicator.State;
+export type TabsIndicatorState = Override<TabsContext, BaseTabs.Indicator.State>;
 
 export namespace TabsIndicatorProps {
   export type Render = RenderProps<TabsIndicatorState>;
@@ -47,9 +49,22 @@ export type ITabsIndicator = IComponent<TabsIndicatorProps>;
  * {@link TabsList} の子要素として配置します。
  */
 export const TabsIndicator: ITabsIndicator = function SuiTabsIndicator(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useTabsContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <BaseTabs.Indicator {...otherProps} className={cn(className, "sui_tabs_indicator")} />;
+  return (
+    <BaseTabs.Indicator
+      {...otherProps}
+      {...proxyRenderProps<BaseTabs.Indicator.State, TabsIndicatorState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<TabsIndicatorState>(className, "sui_tabs_indicator"),
+        },
+      )}
+    />
+  );
 };
 
 export { TabsIndicator as Indicator };

@@ -38,6 +38,7 @@ import {
   type AutocompletePopupProps,
   type AutocompleteRootRadius,
   type IUseAutocompleteFilter,
+  type AutocompleteItemContext,
   type AutocompletePortalProps,
   type AutocompleteRootActions,
   type AutocompleteRootVariant,
@@ -50,6 +51,7 @@ import {
   type AutocompleteGroupLabelProps,
   type AutocompleteInputGroupProps,
   type AutocompletePositionerProps,
+  type IUseAutocompleteItemContext,
   type IUseAutocompleteFilteredItems,
   type AutocompleteRootItemGroupObject,
   type AutocompleteRootChangeEventReason,
@@ -77,6 +79,7 @@ import {
   AutocompleteInputGroup,
   AutocompletePositioner,
   useAutocompleteContext,
+  useAutocompleteItemContext,
   useAutocompleteFilteredItems,
 } from "./autocomplete.parts.js";
 
@@ -294,6 +297,17 @@ namespace AutocompleteProps {
 export type AutocompleteProps<TItem = any> = AutocompleteProps.Autocomplete<TItem> &
   AutocompleteProps.Root<TItem> &
   AutocompleteProps.InputGroup;
+
+export interface IUseAutocompleteAPI {
+  /**
+   * {@link AutocompleteAPI} を作成します。
+   *
+   * @template TItem 項目の値の型です。
+   * @param props {@link Autocomplete} の props です。
+   * @returns オートコンプリートの API です
+   */
+  <TItem = any>(props: AutocompleteProps<TItem>): AutocompleteAPI<TItem>;
+}
 
 // API
 // ---
@@ -809,17 +823,6 @@ export class AutocompleteAPI<TItem = any> {
   }
 }
 
-export interface IUseAutocompleteAPI {
-  /**
-   * {@link AutocompleteAPI} を作成します。
-   *
-   * @template TItem 項目の値の型です。
-   * @param props {@link Autocomplete} の props です。
-   * @returns オートコンプリートの API です
-   */
-  <TItem = any>(props: AutocompleteProps<TItem>): AutocompleteAPI<TItem>;
-}
-
 /**
  * {@link AutocompleteAPI} を作成するフックです。
  */
@@ -843,6 +846,8 @@ export interface IAutocomplete extends IComponent<AutocompleteProps> {
   readonly useFilter: IUseAutocompleteFilter;
 
   readonly useFilteredItems: IUseAutocompleteFilteredItems;
+
+  readonly useItemContext: IUseAutocompleteItemContext;
 }
 
 /**
@@ -897,6 +902,7 @@ export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
   {
     useFilter: useAutocompleteFilter,
     useContext: useAutocompleteContext,
+    useItemContext: useAutocompleteItemContext,
     useFilteredItems: useAutocompleteFilteredItems,
   },
 );
@@ -909,6 +915,8 @@ export namespace Autocomplete {
   export type SlotProps<TItem = any> = AutocompleteSlotProps<TItem>;
 
   export type Context = AutocompleteContext;
+
+  export type ItemContext = AutocompleteItemContext;
 
   export type Actions = AutocompleteActions;
 

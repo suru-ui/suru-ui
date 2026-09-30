@@ -284,6 +284,28 @@ describe("PasswordField", () => {
     expect((screen.getByRole("textbox").element() as HTMLInputElement).name).toBe("password");
   });
 
+  test("render の関数へ表示状態とスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PasswordField
+        color="blue"
+        size="lg"
+        visible
+        render={(props, state) => (
+          <section
+            {...props}
+            data-probe={`${String(state.visible)}/${state.size}/${state.color}`}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_password_field").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("true/lg/blue");
+  });
+
   test("useContext でコンテキストを読み取る", async ({ expect }) => {
     // 準備
     function Probe() {

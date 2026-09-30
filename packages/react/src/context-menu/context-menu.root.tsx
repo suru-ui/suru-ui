@@ -1,12 +1,15 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
 import { Menu } from "@base-ui/react/menu";
-import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import * as Button from "../button/button.parts.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import type { ContextMenuCheckboxItemProps } from "./context-menu.checkbox-item.jsx";
-import { ContextMenuContext } from "./context-menu.context.js";
+import {
+  type ContextMenuContextSize,
+  type ContextMenuContextRadius,
+  type ContextMenuContextVariant,
+  ContextMenuContext,
+} from "./context-menu.context.js";
 import type { ContextMenuGroupLabelProps } from "./context-menu.group-label.jsx";
 import type { ContextMenuGroupProps } from "./context-menu.group.jsx";
 import type { ContextMenuItemProps } from "./context-menu.item.jsx";
@@ -207,7 +210,7 @@ export type ContextMenuRootItemObject =
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type ContextMenuRootRadius = "none" | Size;
+export type ContextMenuRootRadius = ContextMenuContextRadius;
 
 /**
  * コンテキストメニューの大きさです。
@@ -216,7 +219,7 @@ export type ContextMenuRootRadius = "none" | Size;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type ContextMenuRootSize = Size;
+export type ContextMenuRootSize = ContextMenuContextSize;
 
 /**
  * コンテキストメニューの項目の主な外観です。
@@ -225,12 +228,12 @@ export type ContextMenuRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ContextMenuRootVariant = Button.Root.Variant;
+export type ContextMenuRootVariant = ContextMenuContextVariant;
 
 /**
  * {@link ContextMenuRoot} が持つ状態です。
  */
-export type ContextMenuRootState = ContextMenu.Root.State;
+export type ContextMenuRootState = Override<ContextMenuContext, ContextMenu.Root.State>;
 
 export namespace ContextMenuRootProps {
   export type Render = {};

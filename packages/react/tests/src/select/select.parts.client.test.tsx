@@ -67,6 +67,178 @@ function renderParts(children?: React.ReactNode) {
   );
 }
 
+/**
+ * スタイル情報を持つ Root の下で、各パーツの render へ検証用の属性を付けた Select を描画します。
+ */
+function renderStateProbes() {
+  return render(
+    <SelectRoot defaultOpen items={fruits} outlined radius="sm" size="lg" variant="naked">
+      <SelectLabel
+        render={(props, state) => (
+          <div
+            {...props}
+            data-probe={`label/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+          />
+        )}
+      >
+        果物
+      </SelectLabel>
+      <SelectTrigger
+        aria-label="果物"
+        render={(props, state) => (
+          <div
+            {...props}
+            data-probe={`trigger/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+          />
+        )}
+      >
+        <SelectValue
+          placeholder="選択"
+          render={(props, state) => (
+            <span
+              {...props}
+              data-probe={`value/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+            />
+          )}
+        />
+        <SelectIcon
+          render={(props, state) => (
+            <span
+              {...props}
+              data-probe={`icon/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+            />
+          )}
+        />
+      </SelectTrigger>
+      <SelectPortal
+        render={(props, state) => (
+          <div
+            {...props}
+            data-probe={`portal/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+          />
+        )}
+      >
+        <SelectBackdrop
+          render={(props, state) => (
+            <div
+              {...props}
+              data-probe={`backdrop/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+            />
+          )}
+        />
+        <SelectPositioner
+          render={(props, state) => (
+            <div
+              {...props}
+              data-probe={`positioner/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+            />
+          )}
+        >
+          <SelectContent
+            render={(props, state) => (
+              <div
+                {...props}
+                data-probe={`content/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+              />
+            )}
+          >
+            <SelectScrollUpArrow
+              keepMounted
+              render={(props, state) => (
+                <div
+                  {...props}
+                  data-probe={`scrollUp/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+                />
+              )}
+            />
+            <SelectArrow
+              render={(props, state) => (
+                <div
+                  {...props}
+                  data-probe={`arrow/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+                />
+              )}
+            />
+            <SelectList
+              render={(props, state) => (
+                <div
+                  {...props}
+                  data-probe={`list/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+                />
+              )}
+            >
+              <SelectGroup
+                render={(props, state) => (
+                  <div
+                    {...props}
+                    data-probe={`group/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+                  />
+                )}
+              >
+                <SelectGroupLabel
+                  render={(props, state) => (
+                    <div
+                      {...props}
+                      data-probe={`groupLabel/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+                    />
+                  )}
+                >
+                  果物の一覧
+                </SelectGroupLabel>
+                <SelectItem
+                  value="りんご"
+                  render={(props, state) => (
+                    <div
+                      {...props}
+                      data-probe={`item/${state.size}/${state.selected}/${state.highlighted}`}
+                    />
+                  )}
+                >
+                  <SelectItemText
+                    render={(props, state) => (
+                      <div
+                        {...props}
+                        data-probe={`itemText/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+                      />
+                    )}
+                  >
+                    りんご
+                  </SelectItemText>
+                  <SelectItemIndicator
+                    render={(props, state) => (
+                      <span
+                        {...props}
+                        data-probe={`itemIndicator/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+                      />
+                    )}
+                  />
+                </SelectItem>
+              </SelectGroup>
+              <SelectSeparator
+                render={(props, state) => (
+                  <div
+                    {...props}
+                    data-probe={`separator/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+                  />
+                )}
+              />
+            </SelectList>
+            <SelectScrollDownArrow
+              keepMounted
+              render={(props, state) => (
+                <div
+                  {...props}
+                  data-probe={`scrollDown/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+                />
+              )}
+            />
+          </SelectContent>
+        </SelectPositioner>
+      </SelectPortal>
+    </SelectRoot>,
+  );
+}
+
 describe("SelectRoot", () => {
   test("自身の HTML 要素を描画しない", async ({ expect }) => {
     // 準備と実行
@@ -85,6 +257,16 @@ describe("SelectLabel", () => {
     // 検証
     const label = screen.getByText("果物", { exact: true }).element();
     expect(label.classList.contains("sui_select_label")).toBe(true);
+  });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(screen.getByText("果物", { exact: true }).element().getAttribute("data-probe")).toBe(
+      "label/lg/sm/naked/true",
+    );
   });
 });
 
@@ -107,6 +289,16 @@ describe("SelectTrigger", () => {
     expect(trigger.classList.contains("sui_select-outlined")).toBe(true);
     expect(trigger.getAttribute("data-scope")).toBe("");
   });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(
+      screen.getByRole("combobox", { name: "果物" }).element().getAttribute("data-probe"),
+    ).toBe("trigger/lg/sm/naked/true");
+  });
 });
 
 describe("SelectValue", () => {
@@ -125,6 +317,16 @@ describe("SelectValue", () => {
     expect(value.classList.contains("sui_select_value")).toBe(true);
     expect(value.classList.contains("sui_select_value-placeholder")).toBe(true);
   });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(screen.getByText("選択").element().getAttribute("data-probe")).toBe(
+      "value/lg/sm/naked/true",
+    );
+  });
 });
 
 describe("SelectIcon", () => {
@@ -134,6 +336,16 @@ describe("SelectIcon", () => {
 
     // 検証
     expect(screen.getByClassName("sui_select_icon").element().tagName).toBe("SPAN");
+  });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(screen.getByClassName("sui_select_icon").element().getAttribute("data-probe")).toBe(
+      "icon/lg/sm/naked/true",
+    );
   });
 });
 
@@ -152,6 +364,16 @@ describe("SelectPortal", () => {
     // 実行と検証
     await expect(render(<SelectPortal />)).rejects.toThrow(ContextMissingError);
   });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(screen.getByClassName("sui_select_portal").element().getAttribute("data-probe")).toBe(
+      "portal/lg/sm/naked/true",
+    );
+  });
 });
 
 describe("SelectBackdrop", () => {
@@ -161,6 +383,16 @@ describe("SelectBackdrop", () => {
 
     // 検証
     expect(screen.getByClassName("sui_select_backdrop").element().tagName).toBe("DIV");
+  });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(screen.getByClassName("sui_select_backdrop").element().getAttribute("data-probe")).toBe(
+      "backdrop/lg/sm/naked/true",
+    );
   });
 });
 
@@ -172,6 +404,16 @@ describe("SelectPositioner", () => {
     // 検証
     expect(screen.getByClassName("sui_select_positioner").element().tagName).toBe("DIV");
   });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_select_positioner").element().getAttribute("data-probe"),
+    ).toBe("positioner/lg/sm/naked/true");
+  });
 });
 
 describe("SelectContent", () => {
@@ -181,6 +423,16 @@ describe("SelectContent", () => {
 
     // 検証
     expect(screen.getByClassName("sui_select_content").element().tagName).toBe("DIV");
+  });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(screen.getByClassName("sui_select_content").element().getAttribute("data-probe")).toBe(
+      "content/lg/sm/naked/true",
+    );
   });
 });
 
@@ -216,6 +468,16 @@ describe("SelectList", () => {
       expect(screen.getByRole("option", { name: "りんご" }).query()).not.toBe(null);
     });
   });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(screen.getByRole("listbox").element().getAttribute("data-probe")).toBe(
+      "list/lg/sm/naked/true",
+    );
+  });
 });
 
 describe("SelectGroup", () => {
@@ -225,6 +487,16 @@ describe("SelectGroup", () => {
 
     // 検証
     expect(screen.getByRole("group").element().classList.contains("sui_select_group")).toBe(true);
+  });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(screen.getByRole("group").element().getAttribute("data-probe")).toBe(
+      "group/lg/sm/naked/true",
+    );
   });
 });
 
@@ -236,6 +508,16 @@ describe("SelectGroupLabel", () => {
     // 検証
     const label = screen.getByClassName("sui_select_group_label").element();
     expect(label.textContent).toBe("果物の一覧");
+  });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_select_group_label").element().getAttribute("data-probe"),
+    ).toBe("groupLabel/lg/sm/naked/true");
   });
 });
 
@@ -249,6 +531,16 @@ describe("SelectItem", () => {
     expect(item.classList.contains("sui_select_item")).toBe(true);
     expect(item.classList.contains("sui_button-item")).toBe(true);
   });
+
+  test("render の関数へスタイル情報と項目の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(
+      screen.getByRole("option", { name: "りんご" }).element().getAttribute("data-probe"),
+    ).toBe("item/lg/false/false");
+  });
 });
 
 describe("SelectItemText", () => {
@@ -258,6 +550,16 @@ describe("SelectItemText", () => {
 
     // 検証
     expect(screen.getByClassName("sui_select_item_text").element().textContent).toBe("りんご");
+  });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(screen.getByClassName("sui_select_item_text").element().getAttribute("data-probe")).toBe(
+      "itemText/lg/sm/naked/true",
+    );
   });
 });
 
@@ -269,6 +571,16 @@ describe("SelectItemIndicator", () => {
     // 検証
     expect(screen.getByClassName("sui_select_item_indicator").query()).not.toBe(null);
   });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_select_item_indicator").element().getAttribute("data-probe"),
+    ).toBe("itemIndicator/lg/sm/naked/true");
+  });
 });
 
 describe("SelectSeparator", () => {
@@ -278,6 +590,16 @@ describe("SelectSeparator", () => {
 
     // 検証
     expect(screen.getByClassName("sui_select_separator").element().tagName).toBe("DIV");
+  });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(screen.getByClassName("sui_select_separator").element().getAttribute("data-probe")).toBe(
+      "separator/lg/sm/naked/true",
+    );
   });
 });
 
@@ -289,6 +611,16 @@ describe("SelectScrollUpArrow", () => {
     // 検証
     expect(screen.getByClassName("sui_select_scroll_up_arrow").query()).not.toBe(null);
   });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_select_scroll_up_arrow").element().getAttribute("data-probe"),
+    ).toBe("scrollUp/lg/sm/naked/true");
+  });
 });
 
 describe("SelectScrollDownArrow", () => {
@@ -299,6 +631,16 @@ describe("SelectScrollDownArrow", () => {
     // 検証
     expect(screen.getByClassName("sui_select_scroll_down_arrow").query()).not.toBe(null);
   });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_select_scroll_down_arrow").element().getAttribute("data-probe"),
+    ).toBe("scrollDown/lg/sm/naked/true");
+  });
 });
 
 describe("SelectArrow", () => {
@@ -308,5 +650,15 @@ describe("SelectArrow", () => {
 
     // 検証
     expect(screen.getByClassName("sui_select_arrow").element().tagName).toBe("DIV");
+  });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderStateProbes();
+
+    // 検証
+    expect(screen.getByClassName("sui_select_arrow").element().getAttribute("data-probe")).toBe(
+      "arrow/lg/sm/naked/true",
+    );
   });
 });

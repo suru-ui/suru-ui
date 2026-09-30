@@ -1,17 +1,20 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { BreadcrumbContext } from "./breadcrumb.context.js";
+import {
+  type BreadcrumbContextSize,
+  type BreadcrumbContextColor,
+  BreadcrumbContext,
+} from "./breadcrumb.context.js";
 import type { BreadcrumbLinkProps } from "./breadcrumb.link.jsx";
 
 /**
  * パンくずリストの配色です。
  */
-export type BreadcrumbRootColor = Color;
+export type BreadcrumbRootColor = BreadcrumbContextColor;
 
 /**
  * {@link BreadcrumbRoot} の各項目です。
@@ -35,12 +38,12 @@ export type BreadcrumbRootItemObject = Override<
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type BreadcrumbRootSize = Size;
+export type BreadcrumbRootSize = BreadcrumbContextSize;
 
 /**
  * {@link BreadcrumbRoot} が持つ状態です。
  */
-export type BreadcrumbRootState = {};
+export type BreadcrumbRootState = BreadcrumbContext;
 
 export namespace BreadcrumbRootProps {
   export type Render = RenderProps<BreadcrumbRootState>;
@@ -120,15 +123,16 @@ export const BreadcrumbRoot: IBreadcrumbRoot = function SuiBreadcrumbRoot(
     props: [
       otherNavProps,
       {
-        className: cn(
+        className: cn<BreadcrumbRootState>(
           "sui_breadcrumb",
-          `sui_breadcrumb-size_${size}`,
-          `sui_breadcrumb-color_${color}`,
+          (state) => `sui_breadcrumb-size_${state.size}`,
+          (state) => `sui_breadcrumb-color_${state.color}`,
         ),
         "aria-label": ariaLabel,
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "nav",
   });
 

@@ -2,16 +2,12 @@ import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
+import type { FileUploadItemState } from "./file-upload.item.jsx";
 
 /**
- * {@link FileUploadItem} が子パーツへ提供するコンテキストです。
+ * {@link FileUploadItem} が子パーツへ提供する状態です。
  */
-export type FileUploadItemContext = {
-  /**
-   * 表示対象のファイルです。
-   */
-  readonly file: File;
-};
+export type FileUploadItemContext = Readonly<FileUploadItemState>;
 
 /**
  * {@link FileUploadItem} が子パーツへ提供するコンテキストです。

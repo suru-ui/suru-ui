@@ -15,9 +15,9 @@ import type { TreeRootSize, TreeRootColor, TreeRootRadius, TreeRootVariant } fro
 export type TreeSelectAction = "only" | "toggle" | "range" | "add-range";
 
 /**
- * {@link TreeRoot} が子パーツへ提供するコンテキストです。
+ * {@link TreeRoot} が子パーツへ提供する状態です。
  */
-export type TreeContext = {
+export type TreeContextState = {
   /**
    * キーボードフォーカスの対象になっているノードの識別子です。
    */
@@ -32,18 +32,6 @@ export type TreeContext = {
    * 展開されているノードの識別子の集合です。
    */
   readonly expanded: ReadonlySet<string>;
-
-  /**
-   * ツリーのルート要素へフォーカスを移動する関数です。
-   */
-  readonly focus: () => void;
-
-  /**
-   * ノードの識別子から項目要素の DOM ID を作る関数です。
-   *
-   * @param itemId ノードの識別子です。
-   */
-  readonly getItemId: (itemId: string) => string;
 
   /**
    * 項目の背景色を控えめにするかどうかです。
@@ -61,25 +49,9 @@ export type TreeContext = {
   readonly radius: TreeRootRadius;
 
   /**
-   * ノードの識別子から選択状態を変更する関数です。
-   *
-   * @param itemId 選択状態を変更するノードの識別子です。
-   * @param action 選択の変更方法です。
-   * @param event 選択のきっかけになったイベントです。
-   */
-  readonly select: (itemId: string, action: TreeSelectAction, event: React.SyntheticEvent) => void;
-
-  /**
    * 選択されているノードの識別子の集合です。
    */
   readonly selected: ReadonlySet<string>;
-
-  /**
-   * キーボードフォーカスの対象にするノードを変更する関数です。
-   *
-   * @param itemId フォーカス対象にするノードの識別子です。
-   */
-  readonly setActive: (itemId: string) => void;
 
   /**
    * 項目の大きさです。
@@ -87,18 +59,57 @@ export type TreeContext = {
   readonly size: TreeRootSize;
 
   /**
-   * ノードの展開状態を切り替える関数です。
-   *
-   * @param itemId 展開状態を切り替えるノードの識別子です。
-   * @param event 展開のきっかけになったイベントです。
-   */
-  readonly toggleExpansion: (itemId: string, event: React.SyntheticEvent) => void;
-
-  /**
    * 項目の主な外観です。
    */
   readonly variant: TreeRootVariant;
 };
+
+/**
+ * {@link TreeRoot} が子パーツへ提供するコンテキストです。
+ */
+export type TreeContext = Readonly<
+  TreeContextState & {
+    /**
+     * ツリーのルート要素へフォーカスを移動する関数です。
+     */
+    readonly focus: () => void;
+
+    /**
+     * ノードの識別子から項目要素の DOM ID を作る関数です。
+     *
+     * @param itemId ノードの識別子です。
+     */
+    readonly getItemId: (itemId: string) => string;
+
+    /**
+     * ノードの識別子から選択状態を変更する関数です。
+     *
+     * @param itemId 選択状態を変更するノードの識別子です。
+     * @param action 選択の変更方法です。
+     * @param event 選択のきっかけになったイベントです。
+     */
+    readonly select: (
+      itemId: string,
+      action: TreeSelectAction,
+      event: React.SyntheticEvent,
+    ) => void;
+
+    /**
+     * キーボードフォーカスの対象にするノードを変更する関数です。
+     *
+     * @param itemId フォーカス対象にするノードの識別子です。
+     */
+    readonly setActive: (itemId: string) => void;
+
+    /**
+     * ノードの展開状態を切り替える関数です。
+     *
+     * @param itemId 展開状態を切り替えるノードの識別子です。
+     * @param event 展開のきっかけになったイベントです。
+     */
+    readonly toggleExpansion: (itemId: string, event: React.SyntheticEvent) => void;
+  }
+>;
 
 /**
  * {@link TreeContext} です。

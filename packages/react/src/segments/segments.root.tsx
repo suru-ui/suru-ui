@@ -1,11 +1,17 @@
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
-import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { SegmentsContext } from "./segments.context.js";
+import {
+  type SegmentsContextSize,
+  type SegmentsContextColor,
+  type SegmentsContextRadius,
+  type SegmentsContextActiveVariant,
+  SegmentsContext,
+} from "./segments.context.js";
 import type { SegmentsItemProps } from "./segments.item.jsx";
 
 /**
@@ -57,12 +63,12 @@ export interface ISegmentsRootItemRenderer<TItem = any> {
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type SegmentsRootActiveVariant = ColorTemplate;
+export type SegmentsRootActiveVariant = SegmentsContextActiveVariant;
 
 /**
  * Segments の配色です。
  */
-export type SegmentsRootColor = Color;
+export type SegmentsRootColor = SegmentsContextColor;
 
 /**
  * Segments の方向です。
@@ -81,7 +87,7 @@ export type SegmentsRootOrientation = BaseTabs.Root.Orientation;
  * - `"lg"`: 大きめ
  * - `"full"`: 円形
  */
-export type SegmentsRootRadius = "none" | Size | "full";
+export type SegmentsRootRadius = SegmentsContextRadius;
 
 /**
  * Segments の大きさです。
@@ -90,12 +96,12 @@ export type SegmentsRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type SegmentsRootSize = Size;
+export type SegmentsRootSize = SegmentsContextSize;
 
 /**
  * {@link SegmentsRoot} が持つ状態です。
  */
-export type SegmentsRootState = BaseTabs.Root.State;
+export type SegmentsRootState = Override<SegmentsContext, BaseTabs.Root.State>;
 
 export namespace SegmentsRootProps {
   export type Render = RenderProps<SegmentsRootState>;
@@ -184,27 +190,39 @@ export const SegmentsRoot: ISegmentsRoot = function SuiSegmentsRoot(props: Segme
     size = "md",
     color = "grey",
     items = [],
+    style,
     radius = size,
+    render,
     className,
     activeVariant = "solid",
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const ctx = React.useMemo<SegmentsContext>(() => ({ items }), [items]);
+  const ctx = React.useMemo<SegmentsContext>(
+    () => ({ size, color, items, radius, activeVariant }),
+    [activeVariant, color, items, radius, size],
+  );
 
   return (
     <SegmentsContext value={ctx}>
       <BaseTabs.Root
         {...otherProps}
-        className={cn(
-          className,
-          "sui_segments",
-          `sui_segments-size_${size}`,
-          `sui_segments-color_${color}`,
-          `sui_segments-radius_${radius}`,
-          `sui_segments-active_variant_${activeVariant}`,
-          (state) => `sui_segments-orientation_${state.orientation}`,
+        {...proxyRenderProps<BaseTabs.Root.State, SegmentsRootState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn<SegmentsRootState>(
+              className,
+              "sui_segments",
+              (state) => `sui_segments-size_${state.size}`,
+              (state) => `sui_segments-color_${state.color}`,
+              (state) => `sui_segments-radius_${state.radius}`,
+              (state) => `sui_segments-active_variant_${state.activeVariant}`,
+              (state) => `sui_segments-orientation_${state.orientation}`,
+            ),
+          },
         )}
         data-scope={dataScope}
       />

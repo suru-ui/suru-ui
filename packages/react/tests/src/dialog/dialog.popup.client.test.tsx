@@ -97,4 +97,40 @@ describe("DialogPopup", () => {
     expect(popup.tagName).toBe("SECTION");
     expect(popup.classList.contains("sui_card")).toBe(true);
   });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderPopup("内容", {
+      size: "sm",
+      radius: "lg",
+      variant: "stacked",
+      outlined: true,
+      render: (props, state) => (
+        <section
+          {...props}
+          data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}/${String(state.open)}`}
+        />
+      ),
+    });
+
+    // 検証
+    const popup = screen.getByClassName("sui_dialog_popup").element();
+    expect(popup.tagName).toBe("SECTION");
+    expect(popup.getAttribute("data-probe")).toBe("sm/lg/stacked/true/true");
+  });
+
+  test("className と style の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderPopup("内容", {
+      size: "sm",
+      variant: "stacked",
+      className: (state) => `probe-size_${state.size}`,
+      style: (state) => ({ opacity: state.variant === "stacked" ? "0.5" : "1" }),
+    });
+
+    // 検証
+    const popup = screen.getByClassName("sui_dialog_popup").element();
+    expect(popup.classList.contains("probe-size_sm")).toBe(true);
+    expect(popup.style.opacity).toBe("0.5");
+  });
 });

@@ -1,9 +1,12 @@
 import { Input as BaseInput } from "@base-ui/react/input";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { DEFAULT_TEXT_FIELD_CONTEXT } from "./_text-field.jsx";
+import { type TextFieldContext, useTextFieldContext } from "./text-field.context.js";
 
 /**
  * {@link TextFieldInput} の値が変更されたイベントの詳細です。
@@ -28,7 +31,7 @@ export type TextFieldInputType = Exclude<
 /**
  * {@link TextFieldInput} の状態です。
  */
-export type TextFieldInputState = BaseInput.State;
+export type TextFieldInputState = Override<TextFieldContext, BaseInput.State>;
 
 export namespace TextFieldInputProps {
   export type Render = RenderProps<TextFieldInputState>;
@@ -72,20 +75,29 @@ export type ITextFieldInput = IComponent<TextFieldInputProps>;
  * 文字入力欄の入力欄です。
  */
 export const TextFieldInput: ITextFieldInput = function SuiTextFieldInput(props) {
-  const { type = "text", className, ...otherProps } = props;
+  const ctx = useTextFieldContext(true);
+  const { type = "text", style, render, className, ...otherProps } = props;
+  const renderState = ctx ?? DEFAULT_TEXT_FIELD_CONTEXT;
 
   return (
     <BaseInput
       {...otherProps}
-      type={type}
-      className={cn(
-        className,
-        "sui_text_field_input",
-        (state) => state.valid === true && "sui_text_field_input-valid",
-        (state) => state.valid === false && "sui_text_field_input-invalid",
-        (state) => state.valid === null && "sui_text_field_input-unverified",
-        (state) => state.disabled && "sui_text_field_input-disabled",
+      {...proxyRenderProps<BaseInput.State, TextFieldInputState>(
+        (inputState) => ({ ...renderState, ...inputState }),
+        {
+          style,
+          render,
+          className: cn<TextFieldInputState>(
+            className,
+            "sui_text_field_input",
+            (state) => state.valid === true && "sui_text_field_input-valid",
+            (state) => state.valid === false && "sui_text_field_input-invalid",
+            (state) => state.valid === null && "sui_text_field_input-unverified",
+            (state) => state.disabled && "sui_text_field_input-disabled",
+          ),
+        },
       )}
+      type={type}
     />
   );
 };

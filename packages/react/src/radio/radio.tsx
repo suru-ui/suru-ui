@@ -57,6 +57,16 @@ export type RadioProps = RadioProps.Radio & RadioProps.Root & RadioProps.Indicat
 
 export type IRadio = IComponent<RadioProps>;
 
+export interface IUseRadioAPI {
+  /**
+   * {@link RadioAPI} を作成します。
+   *
+   * @param props {@link Radio} の props です。
+   * @returns ラジオボタンの API です。
+   */
+  (props: RadioProps): RadioAPI;
+}
+
 // API
 // ---
 
@@ -99,16 +109,6 @@ export class RadioAPI {
   public getRootProps(): Omit<RadioRootProps, "children"> {
     return this.rootProps;
   }
-}
-
-export interface IUseRadioAPI {
-  /**
-   * {@link RadioAPI} を作成します。
-   *
-   * @param props {@link Radio} の props です。
-   * @returns ラジオボタンの API です。
-   */
-  (props: RadioProps): RadioAPI;
 }
 
 /**

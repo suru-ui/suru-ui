@@ -3,10 +3,14 @@ import { Radio } from "@base-ui/react/radio";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import { useRadioGroupContext } from "../radio-group/radio-group.context.js";
-import type { IComponent } from "../types.js";
+import {
+  type RadioGroupContext,
+  useRadioGroupContext,
+} from "../radio-group/radio-group.context.js";
+import type { Override, IComponent } from "../types.js";
 
 /**
  * ラジオボタンの配色です。
@@ -45,7 +49,7 @@ export type RadioRootVariant = "naked" | "liquid";
 /**
  * {@link RadioRoot} が持つ状態です。
  */
-export type RadioRootState = Radio.Root.State;
+export type RadioRootState = Override<RadioGroupContext, Radio.Root.State>;
 
 export namespace RadioRootProps {
   export type Render = RenderProps<RadioRootState>;
@@ -134,11 +138,13 @@ export type IRadioRoot = IComponent<RadioRootProps>;
  * ラジオボタンのルートコンポーネントです。
  */
 export const RadioRoot: IRadioRoot = function SuiRadioRoot(props) {
-  const group = useRadioGroupContext(true);
+  const ctx = useRadioGroupContext(true);
   const {
     size: sizeProp = "md",
     color: colorProp = "grey",
+    style,
     radius: radiusProp = "full",
+    render,
     variant: variantProp = "liquid",
     disabled: disabledProp,
     outlined: outlinedProp = false,
@@ -147,36 +153,48 @@ export const RadioRoot: IRadioRoot = function SuiRadioRoot(props) {
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const size = group?.size ?? sizeProp;
-  const color = group?.color ?? colorProp;
-  const radius = group?.radius ?? radiusProp;
-  const variant = group?.variant ?? variantProp;
-  const outlined = group?.outlined ?? outlinedProp;
-  const disabled = group?.disabled || disabledProp;
+  const size = ctx?.size ?? sizeProp;
+  const color = ctx?.color ?? colorProp;
+  const radius = ctx?.radius ?? radiusProp;
+  const variant = ctx?.variant ?? variantProp;
+  const outlined = ctx?.outlined ?? outlinedProp;
+  const disabled = ctx?.disabled || disabledProp;
+  const orientation = ctx?.orientation ?? "vertical";
+  const styleState = React.useMemo(
+    () => ({ size, color, radius, variant, outlined, orientation }),
+    [color, orientation, outlined, radius, size, variant],
+  );
 
   return (
     <Radio.Root
       {...otherProps}
       disabled={disabled}
-      className={cn(
-        className,
-        "sui_radio",
-        `sui_radio-size_${size}`,
-        `sui_radio-color_${color}`,
-        `sui_radio-radius_${radius}`,
-        `sui_radio-variant_${variant}`,
-        outlined && "sui_radio-outlined",
-        (state) => state.dirty && "sui_radio-dirty",
-        (state) => state.valid === null && "sui_radio-unverified",
-        (state) => state.valid === true && "sui_radio-valid",
-        (state) => state.valid === false && "sui_radio-invalid",
-        (state) => state.filled && "sui_radio-filled",
-        (state) => state.checked && "sui_radio-checked",
-        (state) => state.focused && "sui_radio-focused",
-        (state) => state.touched && "sui_radio-touched",
-        (state) => state.disabled && "sui_radio-disabled",
-        (state) => state.readOnly && "sui_radio-readonly",
-        (state) => state.required && "sui_radio-required",
+      {...proxyRenderProps<Radio.Root.State, RadioRootState>(
+        (state) => ({ ...styleState, ...state }),
+        {
+          style,
+          render,
+          className: cn<RadioRootState>(
+            className,
+            "sui_radio",
+            (state) => `sui_radio-size_${state.size}`,
+            (state) => `sui_radio-color_${state.color}`,
+            (state) => `sui_radio-radius_${state.radius}`,
+            (state) => `sui_radio-variant_${state.variant}`,
+            (state) => state.outlined && "sui_radio-outlined",
+            (state) => state.dirty && "sui_radio-dirty",
+            (state) => state.valid === null && "sui_radio-unverified",
+            (state) => state.valid === true && "sui_radio-valid",
+            (state) => state.valid === false && "sui_radio-invalid",
+            (state) => state.filled && "sui_radio-filled",
+            (state) => state.checked && "sui_radio-checked",
+            (state) => state.focused && "sui_radio-focused",
+            (state) => state.touched && "sui_radio-touched",
+            (state) => state.disabled && "sui_radio-disabled",
+            (state) => state.readOnly && "sui_radio-readonly",
+            (state) => state.required && "sui_radio-required",
+          ),
+        },
       )}
       data-scope={dataScope}
     />

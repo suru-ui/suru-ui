@@ -3,11 +3,12 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
 import { useFileUploadItemContext } from "./file-upload.item.context.js";
+import { type FileUploadItemState } from "./file-upload.item.jsx";
 
 /**
  * {@link FileUploadItemName} が持つ状態です。
  */
-export type FileUploadItemNameState = {};
+export type FileUploadItemNameState = FileUploadItemState;
 
 export namespace FileUploadItemNameProps {
   export type Render = RenderProps<FileUploadItemNameState>;
@@ -36,8 +37,8 @@ export type IFileUploadItemName = IComponent<FileUploadItemNameProps>;
  * ファイル名を表示するコンポーネントです。
  */
 export const FileUploadItemName: IFileUploadItemName = function SuiFileUploadItemName(props) {
-  const { file } = useFileUploadItemContext();
-  const { children = file.name, ...otherSpanProps } = props;
+  const ctx = useFileUploadItemContext();
+  const { children = ctx.file.name, ...otherSpanProps } = props;
 
   return useRender({
     props: [
@@ -47,6 +48,7 @@ export const FileUploadItemName: IFileUploadItemName = function SuiFileUploadIte
         className: "sui_file_upload_item_name",
       },
     ],
+    state: ctx,
     defaultTagName: "span",
   });
 };

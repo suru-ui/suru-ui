@@ -3,14 +3,16 @@ import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import { ClearIcon } from "../_icons.jsx";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxClear} が持つ状態です。
+ * {@link ComboboxClear} の状態です。
  */
-export type ComboboxClearState = Combobox.Clear.State;
+export type ComboboxClearState = Override<ComboboxContext, Combobox.Clear.State>;
 
 export namespace ComboboxClearProps {
   export type Render = RenderProps<ComboboxClearState>;
@@ -50,7 +52,10 @@ export type IComboboxClear = IComponent<ComboboxClearProps>;
  * 選択値を消去するボタン要素です。
  */
 export const ComboboxClear: IComboboxClear = function SuiComboboxClear(props) {
+  const ctx = useComboboxContext();
   const {
+    style,
+    render,
     children = <ClearIcon />,
     className,
     "aria-label": ariaLabel = "選択値を消去",
@@ -60,7 +65,14 @@ export const ComboboxClear: IComboboxClear = function SuiComboboxClear(props) {
   return (
     <Combobox.Clear
       {...otherProps}
-      className={cn(className, "sui_combobox_clear")}
+      {...proxyRenderProps<Combobox.Clear.State, ComboboxClearState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxClearState>(className, "sui_combobox_clear"),
+        },
+      )}
       aria-label={ariaLabel}
     >
       {children}

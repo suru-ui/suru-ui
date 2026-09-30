@@ -3,9 +3,76 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { useTreeContext } from "../../../src/tree/tree.context.js";
+import { TreeContext, useTreeContext } from "../../../src/tree/tree.context.js";
+import { TreeRoot } from "../../../src/tree/tree.root.jsx";
 
 describe("useTreeContext", () => {
+  test("提供された値を返す", async ({ expect }) => {
+    // 準備
+    const provided: TreeContext = {
+      activeId: "src",
+      color: "blue",
+      expanded: new Set(["src"]),
+      muted: true,
+      outlined: true,
+      radius: "full",
+      selected: new Set(["index"]),
+      size: "lg",
+      variant: "solid",
+      focus: () => {},
+      getItemId: (itemId) => `tree-${itemId}`,
+      select: () => {},
+      setActive: () => {},
+      toggleExpansion: () => {},
+    };
+    function Probe() {
+      const ctx = useTreeContext();
+
+      return (
+        <span>
+          {`${ctx.size}/${ctx.color}/${ctx.radius}/${ctx.variant}/${String(ctx.muted)}/${String(ctx.outlined)}/${ctx.activeId}/${ctx.expanded.size}/${ctx.selected.size}`}
+        </span>
+      );
+    }
+
+    // 実行
+    const screen = await render(
+      <TreeContext value={provided}>
+        <Probe />
+      </TreeContext>,
+    );
+
+    // 検証
+    expect(screen.getByText("lg/blue/full/solid/true/true/src/1/1").query()?.textContent).toBe(
+      "lg/blue/full/solid/true/true/src/1/1",
+    );
+  });
+
+  test("ルートの状態を返す", async ({ expect }) => {
+    // 準備
+    function Probe() {
+      const ctx = useTreeContext();
+
+      return (
+        <span>
+          {`${ctx.size}/${ctx.color}/${ctx.radius}/${ctx.variant}/${String(ctx.muted)}/${String(ctx.outlined)}/${ctx.activeId}/${ctx.expanded.size}/${ctx.selected.size}`}
+        </span>
+      );
+    }
+
+    // 実行
+    const screen = await render(
+      <TreeRoot color="red" muted outlined radius="none" size="sm" variant="solid">
+        <Probe />
+      </TreeRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("sm/red/none/solid/true/true/null/0/0").query()?.textContent).toBe(
+      "sm/red/none/solid/true/true/null/0/0",
+    );
+  });
+
   test("提供がないときはエラーを投げる", async ({ expect }) => {
     // 準備
     function Probe() {

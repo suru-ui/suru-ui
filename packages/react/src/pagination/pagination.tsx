@@ -3,12 +3,14 @@ import * as React from "react";
 import type { IComponent } from "../types.js";
 import { type IUsePaginationState, usePaginationState } from "./_pagination.js";
 import {
+  type PaginationContext,
   type PaginationRootSize,
   type PaginationItemProps,
   type PaginationRootColor,
   type PaginationRootProps,
   type PaginationRootState,
   type PaginationRootRadius,
+  type IUsePaginationContext,
   type PaginationEllipsisProps,
   type PaginationNextButtonProps,
   type PaginationPreviousButtonProps,
@@ -18,6 +20,7 @@ import {
   PaginationRoot,
   PaginationEllipsis,
   PaginationNextButton,
+  usePaginationContext,
   PaginationPreviousButton,
 } from "./pagination.parts.js";
 
@@ -134,7 +137,19 @@ namespace PaginationProps {
  */
 export type PaginationProps = PaginationProps.Pagination & PaginationProps.Root;
 
-export type IPagination = IComponent<PaginationProps>;
+export interface IPagination extends IComponent<PaginationProps> {
+  readonly useContext: IUsePaginationContext;
+}
+
+export interface IUsePaginationAPI {
+  /**
+   * {@link PaginationAPI} を作成します。
+   *
+   * @param props {@link Pagination} の props です。
+   * @returns ページネーションの API です
+   */
+  (props: PaginationProps): PaginationAPI;
+}
 
 // API
 // ---
@@ -254,16 +269,6 @@ export class PaginationAPI {
   }
 }
 
-export interface IUsePaginationAPI {
-  /**
-   * {@link PaginationAPI} を作成します。
-   *
-   * @param props {@link Pagination} の props です。
-   * @returns ページネーションの API です
-   */
-  (props: PaginationProps): PaginationAPI;
-}
-
 /**
  * {@link PaginationAPI} を作成するフックです。
  */
@@ -289,28 +294,33 @@ export { PaginationAPI as API, usePaginationAPI as useAPI };
  *
  * 総ページ数から表示する項目を組み立て、前後の移動ボタンとページ番号ボタンを並べます。省略記号（…）を押下すると入力欄が表示され、ページ番号を入力してそのページへ直接移動できます。
  */
-export const Pagination: IPagination = function SuiPagination(props) {
-  const api = usePaginationAPI(props);
+export const Pagination: IPagination = Object.assign(
+  function SuiPagination(props: PaginationProps) {
+    const api = usePaginationAPI(props);
 
-  return (
-    <PaginationRoot {...api.getRootProps()}>
-      <PaginationPreviousButton {...api.getPreviousButtonProps()} />
-      {api
-        .getItems()
-        .map((item) =>
-          item.type === "item" ? (
-            <PaginationItem {...api.getItemProps(item.page)} key={`page-${item.page}`} />
-          ) : (
-            <PaginationEllipsis
-              {...api.getEllipsisProps(item.start, item.end)}
-              key={`ellipsis-${item.start}-${item.end}`}
-            />
-          ),
-        )}
-      <PaginationNextButton {...api.getNextButtonProps()} />
-    </PaginationRoot>
-  );
-};
+    return (
+      <PaginationRoot {...api.getRootProps()}>
+        <PaginationPreviousButton {...api.getPreviousButtonProps()} />
+        {api
+          .getItems()
+          .map((item) =>
+            item.type === "item" ? (
+              <PaginationItem {...api.getItemProps(item.page)} key={`page-${item.page}`} />
+            ) : (
+              <PaginationEllipsis
+                {...api.getEllipsisProps(item.start, item.end)}
+                key={`ellipsis-${item.start}-${item.end}`}
+              />
+            ),
+          )}
+        <PaginationNextButton {...api.getNextButtonProps()} />
+      </PaginationRoot>
+    );
+  },
+  {
+    useContext: usePaginationContext,
+  },
+);
 
 export namespace Pagination {
   export type State = PaginationState;
@@ -318,6 +328,8 @@ export namespace Pagination {
   export type Props = PaginationProps;
 
   export type SlotProps = PaginationSlotProps;
+
+  export type Context = PaginationContext;
 
   export type ChangeEventDetails = PaginationChangeEventDetails;
 

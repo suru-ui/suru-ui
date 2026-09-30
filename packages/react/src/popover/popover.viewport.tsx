@@ -1,14 +1,16 @@
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type PopoverContext, usePopoverContext } from "./popover.context.js";
 
 /**
  * {@link PopoverViewport} が持つ状態です。
  */
-export type PopoverViewportState = Popover.Viewport.State;
+export type PopoverViewportState = Override<PopoverContext, Popover.Viewport.State>;
 
 export namespace PopoverViewportProps {
   export type Render = RenderProps<PopoverViewportState>;
@@ -47,9 +49,22 @@ export type IPopoverViewport = IComponent<PopoverViewportProps>;
  * 1 つのポップオーバーを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
 export const PopoverViewport: IPopoverViewport = function SuiPopoverViewport(props) {
-  const { className, ...otherProps } = props;
+  const ctx = usePopoverContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Popover.Viewport {...otherProps} className={cn(className, "sui_popover_viewport")} />;
+  return (
+    <Popover.Viewport
+      {...otherProps}
+      {...proxyRenderProps<Popover.Viewport.State, PopoverViewportState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_popover_viewport"),
+        },
+      )}
+    />
+  );
 };
 
 export { PopoverViewport as Viewport };

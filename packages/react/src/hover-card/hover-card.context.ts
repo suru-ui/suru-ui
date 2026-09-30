@@ -49,9 +49,14 @@ export type HoverCardContext = {
 export const HoverCardContext: React.Context<HoverCardContext | null> =
   React.createContext<HoverCardContext | null>(null);
 
-function useSuiHoverCardContext(optional?: false): HoverCardContext;
-function useSuiHoverCardContext(optional?: boolean): HoverCardContext | null;
-function useSuiHoverCardContext(optional?: boolean): HoverCardContext | null {
+export type IUseHoverCardContext = IUseContext<HoverCardContext>;
+
+/**
+ * {@link HoverCardContext} を読み取るフックです。
+ */
+export const useHoverCardContext: IUseHoverCardContext = function useSuiHoverCardContext(
+  optional?: boolean,
+): any {
   const ctx = React.use(HoverCardContext);
   if (ctx === null && !optional) {
     throw new ContextMissingError({
@@ -61,14 +66,7 @@ function useSuiHoverCardContext(optional?: boolean): HoverCardContext | null {
   }
 
   return ctx;
-}
-
-export type IUseHoverCardContext = IUseContext<HoverCardContext>;
-
-/**
- * {@link HoverCardContext} を読み取るフックです。
- */
-export const useHoverCardContext: IUseHoverCardContext = useSuiHoverCardContext;
+};
 
 export { HoverCardContext as Context, useHoverCardContext as useContext };
 

@@ -4,8 +4,8 @@ import * as React from "react";
 import { getItemKey } from "../_item.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
-import { isItemObject } from "./_breadcrumb.jsx";
-import { useBreadcrumbContext } from "./breadcrumb.context.js";
+import { isItemObject, defaultBreadcrumbContext } from "./_breadcrumb.jsx";
+import { type BreadcrumbContext, useBreadcrumbContext } from "./breadcrumb.context.js";
 import { BreadcrumbItem } from "./breadcrumb.item.jsx";
 import { BreadcrumbLink } from "./breadcrumb.link.jsx";
 import type { BreadcrumbRootItemObject } from "./breadcrumb.root.jsx";
@@ -32,7 +32,7 @@ export interface IBreadcrumbListItemRenderer<TItem = any> {
 /**
  * {@link BreadcrumbList} が持つ状態です。
  */
-export type BreadcrumbListState = {};
+export type BreadcrumbListState = BreadcrumbContext;
 
 export namespace BreadcrumbListProps {
   export type Render = RenderProps<BreadcrumbListState>;
@@ -80,6 +80,7 @@ export const BreadcrumbList: IBreadcrumbList = function SuiBreadcrumbList(
   const ctx = useBreadcrumbContext(true);
   const { children = defaultListItemRenderer, ...otherOlProps } = props;
   const items = ctx?.items ?? [];
+  const state: BreadcrumbListState = { ...defaultBreadcrumbContext, ...ctx };
 
   return useRender({
     props: [
@@ -89,6 +90,7 @@ export const BreadcrumbList: IBreadcrumbList = function SuiBreadcrumbList(
         className: "sui_breadcrumb_list",
       },
     ],
+    state,
     defaultTagName: "ol",
   });
 };

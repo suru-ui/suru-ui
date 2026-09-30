@@ -1,11 +1,16 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import Config from "../_config.jsx";
 import { defaultItemToStringValue } from "../_item.js";
 import type { Override, IComponent } from "../types.js";
-import { AutocompleteContext } from "./autocomplete.context.js";
+import {
+  type AutocompleteContextSize,
+  type AutocompleteContextColor,
+  type AutocompleteContextRadius,
+  type AutocompleteContextVariant,
+  AutocompleteContext,
+} from "./autocomplete.context.js";
 import type { AutocompleteGroupProps } from "./autocomplete.group.jsx";
 import type { AutocompleteItemProps } from "./autocomplete.item.jsx";
 
@@ -37,7 +42,7 @@ export type AutocompleteRootHighlightEventReason = Autocomplete.Root.HighlightEv
 /**
  * オートコンプリートの配色です。
  */
-export type AutocompleteRootColor = Color;
+export type AutocompleteRootColor = AutocompleteContextColor;
 
 /**
  * 値と表示内容を組にした、リストの項目です。
@@ -90,7 +95,7 @@ export type AutocompleteRootItemGroupObject<TValue = any> = Override<
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type AutocompleteRootRadius = "none" | Size | "full";
+export type AutocompleteRootRadius = AutocompleteContextRadius;
 
 /**
  * オートコンプリートの大きさです。
@@ -99,7 +104,7 @@ export type AutocompleteRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type AutocompleteRootSize = Size;
+export type AutocompleteRootSize = AutocompleteContextSize;
 
 /**
  * オートコンプリートの主な外観の種類です。
@@ -107,12 +112,12 @@ export type AutocompleteRootSize = Size;
  * - `"naked"`: 背景のない入力欄
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type AutocompleteRootVariant = "naked" | "liquid";
+export type AutocompleteRootVariant = AutocompleteContextVariant;
 
 /**
  * {@link AutocompleteRoot} の状態です。
  */
-export type AutocompleteRootState = Autocomplete.Root.State;
+export type AutocompleteRootState = Override<AutocompleteContext, Autocomplete.Root.State>;
 
 export namespace AutocompleteRootProps {
   export type Render = {};

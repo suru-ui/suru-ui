@@ -2,6 +2,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { NumberFieldAddon } from "../../../src/number-field/number-field.addon.jsx";
+import { NumberFieldRoot } from "../../../src/number-field/number-field.root.jsx";
 import "../_locators.js";
 
 describe("NumberFieldAddon", () => {
@@ -33,5 +34,23 @@ describe("NumberFieldAddon", () => {
     const addon = screen.getByText("¥").element();
     expect(addon.tagName).toBe("B");
     expect(addon.classList.contains("sui_number_field_addon")).toBe(true);
+  });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <NumberFieldRoot color="blue" size="lg">
+        <NumberFieldAddon
+          render={(props, state) => <span {...props} data-probe={`${state.size}/${state.color}`} />}
+        >
+          ¥
+        </NumberFieldAddon>
+      </NumberFieldRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_number_field_addon").element().getAttribute("data-probe"),
+    ).toBe("lg/blue");
   });
 });

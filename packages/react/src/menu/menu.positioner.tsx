@@ -1,15 +1,16 @@
 import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useMenuContext } from "./menu.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * {@link MenuPositioner} が持つ状態です。
  */
-export type MenuPositionerState = Menu.Positioner.State;
+export type MenuPositionerState = Override<MenuContext, Menu.Positioner.State>;
 
 export namespace MenuPositionerProps {
   export type Render = RenderProps<MenuPositionerState>;
@@ -62,6 +63,8 @@ export const MenuPositioner: IMenuPositioner = function SuiMenuPositioner(props)
     // ルートメニューは上下優先、サブメニューは左右優先にします。
     side = ctx.depth === 1 ? "bottom" : "right",
     align = "start",
+    style,
+    render,
     className,
     ...otherProps
   } = props;
@@ -71,7 +74,14 @@ export const MenuPositioner: IMenuPositioner = function SuiMenuPositioner(props)
       {...otherProps}
       side={side}
       align={align}
-      className={cn(className, "sui_menu_positioner")}
+      {...proxyRenderProps<Menu.Positioner.State, MenuPositionerState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_menu_positioner"),
+        },
+      )}
     />
   );
 };

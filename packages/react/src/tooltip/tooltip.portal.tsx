@@ -1,15 +1,16 @@
 import { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useTooltipContext } from "./tooltip.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type TooltipContext, useTooltipContext } from "./tooltip.context.js";
 
 /**
  * {@link TooltipPortal} が持つ状態です。
  */
-export type TooltipPortalState = Tooltip.Portal.State;
+export type TooltipPortalState = Override<TooltipContext, Tooltip.Portal.State>;
 
 export namespace TooltipPortalProps {
   export type Render = RenderProps<TooltipPortalState>;
@@ -48,8 +49,10 @@ export type ITooltipPortal = IComponent<TooltipPortalProps>;
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const TooltipPortal: ITooltipPortal = function SuiTooltipPortal(props) {
-  const { size, radius, outlined } = useTooltipContext();
+  const ctx = useTooltipContext();
   const {
+    style,
+    render,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
@@ -59,12 +62,19 @@ export const TooltipPortal: ITooltipPortal = function SuiTooltipPortal(props) {
   return (
     <Tooltip.Portal
       {...otherProps}
-      className={cn(
-        className,
-        "sui_tooltip_portal",
-        `sui_tooltip_portal-size_${size}`,
-        `sui_tooltip_portal-radius_${radius}`,
-        outlined && "sui_tooltip_portal-outlined",
+      {...proxyRenderProps<Tooltip.Portal.State, TooltipPortalState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<TooltipPortalState>(
+            className,
+            "sui_tooltip_portal",
+            (state) => `sui_tooltip_portal-size_${state.size}`,
+            (state) => `sui_tooltip_portal-radius_${state.radius}`,
+            (state) => state.outlined && "sui_tooltip_portal-outlined",
+          ),
+        },
       )}
       data-scope={dataScope}
     />

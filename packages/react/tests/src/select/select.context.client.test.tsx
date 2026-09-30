@@ -15,7 +15,13 @@ describe("useSelectContext", () => {
       const ctx = useSelectContext();
       return (
         <span>
-          {[ctx.size, ctx.variant, String(ctx.outlined), JSON.stringify(ctx.items)].join(",")}
+          {[
+            ctx.size,
+            ctx.radius,
+            ctx.variant,
+            String(ctx.outlined),
+            JSON.stringify(ctx.items),
+          ].join(",")}
         </span>
       );
     }
@@ -28,8 +34,8 @@ describe("useSelectContext", () => {
     );
 
     // 検証
-    expect(screen.getByText('lg,naked,true,["りんご","ばなな"]').query()?.textContent).toBe(
-      'lg,naked,true,["りんご","ばなな"]',
+    expect(screen.getByText('lg,lg,naked,true,["りんご","ばなな"]').query()?.textContent).toBe(
+      'lg,lg,naked,true,["りんご","ばなな"]',
     );
   });
 

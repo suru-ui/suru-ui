@@ -2,14 +2,16 @@ import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type PopoverContext, usePopoverContext } from "./popover.context.js";
 
 /**
  * {@link PopoverClose} が持つ状態です。
  */
-export type PopoverCloseState = Popover.Close.State;
+export type PopoverCloseState = Override<PopoverContext, Popover.Close.State>;
 
 export namespace PopoverCloseProps {
   export type Render = Omit<RenderProps<PopoverCloseState>, "render">;
@@ -20,7 +22,7 @@ export namespace PopoverCloseProps {
      *
      * Base UI の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
      */
-    children: NonNullable<Popover.Close.Props["render"]>;
+    children: NonNullable<RenderProps<PopoverCloseState>["render"]>;
   };
 
   export type BaseUI = Pick<
@@ -57,13 +59,20 @@ export type IPopoverClose = IComponent<PopoverCloseProps>;
  * 子要素は何にもラップされず、そのまま Base UI の `render` プロパティーに渡されます。
  */
 export const PopoverClose: IPopoverClose = function SuiPopoverClose(props) {
-  const { children, className, ...otherProps } = props;
+  const ctx = usePopoverContext();
+  const { style, children, className, ...otherProps } = props;
 
   return (
     <Popover.Close
       {...otherProps}
-      render={children}
-      className={cn(className, "sui_popover_close")}
+      {...proxyRenderProps<Popover.Close.State, PopoverCloseState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render: children,
+          className: cn(className, "sui_popover_close"),
+        },
+      )}
     />
   );
 };

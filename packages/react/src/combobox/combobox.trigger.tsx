@@ -2,14 +2,16 @@ import { Combobox } from "@base-ui/react/combobox";
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxTrigger} が持つ状態です。
+ * {@link ComboboxTrigger} の状態です。
  */
-export type ComboboxTriggerState = Combobox.Trigger.State;
+export type ComboboxTriggerState = Override<ComboboxContext, Combobox.Trigger.State>;
 
 export namespace ComboboxTriggerProps {
   export type Render = Omit<RenderProps<ComboboxTriggerState>, "render">;
@@ -50,7 +52,9 @@ export type IComboboxTrigger = IComponent<ComboboxTriggerProps>;
  * 候補リストを開閉するボタン要素です。
  */
 export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(props) {
+  const ctx = useComboboxContext();
   const {
+    style,
     children,
     className,
     nativeButton = false,
@@ -61,8 +65,14 @@ export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(pro
   return (
     <Combobox.Trigger
       {...otherProps}
-      render={children}
-      className={cn(className, "sui_combobox_trigger")}
+      {...proxyRenderProps<Combobox.Trigger.State, ComboboxTriggerState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render: children,
+          className: cn<ComboboxTriggerState>(className, "sui_combobox_trigger"),
+        },
+      )}
       nativeButton={nativeButton}
       aria-label={ariaLabel}
     />

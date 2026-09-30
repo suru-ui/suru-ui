@@ -6,6 +6,10 @@ import {
   AlertDialogPopupContext,
   useAlertDialogPopupContext,
 } from "../../../src/alert-dialog/alert-dialog.popup.context.js";
+import { AlertDialogPopup } from "../../../src/alert-dialog/alert-dialog.popup.jsx";
+import { AlertDialogPortal } from "../../../src/alert-dialog/alert-dialog.portal.jsx";
+import { AlertDialogRoot } from "../../../src/alert-dialog/alert-dialog.root.jsx";
+import { AlertDialogViewport } from "../../../src/alert-dialog/alert-dialog.viewport.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useAlertDialogPopupContext", () => {
@@ -27,6 +31,31 @@ describe("useAlertDialogPopupContext", () => {
 
     // 検証
     expect(screen.getByText("lg").query()?.textContent).toBe("lg");
+  });
+
+  test("ルートの状態を返す", async ({ expect }) => {
+    // 準備
+    function Probe() {
+      const ctx = useAlertDialogPopupContext();
+
+      return <span>{`${ctx.size}/${ctx.radius}/${ctx.variant}`}</span>;
+    }
+
+    // 実行
+    const screen = await render(
+      <AlertDialogRoot defaultOpen>
+        <AlertDialogPortal>
+          <AlertDialogViewport>
+            <AlertDialogPopup size="sm" radius="lg" variant="stacked">
+              <Probe />
+            </AlertDialogPopup>
+          </AlertDialogViewport>
+        </AlertDialogPortal>
+      </AlertDialogRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("sm/lg/stacked").query()?.textContent).toBe("sm/lg/stacked");
   });
 
   test("提供がないときはエラーを投げる", async ({ expect }) => {

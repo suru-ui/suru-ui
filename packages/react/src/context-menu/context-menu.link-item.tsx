@@ -7,7 +7,7 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { useContextMenuContext } from "./context-menu.context.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * コンテキストメニューのリンク項目の配色です。
@@ -31,7 +31,10 @@ export type ContextMenuLinkItemVariant = Button.Root.Variant;
 /**
  * {@link ContextMenuLinkItem} が持つ状態です。
  */
-export type ContextMenuLinkItemState = Override<Button.Root.State, ContextMenu.LinkItem.State>;
+export type ContextMenuLinkItemState = Override<
+  ContextMenuContext,
+  Override<Button.Root.State, ContextMenu.LinkItem.State>
+>;
 
 export namespace ContextMenuLinkItemProps {
   export type Render = RenderProps<ContextMenuLinkItemState>;
@@ -130,7 +133,7 @@ export const ContextMenuLinkItem: IContextMenuLinkItem = function SuiContextMenu
     <ContextMenu.LinkItem
       {...otherProps}
       {...baseuiProps}
-      render={(htmlProps: {}, state) => {
+      render={(htmlProps: {}, itemState) => {
         const buttonRootProps: Required<
           Button.Root.Props.SuruUI &
             Button.Root.Props.BaseUI &
@@ -155,16 +158,19 @@ export const ContextMenuLinkItem: IContextMenuLinkItem = function SuiContextMenu
             {...mergeProps<typeof Button.Root>([
               htmlProps,
               buttonRootProps,
-              proxyRenderProps(state, {
-                style,
-                render,
-                className: cn(
-                  className,
-                  "sui_context_menu_item",
-                  "sui_context_menu_link_item",
-                  (state) => state.highlighted && "sui_context_menu_item-highlighted",
-                ),
-              }),
+              proxyRenderProps<Button.Root.State, ContextMenuLinkItemState>(
+                (state) => ({ ...ctx, ...state, ...itemState }),
+                {
+                  style,
+                  render,
+                  className: cn<ContextMenuLinkItemState>(
+                    className,
+                    "sui_context_menu_item",
+                    "sui_context_menu_link_item",
+                    (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                  ),
+                },
+              ),
             ])}
           />
         );

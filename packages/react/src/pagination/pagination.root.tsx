@@ -40,7 +40,7 @@ export type PaginationRootSize = Size;
 /**
  * {@link PaginationRoot} が持つ状態です。
  */
-export type PaginationRootState = {};
+export type PaginationRootState = PaginationContext;
 
 export namespace PaginationRootProps {
   export type Render = RenderProps<PaginationRootState>;
@@ -56,7 +56,7 @@ export namespace PaginationRootProps {
     /**
      * ページネーションの配色を指定します。
      *
-     * 配色は現在のページのボタンに適用されます。
+     * 配色は現在のページのボタンと前後の移動ボタンに適用されます。省略記号は常に `"grey"` です。
      *
      * @default "grey"
      */
@@ -165,17 +165,18 @@ export const PaginationRoot: IPaginationRoot = function SuiPaginationRoot(props)
     props: [
       otherNavProps,
       {
-        className: cn(
+        className: cn<PaginationRootState>(
           "sui_pagination",
-          `sui_pagination-size_${size}`,
-          `sui_pagination-radius_${radius}`,
-          `sui_pagination-color_${color}`,
-          disabled && "sui_pagination-disabled",
+          (state) => `sui_pagination-size_${state.size}`,
+          (state) => `sui_pagination-radius_${state.radius}`,
+          (state) => `sui_pagination-color_${state.color}`,
+          (state) => state.disabled && "sui_pagination-disabled",
         ),
         "aria-label": ariaLabel,
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "nav",
   });
 

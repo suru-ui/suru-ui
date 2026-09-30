@@ -92,6 +92,8 @@ export {
   useAutocompleteAPI,
   AutocompleteContext,
   useAutocompleteContext,
+  AutocompleteItemContext,
+  useAutocompleteItemContext,
 } from "./autocomplete/index.js";
 export {
   type AvatarAPI,
@@ -160,6 +162,8 @@ export {
   useButtonAPI,
   ButtonContext,
   useButtonContext,
+  ButtonCircularProgressContext,
+  useButtonCircularProgressContext,
 } from "./button/index.js";
 export {
   type CardAPI,
@@ -247,6 +251,8 @@ export {
   useComboboxAPI,
   ComboboxContext,
   useComboboxContext,
+  ComboboxItemContext,
+  useComboboxItemContext,
 } from "./combobox/index.js";
 export {
   type ContextMenuAPI,
@@ -783,6 +789,8 @@ export {
   useToggleButtonAPI,
   ToggleButtonContext,
   useToggleButtonContext,
+  ToggleButtonCircularProgressContext,
+  useToggleButtonCircularProgressContext,
 } from "./toggle-button/index.js";
 export {
   type TooltipAPI,

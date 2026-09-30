@@ -164,6 +164,17 @@ export type HoverCardProps<TPayload = any> = HoverCardProps.HoverCard<TPayload> 
   HoverCardProps.Trigger<TPayload> &
   HoverCardProps.Content;
 
+export interface IUseHoverCardAPI {
+  /**
+   * {@link HoverCardAPI} を作成します。
+   *
+   * @template TPayload トリガーから受け取るデータの型です。
+   * @param props {@link HoverCard} の props です。
+   * @returns ホバーカードの API です
+   */
+  <TPayload = any>(props: HoverCardProps<TPayload>): HoverCardAPI<TPayload>;
+}
+
 // API
 // ---
 
@@ -358,17 +369,6 @@ export class HoverCardAPI<TPayload = any> {
 
     return null;
   }
-}
-
-export interface IUseHoverCardAPI {
-  /**
-   * {@link HoverCardAPI} を作成します。
-   *
-   * @template TPayload トリガーから受け取るデータの型です。
-   * @param props {@link HoverCard} の props です。
-   * @returns ホバーカードの API です
-   */
-  <TPayload = any>(props: HoverCardProps<TPayload>): HoverCardAPI<TPayload>;
 }
 
 /**

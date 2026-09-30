@@ -217,6 +217,24 @@ describe("TextField", () => {
     expect(input.classList.contains("sui_text_field_input-disabled")).toBe(true);
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TextField
+        color="blue"
+        size="lg"
+        render={(props, state) => (
+          <section {...props} data-probe={`${state.size}/${state.color}`} />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_text_field").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("lg/blue");
+  });
+
   test("useContext でコンテキストを読み取る", async ({ expect }) => {
     // 準備
     function Probe() {

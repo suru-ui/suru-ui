@@ -4,6 +4,9 @@ import { render } from "vitest-browser-react";
 
 import { defaultItemToStringLabel } from "../../../src/_item.js";
 import { ComboboxContext, useComboboxContext } from "../../../src/combobox/combobox.context.js";
+import { ComboboxPopup } from "../../../src/combobox/combobox.popup.jsx";
+import { ComboboxPortal } from "../../../src/combobox/combobox.portal.jsx";
+import { ComboboxPositioner } from "../../../src/combobox/combobox.positioner.jsx";
 import { ComboboxRoot } from "../../../src/combobox/combobox.root.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
@@ -82,6 +85,30 @@ describe("useComboboxContext", () => {
 
     // 検証
     expect(screen.getByText("full").query()?.textContent).toBe("full");
+  });
+
+  test("ポップアップの派生した値を返す", async ({ expect }) => {
+    // 準備
+    function Probe() {
+      const ctx = useComboboxContext();
+      return <span>{String(ctx.outlined)}</span>;
+    }
+
+    // 実行
+    const screen = await render(
+      <ComboboxRoot items={fruits} outlined open>
+        <ComboboxPortal>
+          <ComboboxPositioner>
+            <ComboboxPopup outlined={false}>
+              <Probe />
+            </ComboboxPopup>
+          </ComboboxPositioner>
+        </ComboboxPortal>
+      </ComboboxRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText("false").query()?.textContent).toBe("false");
   });
 
   test("提供がないときはエラーを投げる", async ({ expect }) => {

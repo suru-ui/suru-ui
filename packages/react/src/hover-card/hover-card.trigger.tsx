@@ -1,15 +1,17 @@
 import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type HoverCardContext, useHoverCardContext } from "./hover-card.context.js";
 import type { HoverCardHandle } from "./hover-card.handle.js";
 
 /**
  * {@link HoverCardTrigger} が持つ状態です。
  */
-export type HoverCardTriggerState = PreviewCard.Trigger.State;
+export type HoverCardTriggerState = Override<HoverCardContext, PreviewCard.Trigger.State>;
 
 export namespace HoverCardTriggerProps {
   export type Render = Omit<RenderProps<HoverCardTriggerState>, "render">;
@@ -20,7 +22,7 @@ export namespace HoverCardTriggerProps {
      *
      * Base UI の `render` プロパティーと同じ型で、そのまま `render` に渡されます。
      */
-    children: NonNullable<PreviewCard.Trigger.Props<TPayload>["render"]>;
+    children: NonNullable<RenderProps<HoverCardTriggerState>["render"]>;
 
     /**
      * ホバーカード ({@link Root}) を関連付けるハンドルです。
@@ -75,14 +77,21 @@ export interface IHoverCardTrigger extends IComponent<HoverCardTriggerProps> {
 export const HoverCardTrigger: IHoverCardTrigger = function SuiHoverCardTrigger<TPayload>(
   props: HoverCardTriggerProps<TPayload>,
 ) {
-  const { handle, children, className, ...otherProps } = props;
+  const ctx = useHoverCardContext(true);
+  const { style, handle, children, className, ...otherProps } = props;
 
   return (
     <PreviewCard.Trigger
       {...otherProps}
       handle={handle}
-      render={children}
-      className={cn(className, "sui_hover_card_trigger")}
+      {...proxyRenderProps<PreviewCard.Trigger.State, HoverCardTriggerState>(
+        (state) => ({ size: "md", radius: "md", outlined: false, ...ctx, ...state }),
+        {
+          style,
+          render: children,
+          className: cn(className, "sui_hover_card_trigger"),
+        },
+      )}
     />
   );
 };

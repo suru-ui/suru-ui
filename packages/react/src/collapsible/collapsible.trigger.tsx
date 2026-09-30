@@ -2,14 +2,16 @@ import { Collapsible } from "@base-ui/react/collapsible";
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type CollapsibleContext, useCollapsibleContext } from "./collapsible.context.js";
 
 /**
  * {@link CollapsibleTrigger} が持つ状態です。
  */
-export type CollapsibleTriggerState = Collapsible.Trigger.State;
+export type CollapsibleTriggerState = Override<CollapsibleContext, Collapsible.Trigger.State>;
 
 export namespace CollapsibleTriggerProps {
   export type Render = Omit<RenderProps<CollapsibleTriggerState>, "render">;
@@ -57,13 +59,20 @@ export type ICollapsibleTrigger = IComponent<CollapsibleTriggerProps>;
  * ボタンなどの操作要素を子に渡して使います。
  */
 export const CollapsibleTrigger: ICollapsibleTrigger = function SuiCollapsibleTrigger(props) {
-  const { children, className, ...otherProps } = props;
+  const ctx = useCollapsibleContext();
+  const { style, children, className, ...otherProps } = props;
 
   return (
     <Collapsible.Trigger
       {...otherProps}
-      render={children}
-      className={cn(className, "sui_collapsible_trigger")}
+      {...proxyRenderProps<Collapsible.Trigger.State, CollapsibleTriggerState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render: children,
+          className: cn(className, "sui_collapsible_trigger"),
+        },
+      )}
     />
   );
 };

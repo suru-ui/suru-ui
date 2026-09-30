@@ -1,17 +1,18 @@
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { getTabsItemLabel, getTabsItemProps, createItemRenderer } from "./_tabs.jsx";
-import { useTabsContext } from "./tabs.context.js";
+import { type TabsContext, useTabsContext } from "./tabs.context.js";
 import type { TabsRootItemObject, ITabsRootItemRenderer } from "./tabs.root.jsx";
 
 /**
  * {@link TabsList} が持つ状態です。
  */
-export type TabsListState = BaseTabs.List.State;
+export type TabsListState = Override<TabsContext, BaseTabs.List.State>;
 
 export namespace TabsListProps {
   export type Render = RenderProps<TabsListState>;
@@ -63,19 +64,25 @@ export interface ITabsList extends IComponent<TabsListProps> {
  * {@link TabsRoot} の `items` を読み取り、`children` を省略した場合は既定の並びで表示します。
  */
 export const TabsList: ITabsList = function SuiTabsList(props: TabsListProps) {
-  const ctx = useTabsContext(true);
+  const ctx = useTabsContext();
   const {
+    style,
+    render,
     children = defaultListItemRenderer,
     className,
     "aria-label": ariaLabel = "タブ",
     ...otherProps
   } = props;
-  const items = ctx?.items ?? [];
+  const items = ctx.items;
 
   return (
     <BaseTabs.List
       {...otherProps}
-      className={cn(className, "sui_tabs_list")}
+      {...proxyRenderProps<BaseTabs.List.State, TabsListState>((state) => ({ ...ctx, ...state }), {
+        style,
+        render,
+        className: cn<TabsListState>(className, "sui_tabs_list"),
+      })}
       aria-label={ariaLabel}
     >
       {typeof children === "function" ? items.map(children) : children}

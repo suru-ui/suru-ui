@@ -100,6 +100,63 @@ describe("ButtonRoot", () => {
     expect(link.classList.contains("sui_button")).toBe(true);
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <ButtonRoot
+        item
+        outlined
+        pending
+        squared
+        color="blue"
+        radius="full"
+        size="lg"
+        variant="naked"
+        render={(props, state) => (
+          <button
+            {...props}
+            data-probe={[
+              state.size,
+              state.color,
+              state.radius,
+              state.variant,
+              String(state.item),
+              String(state.muted),
+              String(state.outlined),
+              String(state.pending),
+              String(state.squared),
+              String(state.disabled),
+            ].join("/")}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    const button = screen.getByClassName("sui_button").element();
+    expect(button.tagName).toBe("BUTTON");
+    expect(button.getAttribute("data-probe")).toBe(
+      "lg/blue/full/naked/true/false/true/true/true/true",
+    );
+  });
+
+  test("className の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <ButtonRoot
+        color="blue"
+        pending
+        size="lg"
+        className={(state) => `probe-pending_${String(state.pending)} probe-size_${state.size}`}
+      />,
+    );
+
+    // 検証
+    const button = screen.getByClassName("sui_button").element();
+    expect(button.classList.contains("probe-pending_true")).toBe(true);
+    expect(button.classList.contains("probe-size_lg")).toBe(true);
+  });
+
   test("押下時にクリックを受け取る", async ({ expect }) => {
     // 準備
     let clicked = 0;

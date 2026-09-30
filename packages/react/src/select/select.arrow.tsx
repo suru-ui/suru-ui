@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectArrow} が持つ状態です。
  */
-export type SelectArrowState = BaseSelect.Arrow.State;
+export type SelectArrowState = Override<SelectContext, BaseSelect.Arrow.State>;
 
 export namespace SelectArrowProps {
   export type Render = RenderProps<SelectArrowState>;
@@ -45,9 +47,22 @@ export type ISelectArrow = IComponent<SelectArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const SelectArrow: ISelectArrow = function SuiSelectArrow(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <BaseSelect.Arrow {...otherProps} className={cn(className, "sui_select_arrow")} />;
+  return (
+    <BaseSelect.Arrow
+      {...otherProps}
+      {...proxyRenderProps<BaseSelect.Arrow.State, SelectArrowState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_arrow"),
+        },
+      )}
+    />
+  );
 };
 
 export { SelectArrow as Arrow };

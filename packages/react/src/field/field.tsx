@@ -121,6 +121,16 @@ namespace FieldProps {
  */
 export type FieldProps = FieldProps.Field & FieldProps.Root;
 
+export interface IUseFieldAPI {
+  /**
+   * {@link FieldAPI} を作成します。
+   *
+   * @param props {@link Field} の props です。
+   * @returns フィールドの API です
+   */
+  (props: FieldProps): FieldAPI;
+}
+
 // API
 // ---
 
@@ -249,16 +259,6 @@ export class FieldAPI {
 
     return null;
   }
-}
-
-export interface IUseFieldAPI {
-  /**
-   * {@link FieldAPI} を作成します。
-   *
-   * @param props {@link Field} の props です。
-   * @returns フィールドの API です
-   */
-  (props: FieldProps): FieldAPI;
 }
 
 /**

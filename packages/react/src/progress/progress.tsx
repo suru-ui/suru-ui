@@ -96,6 +96,16 @@ export type ProgressProps = ProgressProps.Progress & ProgressProps.Root;
 
 export type IProgress = IComponent<ProgressProps>;
 
+export interface IUseProgressAPI {
+  /**
+   * {@link ProgressAPI} を作成します。
+   *
+   * @param props {@link Progress} の props です。
+   * @returns 進捗の API です
+   */
+  (props: ProgressProps): ProgressAPI;
+}
+
 // API
 // ---
 
@@ -184,16 +194,6 @@ export class ProgressAPI {
 
     return null;
   }
-}
-
-export interface IUseProgressAPI {
-  /**
-   * {@link ProgressAPI} を作成します。
-   *
-   * @param props {@link Progress} の props です。
-   * @returns 進捗の API です
-   */
-  (props: ProgressProps): ProgressAPI;
 }
 
 /**

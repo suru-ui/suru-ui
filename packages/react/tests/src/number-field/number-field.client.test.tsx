@@ -197,17 +197,17 @@ describe("NumberField", () => {
     function Probe() {
       const ctx = NumberField.useContext();
 
-      return <span>{`${ctx.size}/${ctx.variant}`}</span>;
+      return <span>{`${ctx.size}/${ctx.variant}/${String(ctx.outlined)}`}</span>;
     }
 
     // 実行
     const screen = await render(
-      <NumberFieldRoot size="lg" variant="naked">
+      <NumberFieldRoot outlined size="lg" variant="naked">
         <Probe />
       </NumberFieldRoot>,
     );
 
     // 検証
-    expect(screen.getByText("lg/naked").query()?.textContent).toBe("lg/naked");
+    expect(screen.getByText("lg/naked/true").query()?.textContent).toBe("lg/naked/true");
   });
 });

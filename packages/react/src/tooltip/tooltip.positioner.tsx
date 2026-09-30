@@ -1,14 +1,16 @@
 import { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type TooltipContext, useTooltipContext } from "./tooltip.context.js";
 
 /**
  * {@link TooltipPositioner} が持つ状態です。
  */
-export type TooltipPositionerState = Tooltip.Positioner.State;
+export type TooltipPositionerState = Override<TooltipContext, Tooltip.Positioner.State>;
 
 export namespace TooltipPositionerProps {
   export type Render = RenderProps<TooltipPositionerState>;
@@ -57,12 +59,20 @@ export type ITooltipPositioner = IComponent<TooltipPositionerProps>;
  * トリガーを基準にポップアップを配置する要素です。
  */
 export const TooltipPositioner: ITooltipPositioner = function SuiTooltipPositioner(props) {
-  const { className, positionMethod = "fixed", ...otherProps } = props;
+  const ctx = useTooltipContext();
+  const { style, render, className, positionMethod = "fixed", ...otherProps } = props;
 
   return (
     <Tooltip.Positioner
       {...otherProps}
-      className={cn(className, "sui_tooltip_positioner")}
+      {...proxyRenderProps<Tooltip.Positioner.State, TooltipPositionerState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_tooltip_positioner"),
+        },
+      )}
       positionMethod={positionMethod}
     />
   );

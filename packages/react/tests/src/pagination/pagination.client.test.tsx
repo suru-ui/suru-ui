@@ -290,4 +290,28 @@ describe("Pagination", () => {
     expect(root.classList.contains("sui_pagination-color_blue")).toBe(true);
     expect(root.classList.contains("sui_pagination-radius_full")).toBe(true);
   });
+
+  test("slotProps の render へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Pagination
+        color="blue"
+        defaultPage={3}
+        size="lg"
+        slotProps={{
+          item: {
+            render: (props, state) => (
+              <button {...props} data-probe={`${state.size}/${state.color}`} />
+            ),
+          },
+        }}
+        totalPages={5}
+      />,
+    );
+
+    // 検証
+    expect(
+      screen.getByRole("button", { name: "3", exact: true }).element().getAttribute("data-probe"),
+    ).toBe("lg/blue");
+  });
 });

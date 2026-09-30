@@ -14,18 +14,20 @@ describe("useButtonContext", () => {
     // 準備
     function Probe() {
       const ctx = useButtonContext();
-      return <span>{[String(ctx.pending), String(ctx.disabled)].join(",")}</span>;
+      return (
+        <span>{[String(ctx.pending), String(ctx.disabled), ctx.size, ctx.color].join(",")}</span>
+      );
     }
 
     // 実行
     const screen = await render(
-      <ButtonRoot pending>
+      <ButtonRoot color="blue" pending size="lg">
         <Probe />
       </ButtonRoot>,
     );
 
     // 検証
-    expect(screen.getByText("true,true").query()?.textContent).toBe("true,true");
+    expect(screen.getByText("true,true,lg,blue").query()?.textContent).toBe("true,true,lg,blue");
   });
 
   test("提供がないときはエラーを投げる", async ({ expect }) => {
@@ -55,7 +57,18 @@ describe("useButtonContext", () => {
 
   test("直接提供した値を返す", async ({ expect }) => {
     // 準備
-    const provided = { disabled: false, pending: false } as const;
+    const provided: ButtonContext = {
+      color: "blue",
+      disabled: false,
+      item: false,
+      muted: false,
+      outlined: true,
+      pending: false,
+      radius: "full",
+      size: "lg",
+      squared: false,
+      variant: "naked",
+    };
     function Probe() {
       const ctx = useButtonContext();
       return <span>{ctx === provided ? "同一" : "別物"}</span>;

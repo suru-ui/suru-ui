@@ -1,14 +1,16 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompleteInput} の状態です。
  */
-export type AutocompleteInputState = Autocomplete.Input.State;
+export type AutocompleteInputState = Override<AutocompleteContext, Autocomplete.Input.State>;
 
 export namespace AutocompleteInputProps {
   export type Render = RenderProps<AutocompleteInputState>;
@@ -45,9 +47,22 @@ export type IAutocompleteInput = IComponent<AutocompleteInputProps>;
  * 検索文字列を入力するテキスト入力欄です。
  */
 export const AutocompleteInput: IAutocompleteInput = function SuiAutocompleteInput(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useAutocompleteContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Autocomplete.Input {...otherProps} className={cn(className, "sui_autocomplete_input")} />;
+  return (
+    <Autocomplete.Input
+      {...otherProps}
+      {...proxyRenderProps<Autocomplete.Input.State, AutocompleteInputState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AutocompleteInputState>(className, "sui_autocomplete_input"),
+        },
+      )}
+    />
+  );
 };
 
 export { AutocompleteInput as Input };

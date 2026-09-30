@@ -1,14 +1,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxChips} が持つ状態です。
+ * {@link ComboboxChips} の状態です。
  */
-export type ComboboxChipsState = Combobox.Chips.State;
+export type ComboboxChipsState = Override<ComboboxContext, Combobox.Chips.State>;
 
 export namespace ComboboxChipsProps {
   export type Render = RenderProps<ComboboxChipsState>;
@@ -45,9 +47,22 @@ export type IComboboxChips = IComponent<ComboboxChipsProps>;
  * 複数選択した値を表示するチップのコンテナーです。
  */
 export const ComboboxChips: IComboboxChips = function SuiComboboxChips(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Combobox.Chips {...otherProps} className={cn(className, "sui_combobox_chips")} />;
+  return (
+    <Combobox.Chips
+      {...otherProps}
+      {...proxyRenderProps<Combobox.Chips.State, ComboboxChipsState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxChipsState>(className, "sui_combobox_chips"),
+        },
+      )}
+    />
+  );
 };
 
 export { ComboboxChips as Chips };

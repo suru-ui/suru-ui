@@ -284,6 +284,91 @@ describe("Sidebar", () => {
     expect(root.getAttribute("data-state")).toBe("expanded");
   });
 
+  test("プロバイダーの render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <SidebarProvider
+        defaultOpen={false}
+        render={(renderProps, state) => (
+          <section {...renderProps} data-probe={`${String(state.open)}/${state.state}`} />
+        )}
+      />,
+    );
+
+    // 検証
+    const provider = screen.getByClassName("sui_sidebar_provider").element();
+    expect(provider.tagName).toBe("SECTION");
+    expect(provider.getAttribute("data-probe")).toBe("false/collapsed");
+  });
+
+  test("ルートの render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Sidebar defaultOpen>
+        <Sidebar.Root
+          collapsible="icon"
+          side="right"
+          variant="floating"
+          render={(renderProps, state) => (
+            <section
+              {...renderProps}
+              data-probe={`${state.collapsible}/${state.side}/${state.variant}/${state.state}`}
+            />
+          )}
+        />
+      </Sidebar>,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_sidebar").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("icon/right/floating/expanded");
+  });
+
+  test("トリガーの render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <SidebarProvider>
+        <SidebarRoot collapsible="icon" side="right" variant="floating">
+          <SidebarTrigger
+            render={(renderProps, state) => (
+              <button
+                {...renderProps}
+                data-probe={`${state.collapsible}/${state.side}/${state.variant}/${state.state}`}
+              />
+            )}
+          />
+        </SidebarRoot>
+      </SidebarProvider>,
+    );
+
+    // 検証
+    const trigger = screen.getByClassName("sui_sidebar_trigger").element();
+    expect(trigger.getAttribute("data-probe")).toBe("icon/right/floating/expanded");
+  });
+
+  test("レールの render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <SidebarProvider>
+        <SidebarRoot collapsible="icon" side="right" variant="floating">
+          <SidebarRail
+            render={(renderProps, state) => (
+              <button
+                {...renderProps}
+                data-probe={`${state.collapsible}/${state.side}/${state.variant}/${state.state}`}
+              />
+            )}
+          />
+        </SidebarRoot>
+      </SidebarProvider>,
+    );
+
+    // 検証
+    const rail = screen.getByClassName("sui_sidebar_rail").element();
+    expect(rail.getAttribute("data-probe")).toBe("icon/right/floating/expanded");
+  });
+
   test("公開パーツとフックを静的メンバーに持つ", ({ expect }) => {
     // 検証
     expect(Sidebar.Provider).toBe(SidebarProvider);

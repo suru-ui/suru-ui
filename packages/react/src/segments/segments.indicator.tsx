@@ -1,14 +1,16 @@
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SegmentsContext, useSegmentsContext } from "./segments.context.js";
 
 /**
  * {@link SegmentsIndicator} が持つ状態です。
  */
-export type SegmentsIndicatorState = BaseTabs.Indicator.State;
+export type SegmentsIndicatorState = Override<SegmentsContext, BaseTabs.Indicator.State>;
 
 export namespace SegmentsIndicatorProps {
   export type Render = RenderProps<SegmentsIndicatorState>;
@@ -47,9 +49,22 @@ export type ISegmentsIndicator = IComponent<SegmentsIndicatorProps>;
  * {@link SegmentsList} の子要素として配置します。
  */
 export const SegmentsIndicator: ISegmentsIndicator = function SuiSegmentsIndicator(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSegmentsContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <BaseTabs.Indicator {...otherProps} className={cn(className, "sui_segments_indicator")} />;
+  return (
+    <BaseTabs.Indicator
+      {...otherProps}
+      {...proxyRenderProps<BaseTabs.Indicator.State, SegmentsIndicatorState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SegmentsIndicatorState>(className, "sui_segments_indicator"),
+        },
+      )}
+    />
+  );
 };
 
 export { SegmentsIndicator as Indicator };

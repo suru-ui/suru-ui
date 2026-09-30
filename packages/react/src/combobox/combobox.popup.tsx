@@ -1,15 +1,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxPopup} が持つ状態です。
+ * {@link ComboboxPopup} の状態です。
  */
-export type ComboboxPopupState = Combobox.Popup.State;
+export type ComboboxPopupState = Override<ComboboxContext, Combobox.Popup.State>;
 
 /**
  * ポップアップ内の入力欄の配置です。
@@ -73,18 +74,32 @@ export type IComboboxPopup = IComponent<ComboboxPopupProps>;
  */
 export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
   const ctx = useComboboxContext();
-  const { outlined = ctx.outlined, className, inputPosition = "start", ...otherProps } = props;
+  const {
+    style,
+    render,
+    outlined = ctx.outlined,
+    className,
+    inputPosition = "start",
+    ...otherProps
+  } = props;
   const childCtx = React.useMemo<ComboboxContext>(() => ({ ...ctx, outlined }), [ctx, outlined]);
 
   return (
     <ComboboxContext value={childCtx}>
       <Combobox.Popup
         {...otherProps}
-        className={cn(
-          className,
-          "sui_combobox_popup",
-          outlined && "sui_combobox_popup-outlined",
-          `sui_combobox_popup-inputposition_${inputPosition}`,
+        {...proxyRenderProps<Combobox.Popup.State, ComboboxPopupState>(
+          (state) => ({ ...childCtx, ...state }),
+          {
+            style,
+            render,
+            className: cn<ComboboxPopupState>(
+              className,
+              "sui_combobox_popup",
+              (state) => state.outlined && "sui_combobox_popup-outlined",
+              `sui_combobox_popup-inputposition_${inputPosition}`,
+            ),
+          },
         )}
       />
     </ComboboxContext>

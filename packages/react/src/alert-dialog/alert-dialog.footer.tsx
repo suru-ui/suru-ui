@@ -1,12 +1,17 @@
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type AlertDialogPopupContext,
+  useAlertDialogPopupContext,
+} from "./alert-dialog.popup.context.js";
 
 /**
  * {@link AlertDialogFooter} が持つ状態です。
  */
-export type AlertDialogFooterState = Card.Footer.State;
+export type AlertDialogFooterState = Override<Card.Footer.State, AlertDialogPopupContext>;
 
 export namespace AlertDialogFooterProps {
   export type Render = RenderProps<AlertDialogFooterState>;
@@ -34,7 +39,22 @@ export type IAlertDialogFooter = IComponent<AlertDialogFooterProps>;
  * 積み上げ式では内容を等幅の 2 列に並べます。
  */
 export const AlertDialogFooter: IAlertDialogFooter = function SuiAlertDialogFooter(props) {
-  return <Card.Footer {...props} className={cn(props.className, "sui_alert_dialog_footer")} />;
+  const ctx = useAlertDialogPopupContext();
+  const { style, render, className, ...otherProps } = props;
+
+  return (
+    <Card.Footer
+      {...otherProps}
+      {...proxyRenderProps<Card.Footer.State, AlertDialogFooterState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AlertDialogFooterState>(className, "sui_alert_dialog_footer"),
+        },
+      )}
+    />
+  );
 };
 
 export { AlertDialogFooter as Footer };

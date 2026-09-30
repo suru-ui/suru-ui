@@ -3,14 +3,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxBackdrop} が持つ状態です。
+ * {@link ComboboxBackdrop} の状態です。
  */
-export type ComboboxBackdropState = Combobox.Backdrop.State;
+export type ComboboxBackdropState = Override<ComboboxContext, Combobox.Backdrop.State>;
 
 export namespace ComboboxBackdropProps {
   export type Render = RenderProps<ComboboxBackdropState>;
@@ -47,9 +49,22 @@ export type IComboboxBackdrop = IComponent<ComboboxBackdropProps>;
  * ポップアップの背後に表示される要素です。
  */
 export const ComboboxBackdrop: IComboboxBackdrop = function SuiComboboxBackdrop(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Combobox.Backdrop {...otherProps} className={cn(className, "sui_combobox_backdrop")} />;
+  return (
+    <Combobox.Backdrop
+      {...otherProps}
+      {...proxyRenderProps<Combobox.Backdrop.State, ComboboxBackdropState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxBackdropState>(className, "sui_combobox_backdrop"),
+        },
+      )}
+    />
+  );
 };
 
 export { ComboboxBackdrop as Backdrop };

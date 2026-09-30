@@ -121,12 +121,13 @@ describe("ToggleButtonRoot", () => {
     expect(link.classList.contains("sui_button")).toBe(true);
   });
 
-  test("className と style の関数へ押下状態を渡す", async ({ expect }) => {
+  test("className と style の関数へ状態を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <ToggleButtonRoot
         defaultPressed
-        className={(state) => `probe-pressed_${String(state.pressed)}`}
+        size="lg"
+        className={(state) => `probe-pressed_${String(state.pressed)} probe-size_${state.size}`}
         style={(state) => ({ outlineWidth: state.pressed ? "3px" : "0px" })}
       />,
     );
@@ -134,24 +135,60 @@ describe("ToggleButtonRoot", () => {
     // 検証
     const button = screen.getByClassName("sui_button").element();
     expect(button.classList.contains("probe-pressed_true")).toBe(true);
+    expect(button.classList.contains("probe-size_lg")).toBe(true);
     expect(getComputedStyle(button).outlineWidth).toBe("3px");
+  });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <ToggleButtonRoot
+        defaultPressed
+        outlined
+        squared
+        color="blue"
+        radius="full"
+        size="lg"
+        variant="naked"
+        render={(props, state) => (
+          <button
+            {...props}
+            data-probe={[
+              state.size,
+              state.color,
+              state.radius,
+              state.variant,
+              String(state.outlined),
+              String(state.pending),
+              String(state.pressed),
+              String(state.squared),
+            ].join("/")}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    const button = screen.getByClassName("sui_button").element();
+    expect(button.tagName).toBe("BUTTON");
+    expect(button.getAttribute("data-probe")).toBe("lg/blue/full/naked/true/false/true/true");
   });
 
   test("コンテキストへ保留状態を提供する", async ({ expect }) => {
     // 準備
     function Probe() {
       const ctx = useToggleButtonContext();
-      return <span>{String(ctx.pending)}</span>;
+      return <span>{[String(ctx.pending), ctx.size, ctx.color].join(",")}</span>;
     }
 
     // 実行
     const screen = await render(
-      <ToggleButtonRoot pending>
+      <ToggleButtonRoot color="blue" pending size="lg">
         <Probe />
       </ToggleButtonRoot>,
     );
 
     // 検証
-    expect(screen.getByText("true").query()?.textContent).toBe("true");
+    expect(screen.getByText("true,lg,blue").query()?.textContent).toBe("true,lg,blue");
   });
 });

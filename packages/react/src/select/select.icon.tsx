@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectIcon} が持つ状態です。
  */
-export type SelectIconState = BaseSelect.Icon.State;
+export type SelectIconState = Override<SelectContext, BaseSelect.Icon.State>;
 
 export namespace SelectIconProps {
   export type Render = RenderProps<SelectIconState>;
@@ -45,9 +47,22 @@ export type ISelectIcon = IComponent<SelectIconProps>;
  * ポップアップの開閉を示すアイコンのラッパー要素です。
  */
 export const SelectIcon: ISelectIcon = function SuiSelectIcon(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <BaseSelect.Icon {...otherProps} className={cn(className, "sui_select_icon")} />;
+  return (
+    <BaseSelect.Icon
+      {...otherProps}
+      {...proxyRenderProps<BaseSelect.Icon.State, SelectIconState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_icon"),
+        },
+      )}
+    />
+  );
 };
 
 export { SelectIcon as Icon };

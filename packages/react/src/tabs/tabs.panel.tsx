@@ -1,9 +1,11 @@
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type TabsContext, useTabsContext } from "./tabs.context.js";
 
 /**
  * Tabs のパネルのメタデータです。
@@ -13,7 +15,7 @@ export type TabsPanelMetadata = BaseTabs.Panel.Metadata;
 /**
  * {@link TabsPanel} が持つ状態です。
  */
-export type TabsPanelState = BaseTabs.Panel.State;
+export type TabsPanelState = Override<TabsContext, BaseTabs.Panel.State>;
 
 export namespace TabsPanelProps {
   export type Render = RenderProps<TabsPanelState>;
@@ -50,9 +52,22 @@ export type ITabsPanel = IComponent<TabsPanelProps>;
  * アクティブな Tab に対応するコンテンツを表示するパネル要素です。
  */
 export const TabsPanel: ITabsPanel = function SuiTabsPanel(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useTabsContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <BaseTabs.Panel {...otherProps} className={cn(className, "sui_tabs_panel")} />;
+  return (
+    <BaseTabs.Panel
+      {...otherProps}
+      {...proxyRenderProps<BaseTabs.Panel.State, TabsPanelState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<TabsPanelState>(className, "sui_tabs_panel"),
+        },
+      )}
+    />
+  );
 };
 
 export { TabsPanel as Panel };

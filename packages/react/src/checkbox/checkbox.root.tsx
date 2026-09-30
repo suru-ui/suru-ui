@@ -3,10 +3,14 @@ import type { NonNativeButtonProps } from "@base-ui/react/internals/types";
 import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
-import { useCheckboxGroupContext } from "../checkbox-group/checkbox-group.context.js";
+import {
+  type CheckboxGroupContext,
+  useCheckboxGroupContext,
+} from "../checkbox-group/checkbox-group.context.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 
 /**
  * チェックボックスの選択状態が変更されたイベントの詳細です。
@@ -55,7 +59,7 @@ export type CheckboxRootVariant = "naked" | "liquid";
 /**
  * {@link CheckboxRoot} が持つ状態です。
  */
-export type CheckboxRootState = Checkbox.Root.State;
+export type CheckboxRootState = Override<CheckboxGroupContext, Checkbox.Root.State>;
 
 export namespace CheckboxRootProps {
   export type Render = RenderProps<CheckboxRootState>;
@@ -152,11 +156,13 @@ export type ICheckboxRoot = IComponent<CheckboxRootProps>;
  * チェックボックスのルートコンポーネントです。
  */
 export const CheckboxRoot: ICheckboxRoot = function SuiCheckboxRoot(props) {
-  const group = useCheckboxGroupContext(true);
+  const ctx = useCheckboxGroupContext(true);
   const {
     size: sizeProp = "md",
     color: colorProp = "grey",
+    style,
     radius: radiusProp = sizeProp,
+    render,
     variant: variantProp = "liquid",
     disabled: disabledProp,
     outlined: outlinedProp = false,
@@ -165,28 +171,40 @@ export const CheckboxRoot: ICheckboxRoot = function SuiCheckboxRoot(props) {
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const size = group?.size ?? sizeProp;
-  const color = group?.color ?? colorProp;
-  const radius = group?.radius ?? radiusProp;
-  const variant = group?.variant ?? variantProp;
-  const outlined = group?.outlined ?? outlinedProp;
-  const disabled = group?.disabled || disabledProp;
+  const size = ctx?.size ?? sizeProp;
+  const color = ctx?.color ?? colorProp;
+  const radius = ctx?.radius ?? radiusProp;
+  const variant = ctx?.variant ?? variantProp;
+  const outlined = ctx?.outlined ?? outlinedProp;
+  const disabled = ctx?.disabled || disabledProp;
+  const orientation = ctx?.orientation ?? "vertical";
+  const styleState = React.useMemo(
+    () => ({ size, color, radius, variant, outlined, orientation }),
+    [color, orientation, outlined, radius, size, variant],
+  );
 
   return (
     <Checkbox.Root
       {...otherProps}
       disabled={disabled}
-      className={cn(
-        className,
-        "sui_checkbox",
-        `sui_checkbox-size_${size}`,
-        `sui_checkbox-color_${color}`,
-        `sui_checkbox-radius_${radius}`,
-        `sui_checkbox-variant_${variant}`,
-        outlined && "sui_checkbox-outlined",
-        (state) => state.checked && "sui_checkbox-checked",
-        (state) => state.indeterminate && "sui_checkbox-indeterminate",
-        (state) => state.disabled && "sui_checkbox-disabled",
+      {...proxyRenderProps<Checkbox.Root.State, CheckboxRootState>(
+        (state) => ({ ...styleState, ...state }),
+        {
+          style,
+          render,
+          className: cn<CheckboxRootState>(
+            className,
+            "sui_checkbox",
+            (state) => `sui_checkbox-size_${state.size}`,
+            (state) => `sui_checkbox-color_${state.color}`,
+            (state) => `sui_checkbox-radius_${state.radius}`,
+            (state) => `sui_checkbox-variant_${state.variant}`,
+            (state) => state.outlined && "sui_checkbox-outlined",
+            (state) => state.checked && "sui_checkbox-checked",
+            (state) => state.indeterminate && "sui_checkbox-indeterminate",
+            (state) => state.disabled && "sui_checkbox-disabled",
+          ),
+        },
       )}
       data-scope={dataScope}
     />

@@ -1,21 +1,55 @@
+import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
 
 /**
- * {@link FileUploadRoot} が子パーツへ提供するコンテキストです。
+ * ファイルアップロードの配色です。
  */
-export type FileUploadContext = {
+export type FileUploadContextColor = Color;
+
+/**
+ * ファイルアップロードの角丸です。
+ *
+ * - `"none"`: 角を直角にする
+ * - `"sm"`: 小さい角丸
+ * - `"md"`: 標準的な角丸
+ * - `"lg"`: 大きい角丸
+ * - `"full"`: 完全な丸形
+ */
+export type FileUploadContextRadius = "none" | Size | "full";
+
+/**
+ * ファイルアップロードの大きさです。
+ *
+ * - `"sm"`: 小さいサイズ
+ * - `"md"`: 標準的なサイズ
+ * - `"lg"`: 大きいサイズ
+ */
+export type FileUploadContextSize = Size;
+
+/**
+ * ファイルアップロードの主な外観の種類です。
+ *
+ * - `"naked"`: 背景のないドロップゾーン
+ * - `"liquid"`: 薄い塗りつぶし
+ */
+export type FileUploadContextVariant = "naked" | "liquid";
+
+/**
+ * {@link FileUploadRoot} が子パーツへ提供する状態です。
+ */
+export type FileUploadContextState = {
   /**
    * 選択できるファイルの種類です。
    */
   readonly accept: string | undefined;
 
   /**
-   * すべての選択済みファイルを削除します。
+   * ファイルアップロードの配色です。
    */
-  readonly clear: () => void;
+  readonly color: FileUploadContextColor;
 
   /**
    * ファイルアップロード全体を無効にするかどうかです。
@@ -38,14 +72,9 @@ export type FileUploadContext = {
   readonly name: string | undefined;
 
   /**
-   * ファイル選択ダイアログを開きます。
+   * ファイルアップロードの角丸です。
    */
-  readonly open: () => void;
-
-  /**
-   * 指定したファイルを選択済みリストから削除します。
-   */
-  readonly remove: (file: File) => void;
+  readonly radius: FileUploadContextRadius;
 
   /**
    * 必須入力かどうかです。
@@ -53,20 +82,52 @@ export type FileUploadContext = {
   readonly required: boolean;
 
   /**
-   * ファイルのリストを選択済みリストへ追加します。
-   *
-   * ドラッグアンドドロップなど、隠し input 以外の経路からファイルを受け取るときに使います。
-   * 検証に失敗したファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
+   * ファイルアップロードの大きさです。
    */
-  readonly selectFiles: (incomingFiles: readonly File[]) => void;
+  readonly size: FileUploadContextSize;
 
   /**
-   * 隠し input 要素へ非同期にアクセスするための ref です。
-   *
-   * {@link FileUploadHiddenInput} がマウントされた要素を登録します。
+   * ファイルアップロードの主な外観です。
    */
-  readonly setInputElement: (element: HTMLInputElement | null) => void;
+  readonly variant: FileUploadContextVariant;
 };
+
+/**
+ * {@link FileUploadRoot} が子パーツへ提供するコンテキストです。
+ */
+export type FileUploadContext = Readonly<
+  FileUploadContextState & {
+    /**
+     * すべての選択済みファイルを削除します。
+     */
+    readonly clear: () => void;
+
+    /**
+     * ファイル選択ダイアログを開きます。
+     */
+    readonly open: () => void;
+
+    /**
+     * 指定したファイルを選択済みリストから削除します。
+     */
+    readonly remove: (file: File) => void;
+
+    /**
+     * ファイルのリストを選択済みリストへ追加します。
+     *
+     * ドラッグアンドドロップなど、隠し input 以外の経路からファイルを受け取るときに使います。
+     * 検証に失敗したファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
+     */
+    readonly selectFiles: (incomingFiles: readonly File[]) => void;
+
+    /**
+     * 隠し input 要素へ非同期にアクセスするための ref です。
+     *
+     * {@link FileUploadHiddenInput} がマウントされた要素を登録します。
+     */
+    readonly setInputElement: (element: HTMLInputElement | null) => void;
+  }
+>;
 
 /**
  * ファイルアップロードの状態と操作を子要素へ伝播するコンテキストです。
@@ -94,3 +155,13 @@ export const useFileUploadContext: IUseFileUploadContext = function useSuiFileUp
 };
 
 export { FileUploadContext as Context, useFileUploadContext as useContext };
+
+export namespace Context {
+  export type Color = FileUploadContextColor;
+
+  export type Radius = FileUploadContextRadius;
+
+  export type Size = FileUploadContextSize;
+
+  export type Variant = FileUploadContextVariant;
+}

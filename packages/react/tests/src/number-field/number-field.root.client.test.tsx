@@ -176,4 +176,44 @@ describe("NumberFieldRoot", () => {
     const root = screen.getByClassName("sui_number_field").element();
     expect(root.tagName).toBe("SECTION");
   });
+
+  test("render の関数へスタイル情報とルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <NumberFieldRoot
+        color="blue"
+        disabled
+        outlined
+        radius="none"
+        size="lg"
+        variant="naked"
+        render={(props, state) => (
+          <section
+            {...props}
+            data-probe={`${state.size}/${state.color}/${state.radius}/${state.variant}/${String(state.outlined)}/${String(state.disabled)}`}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_number_field").element();
+    expect(root.tagName).toBe("SECTION");
+    expect(root.getAttribute("data-probe")).toBe("lg/blue/none/naked/true/true");
+  });
+
+  test("className の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <NumberFieldRoot
+        className={(state) => `probe-size_${state.size}-color_${state.color}`}
+        color="blue"
+        size="lg"
+      />,
+    );
+
+    // 検証
+    const root = screen.getByClassName("sui_number_field").element();
+    expect(root.classList.contains("probe-size_lg-color_blue")).toBe(true);
+  });
 });

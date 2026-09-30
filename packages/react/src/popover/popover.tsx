@@ -142,6 +142,17 @@ export type PopoverProps<TPayload = any> = PopoverProps.Popover<TPayload> &
   PopoverProps.Root<TPayload> &
   PopoverProps.Content;
 
+export interface IUsePopoverAPI {
+  /**
+   * {@link PopoverAPI} を作成します。
+   *
+   * @template TPayload トリガーが送信するデータの型です。
+   * @param props {@link Popover} の props です。
+   * @returns ポップオーバーの API です
+   */
+  <TPayload = any>(props: PopoverProps<TPayload>): PopoverAPI<TPayload>;
+}
+
 // API
 // ---
 
@@ -318,17 +329,6 @@ export class PopoverAPI<TPayload = any> {
 
     return null;
   }
-}
-
-export interface IUsePopoverAPI {
-  /**
-   * {@link PopoverAPI} を作成します。
-   *
-   * @template TPayload トリガーが送信するデータの型です。
-   * @param props {@link Popover} の props です。
-   * @returns ポップオーバーの API です
-   */
-  <TPayload = any>(props: PopoverProps<TPayload>): PopoverAPI<TPayload>;
 }
 
 /**

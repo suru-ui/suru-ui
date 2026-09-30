@@ -1,15 +1,17 @@
 import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import { Menu } from "@base-ui/react/menu";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 import type { MenuHandle } from "./menu.handle.js";
 
 /**
  * {@link MenuTrigger} が持つ状態です。
  */
-export type MenuTriggerState = Menu.Trigger.State;
+export type MenuTriggerState = Override<MenuContext, Menu.Trigger.State>;
 
 export namespace MenuTriggerProps {
   export type Render = Omit<RenderProps<MenuTriggerState>, "render">;
@@ -75,18 +77,34 @@ export interface IMenuTrigger extends IComponent<MenuTriggerProps> {
  * `children` には表示する内容ではなく、トリガーとしてレンダリングする要素を渡します。
  */
 export const MenuTrigger: IMenuTrigger = function SuiMenuTrigger(props: MenuTriggerProps) {
-  const { handle, children, className, ...otherProps } = props;
+  const ctx = useMenuContext(true);
+  const { style, handle, children, className, ...otherProps } = props;
 
   return (
     <Menu.Trigger
       {...otherProps}
       handle={handle}
-      render={children}
-      className={cn(
-        className,
-        "sui_menu_trigger",
-        (state) => state.open && "sui_menu_trigger-open",
-        (state) => state.disabled && "sui_menu_trigger-disabled",
+      {...proxyRenderProps<Menu.Trigger.State, MenuTriggerState>(
+        (state) => ({
+          size: "md",
+          depth: 1,
+          items: [],
+          radius: "md",
+          variant: "naked",
+          outlined: false,
+          ...ctx,
+          ...state,
+        }),
+        {
+          style,
+          render: children,
+          className: cn<MenuTriggerState>(
+            className,
+            "sui_menu_trigger",
+            (state) => state.open && "sui_menu_trigger-open",
+            (state) => state.disabled && "sui_menu_trigger-disabled",
+          ),
+        },
       )}
     />
   );

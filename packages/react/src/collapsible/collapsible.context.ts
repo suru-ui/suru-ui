@@ -1,13 +1,30 @@
 import type { Collapsible } from "@base-ui/react/collapsible";
+import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
 import type { IUseContext } from "../types.js";
 
 /**
+ * コラプシブルの大きさです。
+ *
+ * - `"sm"`: 小さめ
+ * - `"md"`: 標準的
+ * - `"lg"`: 大きめ
+ */
+export type CollapsibleContextSize = Size;
+
+/**
  * {@link CollapsibleRoot} が子パーツへ提供するコンテキストです。
  */
-export type CollapsibleContext = Readonly<Collapsible.Root.State>;
+export type CollapsibleContext = Readonly<
+  Collapsible.Root.State & {
+    /**
+     * コラプシブルの大きさです。
+     */
+    readonly size: CollapsibleContextSize;
+  }
+>;
 
 /**
  * {@link CollapsibleRoot} が子パーツへ提供するコンテキストです。
@@ -35,3 +52,7 @@ export const useCollapsibleContext: IUseCollapsibleContext = function useSuiColl
 };
 
 export { CollapsibleContext as Context, useCollapsibleContext as useContext };
+
+export namespace Context {
+  export type Size = CollapsibleContextSize;
+}

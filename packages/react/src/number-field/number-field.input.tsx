@@ -1,14 +1,16 @@
 import { NumberField } from "@base-ui/react/number-field";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type NumberFieldContext, useNumberFieldContext } from "./number-field.context.js";
 
 /**
  * {@link NumberFieldInput} が持つ状態です。
  */
-export type NumberFieldInputState = NumberField.Input.State;
+export type NumberFieldInputState = Override<NumberFieldContext, NumberField.Input.State>;
 
 export namespace NumberFieldInputProps {
   export type Render = RenderProps<NumberFieldInputState>;
@@ -45,17 +47,25 @@ export type INumberFieldInput = IComponent<NumberFieldInputProps>;
  * 数値の入力欄です。
  */
 export const NumberFieldInput: INumberFieldInput = function SuiNumberFieldInput(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useNumberFieldContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <NumberField.Input
       {...otherProps}
-      className={cn(
-        className,
-        "sui_number_field_input",
-        (state) => state.valid === true && "sui_number_field_input-valid",
-        (state) => state.valid === false && "sui_number_field_input-invalid",
-        (state) => state.valid === null && "sui_number_field_input-unverified",
+      {...proxyRenderProps<NumberField.Input.State, NumberFieldInputState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<NumberFieldInputState>(
+            className,
+            "sui_number_field_input",
+            (state) => state.valid === true && "sui_number_field_input-valid",
+            (state) => state.valid === false && "sui_number_field_input-invalid",
+            (state) => state.valid === null && "sui_number_field_input-unverified",
+          ),
+        },
       )}
     />
   );

@@ -1,14 +1,16 @@
 import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type HoverCardContext, useHoverCardContext } from "./hover-card.context.js";
 
 /**
  * {@link HoverCardViewport} が持つ状態です。
  */
-export type HoverCardViewportState = PreviewCard.Viewport.State;
+export type HoverCardViewportState = Override<HoverCardContext, PreviewCard.Viewport.State>;
 
 export namespace HoverCardViewportProps {
   export type Render = RenderProps<HoverCardViewportState>;
@@ -47,10 +49,21 @@ export type IHoverCardViewport = IComponent<HoverCardViewportProps>;
  * 1 つのホバーカードを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
 export const HoverCardViewport: IHoverCardViewport = function SuiHoverCardViewport(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useHoverCardContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
-    <PreviewCard.Viewport {...otherProps} className={cn(className, "sui_hover_card_viewport")} />
+    <PreviewCard.Viewport
+      {...otherProps}
+      {...proxyRenderProps<PreviewCard.Viewport.State, HoverCardViewportState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_hover_card_viewport"),
+        },
+      )}
+    />
   );
 };
 

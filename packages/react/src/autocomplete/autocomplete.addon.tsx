@@ -2,11 +2,12 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompleteAddon} の状態です。
  */
-export type AutocompleteAddonState = {};
+export type AutocompleteAddonState = AutocompleteContext;
 
 export namespace AutocompleteAddonProps {
   export type Render = RenderProps<AutocompleteAddonState>;
@@ -37,6 +38,8 @@ export type IAutocompleteAddon = IComponent<AutocompleteAddonProps>;
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
 export const AutocompleteAddon: IAutocompleteAddon = function SuiAutocompleteAddon(props) {
+  const ctx = useAutocompleteContext();
+
   return useRender({
     props: [
       props,
@@ -44,6 +47,7 @@ export const AutocompleteAddon: IAutocompleteAddon = function SuiAutocompleteAdd
         className: "sui_autocomplete_addon",
       },
     ],
+    state: ctx,
     defaultTagName: "span",
   });
 };

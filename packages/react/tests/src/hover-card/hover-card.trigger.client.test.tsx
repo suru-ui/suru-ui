@@ -76,4 +76,27 @@ describe("HoverCardTrigger", () => {
       expect(screen.getByText("内容").query()?.textContent).toBe("内容");
     });
   });
+
+  test("描画関数へルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <HoverCardRoot size="lg" radius="sm" outlined>
+        <HoverCardTrigger>
+          {(props, state) => (
+            <a
+              href="#terms"
+              {...props}
+              data-probe={`${state.size}/${state.radius}/${state.outlined}`}
+            >
+              利用規約
+            </a>
+          )}
+        </HoverCardTrigger>
+      </HoverCardRoot>,
+    );
+
+    // 検証
+    const trigger = screen.getByRole("link", { name: "利用規約" }).element();
+    expect(trigger.getAttribute("data-probe")).toBe("lg/sm/true");
+  });
 });

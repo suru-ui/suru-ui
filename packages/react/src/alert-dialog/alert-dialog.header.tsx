@@ -1,12 +1,17 @@
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type AlertDialogPopupContext,
+  useAlertDialogPopupContext,
+} from "./alert-dialog.popup.context.js";
 
 /**
  * {@link AlertDialogHeader} が持つ状態です。
  */
-export type AlertDialogHeaderState = Card.Header.State;
+export type AlertDialogHeaderState = Override<Card.Header.State, AlertDialogPopupContext>;
 
 export namespace AlertDialogHeaderProps {
   export type Render = RenderProps<AlertDialogHeaderState>;
@@ -32,7 +37,22 @@ export type IAlertDialogHeader = IComponent<AlertDialogHeaderProps>;
  * アラートダイアログの見出し・説明・操作をまとめるコンポーネントです。
  */
 export const AlertDialogHeader: IAlertDialogHeader = function SuiAlertDialogHeader(props) {
-  return <Card.Header {...props} className={cn(props.className, "sui_alert_dialog_header")} />;
+  const ctx = useAlertDialogPopupContext();
+  const { style, render, className, ...otherProps } = props;
+
+  return (
+    <Card.Header
+      {...otherProps}
+      {...proxyRenderProps<Card.Header.State, AlertDialogHeaderState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AlertDialogHeaderState>(className, "sui_alert_dialog_header"),
+        },
+      )}
+    />
+  );
 };
 
 export { AlertDialogHeader as Header };

@@ -26,6 +26,16 @@ export type AspectRatioProps = AspectRatioRootProps;
 
 export type IAspectRatio = IComponent<AspectRatioProps>;
 
+export interface IUseAspectRatioAPI {
+  /**
+   * {@link AspectRatioAPI} を作成します。
+   *
+   * @param props {@link AspectRatio} の props です。
+   * @returns アスペクト比の API です
+   */
+  (props: AspectRatioProps): AspectRatioAPI;
+}
+
 // API
 // ---
 
@@ -49,16 +59,6 @@ export class AspectRatioAPI {
   public getRootProps(): AspectRatioRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseAspectRatioAPI {
-  /**
-   * {@link AspectRatioAPI} を作成します。
-   *
-   * @param props {@link AspectRatio} の props です。
-   * @returns アスペクト比の API です
-   */
-  (props: AspectRatioProps): AspectRatioAPI;
 }
 
 /**

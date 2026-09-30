@@ -1,14 +1,16 @@
 import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * {@link MenuArrow} が持つ状態です。
  */
-export type MenuArrowState = Menu.Arrow.State;
+export type MenuArrowState = Override<MenuContext, Menu.Arrow.State>;
 
 export namespace MenuArrowProps {
   export type Render = RenderProps<MenuArrowState>;
@@ -45,9 +47,19 @@ export type IMenuArrow = IComponent<MenuArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const MenuArrow: IMenuArrow = function SuiMenuArrow(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useMenuContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Menu.Arrow {...otherProps} className={cn(className, "sui_menu_arrow")} />;
+  return (
+    <Menu.Arrow
+      {...otherProps}
+      {...proxyRenderProps<Menu.Arrow.State, MenuArrowState>((state) => ({ ...ctx, ...state }), {
+        style,
+        render,
+        className: cn(className, "sui_menu_arrow"),
+      })}
+    />
+  );
 };
 
 export { MenuArrow as Arrow };

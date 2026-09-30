@@ -1,11 +1,17 @@
 import { NumberField } from "@base-ui/react/number-field";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { NumberFieldContext } from "./number-field.context.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type NumberFieldContextSize,
+  type NumberFieldContextColor,
+  type NumberFieldContextRadius,
+  type NumberFieldContextVariant,
+  NumberFieldContext,
+} from "./number-field.context.js";
 
 /**
  * {@link NumberFieldRoot} の値が変更されたイベントの詳細です。
@@ -30,7 +36,7 @@ export type NumberFieldRootCommitEventReason = NumberField.Root.CommitEventReaso
 /**
  * 数値入力欄の配色です。
  */
-export type NumberFieldRootColor = Color;
+export type NumberFieldRootColor = NumberFieldContextColor;
 
 /**
  * 数値入力欄の角丸です。
@@ -41,7 +47,7 @@ export type NumberFieldRootColor = Color;
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type NumberFieldRootRadius = "none" | Size | "full";
+export type NumberFieldRootRadius = NumberFieldContextRadius;
 
 /**
  * 数値入力欄の大きさです。
@@ -50,7 +56,7 @@ export type NumberFieldRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type NumberFieldRootSize = Size;
+export type NumberFieldRootSize = NumberFieldContextSize;
 
 /**
  * 数値入力欄の主な外観の種類です。
@@ -58,12 +64,12 @@ export type NumberFieldRootSize = Size;
  * - `"naked"`: 背景のない数値入力欄
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type NumberFieldRootVariant = "naked" | "liquid";
+export type NumberFieldRootVariant = NumberFieldContextVariant;
 
 /**
  * {@link NumberFieldRoot} が持つ状態です。
  */
-export type NumberFieldRootState = NumberField.Root.State;
+export type NumberFieldRootState = Override<NumberFieldContext, NumberField.Root.State>;
 
 export namespace NumberFieldRootProps {
   export type Render = RenderProps<NumberFieldRootState>;
@@ -158,7 +164,9 @@ export const NumberFieldRoot: INumberFieldRoot = function SuiNumberFieldRoot(pro
   const {
     size = "md",
     color = "grey",
+    style,
     radius = size,
+    render,
     variant = "liquid",
     outlined = false,
     className,
@@ -175,15 +183,22 @@ export const NumberFieldRoot: INumberFieldRoot = function SuiNumberFieldRoot(pro
     <NumberFieldContext value={ctx}>
       <NumberField.Root
         {...otherProps}
-        className={cn(
-          className,
-          "sui_number_field",
-          `sui_number_field-size_${size}`,
-          `sui_number_field-color_${color}`,
-          `sui_number_field-radius_${radius}`,
-          `sui_number_field-variant_${variant}`,
-          outlined && "sui_number_field-outlined",
-          (state) => state.disabled && "sui_number_field-disabled",
+        {...proxyRenderProps<NumberField.Root.State, NumberFieldRootState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn<NumberFieldRootState>(
+              className,
+              "sui_number_field",
+              (state) => `sui_number_field-size_${state.size}`,
+              (state) => `sui_number_field-color_${state.color}`,
+              (state) => `sui_number_field-radius_${state.radius}`,
+              (state) => `sui_number_field-variant_${state.variant}`,
+              (state) => state.outlined && "sui_number_field-outlined",
+              (state) => state.disabled && "sui_number_field-disabled",
+            ),
+          },
         )}
         data-scope={dataScope}
       />

@@ -9,7 +9,7 @@ import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { getItemVariant } from "./_context-menu.utils.jsx";
-import { useContextMenuContext } from "./context-menu.context.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * ラジオ項目の配色です。
@@ -33,7 +33,10 @@ export type ContextMenuRadioItemVariant = Button.Root.Variant;
 /**
  * {@link ContextMenuRadioItem} が持つ状態です。
  */
-export type ContextMenuRadioItemState = Override<Button.Root.State, ContextMenu.RadioItem.State>;
+export type ContextMenuRadioItemState = Override<
+  ContextMenuContext,
+  Override<Button.Root.State, ContextMenu.RadioItem.State>
+>;
 
 export namespace ContextMenuRadioItemProps {
   export type Render = RenderProps<ContextMenuRadioItemState>;
@@ -136,7 +139,7 @@ export const ContextMenuRadioItem: IContextMenuRadioItem = function SuiContextMe
     <ContextMenu.RadioItem
       {...otherProps}
       {...baseuiProps}
-      render={(htmlProps: {}, state) => {
+      render={(htmlProps: {}, itemState) => {
         const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
           Pick<Button.Root.Props.HTML, "disabled"> = {
           item: true,
@@ -146,8 +149,8 @@ export const ContextMenuRadioItem: IContextMenuRadioItem = function SuiContextMe
           radius,
           pending: undefined,
           squared: undefined,
-          variant: getItemVariant(state, variant),
-          disabled: state.disabled,
+          variant: getItemVariant(itemState, variant),
+          disabled: itemState.disabled,
           outlined: undefined,
           nativeButton,
           focusableWhenDisabled,
@@ -158,18 +161,21 @@ export const ContextMenuRadioItem: IContextMenuRadioItem = function SuiContextMe
             {...mergeProps<typeof Button.Root>([
               htmlProps,
               buttonRootProps,
-              proxyRenderProps(state, {
-                style,
-                render: render ?? <div />,
-                className: cn(
-                  className,
-                  "sui_context_menu_item",
-                  "sui_context_menu_radio_item",
-                  (state) => state.checked && "sui_context_menu_item-checked",
-                  (state) => state.highlighted && "sui_context_menu_item-highlighted",
-                  (state) => state.disabled && "sui_context_menu_item-disabled",
-                ),
-              }),
+              proxyRenderProps<Button.Root.State, ContextMenuRadioItemState>(
+                (state) => ({ ...ctx, ...state, ...itemState }),
+                {
+                  style,
+                  render: render ?? <div />,
+                  className: cn<ContextMenuRadioItemState>(
+                    className,
+                    "sui_context_menu_item",
+                    "sui_context_menu_radio_item",
+                    (state) => state.checked && "sui_context_menu_item-checked",
+                    (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                    (state) => state.disabled && "sui_context_menu_item-disabled",
+                  ),
+                },
+              ),
             ])}
           />
         );

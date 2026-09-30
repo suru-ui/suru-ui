@@ -1,15 +1,17 @@
 import { NumberField } from "@base-ui/react/number-field";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { DISABLE_FOCUS_ON_CLICK_DATA } from "./_number-field.jsx";
+import { type NumberFieldContext, useNumberFieldContext } from "./number-field.context.js";
 
 /**
  * {@link NumberFieldGroup} が持つ状態です。
  */
-export type NumberFieldGroupState = NumberField.Group.State;
+export type NumberFieldGroupState = Override<NumberFieldContext, NumberField.Group.State>;
 
 export namespace NumberFieldGroupProps {
   export type Render = RenderProps<NumberFieldGroupState>;
@@ -46,7 +48,8 @@ export type INumberFieldGroup = IComponent<NumberFieldGroupProps>;
  * 入力欄と増減ボタンをまとめるグループ要素です。
  */
 export const NumberFieldGroup: INumberFieldGroup = function SuiNumberFieldGroup(props) {
-  const { onClick, className, ...otherProps } = props;
+  const ctx = useNumberFieldContext();
+  const { style, render, onClick, className, ...otherProps } = props;
   const handleClick: NonNullable<NumberFieldGroupProps["onClick"]> = (evt) => {
     onClick?.(evt);
     if (evt.defaultPrevented || !(evt.target instanceof Element)) {
@@ -70,7 +73,14 @@ export const NumberFieldGroup: INumberFieldGroup = function SuiNumberFieldGroup(
     <NumberField.Group
       {...otherProps}
       onClick={handleClick}
-      className={cn(className, "sui_number_field_group")}
+      {...proxyRenderProps<NumberField.Group.State, NumberFieldGroupState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_number_field_group"),
+        },
+      )}
     />
   );
 };

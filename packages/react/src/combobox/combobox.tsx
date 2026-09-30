@@ -48,6 +48,7 @@ import {
   type ComboboxRootRadius,
   type ComboboxValueProps,
   type IUseComboboxFilter,
+  type ComboboxItemContext,
   type ComboboxPortalProps,
   type ComboboxRootActions,
   type ComboboxRootVariant,
@@ -64,6 +65,7 @@ import {
   type ComboboxGroupLabelProps,
   type ComboboxInputGroupProps,
   type ComboboxPositionerProps,
+  type IUseComboboxItemContext,
   type ComboboxInputDisplayProps,
   type IUseComboboxFilteredItems,
   type ComboboxItemIndicatorProps,
@@ -104,6 +106,7 @@ import {
   ComboboxTriggerLabel,
   ComboboxItemIndicator,
   IComboboxValueRenderer,
+  useComboboxItemContext,
   useComboboxFilteredItems,
   IComboboxListItemRenderer,
   IComboboxItemLabelRenderer,
@@ -441,6 +444,20 @@ export type ComboboxValuePropsOptions<
    */
   readonly defaultRenderer?: IComboboxValueRenderer<TItem, TMultiple> | undefined;
 };
+
+export interface IUseComboboxAPI {
+  /**
+   * {@link ComboboxAPI} を作成します。
+   *
+   * @template TItem 項目の型です。
+   * @template TMultiple 複数選択を有効にするかどうかです。
+   * @param props {@link Combobox} の props です。
+   * @returns コンボボックスの API です
+   */
+  <TItem = any, const TMultiple extends boolean | undefined = undefined>(
+    props: ComboboxProps<TItem, TMultiple>,
+  ): ComboboxAPI<TItem, TMultiple>;
+}
 
 // API
 // ---
@@ -1182,20 +1199,6 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
   }
 }
 
-export interface IUseComboboxAPI {
-  /**
-   * {@link ComboboxAPI} を作成します。
-   *
-   * @template TItem 項目の型です。
-   * @template TMultiple 複数選択を有効にするかどうかです。
-   * @param props {@link Combobox} の props です。
-   * @returns コンボボックスの API です
-   */
-  <TItem = any, const TMultiple extends boolean | undefined = undefined>(
-    props: ComboboxProps<TItem, TMultiple>,
-  ): ComboboxAPI<TItem, TMultiple>;
-}
-
 /**
  * {@link ComboboxAPI} を作成するフックです。
  */
@@ -1227,6 +1230,8 @@ export interface ICombobox extends IComponent<ComboboxProps> {
   readonly useFilter: IUseComboboxFilter;
 
   readonly useFilteredItems: IUseComboboxFilteredItems;
+
+  readonly useItemContext: IUseComboboxItemContext;
 }
 
 /**
@@ -1329,6 +1334,7 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
     useFilter: useComboboxFilter,
     useContext: useComboboxContext,
     TriggerLabel: ComboboxTriggerLabel,
+    useItemContext: useComboboxItemContext,
     useFilteredItems: useComboboxFilteredItems,
   },
 );
@@ -1344,6 +1350,8 @@ export namespace Combobox {
   export type SlotProps = ComboboxSlotProps;
 
   export type Context = ComboboxContext;
+
+  export type ItemContext = ComboboxItemContext;
 
   export type Actions = ComboboxActions;
 

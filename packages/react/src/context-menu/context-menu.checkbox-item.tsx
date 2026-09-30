@@ -9,7 +9,7 @@ import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { getItemVariant } from "./_context-menu.utils.jsx";
-import { useContextMenuContext } from "./context-menu.context.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * {@link ContextMenuCheckboxItem} のチェック状態を変更されるイベントの詳細です。
@@ -44,8 +44,8 @@ export type ContextMenuCheckboxItemVariant = Button.Root.Variant;
  * {@link ContextMenuCheckboxItem} が持つ状態です。
  */
 export type ContextMenuCheckboxItemState = Override<
-  Button.Root.State,
-  ContextMenu.CheckboxItem.State
+  ContextMenuContext,
+  Override<Button.Root.State, ContextMenu.CheckboxItem.State>
 >;
 
 export namespace ContextMenuCheckboxItemProps {
@@ -156,7 +156,7 @@ export const ContextMenuCheckboxItem: IContextMenuCheckboxItem =
       <ContextMenu.CheckboxItem
         {...otherProps}
         {...baseuiProps}
-        render={(htmlProps: {}, state) => {
+        render={(htmlProps: {}, itemState) => {
           const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
             Pick<Button.Root.Props.HTML, "disabled"> = {
             item: true,
@@ -166,8 +166,8 @@ export const ContextMenuCheckboxItem: IContextMenuCheckboxItem =
             radius,
             pending: undefined,
             squared: undefined,
-            variant: getItemVariant(state, variant),
-            disabled: state.disabled,
+            variant: getItemVariant(itemState, variant),
+            disabled: itemState.disabled,
             outlined: undefined,
             nativeButton,
             focusableWhenDisabled,
@@ -178,18 +178,21 @@ export const ContextMenuCheckboxItem: IContextMenuCheckboxItem =
               {...mergeProps<typeof Button.Root>([
                 htmlProps,
                 buttonRootProps,
-                proxyRenderProps(state, {
-                  style,
-                  render: render ?? <div />,
-                  className: cn(
-                    className,
-                    "sui_context_menu_item",
-                    "sui_context_menu_checkbox_item",
-                    (state) => state.checked && "sui_context_menu_item-checked",
-                    (state) => state.highlighted && "sui_context_menu_item-highlighted",
-                    (state) => state.disabled && "sui_context_menu_item-disabled",
-                  ),
-                }),
+                proxyRenderProps<Button.Root.State, ContextMenuCheckboxItemState>(
+                  (state) => ({ ...ctx, ...state, ...itemState }),
+                  {
+                    style,
+                    render: render ?? <div />,
+                    className: cn<ContextMenuCheckboxItemState>(
+                      className,
+                      "sui_context_menu_item",
+                      "sui_context_menu_checkbox_item",
+                      (state) => state.checked && "sui_context_menu_item-checked",
+                      (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                      (state) => state.disabled && "sui_context_menu_item-disabled",
+                    ),
+                  },
+                ),
               ])}
             />
           );

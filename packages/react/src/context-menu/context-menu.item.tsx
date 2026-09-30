@@ -8,7 +8,7 @@ import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { useContextMenuContext } from "./context-menu.context.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * コンテキストメニューの操作項目の配色です。
@@ -32,7 +32,10 @@ export type ContextMenuItemVariant = Button.Root.Variant;
 /**
  * {@link ContextMenuItem} が持つ状態です。
  */
-export type ContextMenuItemState = Override<Button.Root.State, ContextMenu.Item.State>;
+export type ContextMenuItemState = Override<
+  ContextMenuContext,
+  Override<Button.Root.State, ContextMenu.Item.State>
+>;
 
 export namespace ContextMenuItemProps {
   export type Render = RenderProps<ContextMenuItemState>;
@@ -130,7 +133,7 @@ export const ContextMenuItem: IContextMenuItem = function SuiContextMenuItem(pro
     <ContextMenu.Item
       {...otherProps}
       {...baseuiProps}
-      render={(htmlProps: {}, state) => {
+      render={(htmlProps: {}, itemState) => {
         const buttonRootProps: Required<
           Button.Root.Props.SuruUI &
             Button.Root.Props.BaseUI &
@@ -144,7 +147,7 @@ export const ContextMenuItem: IContextMenuItem = function SuiContextMenuItem(pro
           pending: undefined,
           squared: undefined,
           variant,
-          disabled: state.disabled,
+          disabled: itemState.disabled,
           outlined: undefined,
           nativeButton,
           focusableWhenDisabled,
@@ -155,16 +158,19 @@ export const ContextMenuItem: IContextMenuItem = function SuiContextMenuItem(pro
             {...mergeProps<typeof Button.Root>([
               htmlProps,
               buttonRootProps,
-              proxyRenderProps(state, {
-                style,
-                render: render ?? <div />,
-                className: cn(
-                  className,
-                  "sui_context_menu_item",
-                  (state) => state.disabled && "sui_context_menu_item-disabled",
-                  (state) => state.highlighted && "sui_context_menu_item-highlighted",
-                ),
-              }),
+              proxyRenderProps<Button.Root.State, ContextMenuItemState>(
+                (state) => ({ ...ctx, ...state, ...itemState }),
+                {
+                  style,
+                  render: render ?? <div />,
+                  className: cn<ContextMenuItemState>(
+                    className,
+                    "sui_context_menu_item",
+                    (state) => state.disabled && "sui_context_menu_item-disabled",
+                    (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                  ),
+                },
+              ),
             ])}
           />
         );

@@ -98,4 +98,28 @@ describe("TreeItemIndicator", () => {
       screen.getByClassName("sui_tree_item_indicator").element().classList.contains("custom"),
     ).toBe(true);
   });
+
+  test("render の関数へスタイル情報を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TreeRoot radius="full" size="lg">
+        <TreeItem id="src" level={1}>
+          <TreeItemIndicator
+            render={(props, state) => (
+              <span
+                {...props}
+                data-probe={`${state.size}/${state.radius}/${String(state.activeId)}`}
+              />
+            )}
+          />
+          src
+        </TreeItem>
+      </TreeRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_tree_item_indicator").element().getAttribute("data-probe"),
+    ).toBe("lg/full/null");
+  });
 });

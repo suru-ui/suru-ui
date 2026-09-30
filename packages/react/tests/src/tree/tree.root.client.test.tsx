@@ -119,6 +119,33 @@ describe("TreeRoot", () => {
     expect(screen.getByRole("tree").element().tagName).toBe("SECTION");
   });
 
+  test("render と className と style の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TreeRoot
+        defaultExpandedValue={["src"]}
+        defaultValue={["index"]}
+        items={[...items]}
+        radius="full"
+        size="lg"
+        className={(state) => `probe-size_${state.size}`}
+        style={(state) => ({ opacity: state.radius === "full" ? "0.5" : "1" })}
+        render={(props, state) => (
+          <div
+            {...props}
+            data-probe={`${state.size}/${state.radius}/${state.value.join(",")}/${state.expanded.join(",")}/${String(state.activeId)}`}
+          />
+        )}
+      />,
+    );
+
+    // 検証
+    const root = screen.getByRole("tree").element();
+    expect(root.getAttribute("data-probe")).toBe("lg/full/index/src/null");
+    expect(root.classList.contains("probe-size_lg")).toBe(true);
+    expect(root.style.opacity).toBe("0.5");
+  });
+
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<TreeRoot className="custom" items={[...items]} />);

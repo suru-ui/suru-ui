@@ -1,7 +1,7 @@
 import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import type { HoverCardContextSize, HoverCardContextRadius } from "./hover-card.context.js";
 import { HoverCardContext } from "./hover-card.context.js";
 import type { HoverCardHandle } from "./hover-card.handle.js";
@@ -58,7 +58,7 @@ export interface IHoverCardRootRenderer<TPayload = any> {
 /**
  * {@link HoverCardRoot} が持つ状態です。
  */
-export type HoverCardRootState = PreviewCard.Root.State;
+export type HoverCardRootState = Override<HoverCardContext, PreviewCard.Root.State>;
 
 export namespace HoverCardRootProps {
   export type Render = {};

@@ -61,6 +61,26 @@ describe("FileUploadItemName", () => {
     expect(name.classList.contains("sui_file_upload_item_name")).toBe(true);
   });
 
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <FileUploadRoot size="lg">
+        <FileUploadItem file={textFile}>
+          <FileUploadItemName
+            render={(props, state) => (
+              <span {...props} data-probe={`${state.size}/${state.file.name}`} />
+            )}
+          />
+        </FileUploadItem>
+      </FileUploadRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_file_upload_item_name").element().getAttribute("data-probe"),
+    ).toBe("lg/hello.txt");
+  });
+
   test("項目の提供がないときはエラーを投げる", async ({ expect }) => {
     // 準備
     function Probe(): React.ReactElement {

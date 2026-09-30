@@ -2,11 +2,12 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import type { IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
  * {@link ComboboxAddon} の状態です。
  */
-export type ComboboxAddonState = {};
+export type ComboboxAddonState = ComboboxContext;
 
 export namespace ComboboxAddonProps {
   export type Render = RenderProps<ComboboxAddonState>;
@@ -37,6 +38,8 @@ export type IComboboxAddon = IComponent<ComboboxAddonProps>;
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
 export const ComboboxAddon: IComboboxAddon = function SuiComboboxAddon(props) {
+  const ctx = useComboboxContext();
+
   return useRender({
     props: [
       props,
@@ -44,6 +47,7 @@ export const ComboboxAddon: IComboboxAddon = function SuiComboboxAddon(props) {
         className: "sui_combobox_addon",
       },
     ],
+    state: ctx,
     defaultTagName: "span",
   });
 };

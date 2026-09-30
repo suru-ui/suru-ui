@@ -122,6 +122,16 @@ namespace ToggleButtonProps {
  */
 export type ToggleButtonProps = ToggleButtonProps.ToggleButton & ToggleButtonProps.Root;
 
+export interface IUseToggleButtonAPI {
+  /**
+   * {@link ToggleButtonAPI} を作成します。
+   *
+   * @param props {@link ToggleButton} の props です。
+   * @returns トグルボタンの API です。
+   */
+  (props: ToggleButtonProps): ToggleButtonAPI;
+}
+
 // API
 // ---
 
@@ -218,16 +228,6 @@ export class ToggleButtonAPI {
   public getRootProps(): Omit<ToggleButtonRootProps, "children"> {
     return this.rootProps;
   }
-}
-
-export interface IUseToggleButtonAPI {
-  /**
-   * {@link ToggleButtonAPI} を作成します。
-   *
-   * @param props {@link ToggleButton} の props です。
-   * @returns トグルボタンの API です。
-   */
-  (props: ToggleButtonProps): ToggleButtonAPI;
 }
 
 /**

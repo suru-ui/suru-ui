@@ -7,7 +7,13 @@ import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import type { Override, IComponent } from "../types.js";
-import { ToggleButtonContext } from "./toggle-button.context.js";
+import {
+  type ToggleButtonContextSize,
+  type ToggleButtonContextColor,
+  type ToggleButtonContextRadius,
+  type ToggleButtonContextVariant,
+  ToggleButtonContext,
+} from "./toggle-button.context.js";
 
 /**
  * トグルボタンの押下状態が変更されたイベントの詳細です。
@@ -22,7 +28,7 @@ export type ToggleButtonRootChangeEventReason = Toggle.ChangeEventReason;
 /**
  * トグルボタンの配色です。
  */
-export type ToggleButtonRootColor = Button.Root.Color;
+export type ToggleButtonRootColor = ToggleButtonContextColor;
 
 /**
  * トグルボタンの角丸の大きさです。
@@ -34,7 +40,7 @@ export type ToggleButtonRootColor = Button.Root.Color;
  * - `"full"`: 丸形
  * - `"circle"`: 完全な丸形
  */
-export type ToggleButtonRootRadius = Button.Root.Radius;
+export type ToggleButtonRootRadius = ToggleButtonContextRadius;
 
 /**
  * トグルボタンの大きさです。
@@ -43,7 +49,7 @@ export type ToggleButtonRootRadius = Button.Root.Radius;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type ToggleButtonRootSize = Button.Root.Size;
+export type ToggleButtonRootSize = ToggleButtonContextSize;
 
 /**
  * トグルボタンの主な外観です。
@@ -51,12 +57,12 @@ export type ToggleButtonRootSize = Button.Root.Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ToggleButtonRootVariant = "naked" | "liquid";
+export type ToggleButtonRootVariant = ToggleButtonContextVariant;
 
 /**
  * {@link ToggleButtonRoot} が持つ状態です。
  */
-export type ToggleButtonRootState = Override<Button.ButtonRootState, Toggle.State>;
+export type ToggleButtonRootState = ToggleButtonContext;
 
 export namespace ToggleButtonRootProps {
   export type Render = RenderProps<ToggleButtonRootState>;
@@ -194,32 +200,42 @@ export const ToggleButtonRoot: IToggleButtonRoot = function SuiToggleButtonRoot(
       {...otherProps}
       {...baseuiProps}
       render={(htmlProps: {}, toggleState) => {
+        const state: ToggleButtonRootState = {
+          size,
+          color,
+          radius,
+          pending,
+          squared,
+          variant,
+          outlined,
+          ...toggleState,
+        };
         const buttonRootProps: Required<
           Button.ButtonRootProps.SuruUI &
             Button.ButtonRootProps.BaseUI &
             Pick<Button.ButtonRootProps.HTML, "disabled">
         > = {
           item: false,
-          size,
-          color: toggleState.pressed ? color : "grey",
+          size: state.size,
+          color: state.pressed ? state.color : "grey",
           muted: undefined,
-          radius,
-          pending,
-          squared,
-          variant: toggleState.pressed ? "solid" : variant,
-          disabled,
-          outlined,
+          radius: state.radius,
+          pending: state.pending,
+          squared: state.squared,
+          variant: state.pressed ? "solid" : state.variant,
+          disabled: state.disabled,
+          outlined: state.outlined,
           nativeButton,
           focusableWhenDisabled,
         };
 
         return (
-          <ToggleButtonContext value={{ ...toggleState, pending }}>
+          <ToggleButtonContext value={state}>
             <Button.Root
               {...mergeProps<typeof Button.Root>([
                 htmlProps,
                 buttonRootProps,
-                proxyRenderProps(toggleState, {
+                proxyRenderProps(state, {
                   style,
                   render,
                   className,

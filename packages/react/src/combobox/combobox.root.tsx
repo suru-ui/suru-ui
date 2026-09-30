@@ -1,11 +1,16 @@
 import { Combobox } from "@base-ui/react/combobox";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import Config from "../_config.jsx";
 import { defaultItemToStringLabel, defaultItemToStringValue } from "../_item.js";
 import type { Override, IComponent } from "../types.js";
-import { ComboboxContext } from "./combobox.context.js";
+import {
+  type ComboboxContextSize,
+  type ComboboxContextColor,
+  type ComboboxContextRadius,
+  type ComboboxContextVariant,
+  ComboboxContext,
+} from "./combobox.context.js";
 import type { ComboboxGroupProps } from "./combobox.group.jsx";
 import type { ComboboxItemProps } from "./combobox.item.jsx";
 
@@ -37,7 +42,7 @@ export type ComboboxRootHighlightEventReason = Combobox.Root.HighlightEventReaso
 /**
  * コンボボックスの配色です。
  */
-export type ComboboxRootColor = Color;
+export type ComboboxRootColor = ComboboxContextColor;
 
 /**
  * 値と表示内容を組にした、リストの項目です。
@@ -90,7 +95,7 @@ export type ComboboxRootItemGroupObject<TValue = any> = Override<
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
  */
-export type ComboboxRootRadius = "none" | Size | "full";
+export type ComboboxRootRadius = ComboboxContextRadius;
 
 /**
  * コンボボックスの大きさです。
@@ -99,7 +104,7 @@ export type ComboboxRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type ComboboxRootSize = Size;
+export type ComboboxRootSize = ComboboxContextSize;
 
 /**
  * コンボボックスの主な外観の種類です。
@@ -107,12 +112,14 @@ export type ComboboxRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ComboboxRootVariant = "naked" | "liquid";
+export type ComboboxRootVariant = ComboboxContextVariant;
 
 /**
- * {@link ComboboxRoot} が持つ状態です。
+ * {@link ComboboxRoot} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxRootState = Combobox.Root.State;
+export type ComboboxRootState<TItem = any> = Override<ComboboxContext<TItem>, Combobox.Root.State>;
 
 export namespace ComboboxRootProps {
   export type Render = {};

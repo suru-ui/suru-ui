@@ -69,6 +69,25 @@ describe("PopoverTrigger", () => {
       expect(screen.getByText("内容").query()?.textContent).toBe("内容");
     });
   });
+
+  test("描画関数へルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PopoverRoot size="lg" radius="sm" outlined>
+        <PopoverTrigger>
+          {(props, state) => (
+            <button {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`}>
+              開く
+            </button>
+          )}
+        </PopoverTrigger>
+      </PopoverRoot>,
+    );
+
+    // 検証
+    const trigger = screen.getByRole("button", { name: "開く" }).element();
+    expect(trigger.getAttribute("data-probe")).toBe("lg/sm/true");
+  });
 });
 
 describe("PopoverPortal", () => {
@@ -100,6 +119,28 @@ describe("PopoverPortal", () => {
     expect(portal.classList.contains("sui_popover_portal-size_lg")).toBe(true);
     expect(portal.classList.contains("sui_popover_portal-radius_sm")).toBe(true);
     expect(portal.classList.contains("sui_popover_portal-outlined")).toBe(true);
+  });
+
+  test("render の関数へルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PopoverRoot defaultOpen size="lg" radius="sm" outlined>
+        <PopoverPortal
+          render={(props, state) => (
+            <div {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`} />
+          )}
+        >
+          <PopoverPositioner>
+            <PopoverContent>内容</PopoverContent>
+          </PopoverPositioner>
+        </PopoverPortal>
+      </PopoverRoot>,
+    );
+
+    // 検証
+    const portal = screen.getByClassName("sui_popover_portal").element();
+    expect(portal.tagName).toBe("DIV");
+    expect(portal.getAttribute("data-probe")).toBe("lg/sm/true");
   });
 
   test("Root の外ではエラーを投げる", async ({ expect }) => {
@@ -177,6 +218,27 @@ describe("PopoverPositioner", () => {
       "center",
     );
   });
+
+  test("render の関数へルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PopoverRoot defaultOpen size="lg" radius="sm" outlined>
+        <PopoverPortal>
+          <PopoverPositioner
+            render={(props, state) => (
+              <div {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`} />
+            )}
+          >
+            <PopoverContent>内容</PopoverContent>
+          </PopoverPositioner>
+        </PopoverPortal>
+      </PopoverRoot>,
+    );
+
+    // 検証
+    const positioner = screen.getByClassName("sui_popover_positioner").element();
+    expect(positioner.getAttribute("data-probe")).toBe("lg/sm/true");
+  });
 });
 
 describe("PopoverContent", () => {
@@ -231,6 +293,32 @@ describe("PopoverContent", () => {
 
     // 検証
     expect(screen.getByClassName("sui_popover_content").element().textContent).toBe("内容");
+  });
+
+  test("render の関数へルートと内容の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PopoverRoot defaultOpen size="lg" radius="sm" outlined>
+        <PopoverPortal>
+          <PopoverPositioner>
+            <PopoverContent
+              render={(props, state) => (
+                <div
+                  {...props}
+                  data-probe={`${state.size}/${state.radius}/${state.outlined}/${String(state.open)}`}
+                />
+              )}
+            >
+              内容
+            </PopoverContent>
+          </PopoverPositioner>
+        </PopoverPortal>
+      </PopoverRoot>,
+    );
+
+    // 検証
+    const content = screen.getByClassName("sui_popover_content").element();
+    expect(content.getAttribute("data-probe")).toBe("lg/sm/true/true");
   });
 });
 

@@ -1,15 +1,16 @@
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { usePopoverContext } from "./popover.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type PopoverContext, usePopoverContext } from "./popover.context.js";
 
 /**
  * {@link PopoverPortal} が持つ状態です。
  */
-export type PopoverPortalState = Popover.Portal.State;
+export type PopoverPortalState = Override<PopoverContext, Popover.Portal.State>;
 
 export namespace PopoverPortalProps {
   export type Render = RenderProps<PopoverPortalState>;
@@ -48,8 +49,10 @@ export type IPopoverPortal = IComponent<PopoverPortalProps>;
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const PopoverPortal: IPopoverPortal = function SuiPopoverPortal(props) {
-  const { size, radius, outlined } = usePopoverContext();
+  const ctx = usePopoverContext();
   const {
+    style,
+    render,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
@@ -59,12 +62,19 @@ export const PopoverPortal: IPopoverPortal = function SuiPopoverPortal(props) {
   return (
     <Popover.Portal
       {...otherProps}
-      className={cn(
-        className,
-        "sui_popover_portal",
-        `sui_popover_portal-size_${size}`,
-        `sui_popover_portal-radius_${radius}`,
-        outlined && "sui_popover_portal-outlined",
+      {...proxyRenderProps<Popover.Portal.State, PopoverPortalState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<PopoverPortalState>(
+            className,
+            "sui_popover_portal",
+            (state) => `sui_popover_portal-size_${state.size}`,
+            (state) => `sui_popover_portal-radius_${state.radius}`,
+            (state) => state.outlined && "sui_popover_portal-outlined",
+          ),
+        },
       )}
       data-scope={dataScope}
     />

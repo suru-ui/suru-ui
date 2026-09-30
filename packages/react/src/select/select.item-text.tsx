@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectItemText} が持つ状態です。
  */
-export type SelectItemTextState = BaseSelect.ItemText.State;
+export type SelectItemTextState = Override<SelectContext, BaseSelect.ItemText.State>;
 
 export namespace SelectItemTextProps {
   export type Render = RenderProps<SelectItemTextState>;
@@ -45,9 +47,22 @@ export type ISelectItemText = IComponent<SelectItemTextProps>;
  * 選択肢の表示テキストを包む要素です。
  */
 export const SelectItemText: ISelectItemText = function SuiSelectItemText(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <BaseSelect.ItemText {...otherProps} className={cn(className, "sui_select_item_text")} />;
+  return (
+    <BaseSelect.ItemText
+      {...otherProps}
+      {...proxyRenderProps<BaseSelect.ItemText.State, SelectItemTextState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_select_item_text"),
+        },
+      )}
+    />
+  );
 };
 
 export { SelectItemText as ItemText };

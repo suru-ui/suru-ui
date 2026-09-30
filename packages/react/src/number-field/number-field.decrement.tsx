@@ -3,14 +3,16 @@ import { NumberField } from "@base-ui/react/number-field";
 import * as React from "react";
 
 import { MinusIcon } from "../_icons.jsx";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type NumberFieldContext, useNumberFieldContext } from "./number-field.context.js";
 
 /**
  * {@link NumberFieldDecrement} が持つ状態です。
  */
-export type NumberFieldDecrementState = NumberField.Decrement.State;
+export type NumberFieldDecrementState = Override<NumberFieldContext, NumberField.Decrement.State>;
 
 export namespace NumberFieldDecrementProps {
   export type Render = RenderProps<NumberFieldDecrementState>;
@@ -49,7 +51,10 @@ export type INumberFieldDecrement = IComponent<NumberFieldDecrementProps>;
  * 値を減らすボタンです。
  */
 export const NumberFieldDecrement: INumberFieldDecrement = function SuiNumberFieldDecrement(props) {
+  const ctx = useNumberFieldContext();
   const {
+    style,
+    render,
     children = <MinusIcon />,
     className,
     "aria-label": ariaLabel = "値を減らす",
@@ -59,7 +64,14 @@ export const NumberFieldDecrement: INumberFieldDecrement = function SuiNumberFie
   return (
     <NumberField.Decrement
       {...otherProps}
-      className={cn(className, "sui_number_field_stepper", "sui_number_field_decrement")}
+      {...proxyRenderProps<NumberField.Decrement.State, NumberFieldDecrementState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_number_field_stepper", "sui_number_field_decrement"),
+        },
+      )}
       aria-label={ariaLabel}
     >
       {children}

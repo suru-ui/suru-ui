@@ -1,15 +1,16 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useAutocompleteContext } from "./autocomplete.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompletePortal} の状態です。
  */
-export type AutocompletePortalState = Autocomplete.Portal.State;
+export type AutocompletePortalState = Override<AutocompleteContext, Autocomplete.Portal.State>;
 
 export namespace AutocompletePortalProps {
   export type Render = RenderProps<AutocompletePortalState>;
@@ -48,8 +49,10 @@ export type IAutocompletePortal = IComponent<AutocompletePortalProps>;
  * 既定では ポップアップを `<body>` の末尾に配置します。
  */
 export const AutocompletePortal: IAutocompletePortal = function SuiAutocompletePortal(props) {
-  const { size, radius } = useAutocompleteContext();
+  const ctx = useAutocompleteContext();
   const {
+    style,
+    render,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
@@ -59,11 +62,18 @@ export const AutocompletePortal: IAutocompletePortal = function SuiAutocompleteP
   return (
     <Autocomplete.Portal
       {...otherProps}
-      className={cn(
-        className,
-        "sui_autocomplete_portal",
-        `sui_autocomplete_portal-size_${size}`,
-        `sui_autocomplete_portal-radius_${radius}`,
+      {...proxyRenderProps<Autocomplete.Portal.State, AutocompletePortalState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AutocompletePortalState>(
+            className,
+            "sui_autocomplete_portal",
+            (state) => `sui_autocomplete_portal-size_${state.size}`,
+            (state) => `sui_autocomplete_portal-radius_${state.radius}`,
+          ),
+        },
       )}
       data-scope={dataScope}
     />

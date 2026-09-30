@@ -1,15 +1,16 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useContextMenuContext } from "./context-menu.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * {@link ContextMenuPortal} が持つ状態です。
  */
-export type ContextMenuPortalState = ContextMenu.Portal.State;
+export type ContextMenuPortalState = Override<ContextMenuContext, ContextMenu.Portal.State>;
 
 export namespace ContextMenuPortalProps {
   export type Render = RenderProps<ContextMenuPortalState>;
@@ -50,6 +51,8 @@ export type IContextMenuPortal = IComponent<ContextMenuPortalProps>;
 export const ContextMenuPortal: IContextMenuPortal = function SuiContextMenuPortal(props) {
   const ctx = useContextMenuContext();
   const {
+    style,
+    render,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
@@ -59,12 +62,19 @@ export const ContextMenuPortal: IContextMenuPortal = function SuiContextMenuPort
   return (
     <ContextMenu.Portal
       {...otherProps}
-      className={cn(
-        className,
-        "sui_context_menu_portal",
-        `sui_context_menu_portal-size_${ctx.size}`,
-        `sui_context_menu_portal-radius_${ctx.radius}`,
-        ctx.outlined && "sui_context_menu_portal-outlined",
+      {...proxyRenderProps<ContextMenu.Portal.State, ContextMenuPortalState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ContextMenuPortalState>(
+            className,
+            "sui_context_menu_portal",
+            (state) => `sui_context_menu_portal-size_${state.size}`,
+            (state) => `sui_context_menu_portal-radius_${state.radius}`,
+            (state) => state.outlined && "sui_context_menu_portal-outlined",
+          ),
+        },
       )}
       data-scope={dataScope}
     />

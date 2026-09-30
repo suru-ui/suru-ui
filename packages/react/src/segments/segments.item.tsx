@@ -2,9 +2,11 @@ import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SegmentsContext, useSegmentsContext } from "./segments.context.js";
 
 /**
  * セグメントをアクティブ化する方向です。
@@ -40,7 +42,7 @@ export type SegmentsItemValue = BaseTabs.Tab.Value;
 /**
  * {@link SegmentsItem} が持つ状態です。
  */
-export type SegmentsItemState = BaseTabs.Tab.State;
+export type SegmentsItemState = Override<SegmentsContext, BaseTabs.Tab.State>;
 
 export namespace SegmentsItemProps {
   export type Render = RenderProps<SegmentsItemState>;
@@ -80,16 +82,24 @@ export type ISegmentsItem = IComponent<SegmentsItemProps>;
  * 選択できる個々のセグメントです。
  */
 export const SegmentsItem: ISegmentsItem = function SuiSegmentsItem(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSegmentsContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <BaseTabs.Tab
       {...otherProps}
-      className={cn(
-        className,
-        "sui_segments_item",
-        (state) => state.active && "sui_segments_item-active",
-        (state) => state.disabled && "sui_segments_item-disabled",
+      {...proxyRenderProps<BaseTabs.Tab.State, SegmentsItemState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SegmentsItemState>(
+            className,
+            "sui_segments_item",
+            (state) => state.active && "sui_segments_item-active",
+            (state) => state.disabled && "sui_segments_item-disabled",
+          ),
+        },
       )}
     />
   );

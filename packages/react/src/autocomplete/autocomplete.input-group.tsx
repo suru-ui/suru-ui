@@ -1,21 +1,31 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type AutocompleteContextSize,
+  type AutocompleteContextColor,
+  type AutocompleteContextRadius,
+  type AutocompleteContextVariant,
+  AutocompleteContext,
+  useAutocompleteContext,
+} from "./autocomplete.context.js";
 
 /**
  * {@link AutocompleteInputGroup} の状態です。
  */
-export type AutocompleteInputGroupState = Autocomplete.InputGroup.State;
+export type AutocompleteInputGroupState = Override<
+  AutocompleteContext,
+  Autocomplete.InputGroup.State
+>;
 
 /**
  * 入力グループの配色です。
  */
-export type AutocompleteInputGroupColor = Color;
+export type AutocompleteInputGroupColor = AutocompleteContextColor;
 
 /**
  * 入力グループの角丸の大きさです。
@@ -26,7 +36,7 @@ export type AutocompleteInputGroupColor = Color;
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
  */
-export type AutocompleteInputGroupRadius = "none" | Size | "full";
+export type AutocompleteInputGroupRadius = AutocompleteContextRadius;
 
 /**
  * 入力グループの大きさです。
@@ -35,7 +45,7 @@ export type AutocompleteInputGroupRadius = "none" | Size | "full";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type AutocompleteInputGroupSize = Size;
+export type AutocompleteInputGroupSize = AutocompleteContextSize;
 
 /**
  * 入力グループの主な外観の種類です。
@@ -43,7 +53,7 @@ export type AutocompleteInputGroupSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type AutocompleteInputGroupVariant = "naked" | "liquid";
+export type AutocompleteInputGroupVariant = AutocompleteContextVariant;
 
 export namespace AutocompleteInputGroupProps {
   export type Render = RenderProps<AutocompleteInputGroupState>;
@@ -116,7 +126,9 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
   const {
     size = ctx.size,
     color = ctx.color,
+    style,
     radius = ctx.radius,
+    render,
     variant = ctx.variant,
     className,
     // @ts-expect-error
@@ -132,28 +144,35 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
     <AutocompleteContext value={childCtx}>
       <Autocomplete.InputGroup
         {...otherProps}
-        className={cn(
-          className,
-          "sui_autocomplete",
-          `sui_autocomplete-size_${size}`,
-          `sui_autocomplete-color_${color}`,
-          `sui_autocomplete-radius_${radius}`,
-          `sui_autocomplete-variant_${variant}`,
-          childCtx.outlined && "sui_autocomplete-outlined",
-          (state) => state.disabled && "sui_autocomplete-disabled",
-          (state) => state.touched && "sui_autocomplete-touched",
-          (state) => state.dirty && "sui_autocomplete-dirty",
-          (state) => state.valid === false && "sui_autocomplete-invalid",
-          (state) => state.valid === true && "sui_autocomplete-valid",
-          (state) => state.valid === null && "sui_autocomplete-unverified",
-          (state) => state.filled && "sui_autocomplete-filled",
-          (state) => state.focused && "sui_autocomplete-focused",
-          (state) => state.open && "sui_autocomplete-open",
-          (state) => state.readOnly && "sui_autocomplete-readonly",
-          (state) =>
-            state.popupSide !== null &&
-            `sui_autocomplete-popupside_${state.popupSide.replaceAll("-", "_")}`,
-          (state) => state.listEmpty && "sui_autocomplete-listempty",
+        {...proxyRenderProps<Autocomplete.InputGroup.State, AutocompleteInputGroupState>(
+          (state) => ({ ...childCtx, ...state }),
+          {
+            style,
+            render,
+            className: cn<AutocompleteInputGroupState>(
+              className,
+              "sui_autocomplete",
+              (state) => `sui_autocomplete-size_${state.size}`,
+              (state) => `sui_autocomplete-color_${state.color}`,
+              (state) => `sui_autocomplete-radius_${state.radius}`,
+              (state) => `sui_autocomplete-variant_${state.variant}`,
+              (state) => state.outlined && "sui_autocomplete-outlined",
+              (state) => state.disabled && "sui_autocomplete-disabled",
+              (state) => state.touched && "sui_autocomplete-touched",
+              (state) => state.dirty && "sui_autocomplete-dirty",
+              (state) => state.valid === false && "sui_autocomplete-invalid",
+              (state) => state.valid === true && "sui_autocomplete-valid",
+              (state) => state.valid === null && "sui_autocomplete-unverified",
+              (state) => state.filled && "sui_autocomplete-filled",
+              (state) => state.focused && "sui_autocomplete-focused",
+              (state) => state.open && "sui_autocomplete-open",
+              (state) => state.readOnly && "sui_autocomplete-readonly",
+              (state) =>
+                state.popupSide !== null &&
+                `sui_autocomplete-popupside_${state.popupSide.replaceAll("-", "_")}`,
+              (state) => state.listEmpty && "sui_autocomplete-listempty",
+            ),
+          },
         )}
         data-scope={dataScope}
       />

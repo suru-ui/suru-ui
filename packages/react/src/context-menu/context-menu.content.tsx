@@ -4,9 +4,10 @@ import * as React from "react";
 import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import { getItemKey } from "../_item.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import {
   isLinkItemObject,
   isItemObjectGroup,
@@ -17,7 +18,7 @@ import {
 } from "./_context-menu.utils.jsx";
 import { ContextMenuCheckboxItemIndicator } from "./context-menu.checkbox-item-indicator.jsx";
 import { ContextMenuCheckboxItem } from "./context-menu.checkbox-item.jsx";
-import { useContextMenuContext } from "./context-menu.context.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 import { ContextMenuGroupLabel } from "./context-menu.group-label.jsx";
 import { ContextMenuGroup } from "./context-menu.group.jsx";
 import { ContextMenuItem } from "./context-menu.item.jsx";
@@ -54,7 +55,7 @@ export interface IContextMenuContentItemRenderer<TItem = any> {
 /**
  * {@link ContextMenuContent} が持つ状態です。
  */
-export type ContextMenuContentState = ContextMenu.Popup.State;
+export type ContextMenuContentState = Override<ContextMenuContext, ContextMenu.Popup.State>;
 
 export namespace ContextMenuContentProps {
   export type Render = RenderProps<ContextMenuContentState>;
@@ -106,17 +107,24 @@ export const ContextMenuContent: IContextMenuContent = function SuiContextMenuCo
   props: ContextMenuContentProps,
 ) {
   const ctx = useContextMenuContext();
-  const { children = defaultItemRenderer, className, ...otherProps } = props;
+  const { style, render, children = defaultItemRenderer, className, ...otherProps } = props;
 
   return (
     <ContextMenu.Popup
       {...otherProps}
-      className={cn(
-        className,
-        "sui_context_menu_content",
-        (state) =>
-          state.transitionStatus !== undefined &&
-          `sui_context_menu_content-transition_status_${state.transitionStatus}`,
+      {...proxyRenderProps<ContextMenu.Popup.State, ContextMenuContentState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ContextMenuContentState>(
+            className,
+            "sui_context_menu_content",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_context_menu_content-transition_status_${state.transitionStatus}`,
+          ),
+        },
       )}
     >
       {typeof children === "function" ? ctx.items.map(children) : children}

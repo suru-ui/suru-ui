@@ -1,15 +1,27 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
+import * as React from "react";
 
 import { EyeIcon, EyeOffIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { usePasswordFieldContext } from "./password-field.context.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type PasswordFieldContextState,
+  usePasswordFieldContext,
+} from "./password-field.context.js";
 
 /**
  * {@link PasswordFieldToggleButton} の状態です。
  */
-export type PasswordFieldToggleButtonState = {};
+export type PasswordFieldToggleButtonState = Override<
+  PasswordFieldContextState,
+  {
+    /**
+     * このボタンを無効にするかどうかです。
+     */
+    readonly disabled: boolean;
+  }
+>;
 
 export namespace PasswordFieldToggleButtonProps {
   export type Render = RenderProps<PasswordFieldToggleButtonState>;
@@ -56,6 +68,10 @@ export const PasswordFieldToggleButton: IPasswordFieldToggleButton =
         setVisible(!visible);
       }
     };
+    const renderState = React.useMemo<PasswordFieldToggleButtonState>(
+      () => ({ visible, disabled }),
+      [disabled, visible],
+    );
 
     return useRender({
       props: [
@@ -65,14 +81,15 @@ export const PasswordFieldToggleButton: IPasswordFieldToggleButton =
           onClick: handleClick,
           children,
           disabled,
-          className: cn(
+          className: cn<PasswordFieldToggleButtonState>(
             "sui_password_field_toggle",
-            disabled && "sui_password_field_toggle-disabled",
+            (state) => state.disabled && "sui_password_field_toggle-disabled",
           ),
           "aria-label": ariaLabel,
           "aria-pressed": visible,
         },
       ],
+      state: renderState,
       defaultTagName: "button",
     });
   };

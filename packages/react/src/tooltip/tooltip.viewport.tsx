@@ -1,14 +1,16 @@
 import { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type TooltipContext, useTooltipContext } from "./tooltip.context.js";
 
 /**
  * {@link TooltipViewport} が持つ状態です。
  */
-export type TooltipViewportState = Tooltip.Viewport.State;
+export type TooltipViewportState = Override<TooltipContext, Tooltip.Viewport.State>;
 
 export namespace TooltipViewportProps {
   export type Render = RenderProps<TooltipViewportState>;
@@ -47,9 +49,22 @@ export type ITooltipViewport = IComponent<TooltipViewportProps>;
  * 1 つのツールチップを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
 export const TooltipViewport: ITooltipViewport = function SuiTooltipViewport(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useTooltipContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Tooltip.Viewport {...otherProps} className={cn(className, "sui_tooltip_viewport")} />;
+  return (
+    <Tooltip.Viewport
+      {...otherProps}
+      {...proxyRenderProps<Tooltip.Viewport.State, TooltipViewportState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_tooltip_viewport"),
+        },
+      )}
+    />
+  );
 };
 
 export { TooltipViewport as Viewport };

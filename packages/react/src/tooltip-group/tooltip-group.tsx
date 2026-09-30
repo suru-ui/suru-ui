@@ -20,6 +20,16 @@ export type TooltipGroupProps = TooltipGroupRootProps;
 
 export type ITooltipGroup = IComponent<TooltipGroupProps>;
 
+export interface IUseTooltipGroupAPI {
+  /**
+   * {@link TooltipGroupAPI} を作成します。
+   *
+   * @param props {@link TooltipGroup} の props です。
+   * @returns ツールチップグループの API です
+   */
+  (props: TooltipGroupProps): TooltipGroupAPI;
+}
+
 // API
 // ---
 
@@ -43,16 +53,6 @@ export class TooltipGroupAPI {
   public getRootProps(): TooltipGroupRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseTooltipGroupAPI {
-  /**
-   * {@link TooltipGroupAPI} を作成します。
-   *
-   * @param props {@link TooltipGroup} の props です。
-   * @returns ツールチップグループの API です
-   */
-  (props: TooltipGroupProps): TooltipGroupAPI;
 }
 
 /**

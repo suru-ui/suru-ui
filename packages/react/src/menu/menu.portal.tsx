@@ -1,15 +1,16 @@
 import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useMenuContext } from "./menu.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * {@link MenuPortal} が持つ状態です。
  */
-export type MenuPortalState = Menu.Portal.State;
+export type MenuPortalState = Override<MenuContext, Menu.Portal.State>;
 
 export namespace MenuPortalProps {
   export type Render = RenderProps<MenuPortalState>;
@@ -50,6 +51,8 @@ export type IMenuPortal = IComponent<MenuPortalProps>;
 export const MenuPortal: IMenuPortal = function SuiMenuPortal(props) {
   const ctx = useMenuContext();
   const {
+    style,
+    render,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
@@ -59,13 +62,17 @@ export const MenuPortal: IMenuPortal = function SuiMenuPortal(props) {
   return (
     <Menu.Portal
       {...otherProps}
-      className={cn(
-        className,
-        "sui_menu_portal",
-        `sui_menu_portal-size_${ctx.size}`,
-        `sui_menu_portal-radius_${ctx.radius}`,
-        ctx.outlined && "sui_menu_portal-outlined",
-      )}
+      {...proxyRenderProps<Menu.Portal.State, MenuPortalState>((state) => ({ ...ctx, ...state }), {
+        style,
+        render,
+        className: cn<MenuPortalState>(
+          className,
+          "sui_menu_portal",
+          (state) => `sui_menu_portal-size_${state.size}`,
+          (state) => `sui_menu_portal-radius_${state.radius}`,
+          (state) => state.outlined && "sui_menu_portal-outlined",
+        ),
+      })}
       data-scope={dataScope}
     />
   );

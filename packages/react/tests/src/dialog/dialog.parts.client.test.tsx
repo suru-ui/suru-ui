@@ -9,7 +9,7 @@ import { DialogContent } from "../../../src/dialog/dialog.content.jsx";
 import { DialogDescription } from "../../../src/dialog/dialog.description.jsx";
 import { DialogFooter } from "../../../src/dialog/dialog.footer.jsx";
 import { DialogHeader } from "../../../src/dialog/dialog.header.jsx";
-import { DialogPopup } from "../../../src/dialog/dialog.popup.jsx";
+import { type DialogPopupProps, DialogPopup } from "../../../src/dialog/dialog.popup.jsx";
 import { DialogPortal } from "../../../src/dialog/dialog.portal.jsx";
 import { DialogRoot } from "../../../src/dialog/dialog.root.jsx";
 import { DialogTitle } from "../../../src/dialog/dialog.title.jsx";
@@ -22,13 +22,13 @@ import "../_locators.js";
  * 開いた状態のダイアログを組み立てます。
  * ポップアップ系のパーツは Base UI のルートコンテキストを必要とするため、単体では描画できません。
  */
-function renderDialog(children: React.ReactNode) {
+function renderDialog(children: React.ReactNode, props?: DialogPopupProps) {
   return render(
     <DialogRoot defaultOpen>
       <DialogPortal>
         <DialogBackdrop />
         <DialogViewport>
-          <DialogPopup>{children}</DialogPopup>
+          <DialogPopup {...props}>{children}</DialogPopup>
         </DialogViewport>
       </DialogPortal>
     </DialogRoot>,
@@ -85,6 +85,42 @@ describe("DialogHeader", () => {
     expect(header.classList.contains("sui_card_header")).toBe(true);
     expect(header.textContent).toBe("内容");
   });
+
+  test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderDialog(
+      <DialogHeader
+        render={(props, state) => (
+          <div
+            {...props}
+            data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+          />
+        )}
+      />,
+      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_dialog_header").element().getAttribute("data-probe")).toBe(
+      "sm/lg/stacked/true",
+    );
+  });
+
+  test("className と style の関数へポップアップの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderDialog(
+      <DialogHeader
+        className={(state) => `probe-variant_${state.variant}`}
+        style={(state) => ({ opacity: state.outlined ? "0.5" : "1" })}
+      />,
+      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+    );
+
+    // 検証
+    const header = screen.getByClassName("sui_dialog_header").element();
+    expect(header.classList.contains("probe-variant_stacked")).toBe(true);
+    expect(header.style.opacity).toBe("0.5");
+  });
 });
 
 describe("DialogTitle", () => {
@@ -106,6 +142,27 @@ describe("DialogTitle", () => {
     const content = screen.getByRole("dialog").element();
     const title = screen.getByRole("heading", { name: "見出し" }).element();
     expect(content.getAttribute("aria-labelledby")).toBe(title.id);
+  });
+
+  test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderDialog(
+      <DialogTitle
+        render={(props, state) => (
+          // oxlint-disable-next-line jsx-a11y/heading-has-content
+          <h2
+            {...props}
+            data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+          />
+        )}
+      />,
+      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_dialog_title").element().getAttribute("data-probe")).toBe(
+      "sm/lg/stacked/true",
+    );
   });
 });
 
@@ -129,6 +186,26 @@ describe("DialogDescription", () => {
     const description = screen.getByText("説明").element();
     expect(content.getAttribute("aria-describedby")).toBe(description.id);
   });
+
+  test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderDialog(
+      <DialogDescription
+        render={(props, state) => (
+          <div
+            {...props}
+            data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+          />
+        )}
+      />,
+      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+    );
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_dialog_description").element().getAttribute("data-probe"),
+    ).toBe("sm/lg/stacked/true");
+  });
 });
 
 describe("DialogAction", () => {
@@ -141,6 +218,26 @@ describe("DialogAction", () => {
     expect(action.tagName).toBe("DIV");
     expect(action.classList.contains("sui_card_action")).toBe(true);
     expect(action.textContent).toBe("操作");
+  });
+
+  test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderDialog(
+      <DialogAction
+        render={(props, state) => (
+          <div
+            {...props}
+            data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+          />
+        )}
+      />,
+      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_dialog_action").element().getAttribute("data-probe")).toBe(
+      "sm/lg/stacked/true",
+    );
   });
 });
 
@@ -155,6 +252,26 @@ describe("DialogContent", () => {
     expect(content.classList.contains("sui_card_content")).toBe(true);
     expect(content.textContent).toBe("本文");
     expect(content.getAttribute("title")).toBe("説明");
+  });
+
+  test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderDialog(
+      <DialogContent
+        render={(props, state) => (
+          <div
+            {...props}
+            data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+          />
+        )}
+      />,
+      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_dialog_content").element().getAttribute("data-probe")).toBe(
+      "sm/lg/stacked/true",
+    );
   });
 });
 
@@ -172,6 +289,26 @@ describe("DialogFooter", () => {
     expect(footer.tagName).toBe("DIV");
     expect(footer.classList.contains("sui_card_footer")).toBe(true);
     expect(footer.textContent).toBe("操作");
+  });
+
+  test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderDialog(
+      <DialogFooter
+        render={(props, state) => (
+          <div
+            {...props}
+            data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+          />
+        )}
+      />,
+      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_dialog_footer").element().getAttribute("data-probe")).toBe(
+      "sm/lg/stacked/true",
+    );
   });
 });
 

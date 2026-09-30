@@ -45,6 +45,11 @@ export type AvatarGroupContext = {
   readonly radius: AvatarGroupContextRadius;
 
   /**
+   * アバターを逆順に重ねるかどうかです。
+   */
+  readonly reverse: boolean;
+
+  /**
    * アバターの大きさです。
    */
   readonly size: AvatarGroupContextSize;

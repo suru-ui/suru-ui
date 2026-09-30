@@ -1,16 +1,17 @@
 import * as React from "react";
 
 import { MoreIcon } from "../_icons.jsx";
+import proxyRenderProps from "../_proxy-render-props.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { usePaginationContext } from "./pagination.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type PaginationContext, usePaginationContext } from "./pagination.context.js";
 
 /**
  * {@link PaginationEllipsis} が持つ状態です。
  */
-export type PaginationEllipsisState = {};
+export type PaginationEllipsisState = Override<PaginationContext, Button.Root.State>;
 
 export namespace PaginationEllipsisProps {
   export type Render = RenderProps<PaginationEllipsisState>;
@@ -62,13 +63,15 @@ export type IPaginationEllipsis = IComponent<PaginationEllipsisProps>;
 /**
  * 飛ばされたページ範囲を表す省略記号コンポーネントです。
  *
- * 押下すると入力欄が表示され、範囲内のページ番号を入力してそのページへ移動できます。`Enter` で決定、`Escape` で取り消します。
+ * 押下すると入力欄が表示され、範囲内のページ番号を入力してそのページへ移動できます。`Enter` で決定、`Escape` で取り消します。大きさ・角丸は {@link PaginationRoot} から引き継ぎます。
  */
 export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEllipsis(props) {
-  const ctx = usePaginationContext(true);
+  const ctx = usePaginationContext();
   const {
     end,
     start = 2,
+    style,
+    render,
     onClick,
     disabled = false,
     className,
@@ -86,7 +89,7 @@ export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEll
   const label = ariaLabel ?? `${resolvedStart}〜${resolvedEnd}ページへ移動`;
   const [editing, setEditing] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
-  const isDisabled = ctx?.disabled || disabled;
+  const isDisabled = ctx.disabled || disabled;
 
   React.useEffect(() => {
     if (editing) {
@@ -125,7 +128,7 @@ export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEll
           return;
         }
 
-        ctx?.goToPage(Math.min(Math.max(value, resolvedStart), resolvedEnd), {
+        ctx.goToPage(Math.min(Math.max(value, resolvedStart), resolvedEnd), {
           event,
           reason: "ellipsis",
         });
@@ -152,14 +155,21 @@ export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEll
   return (
     <Button.Root
       {...otherButtonProps}
-      size={ctx?.size ?? "md"}
+      {...proxyRenderProps<Button.Root.State, PaginationEllipsisState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_pagination_ellipsis"),
+        },
+      )}
+      size={ctx.size}
       color="grey"
-      radius={ctx?.radius}
+      radius={ctx.radius}
       onClick={handleClick}
       squared
       variant="naked"
       disabled={isDisabled}
-      className={cn(className, "sui_pagination_ellipsis")}
       aria-label={label}
     >
       <MoreIcon />

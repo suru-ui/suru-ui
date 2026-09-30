@@ -1,18 +1,24 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import { useControlled } from "@base-ui/utils/useControlled";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { validateFiles } from "./_file-upload.jsx";
-import { FileUploadContext } from "./file-upload.context.js";
+import {
+  type FileUploadContextSize,
+  type FileUploadContextColor,
+  type FileUploadContextState,
+  type FileUploadContextRadius,
+  type FileUploadContextVariant,
+  FileUploadContext,
+} from "./file-upload.context.js";
 
 /**
  * ファイルアップロードの配色です。
  */
-export type FileUploadRootColor = Color;
+export type FileUploadRootColor = FileUploadContextColor;
 
 /**
  * ファイルアップロードの角丸です。
@@ -23,7 +29,7 @@ export type FileUploadRootColor = Color;
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type FileUploadRootRadius = "none" | Size | "full";
+export type FileUploadRootRadius = FileUploadContextRadius;
 
 /**
  * ファイルアップロードの大きさです。
@@ -32,7 +38,7 @@ export type FileUploadRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type FileUploadRootSize = Size;
+export type FileUploadRootSize = FileUploadContextSize;
 
 /**
  * ファイルアップロードの主な外観の種類です。
@@ -40,7 +46,7 @@ export type FileUploadRootSize = Size;
  * - `"naked"`: 背景のないドロップゾーン
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type FileUploadRootVariant = "naked" | "liquid";
+export type FileUploadRootVariant = FileUploadContextVariant;
 
 /**
  * ファイルが検証で拒否された理由です。
@@ -95,7 +101,7 @@ export type FileUploadRejectEventDetails = {
 /**
  * {@link FileUploadRoot} が持つ状態です。
  */
-export type FileUploadRootState = {};
+export type FileUploadRootState = FileUploadContextState;
 
 export namespace FileUploadRootProps {
   export type Render = RenderProps<FileUploadRootState>;
@@ -340,34 +346,26 @@ export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props)
     ],
   );
 
-  const ctx = React.useMemo<FileUploadContext>(
+  const renderState = React.useMemo<FileUploadRootState>(
     () => ({
       name,
-      open,
-      clear,
+      size,
+      color,
       files,
       accept:
         typeof accept === "string" ? accept : accept === undefined ? undefined : accept.join(","),
-      remove,
+      radius,
+      variant,
       disabled,
       multiple,
       required,
-      selectFiles,
-      setInputElement,
     }),
-    [
-      accept,
-      clear,
-      disabled,
-      files,
-      multiple,
-      name,
-      open,
-      remove,
-      required,
-      selectFiles,
-      setInputElement,
-    ],
+    [accept, color, disabled, files, multiple, name, radius, required, size, variant],
+  );
+
+  const ctx = React.useMemo<FileUploadContext>(
+    () => ({ ...renderState, open, clear, remove, selectFiles, setInputElement }),
+    [clear, open, remove, renderState, selectFiles, setInputElement],
   );
 
   const element = useRender({
@@ -377,15 +375,16 @@ export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props)
         children,
         className: cn<FileUploadRootState>(
           "sui_file_upload",
-          `sui_file_upload-size_${size}`,
-          `sui_file_upload-color_${color}`,
-          `sui_file_upload-radius_${radius}`,
-          `sui_file_upload-variant_${variant}`,
-          disabled && "sui_file_upload-disabled",
+          (state) => `sui_file_upload-size_${state.size}`,
+          (state) => `sui_file_upload-color_${state.color}`,
+          (state) => `sui_file_upload-radius_${state.radius}`,
+          (state) => `sui_file_upload-variant_${state.variant}`,
+          (state) => state.disabled && "sui_file_upload-disabled",
         ),
         "data-scope": dataScope,
       },
     ],
+    state: renderState,
     defaultTagName: "div",
   });
 

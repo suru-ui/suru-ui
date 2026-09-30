@@ -63,6 +63,16 @@ export type SwitchProps = SwitchProps.Switch & SwitchProps.Root & SwitchProps.Th
 
 export type ISwitch = IComponent<SwitchProps>;
 
+export interface IUseSwitchAPI {
+  /**
+   * {@link SwitchAPI} を作成します。
+   *
+   * @param props {@link Switch} の props です。
+   * @returns スイッチの API です。
+   */
+  (props: SwitchProps): SwitchAPI;
+}
+
 // API
 // ---
 
@@ -105,16 +115,6 @@ export class SwitchAPI {
       ...this.thumbProps,
     };
   }
-}
-
-export interface IUseSwitchAPI {
-  /**
-   * {@link SwitchAPI} を作成します。
-   *
-   * @param props {@link Switch} の props です。
-   * @returns スイッチの API です。
-   */
-  (props: SwitchProps): SwitchAPI;
 }
 
 /**

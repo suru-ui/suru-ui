@@ -1,6 +1,7 @@
 import type { RenderProps } from "../_use-render.js";
 import { type AvatarRootProps, type AvatarRootState, AvatarRoot } from "../avatar/avatar.root.jsx";
 import type { IComponent } from "../types.js";
+import { useAvatarGroupContext } from "./avatar-group.context.js";
 
 /**
  * {@link AvatarGroupSurplus} が持つ状態です。
@@ -31,9 +32,15 @@ export type IAvatarGroupSurplus = IComponent<AvatarGroupSurplusProps>;
  * 余剰分のアバターの数などを表示するコンポーネントです。
  */
 export const AvatarGroupSurplus: IAvatarGroupSurplus = function SuiAvatarGroupSurplus(props) {
-  const { color = "grey", ...otherProps } = props;
+  const ctx = useAvatarGroupContext(true);
+  const {
+    size = ctx?.size ?? "md",
+    color = ctx?.color ?? "grey",
+    radius = ctx?.radius ?? "full",
+    ...otherProps
+  } = props;
 
-  return <AvatarRoot {...otherProps} color={color} />;
+  return <AvatarRoot {...otherProps} size={size} color={color} radius={radius} />;
 };
 
 export { AvatarGroupSurplus as Surplus };

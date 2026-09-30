@@ -1,14 +1,16 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * {@link ContextMenuTrigger} が持つ状態です。
  */
-export type ContextMenuTriggerState = ContextMenu.Trigger.State;
+export type ContextMenuTriggerState = Override<ContextMenuContext, ContextMenu.Trigger.State>;
 
 export namespace ContextMenuTriggerProps {
   export type Render = Omit<RenderProps<ContextMenuTriggerState>, "render">;
@@ -54,16 +56,23 @@ export type IContextMenuTrigger = IComponent<ContextMenuTriggerProps>;
  * `children` には表示する内容ではなく、トリガーとしてレンダリングする要素を渡します。
  */
 export const ContextMenuTrigger: IContextMenuTrigger = function SuiContextMenuTrigger(props) {
-  const { children, className, ...otherProps } = props;
+  const ctx = useContextMenuContext();
+  const { style, children, className, ...otherProps } = props;
 
   return (
     <ContextMenu.Trigger
       {...otherProps}
-      render={children}
-      className={cn(
-        className,
-        "sui_context_menu_trigger",
-        (state) => state.open && "sui_context_menu_trigger-open",
+      {...proxyRenderProps<ContextMenu.Trigger.State, ContextMenuTriggerState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render: children,
+          className: cn<ContextMenuTriggerState>(
+            className,
+            "sui_context_menu_trigger",
+            (state) => state.open && "sui_context_menu_trigger-open",
+          ),
+        },
       )}
     />
   );

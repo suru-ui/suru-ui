@@ -1,7 +1,7 @@
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import type { PopoverContextSize, PopoverContextRadius } from "./popover.context.js";
 import { PopoverContext } from "./popover.context.js";
 import type { PopoverHandle } from "./popover.handle.js";
@@ -43,7 +43,7 @@ export type PopoverRootSize = PopoverContextSize;
 /**
  * {@link PopoverRoot} が持つ状態です。
  */
-export type PopoverRootState = Popover.Root.State;
+export type PopoverRootState = Override<PopoverContext, Popover.Root.State>;
 
 export namespace PopoverRootProps {
   export type Render = {};

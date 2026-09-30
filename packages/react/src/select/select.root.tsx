@@ -1,11 +1,15 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
-import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import Config from "../_config.jsx";
 import type { Override, IComponent } from "../types.js";
 import { isItemObjectGroup, isLabeledItemObject } from "./_select.jsx";
-import { SelectContext } from "./select.context.js";
+import {
+  type SelectContextSize,
+  type SelectContextRadius,
+  type SelectContextVariant,
+  SelectContext,
+} from "./select.context.js";
 import type { SelectGroupProps } from "./select.group.jsx";
 import type { SelectItemProps } from "./select.item.jsx";
 
@@ -101,7 +105,7 @@ export type SelectRootItems<TValue = any> =
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type SelectRootRadius = "none" | Size | "full";
+export type SelectRootRadius = SelectContextRadius;
 
 /**
  * 選択欄の大きさです。
@@ -110,7 +114,7 @@ export type SelectRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type SelectRootSize = Size;
+export type SelectRootSize = SelectContextSize;
 
 /**
  * 選択欄の主な外観の種類です。
@@ -118,12 +122,12 @@ export type SelectRootSize = Size;
  * - `"naked"`: 背景のない選択欄
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type SelectRootVariant = "naked" | "liquid";
+export type SelectRootVariant = SelectContextVariant;
 
 /**
  * {@link SelectRoot} が持つ状態です。
  */
-export type SelectRootState = BaseSelect.Root.State;
+export type SelectRootState = Override<SelectContext, BaseSelect.Root.State>;
 
 export namespace SelectRootProps {
   export type Render = {};

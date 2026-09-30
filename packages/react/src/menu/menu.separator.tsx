@@ -1,14 +1,16 @@
 import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * {@link MenuSeparator} が持つ状態です。
  */
-export type MenuSeparatorState = Menu.Separator.State;
+export type MenuSeparatorState = Override<MenuContext, Menu.Separator.State>;
 
 export namespace MenuSeparatorProps {
   export type Render = RenderProps<MenuSeparatorState>;
@@ -45,9 +47,22 @@ export type IMenuSeparator = IComponent<MenuSeparatorProps>;
  * メニュー項目を区切る要素です。
  */
 export const MenuSeparator: IMenuSeparator = function SuiMenuSeparator(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useMenuContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Menu.Separator {...otherProps} className={cn(className, "sui_menu_separator")} />;
+  return (
+    <Menu.Separator
+      {...otherProps}
+      {...proxyRenderProps<Menu.Separator.State, MenuSeparatorState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_menu_separator"),
+        },
+      )}
+    />
+  );
 };
 
 export { MenuSeparator as Separator };

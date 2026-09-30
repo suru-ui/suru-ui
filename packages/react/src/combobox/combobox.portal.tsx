@@ -1,15 +1,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useComboboxContext } from "./combobox.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxPortal} が持つ状態です。
+ * {@link ComboboxPortal} の状態です。
  */
-export type ComboboxPortalState = Combobox.Portal.State;
+export type ComboboxPortalState = Override<ComboboxContext, Combobox.Portal.State>;
 
 export namespace ComboboxPortalProps {
   export type Render = RenderProps<ComboboxPortalState>;
@@ -48,8 +49,10 @@ export type IComboboxPortal = IComponent<ComboboxPortalProps>;
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
 export const ComboboxPortal: IComboboxPortal = function SuiComboboxPortal(props) {
-  const { size, radius } = useComboboxContext();
+  const ctx = useComboboxContext();
   const {
+    style,
+    render,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
@@ -59,11 +62,18 @@ export const ComboboxPortal: IComboboxPortal = function SuiComboboxPortal(props)
   return (
     <Combobox.Portal
       {...otherProps}
-      className={cn(
-        className,
-        "sui_combobox_portal",
-        `sui_combobox_portal-size_${size}`,
-        `sui_combobox_portal-radius_${radius}`,
+      {...proxyRenderProps<Combobox.Portal.State, ComboboxPortalState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxPortalState>(
+            className,
+            "sui_combobox_portal",
+            (state) => `sui_combobox_portal-size_${state.size}`,
+            (state) => `sui_combobox_portal-radius_${state.radius}`,
+          ),
+        },
       )}
       data-scope={dataScope}
     />

@@ -1,14 +1,16 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ContextMenuContext, useContextMenuContext } from "./context-menu.context.js";
 
 /**
  * {@link ContextMenuGroupLabel} が持つ状態です。
  */
-export type ContextMenuGroupLabelState = ContextMenu.GroupLabel.State;
+export type ContextMenuGroupLabelState = Override<ContextMenuContext, ContextMenu.GroupLabel.State>;
 
 export namespace ContextMenuGroupLabelProps {
   export type Render = RenderProps<ContextMenuGroupLabelState>;
@@ -47,12 +49,20 @@ export type IContextMenuGroupLabel = IComponent<ContextMenuGroupLabelProps>;
 export const ContextMenuGroupLabel: IContextMenuGroupLabel = function SuiContextMenuGroupLabel(
   props,
 ) {
-  const { className, ...otherProps } = props;
+  const ctx = useContextMenuContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <ContextMenu.GroupLabel
       {...otherProps}
-      className={cn(className, "sui_context_menu_group_label")}
+      {...proxyRenderProps<ContextMenu.GroupLabel.State, ContextMenuGroupLabelState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_context_menu_group_label"),
+        },
+      )}
     />
   );
 };

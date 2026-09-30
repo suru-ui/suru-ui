@@ -1,11 +1,18 @@
 import { RadioGroup } from "@base-ui/react/radio-group";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { RadioGroupContext } from "./radio-group.context.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type RadioGroupContextSize,
+  type RadioGroupContextColor,
+  type RadioGroupContextRadius,
+  type RadioGroupContextVariant,
+  type RadioGroupContextOrientation,
+  RadioGroupContext,
+} from "./radio-group.context.js";
 
 /**
  * ラジオボタングループの選択状態が変更されたイベントの詳細です。
@@ -20,7 +27,7 @@ export type RadioGroupRootChangeEventReason = RadioGroup.ChangeEventReason;
 /**
  * ラジオボタンの配色です。
  */
-export type RadioGroupRootColor = Color;
+export type RadioGroupRootColor = RadioGroupContextColor;
 
 /**
  * ラジオボタン群の向きです。
@@ -28,7 +35,7 @@ export type RadioGroupRootColor = Color;
  * - `"horizontal"`: 横並び
  * - `"vertical"`: 縦並び
  */
-export type RadioGroupRootOrientation = "horizontal" | "vertical";
+export type RadioGroupRootOrientation = RadioGroupContextOrientation;
 
 /**
  * ラジオボタンの角丸です。
@@ -40,7 +47,7 @@ export type RadioGroupRootOrientation = "horizontal" | "vertical";
  * - `"full"`: 丸形
  * - `"circle"`: 完全な丸形
  */
-export type RadioGroupRootRadius = "none" | Size | "full" | "circle";
+export type RadioGroupRootRadius = RadioGroupContextRadius;
 
 /**
  * ラジオボタンの大きさです。
@@ -49,7 +56,7 @@ export type RadioGroupRootRadius = "none" | Size | "full" | "circle";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type RadioGroupRootSize = Size;
+export type RadioGroupRootSize = RadioGroupContextSize;
 
 /**
  * ラジオボタンの主な外観です。
@@ -57,12 +64,12 @@ export type RadioGroupRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type RadioGroupRootVariant = "naked" | "liquid";
+export type RadioGroupRootVariant = RadioGroupContextVariant;
 
 /**
  * {@link RadioGroupRoot} が持つ状態です。
  */
-export type RadioGroupRootState = RadioGroup.State;
+export type RadioGroupRootState = Override<RadioGroupContext, RadioGroup.State>;
 
 export namespace RadioGroupRootProps {
   export type Render = RenderProps<RadioGroupRootState>;
@@ -169,7 +176,9 @@ export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
   const {
     size = "md",
     color = "grey",
+    style,
     radius = "full",
+    render,
     variant = "liquid",
     disabled,
     outlined = false,
@@ -187,26 +196,34 @@ export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
       variant,
       disabled,
       outlined,
+      orientation,
     }),
-    [size, color, radius, variant, disabled, outlined],
+    [size, color, radius, variant, disabled, outlined, orientation],
   );
 
   return (
     <RadioGroupContext value={ctx}>
       <RadioGroup
         {...otherProps}
-        disabled={disabled}
-        className={cn(
-          className,
-          "sui_radio_group",
-          `sui_radio_group-orientation_${orientation}`,
-          (state) => state.dirty && "sui_radio_group-dirty",
-          (state) => state.valid === true && "sui_radio_group-valid",
-          (state) => state.filled && "sui_radio_group-filled",
-          (state) => state.focused && "sui_radio_group-focused",
-          (state) => state.touched && "sui_radio_group-touched",
-          (state) => state.disabled && "sui_radio_group-disabled",
+        {...proxyRenderProps<RadioGroup.State, RadioGroupRootState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn<RadioGroupRootState>(
+              className,
+              "sui_radio_group",
+              (state) => `sui_radio_group-orientation_${state.orientation}`,
+              (state) => state.dirty && "sui_radio_group-dirty",
+              (state) => state.valid === true && "sui_radio_group-valid",
+              (state) => state.filled && "sui_radio_group-filled",
+              (state) => state.focused && "sui_radio_group-focused",
+              (state) => state.touched && "sui_radio_group-touched",
+              (state) => state.disabled && "sui_radio_group-disabled",
+            ),
+          },
         )}
+        disabled={disabled}
         data-scope={dataScope}
       />
     </RadioGroupContext>

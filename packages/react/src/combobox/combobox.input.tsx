@@ -1,14 +1,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxInput} が持つ状態です。
+ * {@link ComboboxInput} の状態です。
  */
-export type ComboboxInputState = Combobox.Input.State;
+export type ComboboxInputState = Override<ComboboxContext, Combobox.Input.State>;
 
 export namespace ComboboxInputProps {
   export type Render = RenderProps<ComboboxInputState>;
@@ -45,9 +47,22 @@ export type IComboboxInput = IComponent<ComboboxInputProps>;
  * 候補を検索するテキスト入力欄です。
  */
 export const ComboboxInput: IComboboxInput = function SuiComboboxInput(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Combobox.Input {...otherProps} className={cn(className, "sui_combobox_input")} />;
+  return (
+    <Combobox.Input
+      {...otherProps}
+      {...proxyRenderProps<Combobox.Input.State, ComboboxInputState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxInputState>(className, "sui_combobox_input"),
+        },
+      )}
+    />
+  );
 };
 
 export { ComboboxInput as Input };

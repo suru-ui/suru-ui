@@ -1,14 +1,16 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompleteStatus} の状態です。
  */
-export type AutocompleteStatusState = Autocomplete.Status.State;
+export type AutocompleteStatusState = Override<AutocompleteContext, Autocomplete.Status.State>;
 
 export namespace AutocompleteStatusProps {
   export type Render = RenderProps<AutocompleteStatusState>;
@@ -47,10 +49,21 @@ export type IAutocompleteStatus = IComponent<AutocompleteStatusProps>;
  * この要素は常に DOM にマウントされたままにしてください。内容を変更するときは、要素を出し入れするのではなく children を差し替えます。
  */
 export const AutocompleteStatus: IAutocompleteStatus = function SuiAutocompleteStatus(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useAutocompleteContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
-    <Autocomplete.Status {...otherProps} className={cn(className, "sui_autocomplete_status")} />
+    <Autocomplete.Status
+      {...otherProps}
+      {...proxyRenderProps<Autocomplete.Status.State, AutocompleteStatusState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AutocompleteStatusState>(className, "sui_autocomplete_status"),
+        },
+      )}
+    />
   );
 };
 

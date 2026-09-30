@@ -144,7 +144,7 @@ describe("RadioRoot", () => {
     // 準備と実行
     const screen = await render(
       <RadioGroupRoot color="blue" size="lg" variant="naked">
-        <RadioRoot color="red" size="sm" value="a" variant="liquid" />
+        <RadioRoot color="red" size="sm" variant="liquid" value="a" />
       </RadioGroupRoot>,
     );
 
@@ -153,6 +153,28 @@ describe("RadioRoot", () => {
     expect(root.classList.contains("sui_radio-size_lg")).toBe(true);
     expect(root.classList.contains("sui_radio-color_blue")).toBe(true);
     expect(root.classList.contains("sui_radio-variant_naked")).toBe(true);
+  });
+
+  test("render の関数へグループと自身の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <RadioGroupRoot color="blue" size="lg" variant="naked" outlined orientation="horizontal">
+        <RadioRoot
+          value="a"
+          render={(props, state) => (
+            <span
+              {...props}
+              data-probe={`${state.size}/${String(state.color)}/${state.variant}/${String(state.outlined)}/${state.orientation}`}
+            />
+          )}
+        />
+      </RadioGroupRoot>,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_radio").element().getAttribute("data-probe")).toBe(
+      "lg/blue/naked/true/horizontal",
+    );
   });
 
   test("RadioGroup の無効を引き継ぐ", async ({ expect }) => {

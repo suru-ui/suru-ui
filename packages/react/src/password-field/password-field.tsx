@@ -115,6 +115,16 @@ export type PasswordFieldProps = PasswordFieldProps.PasswordField &
   PasswordFieldProps.Root &
   PasswordFieldProps.Input;
 
+export interface IUsePasswordFieldAPI {
+  /**
+   * {@link PasswordFieldAPI} を作成します。
+   *
+   * @param props {@link PasswordField} の props です。
+   * @returns パスワード入力欄の API です
+   */
+  (props: PasswordFieldProps): PasswordFieldAPI;
+}
+
 // API
 // ---
 
@@ -259,16 +269,6 @@ export class PasswordFieldAPI {
 
     return null;
   }
-}
-
-export interface IUsePasswordFieldAPI {
-  /**
-   * {@link PasswordFieldAPI} を作成します。
-   *
-   * @param props {@link PasswordField} の props です。
-   * @returns パスワード入力欄の API です
-   */
-  (props: PasswordFieldProps): PasswordFieldAPI;
 }
 
 /**

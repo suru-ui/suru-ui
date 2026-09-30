@@ -1,11 +1,17 @@
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
-import type { Size, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { TabsContext } from "./tabs.context.js";
+import {
+  type TabsContextSize,
+  type TabsContextRadius,
+  type TabsContextVariant,
+  type TabsContextActiveVariant,
+  TabsContext,
+} from "./tabs.context.js";
 import type { TabsTabProps } from "./tabs.tab.jsx";
 
 /**
@@ -64,7 +70,7 @@ export interface ITabsRootItemRenderer<TItem = any> {
  * - `"liquid"`: 薄い塗りつぶし
  * - `"solid"`: 塗りつぶし
  */
-export type TabsRootActiveVariant = ColorTemplate;
+export type TabsRootActiveVariant = TabsContextActiveVariant;
 
 /**
  * Tabs の方向です。
@@ -82,7 +88,7 @@ export type TabsRootOrientation = BaseTabs.Root.Orientation;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type TabsRootRadius = "none" | Size;
+export type TabsRootRadius = TabsContextRadius;
 
 /**
  * Tabs の大きさです。
@@ -91,7 +97,7 @@ export type TabsRootRadius = "none" | Size;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type TabsRootSize = Size;
+export type TabsRootSize = TabsContextSize;
 
 /**
  * Tabs の主な外観です。
@@ -99,12 +105,12 @@ export type TabsRootSize = Size;
  * - `"segments"`: 区分表示
  * - `"line"`: 下線表示
  */
-export type TabsRootVariant = "segments" | "line";
+export type TabsRootVariant = TabsContextVariant;
 
 /**
  * {@link TabsRoot} が持つ状態です。
  */
-export type TabsRootState = BaseTabs.Root.State;
+export type TabsRootState = Override<TabsContext, BaseTabs.Root.State>;
 
 export namespace TabsRootProps {
   export type Render = RenderProps<TabsRootState>;
@@ -199,7 +205,9 @@ export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
   const {
     size = "md",
     items = [],
+    style,
     radius = size,
+    render,
     variant = "line",
     outlined = false,
     className,
@@ -208,21 +216,31 @@ export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const ctx = React.useMemo<TabsContext>(() => ({ items }), [items]);
+  const ctx = React.useMemo<TabsContext>(
+    () => ({ size, items, radius, variant, outlined, activeVariant }),
+    [activeVariant, items, outlined, radius, size, variant],
+  );
 
   return (
     <TabsContext value={ctx}>
       <BaseTabs.Root
         {...otherProps}
-        className={cn(
-          className,
-          "sui_tabs",
-          `sui_tabs-size_${size}`,
-          `sui_tabs-radius_${radius}`,
-          `sui_tabs-variant_${variant}`,
-          `sui_tabs-active_variant_${activeVariant}`,
-          outlined && "sui_tabs-outlined",
-          (state) => `sui_tabs-orientation_${state.orientation}`,
+        {...proxyRenderProps<BaseTabs.Root.State, TabsRootState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn<TabsRootState>(
+              className,
+              "sui_tabs",
+              (state) => `sui_tabs-size_${state.size}`,
+              (state) => `sui_tabs-radius_${state.radius}`,
+              (state) => `sui_tabs-variant_${state.variant}`,
+              (state) => `sui_tabs-active_variant_${state.activeVariant}`,
+              (state) => state.outlined && "sui_tabs-outlined",
+              (state) => `sui_tabs-orientation_${state.orientation}`,
+            ),
+          },
         )}
         data-scope={dataScope}
       />

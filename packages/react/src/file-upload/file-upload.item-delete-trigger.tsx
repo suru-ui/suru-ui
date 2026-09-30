@@ -1,14 +1,24 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
+import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { useFileUploadContext } from "./file-upload.context.js";
 import { useFileUploadItemContext } from "./file-upload.item.context.js";
+import type { FileUploadItemState } from "./file-upload.item.jsx";
 
 /**
  * {@link FileUploadItemDeleteTrigger} が持つ状態です。
  */
-export type FileUploadItemDeleteTriggerState = {};
+export type FileUploadItemDeleteTriggerState = Override<
+  FileUploadItemState,
+  {
+    /**
+     * このボタンを無効にするかどうかです。
+     */
+    readonly disabled: boolean;
+  }
+>;
 
 export namespace FileUploadItemDeleteTriggerProps {
   export type Render = RenderProps<FileUploadItemDeleteTriggerState>;
@@ -40,11 +50,27 @@ export type IFileUploadItemDeleteTrigger = IComponent<FileUploadItemDeleteTrigge
  */
 export const FileUploadItemDeleteTrigger: IFileUploadItemDeleteTrigger =
   function SuiFileUploadItemDeleteTrigger(props) {
-    const ctx = useFileUploadContext(true);
-    const { file } = useFileUploadItemContext();
+    const ctx = useFileUploadContext();
+    const itemCtx = useFileUploadItemContext();
+    const { file } = itemCtx;
     const { disabled: disabledProp, ...otherButtonProps } = props;
-    const disabled =
-      ctx === null ? (disabledProp ?? false) : ctx.disabled || (disabledProp ?? false);
+    const disabled = ctx.disabled || (disabledProp ?? false);
+    const state = React.useMemo<FileUploadItemDeleteTriggerState>(
+      () => ({
+        file: itemCtx.file,
+        name: itemCtx.name,
+        size: itemCtx.size,
+        color: itemCtx.color,
+        files: itemCtx.files,
+        accept: itemCtx.accept,
+        radius: itemCtx.radius,
+        variant: itemCtx.variant,
+        disabled,
+        multiple: itemCtx.multiple,
+        required: itemCtx.required,
+      }),
+      [disabled, itemCtx],
+    );
 
     return useRender({
       props: [
@@ -53,13 +79,14 @@ export const FileUploadItemDeleteTrigger: IFileUploadItemDeleteTrigger =
           type: "button",
           onClick() {
             if (!disabled) {
-              ctx?.remove(file);
+              ctx.remove(file);
             }
           },
           disabled,
           className: "sui_file_upload_item_delete_trigger",
         },
       ],
+      state,
       defaultTagName: "button",
     });
   };

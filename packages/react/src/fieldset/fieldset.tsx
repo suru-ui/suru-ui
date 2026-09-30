@@ -49,6 +49,16 @@ export type FieldsetProps = FieldsetProps.Fieldset & FieldsetProps.Root;
 
 export type IFieldset = IComponent<FieldsetProps>;
 
+export interface IUseFieldsetAPI {
+  /**
+   * {@link FieldsetAPI} を作成します。
+   *
+   * @param props {@link Fieldset} の props です。
+   * @returns フィールドセットの API です
+   */
+  (props: FieldsetProps): FieldsetAPI;
+}
+
 // API
 // ---
 
@@ -98,16 +108,6 @@ export class FieldsetAPI {
   public getRootProps(): FieldsetRootProps {
     return this.rootProps;
   }
-}
-
-export interface IUseFieldsetAPI {
-  /**
-   * {@link FieldsetAPI} を作成します。
-   *
-   * @param props {@link Fieldset} の props です。
-   * @returns フィールドセットの API です
-   */
-  (props: FieldsetProps): FieldsetAPI;
 }
 
 /**

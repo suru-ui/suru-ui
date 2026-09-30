@@ -1,14 +1,19 @@
 import { NumberField } from "@base-ui/react/number-field";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type NumberFieldContext, useNumberFieldContext } from "./number-field.context.js";
 
 /**
  * {@link NumberFieldScrubAreaCursor} が持つ状態です。
  */
-export type NumberFieldScrubAreaCursorState = NumberField.ScrubAreaCursor.State;
+export type NumberFieldScrubAreaCursorState = Override<
+  NumberFieldContext,
+  NumberField.ScrubAreaCursor.State
+>;
 
 export namespace NumberFieldScrubAreaCursorProps {
   export type Render = RenderProps<NumberFieldScrubAreaCursorState>;
@@ -46,12 +51,20 @@ export type INumberFieldScrubAreaCursor = IComponent<NumberFieldScrubAreaCursorP
  */
 export const NumberFieldScrubAreaCursor: INumberFieldScrubAreaCursor =
   function SuiNumberFieldScrubAreaCursor(props) {
-    const { className, ...otherProps } = props;
+    const ctx = useNumberFieldContext();
+    const { style, render, className, ...otherProps } = props;
 
     return (
       <NumberField.ScrubAreaCursor
         {...otherProps}
-        className={cn(className, "sui_number_field_scrub_area_cursor")}
+        {...proxyRenderProps<NumberField.ScrubAreaCursor.State, NumberFieldScrubAreaCursorState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn(className, "sui_number_field_scrub_area_cursor"),
+          },
+        )}
       />
     );
   };

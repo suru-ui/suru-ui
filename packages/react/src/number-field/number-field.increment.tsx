@@ -3,14 +3,16 @@ import { NumberField } from "@base-ui/react/number-field";
 import * as React from "react";
 
 import { PlusIcon } from "../_icons.jsx";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type NumberFieldContext, useNumberFieldContext } from "./number-field.context.js";
 
 /**
  * {@link NumberFieldIncrement} が持つ状態です。
  */
-export type NumberFieldIncrementState = NumberField.Increment.State;
+export type NumberFieldIncrementState = Override<NumberFieldContext, NumberField.Increment.State>;
 
 export namespace NumberFieldIncrementProps {
   export type Render = RenderProps<NumberFieldIncrementState>;
@@ -49,7 +51,10 @@ export type INumberFieldIncrement = IComponent<NumberFieldIncrementProps>;
  * 値を増やすボタンです。
  */
 export const NumberFieldIncrement: INumberFieldIncrement = function SuiNumberFieldIncrement(props) {
+  const ctx = useNumberFieldContext();
   const {
+    style,
+    render,
     children = <PlusIcon />,
     className,
     "aria-label": ariaLabel = "値を増やす",
@@ -59,7 +64,14 @@ export const NumberFieldIncrement: INumberFieldIncrement = function SuiNumberFie
   return (
     <NumberField.Increment
       {...otherProps}
-      className={cn(className, "sui_number_field_stepper", "sui_number_field_increment")}
+      {...proxyRenderProps<NumberField.Increment.State, NumberFieldIncrementState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn(className, "sui_number_field_stepper", "sui_number_field_increment"),
+        },
+      )}
       aria-label={ariaLabel}
     >
       {children}

@@ -244,6 +244,17 @@ namespace DialogProps {
  */
 export type DialogProps<TPayload = any> = DialogProps.Dialog<TPayload> & DialogProps.Root<TPayload>;
 
+export interface IUseDialogAPI {
+  /**
+   * {@link DialogAPI} を作成します。
+   *
+   * @template TPayload トリガーが送信するデータの型です。
+   * @param props {@link Dialog} の props です。
+   * @returns ダイアログの API です
+   */
+  <TPayload = any>(props: DialogProps<TPayload>): DialogAPI<TPayload>;
+}
+
 // API
 // ---
 
@@ -568,17 +579,6 @@ export class DialogAPI<TPayload = any> {
 
     return props;
   }
-}
-
-export interface IUseDialogAPI {
-  /**
-   * {@link DialogAPI} を作成します。
-   *
-   * @template TPayload トリガーが送信するデータの型です。
-   * @param props {@link Dialog} の props です。
-   * @returns ダイアログの API です
-   */
-  <TPayload = any>(props: DialogProps<TPayload>): DialogAPI<TPayload>;
 }
 
 /**

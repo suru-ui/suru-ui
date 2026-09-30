@@ -80,4 +80,30 @@ describe("SegmentsItem", () => {
     // 検証
     expect(screen.getByRole("tab").element().tagName).toBe("SPAN");
   });
+
+  test("render と className の関数へスタイル情報と項目の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <SegmentsRoot defaultValue="day" size="lg">
+        <SegmentsList>
+          <SegmentsItem
+            nativeButton={false}
+            value="day"
+            className={(state) => (state.active ? "probe-active" : undefined)}
+            render={(props, state) => (
+              <span {...props} data-probe={`${state.size}/${state.active}/${state.disabled}`} />
+            )}
+          >
+            日
+          </SegmentsItem>
+        </SegmentsList>
+      </SegmentsRoot>,
+    );
+
+    // 検証
+    const item = screen.getByRole("tab").element();
+    expect(item.tagName).toBe("SPAN");
+    expect(item.getAttribute("data-probe")).toBe("lg/true/false");
+    expect(item.classList.contains("probe-active")).toBe(true);
+  });
 });

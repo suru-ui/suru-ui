@@ -15,18 +15,32 @@ describe("useFileUploadItemContext", () => {
     // 準備
     function Probe(): React.ReactElement {
       const ctx = useFileUploadItemContext();
-      return <span>{ctx.file.name}</span>;
+      return <span>{`${ctx.file.name}/${ctx.size}`}</span>;
     }
 
     // 実行
     const screen = await render(
-      <FileUploadItemContext value={{ file: textFile }}>
+      <FileUploadItemContext
+        value={{
+          accept: undefined,
+          color: "grey",
+          disabled: false,
+          file: textFile,
+          files: [textFile],
+          multiple: false,
+          name: undefined,
+          radius: "md",
+          required: false,
+          size: "md",
+          variant: "liquid",
+        }}
+      >
         <Probe />
       </FileUploadItemContext>,
     );
 
     // 検証
-    expect(screen.getByText("hello.txt").query()?.textContent).toBe("hello.txt");
+    expect(screen.getByText("hello.txt/md").query()?.textContent).toBe("hello.txt/md");
   });
 
   test("提供がないときはエラーを投げる", async ({ expect }) => {

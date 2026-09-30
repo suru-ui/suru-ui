@@ -4,7 +4,7 @@ import { Group as ExternalGroup } from "react-resizable-panels";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { ResizableContext } from "./resizable.context.js";
+import { type ResizableContextOrientation, ResizableContext } from "./resizable.context.js";
 
 /**
  * リサイズ可能なパネル群の向きです。
@@ -12,20 +12,15 @@ import { ResizableContext } from "./resizable.context.js";
  * - `"horizontal"`: 水平方向にパネルを並べます。
  * - `"vertical"`: 垂直方向にパネルを並べます。
  */
-export type ResizableRootOrientation = "horizontal" | "vertical";
+export type ResizableRootOrientation = ResizableContextOrientation;
 
 /**
  * {@link ResizableRoot} が持つ状態です。
  */
-export type ResizableRootState = {
-  /**
-   * パネル群の向きです。
-   */
-  readonly orientation: ResizableRootOrientation;
-};
+export type ResizableRootState = ResizableContext;
 
 export namespace ResizableRootProps {
-  export type Render = Omit<RenderProps<ResizableRootState>, "render">;
+  export type Render = RenderProps<ResizableRootState>;
 
   export type SuruUI = {
     /**
@@ -89,6 +84,7 @@ const DEFAULT_RESIZE_TARGET_MINIMUM_SIZE = {
  */
 export const ResizableRoot: IResizableRoot = function SuiResizableRoot(props) {
   const {
+    render = <ExternalGroup />,
     orientation = "horizontal",
     resizeTargetMinimumSize = DEFAULT_RESIZE_TARGET_MINIMUM_SIZE,
     // @ts-expect-error
@@ -98,9 +94,8 @@ export const ResizableRoot: IResizableRoot = function SuiResizableRoot(props) {
   const ctx = React.useMemo<ResizableContext>(() => ({ orientation }), [orientation]);
   const element = useRender({
     props: [
-      otherProps,
+      { ...otherProps, render },
       {
-        render: <ExternalGroup />,
         className: cn<ResizableRootState>(
           "sui_resizable",
           (state) => `sui_resizable-orientation_${state.orientation}`,
@@ -110,9 +105,7 @@ export const ResizableRoot: IResizableRoot = function SuiResizableRoot(props) {
         "data-scope": dataScope,
       },
     ],
-    state: {
-      orientation,
-    },
+    state: ctx,
     defaultTagName: "div",
   });
 

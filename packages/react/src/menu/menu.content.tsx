@@ -4,9 +4,10 @@ import * as React from "react";
 import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import { getItemKey } from "../_item.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import {
   isLinkItemObject,
   isItemObjectGroup,
@@ -17,7 +18,7 @@ import {
 } from "./_menu.utils.jsx";
 import { MenuCheckboxItemIndicator } from "./menu.checkbox-item-indicator.jsx";
 import { MenuCheckboxItem } from "./menu.checkbox-item.jsx";
-import { useMenuContext } from "./menu.context.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 import { MenuGroupLabel } from "./menu.group-label.jsx";
 import { MenuGroup } from "./menu.group.jsx";
 import { MenuItem } from "./menu.item.jsx";
@@ -54,7 +55,7 @@ export interface IMenuContentItemRenderer<TItem = any> {
 /**
  * {@link MenuContent} が持つ状態です。
  */
-export type MenuContentState = Menu.Popup.State;
+export type MenuContentState = Override<MenuContext, Menu.Popup.State>;
 
 export namespace MenuContentProps {
   export type Render = RenderProps<MenuContentState>;
@@ -104,18 +105,22 @@ export interface IMenuContent extends IComponent<MenuContentProps> {
  */
 export const MenuContent: IMenuContent = function SuiMenuContent(props: MenuContentProps) {
   const ctx = useMenuContext();
-  const { children = defaultItemRenderer, className, ...otherProps } = props;
+  const { style, render, children = defaultItemRenderer, className, ...otherProps } = props;
 
   return (
     <Menu.Popup
       {...otherProps}
-      className={cn(
-        className,
-        "sui_menu_content",
-        (state) =>
-          state.transitionStatus !== undefined &&
-          `sui_menu_content-transition_status_${state.transitionStatus}`,
-      )}
+      {...proxyRenderProps<Menu.Popup.State, MenuContentState>((state) => ({ ...ctx, ...state }), {
+        style,
+        render,
+        className: cn<MenuContentState>(
+          className,
+          "sui_menu_content",
+          (state) =>
+            state.transitionStatus !== undefined &&
+            `sui_menu_content-transition_status_${state.transitionStatus}`,
+        ),
+      })}
     >
       {typeof children === "function" ? ctx.items.map(children) : children}
     </Menu.Popup>

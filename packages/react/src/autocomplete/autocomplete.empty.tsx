@@ -1,14 +1,16 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompleteEmpty} の状態です。
  */
-export type AutocompleteEmptyState = Autocomplete.Empty.State;
+export type AutocompleteEmptyState = Override<AutocompleteContext, Autocomplete.Empty.State>;
 
 export namespace AutocompleteEmptyProps {
   export type Render = RenderProps<AutocompleteEmptyState>;
@@ -47,9 +49,22 @@ export type IAutocompleteEmpty = IComponent<AutocompleteEmptyProps>;
  * この要素自体は常に DOM に残します。表示内容の切り替えは children で行います。
  */
 export const AutocompleteEmpty: IAutocompleteEmpty = function SuiAutocompleteEmpty(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useAutocompleteContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Autocomplete.Empty {...otherProps} className={cn(className, "sui_autocomplete_empty")} />;
+  return (
+    <Autocomplete.Empty
+      {...otherProps}
+      {...proxyRenderProps<Autocomplete.Empty.State, AutocompleteEmptyState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AutocompleteEmptyState>(className, "sui_autocomplete_empty"),
+        },
+      )}
+    />
+  );
 };
 
 export { AutocompleteEmpty as Empty };

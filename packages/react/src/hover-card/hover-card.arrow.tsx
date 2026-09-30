@@ -1,14 +1,16 @@
 import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type HoverCardContext, useHoverCardContext } from "./hover-card.context.js";
 
 /**
  * {@link HoverCardArrow} が持つ状態です。
  */
-export type HoverCardArrowState = PreviewCard.Arrow.State;
+export type HoverCardArrowState = Override<HoverCardContext, PreviewCard.Arrow.State>;
 
 export namespace HoverCardArrowProps {
   export type Render = RenderProps<HoverCardArrowState>;
@@ -45,15 +47,23 @@ export type IHoverCardArrow = IComponent<HoverCardArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const HoverCardArrow: IHoverCardArrow = function SuiHoverCardArrow(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useHoverCardContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <PreviewCard.Arrow
       {...otherProps}
-      className={cn(
-        className,
-        "sui_hover_card_arrow",
-        (state) => `sui_hover_card_arrow-side_${state.side}`,
+      {...proxyRenderProps<PreviewCard.Arrow.State, HoverCardArrowState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<HoverCardArrowState>(
+            className,
+            "sui_hover_card_arrow",
+            (state) => `sui_hover_card_arrow-side_${state.side}`,
+          ),
+        },
       )}
     />
   );

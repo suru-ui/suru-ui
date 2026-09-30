@@ -1,16 +1,17 @@
 import * as React from "react";
 
 import { ChevronLeftIcon } from "../_icons.jsx";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import * as Button from "../button/button.parts.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { usePaginationContext } from "./pagination.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type PaginationContext, usePaginationContext } from "./pagination.context.js";
 
 /**
  * {@link PaginationPreviousButton} が持つ状態です。
  */
-export type PaginationPreviousButtonState = {};
+export type PaginationPreviousButtonState = Override<PaginationContext, Button.Root.State>;
 
 export namespace PaginationPreviousButtonProps {
   export type Render = RenderProps<PaginationPreviousButtonState>;
@@ -46,22 +47,24 @@ export type IPaginationPreviousButton = IComponent<PaginationPreviousButtonProps
 /**
  * 前のページへ移動するボタンコンポーネントです。
  *
- * 最初のページでは無効になります。
+ * 最初のページでは無効になります。大きさ・配色・角丸は {@link PaginationRoot} から引き継ぎます。
  */
 export const PaginationPreviousButton: IPaginationPreviousButton =
   function SuiPaginationPreviousButton(props) {
-    const ctx = usePaginationContext(true);
+    const ctx = usePaginationContext();
     const {
+      style,
+      render,
       onClick,
       disabled = false,
       className,
       "aria-label": ariaLabel = "前のページへ",
       ...otherProps
     } = props;
-    const isDisabled = disabled || (ctx !== null && (ctx.disabled || ctx.page <= 1));
+    const isDisabled = disabled || ctx.disabled || ctx.page <= 1;
     const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
       onClick?.(event);
-      if (!event.defaultPrevented && !isDisabled && ctx !== null) {
+      if (!event.defaultPrevented && !isDisabled) {
         ctx.goToPage(ctx.page - 1, { event, reason: "previous" });
       }
     };
@@ -69,14 +72,21 @@ export const PaginationPreviousButton: IPaginationPreviousButton =
     return (
       <Button.Root
         {...otherProps}
-        size={ctx?.size ?? "md"}
-        color={ctx?.color ?? "grey"}
-        radius={ctx?.radius}
+        {...proxyRenderProps<Button.Root.State, PaginationPreviousButtonState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn(className, "sui_pagination_previous"),
+          },
+        )}
+        size={ctx.size}
+        color={ctx.color}
+        radius={ctx.radius}
         onClick={handleClick}
         squared
         variant="naked"
         disabled={isDisabled}
-        className={cn(className, "sui_pagination_previous")}
         aria-label={ariaLabel}
       >
         <ChevronLeftIcon />

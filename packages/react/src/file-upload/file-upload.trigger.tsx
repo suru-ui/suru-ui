@@ -1,13 +1,22 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
+import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
-import type { IComponent } from "../types.js";
-import { useFileUploadContext } from "./file-upload.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type FileUploadContextState, useFileUploadContext } from "./file-upload.context.js";
 
 /**
  * {@link FileUploadTrigger} が持つ状態です。
  */
-export type FileUploadTriggerState = {};
+export type FileUploadTriggerState = Override<
+  FileUploadContextState,
+  {
+    /**
+     * このボタンを無効にするかどうかです。
+     */
+    readonly disabled: boolean;
+  }
+>;
 
 export namespace FileUploadTriggerProps {
   export type Render = RenderProps<FileUploadTriggerState>;
@@ -38,9 +47,24 @@ export type IFileUploadTrigger = IComponent<FileUploadTriggerProps>;
  * ファイル選択ダイアログを開くボタンです。
  */
 export const FileUploadTrigger: IFileUploadTrigger = function SuiFileUploadTrigger(props) {
-  const ctx = useFileUploadContext(true);
+  const ctx = useFileUploadContext();
   const { disabled: disabledProp, ...otherButtonProps } = props;
-  const disabled = ctx?.disabled || disabledProp || false;
+  const disabled = ctx.disabled || disabledProp || false;
+  const state = React.useMemo<FileUploadTriggerState>(
+    () => ({
+      name: ctx.name,
+      size: ctx.size,
+      color: ctx.color,
+      files: ctx.files,
+      accept: ctx.accept,
+      radius: ctx.radius,
+      variant: ctx.variant,
+      disabled,
+      multiple: ctx.multiple,
+      required: ctx.required,
+    }),
+    [ctx, disabled],
+  );
 
   return useRender({
     props: [
@@ -49,13 +73,14 @@ export const FileUploadTrigger: IFileUploadTrigger = function SuiFileUploadTrigg
         type: "button",
         onClick() {
           if (!disabled) {
-            ctx?.open();
+            ctx.open();
           }
         },
         disabled,
         className: "sui_file_upload_trigger",
       },
     ],
+    state,
     defaultTagName: "button",
   });
 };

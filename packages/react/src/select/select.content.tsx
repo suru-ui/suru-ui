@@ -1,14 +1,16 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SelectContext, useSelectContext } from "./select.context.js";
 
 /**
  * {@link SelectContent} が持つ状態です。
  */
-export type SelectContentState = BaseSelect.Popup.State;
+export type SelectContentState = Override<SelectContext, BaseSelect.Popup.State>;
 
 export namespace SelectContentProps {
   export type Render = RenderProps<SelectContentState>;
@@ -45,17 +47,25 @@ export type ISelectContent = IComponent<SelectContentProps>;
  * 選択項目を表示するポップアップ要素です。
  */
 export const SelectContent: ISelectContent = function SuiSelectContent(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSelectContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <BaseSelect.Popup
       {...otherProps}
-      className={cn(
-        className,
-        "sui_select_content",
-        (state) =>
-          state.transitionStatus !== undefined &&
-          `sui_select_content-transition_status_${state.transitionStatus}`,
+      {...proxyRenderProps<BaseSelect.Popup.State, SelectContentState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SelectContentState>(
+            className,
+            "sui_select_content",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_select_content-transition_status_${state.transitionStatus}`,
+          ),
+        },
       )}
     />
   );

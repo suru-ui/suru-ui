@@ -1,14 +1,19 @@
 import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 
 /**
  * {@link MenuCheckboxItemIndicator} が持つ状態です。
  */
-export type MenuCheckboxItemIndicatorState = Menu.CheckboxItemIndicator.State;
+export type MenuCheckboxItemIndicatorState = Override<
+  MenuContext,
+  Menu.CheckboxItemIndicator.State
+>;
 
 export namespace MenuCheckboxItemIndicatorProps {
   export type Render = RenderProps<MenuCheckboxItemIndicatorState>;
@@ -46,16 +51,24 @@ export type IMenuCheckboxItemIndicator = IComponent<MenuCheckboxItemIndicatorPro
  */
 export const MenuCheckboxItemIndicator: IMenuCheckboxItemIndicator =
   function SuiMenuCheckboxItemIndicator(props) {
-    const { className, ...otherProps } = props;
+    const ctx = useMenuContext();
+    const { style, render, className, ...otherProps } = props;
 
     return (
       <Menu.CheckboxItemIndicator
         {...otherProps}
-        className={cn(
-          className,
-          "sui_menu_item_indicator",
-          "sui_menu_checkbox_item_indicator",
-          (state) => !state.checked && "sui_menu_item_indicator-unchecked",
+        {...proxyRenderProps<Menu.CheckboxItemIndicator.State, MenuCheckboxItemIndicatorState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn<MenuCheckboxItemIndicatorState>(
+              className,
+              "sui_menu_item_indicator",
+              "sui_menu_checkbox_item_indicator",
+              (state) => !state.checked && "sui_menu_item_indicator-unchecked",
+            ),
+          },
         )}
       />
     );

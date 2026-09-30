@@ -1,14 +1,16 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
 /**
  * {@link AutocompleteRow} の状態です。
  */
-export type AutocompleteRowState = Autocomplete.Row.State;
+export type AutocompleteRowState = Override<AutocompleteContext, Autocomplete.Row.State>;
 
 export namespace AutocompleteRowProps {
   export type Render = RenderProps<AutocompleteRowState>;
@@ -47,9 +49,22 @@ export type IAutocompleteRow = IComponent<AutocompleteRowProps>;
  * {@link Root} の `grid` プロパティーと一緒に使います。
  */
 export const AutocompleteRow: IAutocompleteRow = function SuiAutocompleteRow(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useAutocompleteContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Autocomplete.Row {...otherProps} className={cn(className, "sui_autocomplete_row")} />;
+  return (
+    <Autocomplete.Row
+      {...otherProps}
+      {...proxyRenderProps<Autocomplete.Row.State, AutocompleteRowState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<AutocompleteRowState>(className, "sui_autocomplete_row"),
+        },
+      )}
+    />
+  );
 };
 
 export { AutocompleteRow as Row };

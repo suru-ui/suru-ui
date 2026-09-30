@@ -3,18 +3,26 @@ import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useFileUploadContext } from "./file-upload.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type FileUploadContextState, useFileUploadContext } from "./file-upload.context.js";
 
 /**
  * {@link FileUploadDropzone} が持つ状態です。
  */
-export type FileUploadDropzoneState = {
-  /**
-   * ファイルがドラッグされているかどうかです。
-   */
-  readonly dragging?: boolean;
-};
+export type FileUploadDropzoneState = Override<
+  FileUploadContextState,
+  {
+    /**
+     * このドロップゾーンを無効にするかどうかです。
+     */
+    readonly disabled: boolean;
+
+    /**
+     * ファイルがドラッグされているかどうかです。
+     */
+    readonly dragging: boolean;
+  }
+>;
 
 export namespace FileUploadDropzoneProps {
   export type Render = RenderProps<FileUploadDropzoneState>;
@@ -46,10 +54,26 @@ export type IFileUploadDropzone = IComponent<FileUploadDropzoneProps>;
  * ドラッグ&ドロップを受け付ける領域です。
  */
 export const FileUploadDropzone: IFileUploadDropzone = function SuiFileUploadDropzone(props) {
-  const ctx = useFileUploadContext(true);
+  const ctx = useFileUploadContext();
   const { disabled: disabledProp, ...otherButtonProps } = props;
-  const disabled = ctx?.disabled || disabledProp || false;
+  const disabled = ctx.disabled || disabledProp || false;
   const [dragging, setDragging] = React.useState(false);
+  const state = React.useMemo<FileUploadDropzoneState>(
+    () => ({
+      name: ctx.name,
+      size: ctx.size,
+      color: ctx.color,
+      files: ctx.files,
+      accept: ctx.accept,
+      radius: ctx.radius,
+      variant: ctx.variant,
+      disabled,
+      dragging,
+      multiple: ctx.multiple,
+      required: ctx.required,
+    }),
+    [ctx, disabled, dragging],
+  );
 
   return useRender({
     props: [
@@ -61,12 +85,12 @@ export const FileUploadDropzone: IFileUploadDropzone = function SuiFileUploadDro
           setDragging(false);
           if (!disabled) {
             const droppedFiles = Array.from(event.dataTransfer?.files ?? []);
-            ctx?.selectFiles(droppedFiles);
+            ctx.selectFiles(droppedFiles);
           }
         },
         onClick() {
           if (!disabled) {
-            ctx?.open();
+            ctx.open();
           }
         },
         disabled,
@@ -88,7 +112,7 @@ export const FileUploadDropzone: IFileUploadDropzone = function SuiFileUploadDro
         },
       },
     ],
-    state: { dragging },
+    state,
     defaultTagName: "button",
   });
 };

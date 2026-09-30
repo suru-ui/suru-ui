@@ -1,14 +1,16 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 /**
- * {@link ComboboxEmpty} が持つ状態です。
+ * {@link ComboboxEmpty} の状態です。
  */
-export type ComboboxEmptyState = Combobox.Empty.State;
+export type ComboboxEmptyState = Override<ComboboxContext, Combobox.Empty.State>;
 
 export namespace ComboboxEmptyProps {
   export type Render = RenderProps<ComboboxEmptyState>;
@@ -45,9 +47,22 @@ export type IComboboxEmpty = IComponent<ComboboxEmptyProps>;
  * 候補リストが空のときに内容を表示する要素です。
  */
 export const ComboboxEmpty: IComboboxEmpty = function SuiComboboxEmpty(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useComboboxContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Combobox.Empty {...otherProps} className={cn(className, "sui_combobox_empty")} />;
+  return (
+    <Combobox.Empty
+      {...otherProps}
+      {...proxyRenderProps<Combobox.Empty.State, ComboboxEmptyState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxEmptyState>(className, "sui_combobox_empty"),
+        },
+      )}
+    />
+  );
 };
 
 export { ComboboxEmpty as Empty };

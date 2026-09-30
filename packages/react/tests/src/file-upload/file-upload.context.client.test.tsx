@@ -26,6 +26,10 @@ function Probe(): React.ReactElement {
         String(ctx.required),
         ctx.name ?? "",
         ctx.files.map((selected) => selected.name).join(","),
+        ctx.size,
+        ctx.color,
+        ctx.radius,
+        ctx.variant,
       ].join(",")}
     </span>
   );
@@ -41,9 +45,10 @@ describe("useFileUploadContext", () => {
     );
 
     // 検証
-    expect(screen.getByText("image/*,true,true,true,attachments,").query()?.textContent).toBe(
-      "image/*,true,true,true,attachments,",
-    );
+    expect(
+      screen.getByText("image/*,true,true,true,attachments,,md,grey,md,liquid").query()
+        ?.textContent,
+    ).toBe("image/*,true,true,true,attachments,,md,grey,md,liquid");
   });
 
   test("既定値を補完する", async ({ expect }) => {
@@ -55,8 +60,8 @@ describe("useFileUploadContext", () => {
     );
 
     // 検証
-    expect(screen.getByText(",false,false,false,,").query()?.textContent).toBe(
-      ",false,false,false,,",
+    expect(screen.getByText(",false,false,false,,,md,grey,md,liquid").query()?.textContent).toBe(
+      ",false,false,false,,,md,grey,md,liquid",
     );
   });
 
@@ -69,8 +74,22 @@ describe("useFileUploadContext", () => {
     );
 
     // 検証
-    expect(screen.getByText("image/png,.pdf,false,false,false,,").query()?.textContent).toBe(
-      "image/png,.pdf,false,false,false,,",
+    expect(
+      screen.getByText("image/png,.pdf,false,false,false,,,md,grey,md,liquid").query()?.textContent,
+    ).toBe("image/png,.pdf,false,false,false,,,md,grey,md,liquid");
+  });
+
+  test("スタイル情報を提供する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <FileUploadRoot size="lg" color="blue" radius="full" variant="naked">
+        <Probe />
+      </FileUploadRoot>,
+    );
+
+    // 検証
+    expect(screen.getByText(",false,false,false,,,lg,blue,full,naked").query()?.textContent).toBe(
+      ",false,false,false,,,lg,blue,full,naked",
     );
   });
 
@@ -104,15 +123,19 @@ describe("useFileUploadContext", () => {
     const provided: FileUploadContext = {
       accept: undefined,
       clear() {},
+      color: "grey",
       disabled: false,
       files: [file],
       multiple: false,
       name: "manual",
       open() {},
+      radius: "md",
       remove() {},
       required: false,
       selectFiles() {},
       setInputElement() {},
+      size: "md",
+      variant: "liquid",
     };
     function Same(): React.ReactElement {
       const ctx = useFileUploadContext();

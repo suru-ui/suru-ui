@@ -2,9 +2,11 @@ import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type TabsContext, useTabsContext } from "./tabs.context.js";
 
 /**
  * タブをアクティブ化する方向です。
@@ -40,7 +42,7 @@ export type TabsTabValue = BaseTabs.Tab.Value;
 /**
  * {@link TabsTab} が持つ状態です。
  */
-export type TabsTabState = BaseTabs.Tab.State;
+export type TabsTabState = Override<TabsContext, BaseTabs.Tab.State>;
 
 export namespace TabsTabProps {
   export type Render = RenderProps<TabsTabState>;
@@ -80,17 +82,22 @@ export type ITabsTab = IComponent<TabsTabProps>;
  * 対応するパネルを切り替える Tab ボタンです。
  */
 export const TabsTab: ITabsTab = function SuiTabsTab(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useTabsContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <BaseTabs.Tab
       {...otherProps}
-      className={cn(
-        className,
-        "sui_tabs_tab",
-        (state) => state.active && "sui_tabs_tab-active",
-        (state) => state.disabled && "sui_tabs_tab-disabled",
-      )}
+      {...proxyRenderProps<BaseTabs.Tab.State, TabsTabState>((state) => ({ ...ctx, ...state }), {
+        style,
+        render,
+        className: cn<TabsTabState>(
+          className,
+          "sui_tabs_tab",
+          (state) => state.active && "sui_tabs_tab-active",
+          (state) => state.disabled && "sui_tabs_tab-disabled",
+        ),
+      })}
     />
   );
 };

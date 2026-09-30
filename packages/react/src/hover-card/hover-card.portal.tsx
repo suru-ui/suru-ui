@@ -1,15 +1,16 @@
 import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useHoverCardContext } from "./hover-card.context.js";
+import type { Override, IComponent } from "../types.js";
+import { type HoverCardContext, useHoverCardContext } from "./hover-card.context.js";
 
 /**
  * {@link HoverCardPortal} が持つ状態です。
  */
-export type HoverCardPortalState = PreviewCard.Portal.State;
+export type HoverCardPortalState = Override<HoverCardContext, PreviewCard.Portal.State>;
 
 export namespace HoverCardPortalProps {
   export type Render = RenderProps<HoverCardPortalState>;
@@ -50,6 +51,8 @@ export type IHoverCardPortal = IComponent<HoverCardPortalProps>;
 export const HoverCardPortal: IHoverCardPortal = function SuiHoverCardPortal(props) {
   const ctx = useHoverCardContext();
   const {
+    style,
+    render,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
@@ -59,12 +62,19 @@ export const HoverCardPortal: IHoverCardPortal = function SuiHoverCardPortal(pro
   return (
     <PreviewCard.Portal
       {...otherProps}
-      className={cn(
-        className,
-        "sui_hover_card_portal",
-        `sui_hover_card_portal-size_${ctx.size}`,
-        `sui_hover_card_portal-radius_${ctx.radius}`,
-        ctx.outlined && "sui_hover_card_portal-outlined",
+      {...proxyRenderProps<PreviewCard.Portal.State, HoverCardPortalState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<HoverCardPortalState>(
+            className,
+            "sui_hover_card_portal",
+            (state) => `sui_hover_card_portal-size_${state.size}`,
+            (state) => `sui_hover_card_portal-radius_${state.radius}`,
+            (state) => state.outlined && "sui_hover_card_portal-outlined",
+          ),
+        },
       )}
       data-scope={dataScope}
     />

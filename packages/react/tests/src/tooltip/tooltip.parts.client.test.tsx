@@ -63,6 +63,25 @@ describe("TooltipTrigger", () => {
       expect(screen.getByText("内容").query()?.textContent).toBe("内容");
     });
   });
+
+  test("描画関数へルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TooltipRoot size="lg" radius="sm" outlined>
+        <TooltipTrigger>
+          {(props, state) => (
+            <button {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`}>
+              開く
+            </button>
+          )}
+        </TooltipTrigger>
+      </TooltipRoot>,
+    );
+
+    // 検証
+    const trigger = screen.getByRole("button", { name: "開く" }).element();
+    expect(trigger.getAttribute("data-probe")).toBe("lg/sm/true");
+  });
 });
 
 describe("TooltipPortal", () => {
@@ -96,6 +115,28 @@ describe("TooltipPortal", () => {
     expect(portal.classList.contains("sui_tooltip_portal-outlined")).toBe(true);
   });
 
+  test("render の関数へルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TooltipRoot defaultOpen size="lg" radius="sm" outlined>
+        <TooltipPortal
+          render={(props, state) => (
+            <div {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`} />
+          )}
+        >
+          <TooltipPositioner>
+            <TooltipContent>内容</TooltipContent>
+          </TooltipPositioner>
+        </TooltipPortal>
+      </TooltipRoot>,
+    );
+
+    // 検証
+    const portal = screen.getByClassName("sui_tooltip_portal").element();
+    expect(portal.tagName).toBe("DIV");
+    expect(portal.getAttribute("data-probe")).toBe("lg/sm/true");
+  });
+
   test("Root の外ではエラーを投げる", async ({ expect }) => {
     // 実行と検証
     await expect(render(<TooltipPortal />)).rejects.toThrow(ContextMissingError);
@@ -126,6 +167,27 @@ describe("TooltipPositioner", () => {
     await vi.waitFor(() => {
       expect(screen.getByClassName("sui_tooltip_positioner").element().dataset["side"]).toBe("top");
     });
+  });
+
+  test("render の関数へルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TooltipRoot defaultOpen size="lg" radius="sm" outlined>
+        <TooltipPortal>
+          <TooltipPositioner
+            render={(props, state) => (
+              <div {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`} />
+            )}
+          >
+            <TooltipContent>内容</TooltipContent>
+          </TooltipPositioner>
+        </TooltipPortal>
+      </TooltipRoot>,
+    );
+
+    // 検証
+    const positioner = screen.getByClassName("sui_tooltip_positioner").element();
+    expect(positioner.getAttribute("data-probe")).toBe("lg/sm/true");
   });
 });
 
@@ -180,6 +242,32 @@ describe("TooltipContent", () => {
     const screen = await renderTooltip("内容");
 
     expect(screen.getByClassName("sui_tooltip_content").element().textContent).toBe("内容");
+  });
+
+  test("render の関数へルートと内容の状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TooltipRoot defaultOpen size="lg" radius="sm" outlined>
+        <TooltipPortal>
+          <TooltipPositioner>
+            <TooltipContent
+              render={(props, state) => (
+                <div
+                  {...props}
+                  data-probe={`${state.size}/${state.radius}/${state.outlined}/${String(state.open)}`}
+                />
+              )}
+            >
+              内容
+            </TooltipContent>
+          </TooltipPositioner>
+        </TooltipPortal>
+      </TooltipRoot>,
+    );
+
+    // 検証
+    const content = screen.getByClassName("sui_tooltip_content").element();
+    expect(content.getAttribute("data-probe")).toBe("lg/sm/true/true");
   });
 });
 

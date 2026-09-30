@@ -126,4 +126,25 @@ describe("PaginationPreviousButton", () => {
     // 検証
     expect(screen.getByRole("button", { name: "戻る" }).query()).not.toBe(null);
   });
+
+  test("render の関数へ状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <PaginationRoot color="blue" defaultPage={3} radius="full" size="lg" totalPages={5}>
+        <PaginationPreviousButton
+          render={(props, state) => (
+            <button
+              {...props}
+              data-probe={`${state.size}/${state.color}/${state.radius}/${state.page}/${state.totalPages}/${String(state.disabled)}`}
+            />
+          )}
+        />
+      </PaginationRoot>,
+    );
+
+    // 検証
+    expect(
+      screen.getByRole("button", { name: "前のページへ" }).element().getAttribute("data-probe"),
+    ).toBe("lg/blue/full/3/5/false");
+  });
 });

@@ -1,6 +1,7 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
@@ -8,13 +9,14 @@ import {
   type IComboboxCollectionItemRenderer,
   ComboboxCollection,
 } from "./combobox.collection.jsx";
+import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
 export type IComboboxListItemRenderer<TItem = any> = IComboboxCollectionItemRenderer<TItem>;
 
 /**
- * {@link ComboboxList} が持つ状態です。
+ * {@link ComboboxList} の状態です。
  */
-export type ComboboxListState = Combobox.List.State;
+export type ComboboxListState = Override<ComboboxContext, Combobox.List.State>;
 
 export namespace ComboboxListProps {
   export type Render = RenderProps<ComboboxListState>;
@@ -62,7 +64,10 @@ export interface IComboboxList extends IComponent<ComboboxListProps> {
  * 候補項目のリストを表示するコンテナー要素です。
  */
 export const ComboboxList: IComboboxList = function SuiComboboxList(props: ComboboxListProps) {
+  const ctx = useComboboxContext();
   const {
+    style,
+    render,
     // children ComboboxCollection の defaultItemRenderer とします。
     children = <ComboboxCollection />,
     className,
@@ -70,7 +75,17 @@ export const ComboboxList: IComboboxList = function SuiComboboxList(props: Combo
   } = props;
 
   return (
-    <Combobox.List {...otherProps} className={cn(className, "sui_combobox_list")}>
+    <Combobox.List
+      {...otherProps}
+      {...proxyRenderProps<Combobox.List.State, ComboboxListState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ComboboxListState>(className, "sui_combobox_list"),
+        },
+      )}
+    >
       {children}
     </Combobox.List>
   );

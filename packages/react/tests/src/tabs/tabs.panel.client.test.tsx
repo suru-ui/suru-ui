@@ -92,4 +92,26 @@ describe("TabsPanel", () => {
     // 検証
     expect(screen.getByRole("tabpanel").element().classList.contains("custom")).toBe(true);
   });
+
+  test("render の関数へスタイル情報とパネルの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <TabsRoot defaultValue="overview" size="lg">
+        <TabsList>
+          <TabsTab value="overview">概要</TabsTab>
+        </TabsList>
+        <TabsPanel
+          value="overview"
+          render={(props, state) => (
+            <div {...props} data-probe={`${state.size}/${String(state.hidden)}`} />
+          )}
+        >
+          概要の内容
+        </TabsPanel>
+      </TabsRoot>,
+    );
+
+    // 検証
+    expect(screen.getByRole("tabpanel").element().getAttribute("data-probe")).toBe("lg/false");
+  });
 });

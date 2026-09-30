@@ -1,14 +1,16 @@
 import { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type TooltipContext, useTooltipContext } from "./tooltip.context.js";
 
 /**
  * {@link TooltipArrow} が持つ状態です。
  */
-export type TooltipArrowState = Tooltip.Arrow.State;
+export type TooltipArrowState = Override<TooltipContext, Tooltip.Arrow.State>;
 
 export namespace TooltipArrowProps {
   export type Render = RenderProps<TooltipArrowState>;
@@ -45,15 +47,23 @@ export type ITooltipArrow = IComponent<TooltipArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const TooltipArrow: ITooltipArrow = function SuiTooltipArrow(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useTooltipContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Tooltip.Arrow
       {...otherProps}
-      className={cn(
-        className,
-        "sui_tooltip_arrow",
-        (state) => `sui_tooltip_arrow-side_${state.side}`,
+      {...proxyRenderProps<Tooltip.Arrow.State, TooltipArrowState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<TooltipArrowState>(
+            className,
+            "sui_tooltip_arrow",
+            (state) => `sui_tooltip_arrow-side_${state.side}`,
+          ),
+        },
       )}
     />
   );

@@ -3,10 +3,12 @@ import * as React from "react";
 
 import { CheckIcon } from "../_icons.jsx";
 import { getItemKey } from "../_item.js";
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 import { isRadioItemObject } from "./_menu.utils.jsx";
+import { type MenuContext, useMenuContext } from "./menu.context.js";
 import { MenuRadioItemIndicator } from "./menu.radio-item-indicator.jsx";
 import { MenuRadioItem } from "./menu.radio-item.jsx";
 
@@ -40,7 +42,7 @@ export interface IMenuRadioGroupItemRenderer<TItem = any> {
 /**
  * {@link MenuRadioGroup} が持つ状態です。
  */
-export type MenuRadioGroupState = Menu.RadioGroup.State;
+export type MenuRadioGroupState = Override<MenuContext, Menu.RadioGroup.State>;
 
 export namespace MenuRadioGroupProps {
   export type Render = RenderProps<MenuRadioGroupState>;
@@ -96,15 +98,23 @@ export interface IMenuRadioGroup extends IComponent<MenuRadioGroupProps> {
 export const MenuRadioGroup: IMenuRadioGroup = function SuiMenuRadioGroup(
   props: MenuRadioGroupProps,
 ) {
-  const { items, children = defaultItemRenderer, className, ...otherProps } = props;
+  const ctx = useMenuContext();
+  const { items, style, render, children = defaultItemRenderer, className, ...otherProps } = props;
 
   return (
     <Menu.RadioGroup
       {...otherProps}
-      className={cn(
-        className,
-        "sui_menu_radio_group",
-        (state) => state.disabled && "sui_menu_radio_group-disabled",
+      {...proxyRenderProps<Menu.RadioGroup.State, MenuRadioGroupState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<MenuRadioGroupState>(
+            className,
+            "sui_menu_radio_group",
+            (state) => state.disabled && "sui_menu_radio_group-disabled",
+          ),
+        },
       )}
     >
       {typeof children === "function" ? items?.map(children) : children}

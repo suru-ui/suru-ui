@@ -1,14 +1,16 @@
 import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type PopoverContext, usePopoverContext } from "./popover.context.js";
 
 /**
  * {@link PopoverContent} が持つ状態です。
  */
-export type PopoverContentState = Popover.Popup.State;
+export type PopoverContentState = Override<PopoverContext, Popover.Popup.State>;
 
 export namespace PopoverContentProps {
   export type Render = RenderProps<PopoverContentState>;
@@ -45,17 +47,25 @@ export type IPopoverContent = IComponent<PopoverContentProps>;
  * ポップオーバーの内容を表示するポップアップ要素です。
  */
 export const PopoverContent: IPopoverContent = function SuiPopoverContent(props) {
-  const { className, ...otherProps } = props;
+  const ctx = usePopoverContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Popover.Popup
       {...otherProps}
-      className={cn(
-        className,
-        "sui_popover_content",
-        (state) =>
-          state.transitionStatus !== undefined &&
-          `sui_popover_content-transition_status_${state.transitionStatus}`,
+      {...proxyRenderProps<Popover.Popup.State, PopoverContentState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<PopoverContentState>(
+            className,
+            "sui_popover_content",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_popover_content-transition_status_${state.transitionStatus}`,
+          ),
+        },
       )}
     />
   );
