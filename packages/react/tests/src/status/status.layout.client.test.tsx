@@ -47,14 +47,14 @@ describe("Status の配置", () => {
 
     // 検証
     const sm = getIndicator(screen.container, "sm").getBoundingClientRect();
-    expect(sm.width).toBeCloseTo(6.72, 1);
-    expect(sm.height).toBeCloseTo(6.72, 1);
+    expect(sm.width).toBeCloseTo(7.8, 1);
+    expect(sm.height).toBeCloseTo(7.8, 1);
     const md = getIndicator(screen.container, "md").getBoundingClientRect();
-    expect(md.width).toBeCloseTo(8.4, 1);
-    expect(md.height).toBeCloseTo(8.4, 1);
+    expect(md.width).toBeCloseTo(9.6, 1);
+    expect(md.height).toBeCloseTo(9.6, 1);
     const lg = getIndicator(screen.container, "lg").getBoundingClientRect();
-    expect(lg.width).toBeCloseTo(10.08, 1);
-    expect(lg.height).toBeCloseTo(10.08, 1);
+    expect(lg.width).toBeCloseTo(10.8, 1);
+    expect(lg.height).toBeCloseTo(10.8, 1);
   });
 
   test("点を円形にする", async ({ expect }) => {
@@ -222,13 +222,13 @@ describe("Status の配置", () => {
     const ping = getComputedStyle(getIndicator(screen.container, "ping"));
     expect(ping.marginTop).toBe("0px");
     const contained = getComputedStyle(getIndicator(screen.container, "contained"));
-    expect(Number.parseFloat(contained.marginTop)).toBeCloseTo(5.25, 1);
+    expect(Number.parseFloat(contained.marginTop)).toBeCloseTo(6, 1);
     expect(contained.marginTop).toBe(contained.marginBottom);
     expect(contained.marginLeft).toBe(contained.marginRight);
     const small = getComputedStyle(getIndicator(screen.container, "small"));
-    expect(Number.parseFloat(small.marginTop)).toBeCloseTo(3.15, 1);
+    expect(Number.parseFloat(small.marginTop)).toBeCloseTo(3.6, 1);
     const large = getComputedStyle(getIndicator(screen.container, "large"));
-    expect(Number.parseFloat(large.marginTop)).toBeCloseTo(7.35, 1);
+    expect(Number.parseFloat(large.marginTop)).toBeCloseTo(8.4, 1);
   });
 
   test("外部と内側の余白を持たない", async ({ expect }) => {

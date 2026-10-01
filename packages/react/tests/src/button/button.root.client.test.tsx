@@ -13,7 +13,7 @@ describe("ButtonRoot", () => {
     const button = screen.getByClassName("sui_button").element();
     expect(button.classList.contains("sui_button-size_lg")).toBe(true);
     expect(button.classList.contains("sui_button-color_blue")).toBe(true);
-    expect(button.classList.contains("sui_button-radius_lg")).toBe(true);
+    expect(button.classList.contains("sui_button-radius_md")).toBe(true);
     expect(button.classList.contains("sui_button-variant_naked")).toBe(true);
   });
 

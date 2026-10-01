@@ -102,7 +102,7 @@ describe("Menu の配置", () => {
       const content = screen.getByRole("menu").element();
       const style = getComputedStyle(item);
       expect(style.justifyContent).toBe("space-between");
-      expect(Number.parseFloat(style.minHeight)).toBeCloseTo(28, 0);
+      expect(Number.parseFloat(style.minHeight)).toBeCloseTo(32, 0);
       expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(8, 1);
       expect(item.getBoundingClientRect().width).toBeCloseTo(
         content.getBoundingClientRect().width - 12 * 2,

@@ -1,11 +1,18 @@
 import { describe, expect, test } from "vitest";
 
-import { COLORS, COLOR_TEMPLATES, FONT_FAMILIES, SIZES } from "../src/index.js";
+import { BUTTON_SIZES, COLORS, COLOR_TEMPLATES, FONT_FAMILIES, SIZES } from "../src/index.js";
 
 describe("SIZES", () => {
   test("サイズの一覧を定義順に返す", () => {
     // 検証
     expect(SIZES).toEqual(["sm", "md", "lg"]);
+  });
+});
+
+describe("BUTTON_SIZES", () => {
+  test("ボタン系のサイズの一覧を定義順に返す", () => {
+    // 検証
+    expect(BUTTON_SIZES).toEqual(["xs", "sm", "md", "lg"]);
   });
 });
 

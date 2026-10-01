@@ -57,7 +57,7 @@ describe("build-css", () => {
     expect(css).toContain("@layer sui.component;");
     expect(css).toContain("@layer sui.important;");
     expect(css).toMatch(/--_flexoki-paper:\s+#fffcf0/i);
-    expect(css).toContain("@function --_sui-exp-func(--level, --base, --growth, --offset)");
+    expect(css).toContain("@function --sui-rem(--length)");
   });
 
   test("システム設定用のメディアクエリーと手動設定用の属性セレクターを生成する", async () => {
@@ -92,10 +92,10 @@ describe("build-css", () => {
     );
     const lightAttrBlock = css.slice(css.indexOf('[data-theme="light"]'));
 
-    expect(darkMediaBlock).toContain("--sui-theme: dark");
-    expect(lightMediaBlock).toContain("--sui-theme: light");
-    expect(darkAttrBlock).toContain("--sui-theme: dark");
-    expect(lightAttrBlock).toContain("--sui-theme: light");
+    expect(darkMediaBlock).toContain("--sui-scheme: dark");
+    expect(lightMediaBlock).toContain("--sui-scheme: light");
+    expect(darkAttrBlock).toContain("--sui-scheme: dark");
+    expect(lightAttrBlock).toContain("--sui-scheme: light");
   });
 
   test("単一モードのファイルは :root と属性セレクターにトークンを書き出す", async () => {
@@ -109,15 +109,15 @@ describe("build-css", () => {
     // 検証
     expect(darkCss).toContain("@layer sui.tokens {\n  :root {");
     expect(darkCss).toContain('[data-theme="dark"] {');
-    expect(darkCss).toContain("--sui-theme: dark");
+    expect(darkCss).toContain("--sui-scheme: dark");
     expect(darkCss).not.toContain("prefers-color-scheme");
-    expect(darkCss).not.toContain("--sui-theme: light");
+    expect(darkCss).not.toContain("--sui-scheme: light;");
 
     expect(lightCss).toContain("@layer sui.tokens {\n  :root {");
     expect(lightCss).toContain('[data-theme="light"] {');
-    expect(lightCss).toContain("--sui-theme: light");
+    expect(lightCss).toContain("--sui-scheme: light");
     expect(lightCss).not.toContain("prefers-color-scheme");
-    expect(lightCss).not.toContain("--sui-theme: dark");
+    expect(lightCss).not.toContain("--sui-scheme: dark;");
   });
 
   test("アルファ版ソースをモード別のファイルに含める", async () => {

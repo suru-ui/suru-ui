@@ -68,9 +68,9 @@ describe("NumberField の配置", () => {
 
     // 検証
     const groups = screen.container.querySelectorAll<HTMLElement>(".sui_number_field_group");
-    expect(getComputedStyle(groups[0]!).minHeight).toBe("22.4px");
-    expect(getComputedStyle(groups[1]!).minHeight).toBe("28px");
-    expect(getComputedStyle(groups[2]!).minHeight).toBe("33.6px");
+    expect(getComputedStyle(groups[0]!).minHeight).toBe("26px");
+    expect(getComputedStyle(groups[1]!).minHeight).toBe("32px");
+    expect(getComputedStyle(groups[2]!).minHeight).toBe("36px");
   });
 
   test.skipIf(!supportsCustomFunctions())("大きさに応じた水平余白を持つ", async ({ expect }) => {

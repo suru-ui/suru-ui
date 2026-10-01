@@ -8,6 +8,13 @@ export function isSize(size: any): size is Size {
   return sizeSet.has(size);
 }
 
+/**
+ * ボタン系コンポーネントが受け付ける大きさです。
+ */
+export type ButtonSize = "xs" | Size;
+
+export const BUTTON_SIZES: readonly ButtonSize[] = ["xs", ...SIZES];
+
 export type Color = "blue" | "green" | "grey" | "magenta" | "orange" | "purple" | "red" | "yellow";
 
 export const COLORS: readonly Color[] = [

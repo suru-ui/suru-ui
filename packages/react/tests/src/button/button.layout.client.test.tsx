@@ -50,6 +50,7 @@ describe("ButtonRoot の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
+        <ButtonRoot id="xs" size="xs" />
         <ButtonRoot id="sm" size="sm" />
         <ButtonRoot id="md" size="md" />
         <ButtonRoot id="lg" size="lg" />
@@ -57,9 +58,10 @@ describe("ButtonRoot の配置", () => {
     );
 
     // 検証
-    expect(getComputedStyle(screen.container.querySelector("#sm")!).minHeight).toBe("22.4px");
-    expect(getComputedStyle(screen.container.querySelector("#md")!).minHeight).toBe("28px");
-    expect(getComputedStyle(screen.container.querySelector("#lg")!).minHeight).toBe("33.6px");
+    expect(getComputedStyle(screen.container.querySelector("#xs")!).minHeight).toBe("22px");
+    expect(getComputedStyle(screen.container.querySelector("#sm")!).minHeight).toBe("26px");
+    expect(getComputedStyle(screen.container.querySelector("#md")!).minHeight).toBe("32px");
+    expect(getComputedStyle(screen.container.querySelector("#lg")!).minHeight).toBe("36px");
   });
 
   test("正方形では幅と高さを揃える", async ({ expect }) => {
@@ -68,8 +70,8 @@ describe("ButtonRoot の配置", () => {
 
     // 検証
     const { width, height } = screen.getByClassName("sui_button").element().getBoundingClientRect();
-    expect(width).toBeCloseTo(28, 1);
-    expect(height).toBeCloseTo(28, 1);
+    expect(width).toBeCloseTo(32, 1);
+    expect(height).toBeCloseTo(32, 1);
   });
 
   test("角丸 full は高さの半分にする", async ({ expect }) => {
@@ -78,7 +80,7 @@ describe("ButtonRoot の配置", () => {
 
     // 検証
     const style = getComputedStyle(screen.getByClassName("sui_button").element());
-    expect(style.borderTopLeftRadius).toBe("14px");
+    expect(style.borderTopLeftRadius).toBe("16px");
   });
 
   test("内容を中央に配置する", async ({ expect }) => {

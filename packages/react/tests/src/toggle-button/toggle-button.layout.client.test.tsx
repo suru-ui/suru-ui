@@ -52,6 +52,10 @@ describe("ToggleButtonRoot の配置", () => {
     const screen = await render(
       <>
         <span
+          data-testid="xs-reference"
+          style={{ display: "block", height: "var(--sui-size-xs)" }}
+        />
+        <span
           data-testid="sm-reference"
           style={{ display: "block", height: "var(--sui-size-sm)" }}
         />
@@ -63,6 +67,7 @@ describe("ToggleButtonRoot の配置", () => {
           data-testid="lg-reference"
           style={{ display: "block", height: "var(--sui-size-lg)" }}
         />
+        <ToggleButtonRoot data-testid="xs" size="xs" />
         <ToggleButtonRoot data-testid="sm" size="sm" />
         <ToggleButtonRoot data-testid="md" size="md" />
         <ToggleButtonRoot data-testid="lg" size="lg" />
@@ -70,7 +75,7 @@ describe("ToggleButtonRoot の配置", () => {
     );
 
     // 検証
-    for (const size of ["sm", "md", "lg"] as const) {
+    for (const size of ["xs", "sm", "md", "lg"] as const) {
       const height = screen.getByTestId(size).element().getBoundingClientRect().height;
       const reference = screen
         .getByTestId(`${size}-reference`)

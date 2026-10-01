@@ -24,9 +24,6 @@
   }
 
   @function --sui-light-dark(--light, --dark) {
-    result: if(
-              style(--sui-scheme: light): var(--light);
-              else:                       var(--dark);
-            );
+    result: if(style(--sui-scheme: light): var(--light); else: var(--dark););
   }
 }

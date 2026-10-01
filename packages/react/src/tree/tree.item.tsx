@@ -1,3 +1,4 @@
+import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import proxyRenderProps from "../_proxy-render-props.js";
@@ -21,7 +22,7 @@ export type TreeItemRadius = Button.Root.Radius;
 /**
  * ツリーの項目の大きさです。
  */
-export type TreeItemSize = Button.Root.Size;
+export type TreeItemSize = Size;
 
 /**
  * ツリーの項目の主な外観です。

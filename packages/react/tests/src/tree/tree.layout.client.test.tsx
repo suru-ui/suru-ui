@@ -105,17 +105,17 @@ describe("Tree の配置", () => {
       screen.container.querySelector<HTMLElement>("#sm [role=treeitem]")!,
     );
     expect(sm.fontSize).toBe("12px");
-    expect(sm.minHeight).toBe("22.4px");
+    expect(sm.minHeight).toBe("26px");
     const md = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#md [role=treeitem]")!,
     );
     expect(md.fontSize).toBe("14px");
-    expect(md.minHeight).toBe("28px");
+    expect(md.minHeight).toBe("32px");
     const lg = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#lg [role=treeitem]")!,
     );
     expect(lg.fontSize).toBe("17px");
-    expect(lg.minHeight).toBe("33.6px");
+    expect(lg.minHeight).toBe("36px");
   });
 
   test("角丸を大きさに合わせる", async ({ expect }) => {
@@ -132,15 +132,15 @@ describe("Tree の配置", () => {
     const sm = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#sm [role=treeitem]")!,
     );
-    expect(sm.borderTopLeftRadius).toBe("4px");
+    expect(sm.borderTopLeftRadius).toBe("8px");
     const md = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#md [role=treeitem]")!,
     );
-    expect(md.borderTopLeftRadius).toBe("8px");
+    expect(md.borderTopLeftRadius).toBe("12px");
     const lg = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#lg [role=treeitem]")!,
     );
-    expect(lg.borderTopLeftRadius).toBe("12px");
+    expect(lg.borderTopLeftRadius).toBe("16px");
   });
 
   test("角丸 full では丸くする", async ({ expect }) => {

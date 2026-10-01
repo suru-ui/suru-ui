@@ -23,14 +23,14 @@ describe("AvatarRoot の配置", () => {
 
     // 検証
     const sm = screen.container.querySelector<HTMLElement>("#sm")?.getBoundingClientRect();
-    expect(sm?.width).toBeCloseTo(22.4, 1);
-    expect(sm?.height).toBeCloseTo(22.4, 1);
+    expect(sm?.width).toBeCloseTo(26, 1);
+    expect(sm?.height).toBeCloseTo(26, 1);
     const md = screen.container.querySelector<HTMLElement>("#md")?.getBoundingClientRect();
-    expect(md?.width).toBeCloseTo(28, 1);
-    expect(md?.height).toBeCloseTo(28, 1);
+    expect(md?.width).toBeCloseTo(32, 1);
+    expect(md?.height).toBeCloseTo(32, 1);
     const lg = screen.container.querySelector<HTMLElement>("#lg")?.getBoundingClientRect();
-    expect(lg?.width).toBeCloseTo(33.6, 1);
-    expect(lg?.height).toBeCloseTo(33.6, 1);
+    expect(lg?.width).toBeCloseTo(36, 1);
+    expect(lg?.height).toBeCloseTo(36, 1);
   });
 
   test("内容を中央に配置する", async ({ expect }) => {
@@ -102,9 +102,9 @@ describe("AvatarRoot の配置", () => {
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg")!);
     expect(lg.borderTopLeftRadius).toBe("12px");
     const full = getComputedStyle(screen.container.querySelector<HTMLElement>("#full")!);
-    expect(full.borderTopLeftRadius).toBe("14px");
+    expect(full.borderTopLeftRadius).toBe("16px");
     const fullLg = getComputedStyle(screen.container.querySelector<HTMLElement>("#fullLg")!);
-    expect(fullLg.borderTopLeftRadius).toBe("16.8px");
+    expect(fullLg.borderTopLeftRadius).toBe("18px");
   });
 
   test("配色を背景と文字へ適用する", async ({ expect }) => {
@@ -209,7 +209,7 @@ describe("AvatarRoot の配置", () => {
     expect(fallbackRect.width).toBeCloseTo(root.width, 1);
     expect(fallbackRect.height).toBeCloseTo(root.height, 1);
     const style = getComputedStyle(fallback);
-    expect(style.borderTopLeftRadius).toBe("14px");
+    expect(style.borderTopLeftRadius).toBe("16px");
     expect(style.fontSize).toBe("14px");
     expect(style.fontWeight).toBe("700");
   });

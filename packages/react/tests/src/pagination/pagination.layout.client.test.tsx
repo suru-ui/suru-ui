@@ -93,7 +93,7 @@ describe("PaginationRoot の配置", () => {
 
     // 検証
     const style = getComputedStyle(screen.getByRole("button", { name: "1" }).element());
-    expect(style.borderTopLeftRadius).toBe("14px");
+    expect(style.borderTopLeftRadius).toBe("16px");
   });
 
   test("正方形のページ番号ボタンを表示する", async ({ expect }) => {
@@ -106,8 +106,8 @@ describe("PaginationRoot の配置", () => {
 
     // 検証
     const rect = screen.getByRole("button", { name: "1" }).element().getBoundingClientRect();
-    expect(rect.width).toBeCloseTo(28, 1);
-    expect(rect.height).toBeCloseTo(28, 1);
+    expect(rect.width).toBeCloseTo(32, 1);
+    expect(rect.height).toBeCloseTo(32, 1);
   });
 
   test("無効なときは操作できない見た目にする", async ({ expect }) => {

@@ -512,7 +512,8 @@
   --sui-font-sans: "Noto Sans JP", sans-serif;
   --sui-font-mono: "Noto Sans Mono CJK JP", monospace;
 
-  --sui-size-sm: 28px;
+  --sui-size-xs: 22px;
+  --sui-size-sm: 26px;
   --sui-size-md: 32px;
   --sui-size-lg: 36px;
 

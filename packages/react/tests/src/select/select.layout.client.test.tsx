@@ -32,11 +32,11 @@ describe("Select の配置", () => {
 
     // 検証
     const sm = getComputedStyle(screen.getByRole("combobox", { name: "小" }).element());
-    expect(sm.minHeight).toBe("22.4px");
+    expect(sm.minHeight).toBe("26px");
     const md = getComputedStyle(screen.getByRole("combobox", { name: "中" }).element());
-    expect(md.minHeight).toBe("28px");
+    expect(md.minHeight).toBe("32px");
     const lg = getComputedStyle(screen.getByRole("combobox", { name: "大" }).element());
-    expect(lg.minHeight).toBe("33.6px");
+    expect(lg.minHeight).toBe("36px");
   });
 
   test("指定した角丸で切り抜く", async ({ expect }) => {
@@ -61,7 +61,7 @@ describe("Select の配置", () => {
     const lg = getComputedStyle(screen.getByRole("combobox", { name: "大" }).element());
     expect(lg.borderTopLeftRadius).toBe("12px");
     const full = getComputedStyle(screen.getByRole("combobox", { name: "丸" }).element());
-    expect(full.borderTopLeftRadius).toBe("14px");
+    expect(full.borderTopLeftRadius).toBe("16px");
   });
 
   test.skipIf(!supportsCustomFunctions())("枠線の有無を切り替える", async ({ expect }) => {

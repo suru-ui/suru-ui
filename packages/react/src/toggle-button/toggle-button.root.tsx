@@ -34,6 +34,7 @@ export type ToggleButtonRootColor = ToggleButtonContextColor;
  * トグルボタンの角丸の大きさです。
  *
  * - `"none"`: 直角
+ * - `"xs"`: 極小の角丸
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
@@ -45,6 +46,7 @@ export type ToggleButtonRootRadius = ToggleButtonContextRadius;
 /**
  * トグルボタンの大きさです。
  *
+ * - `"xs"`: 極小
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
@@ -96,7 +98,13 @@ export namespace ToggleButtonRootProps {
     /**
      * トグルボタンの角丸の大きさを指定します。
      *
-     * 既定値は {@link ToggleButtonRootProps.size|size} です。
+     * 既定値:
+     * | {@link ButtonRootProps.size|size} | radius |
+     * | ------ | ------ |
+     * | `"xs"` | `"sm"` |
+     * | `"sm"` | `"sm"` |
+     * | `"md"` | `"md"` |
+     * | `"lg"` | `"md"` |
      */
     radius?: ToggleButtonRootRadius | undefined;
 
@@ -170,7 +178,7 @@ export const ToggleButtonRoot: IToggleButtonRoot = function SuiToggleButtonRoot(
     color = "grey",
     style,
     value,
-    radius = size,
+    radius = size === "xs" || size === "sm" ? "sm" : "md",
     render,
     pending = false,
     pressed,

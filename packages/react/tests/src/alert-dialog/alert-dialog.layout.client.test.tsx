@@ -226,12 +226,12 @@ describe("AlertDialog の配置", () => {
     // 検証
     const icon = screen.getByClassName("sui_alert_dialog_icon").element();
     const style = getComputedStyle(icon);
-    expect(Number.parseFloat(style.width)).toBeCloseTo(44, 1);
+    expect(Number.parseFloat(style.width)).toBeCloseTo(48, 1);
     expect(style.width).toBe(style.height);
     expect(style.borderRadius).toBe("8px");
     const svgRect = icon.querySelector("svg")?.getBoundingClientRect();
-    expect(svgRect?.width).toBeCloseTo(28, 1);
-    expect(svgRect?.height).toBeCloseTo(28, 1);
+    expect(svgRect?.width).toBeCloseTo(32, 1);
+    expect(svgRect?.height).toBeCloseTo(32, 1);
   });
 
   test.skipIf(!supportsCustomFunctions())("枠線を内側に引く", async ({ expect }) => {

@@ -113,6 +113,16 @@
                              )
                            );
 
+  &.sui_button-size_xs {
+    --sui_button-gap: --sui-gap(0.5);
+    --sui_button-min_height: var(--sui-size-xs);
+    --sui_button-padding_inline: --sui-space(1.5);
+    --sui_button-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_button-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_button-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_button-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+  }
+
   &.sui_button-size_sm {
     --sui_button-gap: --sui-gap(0.5);
     --sui_button-min_height: var(--sui-size-sm);
@@ -144,6 +154,10 @@
   }
 
   &.sui_button-item {
+    &.sui_button-size_xs {
+      --sui_button-padding_inline: --sui-space(1);
+    }
+
     &.sui_button-size_sm {
       --sui_button-padding_inline: --sui-space(1);
     }
@@ -161,18 +175,23 @@
     --sui_button-border_radius: 0px;
   }
 
-  &.sui_button-radius_sm {
+  &.sui_button-radius_xs {
     --sui_button-border_radius: --sui-corner_radius(1);
     --sui_button-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_button-radius_md {
+  &.sui_button-radius_sm {
     --sui_button-border_radius: --sui-corner_radius(2);
     --sui_button-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_button-radius_lg {
+  &.sui_button-radius_md {
     --sui_button-border_radius: --sui-corner_radius(3);
+    --sui_button-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_button-radius_lg {
+    --sui_button-border_radius: --sui-corner_radius(4);
     --sui_button-corner_shape: superellipse(var(--sui-superellipse));
   }
 
@@ -778,6 +797,13 @@
                                      var(--sui_button_pending-color),
                                      var(--sui_button_pending-canvas)
                                    );
+
+  &.sui_button-size_xs {
+    --sui_button_pending-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_button_pending-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_button_pending-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_button_pending-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+  }
 
   &.sui_button-size_sm {
     --sui_button_pending-font_size: var(--sui-text-oln-sm-m-font_size);

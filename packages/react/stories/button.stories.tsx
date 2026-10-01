@@ -1,5 +1,5 @@
 import * as theme from "@suru-ui/theme";
-import { GlobeIcon, DeleteIcon, Trash2Icon, EllipsisIcon } from "lucide-react";
+import { GlobeIcon, DeleteIcon, ItalicIcon, Trash2Icon, EllipsisIcon } from "lucide-react";
 import * as React from "react";
 
 import { preview, controls } from "../.config/storybook/preview.js";
@@ -7,8 +7,8 @@ import { Button } from "../src/button/index.js";
 import * as ButtonParts from "../src/button/index.js";
 
 const COLORS: readonly Button.Color[] = theme.COLORS;
-const RADII: readonly Button.Radius[] = ["none", ...theme.SIZES, "full", "circle"];
-const SIZES: readonly Button.Size[] = theme.SIZES;
+const RADII: readonly Button.Radius[] = ["none", ...theme.BUTTON_SIZES, "full", "circle"];
+const SIZES: readonly Button.Size[] = theme.BUTTON_SIZES;
 const VARIANTS: readonly Button.Variant[] = theme.COLOR_TEMPLATES;
 
 const meta = preview.meta({
@@ -415,6 +415,59 @@ export const Colors = meta.story({
             <Button {...props} color={color} />
           </div>
         ))}
+      </div>
+    );
+  },
+});
+
+export const Sizes = meta.story({
+  name: "大きさ",
+  ...ctrl({
+    children: "ボタン",
+    variant: "solid",
+    color: "grey",
+    radius: undefined,
+    muted: false,
+    outlined: false,
+    pending: false,
+    disabled: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-center gap-3">
+          {SIZES.map((size) => (
+            <div key={size} className="flex flex-col items-center gap-2">
+              <span>{size}</span>
+              <Button {...props} size={size}>
+                <ItalicIcon />
+                {props.children}
+              </Button>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center justify-center gap-3">
+          {SIZES.map((size) => (
+            <div key={size} className="flex flex-col items-center gap-2">
+              <span>{size}</span>
+              <Button {...props} size={size} squared>
+                <ItalicIcon />
+              </Button>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <span>親要素に合わせる</span>
+          <div className="flex justify-center gap-3 h-[50px]">
+            <Button {...props}>
+              <ItalicIcon />
+              {props.children}
+            </Button>
+            <Button {...props} squared>
+              <ItalicIcon />
+            </Button>
+          </div>
+        </div>
       </div>
     );
   },

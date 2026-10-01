@@ -1,6 +1,6 @@
 import type { ButtonState } from "@base-ui/react";
 import type { Toggle } from "@base-ui/react/toggle";
-import type { Size, Color } from "@suru-ui/theme";
+import type { Color, ButtonSize } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
@@ -15,22 +15,24 @@ export type ToggleButtonContextColor = Color;
  * トグルボタンの角丸の大きさです。
  *
  * - `"none"`: 直角
+ * - `"xs"`: 極小の角丸
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
  * - `"circle"`: 完全な丸形
  */
-export type ToggleButtonContextRadius = "none" | Size | "full" | "circle";
+export type ToggleButtonContextRadius = "none" | ButtonSize | "full" | "circle";
 
 /**
  * トグルボタンの大きさです。
  *
+ * - `"xs"`: 極小
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type ToggleButtonContextSize = Size;
+export type ToggleButtonContextSize = ButtonSize;
 
 /**
  * トグルボタンの主な外観です。

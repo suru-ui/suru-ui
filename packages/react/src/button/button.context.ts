@@ -1,5 +1,5 @@
 import type { ButtonState } from "@base-ui/react";
-import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
+import type { Color, ButtonSize, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
@@ -14,22 +14,24 @@ export type ButtonContextColor = Color;
  * ボタンの角丸の大きさです。
  *
  * - `"none"`: 直角
+ * - `"xs"`: 極小の角丸
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
  * - `"circle"`: 完全な丸形
  */
-export type ButtonContextRadius = "none" | Size | "full" | "circle";
+export type ButtonContextRadius = "none" | ButtonSize | "full" | "circle";
 
 /**
  * ボタンの大きさです。
  *
+ * - `"xs"`: 極小
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type ButtonContextSize = Size;
+export type ButtonContextSize = ButtonSize;
 
 /**
  * ボタンの主な外観です。

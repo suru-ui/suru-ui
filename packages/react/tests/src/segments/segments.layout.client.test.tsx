@@ -115,13 +115,13 @@ describe("Segments の配置", () => {
     // 検証
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
     expect(sm.fontSize).toBe("12px");
-    expect(sm.minHeight).toBe("22.4px");
+    expect(sm.minHeight).toBe("26px");
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
     expect(md.fontSize).toBe("14px");
-    expect(md.minHeight).toBe("28px");
+    expect(md.minHeight).toBe("32px");
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
     expect(lg.fontSize).toBe("17px");
-    expect(lg.minHeight).toBe("33.6px");
+    expect(lg.minHeight).toBe("36px");
   });
 
   test.skipIf(!supportsCustomFunctions())(

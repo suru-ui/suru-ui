@@ -26,7 +26,7 @@ describe("ダークテーマのトークン", () => {
     const element = createTokensElement();
 
     // 検証
-    expect(getTokenValue(element, "--sui-theme")).toBe("dark");
+    expect(getTokenValue(element, "--sui-scheme")).toBe("dark");
   });
 
   test("キャンバスの色を提供する", () => {
@@ -53,10 +53,11 @@ describe("ダークテーマのトークン", () => {
     const element = createTokensElement();
 
     // 検証
-    expect(getTokenValue(element, "--sui-size-md")).toBe("28px");
-    expect(getTokenValue(element, "--sui-radius-lg")).toBe("6px");
+    expect(getTokenValue(element, "--sui-size-xs")).toBe("22px");
+    expect(getTokenValue(element, "--sui-size-md")).toBe("32px");
+    expect(getTokenValue(element, "--sui-corner_radius-base")).toBe("4px");
     expect(getTokenValue(element, "--sui-focusring_color")).toBe(
-      "color-mix(in srgb, #ad8301 65%, transparent)",
+      "color-mix(in oklab, #ad8301 65%, transparent)",
     );
   });
 });

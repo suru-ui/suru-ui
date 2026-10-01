@@ -133,7 +133,7 @@ describe("AvatarGroupRoot の配置", () => {
     const override = screen.container
       .querySelector<HTMLElement>("#override")!
       .getBoundingClientRect();
-    expect(reference.width).toBeCloseTo(33.6, 1);
+    expect(reference.width).toBeCloseTo(36, 1);
     expect(override.width).toBeCloseTo(reference.width, 1);
     expect(override.height).toBeCloseTo(reference.height, 1);
   });

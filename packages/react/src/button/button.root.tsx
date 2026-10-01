@@ -24,6 +24,7 @@ export type ButtonRootColor = ButtonContextColor;
  * ボタンの角丸の大きさです。
  *
  * - `"none"`: 直角
+ * - `"xs"`: 極小の角丸
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
@@ -35,6 +36,7 @@ export type ButtonRootRadius = ButtonContextRadius;
 /**
  * ボタンの大きさです。
  *
+ * - `"xs"`: 極小
  * - `"sm"`: 小さめ
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
@@ -101,7 +103,13 @@ export namespace ButtonRootProps {
     /**
      * ボタンの角丸の大きさを指定します。
      *
-     * 既定値は {@link ButtonRootProps.size|size} です。
+     * 既定値:
+     * | {@link ButtonRootProps.size|size} | radius |
+     * | ------ | ------ |
+     * | `"xs"` | `"sm"` |
+     * | `"sm"` | `"sm"` |
+     * | `"md"` | `"md"` |
+     * | `"lg"` | `"md"` |
      */
     radius?: ButtonRootRadius | undefined;
 
@@ -168,7 +176,7 @@ export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
     color = "grey",
     muted = false,
     style,
-    radius = size,
+    radius = size === "xs" || size === "sm" ? "sm" : "md",
     render,
     pending = false,
     squared = false,
