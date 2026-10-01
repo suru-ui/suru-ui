@@ -43,6 +43,14 @@ const ITEMS: readonly Accordion.ItemObject[] = [
 const RADII: readonly Accordion.Radius[] = ["none", ...theme.SIZES];
 const SIZES: readonly Accordion.Size[] = theme.SIZES;
 
+function minH(size: Accordion.Size = "md"): string {
+  return {
+    sm: "min-h-[250px]",
+    md: "min-h-[350px]",
+    lg: "min-h-[450px]",
+  }[size];
+}
+
 const meta = preview.meta({
   title: "Accordion",
   component: Accordion,
@@ -85,8 +93,29 @@ export const Basic = meta.story({
   }),
   render(props) {
     return (
-      <div className="w-[400px] h-[320px]">
+      <div className={`w-md ${minH(props.size)}`}>
         <Accordion {...props} items={ITEMS} defaultValue={["1"]} />
+      </div>
+    );
+  },
+});
+
+export const Controlled = meta.story({
+  name: "制御",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    indicator: true,
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    const [value, setValue] = React.useState<string[]>(["1"]);
+
+    return (
+      <div className={`w-md ${minH(props.size)}`}>
+        <Accordion {...props} items={ITEMS} value={value} onValueChange={setValue} />
       </div>
     );
   },
@@ -103,9 +132,9 @@ export const Sizes = meta.story({
   }),
   render(props) {
     return (
-      <div className="w-[400px] h-[320px] flex flex-col gap-6">
+      <div className="w-md flex flex-col gap-6">
         {SIZES.map((size) => (
-          <div key={size} className="flex flex-col gap-2">
+          <div key={size} className={`flex flex-col gap-2 ${minH(size)}`}>
             <span>{size}</span>
             <Accordion {...props} key={size} size={size} items={ITEMS} />
           </div>
@@ -129,7 +158,15 @@ export const Multiple = meta.story({
   }),
   render(props) {
     return (
-      <div className="w-[400px] h-[380px]">
+      <div
+        className={`w-md ${
+          {
+            sm: "h-[280px]",
+            md: "h-[380px]",
+            lg: "h-[480px]",
+          }[props.size ?? "md"]
+        }`}
+      >
         <Accordion {...props} items={ITEMS.slice(0, 3)} multiple defaultValue={["1"]} />
       </div>
     );
@@ -147,7 +184,7 @@ export const WithoutIndicator = meta.story({
   }),
   render(props) {
     return (
-      <div className="w-[400px] h-[320px]">
+      <div className={`w-md ${minH(props.size)}`}>
         <Accordion {...props} items={ITEMS} indicator={false} defaultValue={["1"]} />
       </div>
     );
@@ -165,7 +202,7 @@ export const WithoutSeparator = meta.story({
   }),
   render(props) {
     return (
-      <div className="w-[400px] h-[320px]">
+      <div className={`w-md ${minH(props.size)}`}>
         <Accordion {...props} items={ITEMS} defaultValue={["1"]} />
       </div>
     );
@@ -183,7 +220,7 @@ export const Disabled = meta.story({
   render(props) {
     return (
       <div className="flex flex-col gap-6">
-        <div className="w-[400px] h-[320px] flex flex-col gap-2">
+        <div className={`w-md ${minH(props.size)} flex flex-col gap-2`}>
           <span>部分的に無効なアイテム</span>
           <Accordion
             {...props}
@@ -194,7 +231,7 @@ export const Disabled = meta.story({
             defaultValue={["1"]}
           />
         </div>
-        <div className="w-[400px] h-[320px] flex flex-col gap-2">
+        <div className={`w-md ${minH(props.size)} flex flex-col gap-2`}>
           <span>連続する無効アイテム</span>
           <Accordion
             {...props}
@@ -205,7 +242,7 @@ export const Disabled = meta.story({
             defaultValue={["1"]}
           />
         </div>
-        <div className="w-[400px] h-[320px] flex flex-col gap-2">
+        <div className={`w-md ${minH(props.size)} flex flex-col gap-2`}>
           <span>全体的に無効</span>
           <Accordion {...props} items={ITEMS} disabled defaultValue={["1"]} />
         </div>
@@ -226,7 +263,7 @@ export const Borders = meta.story({
   }),
   render(props) {
     return (
-      <div className="w-[400px] h-[320px]">
+      <div className={`w-md ${minH(props.size)}`}>
         <Accordion
           {...props}
           items={ITEMS}
@@ -257,7 +294,7 @@ export const Card = meta.story({
     const Card = SuiCard;
 
     return (
-      <div className="w-[400px] h-[450px]">
+      <div className="w-md">
         <Card
           title="アコーディオン"
           outlined
@@ -283,7 +320,7 @@ export const WithIcon = meta.story({
     const Accordion = AccordionParts;
 
     return (
-      <div className="w-[400px] h-[320px]">
+      <div className={`w-md ${minH(props.size)}`}>
         <Accordion.Root {...props} items={ITEMS} defaultValue={["1"]}>
           {(item, index) => {
             const { title, content, itemProps } = Accordion.decomposeItemObject(item);
@@ -309,7 +346,7 @@ export const WithIcon = meta.story({
 
     // 合成コンポーネントを使用して以下のように簡単に実装できますが、配列内に React 要素を渡すと Storybook の不具合（？）でブラウザーがフリーズするため、ここではメモとして残しておきます。
     // return (
-    //   <div className="w-[400px] h-[320px]">
+    //   <div className={`w-md ${minH(props.size)}`}>
     //     <Accordion
     //       {...props}
     //       items={ITEMS.map((item) => ({
@@ -330,6 +367,54 @@ export const WithIcon = meta.story({
   },
 });
 
+export const WidthSubtext = meta.story({
+  name: "サブテキスト付き",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    indicator: true,
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    const Accordion = AccordionParts;
+
+    return (
+      <div
+        className={`w-md ${
+          {
+            sm: "h-[350px]",
+            md: "h-[450px]",
+            lg: "h-[550px]",
+          }[props.size ?? "md"]
+        }`}
+      >
+        <Accordion.Root {...props} items={ITEMS} defaultValue={["1"]}>
+          {(item, index) => {
+            const { title, content, itemProps } = Accordion.decomposeItemObject(item);
+
+            return (
+              <Accordion.Item {...itemProps} key={index}>
+                <Accordion.Heading>
+                  <Accordion.Trigger>
+                    <div className="flex flex-col gap-2 overflow-hidden">
+                      <p className="m-0">{title}</p>
+                      <p className="m-0 text-xs text-canvas_text-2 truncate">{content}</p>
+                    </div>
+                    <Accordion.Indicator />
+                  </Accordion.Trigger>
+                </Accordion.Heading>
+                <Accordion.Content>{content}</Accordion.Content>
+              </Accordion.Item>
+            );
+          }}
+        </Accordion.Root>
+      </div>
+    );
+  },
+});
+
 export const CustomTrigger = meta.story({
   name: "独自トリガー",
   ...ctrl({
@@ -343,7 +428,7 @@ export const CustomTrigger = meta.story({
     const Accordion = AccordionParts;
 
     return (
-      <div className="w-[400px] h-[320px]">
+      <div className={`w-md ${minH(props.size)}`}>
         <Accordion.Root {...props} items={ITEMS} defaultValue={["1"]}>
           {(item, index) => {
             const { title, content, itemProps } = Accordion.decomposeItemObject(item);
@@ -390,7 +475,7 @@ export const CustomIndicator = meta.story({
     const Accordion = AccordionParts;
 
     return (
-      <div className="w-[400px] h-[320px]">
+      <div className={`w-md ${minH(props.size)}`}>
         <Accordion.Root {...props} items={ITEMS} defaultValue={["1"]}>
           {(item, index) => {
             const { title, content, itemProps } = Accordion.decomposeItemObject(item);
@@ -406,6 +491,76 @@ export const CustomIndicator = meta.story({
                   </Accordion.Trigger>
                 </Accordion.Heading>
                 <Accordion.Content>{content}</Accordion.Content>
+              </Accordion.Item>
+            );
+          }}
+        </Accordion.Root>
+      </div>
+    );
+  },
+});
+
+export const CustomItems = meta.story({
+  name: "独自アイテム",
+  ...ctrl({
+    size: "md",
+    radius: undefined,
+    multiple: false,
+    separator: true,
+    disabled: false,
+  }),
+  render(props) {
+    const Accordion = AccordionParts;
+
+    const [items] = React.useState([
+      {
+        id: "1",
+        summary: "アコーディオンとは？",
+        description:
+          "複数の項目を折りたたんで表示し、ユーザーが必要な項目だけを展開して内容を確認できる UI コンポーネントです。情報量の多いページでも、画面をすっきりと整理して表示できます。",
+      },
+      {
+        id: "2",
+        summary: "どのような場面で使いますか？",
+        description:
+          "FAQ や設定画面、商品の詳細情報など、関連する情報をまとめて表示したい場合に適しています。最初は概要だけを表示し、詳しい内容を必要とするユーザーにだけ提示できます。",
+      },
+      {
+        id: "3",
+        summary: "複数の項目を同時に開けますか？",
+        description:
+          "コンポーネントの設定によって、複数の項目を同時に展開できるようにすることも、常に 1 つだけ展開するようにすることも可能です。用途に応じて適切な動作を選択できます。",
+      },
+      {
+        id: "4",
+        summary: "キーボードでも操作できますか？",
+        description:
+          "はい。適切なセマンティック要素と ARIA 属性を使用することで、キーボードから項目の展開や折りたたみを操作できます。マウスを使用できないユーザーにも配慮した実装が重要です。",
+      },
+      {
+        id: "5",
+        summary: "内容が長い場合はどうなりますか？",
+        description:
+          "展開された領域の高さは、内部に含まれるコンテンツの量に応じて自動的に調整されます。長い文章やリスト、複数の要素を含む場合でも、コンテンツが途中で隠れないよう自然にレイアウトされます。",
+      },
+    ]);
+    const [value, setValue] = React.useState(["1"]);
+
+    return (
+      <div className={`w-md ${minH(props.size)}`}>
+        <Accordion.Root {...props} items={items} value={value} onValueChange={setValue}>
+          {(item) => {
+            const { id, summary, description } = item;
+
+            return (
+              <Accordion.Item key={id} value={id}>
+                <Accordion.Heading>
+                  <Accordion.Trigger>
+                    {summary}
+                    <Accordion.Indicator />
+                  </Accordion.Trigger>
+                </Accordion.Heading>
+                <Accordion.Content>{description}</Accordion.Content>
               </Accordion.Item>
             );
           }}
