@@ -74,7 +74,6 @@ export const AccordionContent: IAccordionContent = function SuiAccordionContent(
             (state) => state.disabled && "sui_accordion_content-disabled",
             (state) => state.open && "sui_accordion_content-open",
             (state) => state.hidden && "sui_accordion_content-hidden",
-            (state) => `sui_accordion_content-orientation_${state.orientation}`,
             (state) => `sui_accordion_content-index_${state.index}`,
           ),
         },

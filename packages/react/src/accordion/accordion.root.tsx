@@ -255,7 +255,6 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
               (state) => `sui_accordion-radius_${state.radius}`,
               (state) => state.separator && "sui_accordion-separator",
               (state) => state.disabled && "sui_accordion-disabled",
-              (state) => `sui_accordion-orientation_${state.orientation}`,
             ),
           },
         )}

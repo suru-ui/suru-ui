@@ -91,7 +91,6 @@ export const AccordionItem: IAccordionItem = function SuiAccordionItem(props) {
             (state) => `sui_accordion_item-size_${state.size}`,
             (state) => `sui_accordion_item-radius_${state.radius}`,
             (state) => state.separator && "sui_accordion_item-separator",
-            (state) => `sui_accordion_item-orientation_${state.orientation}`,
             (state) => `sui_accordion_item-index_${state.index}`,
           ),
         },
