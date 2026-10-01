@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
-import type { IUseContext } from "../types.js";
+import type { Override, IUseContext } from "../types.js";
 
 /**
  * {@link PasswordFieldRoot} が子パーツへ提供する表示状態です。
@@ -17,14 +17,17 @@ export type PasswordFieldContextState = {
  * {@link PasswordFieldRoot} が子パーツへ提供するコンテキストです。
  */
 export type PasswordFieldContext = Readonly<
-  PasswordFieldContextState & {
-    /**
-     * パスワードの表示状態を更新します。
-     *
-     * 関数を渡すと、現在の表示状態から次の表示状態を計算できます。
-     */
-    readonly setVisible: (value: boolean | ((prevValue: boolean) => boolean)) => void;
-  }
+  Override<
+    PasswordFieldContextState,
+    {
+      /**
+       * パスワードの表示状態を更新します。
+       *
+       * 関数を渡すと、現在の表示状態から次の表示状態を計算できます。
+       */
+      readonly setVisible: (value: boolean | ((prevValue: boolean) => boolean)) => void;
+    }
+  >
 >;
 
 /**

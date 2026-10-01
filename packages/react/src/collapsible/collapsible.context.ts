@@ -3,7 +3,7 @@ import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
-import type { IUseContext } from "../types.js";
+import type { Override, IUseContext } from "../types.js";
 
 /**
  * コラプシブルの大きさです。
@@ -18,12 +18,15 @@ export type CollapsibleContextSize = Size;
  * {@link CollapsibleRoot} が子パーツへ提供するコンテキストです。
  */
 export type CollapsibleContext = Readonly<
-  Collapsible.Root.State & {
-    /**
-     * コラプシブルの大きさです。
-     */
-    readonly size: CollapsibleContextSize;
-  }
+  Override<
+    Collapsible.Root.State,
+    {
+      /**
+       * コラプシブルの大きさです。
+       */
+      readonly size: CollapsibleContextSize;
+    }
+  >
 >;
 
 /**

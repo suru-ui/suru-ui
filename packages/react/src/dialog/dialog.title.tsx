@@ -12,7 +12,10 @@ import { type DialogPopupContext, useDialogPopupContext } from "./dialog.popup.c
 /**
  * {@link DialogTitle} が持つ状態です。
  */
-export type DialogTitleState = Override<Card.Title.State & DialogPopupContext, Dialog.Title.State>;
+export type DialogTitleState = Override<
+  Override<Card.Title.State, DialogPopupContext>,
+  Dialog.Title.State
+>;
 
 export namespace DialogTitleProps {
   export type Render = RenderProps<DialogTitleState>;
@@ -71,7 +74,7 @@ export const DialogTitle: IDialogTitle = function SuiDialogTitle(props) {
           {...mergeProps<typeof Card.Title>([
             htmlProps,
             proxyRenderProps<Card.Title.State, DialogTitleState>(
-              (state) => ({ ...ctx, ...state }),
+              (state) => ({ ...state, ...ctx }),
               {
                 style,
                 render,

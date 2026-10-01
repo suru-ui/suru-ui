@@ -41,7 +41,7 @@ export const DialogContent: IDialogContent = function SuiDialogContent(props) {
     <Card.Content
       {...otherProps}
       {...proxyRenderProps<Card.Content.State, DialogContentState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({ ...state, ...ctx }),
         {
           style,
           render,

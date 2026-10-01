@@ -195,6 +195,7 @@ export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
       {...otherProps}
       {...proxyRenderProps<Button.State, ButtonRootState>(
         (state) => ({
+          ...state,
           item,
           size,
           color,
@@ -204,7 +205,6 @@ export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
           squared,
           variant,
           outlined,
-          ...state,
         }),
         {
           style,

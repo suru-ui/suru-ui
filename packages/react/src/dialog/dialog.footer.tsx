@@ -43,7 +43,7 @@ export const DialogFooter: IDialogFooter = function SuiDialogFooter(props) {
     <Card.Footer
       {...otherProps}
       {...proxyRenderProps<Card.Footer.State, DialogFooterState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({ ...state, ...ctx }),
         {
           style,
           render,

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
-import type { IUseContext } from "../types.js";
+import type { Override, IUseContext } from "../types.js";
 import type { TreeRootSize, TreeRootColor, TreeRootRadius, TreeRootVariant } from "./tree.root.jsx";
 
 /**
@@ -68,47 +68,50 @@ export type TreeContextState = {
  * {@link TreeRoot} が子パーツへ提供するコンテキストです。
  */
 export type TreeContext = Readonly<
-  TreeContextState & {
-    /**
-     * ツリーのルート要素へフォーカスを移動する関数です。
-     */
-    readonly focus: () => void;
+  Override<
+    TreeContextState,
+    {
+      /**
+       * ツリーのルート要素へフォーカスを移動する関数です。
+       */
+      readonly focus: () => void;
 
-    /**
-     * ノードの識別子から項目要素の DOM ID を作る関数です。
-     *
-     * @param itemId ノードの識別子です。
-     */
-    readonly getItemId: (itemId: string) => string;
+      /**
+       * ノードの識別子から項目要素の DOM ID を作る関数です。
+       *
+       * @param itemId ノードの識別子です。
+       */
+      readonly getItemId: (itemId: string) => string;
 
-    /**
-     * ノードの識別子から選択状態を変更する関数です。
-     *
-     * @param itemId 選択状態を変更するノードの識別子です。
-     * @param action 選択の変更方法です。
-     * @param event 選択のきっかけになったイベントです。
-     */
-    readonly select: (
-      itemId: string,
-      action: TreeSelectAction,
-      event: React.SyntheticEvent,
-    ) => void;
+      /**
+       * ノードの識別子から選択状態を変更する関数です。
+       *
+       * @param itemId 選択状態を変更するノードの識別子です。
+       * @param action 選択の変更方法です。
+       * @param event 選択のきっかけになったイベントです。
+       */
+      readonly select: (
+        itemId: string,
+        action: TreeSelectAction,
+        event: React.SyntheticEvent,
+      ) => void;
 
-    /**
-     * キーボードフォーカスの対象にするノードを変更する関数です。
-     *
-     * @param itemId フォーカス対象にするノードの識別子です。
-     */
-    readonly setActive: (itemId: string) => void;
+      /**
+       * キーボードフォーカスの対象にするノードを変更する関数です。
+       *
+       * @param itemId フォーカス対象にするノードの識別子です。
+       */
+      readonly setActive: (itemId: string) => void;
 
-    /**
-     * ノードの展開状態を切り替える関数です。
-     *
-     * @param itemId 展開状態を切り替えるノードの識別子です。
-     * @param event 展開のきっかけになったイベントです。
-     */
-    readonly toggleExpansion: (itemId: string, event: React.SyntheticEvent) => void;
-  }
+      /**
+       * ノードの展開状態を切り替える関数です。
+       *
+       * @param itemId 展開状態を切り替えるノードの識別子です。
+       * @param event 展開のきっかけになったイベントです。
+       */
+      readonly toggleExpansion: (itemId: string, event: React.SyntheticEvent) => void;
+    }
+  >
 >;
 
 /**

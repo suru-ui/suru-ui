@@ -13,7 +13,7 @@ import { type DialogPopupContext, useDialogPopupContext } from "./dialog.popup.c
  * {@link DialogDescription} が持つ状態です。
  */
 export type DialogDescriptionState = Override<
-  Card.Description.State & DialogPopupContext,
+  Override<Card.Description.State, DialogPopupContext>,
   Dialog.Description.State
 >;
 
@@ -68,7 +68,7 @@ export const DialogDescription: IDialogDescription = function SuiDialogDescripti
           {...mergeProps<typeof Card.Description>([
             htmlProps,
             proxyRenderProps<Card.Description.State, DialogDescriptionState>(
-              (state) => ({ ...ctx, ...state }),
+              (state) => ({ ...state, ...ctx }),
               {
                 style,
                 render,

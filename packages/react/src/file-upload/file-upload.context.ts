@@ -2,7 +2,7 @@ import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
-import type { IUseContext } from "../types.js";
+import type { Override, IUseContext } from "../types.js";
 
 /**
  * ファイルアップロードの配色です。
@@ -96,37 +96,40 @@ export type FileUploadContextState = {
  * {@link FileUploadRoot} が子パーツへ提供するコンテキストです。
  */
 export type FileUploadContext = Readonly<
-  FileUploadContextState & {
-    /**
-     * すべての選択済みファイルを削除します。
-     */
-    readonly clear: () => void;
+  Override<
+    FileUploadContextState,
+    {
+      /**
+       * すべての選択済みファイルを削除します。
+       */
+      readonly clear: () => void;
 
-    /**
-     * ファイル選択ダイアログを開きます。
-     */
-    readonly open: () => void;
+      /**
+       * ファイル選択ダイアログを開きます。
+       */
+      readonly open: () => void;
 
-    /**
-     * 指定したファイルを選択済みリストから削除します。
-     */
-    readonly remove: (file: File) => void;
+      /**
+       * 指定したファイルを選択済みリストから削除します。
+       */
+      readonly remove: (file: File) => void;
 
-    /**
-     * ファイルのリストを選択済みリストへ追加します。
-     *
-     * ドラッグアンドドロップなど、隠し input 以外の経路からファイルを受け取るときに使います。
-     * 検証に失敗したファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
-     */
-    readonly selectFiles: (incomingFiles: readonly File[]) => void;
+      /**
+       * ファイルのリストを選択済みリストへ追加します。
+       *
+       * ドラッグアンドドロップなど、隠し input 以外の経路からファイルを受け取るときに使います。
+       * 検証に失敗したファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
+       */
+      readonly selectFiles: (incomingFiles: readonly File[]) => void;
 
-    /**
-     * 隠し input 要素へ非同期にアクセスするための ref です。
-     *
-     * {@link FileUploadHiddenInput} がマウントされた要素を登録します。
-     */
-    readonly setInputElement: (element: HTMLInputElement | null) => void;
-  }
+      /**
+       * 隠し input 要素へ非同期にアクセスするための ref です。
+       *
+       * {@link FileUploadHiddenInput} がマウントされた要素を登録します。
+       */
+      readonly setInputElement: (element: HTMLInputElement | null) => void;
+    }
+  >
 >;
 
 /**

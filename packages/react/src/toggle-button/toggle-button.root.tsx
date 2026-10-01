@@ -209,6 +209,7 @@ export const ToggleButtonRoot: IToggleButtonRoot = function SuiToggleButtonRoot(
       {...baseuiProps}
       render={(htmlProps: {}, toggleState) => {
         const state: ToggleButtonRootState = {
+          ...toggleState,
           size,
           color,
           radius,
@@ -216,7 +217,6 @@ export const ToggleButtonRoot: IToggleButtonRoot = function SuiToggleButtonRoot(
           squared,
           variant,
           outlined,
-          ...toggleState,
         };
         const buttonRootProps: Required<
           Button.ButtonRootProps.SuruUI &

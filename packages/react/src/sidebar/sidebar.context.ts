@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
-import type { IUseContext } from "../types.js";
+import type { Override, IUseContext } from "../types.js";
 import type {
   SidebarRootSide,
   SidebarRootVariant,
@@ -56,17 +56,20 @@ export type SidebarContextState = {
  * {@link SidebarProvider} が子パーツへ提供するコンテキストの型です。
  */
 export type SidebarContext = Readonly<
-  SidebarContextState & {
-    /**
-     * サイドバーの開閉状態を設定します。
-     */
-    readonly setOpen: (open: boolean) => void;
+  Override<
+    SidebarContextState,
+    {
+      /**
+       * サイドバーの開閉状態を設定します。
+       */
+      readonly setOpen: (open: boolean) => void;
 
-    /**
-     * サイドバーの開閉状態を切り替えます。
-     */
-    readonly toggle: () => void;
-  }
+      /**
+       * サイドバーの開閉状態を切り替えます。
+       */
+      readonly toggle: () => void;
+    }
+  >
 >;
 
 /**

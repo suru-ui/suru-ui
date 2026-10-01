@@ -46,7 +46,7 @@ export const AlertDialogFooter: IAlertDialogFooter = function SuiAlertDialogFoot
     <Card.Footer
       {...otherProps}
       {...proxyRenderProps<Card.Footer.State, AlertDialogFooterState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({ ...state, ...ctx }),
         {
           style,
           render,

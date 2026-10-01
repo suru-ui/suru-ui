@@ -91,7 +91,7 @@ export const CollapsibleRoot: ICollapsibleRoot = function SuiCollapsibleRoot(pro
     <Collapsible.Root
       {...otherProps}
       {...proxyRenderProps<Collapsible.Root.State, CollapsibleRootState>(
-        (state) => ({ size, ...state }),
+        (state) => ({ ...state, size }),
         {
           style,
           render: (htmlProps, state) => (

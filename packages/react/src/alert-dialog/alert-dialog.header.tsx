@@ -44,7 +44,7 @@ export const AlertDialogHeader: IAlertDialogHeader = function SuiAlertDialogHead
     <Card.Header
       {...otherProps}
       {...proxyRenderProps<Card.Header.State, AlertDialogHeaderState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({ ...state, ...ctx }),
         {
           style,
           render,

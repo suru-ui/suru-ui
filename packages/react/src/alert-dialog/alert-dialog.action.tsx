@@ -46,7 +46,7 @@ export const AlertDialogAction: IAlertDialogAction = function SuiAlertDialogActi
     <Card.Action
       {...otherProps}
       {...proxyRenderProps<Card.Action.State, AlertDialogActionState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({ ...state, ...ctx }),
         {
           style,
           render,

@@ -3,7 +3,7 @@ import type { Color, ButtonSize, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
 import { ContextMissingError } from "../errors.js";
-import type { IUseContext } from "../types.js";
+import type { Override, IUseContext } from "../types.js";
 
 /**
  * ボタンの配色です。
@@ -46,52 +46,55 @@ export type ButtonContextVariant = ColorTemplate;
  * {@link ButtonRoot} が子パーツへ提供するコンテキストです。
  */
 export type ButtonContext = Readonly<
-  ButtonState & {
-    /**
-     * ボタンの配色です。
-     */
-    readonly color: ButtonContextColor;
+  Override<
+    ButtonState,
+    {
+      /**
+       * ボタンの配色です。
+       */
+      readonly color: ButtonContextColor;
 
-    /**
-     * ボタンをメニューなどのリストアイテムとして使うかどうかです。
-     */
-    readonly item: boolean;
+      /**
+       * ボタンをメニューなどのリストアイテムとして使うかどうかです。
+       */
+      readonly item: boolean;
 
-    /**
-     * ボタンの背景色を控えめにするかどうかです。
-     */
-    readonly muted: boolean;
+      /**
+       * ボタンの背景色を控えめにするかどうかです。
+       */
+      readonly muted: boolean;
 
-    /**
-     * ボタンに枠線を表示するかどうかです。
-     */
-    readonly outlined: boolean;
+      /**
+       * ボタンに枠線を表示するかどうかです。
+       */
+      readonly outlined: boolean;
 
-    /**
-     * ボタンが保留状態かどうかです。
-     */
-    readonly pending: boolean;
+      /**
+       * ボタンが保留状態かどうかです。
+       */
+      readonly pending: boolean;
 
-    /**
-     * ボタンの角丸の大きさです。
-     */
-    readonly radius: ButtonContextRadius;
+      /**
+       * ボタンの角丸の大きさです。
+       */
+      readonly radius: ButtonContextRadius;
 
-    /**
-     * ボタンの大きさです。
-     */
-    readonly size: ButtonContextSize;
+      /**
+       * ボタンの大きさです。
+       */
+      readonly size: ButtonContextSize;
 
-    /**
-     * ボタンを正方形にするかどうかです。
-     */
-    readonly squared: boolean;
+      /**
+       * ボタンを正方形にするかどうかです。
+       */
+      readonly squared: boolean;
 
-    /**
-     * ボタンの主な外観です。
-     */
-    readonly variant: ButtonContextVariant;
-  }
+      /**
+       * ボタンの主な外観です。
+       */
+      readonly variant: ButtonContextVariant;
+    }
+  >
 >;
 
 /**

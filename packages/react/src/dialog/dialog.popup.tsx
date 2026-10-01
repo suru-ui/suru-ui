@@ -36,7 +36,7 @@ export type DialogPopupVariant = DialogPopupContextVariant;
  * {@link DialogPopup} が持つ状態です。
  */
 export type DialogPopupState = Override<
-  Card.Root.State & { variant: DialogPopupVariant },
+  Override<Card.Root.State, { variant: DialogPopupVariant }>,
   Dialog.Popup.State
 >;
 
@@ -121,7 +121,7 @@ export const DialogPopup: IDialogPopup = function SuiDialogPopup(props) {
                 htmlProps,
                 cardRootProps,
                 proxyRenderProps<Dialog.Popup.State, DialogPopupState>(
-                  (state) => ({ ...ctx, outlined, ...popupState, ...state }),
+                  (state) => ({ ...state, ...ctx, outlined, ...popupState }),
                   {
                     style,
                     render,

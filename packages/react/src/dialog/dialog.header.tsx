@@ -41,7 +41,7 @@ export const DialogHeader: IDialogHeader = function SuiDialogHeader(props) {
     <Card.Header
       {...otherProps}
       {...proxyRenderProps<Card.Header.State, DialogHeaderState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({ ...state, ...ctx }),
         {
           style,
           render,

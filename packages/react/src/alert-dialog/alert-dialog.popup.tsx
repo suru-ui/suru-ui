@@ -36,7 +36,7 @@ export type AlertDialogPopupVariant = AlertDialogPopupContextVariant;
  * {@link AlertDialogPopup} が持つ状態です。
  */
 export type AlertDialogPopupState = Override<
-  Card.Root.State & { variant: AlertDialogPopupVariant },
+  Override<Card.Root.State, { variant: AlertDialogPopupVariant }>,
   AlertDialog.Popup.State
 >;
 
@@ -121,7 +121,7 @@ export const AlertDialogPopup: IAlertDialogPopup = function SuiAlertDialogPopup(
                 htmlProps,
                 cardRootProps,
                 proxyRenderProps<AlertDialog.Popup.State, AlertDialogPopupState>(
-                  (state) => ({ ...ctx, outlined, ...popupState, ...state }),
+                  (state) => ({ ...state, ...ctx, outlined, ...popupState }),
                   {
                     style,
                     render,

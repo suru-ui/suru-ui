@@ -46,46 +46,49 @@ export type ToggleButtonContextVariant = "naked" | "liquid";
  * {@link ToggleButtonRoot} が子パーツへ提供するコンテキストです。
  */
 export type ToggleButtonContext = Readonly<
-  Override<ButtonState, Toggle.State> & {
-    /**
-     * トグルボタンの配色です。
-     *
-     * 押下状態でないときは grey で表示されます。
-     */
-    readonly color: ToggleButtonContextColor;
+  Override<
+    Override<ButtonState, Toggle.State>,
+    {
+      /**
+       * トグルボタンの配色です。
+       *
+       * 押下状態でないときは grey で表示されます。
+       */
+      readonly color: ToggleButtonContextColor;
 
-    /**
-     * トグルボタンに枠線を表示するかどうかです。
-     */
-    readonly outlined: boolean;
+      /**
+       * トグルボタンに枠線を表示するかどうかです。
+       */
+      readonly outlined: boolean;
 
-    /**
-     * トグルボタンが保留状態かどうかです。
-     */
-    readonly pending: boolean;
+      /**
+       * トグルボタンが保留状態かどうかです。
+       */
+      readonly pending: boolean;
 
-    /**
-     * トグルボタンの角丸の大きさです。
-     */
-    readonly radius: ToggleButtonContextRadius;
+      /**
+       * トグルボタンの角丸の大きさです。
+       */
+      readonly radius: ToggleButtonContextRadius;
 
-    /**
-     * トグルボタンの大きさです。
-     */
-    readonly size: ToggleButtonContextSize;
+      /**
+       * トグルボタンの大きさです。
+       */
+      readonly size: ToggleButtonContextSize;
 
-    /**
-     * トグルボタンを正方形にするかどうかです。
-     */
-    readonly squared: boolean;
+      /**
+       * トグルボタンを正方形にするかどうかです。
+       */
+      readonly squared: boolean;
 
-    /**
-     * トグルボタンの主な外観です。
-     *
-     * 押下状態では solid で表示されます。
-     */
-    readonly variant: ToggleButtonContextVariant;
-  }
+      /**
+       * トグルボタンの主な外観です。
+       *
+       * 押下状態では solid で表示されます。
+       */
+      readonly variant: ToggleButtonContextVariant;
+    }
+  >
 >;
 
 /**

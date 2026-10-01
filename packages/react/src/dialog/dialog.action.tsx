@@ -43,7 +43,7 @@ export const DialogAction: IDialogAction = function SuiDialogAction(props) {
     <Card.Action
       {...otherProps}
       {...proxyRenderProps<Card.Action.State, DialogActionState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({ ...state, ...ctx }),
         {
           style,
           render,
