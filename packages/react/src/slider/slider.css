@@ -38,14 +38,30 @@
 
 /* Label */
 @layer sui.component {
-@scope (.sui_slider) to ([data-scope]) {
+@scope (.sui_slider_label) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_slider_label {
-    min-width: 0px;
-  }
+  min-width: 0px;
 }
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_slider_label-font_family);
+  font-size: var(--sui_slider_label-font_size);
+  font-weight: var(--sui_slider_label-font_weight);
+  line-height: var(--sui_slider_label-line_height);
+  color: var(--sui_slider_label-color);
+  letter-spacing: var(--sui_slider_label-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Label */
+/* 活字の指定はルートの大きさの修飾クラスに依存し、ラベル自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_slider) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -55,18 +71,6 @@
   --sui_slider_label-line_height: ;
   --sui_slider_label-color: ;
   --sui_slider_label-letter_spacing: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_slider_label {
-    font-family: var(--sui_slider_label-font_family);
-    font-size: var(--sui_slider_label-font_size);
-    font-weight: var(--sui_slider_label-font_weight);
-    line-height: var(--sui_slider_label-line_height);
-    color: var(--sui_slider_label-color);
-    letter-spacing: var(--sui_slider_label-letter_spacing);
-  }
 }
 
 /* 代入 */
@@ -101,14 +105,30 @@
 
 /* Value */
 @layer sui.component {
-@scope (.sui_slider) to ([data-scope]) {
+@scope (.sui_slider_value) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_slider_value {
-    font-variant-numeric: tabular-nums;
-  }
+  font-variant-numeric: tabular-nums;
 }
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_slider_value-font_family);
+  font-size: var(--sui_slider_value-font_size);
+  font-weight: var(--sui_slider_value-font_weight);
+  line-height: var(--sui_slider_value-line_height);
+  color: var(--sui_slider_value-color);
+  letter-spacing: var(--sui_slider_value-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Value */
+/* 活字の指定はルートの大きさの修飾クラスに依存し、値表示自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_slider) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -118,18 +138,6 @@
   --sui_slider_value-line_height: ;
   --sui_slider_value-color: ;
   --sui_slider_value-letter_spacing: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_slider_value {
-    font-family: var(--sui_slider_value-font_family);
-    font-size: var(--sui_slider_value-font_size);
-    font-weight: var(--sui_slider_value-font_weight);
-    line-height: var(--sui_slider_value-line_height);
-    color: var(--sui_slider_value-color);
-    letter-spacing: var(--sui_slider_value-letter_spacing);
-  }
 }
 
 /* 代入 */
@@ -164,15 +172,13 @@
 
 /* Control */
 @layer sui.component {
-@scope (.sui_slider) to ([data-scope]) {
+@scope (.sui_slider_control) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_slider_control {
-    grid-column: 1 / -1;
-    touch-action: none;
-    user-select: none;
-  }
+  grid-column: 1 / -1;
+  touch-action: none;
+  user-select: none;
 }
 
 /* 変数 */
@@ -184,13 +190,11 @@
 
 /* 可変 */
 :scope {
-  .sui_slider_control {
-    width: var(--_sui_slider_control-width, var(--sui_slider_control-width));
-    padding-block: var(--_sui_slider_control-padding_block,
-                     var(--sui_slider_control-padding_block)
-                   );
-    padding-inline: var(--sui_slider_control-padding_inline);
-  }
+  width: var(--_sui_slider_control-width, var(--sui_slider_control-width));
+  padding-block: var(--_sui_slider_control-padding_block,
+                   var(--sui_slider_control-padding_block)
+                 );
+  padding-inline: var(--sui_slider_control-padding_inline);
 }
 
 /* 代入 */
@@ -202,7 +206,7 @@
 
 /* 変異 */
 :scope {
-  &.sui_slider-orientation_vertical .sui_slider_control {
+  &.sui_slider_control-orientation_vertical {
     --_sui_slider_control-width: calc(var(--sui_slider_track-size) + var(--sui_slider_thumb-size));
     --_sui_slider_control-padding_block: 0px;
   }
@@ -213,20 +217,40 @@
 
 /* Track */
 @layer sui.component {
-@scope (.sui_slider) to ([data-scope]) {
+@scope (.sui_slider_track) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_slider_track {
-    position: relative;
-    width: 100%;
-    border-style: solid;
-  }
+  position: relative;
+  width: 100%;
+  border-style: solid;
 
-  &.sui_slider-orientation_vertical .sui_slider_track {
+  &.sui_slider_track-orientation_vertical {
     height: 100%;
   }
 }
+
+/* 可変 */
+:scope {
+  height: var(--sui_slider_track-size);
+  background-color: var(--sui_slider_track-canvas);
+  border-color: var(--_sui_slider_track-border_color, transparent);
+  border-width: var(--_sui_slider_track-border_width, 0px);
+  border-radius: var(--sui_slider_track-border_radius);
+  corner-shape: var(--sui_slider_track-corner_shape);
+
+  &.sui_slider_track-orientation_vertical {
+    width: var(--sui_slider_track-size);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Track */
+/* トラックの寸法変数は操作領域が参照し、角丸と配色の指定はルートの修飾クラスに依存するため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_slider) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -238,22 +262,6 @@
   --sui_slider_track-border_radius: ;
   --sui_slider_track-corner_shape: ;
   --sui_slider_track-canvas: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_slider_track {
-    height: var(--sui_slider_track-size);
-    background-color: var(--sui_slider_track-canvas);
-    border-color: var(--_sui_slider_track-border_color, transparent);
-    border-width: var(--_sui_slider_track-border_width, 0px);
-    border-radius: var(--sui_slider_track-border_radius);
-    corner-shape: var(--sui_slider_track-corner_shape);
-  }
-
-  &.sui_slider-orientation_vertical .sui_slider_track {
-    width: var(--sui_slider_track-size);
-  }
 }
 
 /* 代入 */
@@ -323,26 +331,30 @@
 
 /* Indicator */
 @layer sui.component {
-@scope (.sui_slider) to ([data-scope]) {
+@scope (.sui_slider_indicator) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_slider_indicator {
-    border-radius: inherit;
-    corner-shape: inherit;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_slider_indicator-canvas: ;
+  border-radius: inherit;
+  corner-shape: inherit;
 }
 
 /* 可変 */
 :scope {
-  .sui_slider_indicator {
-    background-color: var(--sui_slider_indicator-canvas);
-  }
+  background-color: var(--sui_slider_indicator-canvas);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Indicator */
+/* 配色の指定はルートの修飾クラスに依存し、インジケーター自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_slider) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_slider_indicator-canvas: ;
 }
 
 /* 代入 */
@@ -385,18 +397,65 @@
 
 /* Thumb */
 @layer sui.component {
-@scope (.sui_slider) to ([data-scope]) {
+@scope (.sui_slider_thumb) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_slider_thumb {
-    border-style: solid;
-  }
+  border-style: solid;
 
-  .sui_slider_thumb:has(:focus-visible) {
+  &:has(:focus-visible) {
     outline-style: solid;
   }
 }
+
+/* 可変 */
+:scope {
+  width: var(--sui_slider_thumb-size);
+  height: var(--sui_slider_thumb-size);
+  cursor: var(--_sui_slider_thumb-cursor, var(--sui_slider_thumb-cursor));
+  background-color: var(--sui_slider_thumb-canvas);
+  border-color: var(--_sui_slider_thumb-border_color, transparent);
+  border-width: var(--_sui_slider_thumb-border_width, 0px);
+  border-radius: var(--sui_slider_thumb-border_radius);
+  corner-shape: var(--sui_slider_thumb-corner_shape);
+
+  &:has(:focus-visible) {
+    outline-width: var(--_sui_slider_thumb-outline_width, 0px);
+    outline-color: var(--_sui_slider_thumb-outline_color, transparent);
+    outline-offset: var(--_sui_slider_thumb-outline_offset, 0px);
+  }
+}
+
+/* 変異 */
+:scope {
+  --_sui_slider_thumb-border_color: var(--sui_slider_thumb-border_color-idle);
+  --_sui_slider_thumb-border_width: var(--sui_slider_thumb-border_width);
+
+  @media (any-hover: hover) {
+    &:hover {
+      --_sui_slider_thumb-cursor: grab;
+      --_sui_slider_thumb-border_color: var(--sui_slider_thumb-border_color-hover);
+    }
+  }
+
+  &:active {
+    --_sui_slider_thumb-border_color: var(--sui_slider_thumb-border_color-active);
+  }
+
+  &:has(:focus-visible) {
+    --_sui_slider_thumb-outline_width: var(--sui_slider_thumb-focusring_width);
+    --_sui_slider_thumb-outline_color: var(--sui_slider_thumb-focusring_color);
+    --_sui_slider_thumb-outline_offset: var(--sui_slider_thumb-focusring_offset);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Thumb */
+/* つまみの寸法変数は操作領域とトラックが参照し、大きさと角丸の指定はルートの修飾クラスに依存するため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_slider) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -412,26 +471,6 @@
   --sui_slider_thumb-border_radius: ;
   --sui_slider_thumb-corner_shape: ;
   --sui_slider_thumb-canvas: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_slider_thumb {
-    width: var(--sui_slider_thumb-size);
-    height: var(--sui_slider_thumb-size);
-    cursor: var(--_sui_slider_thumb-cursor, var(--sui_slider_thumb-cursor));
-    background-color: var(--sui_slider_thumb-canvas);
-    border-color: var(--_sui_slider_thumb-border_color, transparent);
-    border-width: var(--_sui_slider_thumb-border_width, 0px);
-    border-radius: var(--sui_slider_thumb-border_radius);
-    corner-shape: var(--sui_slider_thumb-corner_shape);
-  }
-
-  .sui_slider_thumb:has(:focus-visible) {
-    outline-width: var(--_sui_slider_thumb-outline_width, 0px);
-    outline-color: var(--_sui_slider_thumb-outline_color, transparent);
-    outline-offset: var(--_sui_slider_thumb-outline_offset, 0px);
-  }
 }
 
 /* 代入 */
@@ -492,32 +531,18 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* Thumb */
+/* ドラッグ中はすべてのつまみでカーソルを共有する必要があり、つまみ自身の状態クラスでは表現できないため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_slider) to ([data-scope]) {
+
 /* 変異 */
 :scope {
-  .sui_slider_thumb {
-    --_sui_slider_thumb-border_color: var(--sui_slider_thumb-border_color-idle);
-    --_sui_slider_thumb-border_width: var(--sui_slider_thumb-border_width);
-
-    @media (any-hover: hover) {
-      &:hover {
-        --_sui_slider_thumb-cursor: grab;
-        --_sui_slider_thumb-border_color: var(--sui_slider_thumb-border_color-hover);
-      }
-    }
-
-    &:active {
-      --_sui_slider_thumb-border_color: var(--sui_slider_thumb-border_color-active);
-    }
-  }
-
   .sui_slider-dragging .sui_slider_thumb {
     --_sui_slider_thumb-cursor: grabbing;
-  }
-
-  .sui_slider_thumb:has(:focus-visible) {
-    --_sui_slider_thumb-outline_width: var(--sui_slider_thumb-focusring_width);
-    --_sui_slider_thumb-outline_color: var(--sui_slider_thumb-focusring_color);
-    --_sui_slider_thumb-outline_offset: var(--sui_slider_thumb-focusring_offset);
   }
 }
 
@@ -535,12 +560,30 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Label */
+@layer sui.important {
+@scope (.sui_slider_label) to ([data-scope]) {
+
 :scope {
-  &.sui_slider-disabled .sui_slider_label {
+  &.sui_slider_label-disabled {
     cursor: not-allowed;
   }
+}
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* Label */
+/* 配色の指定はルートのバリアントに依存し、ラベル自身にはバリアントの修飾クラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_slider) to ([data-scope]) {
+
+:scope {
   &.sui_slider-disabled.sui_slider-variant_naked .sui_slider_label {
     color: var(--sui-disabled-naked-canvas_text);
   }
@@ -550,12 +593,30 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Value */
+@layer sui.important {
+@scope (.sui_slider_value) to ([data-scope]) {
+
 :scope {
-  &.sui_slider-disabled .sui_slider_value {
+  &.sui_slider_value-disabled {
     cursor: not-allowed;
   }
+}
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* Value */
+/* 配色の指定はルートのバリアントに依存し、値表示自身にはバリアントの修飾クラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_slider) to ([data-scope]) {
+
+:scope {
   &.sui_slider-disabled.sui_slider-variant_naked .sui_slider_value {
     color: var(--sui-disabled-naked-canvas_text);
   }
@@ -565,14 +626,29 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Control */
+@layer sui.important {
+@scope (.sui_slider_control) to ([data-scope]) {
+
 :scope {
-  &.sui_slider-disabled .sui_slider_control {
+  &.sui_slider_control-disabled {
     cursor: not-allowed;
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Track */
+/* 配色の指定はルートのバリアントに依存し、トラック自身にはバリアントの修飾クラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_slider) to ([data-scope]) {
+
 :scope {
   &.sui_slider-disabled.sui_slider-variant_naked .sui_slider_track {
     cursor: not-allowed;
@@ -587,16 +663,30 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Indicator */
+@layer sui.important {
+@scope (.sui_slider_indicator) to ([data-scope]) {
+
 :scope {
-  &.sui_slider-disabled .sui_slider_indicator {
+  &.sui_slider_indicator-disabled {
     background-color: var(--sui-disabled-solid-canvas);
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Thumb */
+@layer sui.important {
+@scope (.sui_slider_thumb) to ([data-scope]) {
+
 :scope {
-  &.sui_slider-disabled .sui_slider_thumb {
+  &.sui_slider_thumb-disabled {
     cursor: not-allowed;
     background-color: var(--sui-disabled-solid-canvas);
     border-color: var(--sui-disabled-solid-border);

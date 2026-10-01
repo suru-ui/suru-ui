@@ -42,23 +42,21 @@
 
 /* HiddenInput */
 @layer sui.component {
-@scope (.sui_file_upload) to ([data-scope]) {
+@scope (.sui_file_upload_hidden_input) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_file_upload_hidden_input {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0px;
-    margin: -1px;
-    overflow: hidden;
-    white-space: nowrap;
-    border-color: transparent;
-    border-style: solid;
-    border-width: 0px;
-    clip-path: inset(50%);
-  }
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0px;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 0px;
+  clip-path: inset(50%);
 }
 
 } /* @scope */
@@ -66,18 +64,16 @@
 
 /* Trigger */
 @layer sui.component {
-@scope (.sui_file_upload) to ([data-scope]) {
+@scope (.sui_file_upload_trigger) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_file_upload_trigger {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    touch-action: manipulation;
-    cursor: pointer;
-    outline-style: solid;
-  }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  outline-style: solid;
 }
 
 /* 変数 */
@@ -102,24 +98,22 @@
 
 /* 可変 */
 :scope {
-  .sui_file_upload_trigger {
-    min-height: var(--sui_file_upload_trigger-min_height);
-    padding-inline: var(--sui_file_upload_trigger-padding_inline);
-    font-family: var(--sui_file_upload_trigger-font_family);
-    font-size: var(--sui_file_upload_trigger-font_size);
-    font-weight: var(--sui_file_upload_trigger-font_weight);
-    line-height: var(--sui_file_upload_trigger-line_height);
-    color: var(--sui_file_upload_trigger-color);
-    letter-spacing: var(--sui_file_upload_trigger-letter_spacing);
-    outline-width: var(--_sui_file_upload_trigger-outline_width, 0px);
-    outline-color: var(--sui_file_upload_trigger-focusring_color);
-    outline-offset: var(--sui_file_upload_trigger-focusring_offset);
-    background-color: var(--_sui_file_upload_trigger-background_color,
-                        var(--sui_file_upload_trigger-background_color-idle)
-                      );
-    border-radius: var(--sui_file_upload_trigger-border_radius);
-    corner-shape: var(--sui_file_upload_trigger-corner_shape);
-  }
+  min-height: var(--sui_file_upload_trigger-min_height);
+  padding-inline: var(--sui_file_upload_trigger-padding_inline);
+  font-family: var(--sui_file_upload_trigger-font_family);
+  font-size: var(--sui_file_upload_trigger-font_size);
+  font-weight: var(--sui_file_upload_trigger-font_weight);
+  line-height: var(--sui_file_upload_trigger-line_height);
+  color: var(--sui_file_upload_trigger-color);
+  letter-spacing: var(--sui_file_upload_trigger-letter_spacing);
+  outline-width: var(--_sui_file_upload_trigger-outline_width, 0px);
+  outline-color: var(--sui_file_upload_trigger-focusring_color);
+  outline-offset: var(--sui_file_upload_trigger-focusring_offset);
+  background-color: var(--_sui_file_upload_trigger-background_color,
+                      var(--sui_file_upload_trigger-background_color-idle)
+                    );
+  border-radius: var(--sui_file_upload_trigger-border_radius);
+  corner-shape: var(--sui_file_upload_trigger-corner_shape);
 }
 
 /* 代入 */
@@ -133,7 +127,7 @@
   --sui_file_upload_trigger-background_color-hover: var(--sui-grey-naked-canvas-subtle);
   --sui_file_upload_trigger-background_color-active: var(--sui-grey-naked-canvas-strong);
 
-  &.sui_file_upload-size_sm {
+  &.sui_file_upload_trigger-size_sm {
     --sui_file_upload_trigger-min_height: var(--sui-size-sm);
     --sui_file_upload_trigger-padding_inline: --sui-space(1.5);
     --sui_file_upload_trigger-font_size: var(--sui-text-oln-sm-n-font_size);
@@ -142,7 +136,7 @@
     --sui_file_upload_trigger-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
-  &.sui_file_upload-size_md {
+  &.sui_file_upload_trigger-size_md {
     --sui_file_upload_trigger-min_height: var(--sui-size-md);
     --sui_file_upload_trigger-padding_inline: --sui-space(2.5);
     --sui_file_upload_trigger-font_size: var(--sui-text-oln-md-n-font_size);
@@ -151,7 +145,7 @@
     --sui_file_upload_trigger-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
-  &.sui_file_upload-size_lg {
+  &.sui_file_upload_trigger-size_lg {
     --sui_file_upload_trigger-min_height: var(--sui-size-lg);
     --sui_file_upload_trigger-padding_inline: --sui-space(3.5);
     --sui_file_upload_trigger-font_size: var(--sui-text-oln-lg-n-font_size);
@@ -160,26 +154,26 @@
     --sui_file_upload_trigger-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
-  &.sui_file_upload-radius_none {
+  &.sui_file_upload_trigger-radius_none {
     --sui_file_upload_trigger-border_radius: 0px;
   }
 
-  &.sui_file_upload-radius_sm {
+  &.sui_file_upload_trigger-radius_sm {
     --sui_file_upload_trigger-border_radius: --sui-corner_radius(1);
     --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_md {
+  &.sui_file_upload_trigger-radius_md {
     --sui_file_upload_trigger-border_radius: --sui-corner_radius(2);
     --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_lg {
+  &.sui_file_upload_trigger-radius_lg {
     --sui_file_upload_trigger-border_radius: --sui-corner_radius(3);
     --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_full {
+  &.sui_file_upload_trigger-radius_full {
     --sui_file_upload_trigger-border_radius: calc(var(--sui_file_upload_trigger-min_height) / 2);
     --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
@@ -187,7 +181,7 @@
 
 /* 変異 */
 :scope {
-  &:not(.sui_file_upload-disabled) .sui_file_upload_trigger {
+  &:not(.sui_file_upload_trigger-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_file_upload_trigger-background_color:
@@ -211,19 +205,17 @@
 
 /* Dropzone */
 @layer sui.component {
-@scope (.sui_file_upload) to ([data-scope]) {
+@scope (.sui_file_upload_dropzone) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_file_upload_dropzone {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    touch-action: manipulation;
-    cursor: pointer;
-    outline-style: solid;
-    border-style: solid;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  outline-style: solid;
+  border-style: solid;
 }
 
 /* 変数 */
@@ -252,28 +244,26 @@
 
 /* 可変 */
 :scope {
-  .sui_file_upload_dropzone {
-    min-height: var(--sui_file_upload_dropzone-min_height);
-    padding-inline: var(--sui_file_upload_dropzone-padding_inline);
-    font-family: var(--sui_file_upload_dropzone-font_family);
-    font-size: var(--sui_file_upload_dropzone-font_size);
-    font-weight: var(--sui_file_upload_dropzone-font_weight);
-    line-height: var(--sui_file_upload_dropzone-line_height);
-    color: var(--sui_file_upload_dropzone-color);
-    letter-spacing: var(--sui_file_upload_dropzone-letter_spacing);
-    outline-width: var(--_sui_file_upload_dropzone-outline_width, 0px);
-    outline-color: var(--sui_file_upload_dropzone-focusring_color);
-    outline-offset: var(--sui_file_upload_dropzone-focusring_offset);
-    background-color: var(--_sui_file_upload_dropzone-background_color,
-                        var(--sui_file_upload_dropzone-background_color)
-                      );
-    border-color: var(--_sui_file_upload_dropzone-border_color,
-                    var(--sui_file_upload_dropzone-border_color-idle)
-                  );
-    border-width: var(--sui_file_upload_dropzone-border_width);
-    border-radius: var(--sui_file_upload_dropzone-border_radius);
-    corner-shape: var(--sui_file_upload_dropzone-corner_shape);
-  }
+  min-height: var(--sui_file_upload_dropzone-min_height);
+  padding-inline: var(--sui_file_upload_dropzone-padding_inline);
+  font-family: var(--sui_file_upload_dropzone-font_family);
+  font-size: var(--sui_file_upload_dropzone-font_size);
+  font-weight: var(--sui_file_upload_dropzone-font_weight);
+  line-height: var(--sui_file_upload_dropzone-line_height);
+  color: var(--sui_file_upload_dropzone-color);
+  letter-spacing: var(--sui_file_upload_dropzone-letter_spacing);
+  outline-width: var(--_sui_file_upload_dropzone-outline_width, 0px);
+  outline-color: var(--sui_file_upload_dropzone-focusring_color);
+  outline-offset: var(--sui_file_upload_dropzone-focusring_offset);
+  background-color: var(--_sui_file_upload_dropzone-background_color,
+                      var(--sui_file_upload_dropzone-background_color)
+                    );
+  border-color: var(--_sui_file_upload_dropzone-border_color,
+                  var(--sui_file_upload_dropzone-border_color-idle)
+                );
+  border-width: var(--sui_file_upload_dropzone-border_width);
+  border-radius: var(--sui_file_upload_dropzone-border_radius);
+  corner-shape: var(--sui_file_upload_dropzone-corner_shape);
 }
 
 /* 代入 */
@@ -286,7 +276,7 @@
   --sui_file_upload_dropzone-border_color-hover: var(--sui-grey-naked-border-subtle);
   --sui_file_upload_dropzone-border_width: --sui-border_width(1);
 
-  &.sui_file_upload-size_sm {
+  &.sui_file_upload_dropzone-size_sm {
     --sui_file_upload_dropzone-min_height: 64px;
     --sui_file_upload_dropzone-padding_inline: --sui-space(3);
     --sui_file_upload_dropzone-font_size: var(--sui-text-oln-sm-n-font_size);
@@ -295,7 +285,7 @@
     --sui_file_upload_dropzone-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
-  &.sui_file_upload-size_md {
+  &.sui_file_upload_dropzone-size_md {
     --sui_file_upload_dropzone-min_height: 80px;
     --sui_file_upload_dropzone-padding_inline: --sui-space(4);
     --sui_file_upload_dropzone-font_size: var(--sui-text-oln-md-n-font_size);
@@ -304,7 +294,7 @@
     --sui_file_upload_dropzone-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
-  &.sui_file_upload-size_lg {
+  &.sui_file_upload_dropzone-size_lg {
     --sui_file_upload_dropzone-min_height: 96px;
     --sui_file_upload_dropzone-padding_inline: --sui-space(5);
     --sui_file_upload_dropzone-font_size: var(--sui-text-oln-lg-n-font_size);
@@ -313,118 +303,118 @@
     --sui_file_upload_dropzone-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
-  &.sui_file_upload-radius_none {
+  &.sui_file_upload_dropzone-radius_none {
     --sui_file_upload_dropzone-border_radius: 0px;
   }
 
-  &.sui_file_upload-radius_sm {
+  &.sui_file_upload_dropzone-radius_sm {
     --sui_file_upload_dropzone-border_radius: --sui-corner_radius(2);
     --sui_file_upload_dropzone-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_md {
+  &.sui_file_upload_dropzone-radius_md {
     --sui_file_upload_dropzone-border_radius: --sui-corner_radius(3);
     --sui_file_upload_dropzone-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_lg {
+  &.sui_file_upload_dropzone-radius_lg {
     --sui_file_upload_dropzone-border_radius: --sui-corner_radius(4);
     --sui_file_upload_dropzone-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_full {
+  &.sui_file_upload_dropzone-radius_full {
     --sui_file_upload_dropzone-border_radius: calc(var(--sui_file_upload_dropzone-min_height) / 2);
     --sui_file_upload_dropzone-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-variant_naked {
+  &.sui_file_upload_dropzone-variant_naked {
     --sui_file_upload_dropzone-color: var(--sui-grey-naked-canvas_text-normal);
     --sui_file_upload_dropzone-background_color: transparent;
     --sui_file_upload_dropzone-background_color-dragover: var(--sui-grey-naked-canvas-subtle);
   }
 
-  &.sui_file_upload-variant_liquid {
+  &.sui_file_upload_dropzone-variant_liquid {
     --sui_file_upload_dropzone-color: var(--sui-grey-liquid-canvas_text-normal);
     --sui_file_upload_dropzone-background_color: var(--sui-grey-liquid-canvas-normal);
     --sui_file_upload_dropzone-background_color-dragover: var(--sui-grey-liquid-canvas-subtle);
   }
 
-  &.sui_file_upload-color_grey.sui_file_upload-variant_naked {
+  &.sui_file_upload_dropzone-color_grey.sui_file_upload_dropzone-variant_naked {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-grey-naked-border-subtle);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-grey-naked-border-strong);
   }
 
-  &.sui_file_upload-color_grey.sui_file_upload-variant_liquid {
+  &.sui_file_upload_dropzone-color_grey.sui_file_upload_dropzone-variant_liquid {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-grey-liquid-border-subtle);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-grey-liquid-border-strong);
   }
 
-  &.sui_file_upload-color_blue.sui_file_upload-variant_naked {
+  &.sui_file_upload_dropzone-color_blue.sui_file_upload_dropzone-variant_naked {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-blue-naked-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-blue-naked-border-strong);
   }
 
-  &.sui_file_upload-color_blue.sui_file_upload-variant_liquid {
+  &.sui_file_upload_dropzone-color_blue.sui_file_upload_dropzone-variant_liquid {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-blue-liquid-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-blue-liquid-border-strong);
   }
 
-  &.sui_file_upload-color_purple.sui_file_upload-variant_naked {
+  &.sui_file_upload_dropzone-color_purple.sui_file_upload_dropzone-variant_naked {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-purple-naked-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-purple-naked-border-strong);
   }
 
-  &.sui_file_upload-color_purple.sui_file_upload-variant_liquid {
+  &.sui_file_upload_dropzone-color_purple.sui_file_upload_dropzone-variant_liquid {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-purple-liquid-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-purple-liquid-border-strong);
   }
 
-  &.sui_file_upload-color_magenta.sui_file_upload-variant_naked {
+  &.sui_file_upload_dropzone-color_magenta.sui_file_upload_dropzone-variant_naked {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-magenta-naked-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-magenta-naked-border-strong);
   }
 
-  &.sui_file_upload-color_magenta.sui_file_upload-variant_liquid {
+  &.sui_file_upload_dropzone-color_magenta.sui_file_upload_dropzone-variant_liquid {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-magenta-liquid-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-magenta-liquid-border-strong);
   }
 
-  &.sui_file_upload-color_red.sui_file_upload-variant_naked {
+  &.sui_file_upload_dropzone-color_red.sui_file_upload_dropzone-variant_naked {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-red-naked-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-red-naked-border-strong);
   }
 
-  &.sui_file_upload-color_red.sui_file_upload-variant_liquid {
+  &.sui_file_upload_dropzone-color_red.sui_file_upload_dropzone-variant_liquid {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-red-liquid-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-red-liquid-border-strong);
   }
 
-  &.sui_file_upload-color_orange.sui_file_upload-variant_naked {
+  &.sui_file_upload_dropzone-color_orange.sui_file_upload_dropzone-variant_naked {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-orange-naked-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-orange-naked-border-strong);
   }
 
-  &.sui_file_upload-color_orange.sui_file_upload-variant_liquid {
+  &.sui_file_upload_dropzone-color_orange.sui_file_upload_dropzone-variant_liquid {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-orange-liquid-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-orange-liquid-border-strong);
   }
 
-  &.sui_file_upload-color_yellow.sui_file_upload-variant_naked {
+  &.sui_file_upload_dropzone-color_yellow.sui_file_upload_dropzone-variant_naked {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-yellow-naked-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-yellow-naked-border-strong);
   }
 
-  &.sui_file_upload-color_yellow.sui_file_upload-variant_liquid {
+  &.sui_file_upload_dropzone-color_yellow.sui_file_upload_dropzone-variant_liquid {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-yellow-liquid-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-yellow-liquid-border-strong);
   }
 
-  &.sui_file_upload-color_green.sui_file_upload-variant_naked {
+  &.sui_file_upload_dropzone-color_green.sui_file_upload_dropzone-variant_naked {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-green-naked-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-green-naked-border-strong);
   }
 
-  &.sui_file_upload-color_green.sui_file_upload-variant_liquid {
+  &.sui_file_upload_dropzone-color_green.sui_file_upload_dropzone-variant_liquid {
     --sui_file_upload_dropzone-border_color-focus_visible: var(--sui-green-liquid-border-normal);
     --sui_file_upload_dropzone-border_color-dragover: var(--sui-green-liquid-border-strong);
   }
@@ -432,7 +422,7 @@
 
 /* 変異 */
 :scope {
-  &:not(.sui_file_upload-disabled) .sui_file_upload_dropzone {
+  &:not(.sui_file_upload_dropzone-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_file_upload_dropzone-border_color:
@@ -447,7 +437,7 @@
     }
   }
 
-  .sui_file_upload_dropzone.sui_file_upload_dropzone-dragover {
+  &.sui_file_upload_dropzone-dragover {
     --_sui_file_upload_dropzone-background_color:
       var(--sui_file_upload_dropzone-background_color-dragover);
     --_sui_file_upload_dropzone-border_color:
@@ -460,18 +450,16 @@
 
 /* ClearTrigger */
 @layer sui.component {
-@scope (.sui_file_upload) to ([data-scope]) {
+@scope (.sui_file_upload_clear_trigger) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_file_upload_clear_trigger {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    touch-action: manipulation;
-    cursor: pointer;
-    outline-style: solid;
-  }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  outline-style: solid;
 }
 
 /* 変数 */
@@ -494,22 +482,20 @@
 
 /* 可変 */
 :scope {
-  .sui_file_upload_clear_trigger {
-    min-height: var(--sui_file_upload_clear_trigger-min_height);
-    padding-inline: var(--sui_file_upload_clear_trigger-padding_inline);
-    font-family: var(--sui_file_upload_clear_trigger-font_family);
-    font-size: var(--sui_file_upload_clear_trigger-font_size);
-    font-weight: var(--sui_file_upload_clear_trigger-font_weight);
-    line-height: var(--sui_file_upload_clear_trigger-line_height);
-    color: var(--sui_file_upload_clear_trigger-color);
-    letter-spacing: var(--sui_file_upload_clear_trigger-letter_spacing);
-    outline-width: var(--_sui_file_upload_clear_trigger-outline_width, 0px);
-    outline-color: var(--sui_file_upload_clear_trigger-focusring_color);
-    outline-offset: var(--sui_file_upload_clear_trigger-focusring_offset);
-    background-color: var(--_sui_file_upload_clear_trigger-background_color, transparent);
-    border-radius: var(--sui_file_upload_clear_trigger-border_radius);
-    corner-shape: var(--sui_file_upload_clear_trigger-corner_shape);
-  }
+  min-height: var(--sui_file_upload_clear_trigger-min_height);
+  padding-inline: var(--sui_file_upload_clear_trigger-padding_inline);
+  font-family: var(--sui_file_upload_clear_trigger-font_family);
+  font-size: var(--sui_file_upload_clear_trigger-font_size);
+  font-weight: var(--sui_file_upload_clear_trigger-font_weight);
+  line-height: var(--sui_file_upload_clear_trigger-line_height);
+  color: var(--sui_file_upload_clear_trigger-color);
+  letter-spacing: var(--sui_file_upload_clear_trigger-letter_spacing);
+  outline-width: var(--_sui_file_upload_clear_trigger-outline_width, 0px);
+  outline-color: var(--sui_file_upload_clear_trigger-focusring_color);
+  outline-offset: var(--sui_file_upload_clear_trigger-focusring_offset);
+  background-color: var(--_sui_file_upload_clear_trigger-background_color, transparent);
+  border-radius: var(--sui_file_upload_clear_trigger-border_radius);
+  corner-shape: var(--sui_file_upload_clear_trigger-corner_shape);
 }
 
 /* 代入 */
@@ -521,7 +507,7 @@
   --sui_file_upload_clear_trigger-focusring_offset: var(--sui-focusring_offset);
   --sui_file_upload_clear_trigger-background_color-hover: var(--sui-grey-naked-canvas-subtle);
 
-  &.sui_file_upload-size_sm {
+  &.sui_file_upload_clear_trigger-size_sm {
     --sui_file_upload_clear_trigger-min_height: var(--sui-size-sm);
     --sui_file_upload_clear_trigger-padding_inline: --sui-space(1);
     --sui_file_upload_clear_trigger-font_size: var(--sui-text-oln-sm-n-font_size);
@@ -530,7 +516,7 @@
     --sui_file_upload_clear_trigger-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
-  &.sui_file_upload-size_md {
+  &.sui_file_upload_clear_trigger-size_md {
     --sui_file_upload_clear_trigger-min_height: var(--sui-size-md);
     --sui_file_upload_clear_trigger-padding_inline: --sui-space(2);
     --sui_file_upload_clear_trigger-font_size: var(--sui-text-oln-md-n-font_size);
@@ -539,7 +525,7 @@
     --sui_file_upload_clear_trigger-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
-  &.sui_file_upload-size_lg {
+  &.sui_file_upload_clear_trigger-size_lg {
     --sui_file_upload_clear_trigger-min_height: var(--sui-size-lg);
     --sui_file_upload_clear_trigger-padding_inline: --sui-space(3);
     --sui_file_upload_clear_trigger-font_size: var(--sui-text-oln-lg-n-font_size);
@@ -548,26 +534,26 @@
     --sui_file_upload_clear_trigger-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
-  &.sui_file_upload-radius_none {
+  &.sui_file_upload_clear_trigger-radius_none {
     --sui_file_upload_clear_trigger-border_radius: 0px;
   }
 
-  &.sui_file_upload-radius_sm {
+  &.sui_file_upload_clear_trigger-radius_sm {
     --sui_file_upload_clear_trigger-border_radius: --sui-corner_radius(1);
     --sui_file_upload_clear_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_md {
+  &.sui_file_upload_clear_trigger-radius_md {
     --sui_file_upload_clear_trigger-border_radius: --sui-corner_radius(2);
     --sui_file_upload_clear_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_lg {
+  &.sui_file_upload_clear_trigger-radius_lg {
     --sui_file_upload_clear_trigger-border_radius: --sui-corner_radius(3);
     --sui_file_upload_clear_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_full {
+  &.sui_file_upload_clear_trigger-radius_full {
     --sui_file_upload_clear_trigger-border_radius: calc(var(--sui_file_upload_clear_trigger-min_height) / 2);
     --sui_file_upload_clear_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
@@ -575,7 +561,7 @@
 
 /* 変異 */
 :scope {
-  &:not(.sui_file_upload-disabled) .sui_file_upload_clear_trigger {
+  &:not(.sui_file_upload_clear_trigger-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_file_upload_clear_trigger-background_color:
@@ -595,17 +581,15 @@
 
 /* ItemGroup */
 @layer sui.component {
-@scope (.sui_file_upload) to ([data-scope]) {
+@scope (.sui_file_upload_item_group) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_file_upload_item_group {
-    display: flex;
-    flex-direction: column;
-    padding: 0px;
-    margin: 0px;
-    list-style: none;
-  }
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
 }
 
 /* 変数 */
@@ -615,9 +599,7 @@
 
 /* 可変 */
 :scope {
-  .sui_file_upload_item_group {
-    gap: var(--sui_file_upload_item_group-gap);
-  }
+  gap: var(--sui_file_upload_item_group-gap);
 }
 
 /* 代入 */
@@ -630,15 +612,13 @@
 
 /* Item */
 @layer sui.component {
-@scope (.sui_file_upload) to ([data-scope]) {
+@scope (.sui_file_upload_item) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_file_upload_item {
-    display: flex;
-    align-items: center;
-    border-style: solid;
-  }
+  display: flex;
+  align-items: center;
+  border-style: solid;
 }
 
 /* 変数 */
@@ -662,23 +642,21 @@
 
 /* 可変 */
 :scope {
-  .sui_file_upload_item {
-    gap: var(--sui_file_upload_item-gap);
-    min-height: var(--sui_file_upload_item-min_height);
-    padding-block: var(--sui_file_upload_item-padding_block);
-    padding-inline: var(--sui_file_upload_item-padding_inline);
-    font-family: var(--sui_file_upload_item-font_family);
-    font-size: var(--sui_file_upload_item-font_size);
-    font-weight: var(--sui_file_upload_item-font_weight);
-    line-height: var(--sui_file_upload_item-line_height);
-    color: var(--sui_file_upload_item-color);
-    letter-spacing: var(--sui_file_upload_item-letter_spacing);
-    background-color: var(--sui_file_upload_item-background_color);
-    border-color: var(--sui_file_upload_item-border_color);
-    border-width: var(--sui_file_upload_item-border_width);
-    border-radius: var(--sui_file_upload_item-border_radius);
-    corner-shape: var(--sui_file_upload_item-corner_shape);
-  }
+  gap: var(--sui_file_upload_item-gap);
+  min-height: var(--sui_file_upload_item-min_height);
+  padding-block: var(--sui_file_upload_item-padding_block);
+  padding-inline: var(--sui_file_upload_item-padding_inline);
+  font-family: var(--sui_file_upload_item-font_family);
+  font-size: var(--sui_file_upload_item-font_size);
+  font-weight: var(--sui_file_upload_item-font_weight);
+  line-height: var(--sui_file_upload_item-line_height);
+  color: var(--sui_file_upload_item-color);
+  letter-spacing: var(--sui_file_upload_item-letter_spacing);
+  background-color: var(--sui_file_upload_item-background_color);
+  border-color: var(--sui_file_upload_item-border_color);
+  border-width: var(--sui_file_upload_item-border_width);
+  border-radius: var(--sui_file_upload_item-border_radius);
+  corner-shape: var(--sui_file_upload_item-corner_shape);
 }
 
 /* 代入 */
@@ -690,7 +668,7 @@
   --sui_file_upload_item-border_color: var(--sui-grey-naked-border-normal);
   --sui_file_upload_item-border_width: --sui-border_width(1);
 
-  &.sui_file_upload-size_sm {
+  &.sui_file_upload_item-size_sm {
     --sui_file_upload_item-min_height: var(--sui-size-sm);
     --sui_file_upload_item-padding_block: --sui-space(0.5);
     --sui_file_upload_item-padding_inline: --sui-space(1.5);
@@ -700,7 +678,7 @@
     --sui_file_upload_item-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
-  &.sui_file_upload-size_md {
+  &.sui_file_upload_item-size_md {
     --sui_file_upload_item-min_height: var(--sui-size-md);
     --sui_file_upload_item-padding_block: --sui-space(1);
     --sui_file_upload_item-padding_inline: --sui-space(2.5);
@@ -710,7 +688,7 @@
     --sui_file_upload_item-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
-  &.sui_file_upload-size_lg {
+  &.sui_file_upload_item-size_lg {
     --sui_file_upload_item-min_height: var(--sui-size-lg);
     --sui_file_upload_item-padding_block: --sui-space(1.5);
     --sui_file_upload_item-padding_inline: --sui-space(3.5);
@@ -720,26 +698,26 @@
     --sui_file_upload_item-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
-  &.sui_file_upload-radius_none {
+  &.sui_file_upload_item-radius_none {
     --sui_file_upload_item-border_radius: 0px;
   }
 
-  &.sui_file_upload-radius_sm {
+  &.sui_file_upload_item-radius_sm {
     --sui_file_upload_item-border_radius: --sui-corner_radius(1);
     --sui_file_upload_item-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_md {
+  &.sui_file_upload_item-radius_md {
     --sui_file_upload_item-border_radius: --sui-corner_radius(2);
     --sui_file_upload_item-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_lg {
+  &.sui_file_upload_item-radius_lg {
     --sui_file_upload_item-border_radius: --sui-corner_radius(3);
     --sui_file_upload_item-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_full {
+  &.sui_file_upload_item-radius_full {
     --sui_file_upload_item-border_radius: calc(var(--sui_file_upload_item-min_height) / 2);
     --sui_file_upload_item-corner_shape: superellipse(var(--sui-superellipse));
   }
@@ -750,17 +728,15 @@
 
 /* ItemName */
 @layer sui.component {
-@scope (.sui_file_upload) to ([data-scope]) {
+@scope (.sui_file_upload_item_name) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_file_upload_item_name {
-    flex: 1;
-    min-width: 0px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+  flex: 1;
+  min-width: 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 } /* @scope */
@@ -768,7 +744,7 @@
 
 /* ItemSizeText */
 @layer sui.component {
-@scope (.sui_file_upload) to ([data-scope]) {
+@scope (.sui_file_upload_item_size_text) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -782,14 +758,12 @@
 
 /* 可変 */
 :scope {
-  .sui_file_upload_item_size_text {
-    font-family: var(--sui_file_upload_item_size_text-font_family);
-    font-size: var(--sui_file_upload_item_size_text-font_size);
-    font-weight: var(--sui_file_upload_item_size_text-font_weight);
-    line-height: var(--sui_file_upload_item_size_text-line_height);
-    color: var(--sui_file_upload_item_size_text-color);
-    letter-spacing: var(--sui_file_upload_item_size_text-letter_spacing);
-  }
+  font-family: var(--sui_file_upload_item_size_text-font_family);
+  font-size: var(--sui_file_upload_item_size_text-font_size);
+  font-weight: var(--sui_file_upload_item_size_text-font_weight);
+  line-height: var(--sui_file_upload_item_size_text-line_height);
+  color: var(--sui_file_upload_item_size_text-color);
+  letter-spacing: var(--sui_file_upload_item_size_text-letter_spacing);
 }
 
 /* 代入 */
@@ -807,19 +781,17 @@
 
 /* ItemDeleteTrigger */
 @layer sui.component {
-@scope (.sui_file_upload) to ([data-scope]) {
+@scope (.sui_file_upload_item_delete_trigger) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_file_upload_item_delete_trigger {
-    display: inline-flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    touch-action: manipulation;
-    cursor: pointer;
-    outline-style: solid;
-  }
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  outline-style: solid;
 }
 
 /* 変数 */
@@ -837,18 +809,16 @@
 
 /* 可変 */
 :scope {
-  .sui_file_upload_item_delete_trigger {
-    width: var(--sui_file_upload_item_delete_trigger-size);
-    height: var(--sui_file_upload_item_delete_trigger-size);
-    font-size: var(--sui_file_upload_item_delete_trigger-font_size);
-    color: var(--sui_file_upload_item_delete_trigger-color);
-    outline-width: var(--_sui_file_upload_item_delete_trigger-outline_width, 0px);
-    outline-color: var(--sui_file_upload_item_delete_trigger-focusring_color);
-    outline-offset: var(--sui_file_upload_item_delete_trigger-focusring_offset);
-    background-color: var(--_sui_file_upload_item_delete_trigger-background_color, transparent);
-    border-radius: var(--sui_file_upload_item_delete_trigger-border_radius);
-    corner-shape: var(--sui_file_upload_item_delete_trigger-corner_shape);
-  }
+  width: var(--sui_file_upload_item_delete_trigger-size);
+  height: var(--sui_file_upload_item_delete_trigger-size);
+  font-size: var(--sui_file_upload_item_delete_trigger-font_size);
+  color: var(--sui_file_upload_item_delete_trigger-color);
+  outline-width: var(--_sui_file_upload_item_delete_trigger-outline_width, 0px);
+  outline-color: var(--sui_file_upload_item_delete_trigger-focusring_color);
+  outline-offset: var(--sui_file_upload_item_delete_trigger-focusring_offset);
+  background-color: var(--_sui_file_upload_item_delete_trigger-background_color, transparent);
+  border-radius: var(--sui_file_upload_item_delete_trigger-border_radius);
+  corner-shape: var(--sui_file_upload_item_delete_trigger-corner_shape);
 }
 
 /* 代入 */
@@ -859,41 +829,41 @@
   --sui_file_upload_item_delete_trigger-focusring_offset: var(--sui-focusring_offset);
   --sui_file_upload_item_delete_trigger-background_color-hover: var(--sui-grey-naked-canvas-subtle);
 
-  &.sui_file_upload-size_sm {
+  &.sui_file_upload_item_delete_trigger-size_sm {
     --sui_file_upload_item_delete_trigger-size: var(--sui-size-sm);
     --sui_file_upload_item_delete_trigger-font_size: var(--sui-text-oln-sm-n-font_size);
   }
 
-  &.sui_file_upload-size_md {
+  &.sui_file_upload_item_delete_trigger-size_md {
     --sui_file_upload_item_delete_trigger-size: var(--sui-size-md);
     --sui_file_upload_item_delete_trigger-font_size: var(--sui-text-oln-md-n-font_size);
   }
 
-  &.sui_file_upload-size_lg {
+  &.sui_file_upload_item_delete_trigger-size_lg {
     --sui_file_upload_item_delete_trigger-size: var(--sui-size-lg);
     --sui_file_upload_item_delete_trigger-font_size: var(--sui-text-oln-lg-n-font_size);
   }
 
-  &.sui_file_upload-radius_none {
+  &.sui_file_upload_item_delete_trigger-radius_none {
     --sui_file_upload_item_delete_trigger-border_radius: 0px;
   }
 
-  &.sui_file_upload-radius_sm {
+  &.sui_file_upload_item_delete_trigger-radius_sm {
     --sui_file_upload_item_delete_trigger-border_radius: --sui-corner_radius(1);
     --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_md {
+  &.sui_file_upload_item_delete_trigger-radius_md {
     --sui_file_upload_item_delete_trigger-border_radius: --sui-corner_radius(2);
     --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_lg {
+  &.sui_file_upload_item_delete_trigger-radius_lg {
     --sui_file_upload_item_delete_trigger-border_radius: --sui-corner_radius(3);
     --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_file_upload-radius_full {
+  &.sui_file_upload_item_delete_trigger-radius_full {
     --sui_file_upload_item_delete_trigger-border_radius: calc(var(--sui_file_upload_item_delete_trigger-size) / 2);
     --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
   }
@@ -901,7 +871,7 @@
 
 /* 変異 */
 :scope {
-  &:not(.sui_file_upload-disabled) .sui_file_upload_item_delete_trigger {
+  &:not(.sui_file_upload_item_delete_trigger-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_file_upload_item_delete_trigger-background_color:
@@ -920,15 +890,24 @@
 } /* @layer */
 
 /* disabled */
+/* Root */
 @layer sui.important {
 @scope (.sui_file_upload) to ([data-scope]) {
 
-/* Root */
 :scope {
   &.sui_file_upload-disabled {
     cursor: not-allowed;
   }
 }
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* Trigger */
+/* ルートの無効状態と外観に依存するため、ルート起点の別ブロックにまとめます。 */
+@layer sui.important {
+@scope (.sui_file_upload) to ([data-scope]) {
 
 /* Trigger */
 :scope {

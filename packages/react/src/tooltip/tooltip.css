@@ -14,13 +14,11 @@
 
 /* Positioner */
 @layer sui.component {
-@scope (.sui_tooltip_portal) to ([data-scope]) {
+@scope (.sui_tooltip_positioner) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_tooltip_positioner {
-    z-index: calc(infinity);
-  }
+  z-index: calc(infinity);
 }
 
 } /* @scope */
@@ -28,21 +26,19 @@
 
 /* Content */
 @layer sui.component {
-@scope (.sui_tooltip_portal) to ([data-scope]) {
+@scope (.sui_tooltip_content) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_tooltip_content {
-    display: flex;
-    flex-direction: column;
-    line-break: strict;
-    word-break: normal;
-    overflow-wrap: anywhere;
-    pointer-events: auto;
-    border-style: solid;
-    transition: opacity 150ms ease-out,
-                scale 150ms ease-out;
-  }
+  display: flex;
+  flex-direction: column;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  pointer-events: auto;
+  border-style: solid;
+  transition: opacity 150ms ease-out,
+              scale 150ms ease-out;
 }
 
 /* 変数 */
@@ -69,26 +65,24 @@
 
 /* 可変 */
 :scope {
-  .sui_tooltip_content {
-    gap: var(--sui_tooltip_content-gap);
-    max-width: var(--sui_tooltip_content-max_width);
-    padding-block: var(--sui_tooltip_content-padding_block);
-    padding-inline: var(--sui_tooltip_content-padding_inline);
-    font-family: var(--sui_tooltip_content-font_family);
-    font-size: var(--sui_tooltip_content-font_size);
-    font-weight: var(--sui_tooltip_content-font_weight);
-    line-height: var(--sui_tooltip_content-line_height);
-    color: var(--sui_tooltip_content-color);
-    letter-spacing: var(--sui_tooltip_content-letter_spacing);
-    background-color: var(--sui_tooltip_content-background_color);
-    border-color: var(--sui_tooltip_content-border_color);
-    border-width: var(--_sui_tooltip_content-border_width, 0px);
-    border-radius: var(--sui_tooltip_content-border_radius);
-    corner-shape: var(--sui_tooltip_content-corner_shape);
-    opacity: var(--_sui_tooltip_content-opacity, var(--sui_tooltip_content-opacity));
-    transform-origin: var(--sui_tooltip_content-transform_origin);
-    scale: var(--_sui_tooltip_content-scale, var(--sui_tooltip_content-scale));
-  }
+  gap: var(--sui_tooltip_content-gap);
+  max-width: var(--sui_tooltip_content-max_width);
+  padding-block: var(--sui_tooltip_content-padding_block);
+  padding-inline: var(--sui_tooltip_content-padding_inline);
+  font-family: var(--sui_tooltip_content-font_family);
+  font-size: var(--sui_tooltip_content-font_size);
+  font-weight: var(--sui_tooltip_content-font_weight);
+  line-height: var(--sui_tooltip_content-line_height);
+  color: var(--sui_tooltip_content-color);
+  letter-spacing: var(--sui_tooltip_content-letter_spacing);
+  background-color: var(--sui_tooltip_content-background_color);
+  border-color: var(--sui_tooltip_content-border_color);
+  border-width: var(--_sui_tooltip_content-border_width, 0px);
+  border-radius: var(--sui_tooltip_content-border_radius);
+  corner-shape: var(--sui_tooltip_content-corner_shape);
+  opacity: var(--_sui_tooltip_content-opacity, var(--sui_tooltip_content-opacity));
+  transform-origin: var(--sui_tooltip_content-transform_origin);
+  scale: var(--_sui_tooltip_content-scale, var(--sui_tooltip_content-scale));
 }
 
 /* 代入 */
@@ -105,7 +99,7 @@
   --sui_tooltip_content-transform_origin: var(--transform-origin);
   --sui_tooltip_content-scale: 1;
 
-  &.sui_tooltip_portal-size_sm {
+  &.sui_tooltip_content-size_sm {
     --sui_tooltip_content-max_width: calc(var(--sui_tooltip_content-font_size) * 20);
     --sui_tooltip_content-padding_block: calc(
                                            --sui-space(0.5)
@@ -121,7 +115,7 @@
     --sui_tooltip_content-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
   }
 
-  &.sui_tooltip_portal-size_md {
+  &.sui_tooltip_content-size_md {
     --sui_tooltip_content-max_width: calc(var(--sui_tooltip_content-font_size) * 24);
     --sui_tooltip_content-padding_block: calc(
                                            --sui-space(1)
@@ -137,7 +131,7 @@
     --sui_tooltip_content-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
   }
 
-  &.sui_tooltip_portal-size_lg {
+  &.sui_tooltip_content-size_lg {
     --sui_tooltip_content-max_width: calc(var(--sui_tooltip_content-font_size) * 28);
     --sui_tooltip_content-padding_block: calc(
                                            --sui-space(1.5)
@@ -153,21 +147,21 @@
     --sui_tooltip_content-letter_spacing: var(--sui-text-dns-md-n-letter_spacing);
   }
 
-  &.sui_tooltip_portal-radius_none {
+  &.sui_tooltip_content-radius_none {
     --sui_tooltip_content-border_radius: 0px;
   }
 
-  &.sui_tooltip_portal-radius_sm {
+  &.sui_tooltip_content-radius_sm {
     --sui_tooltip_content-border_radius: --sui-corner_radius(2);
     --sui_tooltip_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_tooltip_portal-radius_md {
+  &.sui_tooltip_content-radius_md {
     --sui_tooltip_content-border_radius: --sui-corner_radius(3);
     --sui_tooltip_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_tooltip_portal-radius_lg {
+  &.sui_tooltip_content-radius_lg {
     --sui_tooltip_content-border_radius: --sui-corner_radius(4);
     --sui_tooltip_content-corner_shape: superellipse(var(--sui-superellipse));
   }
@@ -175,13 +169,13 @@
 
 /* 変異 */
 :scope {
-  .sui_tooltip_content-transition_status_starting,
-  .sui_tooltip_content-transition_status_ending {
+  &.sui_tooltip_content-transition_status_starting,
+  &.sui_tooltip_content-transition_status_ending {
     --_sui_tooltip_content-opacity: 0;
     --_sui_tooltip_content-scale: 0.98;
   }
 
-  &.sui_tooltip_portal-outlined {
+  &.sui_tooltip_content-outlined {
     --_sui_tooltip_content-border_width: var(--sui_tooltip_content-border_width);
   }
 }
@@ -191,29 +185,27 @@
 
 /* Arrow */
 @layer sui.component {
-@scope (.sui_tooltip_portal) to ([data-scope]) {
+@scope (.sui_tooltip_arrow) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_tooltip_arrow {
-    position: relative;
-    display: block;
-    overflow: clip;
-  }
+  position: relative;
+  display: block;
+  overflow: clip;
 
-  .sui_tooltip_arrow-side_top {
+  &.sui_tooltip_arrow-side_top {
     rotate: 180deg;
   }
 
-  .sui_tooltip_arrow-side_left {
+  &.sui_tooltip_arrow-side_left {
     rotate: 90deg;
   }
 
-  .sui_tooltip_arrow-side_right {
+  &.sui_tooltip_arrow-side_right {
     rotate: -90deg;
   }
 
-  .sui_tooltip_arrow::before {
+  &::before {
     position: absolute;
     bottom: 0px;
     left: 50%;
@@ -235,28 +227,26 @@
 
 /* 可変 */
 :scope {
-  .sui_tooltip_arrow {
-    width: calc(var(--sui_tooltip_arrow-size) * 2);
-    height: var(--sui_tooltip_arrow-size);
-  }
+  width: calc(var(--sui_tooltip_arrow-size) * 2);
+  height: var(--sui_tooltip_arrow-size);
 
-  .sui_tooltip_arrow-side_top {
+  &.sui_tooltip_arrow-side_top {
     bottom: calc(var(--sui_tooltip_arrow-size) * -1);
   }
 
-  .sui_tooltip_arrow-side_bottom {
+  &.sui_tooltip_arrow-side_bottom {
     top: calc(var(--sui_tooltip_arrow-size) * -1);
   }
 
-  .sui_tooltip_arrow-side_left {
+  &.sui_tooltip_arrow-side_left {
     right: calc(var(--sui_tooltip_arrow-size) * -1.5);
   }
 
-  .sui_tooltip_arrow-side_right {
+  &.sui_tooltip_arrow-side_right {
     left: calc(var(--sui_tooltip_arrow-size) * -1.5);
   }
 
-  .sui_tooltip_arrow::before {
+  &::before {
     width: calc(var(--sui_tooltip_arrow-size) * sqrt(2));
     height: calc(var(--sui_tooltip_arrow-size) * sqrt(2));
     background-color: var(--sui_tooltip_arrow-background_color);
@@ -275,7 +265,7 @@
 
 /* 変異 */
 :scope {
-  &.sui_tooltip_portal-outlined .sui_tooltip_arrow {
+  &.sui_tooltip_arrow-outlined {
     --_sui_tooltip_arrow-border_width: var(--sui_tooltip_arrow-border_width);
   }
 }
@@ -285,14 +275,12 @@
 
 /* Viewport */
 @layer sui.component {
-@scope (.sui_tooltip_portal) to ([data-scope]) {
+@scope (.sui_tooltip_viewport) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_tooltip_viewport {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
 }
 
 } /* @scope */

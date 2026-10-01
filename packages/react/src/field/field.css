@@ -29,7 +29,7 @@
 
 /* Label */
 @layer sui.component {
-@scope (.sui_field) to ([data-scope]) {
+@scope (.sui_field_label) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -43,14 +43,12 @@
 
 /* 可変 */
 :scope {
-  .sui_field_label {
-    font-family: var(--sui_field_label-font_family);
-    font-size: var(--sui_field_label-font_size);
-    font-weight: var(--sui_field_label-font_weight);
-    line-height: var(--sui_field_label-line_height);
-    color: var(--sui_field_label-color);
-    letter-spacing: var(--sui_field_label-letter_spacing);
-  }
+  font-family: var(--sui_field_label-font_family);
+  font-size: var(--sui_field_label-font_size);
+  font-weight: var(--sui_field_label-font_weight);
+  line-height: var(--sui_field_label-line_height);
+  color: var(--sui_field_label-color);
+  letter-spacing: var(--sui_field_label-letter_spacing);
 }
 
 /* 代入 */
@@ -68,15 +66,13 @@
 
 /* Item */
 @layer sui.component {
-@scope (.sui_field) to ([data-scope]) {
+@scope (.sui_field_item) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_field_item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 /* 変数 */
@@ -86,9 +82,7 @@
 
 /* 可変 */
 :scope {
-  .sui_field_item {
-    gap: var(--sui_field_item-gap);
-  }
+  gap: var(--sui_field_item-gap);
 }
 
 /* 代入 */
@@ -101,7 +95,7 @@
 
 /* Description */
 @layer sui.component {
-@scope (.sui_field) to ([data-scope]) {
+@scope (.sui_field_description) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -115,14 +109,12 @@
 
 /* 可変 */
 :scope {
-  .sui_field_description {
-    font-family: var(--sui_field_description-font_family);
-    font-size: var(--sui_field_description-font_size);
-    font-weight: var(--sui_field_description-font_weight);
-    line-height: var(--sui_field_description-line_height);
-    color: var(--sui_field_description-color);
-    letter-spacing: var(--sui_field_description-letter_spacing);
-  }
+  font-family: var(--sui_field_description-font_family);
+  font-size: var(--sui_field_description-font_size);
+  font-weight: var(--sui_field_description-font_weight);
+  line-height: var(--sui_field_description-line_height);
+  color: var(--sui_field_description-color);
+  letter-spacing: var(--sui_field_description-letter_spacing);
 }
 
 /* 代入 */
@@ -140,7 +132,7 @@
 
 /* Error */
 @layer sui.component {
-@scope (.sui_field) to ([data-scope]) {
+@scope (.sui_field_error) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -154,14 +146,12 @@
 
 /* 可変 */
 :scope {
-  .sui_field_error {
-    font-family: var(--sui_field_error-font_family);
-    font-size: var(--sui_field_error-font_size);
-    font-weight: var(--sui_field_error-font_weight);
-    line-height: var(--sui_field_error-line_height);
-    color: var(--sui_field_error-color);
-    letter-spacing: var(--sui_field_error-letter_spacing);
-  }
+  font-family: var(--sui_field_error-font_family);
+  font-size: var(--sui_field_error-font_size);
+  font-weight: var(--sui_field_error-font_weight);
+  line-height: var(--sui_field_error-line_height);
+  color: var(--sui_field_error-color);
+  letter-spacing: var(--sui_field_error-letter_spacing);
 }
 
 /* 代入 */
@@ -178,49 +168,84 @@
 } /* @layer */
 
 /* disabled */
+/* Root */
 @layer sui.important {
 @scope (.sui_field) to ([data-scope]) {
 
-/* Root */
 :scope {
   &.sui_field-disabled {
     cursor: not-allowed;
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Label */
+@layer sui.important {
+@scope (.sui_field_label) to ([data-scope]) {
+
 :scope {
-  &.sui_field-disabled .sui_field_label {
+  &.sui_field_label-disabled {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Control */
+@layer sui.important {
+@scope (.sui_field_control) to ([data-scope]) {
+
 :scope {
-  &.sui_field-disabled .sui_field_control {
+  &.sui_field_control-disabled {
     cursor: not-allowed;
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Item */
+@layer sui.important {
+@scope (.sui_field_item) to ([data-scope]) {
+
 :scope {
-  &.sui_field-disabled .sui_field_item {
+  &.sui_field_item-disabled {
     cursor: not-allowed;
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Description */
+@layer sui.important {
+@scope (.sui_field_description) to ([data-scope]) {
+
 :scope {
-  &.sui_field-disabled .sui_field_description {
+  &.sui_field_description-disabled {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Error */
+@layer sui.important {
+@scope (.sui_field_error) to ([data-scope]) {
+
 :scope {
-  &.sui_field-disabled .sui_field_error {
+  &.sui_field_error-disabled {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
   }

@@ -82,22 +82,20 @@
 
 /* List */
 @layer sui.component {
-@scope (.sui_tabs) to ([data-scope]) {
+@scope (.sui_tabs_list) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_tabs_list {
-    position: relative;
-    display: flex;
-    flex-shrink: 0;
-  }
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
 
-  &.sui_tabs-orientation_horizontal .sui_tabs_list {
+  &.sui_tabs_list-orientation_horizontal {
     flex-direction: row;
     border-block-end-style: solid;
   }
 
-  &.sui_tabs-orientation_vertical .sui_tabs_list {
+  &.sui_tabs_list-orientation_vertical {
     flex-direction: column;
     border-inline-end-style: solid;
   }
@@ -119,23 +117,21 @@
 
 /* 可変 */
 :scope {
-  .sui_tabs_list {
-    gap: var(--sui_tabs_list-gap);
-    padding-block-start: var(--sui_tabs_list-padding_block_start);
-    padding-block-end: var(--sui_tabs_list-padding_block_end);
-    padding-inline-start: var(--sui_tabs_list-padding_inline_start);
-    padding-inline-end: var(--sui_tabs_list-padding_inline_end);
-    background-color: var(--sui_tabs_list-background_color);
-    border-radius: var(--sui_tabs_list-border_radius);
-    corner-shape: var(--sui_tabs_list-corner_shape);
-  }
+  gap: var(--sui_tabs_list-gap);
+  padding-block-start: var(--sui_tabs_list-padding_block_start);
+  padding-block-end: var(--sui_tabs_list-padding_block_end);
+  padding-inline-start: var(--sui_tabs_list-padding_inline_start);
+  padding-inline-end: var(--sui_tabs_list-padding_inline_end);
+  background-color: var(--sui_tabs_list-background_color);
+  border-radius: var(--sui_tabs_list-border_radius);
+  corner-shape: var(--sui_tabs_list-corner_shape);
 
-  &.sui_tabs-orientation_horizontal .sui_tabs_list {
+  &.sui_tabs_list-orientation_horizontal {
     border-block-end-color: var(--sui_tabs_list-border_color);
     border-block-end-width: var(--sui_tabs_list-border_width);
   }
 
-  &.sui_tabs-orientation_vertical .sui_tabs_list {
+  &.sui_tabs_list-orientation_vertical {
     border-inline-end-color: var(--sui_tabs_list-border_color);
     border-inline-end-width: var(--sui_tabs_list-border_width);
   }
@@ -146,19 +142,19 @@
   --sui_tabs_list-border_color: var(--sui-grey-naked-border-normal);
   --sui_tabs_list-border_width: --sui-border_width(1);
 
-  &.sui_tabs-size_sm {
+  &.sui_tabs_list-size_sm {
     --sui_tabs_list-gap: --sui-gap(0.5);
   }
 
-  &.sui_tabs-size_md {
+  &.sui_tabs_list-size_md {
     --sui_tabs_list-gap: --sui-gap(1);
   }
 
-  &.sui_tabs-size_lg {
+  &.sui_tabs_list-size_lg {
     --sui_tabs_list-gap: --sui-gap(1.5);
   }
 
-  &.sui_tabs-variant_segments {
+  &.sui_tabs_list-variant_segments {
     --sui_tabs_list-padding_block_start: var(--sui_tabs-padding-around);
     --sui_tabs_list-padding_block_end: var(--sui_tabs-padding-around);
     --sui_tabs_list-padding_inline_start: var(--sui_tabs-padding-around);
@@ -169,7 +165,7 @@
     --sui_tabs_list-corner_shape: var(--sui_tabs-corner_shape);
   }
 
-  &.sui_tabs-orientation_horizontal.sui_tabs-variant_line {
+  &.sui_tabs_list-orientation_horizontal.sui_tabs_list-variant_line {
     --sui_tabs_list-padding_block_start: var(--sui_tabs-padding-around);
     --sui_tabs_list-padding_block_end: 0px;
     --sui_tabs_list-padding_inline_start: var(--sui_tabs-padding-around);
@@ -178,7 +174,7 @@
     --sui_tabs_list-border_radius: 0px;
   }
 
-  &.sui_tabs-orientation_vertical.sui_tabs-variant_line {
+  &.sui_tabs_list-orientation_vertical.sui_tabs_list-variant_line {
     --sui_tabs_list-padding_block_start: var(--sui_tabs-padding-around);
     --sui_tabs_list-padding_block_end: var(--sui_tabs-padding-around);
     --sui_tabs_list-padding_inline_start: var(--sui_tabs-padding-around);
@@ -187,15 +183,15 @@
     --sui_tabs_list-border_radius: 0px;
   }
 
-  &.sui_tabs-variant_segments.sui_tabs-size_sm {
+  &.sui_tabs_list-variant_segments.sui_tabs_list-size_sm {
     --sui_tabs_list-gap: --sui-gap(0.5);
   }
 
-  &.sui_tabs-variant_segments.sui_tabs-size_md {
+  &.sui_tabs_list-variant_segments.sui_tabs_list-size_md {
     --sui_tabs_list-gap: --sui-gap(1);
   }
 
-  &.sui_tabs-variant_segments.sui_tabs-size_lg {
+  &.sui_tabs_list-variant_segments.sui_tabs_list-size_lg {
     --sui_tabs_list-gap: --sui-gap(1.5);
   }
 }
@@ -206,24 +202,22 @@
 /* Tab */
 /* タブ自体に枠線は付けません。選択中の背景と枠線は Indicator が描画します。 */
 @layer sui.component {
-@scope (.sui_tabs) to ([data-scope]) {
+@scope (.sui_tabs_tab) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_tabs_tab {
-    position: relative;
-    z-index: 1;
-    display: inline-flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    touch-action: manipulation;
-    cursor: default;
-    user-select: none;
-    outline-style: solid;
-    background-color: transparent;
-  }
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  touch-action: manipulation;
+  cursor: default;
+  user-select: none;
+  outline-style: solid;
+  background-color: transparent;
 }
 
 /* 変数 */
@@ -249,22 +243,20 @@
 
 /* 可変 */
 :scope {
-  .sui_tabs_tab {
-    min-height: var(--sui_tabs_tab-min_height);
-    padding-block: var(--sui_tabs_tab-padding_block);
-    padding-inline: var(--sui_tabs_tab-padding_inline);
-    font-family: var(--sui_tabs_tab-font_family);
-    font-size: var(--sui_tabs_tab-font_size);
-    font-weight: var(--sui_tabs_tab-font_weight);
-    line-height: var(--sui_tabs_tab-line_height);
-    color: var(--_sui_tabs_tab-color, var(--sui_tabs_tab-color-idle));
-    letter-spacing: var(--sui_tabs_tab-letter_spacing);
-    outline-width: var(--_sui_tabs_tab-outline_width, 0px);
-    outline-color: var(--_sui_tabs_tab-outline_color, transparent);
-    outline-offset: var(--_sui_tabs_tab-outline_offset, 0px);
-    border-radius: var(--sui_tabs_tab-border_radius);
-    corner-shape: var(--sui_tabs_tab-corner_shape);
-  }
+  min-height: var(--sui_tabs_tab-min_height);
+  padding-block: var(--sui_tabs_tab-padding_block);
+  padding-inline: var(--sui_tabs_tab-padding_inline);
+  font-family: var(--sui_tabs_tab-font_family);
+  font-size: var(--sui_tabs_tab-font_size);
+  font-weight: var(--sui_tabs_tab-font_weight);
+  line-height: var(--sui_tabs_tab-line_height);
+  color: var(--_sui_tabs_tab-color, var(--sui_tabs_tab-color-idle));
+  letter-spacing: var(--sui_tabs_tab-letter_spacing);
+  outline-width: var(--_sui_tabs_tab-outline_width, 0px);
+  outline-color: var(--_sui_tabs_tab-outline_color, transparent);
+  outline-offset: var(--_sui_tabs_tab-outline_offset, 0px);
+  border-radius: var(--sui_tabs_tab-border_radius);
+  corner-shape: var(--sui_tabs_tab-corner_shape);
 }
 
 /* 代入 */
@@ -285,10 +277,12 @@
                                             var(--sui_tabs_tab-font_size)
                                             * var(--sui_tabs_tab-line_height)
                                           );
+
+  /* 大きさで変わる活字と最小の高さに追従させるため、要素起点で代入します。 */
   --sui_tabs_tab-border_radius: var(--sui_tabs-border_radius);
   --sui_tabs_tab-corner_shape: var(--sui_tabs-corner_shape);
 
-  &.sui_tabs-size_sm {
+  &.sui_tabs_tab-size_sm {
     --sui_tabs_tab-min_height: var(--sui-size-sm);
     --sui_tabs_tab-padding_inline: --sui-space(2);
     --sui_tabs_tab-font_size: var(--sui-text-oln-sm-m-font_size);
@@ -297,7 +291,7 @@
     --sui_tabs_tab-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
   }
 
-  &.sui_tabs-size_md {
+  &.sui_tabs_tab-size_md {
     --sui_tabs_tab-min_height: var(--sui-size-md);
     --sui_tabs_tab-padding_inline: --sui-space(3);
     --sui_tabs_tab-font_size: var(--sui-text-oln-md-m-font_size);
@@ -306,7 +300,7 @@
     --sui_tabs_tab-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
   }
 
-  &.sui_tabs-size_lg {
+  &.sui_tabs_tab-size_lg {
     --sui_tabs_tab-min_height: var(--sui-size-lg);
     --sui_tabs_tab-padding_inline: --sui-space(4);
     --sui_tabs_tab-font_size: var(--sui-text-oln-lg-m-font_size);
@@ -315,32 +309,32 @@
     --sui_tabs_tab-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
   }
 
-  &.sui_tabs-variant_segments {
-    &.sui_tabs-active_variant_solid {
+  &.sui_tabs_tab-variant_segments {
+    &.sui_tabs_tab-active_variant_solid {
       --sui_tabs_tab-color-active: var(--sui-grey-solid-canvas_text-normal);
     }
 
-    &.sui_tabs-active_variant_naked {
+    &.sui_tabs_tab-active_variant_naked {
       --sui_tabs_tab-color-active: var(--sui-grey-naked-canvas_text-normal);
     }
 
-    &.sui_tabs-active_variant_liquid {
+    &.sui_tabs_tab-active_variant_liquid {
       --sui_tabs_tab-color-active: var(--sui-grey-liquid-canvas_text-normal);
     }
   }
 
-  &.sui_tabs-variant_line {
+  &.sui_tabs_tab-variant_line {
     --sui_tabs_tab-color-active: var(--sui-canvas_text-1);
   }
 }
 
 /* 変異 */
 :scope {
-  .sui_tabs_tab-active {
+  &.sui_tabs_tab-active {
     --_sui_tabs_tab-color: var(--sui_tabs_tab-color-active);
   }
 
-  .sui_tabs_tab:not(.sui_tabs_tab-disabled) {
+  &:not(.sui_tabs_tab-disabled) {
     @media (any-hover: hover) {
       &:not(.sui_tabs_tab-active):hover {
         --_sui_tabs_tab-color: var(--sui_tabs_tab-color-hover);
@@ -360,15 +354,13 @@
 
 /* Indicator */
 @layer sui.component {
-@scope (.sui_tabs) to ([data-scope]) {
+@scope (.sui_tabs_indicator) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_tabs_indicator {
-    position: absolute;
-    pointer-events: none;
-    border-style: solid;
-  }
+  position: absolute;
+  pointer-events: none;
+  border-style: solid;
 }
 
 /* 変数 */
@@ -393,37 +385,35 @@
 
 /* 可変 */
 :scope {
-  .sui_tabs_indicator {
-    z-index: var(--sui_tabs_indicator-z_index);
-    display: var(--sui_tabs_indicator-display);
-    background-color: var(--sui_tabs_indicator-background_color);
-    border-color: var(--sui_tabs_indicator-border_color);
-    border-width: var(--sui_tabs_indicator-border_width);
-    border-radius: var(--sui_tabs_indicator-border_radius);
-    corner-shape: var(--sui_tabs_indicator-corner_shape);
-    transition: var(--_sui_tabs_indicator-transition,
-                  inset-inline-start 240ms cubic-bezier(0.25, 0.7, 0.3, 1),
-                  width              240ms cubic-bezier(0.25, 0.7, 0.3, 1),
-                  inset-block-start  240ms cubic-bezier(0.25, 0.7, 0.3, 1),
-                  height             240ms cubic-bezier(0.25, 0.7, 0.3, 1)
-                );
-  }
+  z-index: var(--sui_tabs_indicator-z_index);
+  display: var(--sui_tabs_indicator-display);
+  background-color: var(--sui_tabs_indicator-background_color);
+  border-color: var(--sui_tabs_indicator-border_color);
+  border-width: var(--sui_tabs_indicator-border_width);
+  border-radius: var(--sui_tabs_indicator-border_radius);
+  corner-shape: var(--sui_tabs_indicator-corner_shape);
+  transition: var(--_sui_tabs_indicator-transition,
+                inset-inline-start 240ms cubic-bezier(0.25, 0.7, 0.3, 1),
+                width              240ms cubic-bezier(0.25, 0.7, 0.3, 1),
+                inset-block-start  240ms cubic-bezier(0.25, 0.7, 0.3, 1),
+                height             240ms cubic-bezier(0.25, 0.7, 0.3, 1)
+              );
 
-  &.sui_tabs-orientation_horizontal.sui_tabs-variant_line .sui_tabs_indicator {
+  &.sui_tabs_indicator-orientation_horizontal.sui_tabs_indicator-variant_line {
     inset-block-end: var(--sui_tabs_indicator-active_bottom);
     inset-inline-start: calc(var(--sui_tabs_indicator-active_left) + var(--sui_tabs_indicator-inset));
     width: calc(var(--sui_tabs_indicator-active_width) - var(--sui_tabs_indicator-inset) * 2);
     height: var(--sui_tabs_indicator-size);
   }
 
-  &.sui_tabs-orientation_vertical.sui_tabs-variant_line .sui_tabs_indicator {
+  &.sui_tabs_indicator-orientation_vertical.sui_tabs_indicator-variant_line {
     inset-block-start: calc(var(--sui_tabs_indicator-active_top) + var(--sui_tabs_indicator-inset));
     inset-inline-end: var(--sui_tabs_indicator-active_right);
     width: var(--sui_tabs_indicator-size);
     height: calc(var(--sui_tabs_indicator-active_height) - var(--sui_tabs_indicator-inset) * 2);
   }
 
-  &.sui_tabs-variant_segments .sui_tabs_indicator {
+  &.sui_tabs_indicator-variant_segments {
     inset-block-start: var(--sui_tabs_indicator-active_top);
     inset-inline-start: var(--sui_tabs_indicator-active_left);
     width: var(--sui_tabs_indicator-active_width);
@@ -440,19 +430,27 @@
   --sui_tabs_indicator-border_width: 0px;
 
   /* Base UI がインジケーター自身に設定する変数を受けるため、要素起点で代入します。 */
-  .sui_tabs_indicator {
-    --sui_tabs_indicator-active_bottom: var(--active-tab-bottom, 0px);
-    --sui_tabs_indicator-active_height: var(--active-tab-height, 0px);
-    --sui_tabs_indicator-active_left: var(--active-tab-left, 0px);
-    --sui_tabs_indicator-active_right: var(--active-tab-right, 0px);
-    --sui_tabs_indicator-active_top: var(--active-tab-top, 0px);
-    --sui_tabs_indicator-active_width: var(--active-tab-width, 0px);
-  }
+  --sui_tabs_indicator-active_bottom: var(--active-tab-bottom, 0px);
+  --sui_tabs_indicator-active_height: var(--active-tab-height, 0px);
+  --sui_tabs_indicator-active_left: var(--active-tab-left, 0px);
+  --sui_tabs_indicator-active_right: var(--active-tab-right, 0px);
+  --sui_tabs_indicator-active_top: var(--active-tab-top, 0px);
+  --sui_tabs_indicator-active_width: var(--active-tab-width, 0px);
 
-  &.sui_tabs-variant_segments {
-    --sui_tabs_indicator-min_height: var(--sui_tabs_tab-min_height);
+  &.sui_tabs_indicator-variant_segments {
+    &.sui_tabs_indicator-size_sm {
+      --sui_tabs_indicator-min_height: var(--sui-size-sm);
+    }
 
-    &.sui_tabs-active_variant_solid {
+    &.sui_tabs_indicator-size_md {
+      --sui_tabs_indicator-min_height: var(--sui-size-md);
+    }
+
+    &.sui_tabs_indicator-size_lg {
+      --sui_tabs_indicator-min_height: var(--sui-size-lg);
+    }
+
+    &.sui_tabs_indicator-active_variant_solid {
       --sui_tabs_indicator-z_index: 0;
       --sui_tabs_indicator-display: block;
       --sui_tabs_indicator-background_color: var(--sui-grey-solid-canvas-normal);
@@ -460,7 +458,7 @@
       --sui_tabs_indicator-corner_shape: var(--sui_tabs-corner_shape);
     }
 
-    &.sui_tabs-active_variant_naked {
+    &.sui_tabs_indicator-active_variant_naked {
       --sui_tabs_indicator-z_index: 0;
       --sui_tabs_indicator-display: block;
       --sui_tabs_indicator-background_color: color-mix(
@@ -474,7 +472,7 @@
       --sui_tabs_indicator-corner_shape: var(--sui_tabs-corner_shape);
     }
 
-    &.sui_tabs-active_variant_liquid {
+    &.sui_tabs_indicator-active_variant_liquid {
       --sui_tabs_indicator-z_index: 0;
       --sui_tabs_indicator-display: block;
       --sui_tabs_indicator-background_color: color-mix(
@@ -489,7 +487,7 @@
     }
   }
 
-  &.sui_tabs-variant_line {
+  &.sui_tabs_indicator-variant_line {
     --sui_tabs_indicator-z_index: 2;
     --sui_tabs_indicator-display: block;
     --sui_tabs_indicator-background_color: var(--sui-canvas_text-1);
@@ -500,9 +498,7 @@
 /* 変異 */
 :scope {
   @media (prefers-reduced-motion: reduce) {
-    .sui_tabs_indicator {
-      --_sui_tabs_indicator-transition: none;
-    }
+    --_sui_tabs_indicator-transition: none;
   }
 }
 
@@ -511,14 +507,12 @@
 
 /* Panel */
 @layer sui.component {
-@scope (.sui_tabs) to ([data-scope]) {
+@scope (.sui_tabs_panel) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_tabs_panel {
-    min-width: 0px;
-    outline-style: none;
-  }
+  min-width: 0px;
+  outline-style: none;
 }
 
 /* 変数 */
@@ -529,10 +523,8 @@
 
 /* 可変 */
 :scope {
-  .sui_tabs_panel {
-    padding-block: var(--sui_tabs_panel-padding_block);
-    padding-inline: var(--sui_tabs_panel-padding_inline);
-  }
+  padding-block: var(--sui_tabs_panel-padding_block);
+  padding-inline: var(--sui_tabs_panel-padding_inline);
 }
 
 /* 代入 */
@@ -546,11 +538,11 @@
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_tabs) to ([data-scope]) {
+@scope (.sui_tabs_tab) to ([data-scope]) {
 
 /* Tab */
 :scope {
-  .sui_tabs_tab-disabled {
+  &.sui_tabs_tab-disabled {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
     background-color: var(--sui-disabled-naked-canvas);

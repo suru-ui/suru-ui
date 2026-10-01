@@ -23,9 +23,9 @@ TriggerLabel → InputGroup → Input → Icon → Clear → Chips → Chip → 
 パーツごとに `/* パーツ名 */` + `@layer` + `@scope` のブロックを置きます。パーツツリー順に並べます。
 
 ```css
-/* Root */
+/* Input */
 @layer sui.component {
-@scope (.sui_combobox) to ([data-scope]) {
+@scope (.sui_combobox_input) to ([data-scope]) {
 
 /* 固定 */
 :scope {
@@ -52,31 +52,63 @@ TriggerLabel → InputGroup → Input → Icon → Clear → Chips → Chip → 
 ```
 
 - `@layer` は通常 `sui.component` です。読み取り専用は `sui.overrides`、無効状態は `sui.important` を末尾に置きます。詳しくは `## 読み取り専用` と `## 無効状態` に従います。
-- `@scope` の始点はスタイル起点の要素にします。Root が DOM を持たない場合は `InputGroup` (`.sui_combobox`) と `Portal` (`.sui_combobox_portal`) を起点にし、兄弟要素 (`TriggerLabel` の `.sui_combobox_trigger_label`) は自身を起点にします。終点は原則 `to ([data-scope])` です。内包先の `data-scope` を跨ぐ宣言の扱いは `### 例外スコープの分離` と `### 下限の `:not()` 除外` に従います。
+- `@scope` の始点は原則そのパーツ自身の基底クラス (`Input` なら `.sui_combobox_input`、`Root` なら `.sui_combobox`) にします。終点は原則 `to ([data-scope])` です。
+- 祖先・兄弟・他パーツに依存する規則や、パーツ自身を起点にできない規則だけを例外として祖先起点の別ブロックに分けます。詳しくは `### スコープ起点の選び方` と `### 例外ブロック` に従います。
 - ブロック内はすべて `:scope { ... }` に書きます。
 - 閉じ括弧に `} /* @scope */` と `} /* @layer */` のコメントを付けます。
-- 同じ起点でもパーツごとにブロックを分けます。
+- 同じパーツでも例外は別ブロックに分けます。
 
 ```css
-/* InputGroup */
+/* Input */
 @layer sui.component {
-@scope (.sui_combobox) to ([data-scope]) {
+@scope (.sui_combobox_input) to ([data-scope]) {
 } /* @scope */
 } /* @layer */
 
-/* Input */
+/* InputDisplay */
 @layer sui.component {
-@scope (.sui_combobox) to ([data-scope]) {
+@scope (.sui_combobox_input_display) to ([data-scope]) {
 } /* @scope */
 } /* @layer */
 ```
 
 ### スコープ起点の選び方
 
-- 入力系のパーツ (`InputGroup`・`Input`・`Icon`・`Clear`・`Chips`・`Chip`・`ChipRemove`・`InputDisplay`) は `.sui_combobox` 起点にします。
-- ポップアップ系のパーツ (`Backdrop`・`Positioner`・`Popup`・`Arrow`・`Status`・`Empty`・`ScrollArea`・`Viewport`・`List`・`Group`・`GroupLabel`・`Separator`) は `.sui_combobox_portal` 起点にします。
-- `TriggerLabel` は入力グループの兄弟要素のため、自身 (`.sui_combobox_trigger_label`) 起点の別ブロックにします。
-- `Portal` 自体は `ctx` の `size`・`radius` を `sui_combobox_portal-size_*`・`sui_combobox_portal-radius_*` として持ち、ポップアップ系の `代入` は `&.sui_combobox_portal-size_sm` の形で受けます。
+- パーツのブロックは、そのパーツの基底クラスを `@scope` の始点にします。`Root` は `.sui_combobox`、`Portal` は `.sui_combobox_portal`、`Input` は `.sui_combobox_input`、`TriggerLabel` は `.sui_combobox_trigger_label` です。
+- 本文はパーツ自身とその子孫だけを表せるため、`:scope` はパーツ要素を指します。パーツ自身への宣言は `:scope { ... }`、自身の修飾は `:scope { &.sui_combobox_input-size_sm { ... } }`、子孫は `:scope { svg:not(.sui-ignore) { ... } }` のように書きます。
+- パーツ自身が等価な状態クラスを持つ場合は、祖先を見ずに自身のクラスを使います。例: `.sui_combobox_item-highlighted` は `&.sui_combobox_item-highlighted` にします。
+- `Portal` 自体は `ctx` の `size`・`radius` を `sui_combobox_portal-size_*`・`sui_combobox_portal-radius_*` として持ちます。ポップアップ系のパーツがポータルの修飾を受ける必要がある場合は、ポータル起点の例外ブロックで `&.sui_combobox_portal-size_sm` の形で受けます。
+- パーツが別コンポーネント経由で描画され、そのコンポーネントが `data-scope` を持つ場合は、既存の起点と下限 (`### 下限の `:not()` 除外` / `### 例外スコープの分離`) を維持し、理由をコメントで残します。
+
+### 例外ブロック
+
+パーツ起点では表せない規則は、祖先パーツ起点の別ブロックに残します。迷ったら例外に残します。
+
+- 兄弟・位置に依存する規則 (`+`・`~`・`:first-child`・`:last-child`・`:nth-child` など) は、パーツを内包する祖先 (通常はルート) 起点にします。パーツ起点の `:scope + :scope` はスコープの外を指せないため一致しません。
+- 祖先パーツの状態に依存し、パーツ自身に等価なクラスが無い規則は、祖先起点の例外にします。パーツ自身に等価なクラスがある場合は自身のクラスを使います。
+- 複数パーツにまたがる規則や、公開変数を兄弟パーツと共有する規則は、ルート起点の例外にまとめます。
+- 例外ブロックには `/* パーツ名 */` の直下に理由コメントを書きます。例外ブロックは元のパーツブロックの直後に置き、パーツの並び順を維持します。
+
+```css
+/* Item */
+/* 隣接する項目に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_accordion) to ([data-scope]) {
+
+/* 可変 */
+:scope {
+  .sui_accordion_item + .sui_accordion_item {
+    border-top-color: var(--_sui_accordion_item-border_top_color, transparent);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+```
+
+- 公開変数をルートで上書きできる必要がある場合は、`変数` (空宣言) と `代入` をルート起点の例外にまとめます。パーツ要素で空宣言すると、祖先から継承した代入値を遮蔽してしまうためです。
+- 内包する別コンポーネントの規則に意図的に優先させる規則は、詳細度が1クラス分下がります。必要に応じて `&.sui_<パーツ>` を足すか、ルート起点の例外にして詳細度とスコープ近接を元の状態に保ちます。
+- 代入が参照する変数の評価位置を変えないでください。関数 (`--sui-icon_color()` など) を含む代入は、参照先の変数が空の要素で評価されることを前提にしている場合があります。評価位置を維持するにはルート起点の例外にします。
 
 ### 下限の `:not()` 除外
 
@@ -497,7 +529,8 @@ TriggerLabel → InputGroup → Input → Icon → Clear → Chips → Chip → 
 ## 読み取り専用
 
 - `readonly` は `@layer sui.overrides` の別ブロックにします。`sui.component` と `sui.important` の中間の優先度として使います。
-- パーツごとに `/* Clear */` などの小見出しを付け、小見出しごとに `:scope` を 1 つ置きます。
+- パーツ自身に `-readonly` クラスがある場合はパーツ起点のブロックにし、`&.sui_<パーツ>-readonly` で書きます。
+- ルートの `-readonly` 状態に依存する場合や、パーツに `-readonly` クラスが無い場合は、ルート起点の例外ブロックにまとめます。パーツごとに `/* Clear */` などの小見出しを付け、小見出しごとに `:scope` を 1 つ置きます。
 - 変数は使わず、生の `prop` と `-idle` トークンを直接書きます。無効になる要素すべてに `cursor: not-allowed` を付けます。
 
 ```css
@@ -506,6 +539,7 @@ TriggerLabel → InputGroup → Input → Icon → Clear → Chips → Chip → 
 @scope (.sui_combobox) to ([data-scope]) {
 
 /* Clear */
+/* 削除ボタン自身に readonly クラスが無いため、ルート起点の別ブロックにします。 */
 :scope {
   &.sui_combobox-readonly .sui_combobox_clear {
     color: var(--sui_combobox_clear-color-idle);
@@ -520,32 +554,43 @@ TriggerLabel → InputGroup → Input → Icon → Clear → Chips → Chip → 
 
 ## 無効状態
 
-- 末尾に `@layer sui.important` ブロックを置きます。入力系は `.sui_combobox` 起点の 1 ブロックにまとめ、パーツごとに `/* Root */` などの小見出しを付け、小見出しごとに `:scope` を 1 つ置きます。
+- 末尾に `@layer sui.important` ブロックを置きます。
+- パーツ自身に `-disabled` クラスがある場合は、そのパーツ起点のブロックに `&.sui_<パーツ>-disabled` で書きます。パーツごとにブロックを分けて構いません。
+- ルートの無効状態・外観に依存する場合や、パーツに `-disabled` クラスが無い場合は、ルート起点の例外ブロックにまとめます。パーツごとに `/* Root */` などの小見出しを付け、小見出しごとに `:scope` を 1 つ置きます。
 - 変数は使わず、生の `prop` と `var(--sui-disabled-*)` を直接書きます。
-- 対象は起点の無効クラスと各パーツの無効クラスです。`variant` があるパーツは `variant` ごとに書きます。`Chip`・`ChipRemove` は `variant_solid` / `variant_naked` / `variant_liquid` を全列挙し、`svg` の色も `--sui-icon_color()` で明示します。
+- `variant` があるパーツは `variant` ごとに書きます。`Chip`・`ChipRemove` は `variant_solid` / `variant_naked` / `variant_liquid` を全列挙し、`svg` の色も `--sui-icon_color()` で明示します。
 - 無効になる要素すべてに `cursor: not-allowed` を付けます。
 
 ```css
 /* disabled */
+/* Root */
 @layer sui.important {
 @scope (.sui_combobox) to ([data-scope]) {
 
-/* Root */
 :scope {
   &.sui_combobox-disabled {
     cursor: not-allowed;
   }
 }
 
-/* Input */
-:scope {
-  &.sui_combobox-disabled {
-    &.sui_combobox-variant_naked .sui_combobox_input {
-      color: var(--sui-disabled-naked-canvas_text);
+} /* @scope */
+} /* @layer */
 
-      &::placeholder {
-        color: var(--sui-disabled-naked-canvas_text);
-      }
+/* disabled */
+/* Input */
+@layer sui.important {
+@scope (.sui_combobox_input) to ([data-scope]) {
+
+:scope {
+  &.sui_combobox_input-disabled {
+    cursor: not-allowed;
+  }
+
+  &.sui_combobox_input-disabled.sui_combobox_input-variant_naked {
+    color: var(--sui-disabled-naked-canvas_text);
+
+    &::placeholder {
+      color: var(--sui-disabled-naked-canvas_text);
     }
   }
 }
@@ -553,14 +598,14 @@ TriggerLabel → InputGroup → Input → Icon → Clear → Chips → Chip → 
 } /* @scope */
 } /* @layer */
 
-/* TriggerLabel */
-/* トリガーラベルは入力グループの兄弟要素のため、上のスコープでは届きません。自身の無効クラスで判定する別ブロックにします。 */
+/* disabled */
+/* Addon */
+/* ルートの無効状態と外観の組み合わせに依存し、アドオン自身に無効クラスが無いため、ルート起点の別ブロックにします。 */
 @layer sui.important {
-@scope (.sui_combobox_trigger_label) to ([data-scope]) {
+@scope (.sui_combobox) to ([data-scope]) {
 
-/* Root */
 :scope {
-  &.sui_combobox_trigger_label-disabled {
+  &.sui_combobox-disabled.sui_combobox-variant_naked .sui_combobox_addon {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
   }
@@ -577,10 +622,13 @@ TriggerLabel → InputGroup → Input → Icon → Clear → Chips → Chip → 
 - 私的変数 (`--_sui_...`) を `変異` 以外で代入しない。`Status:empty` のような私的代入も `変異` に置きます。
 - 私的変数をフォールバックなしで参照しない。例: `var(--_sui_combobox-border_color, transparent)` のように書きます。
 - `可変` で全体トークンを直接参照しない。例: `var(--sui-canvas-1)` や `var(--sui-radius-md)` は `代入` に書き、`可変` は自部品の変数を経由します。
-- パーツごとに `@layer` + `@scope` ブロックを分ける。複数パーツを 1 ブロックにまとめない。ただし `[data-scope]` の下限の有無が異なるスタイルは、理由のコメント付きで別ブロックに分けます。分離するのは境界を跨ぐ宣言だけにし、適用する `可変` と `変異` はペアで移します。他パーツの私的変数を別ブロックの `変異` で代入しない。
-- 状態クラスを子起点に分散させない。スタイル起点 (Root が DOM を持たない場合は InputGroup / Portal) に集約します (独立状態の子・兄弟起点は例外)。
+- パーツごとに `@layer` + `@scope` ブロックを分ける。複数パーツを 1 ブロックにまとめない。原則はパーツ自身のクラス起点とし、祖先・兄弟依存の規則だけを理由コメント付きの例外ブロックに分けます。`[data-scope]` の下限の有無が異なるスタイルも、理由のコメント付きで別ブロックに分けます。分離するのは境界を跨ぐ宣言だけにし、適用する `可変` と `変異` はペアで移します。他パーツの私的変数を別ブロックの `変異` で代入しない。
+- 祖先・兄弟・他パーツに依存する規則をパーツ起点のブロックに残さない。パーツ起点の `:scope + :scope` は一致しないため、ルート起点の例外にします。
+- 状態クラスを子起点に分散させない。スタイル起点 (原則パーツ自身) に集約します (独立状態の子は例外)。
+- 公開変数をパーツ要素で空宣言して、ルートで上書きされる代入値を遮蔽しない。ルートで受ける必要がある `変数` と `代入` はルート起点の例外にまとめます。
+- 内包する別コンポーネントに意図的に優先させる規則から詳細度を落とさない。必要に応じて `&.sui_<パーツ>` で詳細度を上げるか、ルート起点の例外にします。
 - 5 区分の順序を入れ替えない。
-- 修飾の書き方を取り違えない。例: 起点自身の修飾は `&.sui_combobox-size_sm`、Portal 起点の子孫修飾は `&.sui_combobox_portal-size_sm`、独立装飾の子自身は `.sui_combobox_chip-color_grey` (+ ネスト `&.sui_combobox_chip-variant_solid`) にします。
+- 修飾の書き方を取り違えない。例: パーツ自身の修飾は `&.sui_combobox_input-size_sm`、ルート起点の例外での修飾は `&.sui_combobox-size_sm`、独立装飾の子自身は `.sui_combobox_chip-color_grey` (+ ネスト `&.sui_combobox_chip-variant_solid`) にします。
 - 変数名・クラス名の綴りは `変数`・`可変`・`代入` で一致させる。例: 対応しない変数に代入しない。同一変数の重複宣言を残さない。
 - 同一セレクターへの `代入` を重複させない。例: 同じ `&:has(...)` を二度書いて後の定義で上書きしない。
 - 1 つの公開変数に複数の値を半角スペース区切りで代入しない。`padding_block_start` / `padding_block_end` のように変数を分けます。`padding` と `padding-inline` に同じ変数を重ねない。

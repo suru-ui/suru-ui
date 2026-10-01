@@ -245,16 +245,36 @@
 
 /* Indicator */
 @layer sui.component {
-@scope (.sui_checkbox) to ([data-scope]) {
+@scope (.sui_checkbox_indicator) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_checkbox_indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 可変 */
+:scope {
+  width: var(--sui_checkbox_indicator-size);
+  height: var(--sui_checkbox_indicator-size);
+  color: var(--sui_checkbox_indicator-color);
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_checkbox_indicator__svg-size);
+    height: var(--sui_checkbox_indicator__svg-size);
+    color: var(--sui_checkbox_indicator__svg-color);
+    stroke-width: var(--sui_checkbox_indicator-stroke_width);
   }
 }
+
+} /* @scope */
+} /* @layer */
+
+/* Indicator */
+/* サイズと配色の指定はルートの修飾クラスに依存し、インジケーター自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_checkbox) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -263,22 +283,6 @@
   --sui_checkbox_indicator-stroke_width: ;
   --sui_checkbox_indicator__svg-size: ;
   --sui_checkbox_indicator__svg-color: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_checkbox_indicator {
-    width: var(--sui_checkbox_indicator-size);
-    height: var(--sui_checkbox_indicator-size);
-    color: var(--sui_checkbox_indicator-color);
-
-    svg:not(.sui-ignore) {
-      width: var(--sui_checkbox_indicator__svg-size);
-      height: var(--sui_checkbox_indicator__svg-size);
-      color: var(--sui_checkbox_indicator__svg-color);
-      stroke-width: var(--sui_checkbox_indicator-stroke_width);
-    }
-  }
 }
 
 /* 代入 */
@@ -336,6 +340,7 @@
 } /* @layer */
 
 /* Icon */
+/* アイコンは 2 つのパスクラスで構成され共通の基底クラスが無いため、ルート起点の別ブロックにします。 */
 @layer sui.component {
 @scope (.sui_checkbox) to ([data-scope]) {
 
@@ -423,9 +428,16 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Indicator */
+@layer sui.important {
+@scope (.sui_checkbox_indicator) to ([data-scope]) {
+
 :scope {
-  &.sui_checkbox-disabled .sui_checkbox_indicator {
+  &.sui_checkbox_indicator-disabled {
     color: var(--sui-disabled-solid-canvas_text);
     cursor: not-allowed;
 

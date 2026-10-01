@@ -247,15 +247,45 @@
 
 /* Indicator */
 @layer sui.component {
-@scope (.sui_radio) to ([data-scope]) {
+@scope (.sui_radio_indicator) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_radio_indicator {
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 可変 */
+:scope {
+  display: var(--_sui_radio_indicator-display, var(--sui_radio_indicator-display));
+  width: var(--sui_radio_indicator-size);
+  height: var(--sui_radio_indicator-size);
+  color: var(--sui_radio_indicator-color);
+  background-color: var(--sui_radio_indicator-color);
+  border-radius: var(--sui_radio_indicator-border_radius);
+  corner-shape: var(--sui_radio_indicator-corner_shape);
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_radio_indicator__svg-size);
+    height: var(--sui_radio_indicator__svg-size);
+    color: var(--sui_radio_indicator__svg-color);
   }
 }
+
+/* 変異 */
+:scope {
+  &.sui_radio_indicator-checked {
+    --_sui_radio_indicator-display: flex;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Indicator */
+/* 配色とサイズの指定はルートの修飾クラスに依存し、インジケーター自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_radio) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -266,25 +296,6 @@
   --sui_radio_indicator-corner_shape: ;
   --sui_radio_indicator__svg-size: ;
   --sui_radio_indicator__svg-color: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_radio_indicator {
-    display: var(--_sui_radio_indicator-display, var(--sui_radio_indicator-display));
-    width: var(--sui_radio_indicator-size);
-    height: var(--sui_radio_indicator-size);
-    color: var(--sui_radio_indicator-color);
-    background-color: var(--sui_radio_indicator-color);
-    border-radius: var(--sui_radio_indicator-border_radius);
-    corner-shape: var(--sui_radio_indicator-corner_shape);
-
-    svg:not(.sui-ignore) {
-      width: var(--sui_radio_indicator__svg-size);
-      height: var(--sui_radio_indicator__svg-size);
-      color: var(--sui_radio_indicator__svg-color);
-    }
-  }
 }
 
 /* 代入 */
@@ -340,13 +351,6 @@
   }
 }
 
-/* 変異 */
-:scope {
-  &.sui_radio-checked .sui_radio_indicator {
-    --_sui_radio_indicator-display: flex;
-  }
-}
-
 } /* @scope */
 } /* @layer */
 
@@ -390,9 +394,16 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Indicator */
+@layer sui.important {
+@scope (.sui_radio_indicator) to ([data-scope]) {
+
 :scope {
-  &.sui_radio-disabled .sui_radio_indicator {
+  &.sui_radio_indicator-disabled {
     color: var(--sui-disabled-solid-canvas_text);
     cursor: not-allowed;
     background-color: var(--sui-disabled-solid-canvas_text);

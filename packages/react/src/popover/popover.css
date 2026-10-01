@@ -14,16 +14,14 @@
 
 /* Backdrop */
 @layer sui.component {
-@scope (.sui_popover_portal) to ([data-scope]) {
+@scope (.sui_popover_backdrop) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_popover_backdrop {
-    position: fixed;
-    inset: 0px;
-    pointer-events: none;
-    transition: opacity 150ms ease-out;
-  }
+  position: fixed;
+  inset: 0px;
+  pointer-events: none;
+  transition: opacity 150ms ease-out;
 }
 
 /* 変数 */
@@ -34,10 +32,8 @@
 
 /* 可変 */
 :scope {
-  .sui_popover_backdrop {
-    background-color: var(--sui_popover_backdrop-background_color);
-    opacity: var(--_sui_popover_backdrop-opacity, var(--sui_popover_backdrop-opacity));
-  }
+  background-color: var(--sui_popover_backdrop-background_color);
+  opacity: var(--_sui_popover_backdrop-opacity, var(--sui_popover_backdrop-opacity));
 }
 
 /* 代入 */
@@ -48,8 +44,8 @@
 
 /* 変異 */
 :scope {
-  .sui_popover_backdrop-transition_status_starting,
-  .sui_popover_backdrop-transition_status_ending {
+  &.sui_popover_backdrop-transition_status_starting,
+  &.sui_popover_backdrop-transition_status_ending {
     --_sui_popover_backdrop-opacity: 0;
   }
 }
@@ -59,13 +55,11 @@
 
 /* Positioner */
 @layer sui.component {
-@scope (.sui_popover_portal) to ([data-scope]) {
+@scope (.sui_popover_positioner) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_popover_positioner {
-    z-index: 100;
-  }
+  z-index: 100;
 }
 
 } /* @scope */
@@ -73,23 +67,21 @@
 
 /* Content */
 @layer sui.component {
-@scope (.sui_popover_portal) to ([data-scope]) {
+@scope (.sui_popover_content) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_popover_content {
-    display: flex;
-    flex-direction: column;
-    line-break: strict;
-    word-break: normal;
-    overflow-wrap: anywhere;
-    pointer-events: auto;
-    outline-style: solid;
-    border-style: solid;
-    transition:
-      opacity 150ms ease-out,
-      scale 150ms ease-out;
-  }
+  display: flex;
+  flex-direction: column;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  pointer-events: auto;
+  outline-style: solid;
+  border-style: solid;
+  transition:
+    opacity 150ms ease-out,
+    scale 150ms ease-out;
 }
 
 /* 変数 */
@@ -120,30 +112,28 @@
 
 /* 可変 */
 :scope {
-  .sui_popover_content {
-    gap: var(--sui_popover_content-gap);
-    width: var(--sui_popover_content-width);
-    max-width: var(--sui_popover_content-max_width);
-    max-height: var(--sui_popover_content-max_height);
-    padding: var(--sui_popover_content-padding);
-    font-family: var(--sui_popover_content-font_family);
-    font-size: var(--sui_popover_content-font_size);
-    font-weight: var(--sui_popover_content-font_weight);
-    line-height: var(--sui_popover_content-line_height);
-    color: var(--sui_popover_content-color);
-    letter-spacing: var(--sui_popover_content-letter_spacing);
-    outline-width: var(--_sui_popover_content-outline_width, 0px);
-    outline-color: var(--sui_popover_content-outline_color);
-    outline-offset: var(--sui_popover_content-outline_offset);
-    background-color: var(--sui_popover_content-background_color);
-    border-color: var(--sui_popover_content-border_color);
-    border-width: var(--_sui_popover_content-border_width, 0px);
-    border-radius: var(--sui_popover_content-border_radius);
-    corner-shape: var(--sui_popover_content-corner_shape);
-    opacity: var(--_sui_popover_content-opacity, var(--sui_popover_content-opacity));
-    transform-origin: var(--sui_popover_content-transform_origin);
-    scale: var(--_sui_popover_content-scale, var(--sui_popover_content-scale));
-  }
+  gap: var(--sui_popover_content-gap);
+  width: var(--sui_popover_content-width);
+  max-width: var(--sui_popover_content-max_width);
+  max-height: var(--sui_popover_content-max_height);
+  padding: var(--sui_popover_content-padding);
+  font-family: var(--sui_popover_content-font_family);
+  font-size: var(--sui_popover_content-font_size);
+  font-weight: var(--sui_popover_content-font_weight);
+  line-height: var(--sui_popover_content-line_height);
+  color: var(--sui_popover_content-color);
+  letter-spacing: var(--sui_popover_content-letter_spacing);
+  outline-width: var(--_sui_popover_content-outline_width, 0px);
+  outline-color: var(--sui_popover_content-outline_color);
+  outline-offset: var(--sui_popover_content-outline_offset);
+  background-color: var(--sui_popover_content-background_color);
+  border-color: var(--sui_popover_content-border_color);
+  border-width: var(--_sui_popover_content-border_width, 0px);
+  border-radius: var(--sui_popover_content-border_radius);
+  corner-shape: var(--sui_popover_content-corner_shape);
+  opacity: var(--_sui_popover_content-opacity, var(--sui_popover_content-opacity));
+  transform-origin: var(--sui_popover_content-transform_origin);
+  scale: var(--_sui_popover_content-scale, var(--sui_popover_content-scale));
 }
 
 /* 代入 */
@@ -169,36 +159,36 @@
   --sui_popover_content-transform_origin: var(--transform-origin);
   --sui_popover_content-scale: 1;
 
-  &.sui_popover_portal-size_sm {
+  &.sui_popover_content-size_sm {
     --sui_popover_content-width: calc(var(--sui_popover_content-font_size) * 16);
     --sui_popover_content-padding: --sui-space(3);
   }
 
-  &.sui_popover_portal-size_md {
+  &.sui_popover_content-size_md {
     --sui_popover_content-width: calc(var(--sui_popover_content-font_size) * 20);
     --sui_popover_content-padding: --sui-space(4);
   }
 
-  &.sui_popover_portal-size_lg {
+  &.sui_popover_content-size_lg {
     --sui_popover_content-width: calc(var(--sui_popover_content-font_size) * 24);
     --sui_popover_content-padding: --sui-space(5);
   }
 
-  &.sui_popover_portal-radius_none {
+  &.sui_popover_content-radius_none {
     --sui_popover_content-border_radius: 0px;
   }
 
-  &.sui_popover_portal-radius_sm {
+  &.sui_popover_content-radius_sm {
     --sui_popover_content-border_radius: --sui-corner_radius(2);
     --sui_popover_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_popover_portal-radius_md {
+  &.sui_popover_content-radius_md {
     --sui_popover_content-border_radius: --sui-corner_radius(3);
     --sui_popover_content-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_popover_portal-radius_lg {
+  &.sui_popover_content-radius_lg {
     --sui_popover_content-border_radius: --sui-corner_radius(4);
     --sui_popover_content-corner_shape: superellipse(var(--sui-superellipse));
   }
@@ -206,17 +196,17 @@
 
 /* 変異 */
 :scope {
-  &.sui_popover_portal-outlined {
+  &.sui_popover_content-outlined {
     --_sui_popover_content-border_width: var(--sui_popover_content-border_width);
   }
 
-  .sui_popover_content-transition_status_starting,
-  .sui_popover_content-transition_status_ending {
+  &.sui_popover_content-transition_status_starting,
+  &.sui_popover_content-transition_status_ending {
     --_sui_popover_content-opacity: 0;
     --_sui_popover_content-scale: 0.98;
   }
 
-  .sui_popover_content:focus-visible {
+  &:focus-visible {
     --_sui_popover_content-outline_width: var(--sui_popover_content-focusring_width);
   }
 }
@@ -226,29 +216,27 @@
 
 /* Arrow */
 @layer sui.component {
-@scope (.sui_popover_portal) to ([data-scope]) {
+@scope (.sui_popover_arrow) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_popover_arrow {
-    position: relative;
-    display: block;
-    overflow: clip;
-  }
+  position: relative;
+  display: block;
+  overflow: clip;
 
-  .sui_popover_arrow-side_top {
+  &.sui_popover_arrow-side_top {
     rotate: 180deg;
   }
 
-  .sui_popover_arrow-side_left {
+  &.sui_popover_arrow-side_left {
     rotate: 90deg;
   }
 
-  .sui_popover_arrow-side_right {
+  &.sui_popover_arrow-side_right {
     rotate: -90deg;
   }
 
-  .sui_popover_arrow::before {
+  &::before {
     position: absolute;
     bottom: 0px;
     left: 50%;
@@ -270,28 +258,26 @@
 
 /* 可変 */
 :scope {
-  .sui_popover_arrow {
-    width: calc(var(--sui_popover_arrow-size) * 2);
-    height: var(--sui_popover_arrow-size);
-  }
+  width: calc(var(--sui_popover_arrow-size) * 2);
+  height: var(--sui_popover_arrow-size);
 
-  .sui_popover_arrow-side_top {
+  &.sui_popover_arrow-side_top {
     bottom: calc(var(--sui_popover_arrow-size) * -1);
   }
 
-  .sui_popover_arrow-side_bottom {
+  &.sui_popover_arrow-side_bottom {
     top: calc(var(--sui_popover_arrow-size) * -1);
   }
 
-  .sui_popover_arrow-side_left {
+  &.sui_popover_arrow-side_left {
     right: calc(var(--sui_popover_arrow-size) * -1.5);
   }
 
-  .sui_popover_arrow-side_right {
+  &.sui_popover_arrow-side_right {
     left: calc(var(--sui_popover_arrow-size) * -1.5);
   }
 
-  .sui_popover_arrow::before {
+  &::before {
     width: calc(var(--sui_popover_arrow-size) * sqrt(2));
     height: calc(var(--sui_popover_arrow-size) * sqrt(2));
     background-color: var(--sui_popover_arrow-background_color);
@@ -310,7 +296,7 @@
 
 /* 変異 */
 :scope {
-  &.sui_popover_portal-outlined .sui_popover_arrow {
+  &.sui_popover_arrow-outlined {
     --_sui_popover_arrow-border_width: var(--sui_popover_arrow-border_width);
   }
 }
@@ -320,16 +306,14 @@
 
 /* Title */
 @layer sui.component {
-@scope (.sui_popover_portal) to ([data-scope]) {
+@scope (.sui_popover_title) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_popover_title {
-    display: block;
-    line-break: strict;
-    word-break: normal;
-    overflow-wrap: anywhere;
-  }
+  display: block;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 /* 変数 */
@@ -344,14 +328,12 @@
 
 /* 可変 */
 :scope {
-  .sui_popover_title {
-    font-family: var(--sui_popover_title-font_family);
-    font-size: var(--sui_popover_title-font_size);
-    font-weight: var(--sui_popover_title-font_weight);
-    line-height: var(--sui_popover_title-line_height);
-    color: var(--sui_popover_title-color);
-    letter-spacing: var(--sui_popover_title-letter_spacing);
-  }
+  font-family: var(--sui_popover_title-font_family);
+  font-size: var(--sui_popover_title-font_size);
+  font-weight: var(--sui_popover_title-font_weight);
+  line-height: var(--sui_popover_title-line_height);
+  color: var(--sui_popover_title-color);
+  letter-spacing: var(--sui_popover_title-letter_spacing);
 }
 
 /* 代入 */
@@ -369,16 +351,14 @@
 
 /* Description */
 @layer sui.component {
-@scope (.sui_popover_portal) to ([data-scope]) {
+@scope (.sui_popover_description) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_popover_description {
-    display: block;
-    line-break: strict;
-    word-break: normal;
-    overflow-wrap: anywhere;
-  }
+  display: block;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 /* 変数 */
@@ -393,14 +373,12 @@
 
 /* 可変 */
 :scope {
-  .sui_popover_description {
-    font-family: var(--sui_popover_description-font_family);
-    font-size: var(--sui_popover_description-font_size);
-    font-weight: var(--sui_popover_description-font_weight);
-    line-height: var(--sui_popover_description-line_height);
-    color: var(--sui_popover_description-color);
-    letter-spacing: var(--sui_popover_description-letter_spacing);
-  }
+  font-family: var(--sui_popover_description-font_family);
+  font-size: var(--sui_popover_description-font_size);
+  font-weight: var(--sui_popover_description-font_weight);
+  line-height: var(--sui_popover_description-line_height);
+  color: var(--sui_popover_description-color);
+  letter-spacing: var(--sui_popover_description-letter_spacing);
 }
 
 /* 代入 */
@@ -418,14 +396,12 @@
 
 /* Viewport */
 @layer sui.component {
-@scope (.sui_popover_portal) to ([data-scope]) {
+@scope (.sui_popover_viewport) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_popover_viewport {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
 }
 
 } /* @scope */

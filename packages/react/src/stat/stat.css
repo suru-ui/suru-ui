@@ -33,6 +33,24 @@
 
 /* Label */
 @layer sui.component {
+@scope (.sui_stat_label) to ([data-scope]) {
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_stat_label-font_family);
+  font-size: var(--sui_stat_label-font_size);
+  font-weight: var(--sui_stat_label-font_weight);
+  line-height: var(--sui_stat_label-line_height);
+  color: var(--sui_stat_label-color);
+  letter-spacing: var(--sui_stat_label-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Label */
+/* ルートの size 修飾クラスで代入する変数群のため、ルート起点の別ブロックにします。 */
+@layer sui.component {
 @scope (.sui_stat) to ([data-scope]) {
 
 /* 変数 */
@@ -43,18 +61,6 @@
   --sui_stat_label-line_height: ;
   --sui_stat_label-color: ;
   --sui_stat_label-letter_spacing: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_stat_label {
-    font-family: var(--sui_stat_label-font_family);
-    font-size: var(--sui_stat_label-font_size);
-    font-weight: var(--sui_stat_label-font_weight);
-    line-height: var(--sui_stat_label-line_height);
-    color: var(--sui_stat_label-color);
-    letter-spacing: var(--sui_stat_label-letter_spacing);
-  }
 }
 
 /* 代入 */
@@ -93,15 +99,31 @@
 
 /* Value */
 @layer sui.component {
-@scope (.sui_stat) to ([data-scope]) {
+@scope (.sui_stat_value) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_stat_value {
-    margin: 0px;
-    font-variant-numeric: tabular-nums;
-  }
+  margin: 0px;
+  font-variant-numeric: tabular-nums;
 }
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_stat_value-font_family);
+  font-size: var(--sui_stat_value-font_size);
+  font-weight: var(--sui_stat_value-font_weight);
+  line-height: var(--sui_stat_value-line_height);
+  color: var(--sui_stat_value-color);
+  letter-spacing: var(--sui_stat_value-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Value */
+/* ルートの size 修飾クラスで代入する変数群のため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_stat) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -111,18 +133,6 @@
   --sui_stat_value-line_height: ;
   --sui_stat_value-color: ;
   --sui_stat_value-letter_spacing: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_stat_value {
-    font-family: var(--sui_stat_value-font_family);
-    font-size: var(--sui_stat_value-font_size);
-    font-weight: var(--sui_stat_value-font_weight);
-    line-height: var(--sui_stat_value-line_height);
-    color: var(--sui_stat_value-color);
-    letter-spacing: var(--sui_stat_value-letter_spacing);
-  }
 }
 
 /* 代入 */
@@ -157,6 +167,25 @@
 
 /* ValueUnit */
 @layer sui.component {
+@scope (.sui_stat_value_unit) to ([data-scope]) {
+
+/* 可変 */
+:scope {
+  padding-inline: var(--sui_stat_value_unit-padding_inline);
+  font-family: var(--sui_stat_value_unit-font_family);
+  font-size: var(--sui_stat_value_unit-font_size);
+  font-weight: var(--sui_stat_value_unit-font_weight);
+  line-height: var(--sui_stat_value_unit-line_height);
+  color: var(--sui_stat_value_unit-color);
+  letter-spacing: var(--sui_stat_value_unit-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* ValueUnit */
+/* ルートの size 修飾クラスで代入する変数群のため、ルート起点の別ブロックにします。 */
+@layer sui.component {
 @scope (.sui_stat) to ([data-scope]) {
 
 /* 変数 */
@@ -168,19 +197,6 @@
   --sui_stat_value_unit-line_height: ;
   --sui_stat_value_unit-color: ;
   --sui_stat_value_unit-letter_spacing: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_stat_value_unit {
-    padding-inline: var(--sui_stat_value_unit-padding_inline);
-    font-family: var(--sui_stat_value_unit-font_family);
-    font-size: var(--sui_stat_value_unit-font_size);
-    font-weight: var(--sui_stat_value_unit-font_weight);
-    line-height: var(--sui_stat_value_unit-line_height);
-    color: var(--sui_stat_value_unit-color);
-    letter-spacing: var(--sui_stat_value_unit-letter_spacing);
-  }
 }
 
 /* 代入 */
@@ -216,21 +232,63 @@
 
 /* Trend */
 @layer sui.component {
-@scope (.sui_stat) to ([data-scope]) {
+@scope (.sui_stat_trend) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_stat_trend {
-    display: inline-flex;
-    align-items: center;
-    margin: 0px;
-    font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: center;
+  margin: 0px;
+  font-variant-numeric: tabular-nums;
 
-    &::before {
-      display: block;
-    }
+  &::before {
+    display: block;
   }
 }
+
+/* 可変 */
+:scope {
+  gap: var(--sui_stat_trend-gap);
+  font-family: var(--sui_stat_trend-font_family);
+  font-size: var(--sui_stat_trend-font_size);
+  font-weight: var(--sui_stat_trend-font_weight);
+  line-height: var(--sui_stat_trend-line_height);
+  color: var(--sui_stat_trend-color);
+  letter-spacing: var(--sui_stat_trend-letter_spacing);
+
+  &::before {
+    content: var(--_sui_stat_trend__arrow-content, "");
+  }
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_stat_trend__svg-size);
+    height: var(--sui_stat_trend__svg-size);
+    color: var(--sui_stat_trend__svg-color);
+  }
+}
+
+/* 変異 */
+:scope {
+  &.sui_stat_trend-direction_up:not(:has(svg)) {
+    --_sui_stat_trend__arrow-content: "▲";
+  }
+
+  &.sui_stat_trend-direction_flat:not(:has(svg)) {
+    --_sui_stat_trend__arrow-content: "—";
+  }
+
+  &.sui_stat_trend-direction_down:not(:has(svg)) {
+    --_sui_stat_trend__arrow-content: "▼";
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Trend */
+/* ルートの size 修飾クラスで代入する変数群のため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_stat) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -244,29 +302,6 @@
   --sui_stat_trend-virtual_text_height: ;
   --sui_stat_trend__svg-size: ;
   --sui_stat_trend__svg-color: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_stat_trend {
-    gap: var(--sui_stat_trend-gap);
-    font-family: var(--sui_stat_trend-font_family);
-    font-size: var(--sui_stat_trend-font_size);
-    font-weight: var(--sui_stat_trend-font_weight);
-    line-height: var(--sui_stat_trend-line_height);
-    color: var(--sui_stat_trend-color);
-    letter-spacing: var(--sui_stat_trend-letter_spacing);
-
-    &::before {
-      content: var(--_sui_stat_trend__arrow-content, "");
-    }
-
-    svg:not(.sui-ignore) {
-      width: var(--sui_stat_trend__svg-size);
-      height: var(--sui_stat_trend__svg-size);
-      color: var(--sui_stat_trend__svg-color);
-    }
-  }
 }
 
 /* 代入 */
@@ -318,34 +353,35 @@
   }
 }
 
-/* 変異 */
+} /* @scope */
+} /* @layer */
+
+/* Description */
+@layer sui.component {
+@scope (.sui_stat_description) to ([data-scope]) {
+
+/* 固定 */
 :scope {
-  .sui_stat_trend-direction_up:not(:has(svg)) {
-    --_sui_stat_trend__arrow-content: "▲";
-  }
+  margin: 0px;
+}
 
-  .sui_stat_trend-direction_flat:not(:has(svg)) {
-    --_sui_stat_trend__arrow-content: "—";
-  }
-
-  .sui_stat_trend-direction_down:not(:has(svg)) {
-    --_sui_stat_trend__arrow-content: "▼";
-  }
+/* 可変 */
+:scope {
+  font-family: var(--sui_stat_description-font_family);
+  font-size: var(--sui_stat_description-font_size);
+  font-weight: var(--sui_stat_description-font_weight);
+  line-height: var(--sui_stat_description-line_height);
+  color: var(--sui_stat_description-color);
+  letter-spacing: var(--sui_stat_description-letter_spacing);
 }
 
 } /* @scope */
 } /* @layer */
 
 /* Description */
+/* ルートの size 修飾クラスで代入する変数群のため、ルート起点の別ブロックにします。 */
 @layer sui.component {
 @scope (.sui_stat) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  .sui_stat_description {
-    margin: 0px;
-  }
-}
 
 /* 変数 */
 :scope {
@@ -355,18 +391,6 @@
   --sui_stat_description-line_height: ;
   --sui_stat_description-color: ;
   --sui_stat_description-letter_spacing: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_stat_description {
-    font-family: var(--sui_stat_description-font_family);
-    font-size: var(--sui_stat_description-font_size);
-    font-weight: var(--sui_stat_description-font_weight);
-    line-height: var(--sui_stat_description-line_height);
-    color: var(--sui_stat_description-color);
-    letter-spacing: var(--sui_stat_description-letter_spacing);
-  }
 }
 
 /* 代入 */

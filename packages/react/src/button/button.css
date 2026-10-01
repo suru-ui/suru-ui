@@ -650,6 +650,7 @@
 } /* @layer */
 
 /* Content */
+/* ルートの hover / active 状態に依存し、公開変数の代入をルート側に保持する必要があるため、ルート起点の別ブロックにします。 */
 @layer sui.component {
 @scope (.sui_button) to ([data-scope]) {
 
@@ -731,7 +732,7 @@
     }
   }
 
-  &.sui_button-item .sui_button_content {
+  .sui_button_content-item {
     --_sui_button_content-justify_content: space-between;
   }
 }
@@ -740,6 +741,7 @@
 } /* @layer */
 
 /* Pending */
+/* 公開変数 --sui_button_pending-canvas をルート自身が消費するため、ルート起点の別ブロックにします。 */
 @layer sui.component {
 @scope (.sui_button) to ([data-scope]) {
 
@@ -789,37 +791,41 @@
 :scope {
   --sui_button_pending-font_family: var(--sui-font-sans);
   --sui_button_pending-canvas: var(--sui_button-background_color-idle);
-  --sui_button_pending__svg-size: calc(
-                                    var(--sui_button_pending-font_size)
-                                    * var(--sui_button_pending-line_height)
-                                  );
   --sui_button_pending__svg-color: --sui-icon_color(
                                      var(--sui_button_pending-color),
                                      var(--sui_button_pending-canvas)
                                    );
 
-  &.sui_button-size_xs {
+  /* 大きさで変わる活字に追従させるため、要素起点で代入します。 */
+  .sui_button_pending {
+    --sui_button_pending__svg-size: calc(
+                                      var(--sui_button_pending-font_size)
+                                      * var(--sui_button_pending-line_height)
+                                    );
+  }
+
+  .sui_button_pending-size_xs {
     --sui_button_pending-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_button_pending-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_button_pending-line_height: var(--sui-text-oln-sm-m-line_height);
     --sui_button_pending-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
   }
 
-  &.sui_button-size_sm {
+  .sui_button_pending-size_sm {
     --sui_button_pending-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_button_pending-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_button_pending-line_height: var(--sui-text-oln-sm-m-line_height);
     --sui_button_pending-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
   }
 
-  &.sui_button-size_md {
+  .sui_button_pending-size_md {
     --sui_button_pending-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_button_pending-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_button_pending-line_height: var(--sui-text-oln-md-m-line_height);
     --sui_button_pending-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
   }
 
-  &.sui_button-size_lg {
+  .sui_button_pending-size_lg {
     --sui_button_pending-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_button_pending-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_button_pending-line_height: var(--sui-text-oln-lg-m-line_height);
@@ -943,31 +949,31 @@
       --sui_button_pending-color: var(--sui-grey-solid-canvas_text-normal);
     }
 
-    &.sui_button-color_blue:not(.sui_button-variant_solid) {
+    &.sui_button_pending-color_blue:not(.sui_button_pending-variant_solid) {
       --sui_button_pending-color: var(--sui-blue-naked-canvas_text-normal);
     }
 
-    &.sui_button-color_purple:not(.sui_button-variant_solid) {
+    &.sui_button_pending-color_purple:not(.sui_button_pending-variant_solid) {
       --sui_button_pending-color: var(--sui-purple-naked-canvas_text-normal);
     }
 
-    &.sui_button-color_magenta:not(.sui_button-variant_solid) {
+    &.sui_button_pending-color_magenta:not(.sui_button_pending-variant_solid) {
       --sui_button_pending-color: var(--sui-magenta-naked-canvas_text-normal);
     }
 
-    &.sui_button-color_red:not(.sui_button-variant_solid) {
+    &.sui_button_pending-color_red:not(.sui_button_pending-variant_solid) {
       --sui_button_pending-color: var(--sui-red-naked-canvas_text-normal);
     }
 
-    &.sui_button-color_orange:not(.sui_button-variant_solid) {
+    &.sui_button_pending-color_orange:not(.sui_button_pending-variant_solid) {
       --sui_button_pending-color: var(--sui-orange-naked-canvas_text-normal);
     }
 
-    &.sui_button-color_yellow:not(.sui_button-variant_solid) {
+    &.sui_button_pending-color_yellow:not(.sui_button_pending-variant_solid) {
       --sui_button_pending-color: var(--sui-yellow-naked-canvas_text-normal);
     }
 
-    &.sui_button-color_green:not(.sui_button-variant_solid) {
+    &.sui_button_pending-color_green:not(.sui_button_pending-variant_solid) {
       --sui_button_pending-color: var(--sui-green-naked-canvas_text-normal);
     }
   }
@@ -989,7 +995,7 @@
 
 /* CircularProgressTrack */
 @layer sui.component {
-@scope (.sui_button) to ([data-scope]) {
+@scope (.sui_button_circular_progress_track) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -998,9 +1004,7 @@
 
 /* 可変 */
 :scope {
-  .sui_button_circular_progress_track {
-    color: var(--sui_button_circular_progress_track-color);
-  }
+  color: var(--sui_button_circular_progress_track-color);
 }
 
 /* 代入 */
@@ -1016,6 +1020,7 @@
 } /* @layer */
 
 /* CircularProgressFill */
+/* 保留パーツ側で代入される公開変数を代入が参照し、代入の評価位置を維持するため、ルート起点の別ブロックにします。 */
 @layer sui.component {
 @scope (.sui_button) to ([data-scope]) {
 
@@ -1048,10 +1053,10 @@
 } /* @layer */
 
 /* pending */
+/* Root */
 @layer sui.important {
 @scope (.sui_button) to ([data-scope]) {
 
-/* Root */
 :scope {
   &.sui_button-pending {
     cursor: progress;
@@ -1063,7 +1068,15 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* pending */
 /* Content */
+/* ルートの pending 状態とオーバーレイの兄弟関係に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_button) to ([data-scope]) {
+
 :scope {
   &.sui_button-pending:has(.sui_button_pending-enabled.sui_button_pending-overlay)
     .sui_button_content {
@@ -1075,10 +1088,10 @@
 } /* @layer */
 
 /* disabled */
+/* Root */
 @layer sui.important {
 @scope (.sui_button) to ([data-scope]) {
 
-/* Root */
 :scope {
   &.sui_button-disabled {
     cursor: not-allowed;
@@ -1141,7 +1154,15 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Content */
+/* コンテンツ自身に disabled 相当のクラスが無く、ルートの disabled / variant 状態に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_button) to ([data-scope]) {
+
 :scope {
   &.sui_button-disabled {
     .sui_button_content {
@@ -1183,7 +1204,15 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* CircularProgressTrack */
+/* トラック自身に disabled / variant 相当のクラスが無く、ルートの状態に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_button) to ([data-scope]) {
+
 :scope {
   &.sui_button-disabled {
     &.sui_button-variant_solid .sui_button_circular_progress_track {
@@ -1212,7 +1241,15 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* CircularProgressFill */
+/* フィル自身に disabled / variant 相当のクラスが無く、ルートの状態に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_button) to ([data-scope]) {
+
 :scope {
   &.sui_button-disabled {
     &.sui_button-variant_solid .sui_button_circular_progress_fill {

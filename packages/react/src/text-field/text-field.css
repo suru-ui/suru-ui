@@ -237,16 +237,14 @@
 
 /* Input */
 @layer sui.component {
-@scope (.sui_text_field) to ([data-scope]) {
+@scope (.sui_text_field_input) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_text_field_input {
-    display: block;
-    flex: 1 1 auto;
-    min-width: 0px;
-    touch-action: manipulation;
-  }
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0px;
+  touch-action: manipulation;
 }
 
 /* 変数 */
@@ -263,18 +261,16 @@
 
 /* 可変 */
 :scope {
-  .sui_text_field_input {
-    font-family: var(--sui_text_field_input-font_family);
-    font-size: var(--sui_text_field_input-font_size);
-    font-weight: var(--sui_text_field_input-font_weight);
-    line-height: var(--sui_text_field_input-line_height);
-    color: var(--sui_text_field_input-color);
-    letter-spacing: var(--sui_text_field_input-letter_spacing);
-    caret-color: var(--sui_text_field_input-caret_color);
+  font-family: var(--sui_text_field_input-font_family);
+  font-size: var(--sui_text_field_input-font_size);
+  font-weight: var(--sui_text_field_input-font_weight);
+  line-height: var(--sui_text_field_input-line_height);
+  color: var(--sui_text_field_input-color);
+  letter-spacing: var(--sui_text_field_input-letter_spacing);
+  caret-color: var(--sui_text_field_input-caret_color);
 
-    &::placeholder {
-      color: var(--sui_text_field_input-placeholder-color);
-    }
+  &::placeholder {
+    color: var(--sui_text_field_input-placeholder-color);
   }
 }
 
@@ -283,33 +279,33 @@
   --sui_text_field_input-font_family: var(--sui-font-sans);
   --sui_text_field_input-placeholder-color: var(--sui-canvas_text-2);
 
-  &.sui_text_field-size_sm {
+  &.sui_text_field_input-size_sm {
     --sui_text_field_input-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_text_field_input-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_text_field_input-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_text_field_input-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
-  &.sui_text_field-size_md {
+  &.sui_text_field_input-size_md {
     --sui_text_field_input-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_text_field_input-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_text_field_input-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_text_field_input-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
-  &.sui_text_field-size_lg {
+  &.sui_text_field_input-size_lg {
     --sui_text_field_input-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_text_field_input-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_text_field_input-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_text_field_input-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
-  &.sui_text_field-variant_naked {
+  &.sui_text_field_input-variant_naked {
     --sui_text_field_input-color: var(--sui-grey-naked-canvas_text-normal);
     --sui_text_field_input-caret_color: var(--sui_text_field_input-color);
   }
 
-  &.sui_text_field-variant_liquid {
+  &.sui_text_field_input-variant_liquid {
     --sui_text_field_input-color: var(--sui-grey-liquid-canvas_text-normal);
     --sui_text_field_input-caret_color: var(--sui_text_field_input-color);
   }
@@ -320,17 +316,15 @@
 
 /* Addon */
 @layer sui.component {
-@scope (.sui_text_field) to ([data-scope]) {
+@scope (.sui_text_field_addon) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_text_field_addon {
-    display: inline-flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-  }
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 /* 変数 */
@@ -347,19 +341,18 @@
 
 /* 可変 */
 :scope {
-  .sui_text_field_addon {
-    font-family: var(--sui_text_field_addon-font_family);
-    font-size: var(--sui_text_field_addon-font_size);
-    font-weight: var(--sui_text_field_addon-font_weight);
-    line-height: var(--sui_text_field_addon-line_height);
-    color: var(--sui_text_field_addon-color);
-    letter-spacing: var(--sui_text_field_addon-letter_spacing);
+  font-family: var(--sui_text_field_addon-font_family);
+  font-size: var(--sui_text_field_addon-font_size);
+  font-weight: var(--sui_text_field_addon-font_weight);
+  line-height: var(--sui_text_field_addon-line_height);
+  color: var(--sui_text_field_addon-color);
+  letter-spacing: var(--sui_text_field_addon-letter_spacing);
 
-    svg:not(.sui-ignore) {
-      width: var(--sui_text_field_addon__svg-size);
-      height: var(--sui_text_field_addon__svg-size);
-      color: var(--sui_text_field_addon__svg-color);
-    }
+  /* 内包するボタンなどのアイコン配色より優先させるため、アドオン自身のクラスで詳細度を上げます。 */
+  &.sui_text_field_addon svg:not(.sui-ignore) {
+    width: var(--sui_text_field_addon__svg-size);
+    height: var(--sui_text_field_addon__svg-size);
+    color: var(--sui_text_field_addon__svg-color);
   }
 }
 
@@ -369,7 +362,7 @@
   --sui_text_field_addon-color: var(--sui-canvas_text-2);
   --sui_text_field_addon__svg-color: var(--sui_text_field_addon-color);
 
-  &.sui_text_field-size_sm {
+  &.sui_text_field_addon-size_sm {
     --sui_text_field_addon-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_text_field_addon-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_text_field_addon-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -380,7 +373,7 @@
                                       );
   }
 
-  &.sui_text_field-size_md {
+  &.sui_text_field_addon-size_md {
     --sui_text_field_addon-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_text_field_addon-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_text_field_addon-line_height: var(--sui-text-oln-md-n-line_height);
@@ -391,7 +384,7 @@
                                       );
   }
 
-  &.sui_text_field-size_lg {
+  &.sui_text_field_addon-size_lg {
     --sui_text_field_addon-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_text_field_addon-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_text_field_addon-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -407,10 +400,10 @@
 } /* @layer */
 
 /* disabled */
+/* Root */
 @layer sui.important {
 @scope (.sui_text_field) to ([data-scope]) {
 
-/* Root */
 :scope {
   &:has(.sui_text_field_input-disabled) {
     cursor: not-allowed;
@@ -437,13 +430,20 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Input */
+@layer sui.important {
+@scope (.sui_text_field_input) to ([data-scope]) {
+
 :scope {
-  .sui_text_field_input-disabled {
+  &.sui_text_field_input-disabled {
     cursor: not-allowed;
   }
 
-  &.sui_text_field-variant_naked .sui_text_field_input-disabled {
+  &.sui_text_field_input-disabled.sui_text_field_input-variant_naked {
     color: var(--sui-disabled-naked-canvas_text);
 
     &::placeholder {
@@ -451,7 +451,7 @@
     }
   }
 
-  &.sui_text_field-variant_liquid .sui_text_field_input-disabled {
+  &.sui_text_field_input-disabled.sui_text_field_input-variant_liquid {
     color: var(--sui-disabled-liquid-canvas_text);
 
     &::placeholder {
@@ -460,7 +460,15 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Addon */
+/* 入力欄の無効状態はルートの子孫に依存し、アドオン自身に無効クラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_text_field) to ([data-scope]) {
+
 :scope {
   &.sui_text_field-variant_naked:has(.sui_text_field_input-disabled) .sui_text_field_addon {
     color: var(--sui-disabled-naked-canvas_text);

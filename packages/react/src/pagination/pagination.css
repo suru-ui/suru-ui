@@ -72,14 +72,12 @@
 
 /* Ellipsis */
 @layer sui.component {
-@scope (.sui_pagination) to ([data-scope]) {
+@scope (.sui_pagination_ellipsis_input) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_pagination_ellipsis_input {
-    text-align: center;
-    outline-style: solid;
-  }
+  text-align: center;
+  outline-style: solid;
 }
 
 /* 変数 */
@@ -103,23 +101,21 @@
 
 /* 可変 */
 :scope {
-  .sui_pagination_ellipsis_input {
-    width: var(--sui_pagination_ellipsis_input-width);
-    min-height: var(--sui_pagination_ellipsis_input-min_height);
-    padding-block: var(--sui_pagination_ellipsis_input-padding_block);
-    font-family: var(--sui_pagination_ellipsis_input-font_family);
-    font-size: var(--sui_pagination_ellipsis_input-font_size);
-    font-weight: var(--sui_pagination_ellipsis_input-font_weight);
-    line-height: var(--sui_pagination_ellipsis_input-line_height);
-    color: var(--sui_pagination_ellipsis_input-color);
-    letter-spacing: var(--sui_pagination_ellipsis_input-letter_spacing);
-    outline-width: var(--_sui_pagination_ellipsis_input-outline_width, 0px);
-    outline-color: var(--_sui_pagination_ellipsis_input-outline_color, transparent);
-    outline-offset: var(--sui_pagination_ellipsis_input-focusring_offset);
-    background-color: var(--sui_pagination_ellipsis_input-background_color);
-    border-radius: var(--sui_pagination_ellipsis_input-border_radius);
-    corner-shape: var(--sui_pagination_ellipsis_input-corner_shape);
-  }
+  width: var(--sui_pagination_ellipsis_input-width);
+  min-height: var(--sui_pagination_ellipsis_input-min_height);
+  padding-block: var(--sui_pagination_ellipsis_input-padding_block);
+  font-family: var(--sui_pagination_ellipsis_input-font_family);
+  font-size: var(--sui_pagination_ellipsis_input-font_size);
+  font-weight: var(--sui_pagination_ellipsis_input-font_weight);
+  line-height: var(--sui_pagination_ellipsis_input-line_height);
+  color: var(--sui_pagination_ellipsis_input-color);
+  letter-spacing: var(--sui_pagination_ellipsis_input-letter_spacing);
+  outline-width: var(--_sui_pagination_ellipsis_input-outline_width, 0px);
+  outline-color: var(--_sui_pagination_ellipsis_input-outline_color, transparent);
+  outline-offset: var(--sui_pagination_ellipsis_input-focusring_offset);
+  background-color: var(--sui_pagination_ellipsis_input-background_color);
+  border-radius: var(--sui_pagination_ellipsis_input-border_radius);
+  corner-shape: var(--sui_pagination_ellipsis_input-corner_shape);
 }
 
 /* 代入 */
@@ -143,7 +139,7 @@
 
 /* 変異 */
 :scope {
-  &:not(.sui_pagination-disabled) .sui_pagination_ellipsis_input:focus-visible {
+  &:not(.sui_pagination_ellipsis_input-disabled):focus-visible {
     --_sui_pagination_ellipsis_input-outline_width:
       var(--sui_pagination_ellipsis_input-focusring_width);
     --_sui_pagination_ellipsis_input-outline_color:
@@ -165,10 +161,16 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* EllipsisInput */
+@layer sui.important {
+@scope (.sui_pagination_ellipsis_input) to ([data-scope]) {
+
 :scope {
-  &.sui_pagination-disabled .sui_pagination_ellipsis_input,
-  .sui_pagination_ellipsis_input-disabled {
+  &.sui_pagination_ellipsis_input-disabled {
     color: var(--sui-disabled-liquid-canvas_text);
     cursor: not-allowed;
     background-color: var(--sui-disabled-liquid-canvas);

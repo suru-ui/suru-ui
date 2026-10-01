@@ -144,16 +144,14 @@
 
 /* Image */
 @layer sui.component {
-@scope (.sui_avatar) to ([data-scope]) {
+@scope (.sui_avatar_image) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_avatar_image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* 変数 */
@@ -164,10 +162,8 @@
 
 /* 可変 */
 :scope {
-  .sui_avatar_image {
-    border-radius: var(--sui_avatar_image-border_radius);
-    corner-shape: var(--sui_avatar_image-corner_shape);
-  }
+  border-radius: var(--sui_avatar_image-border_radius);
+  corner-shape: var(--sui_avatar_image-corner_shape);
 }
 
 /* 代入 */
@@ -181,17 +177,15 @@
 
 /* Fallback */
 @layer sui.component {
-@scope (.sui_avatar) to ([data-scope]) {
+@scope (.sui_avatar_fallback) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_avatar_fallback {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 /* 変数 */
@@ -208,16 +202,14 @@
 
 /* 可変 */
 :scope {
-  .sui_avatar_fallback {
-    font-family: var(--sui_avatar_fallback-font_family);
-    font-size: var(--sui_avatar_fallback-font_size);
-    font-weight: var(--sui_avatar_fallback-font_weight);
-    line-height: var(--sui_avatar_fallback-line_height);
-    color: var(--sui_avatar_fallback-color);
-    letter-spacing: var(--sui_avatar_fallback-letter_spacing);
-    border-radius: var(--sui_avatar_fallback-border_radius);
-    corner-shape: var(--sui_avatar_fallback-corner_shape);
-  }
+  font-family: var(--sui_avatar_fallback-font_family);
+  font-size: var(--sui_avatar_fallback-font_size);
+  font-weight: var(--sui_avatar_fallback-font_weight);
+  line-height: var(--sui_avatar_fallback-line_height);
+  color: var(--sui_avatar_fallback-color);
+  letter-spacing: var(--sui_avatar_fallback-letter_spacing);
+  border-radius: var(--sui_avatar_fallback-border_radius);
+  corner-shape: var(--sui_avatar_fallback-corner_shape);
 }
 
 /* 代入 */

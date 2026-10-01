@@ -29,14 +29,30 @@
 
 /* Label */
 @layer sui.component {
-@scope (.sui_meter) to ([data-scope]) {
+@scope (.sui_meter_label) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_meter_label {
-    min-width: 0px;
-  }
+  min-width: 0px;
 }
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_meter_label-font_family);
+  font-size: var(--sui_meter_label-font_size);
+  font-weight: var(--sui_meter_label-font_weight);
+  line-height: var(--sui_meter_label-line_height);
+  color: var(--sui_meter_label-color);
+  letter-spacing: var(--sui_meter_label-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Label */
+/* 活字の代入はルートの大きさの修飾クラスに依存し、ラベル自身には対応するクラスが無いため、空宣言と代入をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_meter) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -46,18 +62,6 @@
   --sui_meter_label-line_height: ;
   --sui_meter_label-color: ;
   --sui_meter_label-letter_spacing: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_meter_label {
-    font-family: var(--sui_meter_label-font_family);
-    font-size: var(--sui_meter_label-font_size);
-    font-weight: var(--sui_meter_label-font_weight);
-    line-height: var(--sui_meter_label-line_height);
-    color: var(--sui_meter_label-color);
-    letter-spacing: var(--sui_meter_label-letter_spacing);
-  }
 }
 
 /* 代入 */
@@ -92,14 +96,30 @@
 
 /* Value */
 @layer sui.component {
-@scope (.sui_meter) to ([data-scope]) {
+@scope (.sui_meter_value) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_meter_value {
-    font-variant-numeric: tabular-nums;
-  }
+  font-variant-numeric: tabular-nums;
 }
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_meter_value-font_family);
+  font-size: var(--sui_meter_value-font_size);
+  font-weight: var(--sui_meter_value-font_weight);
+  line-height: var(--sui_meter_value-line_height);
+  color: var(--sui_meter_value-color);
+  letter-spacing: var(--sui_meter_value-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Value */
+/* 活字の代入はルートの大きさの修飾クラスに依存し、値表示自身には対応するクラスが無いため、空宣言と代入をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_meter) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -109,18 +129,6 @@
   --sui_meter_value-line_height: ;
   --sui_meter_value-color: ;
   --sui_meter_value-letter_spacing: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_meter_value {
-    font-family: var(--sui_meter_value-font_family);
-    font-size: var(--sui_meter_value-font_size);
-    font-weight: var(--sui_meter_value-font_weight);
-    line-height: var(--sui_meter_value-line_height);
-    color: var(--sui_meter_value-color);
-    letter-spacing: var(--sui_meter_value-letter_spacing);
-  }
 }
 
 /* 代入 */
@@ -155,18 +163,34 @@
 
 /* Track */
 @layer sui.component {
-@scope (.sui_meter) to ([data-scope]) {
+@scope (.sui_meter_track) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_meter_track {
-    position: relative;
-    grid-column: 1 / -1;
-    width: 100%;
-    overflow: hidden;
-    border-style: solid;
-  }
+  position: relative;
+  grid-column: 1 / -1;
+  width: 100%;
+  overflow: hidden;
+  border-style: solid;
 }
+
+/* 可変 */
+:scope {
+  height: var(--sui_meter_track-height);
+  background-color: var(--sui_meter_track-background_color);
+  border-color: var(--_sui_meter_track-border_color, transparent);
+  border-width: var(--_sui_meter_track-border_width, 0px);
+  border-radius: var(--sui_meter_track-border_radius);
+  corner-shape: var(--sui_meter_track-corner_shape);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Track */
+/* 寸法・角丸・配色の代入はルートの size・radius・variant 修飾クラスに依存し、outlined の変異もルートに依存しトラック自身には対応するクラスが無いため、空宣言・代入・変異をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_meter) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -176,18 +200,6 @@
   --sui_meter_track-border_width: ;
   --sui_meter_track-border_radius: ;
   --sui_meter_track-corner_shape: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_meter_track {
-    height: var(--sui_meter_track-height);
-    background-color: var(--sui_meter_track-background_color);
-    border-color: var(--_sui_meter_track-border_color, transparent);
-    border-width: var(--_sui_meter_track-border_width, 0px);
-    border-radius: var(--sui_meter_track-border_radius);
-    corner-shape: var(--sui_meter_track-corner_shape);
-  }
 }
 
 /* 代入 */
@@ -254,31 +266,35 @@
 
 /* Indicator */
 @layer sui.component {
-@scope (.sui_meter) to ([data-scope]) {
+@scope (.sui_meter_indicator) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_meter_indicator {
-    position: absolute;
-    inset-block: 0px;
-    inset-inline-start: 0px;
-    display: block;
-    border-radius: inherit;
-    corner-shape: inherit;
-    transition: width 500ms;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_meter_indicator-background_color: ;
+  position: absolute;
+  inset-block: 0px;
+  inset-inline-start: 0px;
+  display: block;
+  border-radius: inherit;
+  corner-shape: inherit;
+  transition: width 500ms;
 }
 
 /* 可変 */
 :scope {
-  .sui_meter_indicator {
-    background-color: var(--sui_meter_indicator-background_color);
-  }
+  background-color: var(--sui_meter_indicator-background_color);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Indicator */
+/* 配色の代入はルートの色の修飾クラスに依存し、インジケーター自身には対応するクラスが無いため、空宣言と代入をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_meter) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_meter_indicator-background_color: ;
 }
 
 /* 代入 */

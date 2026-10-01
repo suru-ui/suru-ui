@@ -28,13 +28,11 @@
 
 /* Legend */
 @layer sui.component {
-@scope (.sui_fieldset) to ([data-scope]) {
+@scope (.sui_fieldset_legend) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_fieldset_legend {
-    border-bottom-style: solid;
-  }
+  border-bottom-style: solid;
 }
 
 /* 変数 */
@@ -51,16 +49,14 @@
 
 /* 可変 */
 :scope {
-  .sui_fieldset_legend {
-    font-family: var(--sui_fieldset_legend-font_family);
-    font-size: var(--sui_fieldset_legend-font_size);
-    font-weight: var(--sui_fieldset_legend-font_weight);
-    line-height: var(--sui_fieldset_legend-line_height);
-    color: var(--sui_fieldset_legend-color);
-    letter-spacing: var(--sui_fieldset_legend-letter_spacing);
-    border-bottom-color: var(--sui_fieldset_legend-border_bottom_color);
-    border-bottom-width: var(--sui_fieldset_legend-border_bottom_width);
-  }
+  font-family: var(--sui_fieldset_legend-font_family);
+  font-size: var(--sui_fieldset_legend-font_size);
+  font-weight: var(--sui_fieldset_legend-font_weight);
+  line-height: var(--sui_fieldset_legend-line_height);
+  color: var(--sui_fieldset_legend-color);
+  letter-spacing: var(--sui_fieldset_legend-letter_spacing);
+  border-bottom-color: var(--sui_fieldset_legend-border_bottom_color);
+  border-bottom-width: var(--sui_fieldset_legend-border_bottom_width);
 }
 
 /* 代入 */
@@ -79,19 +75,26 @@
 } /* @layer */
 
 /* disabled */
+/* Root */
 @layer sui.important {
 @scope (.sui_fieldset) to ([data-scope]) {
 
-/* Root */
 :scope {
   &.sui_fieldset-disabled {
     cursor: not-allowed;
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Legend */
+@layer sui.important {
+@scope (.sui_fieldset_legend) to ([data-scope]) {
+
 :scope {
-  &.sui_fieldset-disabled .sui_fieldset_legend {
+  &.sui_fieldset_legend-disabled {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
   }

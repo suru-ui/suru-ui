@@ -30,14 +30,12 @@
 
 /* ScrubArea */
 @layer sui.component {
-@scope (.sui_number_field) to ([data-scope]) {
+@scope (.sui_number_field_scrub_area) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_number_field_scrub_area {
-    cursor: ew-resize;
-    user-select: none;
-  }
+  cursor: ew-resize;
+  user-select: none;
 }
 
 /* 変数 */
@@ -52,14 +50,12 @@
 
 /* 可変 */
 :scope {
-  .sui_number_field_scrub_area {
-    font-family: var(--sui_number_field_scrub_area-font_family);
-    font-size: var(--sui_number_field_scrub_area-font_size);
-    font-weight: var(--sui_number_field_scrub_area-font_weight);
-    line-height: var(--sui_number_field_scrub_area-line_height);
-    color: var(--sui_number_field_scrub_area-color);
-    letter-spacing: var(--sui_number_field_scrub_area-letter_spacing);
-  }
+  font-family: var(--sui_number_field_scrub_area-font_family);
+  font-size: var(--sui_number_field_scrub_area-font_size);
+  font-weight: var(--sui_number_field_scrub_area-font_weight);
+  line-height: var(--sui_number_field_scrub_area-line_height);
+  color: var(--sui_number_field_scrub_area-color);
+  letter-spacing: var(--sui_number_field_scrub_area-letter_spacing);
 }
 
 /* 代入 */
@@ -67,21 +63,21 @@
   --sui_number_field_scrub_area-font_family: var(--sui-font-sans);
   --sui_number_field_scrub_area-color: var(--sui-canvas_text-1);
 
-  &.sui_number_field-size_sm {
+  &.sui_number_field_scrub_area-size_sm {
     --sui_number_field_scrub_area-font_size: var(--sui-text-dns-sm-b-font_size);
     --sui_number_field_scrub_area-font_weight: var(--sui-text-dns-sm-b-font_weight);
     --sui_number_field_scrub_area-line_height: var(--sui-text-dns-sm-b-line_height);
     --sui_number_field_scrub_area-letter_spacing: var(--sui-text-dns-sm-b-letter_spacing);
   }
 
-  &.sui_number_field-size_md {
+  &.sui_number_field_scrub_area-size_md {
     --sui_number_field_scrub_area-font_size: var(--sui-text-dns-sm-b-font_size);
     --sui_number_field_scrub_area-font_weight: var(--sui-text-dns-sm-b-font_weight);
     --sui_number_field_scrub_area-line_height: var(--sui-text-dns-sm-b-line_height);
     --sui_number_field_scrub_area-letter_spacing: var(--sui-text-dns-sm-b-letter_spacing);
   }
 
-  &.sui_number_field-size_lg {
+  &.sui_number_field_scrub_area-size_lg {
     --sui_number_field_scrub_area-font_size: var(--sui-text-dns-md-b-font_size);
     --sui_number_field_scrub_area-font_weight: var(--sui-text-dns-md-b-font_weight);
     --sui_number_field_scrub_area-line_height: var(--sui-text-dns-md-b-line_height);
@@ -94,13 +90,11 @@
 
 /* ScrubAreaCursor */
 @layer sui.component {
-@scope (.sui_number_field) to ([data-scope]) {
+@scope (.sui_number_field_scrub_area_cursor) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_number_field_scrub_area_cursor {
-    pointer-events: none;
-  }
+  pointer-events: none;
 }
 
 } /* @scope */
@@ -108,26 +102,24 @@
 
 /* Group */
 @layer sui.component {
-@scope (.sui_number_field) to ([data-scope]) {
+@scope (.sui_number_field_group) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_number_field_group {
-    position: relative;
-    display: inline-flex;
-    align-items: stretch;
-    overflow: hidden;
-    vertical-align: middle;
-    touch-action: manipulation;
-    outline-style: solid;
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  vertical-align: middle;
+  touch-action: manipulation;
+  outline-style: solid;
 
-    &::after {
-      position: absolute;
-      inset: 0px;
-      pointer-events: none;
-      content: "";
-      border-style: solid;
-    }
+  &::after {
+    position: absolute;
+    inset: 0px;
+    pointer-events: none;
+    content: "";
+    border-style: solid;
   }
 }
 
@@ -154,23 +146,21 @@
 
 /* 可変 */
 :scope {
-  .sui_number_field_group {
-    gap: var(--sui_number_field_group-gap);
-    min-height: var(--sui_number_field_group-min_height);
-    padding-inline: var(--sui_number_field_group-padding_inline);
-    outline-width: var(--_sui_number_field_group-outline_width, 0px);
-    outline-color: var(--sui_number_field_group-outline_color);
-    outline-offset: var(--sui_number_field_group-outline_offset);
-    background-color: var(--sui_number_field_group-background_color);
+  gap: var(--sui_number_field_group-gap);
+  min-height: var(--sui_number_field_group-min_height);
+  padding-inline: var(--sui_number_field_group-padding_inline);
+  outline-width: var(--_sui_number_field_group-outline_width, 0px);
+  outline-color: var(--sui_number_field_group-outline_color);
+  outline-offset: var(--sui_number_field_group-outline_offset);
+  background-color: var(--sui_number_field_group-background_color);
+  border-radius: var(--sui_number_field_group-border_radius);
+  corner-shape: var(--sui_number_field_group-corner_shape);
+
+  &::after {
+    border-color: var(--_sui_number_field_group-border_color, transparent);
+    border-width: var(--_sui_number_field_group-border_width, 0px);
     border-radius: var(--sui_number_field_group-border_radius);
     corner-shape: var(--sui_number_field_group-corner_shape);
-
-    &::after {
-      border-color: var(--_sui_number_field_group-border_color, transparent);
-      border-width: var(--_sui_number_field_group-border_width, 0px);
-      border-radius: var(--sui_number_field_group-border_radius);
-      corner-shape: var(--sui_number_field_group-corner_shape);
-    }
   }
 }
 
@@ -187,155 +177,153 @@
   --sui_number_field_group-border_width-focus_visible: --sui-border_width(2);
   --sui_number_field_group-border_width-invalid: --sui-border_width(2);
 
-  &.sui_number_field-size_sm {
+  &.sui_number_field_group-size_sm {
     --sui_number_field_group-gap: --sui-gap(0.5);
     --sui_number_field_group-min_height: var(--sui-size-sm);
     --sui_number_field_group-padding_inline: --sui-space(1.5);
   }
 
-  &.sui_number_field-size_md {
+  &.sui_number_field_group-size_md {
     --sui_number_field_group-gap: --sui-gap(1);
     --sui_number_field_group-min_height: var(--sui-size-md);
     --sui_number_field_group-padding_inline: --sui-space(2.5);
   }
 
-  &.sui_number_field-size_lg {
+  &.sui_number_field_group-size_lg {
     --sui_number_field_group-gap: --sui-gap(1.5);
     --sui_number_field_group-min_height: var(--sui-size-lg);
     --sui_number_field_group-padding_inline: --sui-space(3.5);
   }
 
-  &.sui_number_field-radius_none {
+  &.sui_number_field_group-radius_none {
     --sui_number_field_group-border_radius: 0px;
   }
 
-  &.sui_number_field-radius_sm {
+  &.sui_number_field_group-radius_sm {
     --sui_number_field_group-border_radius: --sui-corner_radius(1);
     --sui_number_field_group-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_number_field-radius_md {
+  &.sui_number_field_group-radius_md {
     --sui_number_field_group-border_radius: --sui-corner_radius(2);
     --sui_number_field_group-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_number_field-radius_lg {
+  &.sui_number_field_group-radius_lg {
     --sui_number_field_group-border_radius: --sui-corner_radius(3);
     --sui_number_field_group-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_number_field-radius_full {
+  &.sui_number_field_group-radius_full {
     --sui_number_field_group-border_radius: calc(var(--sui_number_field_group-min_height) / 2);
     --sui_number_field_group-corner_shape: superellipse(var(--sui-superellipse));
   }
 
-  &.sui_number_field-variant_naked {
+  &.sui_number_field_group-variant_naked {
     --sui_number_field_group-background_color: var(--sui-grey-naked-canvas-normal);
   }
 
-  &.sui_number_field-variant_liquid {
+  &.sui_number_field_group-variant_liquid {
     --sui_number_field_group-background_color: var(--sui-grey-liquid-canvas-normal);
   }
 
-  &.sui_number_field-color_grey.sui_number_field-variant_naked {
+  &.sui_number_field_group-color_grey.sui_number_field_group-variant_naked {
     --sui_number_field_group-border_color-focus_visible: var(--sui-grey-naked-border-subtle);
   }
 
-  &.sui_number_field-color_grey.sui_number_field-variant_liquid {
+  &.sui_number_field_group-color_grey.sui_number_field_group-variant_liquid {
     --sui_number_field_group-border_color-focus_visible: var(--sui-grey-liquid-border-subtle);
   }
 
-  &.sui_number_field-color_blue.sui_number_field-variant_naked {
+  &.sui_number_field_group-color_blue.sui_number_field_group-variant_naked {
     --sui_number_field_group-border_color-focus_visible: var(--sui-blue-naked-border-normal);
   }
 
-  &.sui_number_field-color_blue.sui_number_field-variant_liquid {
+  &.sui_number_field_group-color_blue.sui_number_field_group-variant_liquid {
     --sui_number_field_group-border_color-focus_visible: var(--sui-blue-liquid-border-normal);
   }
 
-  &.sui_number_field-color_purple.sui_number_field-variant_naked {
+  &.sui_number_field_group-color_purple.sui_number_field_group-variant_naked {
     --sui_number_field_group-border_color-focus_visible: var(--sui-purple-naked-border-normal);
   }
 
-  &.sui_number_field-color_purple.sui_number_field-variant_liquid {
+  &.sui_number_field_group-color_purple.sui_number_field_group-variant_liquid {
     --sui_number_field_group-border_color-focus_visible: var(--sui-purple-liquid-border-normal);
   }
 
-  &.sui_number_field-color_magenta.sui_number_field-variant_naked {
+  &.sui_number_field_group-color_magenta.sui_number_field_group-variant_naked {
     --sui_number_field_group-border_color-focus_visible: var(--sui-magenta-naked-border-normal);
   }
 
-  &.sui_number_field-color_magenta.sui_number_field-variant_liquid {
+  &.sui_number_field_group-color_magenta.sui_number_field_group-variant_liquid {
     --sui_number_field_group-border_color-focus_visible: var(--sui-magenta-liquid-border-normal);
   }
 
-  &.sui_number_field-color_red.sui_number_field-variant_naked {
+  &.sui_number_field_group-color_red.sui_number_field_group-variant_naked {
     --sui_number_field_group-border_color-focus_visible: var(--sui-red-naked-border-normal);
   }
 
-  &.sui_number_field-color_red.sui_number_field-variant_liquid {
+  &.sui_number_field_group-color_red.sui_number_field_group-variant_liquid {
     --sui_number_field_group-border_color-focus_visible: var(--sui-red-liquid-border-normal);
   }
 
-  &.sui_number_field-color_orange.sui_number_field-variant_naked {
+  &.sui_number_field_group-color_orange.sui_number_field_group-variant_naked {
     --sui_number_field_group-border_color-focus_visible: var(--sui-orange-naked-border-normal);
   }
 
-  &.sui_number_field-color_orange.sui_number_field-variant_liquid {
+  &.sui_number_field_group-color_orange.sui_number_field_group-variant_liquid {
     --sui_number_field_group-border_color-focus_visible: var(--sui-orange-liquid-border-normal);
   }
 
-  &.sui_number_field-color_yellow.sui_number_field-variant_naked {
+  &.sui_number_field_group-color_yellow.sui_number_field_group-variant_naked {
     --sui_number_field_group-border_color-focus_visible: var(--sui-yellow-naked-border-normal);
   }
 
-  &.sui_number_field-color_yellow.sui_number_field-variant_liquid {
+  &.sui_number_field_group-color_yellow.sui_number_field_group-variant_liquid {
     --sui_number_field_group-border_color-focus_visible: var(--sui-yellow-liquid-border-normal);
   }
 
-  &.sui_number_field-color_green.sui_number_field-variant_naked {
+  &.sui_number_field_group-color_green.sui_number_field_group-variant_naked {
     --sui_number_field_group-border_color-focus_visible: var(--sui-green-naked-border-normal);
   }
 
-  &.sui_number_field-color_green.sui_number_field-variant_liquid {
+  &.sui_number_field_group-color_green.sui_number_field_group-variant_liquid {
     --sui_number_field_group-border_color-focus_visible: var(--sui-green-liquid-border-normal);
   }
 }
 
 /* 変異 */
 :scope {
-  &:not(.sui_number_field-disabled):has(.sui_number_field_input:focus-visible)
-    .sui_number_field_group {
+  &:not(.sui_number_field_group-disabled):has(.sui_number_field_input:focus-visible) {
     --_sui_number_field_group-outline_width: var(--sui_number_field_group-focusring_width);
   }
 
-  &.sui_number_field-outlined .sui_number_field_group::after {
+  &.sui_number_field_group-outlined::after {
     --_sui_number_field_group-border_color: var(--sui_number_field_group-border_color-idle);
     --_sui_number_field_group-border_width: var(--sui_number_field_group-border_width-idle);
   }
 
-  &:not(.sui_number_field-disabled) {
+  &:not(.sui_number_field_group-disabled) {
     @media (any-hover: hover) {
-      &.sui_number_field-outlined:has(.sui_number_field_group:hover)
-        .sui_number_field_group::after {
+      &.sui_number_field_group-outlined:hover::after {
         --_sui_number_field_group-border_color: var(--sui_number_field_group-border_color-hover);
         --_sui_number_field_group-border_width: var(--sui_number_field_group-border_width-hover);
       }
     }
 
-    &.sui_number_field-outlined:focus-within .sui_number_field_group::after {
+    &.sui_number_field_group-outlined:focus-within::after {
       --_sui_number_field_group-border_color: var(--sui_number_field_group-border_color-focus_visible);
       --_sui_number_field_group-border_width:
         var(--sui_number_field_group-border_width-focus_visible);
     }
   }
 
-  &:has(.sui_number_field_input-invalid) .sui_number_field_group::after {
+  &:has(.sui_number_field_input-invalid)::after {
     --_sui_number_field_group-border_color: var(--sui_number_field_group-border_color-invalid);
     --_sui_number_field_group-border_width: var(--sui_number_field_group-border_width-invalid);
   }
 
-  &:has(.sui_number_field_input-unverified:user-invalid) .sui_number_field_group::after {
+  &:has(.sui_number_field_input-unverified:user-invalid)::after {
     --_sui_number_field_group-border_color: var(--sui_number_field_group-border_color-invalid);
     --_sui_number_field_group-border_width: var(--sui_number_field_group-border_width-invalid);
   }
@@ -346,17 +334,15 @@
 
 /* Input */
 @layer sui.component {
-@scope (.sui_number_field) to ([data-scope]) {
+@scope (.sui_number_field_input) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_number_field_input {
-    display: block;
-    flex: 1 1 auto;
-    min-width: 0px;
-    font-variant-numeric: tabular-nums;
-    touch-action: manipulation;
-  }
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0px;
+  font-variant-numeric: tabular-nums;
+  touch-action: manipulation;
 }
 
 /* 変数 */
@@ -373,18 +359,16 @@
 
 /* 可変 */
 :scope {
-  .sui_number_field_input {
-    font-family: var(--sui_number_field_input-font_family);
-    font-size: var(--sui_number_field_input-font_size);
-    font-weight: var(--sui_number_field_input-font_weight);
-    line-height: var(--sui_number_field_input-line_height);
-    color: var(--sui_number_field_input-color);
-    letter-spacing: var(--sui_number_field_input-letter_spacing);
-    caret-color: var(--sui_number_field_input-caret_color);
+  font-family: var(--sui_number_field_input-font_family);
+  font-size: var(--sui_number_field_input-font_size);
+  font-weight: var(--sui_number_field_input-font_weight);
+  line-height: var(--sui_number_field_input-line_height);
+  color: var(--sui_number_field_input-color);
+  letter-spacing: var(--sui_number_field_input-letter_spacing);
+  caret-color: var(--sui_number_field_input-caret_color);
 
-    &::placeholder {
-      color: var(--sui_number_field_input-placeholder-color);
-    }
+  &::placeholder {
+    color: var(--sui_number_field_input-placeholder-color);
   }
 }
 
@@ -393,33 +377,33 @@
   --sui_number_field_input-font_family: var(--sui-font-sans);
   --sui_number_field_input-placeholder-color: var(--sui-canvas_text-2);
 
-  &.sui_number_field-size_sm {
+  &.sui_number_field_input-size_sm {
     --sui_number_field_input-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_number_field_input-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_number_field_input-line_height: var(--sui-text-oln-sm-n-line_height);
     --sui_number_field_input-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
   }
 
-  &.sui_number_field-size_md {
+  &.sui_number_field_input-size_md {
     --sui_number_field_input-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_number_field_input-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_number_field_input-line_height: var(--sui-text-oln-md-n-line_height);
     --sui_number_field_input-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   }
 
-  &.sui_number_field-size_lg {
+  &.sui_number_field_input-size_lg {
     --sui_number_field_input-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_number_field_input-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_number_field_input-line_height: var(--sui-text-oln-lg-n-line_height);
     --sui_number_field_input-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
   }
 
-  &.sui_number_field-variant_naked {
+  &.sui_number_field_input-variant_naked {
     --sui_number_field_input-color: var(--sui-grey-naked-canvas_text-normal);
     --sui_number_field_input-caret_color: var(--sui_number_field_input-color);
   }
 
-  &.sui_number_field-variant_liquid {
+  &.sui_number_field_input-variant_liquid {
     --sui_number_field_input-color: var(--sui-grey-liquid-canvas_text-normal);
     --sui_number_field_input-caret_color: var(--sui_number_field_input-color);
   }
@@ -430,20 +414,18 @@
 
 /* Addon */
 @layer sui.component {
-@scope (.sui_number_field) to ([data-scope]) {
+@scope (.sui_number_field_addon) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_number_field_addon {
-    display: inline-flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 
-    &:empty {
-      display: none;
-    }
+  &:empty {
+    display: none;
   }
 }
 
@@ -461,19 +443,17 @@
 
 /* 可変 */
 :scope {
-  .sui_number_field_addon {
-    font-family: var(--sui_number_field_addon-font_family);
-    font-size: var(--sui_number_field_addon-font_size);
-    font-weight: var(--sui_number_field_addon-font_weight);
-    line-height: var(--sui_number_field_addon-line_height);
-    color: var(--sui_number_field_addon-color);
-    letter-spacing: var(--sui_number_field_addon-letter_spacing);
+  font-family: var(--sui_number_field_addon-font_family);
+  font-size: var(--sui_number_field_addon-font_size);
+  font-weight: var(--sui_number_field_addon-font_weight);
+  line-height: var(--sui_number_field_addon-line_height);
+  color: var(--sui_number_field_addon-color);
+  letter-spacing: var(--sui_number_field_addon-letter_spacing);
 
-    svg:not(.sui-ignore) {
-      width: var(--sui_number_field_addon__svg-size);
-      height: var(--sui_number_field_addon__svg-size);
-      color: var(--sui_number_field_addon__svg-color);
-    }
+  svg:not(.sui-ignore) {
+    width: var(--sui_number_field_addon__svg-size);
+    height: var(--sui_number_field_addon__svg-size);
+    color: var(--sui_number_field_addon__svg-color);
   }
 }
 
@@ -486,7 +466,7 @@
                                          var(--sui_number_field_group-background_color)
                                        );
 
-  &.sui_number_field-size_sm {
+  &.sui_number_field_addon-size_sm {
     --sui_number_field_addon-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_number_field_addon-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_number_field_addon-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -497,7 +477,7 @@
                                          );
   }
 
-  &.sui_number_field-size_md {
+  &.sui_number_field_addon-size_md {
     --sui_number_field_addon-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_number_field_addon-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_number_field_addon-line_height: var(--sui-text-oln-md-n-line_height);
@@ -508,7 +488,7 @@
                                          );
   }
 
-  &.sui_number_field-size_lg {
+  &.sui_number_field_addon-size_lg {
     --sui_number_field_addon-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_number_field_addon-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_number_field_addon-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -524,6 +504,7 @@
 } /* @layer */
 
 /* Decrement */
+/* Button を内包し、増加ボタンと公開変数やルート状態を共有するため、ルート起点の別ブロックにまとめます。 */
 @layer sui.component {
 @scope (.sui_number_field) to ([data-scope]) {
 
@@ -793,65 +774,84 @@
 } /* @layer */
 
 /* disabled */
+/* Root */
 @layer sui.important {
 @scope (.sui_number_field) to ([data-scope]) {
 
-/* Root */
 :scope {
   &.sui_number_field-disabled {
     cursor: not-allowed;
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* ScrubArea */
+@layer sui.important {
+@scope (.sui_number_field_scrub_area) to ([data-scope]) {
+
 :scope {
-  &.sui_number_field-disabled .sui_number_field_scrub_area {
+  &.sui_number_field_scrub_area-disabled {
     cursor: not-allowed;
   }
 
-  &.sui_number_field-disabled.sui_number_field-variant_naked .sui_number_field_scrub_area {
+  &.sui_number_field_scrub_area-disabled.sui_number_field_scrub_area-variant_naked {
     color: var(--sui-disabled-naked-canvas_text);
   }
 
-  &.sui_number_field-disabled.sui_number_field-variant_liquid .sui_number_field_scrub_area {
+  &.sui_number_field_scrub_area-disabled.sui_number_field_scrub_area-variant_liquid {
     color: var(--sui-disabled-liquid-canvas_text);
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Group */
+@layer sui.important {
+@scope (.sui_number_field_group) to ([data-scope]) {
+
 :scope {
-  &.sui_number_field-disabled .sui_number_field_group {
+  &.sui_number_field_group-disabled {
     cursor: not-allowed;
   }
 
-  &.sui_number_field-disabled.sui_number_field-variant_naked .sui_number_field_group {
+  &.sui_number_field_group-disabled.sui_number_field_group-variant_naked {
     background-color: var(--sui-disabled-naked-canvas);
   }
 
-  &.sui_number_field-disabled.sui_number_field-variant_naked.sui_number_field-outlined
-    .sui_number_field_group::after {
+  &.sui_number_field_group-disabled.sui_number_field_group-variant_naked.sui_number_field_group-outlined::after {
     border-color: var(--sui-disabled-naked-border);
     border-width: var(--sui-disabled-border_width);
   }
 
-  &.sui_number_field-disabled.sui_number_field-variant_liquid .sui_number_field_group {
+  &.sui_number_field_group-disabled.sui_number_field_group-variant_liquid {
     background-color: var(--sui-disabled-liquid-canvas);
   }
 
-  &.sui_number_field-disabled.sui_number_field-variant_liquid.sui_number_field-outlined
-    .sui_number_field_group::after {
+  &.sui_number_field_group-disabled.sui_number_field_group-variant_liquid.sui_number_field_group-outlined::after {
     border-color: var(--sui-disabled-liquid-border);
     border-width: var(--sui-disabled-border_width);
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Input */
+@layer sui.important {
+@scope (.sui_number_field_input) to ([data-scope]) {
+
 :scope {
-  &.sui_number_field-disabled .sui_number_field_input {
+  &.sui_number_field_input-disabled {
     cursor: not-allowed;
   }
 
-  &.sui_number_field-disabled.sui_number_field-variant_naked .sui_number_field_input {
+  &.sui_number_field_input-disabled.sui_number_field_input-variant_naked {
     color: var(--sui-disabled-naked-canvas_text);
 
     &::placeholder {
@@ -859,7 +859,7 @@
     }
   }
 
-  &.sui_number_field-disabled.sui_number_field-variant_liquid .sui_number_field_input {
+  &.sui_number_field_input-disabled.sui_number_field_input-variant_liquid {
     color: var(--sui-disabled-liquid-canvas_text);
 
     &::placeholder {
@@ -868,7 +868,15 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Addon */
+/* 入力欄の無効状態はルートの子孫に依存し、アドオン自身に無効クラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_number_field) to ([data-scope]) {
+
 :scope {
   &.sui_number_field-disabled .sui_number_field_addon {
     cursor: not-allowed;
@@ -882,6 +890,15 @@
     color: var(--sui-disabled-liquid-canvas_text);
   }
 }
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* Decrement */
+/* Button を内包し、ルートの無効状態に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_number_field) to ([data-scope]) {
 
 /* Decrement */
 :scope {

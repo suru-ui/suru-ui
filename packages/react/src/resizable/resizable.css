@@ -23,28 +23,26 @@
 
 /* Handle */
 @layer sui.component {
-@scope (.sui_resizable) to ([data-scope]) {
+@scope (.sui_resizable_handle) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_resizable_handle {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    padding: 0px;
-    touch-action: none;
-    user-select: none;
-    outline-style: solid;
-  }
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  touch-action: none;
+  user-select: none;
+  outline-style: solid;
 
-  .sui_resizable_handle-direction_vertical {
+  &.sui_resizable_handle-direction_vertical {
     cursor: col-resize;
   }
 
-  .sui_resizable_handle-direction_horizontal {
+  &.sui_resizable_handle-direction_horizontal {
     cursor: row-resize;
   }
 }
@@ -62,18 +60,16 @@
 
 /* 可変 */
 :scope {
-  .sui_resizable_handle {
-    outline-width: var(--_sui_resizable_handle-outline_width, 0px);
-    outline-color: var(--_sui_resizable_handle-outline_color, transparent);
-    outline-offset: var(--_sui_resizable_handle-outline_offset, 0px);
-    background-color: var(--_sui_resizable_handle-color, var(--sui_resizable_handle-color-idle));
-  }
+  outline-width: var(--_sui_resizable_handle-outline_width, 0px);
+  outline-color: var(--_sui_resizable_handle-outline_color, transparent);
+  outline-offset: var(--_sui_resizable_handle-outline_offset, 0px);
+  background-color: var(--_sui_resizable_handle-color, var(--sui_resizable_handle-color-idle));
 
-  .sui_resizable_handle-direction_vertical {
+  &.sui_resizable_handle-direction_vertical {
     width: var(--_sui_resizable_handle-size, var(--sui_resizable_handle-size));
   }
 
-  .sui_resizable_handle-direction_horizontal {
+  &.sui_resizable_handle-direction_horizontal {
     height: var(--_sui_resizable_handle-size, var(--sui_resizable_handle-size));
   }
 }
@@ -92,7 +88,7 @@
 /* 変異 */
 :scope {
   /* react-resizable-panels は data-separator 属性でホバー・操作中の状態を出力します。 */
-  .sui_resizable_handle:not(.sui_resizable_handle-disabled) {
+  &:not(.sui_resizable_handle-disabled) {
     &[data-separator="hover"] {
       --_sui_resizable_handle-color: var(--sui_resizable_handle-color-hover);
     }
@@ -108,7 +104,7 @@
     }
   }
 
-  .sui_resizable_handle-invisible {
+  &.sui_resizable_handle-invisible {
     --_sui_resizable_handle-size: 0px;
   }
 }
@@ -118,11 +114,11 @@
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_resizable) to ([data-scope]) {
+@scope (.sui_resizable_handle) to ([data-scope]) {
 
 /* Handle */
 :scope {
-  .sui_resizable_handle-disabled {
+  &.sui_resizable_handle-disabled {
     cursor: not-allowed;
     background-color: var(--sui-disabled-naked-border);
   }

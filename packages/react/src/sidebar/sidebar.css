@@ -101,16 +101,14 @@
 
 /* Header */
 @layer sui.component {
-  @scope (.sui_sidebar) to ([data-scope]) {
+  @scope (.sui_sidebar_header) to ([data-scope]) {
     /* 固定 */
     :scope {
-      .sui_sidebar_header {
-        display: flex;
-        flex: 0 0 auto;
-        flex-direction: column;
-        align-items: stretch;
-        overflow: hidden;
-      }
+      display: flex;
+      flex: 0 0 auto;
+      flex-direction: column;
+      align-items: stretch;
+      overflow: hidden;
     }
 
     /* 変数 */
@@ -122,11 +120,9 @@
 
     /* 可変 */
     :scope {
-      .sui_sidebar_header {
-        gap: var(--sui_sidebar_header-gap);
-        padding-block: var(--sui_sidebar_header-padding_block);
-        padding-inline: var(--sui_sidebar_header-padding_inline);
-      }
+      gap: var(--sui_sidebar_header-gap);
+      padding-block: var(--sui_sidebar_header-padding_block);
+      padding-inline: var(--sui_sidebar_header-padding_inline);
     }
 
     /* 代入 */
@@ -140,18 +136,16 @@
 
 /* Content */
 @layer sui.component {
-  @scope (.sui_sidebar) to ([data-scope]) {
+  @scope (.sui_sidebar_content) to ([data-scope]) {
     /* 固定 */
     :scope {
-      .sui_sidebar_content {
-        display: flex;
-        flex: 1 1 auto;
-        flex-direction: column;
-        min-height: 0px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        overscroll-behavior: contain;
-      }
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      min-height: 0px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
     }
 
     /* 変数 */
@@ -163,11 +157,9 @@
 
     /* 可変 */
     :scope {
-      .sui_sidebar_content {
-        gap: var(--sui_sidebar_content-gap);
-        padding-block: var(--sui_sidebar_content-padding_block);
-        padding-inline: var(--sui_sidebar_content-padding_inline);
-      }
+      gap: var(--sui_sidebar_content-gap);
+      padding-block: var(--sui_sidebar_content-padding_block);
+      padding-inline: var(--sui_sidebar_content-padding_inline);
     }
 
     /* 代入 */
@@ -181,16 +173,14 @@
 
 /* Footer */
 @layer sui.component {
-  @scope (.sui_sidebar) to ([data-scope]) {
+  @scope (.sui_sidebar_footer) to ([data-scope]) {
     /* 固定 */
     :scope {
-      .sui_sidebar_footer {
-        display: flex;
-        flex: 0 0 auto;
-        flex-direction: column;
-        align-items: stretch;
-        overflow: hidden;
-      }
+      display: flex;
+      flex: 0 0 auto;
+      flex-direction: column;
+      align-items: stretch;
+      overflow: hidden;
     }
 
     /* 変数 */
@@ -202,11 +192,9 @@
 
     /* 可変 */
     :scope {
-      .sui_sidebar_footer {
-        gap: var(--sui_sidebar_footer-gap);
-        padding-block: var(--sui_sidebar_footer-padding_block);
-        padding-inline: var(--sui_sidebar_footer-padding_inline);
-      }
+      gap: var(--sui_sidebar_footer-gap);
+      padding-block: var(--sui_sidebar_footer-padding_block);
+      padding-inline: var(--sui_sidebar_footer-padding_inline);
     }
 
     /* 代入 */
@@ -220,13 +208,11 @@
 
 /* Group */
 @layer sui.component {
-  @scope (.sui_sidebar) to ([data-scope]) {
+  @scope (.sui_sidebar_group) to ([data-scope]) {
     /* 固定 */
     :scope {
-      .sui_sidebar_group {
-        display: flex;
-        flex-direction: column;
-      }
+      display: flex;
+      flex-direction: column;
     }
 
     /* 変数 */
@@ -238,11 +224,9 @@
 
     /* 可変 */
     :scope {
-      .sui_sidebar_group {
-        gap: var(--sui_sidebar_group-gap);
-        padding-block: var(--sui_sidebar_group-padding_block);
-        padding-inline: var(--sui_sidebar_group-padding_inline);
-      }
+      gap: var(--sui_sidebar_group-gap);
+      padding-block: var(--sui_sidebar_group-padding_block);
+      padding-inline: var(--sui_sidebar_group-padding_inline);
     }
 
     /* 代入 */
@@ -256,14 +240,12 @@
 
 /* GroupLabel */
 @layer sui.component {
-  @scope (.sui_sidebar) to ([data-scope]) {
+  @scope (.sui_sidebar_group_label) to ([data-scope]) {
     /* 固定 */
     :scope {
-      .sui_sidebar_group_label {
-        display: flex;
-        flex-shrink: 0;
-        align-items: center;
-      }
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
     }
 
     /* 変数 */
@@ -280,16 +262,14 @@
 
     /* 可変 */
     :scope {
-      .sui_sidebar_group_label {
-        min-height: var(--sui_sidebar_group_label-min_height);
-        padding-inline: var(--sui_sidebar_group_label-padding_inline);
-        font-family: var(--sui_sidebar_group_label-font_family);
-        font-size: var(--sui_sidebar_group_label-font_size);
-        font-weight: var(--sui_sidebar_group_label-font_weight);
-        line-height: var(--sui_sidebar_group_label-line_height);
-        color: var(--sui_sidebar_group_label-color);
-        letter-spacing: var(--sui_sidebar_group_label-letter_spacing);
-      }
+      min-height: var(--sui_sidebar_group_label-min_height);
+      padding-inline: var(--sui_sidebar_group_label-padding_inline);
+      font-family: var(--sui_sidebar_group_label-font_family);
+      font-size: var(--sui_sidebar_group_label-font_size);
+      font-weight: var(--sui_sidebar_group_label-font_weight);
+      line-height: var(--sui_sidebar_group_label-line_height);
+      color: var(--sui_sidebar_group_label-color);
+      letter-spacing: var(--sui_sidebar_group_label-letter_spacing);
     }
 
     /* 代入 */
@@ -308,14 +288,12 @@
 
 /* GroupContent */
 @layer sui.component {
-  @scope (.sui_sidebar) to ([data-scope]) {
+  @scope (.sui_sidebar_group_content) to ([data-scope]) {
     /* 固定 */
     :scope {
-      .sui_sidebar_group_content {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-      }
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
     }
 
     /* 変数 */
@@ -325,9 +303,7 @@
 
     /* 可変 */
     :scope {
-      .sui_sidebar_group_content {
-        gap: var(--sui_sidebar_group_content-gap);
-      }
+      gap: var(--sui_sidebar_group_content-gap);
     }
 
     /* 代入 */
@@ -339,16 +315,14 @@
 
 /* Inset */
 @layer sui.component {
-  @scope (.sui_sidebar_provider) to ([data-scope]) {
+  @scope (.sui_sidebar_inset) to ([data-scope]) {
     /* 固定 */
     :scope {
-      .sui_sidebar_inset {
-        display: flex;
-        flex: 1 1 auto;
-        flex-direction: column;
-        min-width: 0px;
-        border-style: solid;
-      }
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      min-width: 0px;
+      border-style: solid;
     }
 
     /* 変数 */
@@ -366,17 +340,15 @@
 
     /* 可変 */
     :scope {
-      .sui_sidebar_inset {
-        padding-block: var(--sui_sidebar_inset-padding_block);
-        padding-inline: var(--sui_sidebar_inset-padding_inline);
-        margin-block: var(--sui_sidebar_inset-margin_block);
-        margin-inline: var(--sui_sidebar_inset-margin_inline);
-        background-color: var(--sui_sidebar_inset-background_color);
-        border-color: var(--sui_sidebar_inset-border_color);
-        border-width: var(--sui_sidebar_inset-border_width);
-        border-radius: var(--sui_sidebar_inset-border_radius);
-        corner-shape: var(--sui_sidebar_inset-corner_shape);
-      }
+      padding-block: var(--sui_sidebar_inset-padding_block);
+      padding-inline: var(--sui_sidebar_inset-padding_inline);
+      margin-block: var(--sui_sidebar_inset-margin_block);
+      margin-inline: var(--sui_sidebar_inset-margin_inline);
+      background-color: var(--sui_sidebar_inset-background_color);
+      border-color: var(--sui_sidebar_inset-border_color);
+      border-width: var(--sui_sidebar_inset-border_width);
+      border-radius: var(--sui_sidebar_inset-border_radius);
+      corner-shape: var(--sui_sidebar_inset-corner_shape);
     }
 
     /* 代入 */
@@ -389,7 +361,16 @@
       --sui_sidebar_inset-border_color: transparent;
       --sui_sidebar_inset-border_width: 0px;
       --sui_sidebar_inset-border_radius: 0px;
+    }
+  } /* @scope */
+} /* @layer */
 
+/* Inset */
+/* となり合うルートの variant_inset に依存し、インセット自身に等価なクラスが無いため、プロバイダー起点の別ブロックにします。 */
+@layer sui.component {
+  @scope (.sui_sidebar_provider) to ([data-scope]) {
+    /* 代入 */
+    :scope {
       &:has(> .sui_sidebar-variant_inset) > .sui_sidebar_inset {
         --sui_sidebar_inset-margin_block: --sui-space(1);
         --sui_sidebar_inset-margin_inline: --sui-space(1);
@@ -405,25 +386,23 @@
 
 /* Rail */
 @layer sui.component {
-  @scope (.sui_sidebar) to ([data-scope]) {
+  @scope (.sui_sidebar_rail) to ([data-scope]) {
     /* 固定 */
     :scope {
-      .sui_sidebar_rail {
-        position: absolute;
-        top: 0px;
-        bottom: 0px;
-        z-index: 1;
-        padding: 0px;
-        cursor: pointer;
-        outline-style: solid;
-        border: 0px;
-      }
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      z-index: 1;
+      padding: 0px;
+      cursor: pointer;
+      outline-style: solid;
+      border: 0px;
 
-      &.sui_sidebar-side_left > .sui_sidebar_rail {
+      &.sui_sidebar_rail-side_left {
         right: 0px;
       }
 
-      &.sui_sidebar-side_right > .sui_sidebar_rail {
+      &.sui_sidebar_rail-side_right {
         left: 0px;
       }
     }
@@ -441,16 +420,14 @@
 
     /* 可変 */
     :scope {
-      .sui_sidebar_rail {
-        width: var(--sui_sidebar_rail-width);
-        outline-width: var(--_sui_sidebar_rail-outline_width, 0px);
-        outline-color: var(--sui_sidebar_rail-outline_color);
-        outline-offset: var(--sui_sidebar_rail-outline_offset);
-        background-color: var(
-          --_sui_sidebar_rail-background_color,
-          var(--sui_sidebar_rail-background_color-idle)
-        );
-      }
+      width: var(--sui_sidebar_rail-width);
+      outline-width: var(--_sui_sidebar_rail-outline_width, 0px);
+      outline-color: var(--sui_sidebar_rail-outline_color);
+      outline-offset: var(--sui_sidebar_rail-outline_offset);
+      background-color: var(
+        --_sui_sidebar_rail-background_color,
+        var(--sui_sidebar_rail-background_color-idle)
+      );
     }
 
     /* 代入 */
@@ -466,21 +443,19 @@
 
     /* 変異 */
     :scope {
-      .sui_sidebar_rail {
-        &:not(.sui_sidebar_rail-disabled) {
-          @media (any-hover: hover) {
-            &:hover {
-              --_sui_sidebar_rail-background_color: var(--sui_sidebar_rail-background_color-hover);
-            }
+      &:not(.sui_sidebar_rail-disabled) {
+        @media (any-hover: hover) {
+          &:hover {
+            --_sui_sidebar_rail-background_color: var(--sui_sidebar_rail-background_color-hover);
           }
+        }
 
-          &:active {
-            --_sui_sidebar_rail-background_color: var(--sui_sidebar_rail-background_color-active);
-          }
+        &:active {
+          --_sui_sidebar_rail-background_color: var(--sui_sidebar_rail-background_color-active);
+        }
 
-          &:focus-visible {
-            --_sui_sidebar_rail-outline_width: var(--sui_sidebar_rail-focusring_width);
-          }
+        &:focus-visible {
+          --_sui_sidebar_rail-outline_width: var(--sui_sidebar_rail-focusring_width);
         }
       }
     }

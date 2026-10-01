@@ -385,16 +385,13 @@ describe("NumberField の配置", () => {
   test("公開変数でグループの最小高さとステッパーの大きさを上書きできる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<NumberField decrement />);
-    const root = screen.getByClassName("sui_number_field").element();
-    root.style.setProperty("--sui_number_field_group-min_height", "48px");
-    root.style.setProperty("--sui_number_field_stepper-size", "32px");
+    const group = screen.getByClassName("sui_number_field_group").element();
+    const decrement = screen.getByClassName("sui_number_field_decrement").element();
+    group.style.setProperty("--sui_number_field_group-min_height", "48px");
+    decrement.style.setProperty("--sui_number_field_stepper-size", "32px");
 
     // 検証
-    expect(
-      getComputedStyle(screen.getByClassName("sui_number_field_group").element()).minHeight,
-    ).toBe("48px");
-    expect(
-      screen.getByClassName("sui_number_field_decrement").element().getBoundingClientRect().width,
-    ).toBeCloseTo(32, 1);
+    expect(getComputedStyle(group).minHeight).toBe("48px");
+    expect(decrement.getBoundingClientRect().width).toBeCloseTo(32, 1);
   });
 });

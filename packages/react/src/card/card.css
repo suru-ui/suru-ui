@@ -125,19 +125,13 @@
 
 /* Header */
 @layer sui.component {
-@scope (.sui_card) to ([data-scope]) {
+@scope (.sui_card_header) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_card_header {
-    display: grid;
-    grid-template-columns: auto;
-    align-items: flex-start;
-  }
-
-  &:has(.sui_card_action) .sui_card_header {
-    grid-template-columns: 1fr auto;
-  }
+  display: grid;
+  grid-template-columns: auto;
+  align-items: flex-start;
 }
 
 /* 変数 */
@@ -149,11 +143,9 @@
 
 /* 可変 */
 :scope {
-  .sui_card_header {
-    row-gap: var(--sui_card_header-row_gap);
-    column-gap: var(--sui_card_header-column_gap);
-    padding-inline: var(--sui_card_header-padding_inline);
-  }
+  row-gap: var(--sui_card_header-row_gap);
+  column-gap: var(--sui_card_header-column_gap);
+  padding-inline: var(--sui_card_header-padding_inline);
 }
 
 /* 代入 */
@@ -161,16 +153,31 @@
   --sui_card_header-row_gap: --sui-gap(1);
   --sui_card_header-column_gap: --sui-gap(4);
 
-  &.sui_card-size_sm {
+  &.sui_card_header-size_sm {
     --sui_card_header-padding_inline: --sui-space(3);
   }
 
-  &.sui_card-size_md {
+  &.sui_card_header-size_md {
     --sui_card_header-padding_inline: --sui-space(4);
   }
 
-  &.sui_card-size_lg {
+  &.sui_card_header-size_lg {
     --sui_card_header-padding_inline: --sui-space(5);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Header */
+/* 兄弟パーツの有無に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_card) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  &:has(.sui_card_action) .sui_card_header {
+    grid-template-columns: 1fr auto;
   }
 }
 
@@ -179,17 +186,15 @@
 
 /* Title */
 @layer sui.component {
-@scope (.sui_card) to ([data-scope]) {
+@scope (.sui_card_title) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_card_title {
-    grid-row-start: 1;
-    grid-column-start: 1;
-    line-break: strict;
-    word-break: normal;
-    overflow-wrap: anywhere;
-  }
+  grid-row-start: 1;
+  grid-column-start: 1;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 /* 変数 */
@@ -204,14 +209,12 @@
 
 /* 可変 */
 :scope {
-  .sui_card_title {
-    font-family: var(--sui_card_title-font_family);
-    font-size: var(--sui_card_title-font_size);
-    font-weight: var(--sui_card_title-font_weight);
-    line-height: var(--sui_card_title-line_height);
-    color: var(--sui_card_title-color);
-    letter-spacing: var(--sui_card_title-letter_spacing);
-  }
+  font-family: var(--sui_card_title-font_family);
+  font-size: var(--sui_card_title-font_size);
+  font-weight: var(--sui_card_title-font_weight);
+  line-height: var(--sui_card_title-line_height);
+  color: var(--sui_card_title-color);
+  letter-spacing: var(--sui_card_title-letter_spacing);
 }
 
 /* 代入 */
@@ -219,21 +222,21 @@
   --sui_card_title-font_family: var(--sui-font-sans);
   --sui_card_title-color: var(--sui_card-color);
 
-  &.sui_card-size_sm {
+  &.sui_card_title-size_sm {
     --sui_card_title-font_size: var(--sui-text-std-sm-b-font_size);
     --sui_card_title-font_weight: var(--sui-text-std-sm-b-font_weight);
     --sui_card_title-line_height: var(--sui-text-std-sm-b-line_height);
     --sui_card_title-letter_spacing: var(--sui-text-std-sm-b-letter_spacing);
   }
 
-  &.sui_card-size_md {
+  &.sui_card_title-size_md {
     --sui_card_title-font_size: var(--sui-text-std-md-b-font_size);
     --sui_card_title-font_weight: var(--sui-text-std-md-b-font_weight);
     --sui_card_title-line_height: var(--sui-text-std-md-b-line_height);
     --sui_card_title-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
   }
 
-  &.sui_card-size_lg {
+  &.sui_card_title-size_lg {
     --sui_card_title-font_size: var(--sui-text-std-lg-b-font_size);
     --sui_card_title-font_weight: var(--sui-text-std-lg-b-font_weight);
     --sui_card_title-line_height: var(--sui-text-std-lg-b-line_height);
@@ -246,20 +249,14 @@
 
 /* Description */
 @layer sui.component {
-@scope (.sui_card) to ([data-scope]) {
+@scope (.sui_card_description) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_card_description {
-    grid-column-start: 1;
-    line-break: strict;
-    word-break: normal;
-    overflow-wrap: anywhere;
-  }
-
-  &:has(.sui_card_title) .sui_card_description {
-    grid-row-start: 2;
-  }
+  grid-column-start: 1;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 /* 変数 */
@@ -274,14 +271,12 @@
 
 /* 可変 */
 :scope {
-  .sui_card_description {
-    font-family: var(--sui_card_description-font_family);
-    font-size: var(--sui_card_description-font_size);
-    font-weight: var(--sui_card_description-font_weight);
-    line-height: var(--sui_card_description-line_height);
-    color: var(--sui_card_description-color);
-    letter-spacing: var(--sui_card_description-letter_spacing);
-  }
+  font-family: var(--sui_card_description-font_family);
+  font-size: var(--sui_card_description-font_size);
+  font-weight: var(--sui_card_description-font_weight);
+  line-height: var(--sui_card_description-line_height);
+  color: var(--sui_card_description-color);
+  letter-spacing: var(--sui_card_description-letter_spacing);
 }
 
 /* 代入 */
@@ -289,21 +284,21 @@
   --sui_card_description-font_family: var(--sui-font-sans);
   --sui_card_description-color: var(--sui-canvas_text-2);
 
-  &.sui_card-size_sm {
+  &.sui_card_description-size_sm {
     --sui_card_description-font_size: var(--sui-text-std-sm-n-font_size);
     --sui_card_description-font_weight: var(--sui-text-std-sm-n-font_weight);
     --sui_card_description-line_height: var(--sui-text-std-sm-n-line_height);
     --sui_card_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
   }
 
-  &.sui_card-size_md {
+  &.sui_card_description-size_md {
     --sui_card_description-font_size: var(--sui-text-std-md-n-font_size);
     --sui_card_description-font_weight: var(--sui-text-std-md-n-font_weight);
     --sui_card_description-line_height: var(--sui-text-std-md-n-line_height);
     --sui_card_description-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
   }
 
-  &.sui_card-size_lg {
+  &.sui_card_description-size_lg {
     --sui_card_description-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_card_description-font_weight: var(--sui-text-std-lg-n-font_weight);
     --sui_card_description-line_height: var(--sui-text-std-lg-n-line_height);
@@ -314,20 +309,44 @@
 } /* @scope */
 } /* @layer */
 
-/* Action */
+/* Description */
+/* 兄弟パーツの有無に依存するため、ルート起点の別ブロックにします。 */
 @layer sui.component {
 @scope (.sui_card) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_card_action {
-    display: flex;
-    grid-row-start: 1;
-    grid-column-start: 2;
-    align-items: center;
-    justify-self: end;
+  &:has(.sui_card_title) .sui_card_description {
+    grid-row-start: 2;
   }
+}
 
+} /* @scope */
+} /* @layer */
+
+/* Action */
+@layer sui.component {
+@scope (.sui_card_action) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  grid-row-start: 1;
+  grid-column-start: 2;
+  align-items: center;
+  justify-self: end;
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Action */
+/* 兄弟パーツの有無に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_card) to ([data-scope]) {
+
+/* 固定 */
+:scope {
   &:has(.sui_card_title):has(.sui_card_description) .sui_card_action {
     grid-row-end: 3;
   }
@@ -338,15 +357,13 @@
 
 /* Content */
 @layer sui.component {
-@scope (.sui_card) to ([data-scope]) {
+@scope (.sui_card_content) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_card_content {
-    line-break: strict;
-    word-break: normal;
-    overflow-wrap: anywhere;
-  }
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
 }
 
 /* 変数 */
@@ -362,15 +379,13 @@
 
 /* 可変 */
 :scope {
-  .sui_card_content {
-    padding-inline: var(--sui_card_content-padding_inline);
-    font-family: var(--sui_card_content-font_family);
-    font-size: var(--sui_card_content-font_size);
-    font-weight: var(--sui_card_content-font_weight);
-    line-height: var(--sui_card_content-line_height);
-    color: var(--sui_card_content-color);
-    letter-spacing: var(--sui_card_content-letter_spacing);
-  }
+  padding-inline: var(--sui_card_content-padding_inline);
+  font-family: var(--sui_card_content-font_family);
+  font-size: var(--sui_card_content-font_size);
+  font-weight: var(--sui_card_content-font_weight);
+  line-height: var(--sui_card_content-line_height);
+  color: var(--sui_card_content-color);
+  letter-spacing: var(--sui_card_content-letter_spacing);
 }
 
 /* 代入 */
@@ -378,7 +393,7 @@
   --sui_card_content-font_family: var(--sui-font-sans);
   --sui_card_content-color: var(--sui_card-color);
 
-  &.sui_card-size_sm {
+  &.sui_card_content-size_sm {
     --sui_card_content-padding_inline: --sui-space(3);
     --sui_card_content-font_size: var(--sui-text-std-sm-n-font_size);
     --sui_card_content-font_weight: var(--sui-text-std-sm-n-font_weight);
@@ -386,7 +401,7 @@
     --sui_card_content-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
   }
 
-  &.sui_card-size_md {
+  &.sui_card_content-size_md {
     --sui_card_content-padding_inline: --sui-space(4);
     --sui_card_content-font_size: var(--sui-text-std-md-n-font_size);
     --sui_card_content-font_weight: var(--sui-text-std-md-n-font_weight);
@@ -394,7 +409,7 @@
     --sui_card_content-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
   }
 
-  &.sui_card-size_lg {
+  &.sui_card_content-size_lg {
     --sui_card_content-padding_inline: --sui-space(5);
     --sui_card_content-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_card_content-font_weight: var(--sui-text-std-lg-n-font_weight);
@@ -408,16 +423,14 @@
 
 /* Footer */
 @layer sui.component {
-@scope (.sui_card) to ([data-scope]) {
+@scope (.sui_card_footer) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_card_footer {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    border-block-start-style: solid;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  border-block-start-style: solid;
 }
 
 /* 変数 */
@@ -433,15 +446,13 @@
 
 /* 可変 */
 :scope {
-  .sui_card_footer {
-    gap: var(--sui_card_footer-gap);
-    padding-block-start: var(--sui_card_footer-padding_block_start);
-    padding-block-end: var(--sui_card_footer-padding_block_end);
-    padding-inline: var(--sui_card_footer-padding_inline);
-    background-color: var(--sui_card_footer-background_color);
-    border-block-start-color: var(--sui_card_footer-border_color);
-    border-block-start-width: var(--sui_card_footer-border_width);
-  }
+  gap: var(--sui_card_footer-gap);
+  padding-block-start: var(--sui_card_footer-padding_block_start);
+  padding-block-end: var(--sui_card_footer-padding_block_end);
+  padding-inline: var(--sui_card_footer-padding_inline);
+  background-color: var(--sui_card_footer-background_color);
+  border-block-start-color: var(--sui_card_footer-border_color);
+  border-block-start-width: var(--sui_card_footer-border_width);
 }
 
 /* 代入 */
@@ -451,19 +462,19 @@
   --sui_card_footer-border_color: var(--sui-border-1);
   --sui_card_footer-border_width: --sui-border_width(1);
 
-  &.sui_card-size_sm {
+  &.sui_card_footer-size_sm {
     --sui_card_footer-padding_block_start: --sui-space(3);
     --sui_card_footer-padding_block_end: --sui-space(3);
     --sui_card_footer-padding_inline: --sui-space(3);
   }
 
-  &.sui_card-size_md {
+  &.sui_card_footer-size_md {
     --sui_card_footer-padding_block_start: --sui-space(4);
     --sui_card_footer-padding_block_end: --sui-space(4);
     --sui_card_footer-padding_inline: --sui-space(4);
   }
 
-  &.sui_card-size_lg {
+  &.sui_card_footer-size_lg {
     --sui_card_footer-padding_block_start: --sui-space(5);
     --sui_card_footer-padding_block_end: --sui-space(5);
     --sui_card_footer-padding_inline: --sui-space(5);

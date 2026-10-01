@@ -38,15 +38,13 @@
 
 /* List */
 @layer sui.component {
-@scope (.sui_breadcrumb) to ([data-scope]) {
+@scope (.sui_breadcrumb_list) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_breadcrumb_list {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 /* 変数 */
@@ -56,9 +54,7 @@
 
 /* 可変 */
 :scope {
-  .sui_breadcrumb_list {
-    gap: var(--sui_breadcrumb_list-gap);
-  }
+  gap: var(--sui_breadcrumb_list-gap);
 }
 
 /* 代入 */
@@ -71,15 +67,13 @@
 
 /* Item */
 @layer sui.component {
-@scope (.sui_breadcrumb) to ([data-scope]) {
+@scope (.sui_breadcrumb_item) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_breadcrumb_item {
-    display: flex;
-    align-items: center;
-    outline-style: solid;
-  }
+  display: flex;
+  align-items: center;
+  outline-style: solid;
 }
 
 /* 変数 */
@@ -93,13 +87,11 @@
 
 /* 可変 */
 :scope {
-  .sui_breadcrumb_item {
-    outline-width: var(--_sui_breadcrumb_item-outline_width, 0px);
-    outline-color: var(--_sui_breadcrumb_item-outline_color, transparent);
-    outline-offset: var(--_sui_breadcrumb_item-outline_offset, 0px);
-    border-radius: var(--sui_breadcrumb_item-border_radius);
-    corner-shape: var(--sui_breadcrumb_item-corner_shape);
-  }
+  outline-width: var(--_sui_breadcrumb_item-outline_width, 0px);
+  outline-color: var(--_sui_breadcrumb_item-outline_color, transparent);
+  outline-offset: var(--_sui_breadcrumb_item-outline_offset, 0px);
+  border-radius: var(--sui_breadcrumb_item-border_radius);
+  corner-shape: var(--sui_breadcrumb_item-corner_shape);
 }
 
 /* 代入 */
@@ -110,30 +102,30 @@
   --sui_breadcrumb_item-corner_shape: superellipse(var(--sui-superellipse));
 
   /* Firefox では長さ同士を除算できないため、比率 (角丸 / 大きさ) を除数で表します。 */
-  &.sui_breadcrumb-size_sm {
+  &.sui_breadcrumb_item-size_sm {
     /* --sui-corner_radius(1) / --sui-size-sm (4px / 20px = 1/5) */
     --sui_breadcrumb_item-border_radius: calc(
-                                           var(--sui_breadcrumb_link-font_size)
-                                           * var(--sui_breadcrumb_link-line_height)
+                                           var(--sui-text-oln-sm-m-font_size)
+                                           * var(--sui-text-oln-sm-m-line_height)
                                            / 5
                                          );
   }
 
-  &.sui_breadcrumb-size_md {
+  &.sui_breadcrumb_item-size_md {
     /* --sui-corner_radius(2) / --sui-size-md (8px / 28px = 2/7) */
     --sui_breadcrumb_item-border_radius: calc(
-                                           var(--sui_breadcrumb_link-font_size)
-                                           * var(--sui_breadcrumb_link-line_height)
+                                           var(--sui-text-oln-md-m-font_size)
+                                           * var(--sui-text-oln-md-m-line_height)
                                            * 2
                                            / 7
                                          );
   }
 
-  &.sui_breadcrumb-size_lg {
+  &.sui_breadcrumb_item-size_lg {
     /* --sui-corner_radius(3) / --sui-size-lg (12px / 36px = 1/3) */
     --sui_breadcrumb_item-border_radius: calc(
-                                           var(--sui_breadcrumb_link-font_size)
-                                           * var(--sui_breadcrumb_link-line_height)
+                                           var(--sui-text-oln-lg-m-font_size)
+                                           * var(--sui-text-oln-lg-m-line_height)
                                            / 3
                                          );
   }
@@ -141,7 +133,7 @@
 
 /* 変異 */
 :scope {
-  .sui_breadcrumb_item:has(.sui_breadcrumb_link:focus-visible) {
+  &:has(.sui_breadcrumb_link:focus-visible) {
     --_sui_breadcrumb_item-outline_width: var(--sui_breadcrumb_item-focusring_width);
     --_sui_breadcrumb_item-outline_color: var(--sui_breadcrumb_item-focusring_color);
     --_sui_breadcrumb_item-outline_offset: var(--sui_breadcrumb_item-focusring_offset);
@@ -153,14 +145,12 @@
 
 /* Link */
 @layer sui.component {
-@scope (.sui_breadcrumb) to ([data-scope]) {
+@scope (.sui_breadcrumb_link) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_breadcrumb_link {
-    text-decoration: none;
-    outline: none;
-  }
+  text-decoration: none;
+  outline: none;
 }
 
 /* 変数 */
@@ -178,15 +168,13 @@
 
 /* 可変 */
 :scope {
-  .sui_breadcrumb_link {
-    padding-inline: var(--sui_breadcrumb_link-padding_inline);
-    font-family: var(--sui_breadcrumb_link-font_family);
-    font-size: var(--sui_breadcrumb_link-font_size);
-    font-weight: var(--sui_breadcrumb_link-font_weight);
-    line-height: var(--sui_breadcrumb_link-line_height);
-    color: var(--_sui_breadcrumb_link-color, var(--sui_breadcrumb_link-color-idle));
-    letter-spacing: var(--sui_breadcrumb_link-letter_spacing);
-  }
+  padding-inline: var(--sui_breadcrumb_link-padding_inline);
+  font-family: var(--sui_breadcrumb_link-font_family);
+  font-size: var(--sui_breadcrumb_link-font_size);
+  font-weight: var(--sui_breadcrumb_link-font_weight);
+  line-height: var(--sui_breadcrumb_link-line_height);
+  color: var(--_sui_breadcrumb_link-color, var(--sui_breadcrumb_link-color-idle));
+  letter-spacing: var(--sui_breadcrumb_link-letter_spacing);
 }
 
 /* 代入 */
@@ -196,67 +184,67 @@
   --sui_breadcrumb_link-color-idle: var(--sui-canvas_text-2);
   --sui_breadcrumb_link-color-hover: var(--sui-grey-naked-canvas_text-normal);
 
-  &.sui_breadcrumb-size_sm {
+  &.sui_breadcrumb_link-size_sm {
     --sui_breadcrumb_link-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_breadcrumb_link-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_breadcrumb_link-line_height: var(--sui-text-oln-sm-m-line_height);
     --sui_breadcrumb_link-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
   }
 
-  &.sui_breadcrumb-size_md {
+  &.sui_breadcrumb_link-size_md {
     --sui_breadcrumb_link-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_breadcrumb_link-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_breadcrumb_link-line_height: var(--sui-text-oln-md-m-line_height);
     --sui_breadcrumb_link-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
   }
 
-  &.sui_breadcrumb-size_lg {
+  &.sui_breadcrumb_link-size_lg {
     --sui_breadcrumb_link-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_breadcrumb_link-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_breadcrumb_link-line_height: var(--sui-text-oln-lg-m-line_height);
     --sui_breadcrumb_link-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
   }
 
-  &.sui_breadcrumb-color_grey {
+  &.sui_breadcrumb_link-color_grey {
     --sui_breadcrumb_link-color-current: var(--sui-grey-naked-canvas_text-normal);
   }
 
-  &.sui_breadcrumb-color_blue {
+  &.sui_breadcrumb_link-color_blue {
     --sui_breadcrumb_link-color-current: var(--sui-blue-naked-canvas_text-normal);
   }
 
-  &.sui_breadcrumb-color_purple {
+  &.sui_breadcrumb_link-color_purple {
     --sui_breadcrumb_link-color-current: var(--sui-purple-naked-canvas_text-normal);
   }
 
-  &.sui_breadcrumb-color_magenta {
+  &.sui_breadcrumb_link-color_magenta {
     --sui_breadcrumb_link-color-current: var(--sui-magenta-naked-canvas_text-normal);
   }
 
-  &.sui_breadcrumb-color_red {
+  &.sui_breadcrumb_link-color_red {
     --sui_breadcrumb_link-color-current: var(--sui-red-naked-canvas_text-normal);
   }
 
-  &.sui_breadcrumb-color_orange {
+  &.sui_breadcrumb_link-color_orange {
     --sui_breadcrumb_link-color-current: var(--sui-orange-naked-canvas_text-normal);
   }
 
-  &.sui_breadcrumb-color_yellow {
+  &.sui_breadcrumb_link-color_yellow {
     --sui_breadcrumb_link-color-current: var(--sui-yellow-naked-canvas_text-normal);
   }
 
-  &.sui_breadcrumb-color_green {
+  &.sui_breadcrumb_link-color_green {
     --sui_breadcrumb_link-color-current: var(--sui-green-naked-canvas_text-normal);
   }
 }
 
 /* 変異 */
 :scope {
-  .sui_breadcrumb_link-current {
+  &.sui_breadcrumb_link-current {
     --_sui_breadcrumb_link-color: var(--sui_breadcrumb_link-color-current);
   }
 
-  .sui_breadcrumb_link:not(.sui_breadcrumb_link-current):not(.sui_breadcrumb_link-disabled) {
+  &:not(.sui_breadcrumb_link-current):not(.sui_breadcrumb_link-disabled) {
     @media (any-hover: hover) {
       &:hover {
         --_sui_breadcrumb_link-color: var(--sui_breadcrumb_link-color-hover);
@@ -270,14 +258,12 @@
 
 /* Separator */
 @layer sui.component {
-@scope (.sui_breadcrumb) to ([data-scope]) {
+@scope (.sui_breadcrumb_separator) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_breadcrumb_separator {
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  align-items: center;
 }
 
 /* 変数 */
@@ -294,19 +280,17 @@
 
 /* 可変 */
 :scope {
-  .sui_breadcrumb_separator {
-    font-family: var(--sui_breadcrumb_separator-font_family);
-    font-size: var(--sui_breadcrumb_separator-font_size);
-    font-weight: var(--sui_breadcrumb_separator-font_weight);
-    line-height: var(--sui_breadcrumb_separator-line_height);
-    color: var(--sui_breadcrumb_separator-color);
-    letter-spacing: var(--sui_breadcrumb_separator-letter_spacing);
+  font-family: var(--sui_breadcrumb_separator-font_family);
+  font-size: var(--sui_breadcrumb_separator-font_size);
+  font-weight: var(--sui_breadcrumb_separator-font_weight);
+  line-height: var(--sui_breadcrumb_separator-line_height);
+  color: var(--sui_breadcrumb_separator-color);
+  letter-spacing: var(--sui_breadcrumb_separator-letter_spacing);
 
-    svg:not(.sui-ignore) {
-      width: var(--sui_breadcrumb_separator__svg-size);
-      height: var(--sui_breadcrumb_separator__svg-size);
-      color: var(--sui_breadcrumb_separator__svg-color);
-    }
+  svg:not(.sui-ignore) {
+    width: var(--sui_breadcrumb_separator__svg-size);
+    height: var(--sui_breadcrumb_separator__svg-size);
+    color: var(--sui_breadcrumb_separator__svg-color);
   }
 }
 
@@ -319,26 +303,28 @@
                                       var(--sui-canvas-1) 30%
                                     );
   --sui_breadcrumb_separator__svg-size: calc(
-                                          var(--sui_breadcrumb_separator-font_size)
-                                          * var(--sui_breadcrumb_separator-line_height)
-                                        );
+                                        var(--sui_breadcrumb_separator-font_size)
+                                        * var(--sui_breadcrumb_separator-line_height)
+                                      );
+
+  /* 大きさで変わる活字に追従させるため、要素起点で代入します。 */
   --sui_breadcrumb_separator__svg-color: var(--sui_breadcrumb_separator-color);
 
-  &.sui_breadcrumb-size_sm {
+  &.sui_breadcrumb_separator-size_sm {
     --sui_breadcrumb_separator-font_size: var(--sui-text-oln-sm-m-font_size);
     --sui_breadcrumb_separator-font_weight: var(--sui-text-oln-sm-m-font_weight);
     --sui_breadcrumb_separator-line_height: var(--sui-text-oln-sm-m-line_height);
     --sui_breadcrumb_separator-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
   }
 
-  &.sui_breadcrumb-size_md {
+  &.sui_breadcrumb_separator-size_md {
     --sui_breadcrumb_separator-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_breadcrumb_separator-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_breadcrumb_separator-line_height: var(--sui-text-oln-md-m-line_height);
     --sui_breadcrumb_separator-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
   }
 
-  &.sui_breadcrumb-size_lg {
+  &.sui_breadcrumb_separator-size_lg {
     --sui_breadcrumb_separator-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_breadcrumb_separator-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_breadcrumb_separator-line_height: var(--sui-text-oln-lg-m-line_height);
@@ -351,11 +337,11 @@
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_breadcrumb) to ([data-scope]) {
+@scope (.sui_breadcrumb_link) to ([data-scope]) {
 
 /* Link */
 :scope {
-  .sui_breadcrumb_link-disabled {
+  &.sui_breadcrumb_link-disabled {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: not-allowed;
   }

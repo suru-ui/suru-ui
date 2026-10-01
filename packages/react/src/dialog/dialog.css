@@ -20,14 +20,12 @@
 
 /* Backdrop */
 @layer sui.component {
-@scope (.sui_dialog_portal) to ([data-scope]) {
+@scope (.sui_dialog_backdrop) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_dialog_backdrop {
-    position: absolute;
-    inset: 0px;
-  }
+  position: absolute;
+  inset: 0px;
 }
 
 /* 変数 */
@@ -38,10 +36,8 @@
 
 /* 可変 */
 :scope {
-  .sui_dialog_backdrop {
-    background-color: var(--sui_dialog_backdrop-background_color);
-    backdrop-filter: var(--sui_dialog_backdrop-filter-blur);
-  }
+  background-color: var(--sui_dialog_backdrop-background_color);
+  backdrop-filter: var(--sui_dialog_backdrop-filter-blur);
 }
 
 /* 代入 */
@@ -108,11 +104,11 @@
 
 /* Header */
 @layer sui.component {
-@scope (.sui_dialog_popup) to ([data-scope]) {
+@scope (.sui_dialog_header) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  &.sui_dialog_popup-variant_stacked .sui_dialog_header {
+  &.sui_dialog_header-variant_stacked {
     /* 操作はヘッダーの外へ重ねるため、残る操作列の間隔を消して見出しを中央に寄せます。 */
     column-gap: 0px;
     text-align: center;
@@ -124,7 +120,7 @@
 
 /* Action */
 @layer sui.component {
-@scope (.sui_dialog_popup) to ([data-scope]) {
+@scope (.sui_dialog_action) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -133,12 +129,10 @@
 
 /* 可変 */
 :scope {
-  .sui_dialog_action {
-    position: var(--_sui_dialog_action-position, unset);
-    inset-block-start: var(--_sui_dialog_action-inset_block, auto);
-    inset-inline-end: var(--_sui_dialog_action-inset_inline, auto);
-    gap: var(--sui_dialog_action-gap);
-  }
+  position: var(--_sui_dialog_action-position, unset);
+  inset-block-start: var(--_sui_dialog_action-inset_block, auto);
+  inset-inline-end: var(--_sui_dialog_action-inset_inline, auto);
+  gap: var(--sui_dialog_action-gap);
 }
 
 /* 代入 */
@@ -148,11 +142,12 @@
 
 /* 変異 */
 :scope {
-  &.sui_dialog_popup-variant_stacked .sui_dialog_action {
+  &.sui_dialog_action-variant_stacked {
     /* カードの余白を引き継ぎ、ポップアップの右上へ重ねます。 */
     --_sui_dialog_action-position: absolute;
     --_sui_dialog_action-inset_block: var(--sui_card-padding_block_start);
-    --_sui_dialog_action-inset_inline: var(--sui_card_header-padding_inline);
+    /* ヘッダーはポップアップの兄弟のため、同じ値を持つポップアップの余白を参照します。 */
+    --_sui_dialog_action-inset_inline: var(--sui_card-padding_block_start);
   }
 }
 
@@ -161,11 +156,11 @@
 
 /* Footer */
 @layer sui.component {
-@scope (.sui_dialog_popup) to ([data-scope]) {
+@scope (.sui_dialog_footer) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  &.sui_dialog_popup-variant_stacked .sui_dialog_footer {
+  &.sui_dialog_footer-variant_stacked {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
@@ -178,9 +173,7 @@
 
 /* 可変 */
 :scope {
-  .sui_dialog_footer {
-    justify-content: var(--sui_dialog_footer-justify_content);
-  }
+  justify-content: var(--sui_dialog_footer-justify_content);
 }
 
 /* 代入 */

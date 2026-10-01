@@ -29,14 +29,30 @@
 
 /* Label */
 @layer sui.component {
-@scope (.sui_progress) to ([data-scope]) {
+@scope (.sui_progress_label) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_progress_label {
-    min-width: 0px;
-  }
+  min-width: 0px;
 }
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_progress_label-font_family);
+  font-size: var(--sui_progress_label-font_size);
+  font-weight: var(--sui_progress_label-font_weight);
+  line-height: var(--sui_progress_label-line_height);
+  color: var(--sui_progress_label-color);
+  letter-spacing: var(--sui_progress_label-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Label */
+/* 活字の代入はルートの大きさの修飾クラスに依存し、ラベル自身には対応するクラスが無いため、空宣言と代入をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_progress) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -46,18 +62,6 @@
   --sui_progress_label-line_height: ;
   --sui_progress_label-color: ;
   --sui_progress_label-letter_spacing: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_progress_label {
-    font-family: var(--sui_progress_label-font_family);
-    font-size: var(--sui_progress_label-font_size);
-    font-weight: var(--sui_progress_label-font_weight);
-    line-height: var(--sui_progress_label-line_height);
-    color: var(--sui_progress_label-color);
-    letter-spacing: var(--sui_progress_label-letter_spacing);
-  }
 }
 
 /* 代入 */
@@ -92,14 +96,30 @@
 
 /* Value */
 @layer sui.component {
-@scope (.sui_progress) to ([data-scope]) {
+@scope (.sui_progress_value) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_progress_value {
-    font-variant-numeric: tabular-nums;
-  }
+  font-variant-numeric: tabular-nums;
 }
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_progress_value-font_family);
+  font-size: var(--sui_progress_value-font_size);
+  font-weight: var(--sui_progress_value-font_weight);
+  line-height: var(--sui_progress_value-line_height);
+  color: var(--sui_progress_value-color);
+  letter-spacing: var(--sui_progress_value-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Value */
+/* 活字の代入はルートの大きさの修飾クラスに依存し、値表示自身には対応するクラスが無いため、空宣言と代入をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_progress) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -109,18 +129,6 @@
   --sui_progress_value-line_height: ;
   --sui_progress_value-color: ;
   --sui_progress_value-letter_spacing: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_progress_value {
-    font-family: var(--sui_progress_value-font_family);
-    font-size: var(--sui_progress_value-font_size);
-    font-weight: var(--sui_progress_value-font_weight);
-    line-height: var(--sui_progress_value-line_height);
-    color: var(--sui_progress_value-color);
-    letter-spacing: var(--sui_progress_value-letter_spacing);
-  }
 }
 
 /* 代入 */
@@ -155,18 +163,34 @@
 
 /* Track */
 @layer sui.component {
-@scope (.sui_progress) to ([data-scope]) {
+@scope (.sui_progress_track) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_progress_track {
-    position: relative;
-    grid-column: 1 / -1;
-    width: 100%;
-    overflow: hidden;
-    border-style: solid;
-  }
+  position: relative;
+  grid-column: 1 / -1;
+  width: 100%;
+  overflow: hidden;
+  border-style: solid;
 }
+
+/* 可変 */
+:scope {
+  height: var(--sui_progress_track-height);
+  background-color: var(--sui_progress_track-background_color);
+  border-color: var(--_sui_progress_track-border_color, transparent);
+  border-width: var(--_sui_progress_track-border_width, 0px);
+  border-radius: var(--sui_progress_track-border_radius);
+  corner-shape: var(--sui_progress_track-corner_shape);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Track */
+/* 寸法・角丸・配色の代入はルートの size・radius・variant 修飾クラスに依存し、outlined の変異もルートに依存しトラック自身には対応するクラスが無いため、空宣言・代入・変異をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_progress) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -176,18 +200,6 @@
   --sui_progress_track-border_width: ;
   --sui_progress_track-border_radius: ;
   --sui_progress_track-corner_shape: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_progress_track {
-    height: var(--sui_progress_track-height);
-    background-color: var(--sui_progress_track-background_color);
-    border-color: var(--_sui_progress_track-border_color, transparent);
-    border-width: var(--_sui_progress_track-border_width, 0px);
-    border-radius: var(--sui_progress_track-border_radius);
-    corner-shape: var(--sui_progress_track-corner_shape);
-  }
 }
 
 /* 代入 */
@@ -254,37 +266,49 @@
 
 /* Indicator */
 @layer sui.component {
-@scope (.sui_progress) to ([data-scope]) {
+@scope (.sui_progress_indicator) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_progress_indicator {
-    position: absolute;
-    inset-block: 0px;
-    inset-inline-start: 0px;
-    display: block;
-    border-radius: inherit;
-    corner-shape: inherit;
-    transition: width 500ms;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
+  position: absolute;
+  inset-block: 0px;
+  inset-inline-start: 0px;
+  display: block;
+  border-radius: inherit;
+  corner-shape: inherit;
+  transition: width 500ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* 可変 */
+:scope {
+  width: var(--_sui_progress_indicator-width, auto);
+  background-color: var(--sui_progress_indicator-background_color);
+  animation-name: var(--_sui_progress_indicator-animation_name, none);
+  animation-duration: var(--sui_progress_indicator-animation_duration);
+}
+
+/* 変異 */
+:scope {
+  &.sui_progress_indicator-status_indeterminate {
+    --_sui_progress_indicator-width: 40%;
+    --_sui_progress_indicator-animation_name: sui_progress-indeterminate;
   }
 }
+
+} /* @scope */
+} /* @layer */
+
+/* Indicator */
+/* 配色とアニメーション時間の代入はルートの修飾クラスに依存し、インジケーター自身には対応するクラスが無いため、空宣言と代入をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_progress) to ([data-scope]) {
 
 /* 変数 */
 :scope {
   --sui_progress_indicator-background_color: ;
   --sui_progress_indicator-animation_duration: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_progress_indicator {
-    width: var(--_sui_progress_indicator-width, auto);
-    background-color: var(--sui_progress_indicator-background_color);
-    animation-name: var(--_sui_progress_indicator-animation_name, none);
-    animation-duration: var(--sui_progress_indicator-animation_duration);
-  }
 }
 
 /* 代入 */
@@ -321,14 +345,6 @@
 
   &.sui_progress-color_green {
     --sui_progress_indicator-background_color: var(--sui-green-solid-canvas-normal);
-  }
-}
-
-/* 変異 */
-:scope {
-  &.sui_progress-status_indeterminate .sui_progress_indicator {
-    --_sui_progress_indicator-width: 40%;
-    --_sui_progress_indicator-animation_name: sui_progress-indeterminate;
   }
 }
 

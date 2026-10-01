@@ -48,27 +48,12 @@
 
 /* Item */
 @layer sui.component {
-@scope (.sui_accordion) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  .sui_accordion_item + .sui_accordion_item {
-    border-top-style: solid;
-  }
-}
+@scope (.sui_accordion_item) to ([data-scope]) {
 
 /* 変数 */
 :scope {
   --sui_accordion_item-separator_color: ;
   --sui_accordion_item-separator_width: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_accordion_item + .sui_accordion_item {
-    border-top-color: var(--_sui_accordion_item-border_top_color, transparent);
-    border-top-width: var(--_sui_accordion_item-border_top_width, 0px);
-  }
 }
 
 /* 代入 */
@@ -79,7 +64,7 @@
 
 /* 変異 */
 :scope {
-  &.sui_accordion-separator {
+  &.sui_accordion_item-separator {
     --_sui_accordion_item-border_top_color: var(--sui_accordion_item-separator_color);
     --_sui_accordion_item-border_top_width: var(--sui_accordion_item-separator_width);
   }
@@ -88,23 +73,44 @@
 } /* @scope */
 } /* @layer */
 
-/* Heading */
+/* Item */
+/* 隣接する項目に依存するため、ルート起点の別ブロックにします。 */
 @layer sui.component {
 @scope (.sui_accordion) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_accordion_heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    line-break: strict;
-    word-break: normal;
-    overflow-wrap: anywhere;
-    touch-action: manipulation;
-    cursor: default;
+  .sui_accordion_item + .sui_accordion_item {
+    border-top-style: solid;
   }
+}
+
+/* 可変 */
+:scope {
+  .sui_accordion_item + .sui_accordion_item {
+    border-top-color: var(--_sui_accordion_item-border_top_color, transparent);
+    border-top-width: var(--_sui_accordion_item-border_top_width, 0px);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Heading */
+@layer sui.component {
+@scope (.sui_accordion_heading) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  touch-action: manipulation;
+  cursor: default;
 }
 
 /* 変数 */
@@ -125,37 +131,23 @@
 
 /* 可変 */
 :scope {
-  .sui_accordion_heading {
-    gap: var(--sui_accordion_heading-gap);
-    font-family: var(--sui_accordion_heading-font_family);
-    font-size: var(--sui_accordion_heading-font_size);
-    font-weight: var(--sui_accordion_heading-font_weight);
-    line-height: var(--sui_accordion_heading-line_height);
-    color: var(--sui_accordion_heading-color);
-    letter-spacing: var(--sui_accordion_heading-letter_spacing);
+  gap: var(--sui_accordion_heading-gap);
+  font-family: var(--sui_accordion_heading-font_family);
+  font-size: var(--sui_accordion_heading-font_size);
+  font-weight: var(--sui_accordion_heading-font_weight);
+  line-height: var(--sui_accordion_heading-line_height);
+  color: var(--sui_accordion_heading-color);
+  letter-spacing: var(--sui_accordion_heading-letter_spacing);
 
-    &:not(:has(.sui_accordion_trigger)),
-    &:has(.sui_accordion_trigger-unstyled) {
-      padding-block: var(--sui_accordion_heading-padding_block);
-    }
-
-    svg:not(.sui-ignore) {
-      width: var(--sui_accordion_heading__svg-size);
-      height: var(--sui_accordion_heading__svg-size);
-      color: var(--sui_accordion_heading__svg-color);
-    }
+  &:not(:has(.sui_accordion_trigger)),
+  &:has(.sui_accordion_trigger-unstyled) {
+    padding-block: var(--sui_accordion_heading-padding_block);
   }
 
-  .sui_accordion_item:first-child .sui_accordion_heading {
-    border-top-left-radius: var(--sui_accordion_heading-border_radius);
-    border-top-right-radius: var(--sui_accordion_heading-border_radius);
-    corner-shape: var(--sui_accordion_heading-corner_shape);
-  }
-
-  .sui_accordion_item:last-child .sui_accordion_heading {
-    border-bottom-right-radius: var(--sui_accordion_heading-border_radius);
-    border-bottom-left-radius: var(--sui_accordion_heading-border_radius);
-    corner-shape: var(--sui_accordion_heading-corner_shape);
+  svg:not(.sui-ignore) {
+    width: var(--sui_accordion_heading__svg-size);
+    height: var(--sui_accordion_heading__svg-size);
+    color: var(--sui_accordion_heading__svg-color);
   }
 }
 
@@ -174,7 +166,7 @@
                                         var(--sui-canvas-1)
                                       );
 
-  &.sui_accordion-size_sm {
+  &.sui_accordion_heading-size_sm {
     --sui_accordion_heading-gap: --sui-gap(2);
     --sui_accordion_heading-padding_block: --sui-space(2);
     --sui_accordion_heading-font_size: var(--sui-text-dns-md-n-font_size);
@@ -183,7 +175,7 @@
     --sui_accordion_heading-letter_spacing: var(--sui-text-dns-md-n-letter_spacing);
   }
 
-  &.sui_accordion-size_md {
+  &.sui_accordion_heading-size_md {
     --sui_accordion_heading-gap: --sui-gap(3);
     --sui_accordion_heading-padding_block: --sui-space(3);
     --sui_accordion_heading-font_size: var(--sui-text-dns-md-n-font_size);
@@ -192,7 +184,7 @@
     --sui_accordion_heading-letter_spacing: var(--sui-text-dns-md-n-letter_spacing);
   }
 
-  &.sui_accordion-size_lg {
+  &.sui_accordion_heading-size_lg {
     --sui_accordion_heading-gap: --sui-gap(4);
     --sui_accordion_heading-padding_block: --sui-space(4);
     --sui_accordion_heading-font_size: var(--sui-text-dns-lg-n-font_size);
@@ -205,13 +197,36 @@
 } /* @scope */
 } /* @layer */
 
+/* Heading */
+/* 項目の位置に依存するため、項目起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_accordion_item) to ([data-scope]) {
+
+/* 可変 */
+:scope {
+  &:first-child .sui_accordion_heading {
+    border-top-left-radius: var(--sui_accordion_heading-border_radius);
+    border-top-right-radius: var(--sui_accordion_heading-border_radius);
+    corner-shape: var(--sui_accordion_heading-corner_shape);
+  }
+
+  &:last-child .sui_accordion_heading {
+    border-bottom-right-radius: var(--sui_accordion_heading-border_radius);
+    border-bottom-left-radius: var(--sui_accordion_heading-border_radius);
+    corner-shape: var(--sui_accordion_heading-corner_shape);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
 /* Trigger */
 @layer sui.component {
-@scope (.sui_accordion) to ([data-scope]) {
+@scope (.sui_accordion_trigger) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
+  &:not(.sui_accordion_trigger-unstyled) {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -253,7 +268,7 @@
 
 /* 可変 */
 :scope {
-  .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
+  &:not(.sui_accordion_trigger-unstyled) {
     gap: var(--sui_accordion_trigger-gap);
     padding-block: var(--sui_accordion_trigger-padding_block);
     font-family: var(--sui_accordion_trigger-font_family);
@@ -275,19 +290,6 @@
       height: var(--sui_accordion_trigger__svg-size);
       color: var(--sui_accordion_trigger__svg-color);
     }
-  }
-
-  .sui_accordion_item:first-child .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
-    border-top-left-radius: var(--sui_accordion_trigger-border_radius);
-    border-top-right-radius: var(--sui_accordion_trigger-border_radius);
-    corner-shape: var(--sui_accordion_trigger-corner_shape);
-  }
-
-  .sui_accordion_item:last-child:not(.sui_accordion_item-open)
-    .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
-    border-bottom-right-radius: var(--sui_accordion_trigger-border_radius);
-    border-bottom-left-radius: var(--sui_accordion_trigger-border_radius);
-    corner-shape: var(--sui_accordion_trigger-corner_shape);
   }
 }
 
@@ -312,7 +314,7 @@
                                         var(--sui-canvas-1)
                                       );
 
-  &.sui_accordion-size_sm {
+  &.sui_accordion_trigger-size_sm {
     --sui_accordion_trigger-gap: --sui-gap(2);
     --sui_accordion_trigger-padding_block: --sui-space(2);
     --sui_accordion_trigger-font_size: var(--sui-text-dns-sm-n-font_size);
@@ -321,7 +323,7 @@
     --sui_accordion_trigger-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
   }
 
-  &.sui_accordion-size_md {
+  &.sui_accordion_trigger-size_md {
     --sui_accordion_trigger-gap: --sui-gap(3);
     --sui_accordion_trigger-padding_block: --sui-space(3);
     --sui_accordion_trigger-font_size: var(--sui-text-dns-md-n-font_size);
@@ -330,7 +332,7 @@
     --sui_accordion_trigger-letter_spacing: var(--sui-text-dns-md-n-letter_spacing);
   }
 
-  &.sui_accordion-size_lg {
+  &.sui_accordion_trigger-size_lg {
     --sui_accordion_trigger-gap: --sui-gap(4);
     --sui_accordion_trigger-padding_block: --sui-space(4);
     --sui_accordion_trigger-font_size: var(--sui-text-dns-lg-n-font_size);
@@ -342,24 +344,46 @@
 
 /* 変異 */
 :scope {
-  &:not(.sui_accordion-disabled) {
-    .sui_accordion_item:not(.sui_accordion_item-disabled) .sui_accordion_trigger {
-      &:hover {
-        @media (any-hover: hover) {
-          --_sui_accordion_trigger-text_decoration_line: underline;
-        }
-      }
-
-      &:active {
+  &:not(.sui_accordion_trigger-disabled) {
+    &:hover {
+      @media (any-hover: hover) {
         --_sui_accordion_trigger-text_decoration_line: underline;
       }
-
-      &:focus-visible {
-        --_sui_accordion_trigger-outline_width: var(--sui_accordion_trigger-focusring_width);
-        --_sui_accordion_trigger-outline_color: var(--sui_accordion_trigger-focusring_color);
-        --_sui_accordion_trigger-outline_offset: var(--sui_accordion_trigger-focusring_offset);
-      }
     }
+
+    &:active {
+      --_sui_accordion_trigger-text_decoration_line: underline;
+    }
+
+    &:focus-visible {
+      --_sui_accordion_trigger-outline_width: var(--sui_accordion_trigger-focusring_width);
+      --_sui_accordion_trigger-outline_color: var(--sui_accordion_trigger-focusring_color);
+      --_sui_accordion_trigger-outline_offset: var(--sui_accordion_trigger-focusring_offset);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Trigger */
+/* 項目の位置に依存するため、項目起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_accordion_item) to ([data-scope]) {
+
+/* 可変 */
+:scope {
+  &:first-child .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
+    border-top-left-radius: var(--sui_accordion_trigger-border_radius);
+    border-top-right-radius: var(--sui_accordion_trigger-border_radius);
+    corner-shape: var(--sui_accordion_trigger-corner_shape);
+  }
+
+  &:last-child:not(.sui_accordion_item-open)
+    .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
+    border-bottom-right-radius: var(--sui_accordion_trigger-border_radius);
+    border-bottom-left-radius: var(--sui_accordion_trigger-border_radius);
+    corner-shape: var(--sui_accordion_trigger-corner_shape);
   }
 }
 
@@ -368,16 +392,14 @@
 
 /* Indicator */
 @layer sui.component {
-@scope (.sui_accordion) to ([data-scope]) {
+@scope (.sui_accordion_indicator) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_accordion_indicator {
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-  }
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
 }
 
 /* 変数 */
@@ -390,17 +412,15 @@
 
 /* 可変 */
 :scope {
-  .sui_accordion_indicator {
+  width: var(--sui_accordion_indicator-size);
+  height: var(--sui_accordion_indicator-size);
+  color: var(--sui_accordion_indicator-color);
+  rotate: var(--_sui_accordion_indicator-rotate, var(--sui_accordion_indicator-rotate-closed));
+
+  svg:not(.sui-ignore) {
     width: var(--sui_accordion_indicator-size);
     height: var(--sui_accordion_indicator-size);
     color: var(--sui_accordion_indicator-color);
-    rotate: var(--_sui_accordion_indicator-rotate, var(--sui_accordion_indicator-rotate-closed));
-
-    svg:not(.sui-ignore) {
-      width: var(--sui_accordion_indicator-size);
-      height: var(--sui_accordion_indicator-size);
-      color: var(--sui_accordion_indicator-color);
-    }
   }
 }
 
@@ -414,7 +434,7 @@
 
 /* 変異 */
 :scope {
-  .sui_accordion_item-open .sui_accordion_indicator {
+  &.sui_accordion_indicator-open {
     --_sui_accordion_indicator-rotate: var(--sui_accordion_indicator-rotate-open);
   }
 }
@@ -424,22 +444,20 @@
 
 /* Content */
 @layer sui.component {
-@scope (.sui_accordion) to ([data-scope]) {
+@scope (.sui_accordion_content) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_accordion_content {
-    overflow: hidden;
-    line-break: strict;
-    word-break: normal;
-    overflow-wrap: anywhere;
-    transition-property: height;
+  overflow: hidden;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  transition-property: height;
 
-    /* 折りたたみ時に高さ 0 まで縮むよう、下余白は padding ではなく擬似要素の高さで確保します。 */
-    &::after {
-      display: block;
-      content: "";
-    }
+  /* 折りたたみ時に高さ 0 まで縮むよう、下余白は padding ではなく擬似要素の高さで確保します。 */
+  &::after {
+    display: block;
+    content: "";
   }
 }
 
@@ -462,34 +480,27 @@
 
 /* 可変 */
 :scope {
-  .sui_accordion_content {
-    height: var(--_sui_accordion_content-height, var(--sui_accordion_content-height));
-    padding-inline: var(--sui_accordion_content-padding_inline);
-    font-family: var(--sui_accordion_content-font_family);
-    font-size: var(--sui_accordion_content-font_size);
-    font-weight: var(--sui_accordion_content-font_weight);
-    line-height: var(--sui_accordion_content-line_height);
-    color: var(--sui_accordion_content-color);
-    letter-spacing: var(--sui_accordion_content-letter_spacing);
-    transition-timing-function: var(--sui_accordion_content-transition_timing_function);
-    transition-duration: var(--_sui_accordion_content-transition_duration,
-                           var(--sui_accordion_content-transition_duration)
-                         );
-  }
+  height: var(--_sui_accordion_content-height, var(--sui_accordion_content-height));
+  padding-inline: var(--sui_accordion_content-padding_inline);
+  font-family: var(--sui_accordion_content-font_family);
+  font-size: var(--sui_accordion_content-font_size);
+  font-weight: var(--sui_accordion_content-font_weight);
+  line-height: var(--sui_accordion_content-line_height);
+  color: var(--sui_accordion_content-color);
+  letter-spacing: var(--sui_accordion_content-letter_spacing);
+  transition-timing-function: var(--sui_accordion_content-transition_timing_function);
+  transition-duration: var(--_sui_accordion_content-transition_duration,
+                         var(--sui_accordion_content-transition_duration)
+                       );
 
-  .sui_accordion_content::after {
+  &::after {
     height: var(--sui_accordion_content-padding_bottom);
-  }
-
-  .sui_accordion_item:last-child.sui_accordion_item-open .sui_accordion_content {
-    border-bottom-right-radius: var(--sui_accordion_content-border_radius);
-    border-bottom-left-radius: var(--sui_accordion_content-border_radius);
-    corner-shape: var(--sui_accordion_content-corner_shape);
   }
 }
 
 /* 代入 */
 :scope {
+  --sui_accordion_content-height: var(--accordion-panel-height, auto);
   --sui_accordion_content-font_family: var(--sui-font-sans);
   --sui_accordion_content-color: var(--sui-canvas_text-1);
   --sui_accordion_content-border_radius: var(--sui_accordion-border_radius);
@@ -497,12 +508,7 @@
   --sui_accordion_content-transition_timing_function: cubic-bezier(0.25, 0.7, 0.3, 1);
   --sui_accordion_content-transition_duration: 240ms;
 
-  /* Base UI がコンテンツ自身に設定する変数を受けるため、要素起点で代入します。 */
-  .sui_accordion_content {
-    --sui_accordion_content-height: var(--accordion-panel-height, auto);
-  }
-
-  &.sui_accordion-size_sm {
+  &.sui_accordion_content-size_sm {
     --sui_accordion_content-padding_bottom: --sui-space(2);
     --sui_accordion_content-font_size: var(--sui-text-std-sm-n-font_size);
     --sui_accordion_content-font_weight: var(--sui-text-std-sm-n-font_weight);
@@ -510,7 +516,7 @@
     --sui_accordion_content-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
   }
 
-  &.sui_accordion-size_md {
+  &.sui_accordion_content-size_md {
     --sui_accordion_content-padding_bottom: --sui-space(3);
     --sui_accordion_content-font_size: var(--sui-text-std-md-n-font_size);
     --sui_accordion_content-font_weight: var(--sui-text-std-md-n-font_weight);
@@ -518,7 +524,7 @@
     --sui_accordion_content-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
   }
 
-  &.sui_accordion-size_lg {
+  &.sui_accordion_content-size_lg {
     --sui_accordion_content-padding_bottom: --sui-space(4);
     --sui_accordion_content-font_size: var(--sui-text-std-lg-n-font_size);
     --sui_accordion_content-font_weight: var(--sui-text-std-lg-n-font_weight);
@@ -529,14 +535,95 @@
 
 /* 変異 */
 :scope {
-  .sui_accordion_content-transition_status_starting,
-  .sui_accordion_content-transition_status_ending {
+  &.sui_accordion_content-transition_status_starting,
+  &.sui_accordion_content-transition_status_ending {
     --_sui_accordion_content-height: 0px;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sui_accordion_content {
-      --_sui_accordion_content-transition_duration: 0ms;
+    --_sui_accordion_content-transition_duration: 0ms;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Content */
+/* 項目の位置と開閉状態に依存するため、項目起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_accordion_item) to ([data-scope]) {
+
+/* 可変 */
+:scope {
+  &:last-child.sui_accordion_item-open .sui_accordion_content {
+    border-bottom-right-radius: var(--sui_accordion_content-border_radius);
+    border-bottom-left-radius: var(--sui_accordion_content-border_radius);
+    corner-shape: var(--sui_accordion_content-corner_shape);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* Root */
+@layer sui.important {
+@scope (.sui_accordion) to ([data-scope]) {
+
+:scope {
+  &.sui_accordion-disabled {
+    cursor: default;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* Item */
+@layer sui.important {
+@scope (.sui_accordion_item) to ([data-scope]) {
+
+:scope {
+  &.sui_accordion_item-disabled {
+    cursor: default;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* Item */
+/* 隣接する項目に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_accordion) to ([data-scope]) {
+
+:scope {
+  &.sui_accordion-separator .sui_accordion_item-disabled + .sui_accordion_item-disabled {
+    border-top-color: var(--sui-disabled-naked-border);
+    border-top-width: var(--sui-disabled-border_width);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* Heading */
+@layer sui.important {
+@scope (.sui_accordion_heading) to ([data-scope]) {
+
+:scope {
+  &.sui_accordion_heading-disabled {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: default;
+
+    &:is(
+      :not(:has(.sui_accordion_trigger)),
+      :has(.sui_accordion_trigger-unstyled)
+    ) {
+      background-color: var(--sui-disabled-naked-canvas);
     }
   }
 }
@@ -545,64 +632,46 @@
 } /* @layer */
 
 /* disabled */
-@layer sui.important {
-@scope (.sui_accordion) to ([data-scope]) {
-
-/* Root */
-:scope {
-  &.sui_accordion-disabled {
-    cursor: default;
-  }
-}
-
-/* Item */
-:scope {
-  .sui_accordion_item-disabled {
-    cursor: default;
-  }
-
-  &.sui_accordion-separator .sui_accordion_item-disabled + .sui_accordion_item-disabled {
-    border-top-color: var(--sui-disabled-naked-border);
-    border-top-width: var(--sui-disabled-border_width);
-  }
-}
-
-/* Heading */
-:scope {
-  .sui_accordion_item-disabled .sui_accordion_heading {
-    color: var(--sui-disabled-naked-canvas_text);
-    cursor: default;
-  }
-
-  .sui_accordion_item-disabled .sui_accordion_heading:is(
-    :not(:has(.sui_accordion_trigger)),
-    :has(.sui_accordion_trigger-unstyled)
-  ) {
-    background-color: var(--sui-disabled-naked-canvas);
-  }
-}
-
 /* Trigger */
-:scope {
-  .sui_accordion_item-disabled .sui_accordion_trigger {
-    cursor: default;
-  }
+@layer sui.important {
+@scope (.sui_accordion_trigger) to ([data-scope]) {
 
-  .sui_accordion_item-disabled .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled) {
-    color: var(--sui-disabled-naked-canvas_text);
-    background-color: var(--sui-disabled-naked-canvas);
+:scope {
+  &.sui_accordion_trigger-disabled {
+    cursor: default;
+
+    &:not(.sui_accordion_trigger-unstyled) {
+      color: var(--sui-disabled-naked-canvas_text);
+      background-color: var(--sui-disabled-naked-canvas);
+    }
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Indicator */
+@layer sui.important {
+@scope (.sui_accordion_indicator) to ([data-scope]) {
+
 :scope {
-  .sui_accordion_item-disabled .sui_accordion_indicator {
+  &.sui_accordion_indicator-disabled {
     cursor: default;
   }
+}
 
-  .sui_accordion_item-disabled
-    .sui_accordion_trigger:not(.sui_accordion_trigger-unstyled)
-      .sui_accordion_indicator {
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* Indicator */
+/* スタイル付きトリガーの内側に限定するため、トリガー起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_accordion_trigger) to ([data-scope]) {
+
+:scope {
+  &.sui_accordion_trigger-disabled:not(.sui_accordion_trigger-unstyled) .sui_accordion_indicator {
     color: --sui-icon_color(
              var(--sui-disabled-naked-canvas_text),
              var(--sui-disabled-naked-canvas)
@@ -617,9 +686,16 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Content */
+@layer sui.important {
+@scope (.sui_accordion_content) to ([data-scope]) {
+
 :scope {
-  .sui_accordion_item-disabled .sui_accordion_content {
+  &.sui_accordion_content-disabled {
     color: var(--sui-disabled-naked-canvas_text);
     cursor: default;
     background-color: var(--sui-disabled-naked-canvas);

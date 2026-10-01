@@ -285,17 +285,43 @@
 
 /* Thumb */
 @layer sui.component {
-@scope (.sui_switch) to ([data-scope]) {
+@scope (.sui_switch_thumb) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_switch_thumb {
-    display: block;
-    box-shadow: 0 3px 8px rgb(0 0 0 / 0.15),
-                0 1px 1px rgb(0 0 0 / 0.16);
-    transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1);
+  display: block;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 0.15),
+              0 1px 1px rgb(0 0 0 / 0.16);
+  transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* 可変 */
+:scope {
+  width: var(--sui_switch_thumb-size);
+  height: var(--sui_switch_thumb-size);
+  background-color: var(--_sui_switch_thumb-background_color,
+                      var(--sui_switch_thumb-background_color)
+                    );
+  border-radius: var(--sui_switch_thumb-border_radius);
+  corner-shape: var(--sui_switch_thumb-corner_shape);
+  transform: translateX(var(--_sui_switch_thumb-translate_x, 0px));
+}
+
+/* 変異 */
+:scope {
+  &.sui_switch_thumb-checked {
+    --_sui_switch_thumb-background_color: var(--sui_switch_thumb-background_color-checked);
+    --_sui_switch_thumb-translate_x: var(--sui_switch_thumb-translate_x-checked);
   }
 }
+
+} /* @scope */
+} /* @layer */
+
+/* Thumb */
+/* 大きさと角丸の指定はルートの修飾クラスに依存し、つまみ自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_switch) to ([data-scope]) {
 
 /* 変数 */
 :scope {
@@ -305,20 +331,6 @@
   --sui_switch_thumb-border_radius: ;
   --sui_switch_thumb-corner_shape: ;
   --sui_switch_thumb-translate_x-checked: ;
-}
-
-/* 可変 */
-:scope {
-  .sui_switch_thumb {
-    width: var(--sui_switch_thumb-size);
-    height: var(--sui_switch_thumb-size);
-    background-color: var(--_sui_switch_thumb-background_color,
-                        var(--sui_switch_thumb-background_color)
-                      );
-    border-radius: var(--sui_switch_thumb-border_radius);
-    corner-shape: var(--sui_switch_thumb-corner_shape);
-    transform: translateX(var(--_sui_switch_thumb-translate_x, 0px));
-  }
 }
 
 /* 代入 */
@@ -350,14 +362,6 @@
   &.sui_switch-radius_full {
     --sui_switch_thumb-border_radius: calc(var(--sui_switch_thumb-size) / 2);
     --sui_switch_thumb-corner_shape: none;
-  }
-}
-
-/* 変異 */
-:scope {
-  &.sui_switch-checked .sui_switch_thumb {
-    --_sui_switch_thumb-background_color: var(--sui_switch_thumb-background_color-checked);
-    --_sui_switch_thumb-translate_x: var(--sui_switch_thumb-translate_x-checked);
   }
 }
 
@@ -404,13 +408,35 @@
   }
 }
 
+} /* @scope */
+} /* @layer */
+
+/* disabled */
 /* Thumb */
+@layer sui.important {
+@scope (.sui_switch_thumb) to ([data-scope]) {
+
 :scope {
-  &.sui_switch-disabled .sui_switch_thumb {
+  &.sui_switch_thumb-disabled {
     cursor: not-allowed;
     box-shadow: none;
   }
 
+  &.sui_switch_thumb-disabled.sui_switch_thumb-checked {
+    background-color: var(--sui-disabled-solid-canvas_text);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* Thumb */
+/* 配色の指定はルートのバリアントに依存し、つまみ自身にはバリアントの修飾クラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_switch) to ([data-scope]) {
+
+:scope {
   &.sui_switch-disabled:not(.sui_switch-checked) {
     &.sui_switch-variant_naked .sui_switch_thumb {
       background-color: var(--sui-disabled-naked-canvas_text);
@@ -419,10 +445,6 @@
     &.sui_switch-variant_liquid .sui_switch_thumb {
       background-color: var(--sui-disabled-liquid-canvas_text);
     }
-  }
-
-  &.sui_switch-disabled.sui_switch-checked .sui_switch_thumb {
-    background-color: var(--sui-disabled-solid-canvas_text);
   }
 }
 
