@@ -61,6 +61,11 @@ export const NumberFieldInput: INumberFieldInput = function SuiNumberFieldInput(
           className: cn<NumberFieldInputState>(
             className,
             "sui_number_field_input",
+            (state) => `sui_number_field_input-size_${state.size}`,
+            (state) => `sui_number_field_input-color_${state.color}`,
+            (state) => `sui_number_field_input-radius_${state.radius}`,
+            (state) => `sui_number_field_input-variant_${state.variant}`,
+            (state) => state.outlined && "sui_number_field_input-outlined",
             (state) => state.valid === true && "sui_number_field_input-valid",
             (state) => state.valid === false && "sui_number_field_input-invalid",
             (state) => state.valid === null && "sui_number_field_input-unverified",

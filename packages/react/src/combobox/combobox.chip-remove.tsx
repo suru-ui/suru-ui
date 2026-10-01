@@ -96,6 +96,11 @@ export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipR
             className,
             "sui_combobox_chip_remove",
             (state) => `sui_combobox_chip_remove-radius_${state.radius}`,
+            (state) => `sui_combobox_chip_remove-size_${state.size}`,
+            (state) => `sui_combobox_chip_remove-color_${state.color}`,
+            (state) => `sui_combobox_chip_remove-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_chip_remove-outlined",
+            (state) => state.multiple && "sui_combobox_chip_remove-multiple",
           ),
         },
       )}

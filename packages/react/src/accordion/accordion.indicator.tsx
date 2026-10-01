@@ -2,6 +2,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import { ChevronIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { type AccordionItemContext, useAccordionItemContext } from "./accordion.item.context.js";
 
@@ -45,7 +46,12 @@ export const AccordionIndicator: IAccordionIndicator = function SuiAccordionIndi
       otherSpanProps,
       {
         children,
-        className: "sui_accordion_indicator",
+        className: cn<AccordionIndicatorState>(
+          "sui_accordion_indicator",
+          (state) => `sui_accordion_indicator-size_${state.size}`,
+          (state) => `sui_accordion_indicator-radius_${state.radius}`,
+          (state) => state.separator && "sui_accordion_indicator-separator",
+        ),
       },
     ],
     state: ctx,

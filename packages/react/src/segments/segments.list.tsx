@@ -84,7 +84,14 @@ export const SegmentsList: ISegmentsList = function SuiSegmentsList(props: Segme
         {
           style,
           render,
-          className: cn<SegmentsListState>(className, "sui_segments_list"),
+          className: cn<SegmentsListState>(
+            className,
+            "sui_segments_list",
+            (state) => `sui_segments_list-size_${state.size}`,
+            (state) => `sui_segments_list-color_${state.color}`,
+            (state) => `sui_segments_list-radius_${state.radius}`,
+            (state) => `sui_segments_list-active_variant_${state.activeVariant}`,
+          ),
         },
       )}
       aria-label={ariaLabel}

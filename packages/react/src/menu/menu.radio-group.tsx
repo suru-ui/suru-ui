@@ -113,6 +113,10 @@ export const MenuRadioGroup: IMenuRadioGroup = function SuiMenuRadioGroup(
             className,
             "sui_menu_radio_group",
             (state) => state.disabled && "sui_menu_radio_group-disabled",
+            (state) => `sui_menu_radio_group-size_${state.size}`,
+            (state) => `sui_menu_radio_group-radius_${state.radius}`,
+            (state) => `sui_menu_radio_group-variant_${state.variant}`,
+            (state) => state.outlined && "sui_menu_radio_group-outlined",
           ),
         },
       )}

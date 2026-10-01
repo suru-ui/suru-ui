@@ -62,6 +62,12 @@ export const ComboboxTriggerLabel: IComboboxTriggerLabel = function SuiComboboxT
             className,
             "sui_combobox_trigger_label",
             (state) => state.disabled && "sui_combobox_trigger_label-disabled",
+            (state) => `sui_combobox_trigger_label-size_${state.size}`,
+            (state) => `sui_combobox_trigger_label-color_${state.color}`,
+            (state) => `sui_combobox_trigger_label-radius_${state.radius}`,
+            (state) => `sui_combobox_trigger_label-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_trigger_label-outlined",
+            (state) => state.multiple && "sui_combobox_trigger_label-multiple",
           ),
         },
       )}

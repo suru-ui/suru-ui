@@ -47,7 +47,14 @@ export const DialogAction: IDialogAction = function SuiDialogAction(props) {
         {
           style,
           render,
-          className: cn<DialogActionState>(className, "sui_dialog_action"),
+          className: cn<DialogActionState>(
+            className,
+            "sui_dialog_action",
+            (state) => `sui_dialog_action-size_${state.size}`,
+            (state) => `sui_dialog_action-radius_${state.radius}`,
+            (state) => `sui_dialog_action-variant_${state.variant}`,
+            (state) => state.outlined && "sui_dialog_action-outlined",
+          ),
         },
       )}
     />

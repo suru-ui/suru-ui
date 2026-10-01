@@ -88,6 +88,9 @@ export const AccordionItem: IAccordionItem = function SuiAccordionItem(props) {
             (state) => state.open && "sui_accordion_item-open",
             (state) => state.hidden && "sui_accordion_item-hidden",
             (state) => state.disabled && "sui_accordion_item-disabled",
+            (state) => `sui_accordion_item-size_${state.size}`,
+            (state) => `sui_accordion_item-radius_${state.radius}`,
+            (state) => state.separator && "sui_accordion_item-separator",
           ),
         },
       )}

@@ -1,6 +1,7 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { useFileUploadItemContext } from "./file-upload.item.context.js";
 import { type FileUploadItemState } from "./file-upload.item.jsx";
@@ -45,7 +46,16 @@ export const FileUploadItemName: IFileUploadItemName = function SuiFileUploadIte
       otherSpanProps,
       {
         children,
-        className: "sui_file_upload_item_name",
+        className: cn<FileUploadItemNameState>(
+          "sui_file_upload_item_name",
+          (state) => `sui_file_upload_item_name-size_${state.size}`,
+          (state) => `sui_file_upload_item_name-color_${state.color}`,
+          (state) => `sui_file_upload_item_name-radius_${state.radius}`,
+          (state) => `sui_file_upload_item_name-variant_${state.variant}`,
+          (state) => state.disabled && "sui_file_upload_item_name-disabled",
+          (state) => state.multiple && "sui_file_upload_item_name-multiple",
+          (state) => state.required && "sui_file_upload_item_name-required",
+        ),
       },
     ],
     state: ctx,

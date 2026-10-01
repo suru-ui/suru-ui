@@ -67,6 +67,10 @@ export const MenuCheckboxItemIndicator: IMenuCheckboxItemIndicator =
               "sui_menu_item_indicator",
               "sui_menu_checkbox_item_indicator",
               (state) => !state.checked && "sui_menu_item_indicator-unchecked",
+              (state) => `sui_menu_item_indicator-size_${state.size}`,
+              (state) => `sui_menu_item_indicator-radius_${state.radius}`,
+              (state) => `sui_menu_item_indicator-variant_${state.variant}`,
+              (state) => state.outlined && "sui_menu_item_indicator-outlined",
             ),
           },
         )}

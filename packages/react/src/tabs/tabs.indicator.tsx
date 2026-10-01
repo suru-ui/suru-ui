@@ -60,7 +60,15 @@ export const TabsIndicator: ITabsIndicator = function SuiTabsIndicator(props) {
         {
           style,
           render,
-          className: cn<TabsIndicatorState>(className, "sui_tabs_indicator"),
+          className: cn<TabsIndicatorState>(
+            className,
+            "sui_tabs_indicator",
+            (state) => `sui_tabs_indicator-size_${state.size}`,
+            (state) => `sui_tabs_indicator-radius_${state.radius}`,
+            (state) => `sui_tabs_indicator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_tabs_indicator-outlined",
+            (state) => `sui_tabs_indicator-active_variant_${state.activeVariant}`,
+          ),
         },
       )}
     />

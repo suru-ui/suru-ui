@@ -45,7 +45,14 @@ export const DialogContent: IDialogContent = function SuiDialogContent(props) {
         {
           style,
           render,
-          className: cn<DialogContentState>(className, "sui_dialog_content"),
+          className: cn<DialogContentState>(
+            className,
+            "sui_dialog_content",
+            (state) => `sui_dialog_content-size_${state.size}`,
+            (state) => `sui_dialog_content-radius_${state.radius}`,
+            (state) => `sui_dialog_content-variant_${state.variant}`,
+            (state) => state.outlined && "sui_dialog_content-outlined",
+          ),
         },
       )}
     />

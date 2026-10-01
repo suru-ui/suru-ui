@@ -58,7 +58,14 @@ export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(
         {
           style,
           render,
-          className: cn(className, "sui_context_menu_arrow"),
+          className: cn<ContextMenuArrowState>(
+            className,
+            "sui_context_menu_arrow",
+            (state) => `sui_context_menu_arrow-size_${state.size}`,
+            (state) => `sui_context_menu_arrow-radius_${state.radius}`,
+            (state) => `sui_context_menu_arrow-variant_${state.variant}`,
+            (state) => state.outlined && "sui_context_menu_arrow-outlined",
+          ),
         },
       )}
     />

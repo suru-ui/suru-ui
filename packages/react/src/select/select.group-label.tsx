@@ -58,7 +58,14 @@ export const SelectGroupLabel: ISelectGroupLabel = function SuiSelectGroupLabel(
         {
           style,
           render,
-          className: cn(className, "sui_select_group_label"),
+          className: cn<SelectGroupLabelState>(
+            className,
+            "sui_select_group_label",
+            (state) => `sui_select_group_label-size_${state.size}`,
+            (state) => `sui_select_group_label-radius_${state.radius}`,
+            (state) => `sui_select_group_label-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_group_label-outlined",
+          ),
         },
       )}
     />

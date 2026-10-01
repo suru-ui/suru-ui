@@ -77,7 +77,14 @@ export const PaginationPreviousButton: IPaginationPreviousButton =
           {
             style,
             render,
-            className: cn(className, "sui_pagination_previous"),
+            className: cn<PaginationPreviousButtonState>(
+              className,
+              "sui_pagination_previous",
+              (state) => `sui_pagination_previous-size_${state.size}`,
+              (state) => `sui_pagination_previous-color_${state.color}`,
+              (state) => `sui_pagination_previous-radius_${state.radius}`,
+              (state) => state.disabled && "sui_pagination_previous-disabled",
+            ),
           },
         )}
         size={ctx.size}

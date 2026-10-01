@@ -58,7 +58,16 @@ export const ComboboxInput: IComboboxInput = function SuiComboboxInput(props) {
         {
           style,
           render,
-          className: cn<ComboboxInputState>(className, "sui_combobox_input"),
+          className: cn<ComboboxInputState>(
+            className,
+            "sui_combobox_input",
+            (state) => `sui_combobox_input-size_${state.size}`,
+            (state) => `sui_combobox_input-color_${state.color}`,
+            (state) => `sui_combobox_input-radius_${state.radius}`,
+            (state) => `sui_combobox_input-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_input-outlined",
+            (state) => state.multiple && "sui_combobox_input-multiple",
+          ),
         },
       )}
     />

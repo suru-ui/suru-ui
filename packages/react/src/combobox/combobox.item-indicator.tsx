@@ -61,7 +61,16 @@ export const ComboboxItemIndicator: IComboboxItemIndicator = function SuiCombobo
         {
           style,
           render,
-          className: cn<ComboboxItemIndicatorState>(className, "sui_combobox_item_indicator"),
+          className: cn<ComboboxItemIndicatorState>(
+            className,
+            "sui_combobox_item_indicator",
+            (state) => `sui_combobox_item_indicator-size_${state.size}`,
+            (state) => `sui_combobox_item_indicator-color_${state.color}`,
+            (state) => `sui_combobox_item_indicator-radius_${state.radius}`,
+            (state) => `sui_combobox_item_indicator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_item_indicator-outlined",
+            (state) => state.multiple && "sui_combobox_item_indicator-multiple",
+          ),
         },
       )}
     >

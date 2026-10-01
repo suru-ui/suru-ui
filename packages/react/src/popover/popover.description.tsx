@@ -58,7 +58,13 @@ export const PopoverDescription: IPopoverDescription = function SuiPopoverDescri
         {
           style,
           render,
-          className: cn(className, "sui_popover_description"),
+          className: cn<PopoverDescriptionState>(
+            className,
+            "sui_popover_description",
+            (state) => `sui_popover_description-size_${state.size}`,
+            (state) => `sui_popover_description-radius_${state.radius}`,
+            (state) => state.outlined && "sui_popover_description-outlined",
+          ),
         },
       )}
     />

@@ -60,9 +60,18 @@ export const ButtonPending: IButtonPending = function SuiButtonPending(props) {
     props: [
       otherSpanProps,
       {
-        className: cn(
+        className: cn<ButtonPendingState>(
           "sui_button_pending",
           overlay && "sui_button_pending-overlay",
+          (state) => `sui_button_pending-size_${state.size}`,
+          (state) => `sui_button_pending-color_${state.color}`,
+          (state) => `sui_button_pending-radius_${state.radius}`,
+          (state) => `sui_button_pending-variant_${state.variant}`,
+          (state) => state.item && "sui_button_pending-item",
+          (state) => state.muted && "sui_button_pending-muted",
+          (state) => state.outlined && "sui_button_pending-outlined",
+          (state) => state.pending && "sui_button_pending-pending",
+          (state) => state.squared && "sui_button_pending-squared",
           (state: ButtonPendingState) => state.pending && "sui_button_pending-enabled",
           (state: ButtonPendingState) =>
             !state.pending && keepMounted && "sui_button_pending-visibility_hidden",

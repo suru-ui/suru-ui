@@ -60,7 +60,15 @@ export const AutocompleteRow: IAutocompleteRow = function SuiAutocompleteRow(pro
         {
           style,
           render,
-          className: cn<AutocompleteRowState>(className, "sui_autocomplete_row"),
+          className: cn<AutocompleteRowState>(
+            className,
+            "sui_autocomplete_row",
+            (state) => `sui_autocomplete_row-size_${state.size}`,
+            (state) => `sui_autocomplete_row-color_${state.color}`,
+            (state) => `sui_autocomplete_row-radius_${state.radius}`,
+            (state) => `sui_autocomplete_row-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_row-outlined",
+          ),
         },
       )}
     />

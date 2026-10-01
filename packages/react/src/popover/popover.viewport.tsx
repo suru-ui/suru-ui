@@ -60,7 +60,13 @@ export const PopoverViewport: IPopoverViewport = function SuiPopoverViewport(pro
         {
           style,
           render,
-          className: cn(className, "sui_popover_viewport"),
+          className: cn<PopoverViewportState>(
+            className,
+            "sui_popover_viewport",
+            (state) => `sui_popover_viewport-size_${state.size}`,
+            (state) => `sui_popover_viewport-radius_${state.radius}`,
+            (state) => state.outlined && "sui_popover_viewport-outlined",
+          ),
         },
       )}
     />

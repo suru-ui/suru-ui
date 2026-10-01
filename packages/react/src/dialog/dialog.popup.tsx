@@ -128,7 +128,10 @@ export const DialogPopup: IDialogPopup = function SuiDialogPopup(props) {
                     className: cn<DialogPopupState>(
                       className,
                       "sui_dialog_popup",
+                      (state) => `sui_dialog_popup-size_${state.size}`,
+                      (state) => `sui_dialog_popup-radius_${state.radius}`,
                       (state) => `sui_dialog_popup-variant_${state.variant}`,
+                      (state) => state.outlined && "sui_dialog_popup-outlined",
                     ),
                   },
                 ),

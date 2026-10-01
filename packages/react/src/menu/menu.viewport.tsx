@@ -58,7 +58,14 @@ export const MenuViewport: IMenuViewport = function SuiMenuViewport(props) {
         {
           style,
           render,
-          className: cn(className, "sui_menu_viewport"),
+          className: cn<MenuViewportState>(
+            className,
+            "sui_menu_viewport",
+            (state) => `sui_menu_viewport-size_${state.size}`,
+            (state) => `sui_menu_viewport-radius_${state.radius}`,
+            (state) => `sui_menu_viewport-variant_${state.variant}`,
+            (state) => state.outlined && "sui_menu_viewport-outlined",
+          ),
         },
       )}
     />

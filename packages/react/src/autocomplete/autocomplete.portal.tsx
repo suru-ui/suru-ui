@@ -72,6 +72,9 @@ export const AutocompletePortal: IAutocompletePortal = function SuiAutocompleteP
             "sui_autocomplete_portal",
             (state) => `sui_autocomplete_portal-size_${state.size}`,
             (state) => `sui_autocomplete_portal-radius_${state.radius}`,
+            (state) => `sui_autocomplete_portal-color_${state.color}`,
+            (state) => `sui_autocomplete_portal-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_portal-outlined",
           ),
         },
       )}

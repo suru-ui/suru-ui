@@ -69,7 +69,16 @@ export const PasswordFieldAddon: IPasswordFieldAddon = function SuiPasswordField
         {
           style,
           render,
-          className: cn(className, "sui_password_field_addon"),
+          className: cn<PasswordFieldAddonState>(
+            className,
+            "sui_password_field_addon",
+            (state) => `sui_password_field_addon-size_${state.size}`,
+            (state) => `sui_password_field_addon-color_${state.color}`,
+            (state) => `sui_password_field_addon-radius_${state.radius}`,
+            (state) => `sui_password_field_addon-variant_${state.variant}`,
+            (state) => state.outlined && "sui_password_field_addon-outlined",
+            (state) => state.visible && "sui_password_field_addon-visible",
+          ),
         },
       )}
     />

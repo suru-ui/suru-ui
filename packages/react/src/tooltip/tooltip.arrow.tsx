@@ -62,6 +62,9 @@ export const TooltipArrow: ITooltipArrow = function SuiTooltipArrow(props) {
             className,
             "sui_tooltip_arrow",
             (state) => `sui_tooltip_arrow-side_${state.side}`,
+            (state) => `sui_tooltip_arrow-size_${state.size}`,
+            (state) => `sui_tooltip_arrow-radius_${state.radius}`,
+            (state) => state.outlined && "sui_tooltip_arrow-outlined",
           ),
         },
       )}

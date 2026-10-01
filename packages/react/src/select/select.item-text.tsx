@@ -58,7 +58,14 @@ export const SelectItemText: ISelectItemText = function SuiSelectItemText(props)
         {
           style,
           render,
-          className: cn(className, "sui_select_item_text"),
+          className: cn<SelectItemTextState>(
+            className,
+            "sui_select_item_text",
+            (state) => `sui_select_item_text-size_${state.size}`,
+            (state) => `sui_select_item_text-radius_${state.radius}`,
+            (state) => `sui_select_item_text-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_item_text-outlined",
+          ),
         },
       )}
     />

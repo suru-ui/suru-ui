@@ -95,7 +95,13 @@ export const PopoverTrigger: IPopoverTrigger = function SuiPopoverTrigger<TPaylo
         {
           style,
           render: children,
-          className: cn(className, "sui_popover_trigger"),
+          className: cn<PopoverTriggerState>(
+            className,
+            "sui_popover_trigger",
+            (state) => `sui_popover_trigger-size_${state.size}`,
+            (state) => `sui_popover_trigger-radius_${state.radius}`,
+            (state) => state.outlined && "sui_popover_trigger-outlined",
+          ),
         },
       )}
     />

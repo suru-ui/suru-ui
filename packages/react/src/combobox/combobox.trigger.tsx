@@ -70,7 +70,16 @@ export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(pro
         {
           style,
           render: children,
-          className: cn<ComboboxTriggerState>(className, "sui_combobox_trigger"),
+          className: cn<ComboboxTriggerState>(
+            className,
+            "sui_combobox_trigger",
+            (state) => `sui_combobox_trigger-size_${state.size}`,
+            (state) => `sui_combobox_trigger-color_${state.color}`,
+            (state) => `sui_combobox_trigger-radius_${state.radius}`,
+            (state) => `sui_combobox_trigger-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_trigger-outlined",
+            (state) => state.multiple && "sui_combobox_trigger-multiple",
+          ),
         },
       )}
       nativeButton={nativeButton}

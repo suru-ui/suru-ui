@@ -259,6 +259,12 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
           (state) => state.expanded && "sui_tree_item-expanded",
           (state) => state.selected && "sui_tree_item-selected",
           (state) => state.disabled && "sui_tree_item-disabled",
+          (state) => `sui_tree_item-size_${state.size}`,
+          (state) => `sui_tree_item-color_${state.color}`,
+          (state) => `sui_tree_item-radius_${state.radius}`,
+          (state) => `sui_tree_item-variant_${state.variant}`,
+          (state) => state.outlined && "sui_tree_item-outlined",
+          (state) => state.muted && "sui_tree_item-muted",
         ),
       })}
       id={domId}

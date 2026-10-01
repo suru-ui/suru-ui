@@ -128,7 +128,10 @@ export const AlertDialogPopup: IAlertDialogPopup = function SuiAlertDialogPopup(
                     className: cn<AlertDialogPopupState>(
                       className,
                       "sui_alert_dialog_popup",
+                      (state) => `sui_alert_dialog_popup-size_${state.size}`,
+                      (state) => `sui_alert_dialog_popup-radius_${state.radius}`,
                       (state) => `sui_alert_dialog_popup-variant_${state.variant}`,
+                      (state) => state.outlined && "sui_alert_dialog_popup-outlined",
                     ),
                   },
                 ),

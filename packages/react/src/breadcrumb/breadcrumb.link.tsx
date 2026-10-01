@@ -91,6 +91,8 @@ export const BreadcrumbLink: IBreadcrumbLink = function SuiBreadcrumbLink(props)
           "sui_breadcrumb_link",
           (state) => state.current && "sui_breadcrumb_link-current",
           (state) => state.disabled && "sui_breadcrumb_link-disabled",
+          (state) => `sui_breadcrumb_link-size_${state.size}`,
+          (state) => `sui_breadcrumb_link-color_${state.color}`,
         ),
         "aria-current": current ? "page" : undefined,
         "aria-disabled": disabled || undefined,

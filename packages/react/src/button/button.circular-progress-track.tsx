@@ -1,6 +1,7 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import {
   ButtonCircularProgressContext,
@@ -59,7 +60,10 @@ export const ButtonCircularProgressTrack: IButtonCircularProgressTrack =
           cx,
           cy,
           stroke,
-          className: "sui_button_circular_progress_track",
+          className: cn<ButtonCircularProgressTrackState>(
+            "sui_button_circular_progress_track",
+            (state) => state.indeterminate && "sui_button_circular_progress_track-indeterminate",
+          ),
           strokeWidth: strokeWidthCss,
         },
       ],

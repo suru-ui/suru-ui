@@ -64,6 +64,9 @@ export const PopoverBackdrop: IPopoverBackdrop = function SuiPopoverBackdrop(pro
             (state) =>
               state.transitionStatus !== undefined &&
               `sui_popover_backdrop-transition_status_${state.transitionStatus}`,
+            (state) => `sui_popover_backdrop-size_${state.size}`,
+            (state) => `sui_popover_backdrop-radius_${state.radius}`,
+            (state) => state.outlined && "sui_popover_backdrop-outlined",
           ),
         },
       )}

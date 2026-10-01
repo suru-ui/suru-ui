@@ -56,7 +56,14 @@ export const MenuGroup: IMenuGroup = function SuiMenuGroup(props) {
       {...proxyRenderProps<Menu.Group.State, MenuGroupState>((state) => ({ ...ctx, ...state }), {
         style,
         render,
-        className: cn(className, "sui_menu_group"),
+        className: cn<MenuGroupState>(
+          className,
+          "sui_menu_group",
+          (state) => `sui_menu_group-size_${state.size}`,
+          (state) => `sui_menu_group-radius_${state.radius}`,
+          (state) => `sui_menu_group-variant_${state.variant}`,
+          (state) => state.outlined && "sui_menu_group-outlined",
+        ),
       })}
     />
   );

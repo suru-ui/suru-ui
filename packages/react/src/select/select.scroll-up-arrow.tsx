@@ -58,7 +58,14 @@ export const SelectScrollUpArrow: ISelectScrollUpArrow = function SuiSelectScrol
         {
           style,
           render,
-          className: cn(className, "sui_select_scroll_up_arrow"),
+          className: cn<SelectScrollUpArrowState>(
+            className,
+            "sui_select_scroll_up_arrow",
+            (state) => `sui_select_scroll_up_arrow-size_${state.size}`,
+            (state) => `sui_select_scroll_up_arrow-radius_${state.radius}`,
+            (state) => `sui_select_scroll_up_arrow-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_scroll_up_arrow-outlined",
+          ),
         },
       )}
     />

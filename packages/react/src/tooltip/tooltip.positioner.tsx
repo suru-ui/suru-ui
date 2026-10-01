@@ -70,7 +70,13 @@ export const TooltipPositioner: ITooltipPositioner = function SuiTooltipPosition
         {
           style,
           render,
-          className: cn(className, "sui_tooltip_positioner"),
+          className: cn<TooltipPositionerState>(
+            className,
+            "sui_tooltip_positioner",
+            (state) => `sui_tooltip_positioner-size_${state.size}`,
+            (state) => `sui_tooltip_positioner-radius_${state.radius}`,
+            (state) => state.outlined && "sui_tooltip_positioner-outlined",
+          ),
         },
       )}
       positionMethod={positionMethod}

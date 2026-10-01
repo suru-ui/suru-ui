@@ -80,6 +80,10 @@ export const AlertDialogDescription: IAlertDialogDescription = function SuiAlert
                 className: cn<AlertDialogDescriptionState>(
                   className,
                   "sui_alert_dialog_description",
+                  (state) => `sui_alert_dialog_description-size_${state.size}`,
+                  (state) => `sui_alert_dialog_description-radius_${state.radius}`,
+                  (state) => `sui_alert_dialog_description-variant_${state.variant}`,
+                  (state) => state.outlined && "sui_alert_dialog_description-outlined",
                 ),
               },
             ),

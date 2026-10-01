@@ -96,6 +96,11 @@ export const TabsTab: ITabsTab = function SuiTabsTab(props) {
           "sui_tabs_tab",
           (state) => state.active && "sui_tabs_tab-active",
           (state) => state.disabled && "sui_tabs_tab-disabled",
+          (state) => `sui_tabs_tab-size_${state.size}`,
+          (state) => `sui_tabs_tab-radius_${state.radius}`,
+          (state) => `sui_tabs_tab-variant_${state.variant}`,
+          (state) => state.outlined && "sui_tabs_tab-outlined",
+          (state) => `sui_tabs_tab-active_variant_${state.activeVariant}`,
         ),
       })}
     />

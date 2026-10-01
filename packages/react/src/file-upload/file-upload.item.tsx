@@ -2,6 +2,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { type FileUploadContextState, useFileUploadContext } from "./file-upload.context.js";
 import { FileUploadItemContext } from "./file-upload.item.context.js";
@@ -75,7 +76,16 @@ export const FileUploadItem: IFileUploadItem = function SuiFileUploadItem(props)
     props: [
       otherLiProps,
       {
-        className: "sui_file_upload_item",
+        className: cn<FileUploadItemState>(
+          "sui_file_upload_item",
+          (state) => `sui_file_upload_item-size_${state.size}`,
+          (state) => `sui_file_upload_item-color_${state.color}`,
+          (state) => `sui_file_upload_item-radius_${state.radius}`,
+          (state) => `sui_file_upload_item-variant_${state.variant}`,
+          (state) => state.disabled && "sui_file_upload_item-disabled",
+          (state) => state.multiple && "sui_file_upload_item-multiple",
+          (state) => state.required && "sui_file_upload_item-required",
+        ),
       },
     ],
     state,

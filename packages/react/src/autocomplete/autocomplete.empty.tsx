@@ -60,7 +60,15 @@ export const AutocompleteEmpty: IAutocompleteEmpty = function SuiAutocompleteEmp
         {
           style,
           render,
-          className: cn<AutocompleteEmptyState>(className, "sui_autocomplete_empty"),
+          className: cn<AutocompleteEmptyState>(
+            className,
+            "sui_autocomplete_empty",
+            (state) => `sui_autocomplete_empty-size_${state.size}`,
+            (state) => `sui_autocomplete_empty-color_${state.color}`,
+            (state) => `sui_autocomplete_empty-radius_${state.radius}`,
+            (state) => `sui_autocomplete_empty-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_empty-outlined",
+          ),
         },
       )}
     />

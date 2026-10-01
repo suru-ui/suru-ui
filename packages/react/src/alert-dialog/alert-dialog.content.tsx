@@ -48,7 +48,14 @@ export const AlertDialogContent: IAlertDialogContent = function SuiAlertDialogCo
         {
           style,
           render,
-          className: cn<AlertDialogContentState>(className, "sui_alert_dialog_content"),
+          className: cn<AlertDialogContentState>(
+            className,
+            "sui_alert_dialog_content",
+            (state) => `sui_alert_dialog_content-size_${state.size}`,
+            (state) => `sui_alert_dialog_content-radius_${state.radius}`,
+            (state) => `sui_alert_dialog_content-variant_${state.variant}`,
+            (state) => state.outlined && "sui_alert_dialog_content-outlined",
+          ),
         },
       )}
     />

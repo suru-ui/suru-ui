@@ -2,6 +2,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { type FileUploadContextState, useFileUploadContext } from "./file-upload.context.js";
 
@@ -79,7 +80,16 @@ export const FileUploadClearTrigger: IFileUploadClearTrigger = function SuiFileU
           }
         },
         disabled,
-        className: "sui_file_upload_clear_trigger",
+        className: cn<FileUploadClearTriggerState>(
+          "sui_file_upload_clear_trigger",
+          (state) => `sui_file_upload_clear_trigger-size_${state.size}`,
+          (state) => `sui_file_upload_clear_trigger-color_${state.color}`,
+          (state) => `sui_file_upload_clear_trigger-radius_${state.radius}`,
+          (state) => `sui_file_upload_clear_trigger-variant_${state.variant}`,
+          (state) => state.disabled && "sui_file_upload_clear_trigger-disabled",
+          (state) => state.multiple && "sui_file_upload_clear_trigger-multiple",
+          (state) => state.required && "sui_file_upload_clear_trigger-required",
+        ),
       },
     ],
     state,

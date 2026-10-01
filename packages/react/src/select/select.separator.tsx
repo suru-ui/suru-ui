@@ -58,7 +58,14 @@ export const SelectSeparator: ISelectSeparator = function SuiSelectSeparator(pro
         {
           style,
           render,
-          className: cn(className, "sui_select_separator"),
+          className: cn<SelectSeparatorState>(
+            className,
+            "sui_select_separator",
+            (state) => `sui_select_separator-size_${state.size}`,
+            (state) => `sui_select_separator-radius_${state.radius}`,
+            (state) => `sui_select_separator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_separator-outlined",
+          ),
         },
       )}
     />

@@ -59,7 +59,13 @@ export const AccordionHeading: IAccordionHeading = function SuiAccordionHeading(
         {
           style,
           render,
-          className: cn(className, "sui_accordion_heading"),
+          className: cn<AccordionHeadingState>(
+            className,
+            "sui_accordion_heading",
+            (state) => `sui_accordion_heading-size_${state.size}`,
+            (state) => `sui_accordion_heading-radius_${state.radius}`,
+            (state) => state.separator && "sui_accordion_heading-separator",
+          ),
         },
       )}
     />

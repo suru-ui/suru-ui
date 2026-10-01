@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { getItemKey } from "../_item.js";
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { isItemObject, defaultBreadcrumbContext } from "./_breadcrumb.jsx";
 import { type BreadcrumbContext, useBreadcrumbContext } from "./breadcrumb.context.js";
@@ -87,7 +88,11 @@ export const BreadcrumbList: IBreadcrumbList = function SuiBreadcrumbList(
       otherOlProps,
       {
         children: typeof children === "function" ? items.map(children) : children,
-        className: "sui_breadcrumb_list",
+        className: cn<BreadcrumbListState>(
+          "sui_breadcrumb_list",
+          (state) => `sui_breadcrumb_list-size_${state.size}`,
+          (state) => `sui_breadcrumb_list-color_${state.color}`,
+        ),
       },
     ],
     state,

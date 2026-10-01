@@ -62,12 +62,15 @@ export const AccordionContent: IAccordionContent = function SuiAccordionContent(
         {
           style,
           render,
-          className: cn(
+          className: cn<AccordionContentState>(
             className,
             "sui_accordion_content",
             (state) =>
               state.transitionStatus !== undefined &&
               `sui_accordion_content-transition_status_${state.transitionStatus}`,
+            (state) => `sui_accordion_content-size_${state.size}`,
+            (state) => `sui_accordion_content-radius_${state.radius}`,
+            (state) => state.separator && "sui_accordion_content-separator",
           ),
         },
       )}

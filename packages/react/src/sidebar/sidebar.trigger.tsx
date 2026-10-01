@@ -93,6 +93,12 @@ export const SidebarTrigger: ISidebarTrigger = function SuiSidebarTrigger(props)
           "sui_sidebar_trigger",
           (state) => `sui_sidebar_trigger-${state.state}`,
           (state) => state.disabled && "sui_sidebar_trigger-disabled",
+          (state) => state.open && "sui_sidebar_trigger-open",
+          (state) =>
+            state.collapsible !== undefined &&
+            `sui_sidebar_trigger-collapsible_${state.collapsible}`,
+          (state) => state.side !== undefined && `sui_sidebar_trigger-side_${state.side}`,
+          (state) => state.variant !== undefined && `sui_sidebar_trigger-variant_${state.variant}`,
         ),
         "aria-label": ariaLabel,
         "aria-expanded": ctx.open,

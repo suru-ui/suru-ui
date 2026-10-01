@@ -60,7 +60,13 @@ export const HoverCardViewport: IHoverCardViewport = function SuiHoverCardViewpo
         {
           style,
           render,
-          className: cn(className, "sui_hover_card_viewport"),
+          className: cn<HoverCardViewportState>(
+            className,
+            "sui_hover_card_viewport",
+            (state) => `sui_hover_card_viewport-size_${state.size}`,
+            (state) => `sui_hover_card_viewport-radius_${state.radius}`,
+            (state) => state.outlined && "sui_hover_card_viewport-outlined",
+          ),
         },
       )}
     />

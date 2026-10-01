@@ -60,7 +60,16 @@ export const ComboboxBackdrop: IComboboxBackdrop = function SuiComboboxBackdrop(
         {
           style,
           render,
-          className: cn<ComboboxBackdropState>(className, "sui_combobox_backdrop"),
+          className: cn<ComboboxBackdropState>(
+            className,
+            "sui_combobox_backdrop",
+            (state) => `sui_combobox_backdrop-size_${state.size}`,
+            (state) => `sui_combobox_backdrop-color_${state.color}`,
+            (state) => `sui_combobox_backdrop-radius_${state.radius}`,
+            (state) => `sui_combobox_backdrop-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_backdrop-outlined",
+            (state) => state.multiple && "sui_combobox_backdrop-multiple",
+          ),
         },
       )}
     />

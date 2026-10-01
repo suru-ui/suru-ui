@@ -58,7 +58,14 @@ export const MenuSeparator: IMenuSeparator = function SuiMenuSeparator(props) {
         {
           style,
           render,
-          className: cn(className, "sui_menu_separator"),
+          className: cn<MenuSeparatorState>(
+            className,
+            "sui_menu_separator",
+            (state) => `sui_menu_separator-size_${state.size}`,
+            (state) => `sui_menu_separator-radius_${state.radius}`,
+            (state) => `sui_menu_separator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_menu_separator-outlined",
+          ),
         },
       )}
     />

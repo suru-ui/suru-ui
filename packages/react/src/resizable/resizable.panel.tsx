@@ -149,7 +149,10 @@ export const ResizablePanel: IResizablePanel = function SuiResizablePanel(props)
         children,
         onResize: handleResize,
         panelRef,
-        className: cn<ResizablePanelState>("sui_resizable_panel"),
+        className: cn<ResizablePanelState>(
+          "sui_resizable_panel",
+          (state) => `sui_resizable_panel-orientation_${state.orientation}`,
+        ),
         defaultSize: normalizePanelSize(defaultSize ?? sizeProp),
       },
     ],

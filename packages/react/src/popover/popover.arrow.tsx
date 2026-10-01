@@ -62,6 +62,9 @@ export const PopoverArrow: IPopoverArrow = function SuiPopoverArrow(props) {
             className,
             "sui_popover_arrow",
             (state) => `sui_popover_arrow-side_${state.side}`,
+            (state) => `sui_popover_arrow-size_${state.size}`,
+            (state) => `sui_popover_arrow-radius_${state.radius}`,
+            (state) => state.outlined && "sui_popover_arrow-outlined",
           ),
         },
       )}

@@ -2,6 +2,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { type FileUploadContextState, useFileUploadContext } from "./file-upload.context.js";
 
@@ -77,7 +78,16 @@ export const FileUploadHiddenInput: IFileUploadHiddenInput = function SuiFileUpl
           ctx.selectFiles(selectedFiles);
         },
         required: ctx.required,
-        className: "sui_file_upload_hidden_input",
+        className: cn<FileUploadHiddenInputState>(
+          "sui_file_upload_hidden_input",
+          (state) => `sui_file_upload_hidden_input-size_${state.size}`,
+          (state) => `sui_file_upload_hidden_input-color_${state.color}`,
+          (state) => `sui_file_upload_hidden_input-radius_${state.radius}`,
+          (state) => `sui_file_upload_hidden_input-variant_${state.variant}`,
+          (state) => state.disabled && "sui_file_upload_hidden_input-disabled",
+          (state) => state.multiple && "sui_file_upload_hidden_input-multiple",
+          (state) => state.required && "sui_file_upload_hidden_input-required",
+        ),
       },
     ],
     state,

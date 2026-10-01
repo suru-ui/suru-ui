@@ -65,6 +65,9 @@ export const TooltipContent: ITooltipContent = function SuiTooltipContent(props)
             (state) =>
               state.transitionStatus !== undefined &&
               `sui_tooltip_content-transition_status_${state.transitionStatus}`,
+            (state) => `sui_tooltip_content-size_${state.size}`,
+            (state) => `sui_tooltip_content-radius_${state.radius}`,
+            (state) => state.outlined && "sui_tooltip_content-outlined",
           ),
         },
       )}

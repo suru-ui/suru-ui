@@ -97,6 +97,13 @@ export const FileUploadDropzone: IFileUploadDropzone = function SuiFileUploadDro
         className: cn<FileUploadDropzoneState>(
           "sui_file_upload_dropzone",
           (state) => state.dragging && "sui_file_upload_dropzone-dragover",
+          (state) => `sui_file_upload_dropzone-size_${state.size}`,
+          (state) => `sui_file_upload_dropzone-color_${state.color}`,
+          (state) => `sui_file_upload_dropzone-radius_${state.radius}`,
+          (state) => `sui_file_upload_dropzone-variant_${state.variant}`,
+          (state) => state.disabled && "sui_file_upload_dropzone-disabled",
+          (state) => state.multiple && "sui_file_upload_dropzone-multiple",
+          (state) => state.required && "sui_file_upload_dropzone-required",
         ),
         onDragOver(event: React.DragEvent<HTMLButtonElement>) {
           event.preventDefault();

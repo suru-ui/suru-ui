@@ -92,6 +92,11 @@ export const SidebarRail: ISidebarRail = function SuiSidebarRail(props) {
           (state) => state.state === "expanded" && "sui_sidebar_rail-expanded",
           (state) => state.state === "collapsed" && "sui_sidebar_rail-collapsed",
           (state) => state.disabled && "sui_sidebar_rail-disabled",
+          (state) => state.open && "sui_sidebar_rail-open",
+          (state) =>
+            state.collapsible !== undefined && `sui_sidebar_rail-collapsible_${state.collapsible}`,
+          (state) => state.side !== undefined && `sui_sidebar_rail-side_${state.side}`,
+          (state) => state.variant !== undefined && `sui_sidebar_rail-variant_${state.variant}`,
         ),
         "aria-label": ariaLabel,
         "aria-expanded": ctx.open,

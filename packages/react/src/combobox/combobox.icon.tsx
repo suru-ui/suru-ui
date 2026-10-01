@@ -59,7 +59,16 @@ export const ComboboxIcon: IComboboxIcon = function SuiComboboxIcon(props) {
         {
           style,
           render,
-          className: cn<ComboboxIconState>(className, "sui_combobox_icon"),
+          className: cn<ComboboxIconState>(
+            className,
+            "sui_combobox_icon",
+            (state) => `sui_combobox_icon-size_${state.size}`,
+            (state) => `sui_combobox_icon-color_${state.color}`,
+            (state) => `sui_combobox_icon-radius_${state.radius}`,
+            (state) => `sui_combobox_icon-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_icon-outlined",
+            (state) => state.multiple && "sui_combobox_icon-multiple",
+          ),
         },
       )}
     >

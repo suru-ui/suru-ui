@@ -61,9 +61,15 @@ export const ComboboxInputDisplay: IComboboxInputDisplay = function SuiComboboxI
       otherSpanProps,
       {
         children: label || placeholder,
-        className: cn(
+        className: cn<ComboboxInputDisplayState>(
           "sui_combobox_input_display",
           !label && "sui_combobox_input_display-placeholder",
+          (state) => `sui_combobox_input_display-size_${state.size}`,
+          (state) => `sui_combobox_input_display-color_${state.color}`,
+          (state) => `sui_combobox_input_display-radius_${state.radius}`,
+          (state) => `sui_combobox_input_display-variant_${state.variant}`,
+          (state) => state.outlined && "sui_combobox_input_display-outlined",
+          (state) => state.multiple && "sui_combobox_input_display-multiple",
         ),
       },
     ],

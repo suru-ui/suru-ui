@@ -200,6 +200,7 @@ export const CheckboxRoot: ICheckboxRoot = function SuiCheckboxRoot(props) {
             (state) => `sui_checkbox-radius_${state.radius}`,
             (state) => `sui_checkbox-variant_${state.variant}`,
             (state) => state.outlined && "sui_checkbox-outlined",
+            (state) => `sui_checkbox-orientation_${state.orientation}`,
             (state) => state.checked && "sui_checkbox-checked",
             (state) => state.indeterminate && "sui_checkbox-indeterminate",
             (state) => state.disabled && "sui_checkbox-disabled",

@@ -70,7 +70,16 @@ export const ComboboxClear: IComboboxClear = function SuiComboboxClear(props) {
         {
           style,
           render,
-          className: cn<ComboboxClearState>(className, "sui_combobox_clear"),
+          className: cn<ComboboxClearState>(
+            className,
+            "sui_combobox_clear",
+            (state) => `sui_combobox_clear-size_${state.size}`,
+            (state) => `sui_combobox_clear-color_${state.color}`,
+            (state) => `sui_combobox_clear-radius_${state.radius}`,
+            (state) => `sui_combobox_clear-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_clear-outlined",
+            (state) => state.multiple && "sui_combobox_clear-multiple",
+          ),
         },
       )}
       aria-label={ariaLabel}

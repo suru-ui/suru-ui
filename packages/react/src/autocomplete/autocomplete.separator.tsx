@@ -65,7 +65,15 @@ export const AutocompleteSeparator: IAutocompleteSeparator = function SuiAutocom
         {
           style,
           render,
-          className: cn<AutocompleteSeparatorState>(className, "sui_autocomplete_separator"),
+          className: cn<AutocompleteSeparatorState>(
+            className,
+            "sui_autocomplete_separator",
+            (state) => `sui_autocomplete_separator-size_${state.size}`,
+            (state) => `sui_autocomplete_separator-color_${state.color}`,
+            (state) => `sui_autocomplete_separator-radius_${state.radius}`,
+            (state) => `sui_autocomplete_separator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_separator-outlined",
+          ),
         },
       )}
     />

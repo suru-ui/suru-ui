@@ -70,7 +70,13 @@ export const PopoverClose: IPopoverClose = function SuiPopoverClose(props) {
         {
           style,
           render: children,
-          className: cn(className, "sui_popover_close"),
+          className: cn<PopoverCloseState>(
+            className,
+            "sui_popover_close",
+            (state) => `sui_popover_close-size_${state.size}`,
+            (state) => `sui_popover_close-radius_${state.radius}`,
+            (state) => state.outlined && "sui_popover_close-outlined",
+          ),
         },
       )}
     />

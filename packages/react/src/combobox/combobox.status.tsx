@@ -60,7 +60,16 @@ export const ComboboxStatus: IComboboxStatus = function SuiComboboxStatus(props)
         {
           style,
           render,
-          className: cn<ComboboxStatusState>(className, "sui_combobox_status"),
+          className: cn<ComboboxStatusState>(
+            className,
+            "sui_combobox_status",
+            (state) => `sui_combobox_status-size_${state.size}`,
+            (state) => `sui_combobox_status-color_${state.color}`,
+            (state) => `sui_combobox_status-radius_${state.radius}`,
+            (state) => `sui_combobox_status-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_status-outlined",
+            (state) => state.multiple && "sui_combobox_status-multiple",
+          ),
         },
       )}
     />

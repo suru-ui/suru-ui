@@ -71,7 +71,14 @@ export const SelectPositioner: ISelectPositioner = function SuiSelectPositioner(
         {
           style,
           render,
-          className: cn(className, "sui_select_positioner"),
+          className: cn<SelectPositionerState>(
+            className,
+            "sui_select_positioner",
+            (state) => `sui_select_positioner-size_${state.size}`,
+            (state) => `sui_select_positioner-radius_${state.radius}`,
+            (state) => `sui_select_positioner-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_positioner-outlined",
+          ),
         },
       )}
     />

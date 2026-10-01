@@ -58,7 +58,14 @@ export const MenuBackdrop: IMenuBackdrop = function SuiMenuBackdrop(props) {
         {
           style,
           render,
-          className: cn(className, "sui_menu_backdrop"),
+          className: cn<MenuBackdropState>(
+            className,
+            "sui_menu_backdrop",
+            (state) => `sui_menu_backdrop-size_${state.size}`,
+            (state) => `sui_menu_backdrop-radius_${state.radius}`,
+            (state) => `sui_menu_backdrop-variant_${state.variant}`,
+            (state) => state.outlined && "sui_menu_backdrop-outlined",
+          ),
         },
       )}
     />

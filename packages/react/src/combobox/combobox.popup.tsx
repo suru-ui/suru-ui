@@ -98,6 +98,11 @@ export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
               "sui_combobox_popup",
               (state) => state.outlined && "sui_combobox_popup-outlined",
               `sui_combobox_popup-inputposition_${inputPosition}`,
+              (state) => `sui_combobox_popup-size_${state.size}`,
+              (state) => `sui_combobox_popup-color_${state.color}`,
+              (state) => `sui_combobox_popup-radius_${state.radius}`,
+              (state) => `sui_combobox_popup-variant_${state.variant}`,
+              (state) => state.multiple && "sui_combobox_popup-multiple",
             ),
           },
         )}

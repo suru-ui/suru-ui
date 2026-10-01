@@ -2,6 +2,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import { ChevronRightIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { defaultBreadcrumbContext } from "./_breadcrumb.jsx";
 import { type BreadcrumbContext, useBreadcrumbContext } from "./breadcrumb.context.js";
@@ -50,7 +51,11 @@ export const BreadcrumbSeparator: IBreadcrumbSeparator = function SuiBreadcrumbS
       otherLiProps,
       {
         children,
-        className: "sui_breadcrumb_separator",
+        className: cn<BreadcrumbSeparatorState>(
+          "sui_breadcrumb_separator",
+          (state) => `sui_breadcrumb_separator-size_${state.size}`,
+          (state) => `sui_breadcrumb_separator-color_${state.color}`,
+        ),
         "aria-hidden": ariaHidden,
       },
     ],

@@ -138,7 +138,14 @@ export const SelectList: ISelectList = function SuiSelectList(props: SelectListP
         {
           style,
           render,
-          className: cn(className, "sui_select_list"),
+          className: cn<SelectListState>(
+            className,
+            "sui_select_list",
+            (state) => `sui_select_list-size_${state.size}`,
+            (state) => `sui_select_list-radius_${state.radius}`,
+            (state) => `sui_select_list-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_list-outlined",
+          ),
         },
       )}
     >

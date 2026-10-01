@@ -100,6 +100,10 @@ export const PaginationItem: IPaginationItem = function SuiPaginationItem(props)
             className,
             "sui_pagination_item",
             (state) => state.selected && "sui_pagination_item-selected",
+            (state) => `sui_pagination_item-size_${state.size}`,
+            (state) => `sui_pagination_item-color_${state.color}`,
+            (state) => `sui_pagination_item-radius_${state.radius}`,
+            (state) => state.disabled && "sui_pagination_item-disabled",
           ),
         },
       )}

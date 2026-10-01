@@ -60,7 +60,15 @@ export const AutocompleteStatus: IAutocompleteStatus = function SuiAutocompleteS
         {
           style,
           render,
-          className: cn<AutocompleteStatusState>(className, "sui_autocomplete_status"),
+          className: cn<AutocompleteStatusState>(
+            className,
+            "sui_autocomplete_status",
+            (state) => `sui_autocomplete_status-size_${state.size}`,
+            (state) => `sui_autocomplete_status-color_${state.color}`,
+            (state) => `sui_autocomplete_status-radius_${state.radius}`,
+            (state) => `sui_autocomplete_status-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_status-outlined",
+          ),
         },
       )}
     />

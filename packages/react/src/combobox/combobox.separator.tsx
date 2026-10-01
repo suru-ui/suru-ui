@@ -60,7 +60,16 @@ export const ComboboxSeparator: IComboboxSeparator = function SuiComboboxSeparat
         {
           style,
           render,
-          className: cn<ComboboxSeparatorState>(className, "sui_combobox_separator"),
+          className: cn<ComboboxSeparatorState>(
+            className,
+            "sui_combobox_separator",
+            (state) => `sui_combobox_separator-size_${state.size}`,
+            (state) => `sui_combobox_separator-color_${state.color}`,
+            (state) => `sui_combobox_separator-radius_${state.radius}`,
+            (state) => `sui_combobox_separator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_separator-outlined",
+            (state) => state.multiple && "sui_combobox_separator-multiple",
+          ),
         },
       )}
     />

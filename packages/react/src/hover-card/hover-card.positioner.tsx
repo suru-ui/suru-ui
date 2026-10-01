@@ -69,7 +69,13 @@ export const HoverCardPositioner: IHoverCardPositioner = function SuiHoverCardPo
         {
           style,
           render,
-          className: cn(className, "sui_hover_card_positioner"),
+          className: cn<HoverCardPositionerState>(
+            className,
+            "sui_hover_card_positioner",
+            (state) => `sui_hover_card_positioner-size_${state.size}`,
+            (state) => `sui_hover_card_positioner-radius_${state.radius}`,
+            (state) => state.outlined && "sui_hover_card_positioner-outlined",
+          ),
         },
       )}
     />

@@ -72,6 +72,7 @@ export const ContextMenuPortal: IContextMenuPortal = function SuiContextMenuPort
             "sui_context_menu_portal",
             (state) => `sui_context_menu_portal-size_${state.size}`,
             (state) => `sui_context_menu_portal-radius_${state.radius}`,
+            (state) => `sui_context_menu_portal-variant_${state.variant}`,
             (state) => state.outlined && "sui_context_menu_portal-outlined",
           ),
         },

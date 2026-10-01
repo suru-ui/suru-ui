@@ -60,7 +60,14 @@ export const SegmentsIndicator: ISegmentsIndicator = function SuiSegmentsIndicat
         {
           style,
           render,
-          className: cn<SegmentsIndicatorState>(className, "sui_segments_indicator"),
+          className: cn<SegmentsIndicatorState>(
+            className,
+            "sui_segments_indicator",
+            (state) => `sui_segments_indicator-size_${state.size}`,
+            (state) => `sui_segments_indicator-color_${state.color}`,
+            (state) => `sui_segments_indicator-radius_${state.radius}`,
+            (state) => `sui_segments_indicator-active_variant_${state.activeVariant}`,
+          ),
         },
       )}
     />

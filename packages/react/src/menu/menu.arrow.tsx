@@ -56,7 +56,14 @@ export const MenuArrow: IMenuArrow = function SuiMenuArrow(props) {
       {...proxyRenderProps<Menu.Arrow.State, MenuArrowState>((state) => ({ ...ctx, ...state }), {
         style,
         render,
-        className: cn(className, "sui_menu_arrow"),
+        className: cn<MenuArrowState>(
+          className,
+          "sui_menu_arrow",
+          (state) => `sui_menu_arrow-size_${state.size}`,
+          (state) => `sui_menu_arrow-radius_${state.radius}`,
+          (state) => `sui_menu_arrow-variant_${state.variant}`,
+          (state) => state.outlined && "sui_menu_arrow-outlined",
+        ),
       })}
     />
   );

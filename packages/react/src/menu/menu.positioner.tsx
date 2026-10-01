@@ -79,7 +79,14 @@ export const MenuPositioner: IMenuPositioner = function SuiMenuPositioner(props)
         {
           style,
           render,
-          className: cn(className, "sui_menu_positioner"),
+          className: cn<MenuPositionerState>(
+            className,
+            "sui_menu_positioner",
+            (state) => `sui_menu_positioner-size_${state.size}`,
+            (state) => `sui_menu_positioner-radius_${state.radius}`,
+            (state) => `sui_menu_positioner-variant_${state.variant}`,
+            (state) => state.outlined && "sui_menu_positioner-outlined",
+          ),
         },
       )}
     />

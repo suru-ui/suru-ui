@@ -64,6 +64,9 @@ export const HoverCardContent: IHoverCardContent = function SuiHoverCardContent(
             (state) =>
               state.transitionStatus !== undefined &&
               `sui_hover_card_content-transition_status_${state.transitionStatus}`,
+            (state) => `sui_hover_card_content-size_${state.size}`,
+            (state) => `sui_hover_card_content-radius_${state.radius}`,
+            (state) => state.outlined && "sui_hover_card_content-outlined",
           ),
         },
       )}

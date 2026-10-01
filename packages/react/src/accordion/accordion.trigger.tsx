@@ -90,10 +90,13 @@ export const AccordionTrigger: IAccordionTrigger = function SuiAccordionTrigger(
               />
             </AccordionTriggerContext>
           ),
-          className: cn(
+          className: cn<AccordionTriggerState>(
             className,
             "sui_accordion_trigger",
             (state) => state.unstyled && "sui_accordion_trigger-unstyled",
+            (state) => `sui_accordion_trigger-size_${state.size}`,
+            (state) => `sui_accordion_trigger-radius_${state.radius}`,
+            (state) => state.separator && "sui_accordion_trigger-separator",
           ),
         },
       )}

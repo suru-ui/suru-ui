@@ -92,6 +92,11 @@ export const AutocompletePositioner: IAutocompletePositioner = function SuiAutoc
             (state) => `sui_autocomplete_positioner-align_${state.align}`,
             (state) => state.anchorHidden && "sui_autocomplete_positioner-anchorhidden",
             (state) => state.empty && "sui_autocomplete_positioner-empty",
+            (state) => `sui_autocomplete_positioner-size_${state.size}`,
+            (state) => `sui_autocomplete_positioner-color_${state.color}`,
+            (state) => `sui_autocomplete_positioner-radius_${state.radius}`,
+            (state) => `sui_autocomplete_positioner-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_positioner-outlined",
           ),
         },
       )}

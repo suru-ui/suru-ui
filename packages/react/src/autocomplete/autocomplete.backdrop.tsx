@@ -60,7 +60,15 @@ export const AutocompleteBackdrop: IAutocompleteBackdrop = function SuiAutocompl
         {
           style,
           render,
-          className: cn<AutocompleteBackdropState>(className, "sui_autocomplete_backdrop"),
+          className: cn<AutocompleteBackdropState>(
+            className,
+            "sui_autocomplete_backdrop",
+            (state) => `sui_autocomplete_backdrop-size_${state.size}`,
+            (state) => `sui_autocomplete_backdrop-color_${state.color}`,
+            (state) => `sui_autocomplete_backdrop-radius_${state.radius}`,
+            (state) => `sui_autocomplete_backdrop-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_backdrop-outlined",
+          ),
         },
       )}
     />

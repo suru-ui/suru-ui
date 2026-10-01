@@ -50,7 +50,14 @@ export const AlertDialogFooter: IAlertDialogFooter = function SuiAlertDialogFoot
         {
           style,
           render,
-          className: cn<AlertDialogFooterState>(className, "sui_alert_dialog_footer"),
+          className: cn<AlertDialogFooterState>(
+            className,
+            "sui_alert_dialog_footer",
+            (state) => `sui_alert_dialog_footer-size_${state.size}`,
+            (state) => `sui_alert_dialog_footer-radius_${state.radius}`,
+            (state) => `sui_alert_dialog_footer-variant_${state.variant}`,
+            (state) => state.outlined && "sui_alert_dialog_footer-outlined",
+          ),
         },
       )}
     />

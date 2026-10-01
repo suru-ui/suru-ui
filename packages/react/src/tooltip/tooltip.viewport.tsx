@@ -60,7 +60,13 @@ export const TooltipViewport: ITooltipViewport = function SuiTooltipViewport(pro
         {
           style,
           render,
-          className: cn(className, "sui_tooltip_viewport"),
+          className: cn<TooltipViewportState>(
+            className,
+            "sui_tooltip_viewport",
+            (state) => `sui_tooltip_viewport-size_${state.size}`,
+            (state) => `sui_tooltip_viewport-radius_${state.radius}`,
+            (state) => state.outlined && "sui_tooltip_viewport-outlined",
+          ),
         },
       )}
     />

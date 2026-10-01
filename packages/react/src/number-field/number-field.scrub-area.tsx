@@ -58,7 +58,15 @@ export const NumberFieldScrubArea: INumberFieldScrubArea = function SuiNumberFie
         {
           style,
           render,
-          className: cn(className, "sui_number_field_scrub_area"),
+          className: cn<NumberFieldScrubAreaState>(
+            className,
+            "sui_number_field_scrub_area",
+            (state) => `sui_number_field_scrub_area-size_${state.size}`,
+            (state) => `sui_number_field_scrub_area-color_${state.color}`,
+            (state) => `sui_number_field_scrub_area-radius_${state.radius}`,
+            (state) => `sui_number_field_scrub_area-variant_${state.variant}`,
+            (state) => state.outlined && "sui_number_field_scrub_area-outlined",
+          ),
         },
       )}
     />

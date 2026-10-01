@@ -64,6 +64,10 @@ export const SelectContent: ISelectContent = function SuiSelectContent(props) {
             (state) =>
               state.transitionStatus !== undefined &&
               `sui_select_content-transition_status_${state.transitionStatus}`,
+            (state) => `sui_select_content-size_${state.size}`,
+            (state) => `sui_select_content-radius_${state.radius}`,
+            (state) => `sui_select_content-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_content-outlined",
           ),
         },
       )}

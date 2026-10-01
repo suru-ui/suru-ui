@@ -70,6 +70,7 @@ export const MenuPortal: IMenuPortal = function SuiMenuPortal(props) {
           "sui_menu_portal",
           (state) => `sui_menu_portal-size_${state.size}`,
           (state) => `sui_menu_portal-radius_${state.radius}`,
+          (state) => `sui_menu_portal-variant_${state.variant}`,
           (state) => state.outlined && "sui_menu_portal-outlined",
         ),
       })}

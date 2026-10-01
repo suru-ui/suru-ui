@@ -81,7 +81,15 @@ export const TabsList: ITabsList = function SuiTabsList(props: TabsListProps) {
       {...proxyRenderProps<BaseTabs.List.State, TabsListState>((state) => ({ ...ctx, ...state }), {
         style,
         render,
-        className: cn<TabsListState>(className, "sui_tabs_list"),
+        className: cn<TabsListState>(
+          className,
+          "sui_tabs_list",
+          (state) => `sui_tabs_list-size_${state.size}`,
+          (state) => `sui_tabs_list-radius_${state.radius}`,
+          (state) => `sui_tabs_list-variant_${state.variant}`,
+          (state) => state.outlined && "sui_tabs_list-outlined",
+          (state) => `sui_tabs_list-active_variant_${state.activeVariant}`,
+        ),
       })}
       aria-label={ariaLabel}
     >

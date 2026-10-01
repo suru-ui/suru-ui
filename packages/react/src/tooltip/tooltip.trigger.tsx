@@ -97,7 +97,13 @@ export const TooltipTrigger: ITooltipTrigger = function SuiTooltipTrigger<TPaylo
         {
           style,
           render: children,
-          className: cn(className, "sui_tooltip_trigger"),
+          className: cn<TooltipTriggerState>(
+            className,
+            "sui_tooltip_trigger",
+            (state) => `sui_tooltip_trigger-size_${state.size}`,
+            (state) => `sui_tooltip_trigger-radius_${state.radius}`,
+            (state) => state.outlined && "sui_tooltip_trigger-outlined",
+          ),
         },
       )}
       closeOnClick={!keepOpenOnClick}

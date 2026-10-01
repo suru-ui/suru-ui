@@ -75,7 +75,14 @@ export const DialogTitle: IDialogTitle = function SuiDialogTitle(props) {
               {
                 style,
                 render,
-                className: cn<DialogTitleState>(className, "sui_dialog_title"),
+                className: cn<DialogTitleState>(
+                  className,
+                  "sui_dialog_title",
+                  (state) => `sui_dialog_title-size_${state.size}`,
+                  (state) => `sui_dialog_title-radius_${state.radius}`,
+                  (state) => `sui_dialog_title-variant_${state.variant}`,
+                  (state) => state.outlined && "sui_dialog_title-outlined",
+                ),
               },
             ),
           ])}

@@ -96,6 +96,7 @@ export const ResizableHandle: IResizableHandle = function SuiResizableHandle(pro
           (state) => `sui_resizable_handle-direction_${state.direction}`,
           (state) => state.invisible && "sui_resizable_handle-invisible",
           (state) => state.disabled && "sui_resizable_handle-disabled",
+          (state) => `sui_resizable_handle-orientation_${state.orientation}`,
         ),
         "aria-orientation": direction,
       },

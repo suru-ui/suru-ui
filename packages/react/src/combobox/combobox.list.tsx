@@ -82,7 +82,16 @@ export const ComboboxList: IComboboxList = function SuiComboboxList(props: Combo
         {
           style,
           render,
-          className: cn<ComboboxListState>(className, "sui_combobox_list"),
+          className: cn<ComboboxListState>(
+            className,
+            "sui_combobox_list",
+            (state) => `sui_combobox_list-size_${state.size}`,
+            (state) => `sui_combobox_list-color_${state.color}`,
+            (state) => `sui_combobox_list-radius_${state.radius}`,
+            (state) => `sui_combobox_list-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_list-outlined",
+            (state) => state.multiple && "sui_combobox_list-multiple",
+          ),
         },
       )}
     >

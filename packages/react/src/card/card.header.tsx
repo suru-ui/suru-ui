@@ -1,6 +1,7 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { useCardContext } from "./card.context.js";
 import type { CardRootState } from "./card.root.jsx";
@@ -43,7 +44,12 @@ export const CardHeader: ICardHeader = function SuiCardHeader(props) {
     props: [
       props,
       {
-        className: "sui_card_header",
+        className: cn<CardHeaderState>(
+          "sui_card_header",
+          (state) => `sui_card_header-size_${state.size}`,
+          (state) => `sui_card_header-radius_${state.radius}`,
+          (state) => state.outlined && "sui_card_header-outlined",
+        ),
       },
     ],
     state: ctx,

@@ -1,6 +1,7 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { useCardContext } from "./card.context.js";
 import type { CardRootState } from "./card.root.jsx";
@@ -43,7 +44,12 @@ export const CardFooter: ICardFooter = function SuiCardFooter(props) {
     props: [
       props,
       {
-        className: "sui_card_footer",
+        className: cn<CardFooterState>(
+          "sui_card_footer",
+          (state) => `sui_card_footer-size_${state.size}`,
+          (state) => `sui_card_footer-radius_${state.radius}`,
+          (state) => state.outlined && "sui_card_footer-outlined",
+        ),
       },
     ],
     state: ctx,

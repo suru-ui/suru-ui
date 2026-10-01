@@ -58,7 +58,14 @@ export const SelectLabel: ISelectLabel = function SuiSelectLabel(props) {
         {
           style,
           render,
-          className: cn(className, "sui_select_label"),
+          className: cn<SelectLabelState>(
+            className,
+            "sui_select_label",
+            (state) => `sui_select_label-size_${state.size}`,
+            (state) => `sui_select_label-radius_${state.radius}`,
+            (state) => `sui_select_label-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_label-outlined",
+          ),
         },
       )}
     />

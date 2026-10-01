@@ -71,6 +71,10 @@ export const ContextMenuTrigger: IContextMenuTrigger = function SuiContextMenuTr
             className,
             "sui_context_menu_trigger",
             (state) => state.open && "sui_context_menu_trigger-open",
+            (state) => `sui_context_menu_trigger-size_${state.size}`,
+            (state) => `sui_context_menu_trigger-radius_${state.radius}`,
+            (state) => `sui_context_menu_trigger-variant_${state.variant}`,
+            (state) => state.outlined && "sui_context_menu_trigger-outlined",
           ),
         },
       )}

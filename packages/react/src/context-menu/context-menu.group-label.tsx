@@ -60,7 +60,14 @@ export const ContextMenuGroupLabel: IContextMenuGroupLabel = function SuiContext
         {
           style,
           render,
-          className: cn(className, "sui_context_menu_group_label"),
+          className: cn<ContextMenuGroupLabelState>(
+            className,
+            "sui_context_menu_group_label",
+            (state) => `sui_context_menu_group_label-size_${state.size}`,
+            (state) => `sui_context_menu_group_label-radius_${state.radius}`,
+            (state) => `sui_context_menu_group_label-variant_${state.variant}`,
+            (state) => state.outlined && "sui_context_menu_group_label-outlined",
+          ),
         },
       )}
     />

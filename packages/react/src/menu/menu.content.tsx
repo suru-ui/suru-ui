@@ -119,6 +119,10 @@ export const MenuContent: IMenuContent = function SuiMenuContent(props: MenuCont
           (state) =>
             state.transitionStatus !== undefined &&
             `sui_menu_content-transition_status_${state.transitionStatus}`,
+          (state) => `sui_menu_content-size_${state.size}`,
+          (state) => `sui_menu_content-radius_${state.radius}`,
+          (state) => `sui_menu_content-variant_${state.variant}`,
+          (state) => state.outlined && "sui_menu_content-outlined",
         ),
       })}
     >

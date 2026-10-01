@@ -1,6 +1,7 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { type ComboboxContext, useComboboxContext } from "./combobox.context.js";
 
@@ -44,7 +45,15 @@ export const ComboboxAddon: IComboboxAddon = function SuiComboboxAddon(props) {
     props: [
       props,
       {
-        className: "sui_combobox_addon",
+        className: cn<ComboboxAddonState>(
+          "sui_combobox_addon",
+          (state) => `sui_combobox_addon-size_${state.size}`,
+          (state) => `sui_combobox_addon-color_${state.color}`,
+          (state) => `sui_combobox_addon-radius_${state.radius}`,
+          (state) => `sui_combobox_addon-variant_${state.variant}`,
+          (state) => state.outlined && "sui_combobox_addon-outlined",
+          (state) => state.multiple && "sui_combobox_addon-multiple",
+        ),
       },
     ],
     state: ctx,

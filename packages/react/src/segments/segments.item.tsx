@@ -98,6 +98,10 @@ export const SegmentsItem: ISegmentsItem = function SuiSegmentsItem(props) {
             "sui_segments_item",
             (state) => state.active && "sui_segments_item-active",
             (state) => state.disabled && "sui_segments_item-disabled",
+            (state) => `sui_segments_item-size_${state.size}`,
+            (state) => `sui_segments_item-color_${state.color}`,
+            (state) => `sui_segments_item-radius_${state.radius}`,
+            (state) => `sui_segments_item-active_variant_${state.activeVariant}`,
           ),
         },
       )}

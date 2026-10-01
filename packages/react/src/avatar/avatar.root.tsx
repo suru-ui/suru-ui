@@ -134,6 +134,7 @@ export const AvatarRoot: IAvatarRoot = function SuiAvatarRoot(props) {
             (state) => `sui_avatar-size_${state.size}`,
             (state) => `sui_avatar-color_${state.color}`,
             (state) => `sui_avatar-radius_${state.radius}`,
+            (state) => state.reverse && "sui_avatar-reverse",
           ),
         },
       )}

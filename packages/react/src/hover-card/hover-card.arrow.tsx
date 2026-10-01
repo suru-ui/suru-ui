@@ -62,6 +62,9 @@ export const HoverCardArrow: IHoverCardArrow = function SuiHoverCardArrow(props)
             className,
             "sui_hover_card_arrow",
             (state) => `sui_hover_card_arrow-side_${state.side}`,
+            (state) => `sui_hover_card_arrow-size_${state.size}`,
+            (state) => `sui_hover_card_arrow-radius_${state.radius}`,
+            (state) => state.outlined && "sui_hover_card_arrow-outlined",
           ),
         },
       )}

@@ -58,7 +58,15 @@ export const AutocompleteInput: IAutocompleteInput = function SuiAutocompleteInp
         {
           style,
           render,
-          className: cn<AutocompleteInputState>(className, "sui_autocomplete_input"),
+          className: cn<AutocompleteInputState>(
+            className,
+            "sui_autocomplete_input",
+            (state) => `sui_autocomplete_input-size_${state.size}`,
+            (state) => `sui_autocomplete_input-color_${state.color}`,
+            (state) => `sui_autocomplete_input-radius_${state.radius}`,
+            (state) => `sui_autocomplete_input-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_input-outlined",
+          ),
         },
       )}
     />

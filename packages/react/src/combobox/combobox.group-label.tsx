@@ -58,7 +58,16 @@ export const ComboboxGroupLabel: IComboboxGroupLabel = function SuiComboboxGroup
         {
           style,
           render,
-          className: cn<ComboboxGroupLabelState>(className, "sui_combobox_group_label"),
+          className: cn<ComboboxGroupLabelState>(
+            className,
+            "sui_combobox_group_label",
+            (state) => `sui_combobox_group_label-size_${state.size}`,
+            (state) => `sui_combobox_group_label-color_${state.color}`,
+            (state) => `sui_combobox_group_label-radius_${state.radius}`,
+            (state) => `sui_combobox_group_label-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_group_label-outlined",
+            (state) => state.multiple && "sui_combobox_group_label-multiple",
+          ),
         },
       )}
     />

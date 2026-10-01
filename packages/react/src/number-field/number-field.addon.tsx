@@ -1,6 +1,7 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { DISABLE_FOCUS_ON_CLICK_DATA } from "./_number-field.jsx";
 import { type NumberFieldContext, useNumberFieldContext } from "./number-field.context.js";
@@ -62,7 +63,14 @@ export const NumberFieldAddon: INumberFieldAddon = function SuiNumberFieldAddon(
     props: [
       otherSpanProps,
       {
-        className: "sui_number_field_addon",
+        className: cn<NumberFieldAddonState>(
+          "sui_number_field_addon",
+          (state) => `sui_number_field_addon-size_${state.size}`,
+          (state) => `sui_number_field_addon-color_${state.color}`,
+          (state) => `sui_number_field_addon-radius_${state.radius}`,
+          (state) => `sui_number_field_addon-variant_${state.variant}`,
+          (state) => state.outlined && "sui_number_field_addon-outlined",
+        ),
         [DISABLE_FOCUS_ON_CLICK_DATA]: disableFocusOnClick ? "true" : undefined,
       },
     ],

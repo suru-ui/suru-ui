@@ -90,6 +90,11 @@ export const TextFieldInput: ITextFieldInput = function SuiTextFieldInput(props)
           className: cn<TextFieldInputState>(
             className,
             "sui_text_field_input",
+            (state) => `sui_text_field_input-size_${state.size}`,
+            (state) => `sui_text_field_input-color_${state.color}`,
+            (state) => `sui_text_field_input-radius_${state.radius}`,
+            (state) => `sui_text_field_input-variant_${state.variant}`,
+            (state) => state.outlined && "sui_text_field_input-outlined",
             (state) => state.valid === true && "sui_text_field_input-valid",
             (state) => state.valid === false && "sui_text_field_input-invalid",
             (state) => state.valid === null && "sui_text_field_input-unverified",

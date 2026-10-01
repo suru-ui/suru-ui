@@ -48,7 +48,14 @@ export const AlertDialogHeader: IAlertDialogHeader = function SuiAlertDialogHead
         {
           style,
           render,
-          className: cn<AlertDialogHeaderState>(className, "sui_alert_dialog_header"),
+          className: cn<AlertDialogHeaderState>(
+            className,
+            "sui_alert_dialog_header",
+            (state) => `sui_alert_dialog_header-size_${state.size}`,
+            (state) => `sui_alert_dialog_header-radius_${state.radius}`,
+            (state) => `sui_alert_dialog_header-variant_${state.variant}`,
+            (state) => state.outlined && "sui_alert_dialog_header-outlined",
+          ),
         },
       )}
     />

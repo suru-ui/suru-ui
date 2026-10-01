@@ -69,7 +69,16 @@ export const NumberFieldDecrement: INumberFieldDecrement = function SuiNumberFie
         {
           style,
           render,
-          className: cn(className, "sui_number_field_stepper", "sui_number_field_decrement"),
+          className: cn<NumberFieldDecrementState>(
+            className,
+            "sui_number_field_stepper",
+            "sui_number_field_decrement",
+            (state) => `sui_number_field_decrement-size_${state.size}`,
+            (state) => `sui_number_field_decrement-color_${state.color}`,
+            (state) => `sui_number_field_decrement-radius_${state.radius}`,
+            (state) => `sui_number_field_decrement-variant_${state.variant}`,
+            (state) => state.outlined && "sui_number_field_decrement-outlined",
+          ),
         },
       )}
       aria-label={ariaLabel}

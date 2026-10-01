@@ -74,6 +74,10 @@ export const AutocompletePopup: IAutocompletePopup = function SuiAutocompletePop
               className,
               "sui_autocomplete_popup",
               (state) => state.outlined && "sui_autocomplete_popup-outlined",
+              (state) => `sui_autocomplete_popup-size_${state.size}`,
+              (state) => `sui_autocomplete_popup-color_${state.color}`,
+              (state) => `sui_autocomplete_popup-radius_${state.radius}`,
+              (state) => `sui_autocomplete_popup-variant_${state.variant}`,
             ),
           },
         )}

@@ -1,6 +1,7 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { type AutocompleteContext, useAutocompleteContext } from "./autocomplete.context.js";
 
@@ -44,7 +45,14 @@ export const AutocompleteAddon: IAutocompleteAddon = function SuiAutocompleteAdd
     props: [
       props,
       {
-        className: "sui_autocomplete_addon",
+        className: cn<AutocompleteAddonState>(
+          "sui_autocomplete_addon",
+          (state) => `sui_autocomplete_addon-size_${state.size}`,
+          (state) => `sui_autocomplete_addon-color_${state.color}`,
+          (state) => `sui_autocomplete_addon-radius_${state.radius}`,
+          (state) => `sui_autocomplete_addon-variant_${state.variant}`,
+          (state) => state.outlined && "sui_autocomplete_addon-outlined",
+        ),
       },
     ],
     state: ctx,

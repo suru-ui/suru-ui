@@ -81,7 +81,14 @@ export const ContextMenuPositioner: IContextMenuPositioner = function SuiContext
         {
           style,
           render,
-          className: cn(className, "sui_context_menu_positioner"),
+          className: cn<ContextMenuPositionerState>(
+            className,
+            "sui_context_menu_positioner",
+            (state) => `sui_context_menu_positioner-size_${state.size}`,
+            (state) => `sui_context_menu_positioner-radius_${state.radius}`,
+            (state) => `sui_context_menu_positioner-variant_${state.variant}`,
+            (state) => state.outlined && "sui_context_menu_positioner-outlined",
+          ),
         },
       )}
     />

@@ -84,7 +84,15 @@ export const AutocompleteList: IAutocompleteList = function SuiAutocompleteList(
         {
           style,
           render,
-          className: cn<AutocompleteListState>(className, "sui_autocomplete_list"),
+          className: cn<AutocompleteListState>(
+            className,
+            "sui_autocomplete_list",
+            (state) => `sui_autocomplete_list-size_${state.size}`,
+            (state) => `sui_autocomplete_list-color_${state.color}`,
+            (state) => `sui_autocomplete_list-radius_${state.radius}`,
+            (state) => `sui_autocomplete_list-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_list-outlined",
+          ),
         },
       )}
     >

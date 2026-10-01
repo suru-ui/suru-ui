@@ -2,6 +2,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
 import { useFileUploadContext } from "./file-upload.context.js";
 import { useFileUploadItemContext } from "./file-upload.item.context.js";
@@ -83,7 +84,16 @@ export const FileUploadItemDeleteTrigger: IFileUploadItemDeleteTrigger =
             }
           },
           disabled,
-          className: "sui_file_upload_item_delete_trigger",
+          className: cn<FileUploadItemDeleteTriggerState>(
+            "sui_file_upload_item_delete_trigger",
+            (state) => `sui_file_upload_item_delete_trigger-size_${state.size}`,
+            (state) => `sui_file_upload_item_delete_trigger-color_${state.color}`,
+            (state) => `sui_file_upload_item_delete_trigger-radius_${state.radius}`,
+            (state) => `sui_file_upload_item_delete_trigger-variant_${state.variant}`,
+            (state) => state.disabled && "sui_file_upload_item_delete_trigger-disabled",
+            (state) => state.multiple && "sui_file_upload_item_delete_trigger-multiple",
+            (state) => state.required && "sui_file_upload_item_delete_trigger-required",
+          ),
         },
       ],
       state,

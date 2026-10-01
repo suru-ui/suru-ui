@@ -87,6 +87,12 @@ export const ComboboxPositioner: IComboboxPositioner = function SuiComboboxPosit
             (state) => `sui_combobox_positioner-align_${state.align}`,
             (state) => state.anchorHidden && "sui_combobox_positioner-anchorhidden",
             (state) => state.empty && "sui_combobox_positioner-empty",
+            (state) => `sui_combobox_positioner-size_${state.size}`,
+            (state) => `sui_combobox_positioner-color_${state.color}`,
+            (state) => `sui_combobox_positioner-radius_${state.radius}`,
+            (state) => `sui_combobox_positioner-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_positioner-outlined",
+            (state) => state.multiple && "sui_combobox_positioner-multiple",
           ),
         },
       )}

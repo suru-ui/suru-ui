@@ -58,7 +58,14 @@ export const SelectArrow: ISelectArrow = function SuiSelectArrow(props) {
         {
           style,
           render,
-          className: cn(className, "sui_select_arrow"),
+          className: cn<SelectArrowState>(
+            className,
+            "sui_select_arrow",
+            (state) => `sui_select_arrow-size_${state.size}`,
+            (state) => `sui_select_arrow-radius_${state.radius}`,
+            (state) => `sui_select_arrow-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_arrow-outlined",
+          ),
         },
       )}
     />

@@ -58,7 +58,14 @@ export const ContextMenuSeparator: IContextMenuSeparator = function SuiContextMe
         {
           style,
           render,
-          className: cn(className, "sui_context_menu_separator"),
+          className: cn<ContextMenuSeparatorState>(
+            className,
+            "sui_context_menu_separator",
+            (state) => `sui_context_menu_separator-size_${state.size}`,
+            (state) => `sui_context_menu_separator-radius_${state.radius}`,
+            (state) => `sui_context_menu_separator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_context_menu_separator-outlined",
+          ),
         },
       )}
     />

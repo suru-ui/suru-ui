@@ -70,7 +70,11 @@ export const CollapsibleTrigger: ICollapsibleTrigger = function SuiCollapsibleTr
         {
           style,
           render: children,
-          className: cn(className, "sui_collapsible_trigger"),
+          className: cn<CollapsibleTriggerState>(
+            className,
+            "sui_collapsible_trigger",
+            (state) => `sui_collapsible_trigger-size_${state.size}`,
+          ),
         },
       )}
     />

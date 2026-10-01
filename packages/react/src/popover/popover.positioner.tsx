@@ -69,7 +69,13 @@ export const PopoverPositioner: IPopoverPositioner = function SuiPopoverPosition
         {
           style,
           render,
-          className: cn(className, "sui_popover_positioner"),
+          className: cn<PopoverPositionerState>(
+            className,
+            "sui_popover_positioner",
+            (state) => `sui_popover_positioner-size_${state.size}`,
+            (state) => `sui_popover_positioner-radius_${state.radius}`,
+            (state) => state.outlined && "sui_popover_positioner-outlined",
+          ),
         },
       )}
     />

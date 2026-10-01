@@ -58,7 +58,16 @@ export const ComboboxEmpty: IComboboxEmpty = function SuiComboboxEmpty(props) {
         {
           style,
           render,
-          className: cn<ComboboxEmptyState>(className, "sui_combobox_empty"),
+          className: cn<ComboboxEmptyState>(
+            className,
+            "sui_combobox_empty",
+            (state) => `sui_combobox_empty-size_${state.size}`,
+            (state) => `sui_combobox_empty-color_${state.color}`,
+            (state) => `sui_combobox_empty-radius_${state.radius}`,
+            (state) => `sui_combobox_empty-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_empty-outlined",
+            (state) => state.multiple && "sui_combobox_empty-multiple",
+          ),
         },
       )}
     />

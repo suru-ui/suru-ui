@@ -84,6 +84,7 @@ export const PasswordFieldToggleButton: IPasswordFieldToggleButton =
           className: cn<PasswordFieldToggleButtonState>(
             "sui_password_field_toggle",
             (state) => state.disabled && "sui_password_field_toggle-disabled",
+            (state) => state.visible && "sui_password_field_toggle-visible",
           ),
           "aria-label": ariaLabel,
           "aria-pressed": visible,

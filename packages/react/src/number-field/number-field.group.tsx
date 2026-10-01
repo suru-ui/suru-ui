@@ -78,7 +78,15 @@ export const NumberFieldGroup: INumberFieldGroup = function SuiNumberFieldGroup(
         {
           style,
           render,
-          className: cn(className, "sui_number_field_group"),
+          className: cn<NumberFieldGroupState>(
+            className,
+            "sui_number_field_group",
+            (state) => `sui_number_field_group-size_${state.size}`,
+            (state) => `sui_number_field_group-color_${state.color}`,
+            (state) => `sui_number_field_group-radius_${state.radius}`,
+            (state) => `sui_number_field_group-variant_${state.variant}`,
+            (state) => state.outlined && "sui_number_field_group-outlined",
+          ),
         },
       )}
     />

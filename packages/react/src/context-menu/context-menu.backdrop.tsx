@@ -58,7 +58,14 @@ export const ContextMenuBackdrop: IContextMenuBackdrop = function SuiContextMenu
         {
           style,
           render,
-          className: cn(className, "sui_context_menu_backdrop"),
+          className: cn<ContextMenuBackdropState>(
+            className,
+            "sui_context_menu_backdrop",
+            (state) => `sui_context_menu_backdrop-size_${state.size}`,
+            (state) => `sui_context_menu_backdrop-radius_${state.radius}`,
+            (state) => `sui_context_menu_backdrop-variant_${state.variant}`,
+            (state) => state.outlined && "sui_context_menu_backdrop-outlined",
+          ),
         },
       )}
     />

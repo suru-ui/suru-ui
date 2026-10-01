@@ -62,7 +62,15 @@ export const NumberFieldScrubAreaCursor: INumberFieldScrubAreaCursor =
           {
             style,
             render,
-            className: cn(className, "sui_number_field_scrub_area_cursor"),
+            className: cn<NumberFieldScrubAreaCursorState>(
+              className,
+              "sui_number_field_scrub_area_cursor",
+              (state) => `sui_number_field_scrub_area_cursor-size_${state.size}`,
+              (state) => `sui_number_field_scrub_area_cursor-color_${state.color}`,
+              (state) => `sui_number_field_scrub_area_cursor-radius_${state.radius}`,
+              (state) => `sui_number_field_scrub_area_cursor-variant_${state.variant}`,
+              (state) => state.outlined && "sui_number_field_scrub_area_cursor-outlined",
+            ),
           },
         )}
       />

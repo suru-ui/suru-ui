@@ -58,7 +58,13 @@ export const PopoverTitle: IPopoverTitle = function SuiPopoverTitle(props) {
         {
           style,
           render,
-          className: cn(className, "sui_popover_title"),
+          className: cn<PopoverTitleState>(
+            className,
+            "sui_popover_title",
+            (state) => `sui_popover_title-size_${state.size}`,
+            (state) => `sui_popover_title-radius_${state.radius}`,
+            (state) => state.outlined && "sui_popover_title-outlined",
+          ),
         },
       )}
     />

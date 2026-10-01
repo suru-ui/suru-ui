@@ -72,7 +72,15 @@ export const AutocompleteClear: IAutocompleteClear = function SuiAutocompleteCle
         {
           style,
           render,
-          className: cn<AutocompleteClearState>(className, "sui_autocomplete_clear"),
+          className: cn<AutocompleteClearState>(
+            className,
+            "sui_autocomplete_clear",
+            (state) => `sui_autocomplete_clear-size_${state.size}`,
+            (state) => `sui_autocomplete_clear-color_${state.color}`,
+            (state) => `sui_autocomplete_clear-radius_${state.radius}`,
+            (state) => `sui_autocomplete_clear-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_clear-outlined",
+          ),
         },
       )}
       aria-label={ariaLabel}

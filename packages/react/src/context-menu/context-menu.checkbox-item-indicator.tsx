@@ -68,6 +68,10 @@ export const ContextMenuCheckboxItemIndicator: IContextMenuCheckboxItemIndicator
             "sui_context_menu_item_indicator",
             "sui_context_menu_checkbox_item_indicator",
             (state) => !state.checked && "sui_context_menu_item_indicator-unchecked",
+            (state) => `sui_context_menu_item_indicator-size_${state.size}`,
+            (state) => `sui_context_menu_item_indicator-radius_${state.radius}`,
+            (state) => `sui_context_menu_item_indicator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_context_menu_item_indicator-outlined",
           ),
         })}
       />

@@ -58,7 +58,14 @@ export const SelectIcon: ISelectIcon = function SuiSelectIcon(props) {
         {
           style,
           render,
-          className: cn(className, "sui_select_icon"),
+          className: cn<SelectIconState>(
+            className,
+            "sui_select_icon",
+            (state) => `sui_select_icon-size_${state.size}`,
+            (state) => `sui_select_icon-radius_${state.radius}`,
+            (state) => `sui_select_icon-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_icon-outlined",
+          ),
         },
       )}
     />

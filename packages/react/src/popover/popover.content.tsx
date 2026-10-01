@@ -64,6 +64,9 @@ export const PopoverContent: IPopoverContent = function SuiPopoverContent(props)
             (state) =>
               state.transitionStatus !== undefined &&
               `sui_popover_content-transition_status_${state.transitionStatus}`,
+            (state) => `sui_popover_content-size_${state.size}`,
+            (state) => `sui_popover_content-radius_${state.radius}`,
+            (state) => state.outlined && "sui_popover_content-outlined",
           ),
         },
       )}

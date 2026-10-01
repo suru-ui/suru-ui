@@ -72,6 +72,8 @@ export const SelectPortal: ISelectPortal = function SuiSelectPortal(props) {
             "sui_select_portal",
             (state) => `sui_select_portal-size_${state.size}`,
             (state) => `sui_select_portal-radius_${state.radius}`,
+            (state) => `sui_select_portal-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_portal-outlined",
           ),
         },
       )}

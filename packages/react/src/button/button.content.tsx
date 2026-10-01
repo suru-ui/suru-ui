@@ -1,6 +1,7 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { type ButtonContext, useButtonContext } from "./button.context.js";
 
@@ -42,7 +43,18 @@ export const ButtonContent: IButtonContent = function SuiButtonContent(props) {
     props: [
       props,
       {
-        className: "sui_button_content",
+        className: cn<ButtonContentState>(
+          "sui_button_content",
+          (state) => `sui_button_content-size_${state.size}`,
+          (state) => `sui_button_content-color_${state.color}`,
+          (state) => `sui_button_content-radius_${state.radius}`,
+          (state) => `sui_button_content-variant_${state.variant}`,
+          (state) => state.item && "sui_button_content-item",
+          (state) => state.muted && "sui_button_content-muted",
+          (state) => state.outlined && "sui_button_content-outlined",
+          (state) => state.pending && "sui_button_content-pending",
+          (state) => state.squared && "sui_button_content-squared",
+        ),
       },
     ],
     state: ctx,

@@ -62,6 +62,10 @@ export const SelectValue: ISelectValue = function SuiSelectValue(props) {
             className,
             "sui_select_value",
             (state) => state.placeholder && "sui_select_value-placeholder",
+            (state) => `sui_select_value-size_${state.size}`,
+            (state) => `sui_select_value-radius_${state.radius}`,
+            (state) => `sui_select_value-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_value-outlined",
           ),
         },
       )}

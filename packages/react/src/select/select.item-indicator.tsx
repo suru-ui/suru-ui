@@ -58,7 +58,14 @@ export const SelectItemIndicator: ISelectItemIndicator = function SuiSelectItemI
         {
           style,
           render,
-          className: cn(className, "sui_select_item_indicator"),
+          className: cn<SelectItemIndicatorState>(
+            className,
+            "sui_select_item_indicator",
+            (state) => `sui_select_item_indicator-size_${state.size}`,
+            (state) => `sui_select_item_indicator-radius_${state.radius}`,
+            (state) => `sui_select_item_indicator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_item_indicator-outlined",
+          ),
         },
       )}
       keepMounted={keepMounted}

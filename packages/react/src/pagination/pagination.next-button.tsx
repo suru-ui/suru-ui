@@ -76,7 +76,14 @@ export const PaginationNextButton: IPaginationNextButton = function SuiPaginatio
         {
           style,
           render,
-          className: cn(className, "sui_pagination_next"),
+          className: cn<PaginationNextButtonState>(
+            className,
+            "sui_pagination_next",
+            (state) => `sui_pagination_next-size_${state.size}`,
+            (state) => `sui_pagination_next-color_${state.color}`,
+            (state) => `sui_pagination_next-radius_${state.radius}`,
+            (state) => state.disabled && "sui_pagination_next-disabled",
+          ),
         },
       )}
       size={ctx.size}

@@ -58,7 +58,16 @@ export const ComboboxChips: IComboboxChips = function SuiComboboxChips(props) {
         {
           style,
           render,
-          className: cn<ComboboxChipsState>(className, "sui_combobox_chips"),
+          className: cn<ComboboxChipsState>(
+            className,
+            "sui_combobox_chips",
+            (state) => `sui_combobox_chips-size_${state.size}`,
+            (state) => `sui_combobox_chips-color_${state.color}`,
+            (state) => `sui_combobox_chips-radius_${state.radius}`,
+            (state) => `sui_combobox_chips-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_chips-outlined",
+            (state) => state.multiple && "sui_combobox_chips-multiple",
+          ),
         },
       )}
     />

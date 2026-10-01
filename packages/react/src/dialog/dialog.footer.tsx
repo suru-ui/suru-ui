@@ -47,7 +47,14 @@ export const DialogFooter: IDialogFooter = function SuiDialogFooter(props) {
         {
           style,
           render,
-          className: cn<DialogFooterState>(className, "sui_dialog_footer"),
+          className: cn<DialogFooterState>(
+            className,
+            "sui_dialog_footer",
+            (state) => `sui_dialog_footer-size_${state.size}`,
+            (state) => `sui_dialog_footer-radius_${state.radius}`,
+            (state) => `sui_dialog_footer-variant_${state.variant}`,
+            (state) => state.outlined && "sui_dialog_footer-outlined",
+          ),
         },
       )}
     />

@@ -72,7 +72,14 @@ export const DialogDescription: IDialogDescription = function SuiDialogDescripti
               {
                 style,
                 render,
-                className: cn<DialogDescriptionState>(className, "sui_dialog_description"),
+                className: cn<DialogDescriptionState>(
+                  className,
+                  "sui_dialog_description",
+                  (state) => `sui_dialog_description-size_${state.size}`,
+                  (state) => `sui_dialog_description-radius_${state.radius}`,
+                  (state) => `sui_dialog_description-variant_${state.variant}`,
+                  (state) => state.outlined && "sui_dialog_description-outlined",
+                ),
               },
             ),
           ])}

@@ -2,6 +2,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import { ChevronRightIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { type CollapsibleContext, useCollapsibleContext } from "./collapsible.context.js";
 
@@ -47,7 +48,10 @@ export const CollapsibleIndicator: ICollapsibleIndicator = function SuiCollapsib
       otherSpanProps,
       {
         children,
-        className: "sui_collapsible_indicator",
+        className: cn<CollapsibleIndicatorState>(
+          "sui_collapsible_indicator",
+          (state) => `sui_collapsible_indicator-size_${state.size}`,
+        ),
       },
     ],
     state: ctx,

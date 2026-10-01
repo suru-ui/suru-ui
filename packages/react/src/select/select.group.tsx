@@ -58,7 +58,14 @@ export const SelectGroup: ISelectGroup = function SuiSelectGroup(props) {
         {
           style,
           render,
-          className: cn(className, "sui_select_group"),
+          className: cn<SelectGroupState>(
+            className,
+            "sui_select_group",
+            (state) => `sui_select_group-size_${state.size}`,
+            (state) => `sui_select_group-radius_${state.radius}`,
+            (state) => `sui_select_group-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_group-outlined",
+          ),
         },
       )}
     />

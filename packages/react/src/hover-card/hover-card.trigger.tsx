@@ -89,7 +89,13 @@ export const HoverCardTrigger: IHoverCardTrigger = function SuiHoverCardTrigger<
         {
           style,
           render: children,
-          className: cn(className, "sui_hover_card_trigger"),
+          className: cn<HoverCardTriggerState>(
+            className,
+            "sui_hover_card_trigger",
+            (state) => `sui_hover_card_trigger-size_${state.size}`,
+            (state) => `sui_hover_card_trigger-radius_${state.radius}`,
+            (state) => state.outlined && "sui_hover_card_trigger-outlined",
+          ),
         },
       )}
     />

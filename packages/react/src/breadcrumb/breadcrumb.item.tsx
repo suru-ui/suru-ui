@@ -1,6 +1,7 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { defaultBreadcrumbContext } from "./_breadcrumb.jsx";
 import { type BreadcrumbContext, useBreadcrumbContext } from "./breadcrumb.context.js";
@@ -43,7 +44,11 @@ export const BreadcrumbItem: IBreadcrumbItem = function SuiBreadcrumbItem(props)
     props: [
       props,
       {
-        className: "sui_breadcrumb_item",
+        className: cn<BreadcrumbItemState>(
+          "sui_breadcrumb_item",
+          (state) => `sui_breadcrumb_item-size_${state.size}`,
+          (state) => `sui_breadcrumb_item-color_${state.color}`,
+        ),
       },
     ],
     state: { ...defaultBreadcrumbContext, ...ctx },

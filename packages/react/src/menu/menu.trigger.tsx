@@ -103,6 +103,10 @@ export const MenuTrigger: IMenuTrigger = function SuiMenuTrigger(props: MenuTrig
             "sui_menu_trigger",
             (state) => state.open && "sui_menu_trigger-open",
             (state) => state.disabled && "sui_menu_trigger-disabled",
+            (state) => `sui_menu_trigger-size_${state.size}`,
+            (state) => `sui_menu_trigger-radius_${state.radius}`,
+            (state) => `sui_menu_trigger-variant_${state.variant}`,
+            (state) => state.outlined && "sui_menu_trigger-outlined",
           ),
         },
       )}

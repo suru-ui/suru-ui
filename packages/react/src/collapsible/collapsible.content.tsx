@@ -58,7 +58,11 @@ export const CollapsibleContent: ICollapsibleContent = function SuiCollapsibleCo
         {
           style,
           render,
-          className: cn(className, "sui_collapsible_content"),
+          className: cn<CollapsibleContentState>(
+            className,
+            "sui_collapsible_content",
+            (state) => `sui_collapsible_content-size_${state.size}`,
+          ),
         },
       )}
     />

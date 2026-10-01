@@ -113,6 +113,10 @@ export const ContextMenuRadioGroup: IContextMenuRadioGroup = function SuiContext
             className,
             "sui_context_menu_radio_group",
             (state) => state.disabled && "sui_context_menu_radio_group-disabled",
+            (state) => `sui_context_menu_radio_group-size_${state.size}`,
+            (state) => `sui_context_menu_radio_group-radius_${state.radius}`,
+            (state) => `sui_context_menu_radio_group-variant_${state.variant}`,
+            (state) => state.outlined && "sui_context_menu_radio_group-outlined",
           ),
         },
       )}

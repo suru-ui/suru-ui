@@ -160,7 +160,14 @@ export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEll
         {
           style,
           render,
-          className: cn(className, "sui_pagination_ellipsis"),
+          className: cn<PaginationEllipsisState>(
+            className,
+            "sui_pagination_ellipsis",
+            (state) => `sui_pagination_ellipsis-size_${state.size}`,
+            (state) => `sui_pagination_ellipsis-color_${state.color}`,
+            (state) => `sui_pagination_ellipsis-radius_${state.radius}`,
+            (state) => state.disabled && "sui_pagination_ellipsis-disabled",
+          ),
         },
       )}
       size={ctx.size}

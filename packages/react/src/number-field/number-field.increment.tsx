@@ -69,7 +69,16 @@ export const NumberFieldIncrement: INumberFieldIncrement = function SuiNumberFie
         {
           style,
           render,
-          className: cn(className, "sui_number_field_stepper", "sui_number_field_increment"),
+          className: cn<NumberFieldIncrementState>(
+            className,
+            "sui_number_field_stepper",
+            "sui_number_field_increment",
+            (state) => `sui_number_field_increment-size_${state.size}`,
+            (state) => `sui_number_field_increment-color_${state.color}`,
+            (state) => `sui_number_field_increment-radius_${state.radius}`,
+            (state) => `sui_number_field_increment-variant_${state.variant}`,
+            (state) => state.outlined && "sui_number_field_increment-outlined",
+          ),
         },
       )}
       aria-label={ariaLabel}

@@ -58,7 +58,14 @@ export const ContextMenuGroup: IContextMenuGroup = function SuiContextMenuGroup(
         {
           style,
           render,
-          className: cn(className, "sui_context_menu_group"),
+          className: cn<ContextMenuGroupState>(
+            className,
+            "sui_context_menu_group",
+            (state) => `sui_context_menu_group-size_${state.size}`,
+            (state) => `sui_context_menu_group-radius_${state.radius}`,
+            (state) => `sui_context_menu_group-variant_${state.variant}`,
+            (state) => state.outlined && "sui_context_menu_group-outlined",
+          ),
         },
       )}
     />

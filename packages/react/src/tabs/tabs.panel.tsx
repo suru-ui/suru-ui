@@ -63,7 +63,15 @@ export const TabsPanel: ITabsPanel = function SuiTabsPanel(props) {
         {
           style,
           render,
-          className: cn<TabsPanelState>(className, "sui_tabs_panel"),
+          className: cn<TabsPanelState>(
+            className,
+            "sui_tabs_panel",
+            (state) => `sui_tabs_panel-size_${state.size}`,
+            (state) => `sui_tabs_panel-radius_${state.radius}`,
+            (state) => `sui_tabs_panel-variant_${state.variant}`,
+            (state) => state.outlined && "sui_tabs_panel-outlined",
+            (state) => `sui_tabs_panel-active_variant_${state.activeVariant}`,
+          ),
         },
       )}
     />

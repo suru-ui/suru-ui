@@ -72,6 +72,10 @@ export const ComboboxPortal: IComboboxPortal = function SuiComboboxPortal(props)
             "sui_combobox_portal",
             (state) => `sui_combobox_portal-size_${state.size}`,
             (state) => `sui_combobox_portal-radius_${state.radius}`,
+            (state) => `sui_combobox_portal-color_${state.color}`,
+            (state) => `sui_combobox_portal-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_portal-outlined",
+            (state) => state.multiple && "sui_combobox_portal-multiple",
           ),
         },
       )}

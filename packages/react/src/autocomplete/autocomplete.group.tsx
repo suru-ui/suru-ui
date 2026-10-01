@@ -69,7 +69,15 @@ export const AutocompleteGroup: IAutocompleteGroup = function SuiAutocompleteGro
           {
             style,
             render,
-            className: cn<AutocompleteGroupState>(className, "sui_autocomplete_group"),
+            className: cn<AutocompleteGroupState>(
+              className,
+              "sui_autocomplete_group",
+              (state) => `sui_autocomplete_group-size_${state.size}`,
+              (state) => `sui_autocomplete_group-color_${state.color}`,
+              (state) => `sui_autocomplete_group-radius_${state.radius}`,
+              (state) => `sui_autocomplete_group-variant_${state.variant}`,
+              (state) => state.outlined && "sui_autocomplete_group-outlined",
+            ),
           },
         )}
       />

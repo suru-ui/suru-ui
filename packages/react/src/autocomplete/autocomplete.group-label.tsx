@@ -63,7 +63,15 @@ export const AutocompleteGroupLabel: IAutocompleteGroupLabel = function SuiAutoc
         {
           style,
           render,
-          className: cn<AutocompleteGroupLabelState>(className, "sui_autocomplete_group_label"),
+          className: cn<AutocompleteGroupLabelState>(
+            className,
+            "sui_autocomplete_group_label",
+            (state) => `sui_autocomplete_group_label-size_${state.size}`,
+            (state) => `sui_autocomplete_group_label-color_${state.color}`,
+            (state) => `sui_autocomplete_group_label-radius_${state.radius}`,
+            (state) => `sui_autocomplete_group_label-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_group_label-outlined",
+          ),
         },
       )}
     />

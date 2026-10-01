@@ -182,6 +182,7 @@ export const RadioRoot: IRadioRoot = function SuiRadioRoot(props) {
             (state) => `sui_radio-radius_${state.radius}`,
             (state) => `sui_radio-variant_${state.variant}`,
             (state) => state.outlined && "sui_radio-outlined",
+            (state) => `sui_radio-orientation_${state.orientation}`,
             (state) => state.dirty && "sui_radio-dirty",
             (state) => state.valid === null && "sui_radio-unverified",
             (state) => state.valid === true && "sui_radio-valid",

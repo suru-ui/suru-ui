@@ -1,6 +1,7 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 import { DEFAULT_TEXT_FIELD_CONTEXT, DISABLE_FOCUS_ON_CLICK_DATA } from "./_text-field.jsx";
 import { type TextFieldContext, useTextFieldContext } from "./text-field.context.js";
@@ -54,7 +55,14 @@ export const TextFieldAddon: ITextFieldAddon = function SuiTextFieldAddon(props)
     props: [
       otherSpanProps,
       {
-        className: "sui_text_field_addon",
+        className: cn<TextFieldAddonState>(
+          "sui_text_field_addon",
+          (state) => `sui_text_field_addon-size_${state.size}`,
+          (state) => `sui_text_field_addon-color_${state.color}`,
+          (state) => `sui_text_field_addon-radius_${state.radius}`,
+          (state) => `sui_text_field_addon-variant_${state.variant}`,
+          (state) => state.outlined && "sui_text_field_addon-outlined",
+        ),
         [DISABLE_FOCUS_ON_CLICK_DATA]: disableFocusOnClick ? "true" : undefined,
       },
     ],

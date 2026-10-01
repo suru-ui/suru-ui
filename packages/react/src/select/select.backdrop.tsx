@@ -64,6 +64,10 @@ export const SelectBackdrop: ISelectBackdrop = function SuiSelectBackdrop(props)
             (state) =>
               state.transitionStatus !== undefined &&
               `sui_select_backdrop-transition_status_${state.transitionStatus}`,
+            (state) => `sui_select_backdrop-size_${state.size}`,
+            (state) => `sui_select_backdrop-radius_${state.radius}`,
+            (state) => `sui_select_backdrop-variant_${state.variant}`,
+            (state) => state.outlined && "sui_select_backdrop-outlined",
           ),
         },
       )}

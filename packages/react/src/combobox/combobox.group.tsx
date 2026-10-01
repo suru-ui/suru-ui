@@ -67,7 +67,16 @@ export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
           {
             style,
             render,
-            className: cn<ComboboxGroupState>(className, "sui_combobox_group"),
+            className: cn<ComboboxGroupState>(
+              className,
+              "sui_combobox_group",
+              (state) => `sui_combobox_group-size_${state.size}`,
+              (state) => `sui_combobox_group-color_${state.color}`,
+              (state) => `sui_combobox_group-radius_${state.radius}`,
+              (state) => `sui_combobox_group-variant_${state.variant}`,
+              (state) => state.outlined && "sui_combobox_group-outlined",
+              (state) => state.multiple && "sui_combobox_group-multiple",
+            ),
           },
         )}
       />

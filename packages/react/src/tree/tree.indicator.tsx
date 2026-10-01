@@ -75,6 +75,12 @@ export const TreeItemIndicator: ITreeItemIndicator = function SuiTreeItemIndicat
         className: cn<TreeItemIndicatorState>(
           "sui_tree_item_indicator",
           !visible && "sui_tree_item_indicator-hidden",
+          (state) => `sui_tree_item_indicator-size_${state.size}`,
+          (state) => `sui_tree_item_indicator-color_${state.color}`,
+          (state) => `sui_tree_item_indicator-radius_${state.radius}`,
+          (state) => `sui_tree_item_indicator-variant_${state.variant}`,
+          (state) => state.outlined && "sui_tree_item_indicator-outlined",
+          (state) => state.muted && "sui_tree_item_indicator-muted",
         ),
       },
     ],
