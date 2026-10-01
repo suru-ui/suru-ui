@@ -103,6 +103,14 @@ export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
               (state) => `sui_combobox_popup-radius_${state.radius}`,
               (state) => `sui_combobox_popup-variant_${state.variant}`,
               (state) => state.multiple && "sui_combobox_popup-multiple",
+              (state) => state.open && "sui_combobox_popup-open",
+              (state) => state.empty && "sui_combobox_popup-empty",
+              (state) => state.anchorHidden && "sui_combobox_popup-anchorhidden",
+              (state) => `sui_combobox_popup-side_${state.side.replaceAll("-", "_")}`,
+              (state) => `sui_combobox_popup-align_${state.align}`,
+              (state) =>
+                state.transitionStatus !== undefined &&
+                `sui_combobox_popup-transition_status_${state.transitionStatus}`,
             ),
           },
         )}

@@ -79,6 +79,12 @@ export const ComboboxClear: IComboboxClear = function SuiComboboxClear(props) {
             (state) => `sui_combobox_clear-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_clear-outlined",
             (state) => state.multiple && "sui_combobox_clear-multiple",
+            (state) => state.disabled && "sui_combobox_clear-disabled",
+            (state) => state.open && "sui_combobox_clear-open",
+            (state) => state.visible && "sui_combobox_clear-visible",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_combobox_clear-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

@@ -47,7 +47,19 @@ export type IDialogBackdrop = IComponent<DialogBackdropProps>;
 export const DialogBackdrop: IDialogBackdrop = function SuiDialogBackdrop(props) {
   const { className, ...otherProps } = props;
 
-  return <Dialog.Backdrop {...otherProps} className={cn(className, "sui_dialog_backdrop")} />;
+  return (
+    <Dialog.Backdrop
+      {...otherProps}
+      className={cn<DialogBackdropState>(
+        className,
+        "sui_dialog_backdrop",
+        (state) => state.open && "sui_dialog_backdrop-open",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_dialog_backdrop-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
 export { DialogBackdrop as Backdrop };

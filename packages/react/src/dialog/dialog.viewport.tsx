@@ -49,7 +49,21 @@ export type IDialogViewport = IComponent<DialogViewportProps>;
 export const DialogViewport: IDialogViewport = function SuiDialogViewport(props) {
   const { className, ...otherProps } = props;
 
-  return <Dialog.Viewport {...otherProps} className={cn(className, "sui_dialog_viewport")} />;
+  return (
+    <Dialog.Viewport
+      {...otherProps}
+      className={cn<DialogViewportState>(
+        className,
+        "sui_dialog_viewport",
+        (state) => state.open && "sui_dialog_viewport-open",
+        (state) => state.nested && "sui_dialog_viewport-nested",
+        (state) => state.nestedDialogOpen && "sui_dialog_viewport-nested_dialog_open",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_dialog_viewport-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
 export { DialogViewport as Viewport };

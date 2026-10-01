@@ -68,6 +68,9 @@ export const SelectContent: ISelectContent = function SuiSelectContent(props) {
             (state) => `sui_select_content-radius_${state.radius}`,
             (state) => `sui_select_content-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_content-outlined",
+            (state) => state.open && "sui_select_content-open",
+            (state) => `sui_select_content-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_select_content-align_${state.align}`,
           ),
         },
       )}

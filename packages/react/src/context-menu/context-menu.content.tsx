@@ -127,6 +127,11 @@ export const ContextMenuContent: IContextMenuContent = function SuiContextMenuCo
             (state) => `sui_context_menu_content-radius_${state.radius}`,
             (state) => `sui_context_menu_content-variant_${state.variant}`,
             (state) => state.outlined && "sui_context_menu_content-outlined",
+            (state) => state.open && "sui_context_menu_content-open",
+            (state) => state.nested && "sui_context_menu_content-nested",
+            (state) => state.instant && "sui_context_menu_content-instant",
+            (state) => `sui_context_menu_content-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_context_menu_content-align_${state.align}`,
           ),
         },
       )}

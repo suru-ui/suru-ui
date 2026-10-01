@@ -49,7 +49,28 @@ export const CheckboxIndicator: ICheckboxIndicator = function SuiCheckboxIndicat
   const { children = <CheckboxIcon />, className, ...otherProps } = props;
 
   return (
-    <Checkbox.Indicator {...otherProps} className={cn(className, "sui_checkbox_indicator")}>
+    <Checkbox.Indicator
+      {...otherProps}
+      className={cn<CheckboxIndicatorState>(
+        className,
+        "sui_checkbox_indicator",
+        (state) => state.disabled && "sui_checkbox_indicator-disabled",
+        (state) => state.readOnly && "sui_checkbox_indicator-readonly",
+        (state) => state.required && "sui_checkbox_indicator-required",
+        (state) => state.checked && "sui_checkbox_indicator-checked",
+        (state) => state.indeterminate && "sui_checkbox_indicator-indeterminate",
+        (state) => state.touched && "sui_checkbox_indicator-touched",
+        (state) => state.dirty && "sui_checkbox_indicator-dirty",
+        (state) => state.filled && "sui_checkbox_indicator-filled",
+        (state) => state.focused && "sui_checkbox_indicator-focused",
+        (state) => state.valid === false && "sui_checkbox_indicator-invalid",
+        (state) => state.valid === true && "sui_checkbox_indicator-valid",
+        (state) => state.valid === null && "sui_checkbox_indicator-unverified",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_checkbox_indicator-transition_status_${state.transitionStatus}`,
+      )}
+    >
       {children}
     </Checkbox.Indicator>
   );

@@ -57,7 +57,23 @@ export type IFieldControl = IComponent<FieldControlProps>;
 export const FieldControl: IFieldControl = function SuiFieldControl(props) {
   const { className, ...otherProps } = props;
 
-  return <Field.Control {...otherProps} className={cn(className, "sui_field_control")} />;
+  return (
+    <Field.Control
+      {...otherProps}
+      className={cn<FieldControlState>(
+        className,
+        "sui_field_control",
+        (state) => state.disabled && "sui_field_control-disabled",
+        (state) => state.touched && "sui_field_control-touched",
+        (state) => state.dirty && "sui_field_control-dirty",
+        (state) => state.filled && "sui_field_control-filled",
+        (state) => state.focused && "sui_field_control-focused",
+        (state) => state.valid === false && "sui_field_control-invalid",
+        (state) => state.valid === true && "sui_field_control-valid",
+        (state) => state.valid === null && "sui_field_control-unverified",
+      )}
+    />
+  );
 };
 
 export { FieldControl as Control };

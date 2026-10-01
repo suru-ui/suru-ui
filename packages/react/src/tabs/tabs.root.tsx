@@ -239,6 +239,7 @@ export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
               (state) => `sui_tabs-active_variant_${state.activeVariant}`,
               (state) => state.outlined && "sui_tabs-outlined",
               (state) => `sui_tabs-orientation_${state.orientation}`,
+              (state) => `sui_tabs-tab_activation_direction_${state.tabActivationDirection}`,
             ),
           },
         )}

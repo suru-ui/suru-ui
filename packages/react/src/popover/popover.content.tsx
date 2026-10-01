@@ -67,6 +67,10 @@ export const PopoverContent: IPopoverContent = function SuiPopoverContent(props)
             (state) => `sui_popover_content-size_${state.size}`,
             (state) => `sui_popover_content-radius_${state.radius}`,
             (state) => state.outlined && "sui_popover_content-outlined",
+            (state) => state.open && "sui_popover_content-open",
+            (state) => state.instant && "sui_popover_content-instant",
+            (state) => `sui_popover_content-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_popover_content-align_${state.align}`,
           ),
         },
       )}

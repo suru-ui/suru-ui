@@ -67,6 +67,20 @@ export const ComboboxInput: IComboboxInput = function SuiComboboxInput(props) {
             (state) => `sui_combobox_input-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_input-outlined",
             (state) => state.multiple && "sui_combobox_input-multiple",
+            (state) => state.disabled && "sui_combobox_input-disabled",
+            (state) => state.readOnly && "sui_combobox_input-readonly",
+            (state) => state.open && "sui_combobox_input-open",
+            (state) => state.listEmpty && "sui_combobox_input-listempty",
+            (state) => state.touched && "sui_combobox_input-touched",
+            (state) => state.dirty && "sui_combobox_input-dirty",
+            (state) => state.filled && "sui_combobox_input-filled",
+            (state) => state.focused && "sui_combobox_input-focused",
+            (state) => state.valid === false && "sui_combobox_input-invalid",
+            (state) => state.valid === true && "sui_combobox_input-valid",
+            (state) => state.valid === null && "sui_combobox_input-unverified",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_combobox_input-popupside_${state.popupSide.replaceAll("-", "_")}`,
           ),
         },
       )}

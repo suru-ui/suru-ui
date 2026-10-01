@@ -62,6 +62,10 @@ export const CollapsibleContent: ICollapsibleContent = function SuiCollapsibleCo
             className,
             "sui_collapsible_content",
             (state) => `sui_collapsible_content-size_${state.size}`,
+            (state) => state.disabled && "sui_collapsible_content-disabled",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_collapsible_content-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

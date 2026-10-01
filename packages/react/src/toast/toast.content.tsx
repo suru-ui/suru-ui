@@ -99,6 +99,7 @@ export const ToastContent: IToastContent = function SuiToastContent(props) {
                   className,
                   "sui_toast_content",
                   (state) => state.behind && "sui_toast_content-behind",
+                  (state) => state.expanded && "sui_toast_content-expanded",
                 ),
               }),
             ])}

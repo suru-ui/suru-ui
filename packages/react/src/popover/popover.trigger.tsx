@@ -101,6 +101,8 @@ export const PopoverTrigger: IPopoverTrigger = function SuiPopoverTrigger<TPaylo
             (state) => `sui_popover_trigger-size_${state.size}`,
             (state) => `sui_popover_trigger-radius_${state.radius}`,
             (state) => state.outlined && "sui_popover_trigger-outlined",
+            (state) => state.disabled && "sui_popover_trigger-disabled",
+            (state) => state.open && "sui_popover_trigger-open",
           ),
         },
       )}

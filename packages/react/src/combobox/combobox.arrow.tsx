@@ -61,13 +61,16 @@ export const ComboboxArrow: IComboboxArrow = function SuiComboboxArrow(props) {
           className: cn<ComboboxArrowState>(
             className,
             "sui_combobox_arrow",
-            (state) => `sui_combobox_arrow-side_${state.side}`,
+            (state) => `sui_combobox_arrow-side_${state.side.replaceAll("-", "_")}`,
             (state) => `sui_combobox_arrow-size_${state.size}`,
             (state) => `sui_combobox_arrow-color_${state.color}`,
             (state) => `sui_combobox_arrow-radius_${state.radius}`,
             (state) => `sui_combobox_arrow-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_arrow-outlined",
             (state) => state.multiple && "sui_combobox_arrow-multiple",
+            (state) => state.open && "sui_combobox_arrow-open",
+            (state) => state.uncentered && "sui_combobox_arrow-uncentered",
+            (state) => `sui_combobox_arrow-align_${state.align}`,
           ),
         },
       )}

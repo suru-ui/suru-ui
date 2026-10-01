@@ -73,7 +73,23 @@ export const SliderValue: ISliderValue = function SuiSliderValue(props) {
     <Slider.Value
       {...otherProps}
       children={renderer}
-      className={cn(className, "sui_slider_value")}
+      className={cn<SliderValueState>(
+        className,
+        "sui_slider_value",
+        (state) => state.disabled && "sui_slider_value-disabled",
+        (state) => state.dragging && "sui_slider_value-dragging",
+        (state) => state.touched && "sui_slider_value-touched",
+        (state) => state.dirty && "sui_slider_value-dirty",
+        (state) => state.filled && "sui_slider_value-filled",
+        (state) => state.focused && "sui_slider_value-focused",
+        (state) => state.valid === false && "sui_slider_value-invalid",
+        (state) => state.valid === true && "sui_slider_value-valid",
+        (state) => state.valid === null && "sui_slider_value-unverified",
+        (state) => `sui_slider_value-orientation_${state.orientation}`,
+        (state) =>
+          state.activeThumbIndex >= 0 &&
+          `sui_slider_value-active_thumb_index_${state.activeThumbIndex}`,
+      )}
     />
   );
 };

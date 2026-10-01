@@ -63,6 +63,10 @@ export const MenuArrow: IMenuArrow = function SuiMenuArrow(props) {
           (state) => `sui_menu_arrow-radius_${state.radius}`,
           (state) => `sui_menu_arrow-variant_${state.variant}`,
           (state) => state.outlined && "sui_menu_arrow-outlined",
+          (state) => state.open && "sui_menu_arrow-open",
+          (state) => state.uncentered && "sui_menu_arrow-uncentered",
+          (state) => `sui_menu_arrow-side_${state.side.replaceAll("-", "_")}`,
+          (state) => `sui_menu_arrow-align_${state.align}`,
         ),
       })}
     />

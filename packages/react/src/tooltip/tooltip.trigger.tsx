@@ -103,6 +103,7 @@ export const TooltipTrigger: ITooltipTrigger = function SuiTooltipTrigger<TPaylo
             (state) => `sui_tooltip_trigger-size_${state.size}`,
             (state) => `sui_tooltip_trigger-radius_${state.radius}`,
             (state) => state.outlined && "sui_tooltip_trigger-outlined",
+            (state) => state.open && "sui_tooltip_trigger-open",
           ),
         },
       )}

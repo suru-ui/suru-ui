@@ -65,6 +65,7 @@ export const SelectIcon: ISelectIcon = function SuiSelectIcon(props) {
             (state) => `sui_select_icon-radius_${state.radius}`,
             (state) => `sui_select_icon-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_icon-outlined",
+            (state) => state.open && "sui_select_icon-open",
           ),
         },
       )}

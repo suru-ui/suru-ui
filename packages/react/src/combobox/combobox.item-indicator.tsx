@@ -70,6 +70,10 @@ export const ComboboxItemIndicator: IComboboxItemIndicator = function SuiCombobo
             (state) => `sui_combobox_item_indicator-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_item_indicator-outlined",
             (state) => state.multiple && "sui_combobox_item_indicator-multiple",
+            (state) => state.selected && "sui_combobox_item_indicator-selected",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_combobox_item_indicator-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

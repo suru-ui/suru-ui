@@ -170,6 +170,10 @@ export const InputRoot: IInputRoot = function SuiInputRoot(props) {
         (state) => state.valid === false && "sui_input-invalid",
         (state) => state.valid === null && "sui_input-unverified",
         (state) => state.disabled && "sui_input-disabled",
+        (state) => state.touched && "sui_input-touched",
+        (state) => state.dirty && "sui_input-dirty",
+        (state) => state.filled && "sui_input-filled",
+        (state) => state.focused && "sui_input-focused",
       )}
       data-scope={dataScope}
     />

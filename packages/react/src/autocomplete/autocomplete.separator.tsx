@@ -73,6 +73,7 @@ export const AutocompleteSeparator: IAutocompleteSeparator = function SuiAutocom
             (state) => `sui_autocomplete_separator-radius_${state.radius}`,
             (state) => `sui_autocomplete_separator-variant_${state.variant}`,
             (state) => state.outlined && "sui_autocomplete_separator-outlined",
+            (state) => `sui_autocomplete_separator-orientation_${state.orientation}`,
           ),
         },
       )}

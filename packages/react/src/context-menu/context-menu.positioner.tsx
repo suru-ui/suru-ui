@@ -88,6 +88,12 @@ export const ContextMenuPositioner: IContextMenuPositioner = function SuiContext
             (state) => `sui_context_menu_positioner-radius_${state.radius}`,
             (state) => `sui_context_menu_positioner-variant_${state.variant}`,
             (state) => state.outlined && "sui_context_menu_positioner-outlined",
+            (state) => state.open && "sui_context_menu_positioner-open",
+            (state) => state.nested && "sui_context_menu_positioner-nested",
+            (state) => state.anchorHidden && "sui_context_menu_positioner-anchorhidden",
+            (state) => state.instant && "sui_context_menu_positioner-instant",
+            (state) => `sui_context_menu_positioner-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_context_menu_positioner-align_${state.align}`,
           ),
         },
       )}

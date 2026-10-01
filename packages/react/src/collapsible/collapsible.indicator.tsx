@@ -51,6 +51,7 @@ export const CollapsibleIndicator: ICollapsibleIndicator = function SuiCollapsib
         className: cn<CollapsibleIndicatorState>(
           "sui_collapsible_indicator",
           (state) => `sui_collapsible_indicator-size_${state.size}`,
+          (state) => state.disabled && "sui_collapsible_indicator-disabled",
         ),
       },
     ],

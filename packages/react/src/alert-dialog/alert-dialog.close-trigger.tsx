@@ -60,7 +60,11 @@ export const AlertDialogCloseTrigger: IAlertDialogCloseTrigger =
       <AlertDialog.Close
         {...otherProps}
         render={children}
-        className={cn(className, "sui_alert_dialog_close")}
+        className={cn<AlertDialogCloseTriggerState>(
+          className,
+          "sui_alert_dialog_close",
+          (state) => state.disabled && "sui_alert_dialog_close-disabled",
+        )}
       />
     );
   };

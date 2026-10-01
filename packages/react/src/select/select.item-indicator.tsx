@@ -65,6 +65,10 @@ export const SelectItemIndicator: ISelectItemIndicator = function SuiSelectItemI
             (state) => `sui_select_item_indicator-radius_${state.radius}`,
             (state) => `sui_select_item_indicator-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_item_indicator-outlined",
+            (state) => state.selected && "sui_select_item_indicator-selected",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_select_item_indicator-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

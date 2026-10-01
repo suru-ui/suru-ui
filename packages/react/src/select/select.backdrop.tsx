@@ -68,6 +68,7 @@ export const SelectBackdrop: ISelectBackdrop = function SuiSelectBackdrop(props)
             (state) => `sui_select_backdrop-radius_${state.radius}`,
             (state) => `sui_select_backdrop-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_backdrop-outlined",
+            (state) => state.open && "sui_select_backdrop-open",
           ),
         },
       )}

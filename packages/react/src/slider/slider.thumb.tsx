@@ -58,7 +58,28 @@ export type ISliderThumb = IComponent<SliderThumbProps>;
 export const SliderThumb: ISliderThumb = function SuiSliderThumb(props) {
   const { className, ...otherProps } = props;
 
-  return <Slider.Thumb {...otherProps} className={cn(className, "sui_slider_thumb")} />;
+  return (
+    <Slider.Thumb
+      {...otherProps}
+      className={cn<SliderThumbState>(
+        className,
+        "sui_slider_thumb",
+        (state) => state.disabled && "sui_slider_thumb-disabled",
+        (state) => state.dragging && "sui_slider_thumb-dragging",
+        (state) => state.touched && "sui_slider_thumb-touched",
+        (state) => state.dirty && "sui_slider_thumb-dirty",
+        (state) => state.filled && "sui_slider_thumb-filled",
+        (state) => state.focused && "sui_slider_thumb-focused",
+        (state) => state.valid === false && "sui_slider_thumb-invalid",
+        (state) => state.valid === true && "sui_slider_thumb-valid",
+        (state) => state.valid === null && "sui_slider_thumb-unverified",
+        (state) => `sui_slider_thumb-orientation_${state.orientation}`,
+        (state) =>
+          state.activeThumbIndex >= 0 &&
+          `sui_slider_thumb-active_thumb_index_${state.activeThumbIndex}`,
+      )}
+    />
+  );
 };
 
 export { SliderThumb as Thumb };

@@ -190,6 +190,15 @@ export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootP
         (state) => state.disabled && "sui_slider-disabled",
         (state) => state.dragging && "sui_slider-dragging",
         (state) => `sui_slider-orientation_${state.orientation}`,
+        (state) => state.touched && "sui_slider-touched",
+        (state) => state.dirty && "sui_slider-dirty",
+        (state) => state.filled && "sui_slider-filled",
+        (state) => state.focused && "sui_slider-focused",
+        (state) => state.valid === false && "sui_slider-invalid",
+        (state) => state.valid === true && "sui_slider-valid",
+        (state) => state.valid === null && "sui_slider-unverified",
+        (state) =>
+          state.activeThumbIndex >= 0 && `sui_slider-active_thumb_index_${state.activeThumbIndex}`,
       )}
       data-scope={dataScope}
     />

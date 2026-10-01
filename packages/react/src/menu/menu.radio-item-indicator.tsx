@@ -69,6 +69,11 @@ export const MenuRadioItemIndicator: IMenuRadioItemIndicator = function SuiMenuR
             (state) => `sui_menu_item_indicator-radius_${state.radius}`,
             (state) => `sui_menu_item_indicator-variant_${state.variant}`,
             (state) => state.outlined && "sui_menu_item_indicator-outlined",
+            (state) => state.disabled && "sui_menu_item_indicator-disabled",
+            (state) => state.highlighted && "sui_menu_item_indicator-highlighted",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_menu_item_indicator-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

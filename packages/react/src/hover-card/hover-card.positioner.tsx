@@ -75,6 +75,11 @@ export const HoverCardPositioner: IHoverCardPositioner = function SuiHoverCardPo
             (state) => `sui_hover_card_positioner-size_${state.size}`,
             (state) => `sui_hover_card_positioner-radius_${state.radius}`,
             (state) => state.outlined && "sui_hover_card_positioner-outlined",
+            (state) => state.open && "sui_hover_card_positioner-open",
+            (state) => state.anchorHidden && "sui_hover_card_positioner-anchorhidden",
+            (state) => state.instant && "sui_hover_card_positioner-instant",
+            (state) => `sui_hover_card_positioner-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_hover_card_positioner-align_${state.align}`,
           ),
         },
       )}

@@ -47,7 +47,16 @@ export type IProgressLabel = IComponent<ProgressLabelProps>;
 export const ProgressLabel: IProgressLabel = function SuiProgressLabel(props) {
   const { className, ...otherProps } = props;
 
-  return <Progress.Label {...otherProps} className={cn(className, "sui_progress_label")} />;
+  return (
+    <Progress.Label
+      {...otherProps}
+      className={cn<ProgressLabelState>(
+        className,
+        "sui_progress_label",
+        (state) => `sui_progress_label-status_${state.status}`,
+      )}
+    />
+  );
 };
 
 export { ProgressLabel as Label };

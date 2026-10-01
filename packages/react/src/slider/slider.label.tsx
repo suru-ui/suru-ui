@@ -47,7 +47,28 @@ export type ISliderLabel = IComponent<SliderLabelProps>;
 export const SliderLabel: ISliderLabel = function SuiSliderLabel(props) {
   const { className, ...otherProps } = props;
 
-  return <Slider.Label {...otherProps} className={cn(className, "sui_slider_label")} />;
+  return (
+    <Slider.Label
+      {...otherProps}
+      className={cn<SliderLabelState>(
+        className,
+        "sui_slider_label",
+        (state) => state.disabled && "sui_slider_label-disabled",
+        (state) => state.dragging && "sui_slider_label-dragging",
+        (state) => state.touched && "sui_slider_label-touched",
+        (state) => state.dirty && "sui_slider_label-dirty",
+        (state) => state.filled && "sui_slider_label-filled",
+        (state) => state.focused && "sui_slider_label-focused",
+        (state) => state.valid === false && "sui_slider_label-invalid",
+        (state) => state.valid === true && "sui_slider_label-valid",
+        (state) => state.valid === null && "sui_slider_label-unverified",
+        (state) => `sui_slider_label-orientation_${state.orientation}`,
+        (state) =>
+          state.activeThumbIndex >= 0 &&
+          `sui_slider_label-active_thumb_index_${state.activeThumbIndex}`,
+      )}
+    />
+  );
 };
 
 export { SliderLabel as Label };

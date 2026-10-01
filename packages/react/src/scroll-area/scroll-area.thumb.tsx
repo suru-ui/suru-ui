@@ -53,6 +53,7 @@ export const ScrollAreaThumb: IScrollAreaThumb = function SuiScrollAreaThumb(pro
         className,
         "sui_scroll_area_thumb",
         (state) => `sui_scroll_area_thumb-orientation_${state.orientation}`,
+        (state) => state.scrolling && "sui_scroll_area_thumb-scrolling",
       )}
     />
   );

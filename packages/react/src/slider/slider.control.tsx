@@ -47,7 +47,28 @@ export type ISliderControl = IComponent<SliderControlProps>;
 export const SliderControl: ISliderControl = function SuiSliderControl(props) {
   const { className, ...otherProps } = props;
 
-  return <Slider.Control {...otherProps} className={cn(className, "sui_slider_control")} />;
+  return (
+    <Slider.Control
+      {...otherProps}
+      className={cn<SliderControlState>(
+        className,
+        "sui_slider_control",
+        (state) => state.disabled && "sui_slider_control-disabled",
+        (state) => state.dragging && "sui_slider_control-dragging",
+        (state) => state.touched && "sui_slider_control-touched",
+        (state) => state.dirty && "sui_slider_control-dirty",
+        (state) => state.filled && "sui_slider_control-filled",
+        (state) => state.focused && "sui_slider_control-focused",
+        (state) => state.valid === false && "sui_slider_control-invalid",
+        (state) => state.valid === true && "sui_slider_control-valid",
+        (state) => state.valid === null && "sui_slider_control-unverified",
+        (state) => `sui_slider_control-orientation_${state.orientation}`,
+        (state) =>
+          state.activeThumbIndex >= 0 &&
+          `sui_slider_control-active_thumb_index_${state.activeThumbIndex}`,
+      )}
+    />
+  );
 };
 
 export { SliderControl as Control };

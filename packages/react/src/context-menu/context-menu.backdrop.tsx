@@ -65,6 +65,10 @@ export const ContextMenuBackdrop: IContextMenuBackdrop = function SuiContextMenu
             (state) => `sui_context_menu_backdrop-radius_${state.radius}`,
             (state) => `sui_context_menu_backdrop-variant_${state.variant}`,
             (state) => state.outlined && "sui_context_menu_backdrop-outlined",
+            (state) => state.open && "sui_context_menu_backdrop-open",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_context_menu_backdrop-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

@@ -62,6 +62,9 @@ export const DrawerPopup: IDrawerPopup = function SuiDrawerPopup(props) {
         (state) =>
           state.transitionStatus !== undefined &&
           `sui_drawer_popup-transition_status_${state.transitionStatus}`,
+        (state) => state.expanded && "sui_drawer_popup-expanded",
+        (state) => state.open && "sui_drawer_popup-open",
+        (state) => state.nested && "sui_drawer_popup-nested",
       )}
     />
   );

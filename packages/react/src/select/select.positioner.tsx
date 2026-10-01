@@ -78,6 +78,10 @@ export const SelectPositioner: ISelectPositioner = function SuiSelectPositioner(
             (state) => `sui_select_positioner-radius_${state.radius}`,
             (state) => `sui_select_positioner-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_positioner-outlined",
+            (state) => state.open && "sui_select_positioner-open",
+            (state) => state.anchorHidden && "sui_select_positioner-anchorhidden",
+            (state) => `sui_select_positioner-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_select_positioner-align_${state.align}`,
           ),
         },
       )}

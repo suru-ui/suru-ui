@@ -49,7 +49,23 @@ export type IFieldItem = IComponent<FieldItemProps>;
 export const FieldItem: IFieldItem = function SuiFieldItem(props) {
   const { className, ...otherProps } = props;
 
-  return <Field.Item {...otherProps} className={cn(className, "sui_field_item")} />;
+  return (
+    <Field.Item
+      {...otherProps}
+      className={cn<FieldItemState>(
+        className,
+        "sui_field_item",
+        (state) => state.disabled && "sui_field_item-disabled",
+        (state) => state.touched && "sui_field_item-touched",
+        (state) => state.dirty && "sui_field_item-dirty",
+        (state) => state.filled && "sui_field_item-filled",
+        (state) => state.focused && "sui_field_item-focused",
+        (state) => state.valid === false && "sui_field_item-invalid",
+        (state) => state.valid === true && "sui_field_item-valid",
+        (state) => state.valid === null && "sui_field_item-unverified",
+      )}
+    />
+  );
 };
 
 export { FieldItem as Item };

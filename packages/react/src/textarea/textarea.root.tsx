@@ -160,6 +160,10 @@ export const TextareaRoot: ITextareaRoot = function SuiTextareaRoot(props) {
         (state) => state.valid === false && "sui_textarea-invalid",
         (state) => state.valid === null && "sui_textarea-unverified",
         (state) => state.disabled && "sui_textarea-disabled",
+        (state) => state.touched && "sui_textarea-touched",
+        (state) => state.dirty && "sui_textarea-dirty",
+        (state) => state.filled && "sui_textarea-filled",
+        (state) => state.focused && "sui_textarea-focused",
       )}
       data-scope={dataScope}
     />

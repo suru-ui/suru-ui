@@ -69,7 +69,12 @@ export const DrawerTrigger: IDrawerTrigger = function SuiDrawerTrigger(props: Dr
       {...otherProps}
       handle={handle}
       render={children}
-      className={cn(className, "sui_drawer_trigger")}
+      className={cn<DrawerTriggerState>(
+        className,
+        "sui_drawer_trigger",
+        (state) => state.disabled && "sui_drawer_trigger-disabled",
+        (state) => state.open && "sui_drawer_trigger-open",
+      )}
     />
   );
 };

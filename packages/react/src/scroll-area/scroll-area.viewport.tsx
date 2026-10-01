@@ -49,7 +49,18 @@ export const ScrollAreaViewport: IScrollAreaViewport = function SuiScrollAreaVie
   return (
     <BaseScrollArea.Viewport
       {...otherProps}
-      className={cn(className, "sui_scroll_area_viewport")}
+      className={cn<ScrollAreaViewportState>(
+        className,
+        "sui_scroll_area_viewport",
+        (state) => state.scrolling && "sui_scroll_area_viewport-scrolling",
+        (state) => state.cornerHidden && "sui_scroll_area_viewport-corner_hidden",
+        (state) => state.hasOverflowX && "sui_scroll_area_viewport-has_overflow_x",
+        (state) => state.hasOverflowY && "sui_scroll_area_viewport-has_overflow_y",
+        (state) => state.overflowXStart && "sui_scroll_area_viewport-overflow_x_start",
+        (state) => state.overflowXEnd && "sui_scroll_area_viewport-overflow_x_end",
+        (state) => state.overflowYStart && "sui_scroll_area_viewport-overflow_y_start",
+        (state) => state.overflowYEnd && "sui_scroll_area_viewport-overflow_y_end",
+      )}
     />
   );
 };

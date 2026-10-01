@@ -47,7 +47,16 @@ export type IAvatarFallback = IComponent<AvatarFallbackProps>;
 export const AvatarFallback: IAvatarFallback = function SuiAvatarFallback(props) {
   const { className, ...otherProps } = props;
 
-  return <Avatar.Fallback {...otherProps} className={cn(className, "sui_avatar_fallback")} />;
+  return (
+    <Avatar.Fallback
+      {...otherProps}
+      className={cn<AvatarFallbackState>(
+        className,
+        "sui_avatar_fallback",
+        (state) => `sui_avatar_fallback-image_loading_status_${state.imageLoadingStatus}`,
+      )}
+    />
+  );
 };
 
 export { AvatarFallback as Fallback };

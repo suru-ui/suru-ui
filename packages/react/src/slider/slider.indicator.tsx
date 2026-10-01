@@ -47,7 +47,28 @@ export type ISliderIndicator = IComponent<SliderIndicatorProps>;
 export const SliderIndicator: ISliderIndicator = function SuiSliderIndicator(props) {
   const { className, ...otherProps } = props;
 
-  return <Slider.Indicator {...otherProps} className={cn(className, "sui_slider_indicator")} />;
+  return (
+    <Slider.Indicator
+      {...otherProps}
+      className={cn<SliderIndicatorState>(
+        className,
+        "sui_slider_indicator",
+        (state) => state.disabled && "sui_slider_indicator-disabled",
+        (state) => state.dragging && "sui_slider_indicator-dragging",
+        (state) => state.touched && "sui_slider_indicator-touched",
+        (state) => state.dirty && "sui_slider_indicator-dirty",
+        (state) => state.filled && "sui_slider_indicator-filled",
+        (state) => state.focused && "sui_slider_indicator-focused",
+        (state) => state.valid === false && "sui_slider_indicator-invalid",
+        (state) => state.valid === true && "sui_slider_indicator-valid",
+        (state) => state.valid === null && "sui_slider_indicator-unverified",
+        (state) => `sui_slider_indicator-orientation_${state.orientation}`,
+        (state) =>
+          state.activeThumbIndex >= 0 &&
+          `sui_slider_indicator-active_thumb_index_${state.activeThumbIndex}`,
+      )}
+    />
+  );
 };
 
 export { SliderIndicator as Indicator };

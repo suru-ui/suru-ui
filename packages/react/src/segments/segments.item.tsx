@@ -102,6 +102,8 @@ export const SegmentsItem: ISegmentsItem = function SuiSegmentsItem(props) {
             (state) => `sui_segments_item-color_${state.color}`,
             (state) => `sui_segments_item-radius_${state.radius}`,
             (state) => `sui_segments_item-active_variant_${state.activeVariant}`,
+            (state) => `sui_segments_item-orientation_${state.orientation}`,
+            (state) => `sui_segments_item-tab_activation_direction_${state.tabActivationDirection}`,
           ),
         },
       )}

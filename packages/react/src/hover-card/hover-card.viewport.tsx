@@ -66,6 +66,11 @@ export const HoverCardViewport: IHoverCardViewport = function SuiHoverCardViewpo
             (state) => `sui_hover_card_viewport-size_${state.size}`,
             (state) => `sui_hover_card_viewport-radius_${state.radius}`,
             (state) => state.outlined && "sui_hover_card_viewport-outlined",
+            (state) => state.instant && "sui_hover_card_viewport-instant",
+            (state) => state.transitioning && "sui_hover_card_viewport-transitioning",
+            (state) =>
+              state.activationDirection !== undefined &&
+              `sui_hover_card_viewport-activation_direction_${state.activationDirection}`,
           ),
         },
       )}

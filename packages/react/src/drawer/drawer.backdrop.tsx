@@ -56,6 +56,7 @@ export const DrawerBackdrop: IDrawerBackdrop = function SuiDrawerBackdrop(props)
         (state) =>
           state.transitionStatus !== undefined &&
           `sui_drawer_backdrop-transition_status_${state.transitionStatus}`,
+        (state) => state.open && "sui_drawer_backdrop-open",
       )}
     />
   );

@@ -61,10 +61,13 @@ export const HoverCardArrow: IHoverCardArrow = function SuiHoverCardArrow(props)
           className: cn<HoverCardArrowState>(
             className,
             "sui_hover_card_arrow",
-            (state) => `sui_hover_card_arrow-side_${state.side}`,
+            (state) => `sui_hover_card_arrow-side_${state.side.replaceAll("-", "_")}`,
             (state) => `sui_hover_card_arrow-size_${state.size}`,
             (state) => `sui_hover_card_arrow-radius_${state.radius}`,
             (state) => state.outlined && "sui_hover_card_arrow-outlined",
+            (state) => state.open && "sui_hover_card_arrow-open",
+            (state) => state.uncentered && "sui_hover_card_arrow-uncentered",
+            (state) => `sui_hover_card_arrow-align_${state.align}`,
           ),
         },
       )}

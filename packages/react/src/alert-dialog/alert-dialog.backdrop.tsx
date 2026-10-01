@@ -48,7 +48,17 @@ export const AlertDialogBackdrop: IAlertDialogBackdrop = function SuiAlertDialog
   const { className, ...otherProps } = props;
 
   return (
-    <AlertDialog.Backdrop {...otherProps} className={cn(className, "sui_alert_dialog_backdrop")} />
+    <AlertDialog.Backdrop
+      {...otherProps}
+      className={cn<AlertDialogBackdropState>(
+        className,
+        "sui_alert_dialog_backdrop",
+        (state) => state.open && "sui_alert_dialog_backdrop-open",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_alert_dialog_backdrop-transition_status_${state.transitionStatus}`,
+      )}
+    />
   );
 };
 

@@ -64,7 +64,12 @@ export const DialogToggleTrigger: IDialogToggleTrigger = function SuiDialogToggl
       {...otherProps}
       handle={handle}
       render={children}
-      className={cn(className, "sui_dialog_trigger")}
+      className={cn<DialogToggleTriggerState>(
+        className,
+        "sui_dialog_trigger",
+        (state) => state.disabled && "sui_dialog_trigger-disabled",
+        (state) => state.open && "sui_dialog_trigger-open",
+      )}
     />
   );
 };

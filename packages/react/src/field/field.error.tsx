@@ -49,7 +49,26 @@ export type IFieldError = IComponent<FieldErrorProps>;
 export const FieldError: IFieldError = function SuiFieldError(props) {
   const { className, ...otherProps } = props;
 
-  return <Field.Error {...otherProps} className={cn(className, "sui_field_error")} />;
+  return (
+    <Field.Error
+      {...otherProps}
+      className={cn<FieldErrorState>(
+        className,
+        "sui_field_error",
+        (state) => state.disabled && "sui_field_error-disabled",
+        (state) => state.touched && "sui_field_error-touched",
+        (state) => state.dirty && "sui_field_error-dirty",
+        (state) => state.filled && "sui_field_error-filled",
+        (state) => state.focused && "sui_field_error-focused",
+        (state) => state.valid === false && "sui_field_error-invalid",
+        (state) => state.valid === true && "sui_field_error-valid",
+        (state) => state.valid === null && "sui_field_error-unverified",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_field_error-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
 export { FieldError as Error };

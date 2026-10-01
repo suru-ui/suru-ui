@@ -88,6 +88,8 @@ export const ToastRoot: IToastRoot = function SuiToastRoot<TData extends object 
         (state) => state.swiping && "sui_toast-swiping",
         (state) =>
           state.swipeDirection !== undefined && `sui_toast-swipe_direction_${state.swipeDirection}`,
+        (state) => state.expanded && "sui_toast-expanded",
+        (state) => state.type !== undefined && `sui_toast-type_${state.type}`,
       )}
     />
   );

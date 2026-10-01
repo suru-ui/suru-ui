@@ -83,6 +83,15 @@ export const SelectTrigger: ISelectTrigger = function SuiSelectTrigger(props) {
             (state) => state.valid === null && "sui_select-unverified",
             (state) => state.disabled && "sui_select-disabled",
             (state) => state.open && "sui_select-open",
+            (state) => state.readOnly && "sui_select-readonly",
+            (state) => state.placeholder && "sui_select-placeholder",
+            (state) => state.touched && "sui_select-touched",
+            (state) => state.dirty && "sui_select-dirty",
+            (state) => state.filled && "sui_select-filled",
+            (state) => state.focused && "sui_select-focused",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_select-popupside_${state.popupSide.replaceAll("-", "_")}`,
           ),
         },
       )}

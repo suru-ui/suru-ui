@@ -65,6 +65,10 @@ export const SelectArrow: ISelectArrow = function SuiSelectArrow(props) {
             (state) => `sui_select_arrow-radius_${state.radius}`,
             (state) => `sui_select_arrow-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_arrow-outlined",
+            (state) => state.open && "sui_select_arrow-open",
+            (state) => state.uncentered && "sui_select_arrow-uncentered",
+            (state) => `sui_select_arrow-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_select_arrow-align_${state.align}`,
           ),
         },
       )}

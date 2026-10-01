@@ -54,7 +54,11 @@ export const DrawerIndentBackground: IDrawerIndentBackground = function SuiDrawe
   return (
     <Drawer.IndentBackground
       {...otherProps}
-      className={cn(className, "sui_drawer_indent_background")}
+      className={cn<DrawerIndentBackgroundState>(
+        className,
+        "sui_drawer_indent_background",
+        (state) => state.active && "sui_drawer_indent_background-active",
+      )}
     />
   );
 };

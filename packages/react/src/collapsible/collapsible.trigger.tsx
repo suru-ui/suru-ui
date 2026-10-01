@@ -74,6 +74,7 @@ export const CollapsibleTrigger: ICollapsibleTrigger = function SuiCollapsibleTr
             className,
             "sui_collapsible_trigger",
             (state) => `sui_collapsible_trigger-size_${state.size}`,
+            (state) => state.disabled && "sui_collapsible_trigger-disabled",
           ),
         },
       )}

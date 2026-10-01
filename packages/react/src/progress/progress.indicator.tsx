@@ -47,7 +47,16 @@ export type IProgressIndicator = IComponent<ProgressIndicatorProps>;
 export const ProgressIndicator: IProgressIndicator = function SuiProgressIndicator(props) {
   const { className, ...otherProps } = props;
 
-  return <Progress.Indicator {...otherProps} className={cn(className, "sui_progress_indicator")} />;
+  return (
+    <Progress.Indicator
+      {...otherProps}
+      className={cn<ProgressIndicatorState>(
+        className,
+        "sui_progress_indicator",
+        (state) => `sui_progress_indicator-status_${state.status}`,
+      )}
+    />
+  );
 };
 
 export { ProgressIndicator as Indicator };

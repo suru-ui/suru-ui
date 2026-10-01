@@ -67,6 +67,10 @@ export const HoverCardContent: IHoverCardContent = function SuiHoverCardContent(
             (state) => `sui_hover_card_content-size_${state.size}`,
             (state) => `sui_hover_card_content-radius_${state.radius}`,
             (state) => state.outlined && "sui_hover_card_content-outlined",
+            (state) => state.open && "sui_hover_card_content-open",
+            (state) => state.instant && "sui_hover_card_content-instant",
+            (state) => `sui_hover_card_content-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_hover_card_content-align_${state.align}`,
           ),
         },
       )}

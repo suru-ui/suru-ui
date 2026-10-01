@@ -89,6 +89,8 @@ export const TabsList: ITabsList = function SuiTabsList(props: TabsListProps) {
           (state) => `sui_tabs_list-variant_${state.variant}`,
           (state) => state.outlined && "sui_tabs_list-outlined",
           (state) => `sui_tabs_list-active_variant_${state.activeVariant}`,
+          (state) => `sui_tabs_list-orientation_${state.orientation}`,
+          (state) => `sui_tabs_list-tab_activation_direction_${state.tabActivationDirection}`,
         ),
       })}
       aria-label={ariaLabel}

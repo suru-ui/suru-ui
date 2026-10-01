@@ -65,6 +65,10 @@ export const MenuBackdrop: IMenuBackdrop = function SuiMenuBackdrop(props) {
             (state) => `sui_menu_backdrop-radius_${state.radius}`,
             (state) => `sui_menu_backdrop-variant_${state.variant}`,
             (state) => state.outlined && "sui_menu_backdrop-outlined",
+            (state) => state.open && "sui_menu_backdrop-open",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_menu_backdrop-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

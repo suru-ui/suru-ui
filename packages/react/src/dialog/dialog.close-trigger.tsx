@@ -56,7 +56,15 @@ export const DialogCloseTrigger: IDialogCloseTrigger = function SuiDialogCloseTr
   const { children, className, ...otherProps } = props;
 
   return (
-    <Dialog.Close {...otherProps} render={children} className={cn(className, "sui_dialog_close")} />
+    <Dialog.Close
+      {...otherProps}
+      render={children}
+      className={cn<DialogCloseTriggerState>(
+        className,
+        "sui_dialog_close",
+        (state) => state.disabled && "sui_dialog_close-disabled",
+      )}
+    />
   );
 };
 

@@ -49,7 +49,26 @@ export type ISwitchThumb = IComponent<SwitchThumbProps>;
 export const SwitchThumb: ISwitchThumb = function SuiSwitchThumb(props) {
   const { className, ...otherProps } = props;
 
-  return <Switch.Thumb {...otherProps} className={cn(className, "sui_switch_thumb")} />;
+  return (
+    <Switch.Thumb
+      {...otherProps}
+      className={cn<SwitchThumbState>(
+        className,
+        "sui_switch_thumb",
+        (state) => state.disabled && "sui_switch_thumb-disabled",
+        (state) => state.readOnly && "sui_switch_thumb-readonly",
+        (state) => state.required && "sui_switch_thumb-required",
+        (state) => state.checked && "sui_switch_thumb-checked",
+        (state) => state.touched && "sui_switch_thumb-touched",
+        (state) => state.dirty && "sui_switch_thumb-dirty",
+        (state) => state.filled && "sui_switch_thumb-filled",
+        (state) => state.focused && "sui_switch_thumb-focused",
+        (state) => state.valid === false && "sui_switch_thumb-invalid",
+        (state) => state.valid === true && "sui_switch_thumb-valid",
+        (state) => state.valid === null && "sui_switch_thumb-unverified",
+      )}
+    />
+  );
 };
 
 export { SwitchThumb as Thumb };

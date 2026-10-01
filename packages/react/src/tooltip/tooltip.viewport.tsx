@@ -66,6 +66,11 @@ export const TooltipViewport: ITooltipViewport = function SuiTooltipViewport(pro
             (state) => `sui_tooltip_viewport-size_${state.size}`,
             (state) => `sui_tooltip_viewport-radius_${state.radius}`,
             (state) => state.outlined && "sui_tooltip_viewport-outlined",
+            (state) => state.instant && "sui_tooltip_viewport-instant",
+            (state) => state.transitioning && "sui_tooltip_viewport-transitioning",
+            (state) =>
+              state.activationDirection !== undefined &&
+              `sui_tooltip_viewport-activation_direction_${state.activationDirection}`,
           ),
         },
       )}

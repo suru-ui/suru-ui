@@ -68,6 +68,10 @@ export const TooltipContent: ITooltipContent = function SuiTooltipContent(props)
             (state) => `sui_tooltip_content-size_${state.size}`,
             (state) => `sui_tooltip_content-radius_${state.radius}`,
             (state) => state.outlined && "sui_tooltip_content-outlined",
+            (state) => state.open && "sui_tooltip_content-open",
+            (state) => state.instant && "sui_tooltip_content-instant",
+            (state) => `sui_tooltip_content-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_tooltip_content-align_${state.align}`,
           ),
         },
       )}

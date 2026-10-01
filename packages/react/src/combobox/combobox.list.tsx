@@ -91,6 +91,7 @@ export const ComboboxList: IComboboxList = function SuiComboboxList(props: Combo
             (state) => `sui_combobox_list-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_list-outlined",
             (state) => state.multiple && "sui_combobox_list-multiple",
+            (state) => state.empty && "sui_combobox_list-empty",
           ),
         },
       )}

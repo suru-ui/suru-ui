@@ -47,7 +47,29 @@ export type IRadioIndicator = IComponent<RadioIndicatorProps>;
 export const RadioIndicator: IRadioIndicator = function SuiRadioIndicator(props) {
   const { className, ...otherProps } = props;
 
-  return <Radio.Indicator {...otherProps} className={cn(className, "sui_radio_indicator")} />;
+  return (
+    <Radio.Indicator
+      {...otherProps}
+      className={cn<RadioIndicatorState>(
+        className,
+        "sui_radio_indicator",
+        (state) => state.disabled && "sui_radio_indicator-disabled",
+        (state) => state.readOnly && "sui_radio_indicator-readonly",
+        (state) => state.required && "sui_radio_indicator-required",
+        (state) => state.checked && "sui_radio_indicator-checked",
+        (state) => state.touched && "sui_radio_indicator-touched",
+        (state) => state.dirty && "sui_radio_indicator-dirty",
+        (state) => state.filled && "sui_radio_indicator-filled",
+        (state) => state.focused && "sui_radio_indicator-focused",
+        (state) => state.valid === false && "sui_radio_indicator-invalid",
+        (state) => state.valid === true && "sui_radio_indicator-valid",
+        (state) => state.valid === null && "sui_radio_indicator-unverified",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_radio_indicator-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
 export { RadioIndicator as Indicator };

@@ -47,7 +47,28 @@ export type ISliderTrack = IComponent<SliderTrackProps>;
 export const SliderTrack: ISliderTrack = function SuiSliderTrack(props) {
   const { className, ...otherProps } = props;
 
-  return <Slider.Track {...otherProps} className={cn(className, "sui_slider_track")} />;
+  return (
+    <Slider.Track
+      {...otherProps}
+      className={cn<SliderTrackState>(
+        className,
+        "sui_slider_track",
+        (state) => state.disabled && "sui_slider_track-disabled",
+        (state) => state.dragging && "sui_slider_track-dragging",
+        (state) => state.touched && "sui_slider_track-touched",
+        (state) => state.dirty && "sui_slider_track-dirty",
+        (state) => state.filled && "sui_slider_track-filled",
+        (state) => state.focused && "sui_slider_track-focused",
+        (state) => state.valid === false && "sui_slider_track-invalid",
+        (state) => state.valid === true && "sui_slider_track-valid",
+        (state) => state.valid === null && "sui_slider_track-unverified",
+        (state) => `sui_slider_track-orientation_${state.orientation}`,
+        (state) =>
+          state.activeThumbIndex >= 0 &&
+          `sui_slider_track-active_thumb_index_${state.activeThumbIndex}`,
+      )}
+    />
+  );
 };
 
 export { SliderTrack as Track };

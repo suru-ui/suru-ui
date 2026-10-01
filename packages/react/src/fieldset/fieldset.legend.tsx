@@ -49,7 +49,16 @@ export type IFieldsetLegend = IComponent<FieldsetLegendProps>;
 export const FieldsetLegend: IFieldsetLegend = function SuiFieldsetLegend(props) {
   const { className, ...otherProps } = props;
 
-  return <Fieldset.Legend {...otherProps} className={cn(className, "sui_fieldset_legend")} />;
+  return (
+    <Fieldset.Legend
+      {...otherProps}
+      className={cn<FieldsetLegendState>(
+        className,
+        "sui_fieldset_legend",
+        (state) => state.disabled && "sui_fieldset_legend-disabled",
+      )}
+    />
+  );
 };
 
 export { FieldsetLegend as Legend };

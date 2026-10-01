@@ -49,7 +49,21 @@ export type IDrawerViewport = IComponent<DrawerViewportProps>;
 export const DrawerViewport: IDrawerViewport = function SuiDrawerViewport(props) {
   const { className, ...otherProps } = props;
 
-  return <Drawer.Viewport {...otherProps} className={cn(className, "sui_drawer_viewport")} />;
+  return (
+    <Drawer.Viewport
+      {...otherProps}
+      className={cn<DrawerViewportState>(
+        className,
+        "sui_drawer_viewport",
+        (state) => state.open && "sui_drawer_viewport-open",
+        (state) => state.nested && "sui_drawer_viewport-nested",
+        (state) => state.nestedDialogOpen && "sui_drawer_viewport-nested_dialog_open",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_drawer_viewport-transition_status_${state.transitionStatus}`,
+      )}
+    />
+  );
 };
 
 export { DrawerViewport as Viewport };

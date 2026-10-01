@@ -67,6 +67,9 @@ export const SegmentsIndicator: ISegmentsIndicator = function SuiSegmentsIndicat
             (state) => `sui_segments_indicator-color_${state.color}`,
             (state) => `sui_segments_indicator-radius_${state.radius}`,
             (state) => `sui_segments_indicator-active_variant_${state.activeVariant}`,
+            (state) => `sui_segments_indicator-orientation_${state.orientation}`,
+            (state) =>
+              `sui_segments_indicator-tab_activation_direction_${state.tabActivationDirection}`,
           ),
         },
       )}

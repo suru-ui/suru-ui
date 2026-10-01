@@ -72,6 +72,11 @@ export const ContextMenuCheckboxItemIndicator: IContextMenuCheckboxItemIndicator
             (state) => `sui_context_menu_item_indicator-radius_${state.radius}`,
             (state) => `sui_context_menu_item_indicator-variant_${state.variant}`,
             (state) => state.outlined && "sui_context_menu_item_indicator-outlined",
+            (state) => state.disabled && "sui_context_menu_item_indicator-disabled",
+            (state) => state.highlighted && "sui_context_menu_item_indicator-highlighted",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_context_menu_item_indicator-transition_status_${state.transitionStatus}`,
           ),
         })}
       />

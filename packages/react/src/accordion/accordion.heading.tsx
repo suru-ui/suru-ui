@@ -65,6 +65,11 @@ export const AccordionHeading: IAccordionHeading = function SuiAccordionHeading(
             (state) => `sui_accordion_heading-size_${state.size}`,
             (state) => `sui_accordion_heading-radius_${state.radius}`,
             (state) => state.separator && "sui_accordion_heading-separator",
+            (state) => state.disabled && "sui_accordion_heading-disabled",
+            (state) => state.open && "sui_accordion_heading-open",
+            (state) => state.hidden && "sui_accordion_heading-hidden",
+            (state) => `sui_accordion_heading-orientation_${state.orientation}`,
+            (state) => `sui_accordion_heading-index_${state.index}`,
           ),
         },
       )}

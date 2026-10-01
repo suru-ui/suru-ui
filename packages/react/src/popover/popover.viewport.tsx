@@ -66,6 +66,11 @@ export const PopoverViewport: IPopoverViewport = function SuiPopoverViewport(pro
             (state) => `sui_popover_viewport-size_${state.size}`,
             (state) => `sui_popover_viewport-radius_${state.radius}`,
             (state) => state.outlined && "sui_popover_viewport-outlined",
+            (state) => state.instant && "sui_popover_viewport-instant",
+            (state) => state.transitioning && "sui_popover_viewport-transitioning",
+            (state) =>
+              state.activationDirection !== undefined &&
+              `sui_popover_viewport-activation_direction_${state.activationDirection}`,
           ),
         },
       )}

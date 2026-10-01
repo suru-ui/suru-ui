@@ -75,6 +75,11 @@ export const PopoverPositioner: IPopoverPositioner = function SuiPopoverPosition
             (state) => `sui_popover_positioner-size_${state.size}`,
             (state) => `sui_popover_positioner-radius_${state.radius}`,
             (state) => state.outlined && "sui_popover_positioner-outlined",
+            (state) => state.open && "sui_popover_positioner-open",
+            (state) => state.anchorHidden && "sui_popover_positioner-anchorhidden",
+            (state) => state.instant && "sui_popover_positioner-instant",
+            (state) => `sui_popover_positioner-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_popover_positioner-align_${state.align}`,
           ),
         },
       )}

@@ -99,6 +99,10 @@ export const TextFieldInput: ITextFieldInput = function SuiTextFieldInput(props)
             (state) => state.valid === false && "sui_text_field_input-invalid",
             (state) => state.valid === null && "sui_text_field_input-unverified",
             (state) => state.disabled && "sui_text_field_input-disabled",
+            (state) => state.touched && "sui_text_field_input-touched",
+            (state) => state.dirty && "sui_text_field_input-dirty",
+            (state) => state.filled && "sui_text_field_input-filled",
+            (state) => state.focused && "sui_text_field_input-focused",
           ),
         },
       )}

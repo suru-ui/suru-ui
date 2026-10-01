@@ -95,6 +95,7 @@ export const HoverCardTrigger: IHoverCardTrigger = function SuiHoverCardTrigger<
             (state) => `sui_hover_card_trigger-size_${state.size}`,
             (state) => `sui_hover_card_trigger-radius_${state.radius}`,
             (state) => state.outlined && "sui_hover_card_trigger-outlined",
+            (state) => state.open && "sui_hover_card_trigger-open",
           ),
         },
       )}

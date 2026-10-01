@@ -71,6 +71,12 @@ export const TabsPanel: ITabsPanel = function SuiTabsPanel(props) {
             (state) => `sui_tabs_panel-variant_${state.variant}`,
             (state) => state.outlined && "sui_tabs_panel-outlined",
             (state) => `sui_tabs_panel-active_variant_${state.activeVariant}`,
+            (state) => state.hidden && "sui_tabs_panel-hidden",
+            (state) => `sui_tabs_panel-orientation_${state.orientation}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_tabs_panel-transition_status_${state.transitionStatus}`,
+            (state) => `sui_tabs_panel-tab_activation_direction_${state.tabActivationDirection}`,
           ),
         },
       )}

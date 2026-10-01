@@ -49,7 +49,23 @@ export type IFieldLabel = IComponent<FieldLabelProps>;
 export const FieldLabel: IFieldLabel = function SuiFieldLabel(props) {
   const { className, ...otherProps } = props;
 
-  return <Field.Label {...otherProps} className={cn(className, "sui_field_label")} />;
+  return (
+    <Field.Label
+      {...otherProps}
+      className={cn<FieldLabelState>(
+        className,
+        "sui_field_label",
+        (state) => state.disabled && "sui_field_label-disabled",
+        (state) => state.touched && "sui_field_label-touched",
+        (state) => state.dirty && "sui_field_label-dirty",
+        (state) => state.filled && "sui_field_label-filled",
+        (state) => state.focused && "sui_field_label-focused",
+        (state) => state.valid === false && "sui_field_label-invalid",
+        (state) => state.valid === true && "sui_field_label-valid",
+        (state) => state.valid === null && "sui_field_label-unverified",
+      )}
+    />
+  );
 };
 
 export { FieldLabel as Label };

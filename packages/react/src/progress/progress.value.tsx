@@ -77,7 +77,11 @@ export const ProgressValue: IProgressValue = function SuiProgressValue(props) {
     <Progress.Value
       {...otherProps}
       children={renderer}
-      className={cn(className, "sui_progress_value")}
+      className={cn<ProgressValueState>(
+        className,
+        "sui_progress_value",
+        (state) => `sui_progress_value-status_${state.status}`,
+      )}
     />
   );
 };

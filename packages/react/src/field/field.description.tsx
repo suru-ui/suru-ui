@@ -49,7 +49,23 @@ export type IFieldDescription = IComponent<FieldDescriptionProps>;
 export const FieldDescription: IFieldDescription = function SuiFieldDescription(props) {
   const { className, ...otherProps } = props;
 
-  return <Field.Description {...otherProps} className={cn(className, "sui_field_description")} />;
+  return (
+    <Field.Description
+      {...otherProps}
+      className={cn<FieldDescriptionState>(
+        className,
+        "sui_field_description",
+        (state) => state.disabled && "sui_field_description-disabled",
+        (state) => state.touched && "sui_field_description-touched",
+        (state) => state.dirty && "sui_field_description-dirty",
+        (state) => state.filled && "sui_field_description-filled",
+        (state) => state.focused && "sui_field_description-focused",
+        (state) => state.valid === false && "sui_field_description-invalid",
+        (state) => state.valid === true && "sui_field_description-valid",
+        (state) => state.valid === null && "sui_field_description-unverified",
+      )}
+    />
+  );
 };
 
 export { FieldDescription as Description };

@@ -101,6 +101,8 @@ export const TabsTab: ITabsTab = function SuiTabsTab(props) {
           (state) => `sui_tabs_tab-variant_${state.variant}`,
           (state) => state.outlined && "sui_tabs_tab-outlined",
           (state) => `sui_tabs_tab-active_variant_${state.activeVariant}`,
+          (state) => `sui_tabs_tab-orientation_${state.orientation}`,
+          (state) => `sui_tabs_tab-tab_activation_direction_${state.tabActivationDirection}`,
         ),
       })}
     />

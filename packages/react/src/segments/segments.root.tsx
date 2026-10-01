@@ -221,6 +221,7 @@ export const SegmentsRoot: ISegmentsRoot = function SuiSegmentsRoot(props: Segme
               (state) => `sui_segments-radius_${state.radius}`,
               (state) => `sui_segments-active_variant_${state.activeVariant}`,
               (state) => `sui_segments-orientation_${state.orientation}`,
+              (state) => `sui_segments-tab_activation_direction_${state.tabActivationDirection}`,
             ),
           },
         )}

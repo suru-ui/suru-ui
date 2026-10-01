@@ -49,7 +49,19 @@ export type IAvatarImage = IComponent<AvatarImageProps>;
 export const AvatarImage: IAvatarImage = function SuiAvatarImage(props) {
   const { className, ...otherProps } = props;
 
-  return <Avatar.Image {...otherProps} className={cn(className, "sui_avatar_image")} />;
+  return (
+    <Avatar.Image
+      {...otherProps}
+      className={cn<AvatarImageState>(
+        className,
+        "sui_avatar_image",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_avatar_image-transition_status_${state.transitionStatus}`,
+        (state) => `sui_avatar_image-image_loading_status_${state.imageLoadingStatus}`,
+      )}
+    />
+  );
 };
 
 export { AvatarImage as Image };

@@ -69,6 +69,7 @@ export const ComboboxSeparator: IComboboxSeparator = function SuiComboboxSeparat
             (state) => `sui_combobox_separator-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_separator-outlined",
             (state) => state.multiple && "sui_combobox_separator-multiple",
+            (state) => `sui_combobox_separator-orientation_${state.orientation}`,
           ),
         },
       )}

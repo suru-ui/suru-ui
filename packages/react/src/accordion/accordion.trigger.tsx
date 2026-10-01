@@ -97,6 +97,11 @@ export const AccordionTrigger: IAccordionTrigger = function SuiAccordionTrigger(
             (state) => `sui_accordion_trigger-size_${state.size}`,
             (state) => `sui_accordion_trigger-radius_${state.radius}`,
             (state) => state.separator && "sui_accordion_trigger-separator",
+            (state) => state.disabled && "sui_accordion_trigger-disabled",
+            (state) => state.open && "sui_accordion_trigger-open",
+            (state) => state.hidden && "sui_accordion_trigger-hidden",
+            (state) => `sui_accordion_trigger-orientation_${state.orientation}`,
+            (state) => `sui_accordion_trigger-index_${state.index}`,
           ),
         },
       )}

@@ -56,7 +56,15 @@ export const DrawerClose: IDrawerClose = function SuiDrawerClose(props) {
   const { children, className, ...otherProps } = props;
 
   return (
-    <Drawer.Close {...otherProps} render={children} className={cn(className, "sui_drawer_close")} />
+    <Drawer.Close
+      {...otherProps}
+      render={children}
+      className={cn<DrawerCloseState>(
+        className,
+        "sui_drawer_close",
+        (state) => state.disabled && "sui_drawer_close-disabled",
+      )}
+    />
   );
 };
 

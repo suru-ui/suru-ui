@@ -50,7 +50,19 @@ export const AlertDialogViewport: IAlertDialogViewport = function SuiAlertDialog
   const { className, ...otherProps } = props;
 
   return (
-    <AlertDialog.Viewport {...otherProps} className={cn(className, "sui_alert_dialog_viewport")} />
+    <AlertDialog.Viewport
+      {...otherProps}
+      className={cn<AlertDialogViewportState>(
+        className,
+        "sui_alert_dialog_viewport",
+        (state) => state.open && "sui_alert_dialog_viewport-open",
+        (state) => state.nested && "sui_alert_dialog_viewport-nested",
+        (state) => state.nestedDialogOpen && "sui_alert_dialog_viewport-nested_dialog_open",
+        (state) =>
+          state.transitionStatus !== undefined &&
+          `sui_alert_dialog_viewport-transition_status_${state.transitionStatus}`,
+      )}
+    />
   );
 };
 

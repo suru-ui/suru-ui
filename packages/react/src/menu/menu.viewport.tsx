@@ -65,6 +65,11 @@ export const MenuViewport: IMenuViewport = function SuiMenuViewport(props) {
             (state) => `sui_menu_viewport-radius_${state.radius}`,
             (state) => `sui_menu_viewport-variant_${state.variant}`,
             (state) => state.outlined && "sui_menu_viewport-outlined",
+            (state) => state.instant && "sui_menu_viewport-instant",
+            (state) => state.transitioning && "sui_menu_viewport-transitioning",
+            (state) =>
+              state.activationDirection !== undefined &&
+              `sui_menu_viewport-activation_direction_${state.activationDirection}`,
           ),
         },
       )}

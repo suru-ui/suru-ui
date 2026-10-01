@@ -91,6 +91,8 @@ export const SegmentsList: ISegmentsList = function SuiSegmentsList(props: Segme
             (state) => `sui_segments_list-color_${state.color}`,
             (state) => `sui_segments_list-radius_${state.radius}`,
             (state) => `sui_segments_list-active_variant_${state.activeVariant}`,
+            (state) => `sui_segments_list-orientation_${state.orientation}`,
+            (state) => `sui_segments_list-tab_activation_direction_${state.tabActivationDirection}`,
           ),
         },
       )}

@@ -220,6 +220,8 @@ export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
               (state) => state.focused && "sui_radio_group-focused",
               (state) => state.touched && "sui_radio_group-touched",
               (state) => state.disabled && "sui_radio_group-disabled",
+              (state) => state.readOnly && "sui_radio_group-readonly",
+              (state) => state.required && "sui_radio_group-required",
             ),
           },
         )}

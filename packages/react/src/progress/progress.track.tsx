@@ -47,7 +47,16 @@ export type IProgressTrack = IComponent<ProgressTrackProps>;
 export const ProgressTrack: IProgressTrack = function SuiProgressTrack(props) {
   const { className, ...otherProps } = props;
 
-  return <Progress.Track {...otherProps} className={cn(className, "sui_progress_track")} />;
+  return (
+    <Progress.Track
+      {...otherProps}
+      className={cn<ProgressTrackState>(
+        className,
+        "sui_progress_track",
+        (state) => `sui_progress_track-status_${state.status}`,
+      )}
+    />
+  );
 };
 
 export { ProgressTrack as Track };

@@ -71,6 +71,11 @@ export const ScrollAreaRoot: IScrollAreaRoot = function SuiScrollAreaRoot(props)
         (state) => state.scrolling && "sui_scroll_area-scrolling",
         (state) => state.hasOverflowX && "sui_scroll_area-has_overflow_x",
         (state) => state.hasOverflowY && "sui_scroll_area-has_overflow_y",
+        (state) => state.cornerHidden && "sui_scroll_area-corner_hidden",
+        (state) => state.overflowXStart && "sui_scroll_area-overflow_x_start",
+        (state) => state.overflowXEnd && "sui_scroll_area-overflow_x_end",
+        (state) => state.overflowYStart && "sui_scroll_area-overflow_y_start",
+        (state) => state.overflowYEnd && "sui_scroll_area-overflow_y_end",
       )}
       data-scope={dataScope}
     />

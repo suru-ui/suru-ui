@@ -54,6 +54,9 @@ export const DrawerSwipeArea: IDrawerSwipeArea = function SuiDrawerSwipeArea(pro
         className,
         "sui_drawer_swipe_area",
         (state) => `sui_drawer_swipe_area-swipe_direction_${state.swipeDirection}`,
+        (state) => state.disabled && "sui_drawer_swipe_area-disabled",
+        (state) => state.open && "sui_drawer_swipe_area-open",
+        (state) => state.swiping && "sui_drawer_swipe_area-swiping",
       )}
     />
   );

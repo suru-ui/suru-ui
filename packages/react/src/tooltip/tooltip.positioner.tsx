@@ -76,6 +76,11 @@ export const TooltipPositioner: ITooltipPositioner = function SuiTooltipPosition
             (state) => `sui_tooltip_positioner-size_${state.size}`,
             (state) => `sui_tooltip_positioner-radius_${state.radius}`,
             (state) => state.outlined && "sui_tooltip_positioner-outlined",
+            (state) => state.open && "sui_tooltip_positioner-open",
+            (state) => state.anchorHidden && "sui_tooltip_positioner-anchorhidden",
+            (state) => state.instant && "sui_tooltip_positioner-instant",
+            (state) => `sui_tooltip_positioner-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_tooltip_positioner-align_${state.align}`,
           ),
         },
       )}

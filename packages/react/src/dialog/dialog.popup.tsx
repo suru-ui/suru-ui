@@ -132,6 +132,12 @@ export const DialogPopup: IDialogPopup = function SuiDialogPopup(props) {
                       (state) => `sui_dialog_popup-radius_${state.radius}`,
                       (state) => `sui_dialog_popup-variant_${state.variant}`,
                       (state) => state.outlined && "sui_dialog_popup-outlined",
+                      (state) => state.open && "sui_dialog_popup-open",
+                      (state) => state.nested && "sui_dialog_popup-nested",
+                      (state) => state.nestedDialogOpen && "sui_dialog_popup-nested_dialog_open",
+                      (state) =>
+                        state.transitionStatus !== undefined &&
+                        `sui_dialog_popup-transition_status_${state.transitionStatus}`,
                     ),
                   },
                 ),

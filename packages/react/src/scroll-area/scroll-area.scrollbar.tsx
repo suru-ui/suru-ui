@@ -55,6 +55,15 @@ export const ScrollAreaScrollbar: IScrollAreaScrollbar = function SuiScrollAreaS
         className,
         "sui_scroll_area_scrollbar",
         (state) => `sui_scroll_area_scrollbar-orientation_${state.orientation}`,
+        (state) => state.scrolling && "sui_scroll_area_scrollbar-scrolling",
+        (state) => state.hovering && "sui_scroll_area_scrollbar-hovering",
+        (state) => state.cornerHidden && "sui_scroll_area_scrollbar-corner_hidden",
+        (state) => state.hasOverflowX && "sui_scroll_area_scrollbar-has_overflow_x",
+        (state) => state.hasOverflowY && "sui_scroll_area_scrollbar-has_overflow_y",
+        (state) => state.overflowXStart && "sui_scroll_area_scrollbar-overflow_x_start",
+        (state) => state.overflowXEnd && "sui_scroll_area_scrollbar-overflow_x_end",
+        (state) => state.overflowYStart && "sui_scroll_area_scrollbar-overflow_y_start",
+        (state) => state.overflowYEnd && "sui_scroll_area_scrollbar-overflow_y_end",
       )}
     />
   );

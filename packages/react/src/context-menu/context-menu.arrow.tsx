@@ -65,6 +65,10 @@ export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(
             (state) => `sui_context_menu_arrow-radius_${state.radius}`,
             (state) => `sui_context_menu_arrow-variant_${state.variant}`,
             (state) => state.outlined && "sui_context_menu_arrow-outlined",
+            (state) => state.open && "sui_context_menu_arrow-open",
+            (state) => state.uncentered && "sui_context_menu_arrow-uncentered",
+            (state) => `sui_context_menu_arrow-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_context_menu_arrow-align_${state.align}`,
           ),
         },
       )}

@@ -47,7 +47,21 @@ export type IScrollAreaContent = IComponent<ScrollAreaContentProps>;
 export const ScrollAreaContent: IScrollAreaContent = function SuiScrollAreaContent(props) {
   const { className, ...otherProps } = props;
   return (
-    <BaseScrollArea.Content {...otherProps} className={cn(className, "sui_scroll_area_content")} />
+    <BaseScrollArea.Content
+      {...otherProps}
+      className={cn<ScrollAreaContentState>(
+        className,
+        "sui_scroll_area_content",
+        (state) => state.scrolling && "sui_scroll_area_content-scrolling",
+        (state) => state.cornerHidden && "sui_scroll_area_content-corner_hidden",
+        (state) => state.hasOverflowX && "sui_scroll_area_content-has_overflow_x",
+        (state) => state.hasOverflowY && "sui_scroll_area_content-has_overflow_y",
+        (state) => state.overflowXStart && "sui_scroll_area_content-overflow_x_start",
+        (state) => state.overflowXEnd && "sui_scroll_area_content-overflow_x_end",
+        (state) => state.overflowYStart && "sui_scroll_area_content-overflow_y_start",
+        (state) => state.overflowYEnd && "sui_scroll_area_content-overflow_y_end",
+      )}
+    />
   );
 };
 

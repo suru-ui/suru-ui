@@ -67,6 +67,7 @@ export const HoverCardBackdrop: IHoverCardBackdrop = function SuiHoverCardBackdr
             (state) => `sui_hover_card_backdrop-size_${state.size}`,
             (state) => `sui_hover_card_backdrop-radius_${state.radius}`,
             (state) => state.outlined && "sui_hover_card_backdrop-outlined",
+            (state) => state.open && "sui_hover_card_backdrop-open",
           ),
         },
       )}
