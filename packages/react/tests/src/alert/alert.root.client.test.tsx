@@ -11,6 +11,7 @@ describe("AlertRoot", () => {
     // 検証
     const root = screen.getByRole("alert", { name: "通知" }).element();
     expect(root.classList.contains("sui_alert")).toBe(true);
+    expect(root.classList.contains("sui_alert-actionsposition_side")).toBe(true);
     expect(root.classList.contains("sui_alert-size_md")).toBe(true);
     expect(root.classList.contains("sui_alert-color_grey")).toBe(true);
     expect(root.classList.contains("sui_alert-radius_md")).toBe(true);
@@ -21,11 +22,20 @@ describe("AlertRoot", () => {
   test("指定した修飾クラスを付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <AlertRoot aria-label="通知" size="lg" color="red" radius="none" variant="naked" outlined />,
+      <AlertRoot
+        aria-label="通知"
+        actionsPosition="bottom"
+        size="lg"
+        color="red"
+        radius="none"
+        variant="naked"
+        outlined
+      />,
     );
 
     // 検証
     const root = screen.getByRole("alert", { name: "通知" }).element();
+    expect(root.classList.contains("sui_alert-actionsposition_bottom")).toBe(true);
     expect(root.classList.contains("sui_alert-size_lg")).toBe(true);
     expect(root.classList.contains("sui_alert-color_red")).toBe(true);
     expect(root.classList.contains("sui_alert-radius_none")).toBe(true);

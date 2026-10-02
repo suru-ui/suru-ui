@@ -6,6 +6,16 @@ import cn from "../cn.js";
 import type { IComponent } from "../types.js";
 
 /**
+ * アラートのアクションの配置です。
+ *
+ * 本文があるときは本文との間に仕切り線を表示します。
+ *
+ * - `"bottom"`: 本文の下
+ * - `"side"`: タイトルと本文の右側に縦方向へ並べます
+ */
+export type AlertRootActionsPosition = "bottom" | "side";
+
+/**
  * アラートの配色です。
  */
 export type AlertRootColor = Color;
@@ -47,6 +57,13 @@ export namespace AlertRootProps {
   export type Render = RenderProps<AlertRootState>;
 
   export type SuruUI = {
+    /**
+     * アラートのアクションの配置を指定します。
+     *
+     * @default "side"
+     */
+    actionsPosition?: AlertRootActionsPosition | undefined;
+
     /**
      * アラートの色を指定します。
      *
@@ -112,6 +129,7 @@ export const AlertRoot: IAlertRoot = function SuiAlertRoot(props) {
     radius = size,
     variant = "muted",
     outlined = false,
+    actionsPosition = "side",
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherDivProps
@@ -124,6 +142,7 @@ export const AlertRoot: IAlertRoot = function SuiAlertRoot(props) {
         role,
         className: cn(
           "sui_alert",
+          `sui_alert-actionsposition_${actionsPosition}`,
           `sui_alert-size_${size}`,
           `sui_alert-color_${color}`,
           `sui_alert-radius_${radius}`,
@@ -153,6 +172,8 @@ export namespace Root {
 
     export type HTML = AlertRootProps.HTML;
   }
+
+  export type ActionsPosition = AlertRootActionsPosition;
 
   export type Color = AlertRootColor;
 

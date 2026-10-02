@@ -11,6 +11,7 @@ import {
   type AlertRootVariant,
   type AlertActionsProps,
   type AlertContentProps,
+  type AlertRootActionsPosition,
   AlertIcon,
   AlertRoot,
   AlertTitle,
@@ -253,6 +254,8 @@ export namespace Alert {
   export type Props = AlertProps;
 
   export type SlotProps = AlertSlotProps;
+
+  export type ActionsPosition = AlertRootActionsPosition;
 
   export type Color = AlertColor;
 

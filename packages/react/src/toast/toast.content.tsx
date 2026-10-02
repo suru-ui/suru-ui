@@ -73,7 +73,18 @@ export type IToastContent = IComponent<ToastContentProps>;
  * 見た目はアラートとして描画され、大きさや配色は最上位の見た目として集約します。
  */
 export const ToastContent: IToastContent = function SuiToastContent(props) {
-  const { size, color, style, radius, render, variant, outlined, className, ...otherProps } = props;
+  const {
+    size,
+    color,
+    style,
+    radius,
+    render,
+    variant,
+    outlined,
+    className,
+    actionsPosition,
+    ...otherProps
+  } = props;
 
   return (
     <Toast.Content
@@ -85,6 +96,7 @@ export const ToastContent: IToastContent = function SuiToastContent(props) {
           radius,
           variant,
           outlined,
+          actionsPosition,
         };
 
         return (
