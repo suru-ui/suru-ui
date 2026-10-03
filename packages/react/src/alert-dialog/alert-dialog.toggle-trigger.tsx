@@ -12,7 +12,7 @@ import type { IComponent } from "../types.js";
 export type AlertDialogToggleTriggerState = AlertDialog.Trigger.State;
 
 export namespace AlertDialogToggleTriggerProps {
-  export type Render = RenderProps<AlertDialogToggleTriggerState>;
+  export type Render = Omit<RenderProps<AlertDialogToggleTriggerState>, "render">;
 
   export type SuruUI<TPayload = any> = {
     /**

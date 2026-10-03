@@ -12,7 +12,7 @@ import type { IComponent } from "../types.js";
 export type AlertDialogCloseTriggerState = AlertDialog.Close.State;
 
 export namespace AlertDialogCloseTriggerProps {
-  export type Render = RenderProps<AlertDialogCloseTriggerState>;
+  export type Render = Omit<RenderProps<AlertDialogCloseTriggerState>, "render">;
 
   export type SuruUI = {
     /**

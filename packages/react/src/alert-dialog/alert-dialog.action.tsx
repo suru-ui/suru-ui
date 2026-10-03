@@ -40,7 +40,7 @@ export type IAlertDialogAction = IComponent<AlertDialogActionProps>;
  */
 export const AlertDialogAction: IAlertDialogAction = function SuiAlertDialogAction(props) {
   const ctx = useAlertDialogPopupContext();
-  const { style, render, className, ...otherProps } = props;
+  const { style, render, absolute = ctx.variant === "stacked", className, ...otherProps } = props;
 
   return (
     <Card.Action
@@ -56,10 +56,12 @@ export const AlertDialogAction: IAlertDialogAction = function SuiAlertDialogActi
             (state) => `sui_alert_dialog_action-size_${state.size}`,
             (state) => `sui_alert_dialog_action-radius_${state.radius}`,
             (state) => `sui_alert_dialog_action-variant_${state.variant}`,
+            (state) => state.absolute && "sui_alert_dialog_action-absolute",
             (state) => state.outlined && "sui_alert_dialog_action-outlined",
           ),
         },
       )}
+      absolute={absolute}
     />
   );
 };

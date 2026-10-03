@@ -9,7 +9,7 @@ import type { IComponent } from "../types.js";
 export type AlertDialogRootActions = AlertDialog.Root.Actions;
 
 /**
- * アラートダイアログの開閉状態を変更されるイベントの詳細です。
+ * アラートダイアログの開閉状態が変更されるイベントの詳細です。
  */
 export type AlertDialogRootChangeEventDetails = AlertDialog.Root.ChangeEventDetails;
 
@@ -73,25 +73,11 @@ export interface IAlertDialogRoot extends IComponent<AlertDialogRootProps> {
  * アラートダイアログのルートコンポーネントです。
  *
  * ダイアログの開閉状態を管理し、各パーツをグループ化します。それ自身は HTML 要素をレンダリングしません。
- * Escape キーでは閉じず、中止または確認の操作を必要とします。
  */
 export const AlertDialogRoot: IAlertDialogRoot = function SuiAlertDialogRoot(
   props: AlertDialogRootProps,
 ) {
-  const { onOpenChange, ...otherProps } = props;
-
-  return (
-    <AlertDialog.Root
-      {...otherProps}
-      onOpenChange={(open, eventDetails) => {
-        if (!open && eventDetails.reason === "escape-key") {
-          eventDetails.cancel();
-        }
-
-        onOpenChange?.(open, eventDetails);
-      }}
-    />
-  );
+  return <AlertDialog.Root {...props} />;
 };
 
 export { AlertDialogRoot as Root };
