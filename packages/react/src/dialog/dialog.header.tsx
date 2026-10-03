@@ -8,7 +8,7 @@ import { type DialogPopupContext, useDialogPopupContext } from "./dialog.popup.c
 /**
  * {@link DialogHeader} が持つ状態です。
  */
-export type DialogHeaderState = Override<Card.Header.State, DialogPopupContext>;
+export type DialogHeaderState = Override<DialogPopupContext, Card.Header.State>;
 
 export namespace DialogHeaderProps {
   export type Render = RenderProps<DialogHeaderState>;
@@ -41,7 +41,7 @@ export const DialogHeader: IDialogHeader = function SuiDialogHeader(props) {
     <Card.Header
       {...otherProps}
       {...proxyRenderProps<Card.Header.State, DialogHeaderState>(
-        (state) => ({ ...state, ...ctx }),
+        (state) => ({ ...ctx, ...state }),
         {
           style,
           render,

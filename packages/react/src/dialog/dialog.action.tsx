@@ -8,7 +8,7 @@ import { type DialogPopupContext, useDialogPopupContext } from "./dialog.popup.c
 /**
  * {@link DialogAction} が持つ状態です。
  */
-export type DialogActionState = Override<Card.Action.State, DialogPopupContext>;
+export type DialogActionState = Override<DialogPopupContext, Card.Action.State>;
 
 export namespace DialogActionProps {
   export type Render = RenderProps<DialogActionState>;
@@ -37,13 +37,13 @@ export type IDialogAction = IComponent<DialogActionProps>;
  */
 export const DialogAction: IDialogAction = function SuiDialogAction(props) {
   const ctx = useDialogPopupContext();
-  const { style, render, className, ...otherProps } = props;
+  const { style, render, absolute = ctx.variant === "stacked", className, ...otherProps } = props;
 
   return (
     <Card.Action
       {...otherProps}
       {...proxyRenderProps<Card.Action.State, DialogActionState>(
-        (state) => ({ ...state, ...ctx }),
+        (state) => ({ ...ctx, ...state }),
         {
           style,
           render,
@@ -53,10 +53,12 @@ export const DialogAction: IDialogAction = function SuiDialogAction(props) {
             (state) => `sui_dialog_action-size_${state.size}`,
             (state) => `sui_dialog_action-radius_${state.radius}`,
             (state) => `sui_dialog_action-variant_${state.variant}`,
+            (state) => state.absolute && "sui_dialog_action-absolute",
             (state) => state.outlined && "sui_dialog_action-outlined",
           ),
         },
       )}
+      absolute={absolute}
     />
   );
 };

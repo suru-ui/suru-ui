@@ -108,6 +108,8 @@
 
 /* 固定 */
 :scope {
+  flex-shrink: 0;
+
   &.sui_dialog_header-variant_stacked {
     /* 操作はヘッダーの外へ重ねるため、残る操作列の間隔を消して見出しを中央に寄せます。 */
     column-gap: 0px;
@@ -118,37 +120,16 @@
 } /* @scope */
 } /* @layer */
 
-/* Action */
+/* Content */
 @layer sui.component {
-@scope (.sui_dialog_action) to ([data-scope]) {
+@scope (.sui_dialog_content) to ([data-scope]) {
 
-/* 変数 */
+/* 固定 */
 :scope {
-  --sui_dialog_action-gap: ;
-}
-
-/* 可変 */
-:scope {
-  position: var(--_sui_dialog_action-position, unset);
-  inset-block-start: var(--_sui_dialog_action-inset_block, auto);
-  inset-inline-end: var(--_sui_dialog_action-inset_inline, auto);
-  gap: var(--sui_dialog_action-gap);
-}
-
-/* 代入 */
-:scope {
-  --sui_dialog_action-gap: --sui-gap(2);
-}
-
-/* 変異 */
-:scope {
-  &.sui_dialog_action-variant_stacked {
-    /* カードの余白を引き継ぎ、ポップアップの右上へ重ねます。 */
-    --_sui_dialog_action-position: absolute;
-    --_sui_dialog_action-inset_block: var(--sui_card-padding_block_start);
-    /* ヘッダーはポップアップの兄弟のため、同じ値を持つポップアップの余白を参照します。 */
-    --_sui_dialog_action-inset_inline: var(--sui_card-padding_block_start);
-  }
+  flex: 1 1 auto;
+  min-height: 0px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 } /* @scope */
@@ -160,9 +141,25 @@
 
 /* 固定 */
 :scope {
+  flex-shrink: 0;
+
   &.sui_dialog_footer-variant_stacked {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+
+    /* 要素が 1 つの場合は、その要素を横いっぱいに広げます。 */
+    &:has(> :nth-child(1):last-child) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    /* 要素が 2 つ以上の場合は、それらの要素を 2 行以上 2 列でグリッド状に並べます。 */
+    &:has(> :nth-child(2)) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* 要素が 3 つ以上の場合は、そ最初の要素を横いっぱいに広げます。 */
+    &:has(> :nth-child(3)) :first-child {
+      grid-column: span 2;
+    }
   }
 }
 

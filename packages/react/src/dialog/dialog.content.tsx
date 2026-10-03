@@ -8,7 +8,7 @@ import { type DialogPopupContext, useDialogPopupContext } from "./dialog.popup.c
 /**
  * {@link DialogContent} が持つ状態です。
  */
-export type DialogContentState = Override<Card.Content.State, DialogPopupContext>;
+export type DialogContentState = Override<DialogPopupContext, Card.Content.State>;
 
 export namespace DialogContentProps {
   export type Render = RenderProps<DialogContentState>;
@@ -41,7 +41,7 @@ export const DialogContent: IDialogContent = function SuiDialogContent(props) {
     <Card.Content
       {...otherProps}
       {...proxyRenderProps<Card.Content.State, DialogContentState>(
-        (state) => ({ ...state, ...ctx }),
+        (state) => ({ ...ctx, ...state }),
         {
           style,
           render,

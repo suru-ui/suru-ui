@@ -8,7 +8,7 @@ import { type DialogPopupContext, useDialogPopupContext } from "./dialog.popup.c
 /**
  * {@link DialogFooter} が持つ状態です。
  */
-export type DialogFooterState = Override<Card.Footer.State, DialogPopupContext>;
+export type DialogFooterState = Override<DialogPopupContext, Card.Footer.State>;
 
 export namespace DialogFooterProps {
   export type Render = RenderProps<DialogFooterState>;
@@ -43,7 +43,7 @@ export const DialogFooter: IDialogFooter = function SuiDialogFooter(props) {
     <Card.Footer
       {...otherProps}
       {...proxyRenderProps<Card.Footer.State, DialogFooterState>(
-        (state) => ({ ...state, ...ctx }),
+        (state) => ({ ...ctx, ...state }),
         {
           style,
           render,

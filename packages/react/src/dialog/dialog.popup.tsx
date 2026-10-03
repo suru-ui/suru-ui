@@ -121,7 +121,7 @@ export const DialogPopup: IDialogPopup = function SuiDialogPopup(props) {
                 htmlProps,
                 cardRootProps,
                 proxyRenderProps<Dialog.Popup.State, DialogPopupState>(
-                  (state) => ({ ...state, ...ctx, outlined, ...popupState }),
+                  (state) => ({ ...ctx, ...state, outlined, ...popupState }),
                   {
                     style,
                     render,
