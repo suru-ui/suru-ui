@@ -15,7 +15,11 @@ import * as AlertParts from "../src/alert/index.js";
 import { Button } from "../src/button/index.js";
 
 const ACTIONS_POSITIONS: readonly Alert.ActionsPosition[] = ["bottom", "side"];
-const CONTENT_POSITIONS: readonly Alert.ContentPosition[] = ["bottom", "side-start", "side-end"];
+const DESCRIPTION_POSITIONS: readonly Alert.DescriptionPosition[] = [
+  "bottom",
+  "side-start",
+  "side-end",
+];
 const COLORS: readonly Alert.Color[] = theme.COLORS;
 const RADII: readonly Alert.Radius[] = ["none", ...theme.SIZES];
 const SIZES: readonly Alert.Size[] = theme.SIZES;
@@ -23,35 +27,35 @@ const VARIANTS: readonly Alert.Variant[] = ["muted", "naked", "liquid"];
 const STATUSES: readonly {
   readonly Icon: typeof InfoIcon;
   readonly color: Alert.Color;
-  readonly content: string;
+  readonly description: string;
   readonly status: string;
   readonly title: string;
 }[] = [
   {
     status: "info",
     title: "お知らせ",
-    content: "新しい更新があります。",
+    description: "新しい更新があります。",
     color: "blue",
     Icon: InfoIcon,
   },
   {
     status: "success",
     title: "更新完了",
-    content: "プロフィールを更新しました。",
+    description: "プロフィールを更新しました。",
     color: "green",
     Icon: CheckCircle2Icon,
   },
   {
     status: "warning",
     title: "警告",
-    content: "空き容量が残りわずかです。",
+    description: "空き容量が残りわずかです。",
     color: "yellow",
     Icon: AlertTriangleIcon,
   },
   {
     status: "error",
     title: "保存に失敗",
-    content: "入力内容を確認して、もう一度お試しください。",
+    description: "入力内容を確認して、もう一度お試しください。",
     color: "red",
     Icon: AlertCircleIcon,
   },
@@ -76,9 +80,9 @@ const ctrl = controls(Alert, {
     control: "select",
     options: COLORS,
   },
-  contentPosition: {
+  descriptionPosition: {
     control: "select",
-    options: CONTENT_POSITIONS,
+    options: DESCRIPTION_POSITIONS,
   },
   outlined: {
     control: "boolean",
@@ -127,7 +131,7 @@ export const Variants = meta.story({
     radius: undefined,
     outlined: true,
     actionsPosition: "side",
-    contentPosition: "bottom",
+    descriptionPosition: "bottom",
     title: "更新完了",
     children: "プロフィールを更新しました。",
   }),
@@ -164,7 +168,7 @@ export const Colors = meta.story({
   ...ctrl({
     title: "更新完了",
     children: "プロフィールを更新しました。",
-    contentPosition: "bottom",
+    descriptionPosition: "bottom",
     variant: "muted",
     size: "md",
     radius: undefined,
@@ -191,7 +195,7 @@ export const Sizes = meta.story({
     color: "grey",
     radius: undefined,
     outlined: true,
-    contentPosition: "bottom",
+    descriptionPosition: "bottom",
     title: "更新完了",
     children: "プロフィールを更新しました。",
   }),
@@ -214,7 +218,7 @@ export const Radii = meta.story({
   ...ctrl({
     title: "更新完了",
     children: "プロフィールを更新しました。",
-    contentPosition: "bottom",
+    descriptionPosition: "bottom",
     variant: "muted",
     color: "grey",
     size: "md",
@@ -238,7 +242,7 @@ export const Outline = meta.story({
   name: "枠線",
   ...ctrl({
     children: "説明文",
-    contentPosition: "bottom",
+    descriptionPosition: "bottom",
     variant: "muted",
     color: "grey",
     size: "md",
@@ -261,16 +265,16 @@ export const Statuses = meta.story({
     size: "md",
     radius: undefined,
     outlined: true,
-    contentPosition: "bottom",
+    descriptionPosition: "bottom",
   }),
   render(props) {
     return (
       <div className="flex w-[450px] flex-col gap-6">
-        {STATUSES.map(({ status, title, content, color, Icon }) => (
+        {STATUSES.map(({ status, title, description, color, Icon }) => (
           <div key={status} className="flex flex-col gap-2">
             <span>{status}</span>
             <Alert {...props} icon={<Icon />} color={color} title={title}>
-              {content}
+              {description}
             </Alert>
           </div>
         ))}
@@ -294,16 +298,16 @@ export const WithTitle = meta.story({
     return (
       <div className="flex w-[450px] flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <span>タイトル下部に本文</span>
+          <span>タイトル下部に説明文</span>
           <Alert {...props} icon={<CheckCircle2Icon />} />
         </div>
         <div className="flex flex-col gap-2">
-          <span>タイトル側面のすぐ隣に本文</span>
-          <Alert {...props} icon={<CheckCircle2Icon />} contentPosition="side-start" />
+          <span>タイトル側面のすぐ隣に説明文</span>
+          <Alert {...props} icon={<CheckCircle2Icon />} descriptionPosition="side-start" />
         </div>
         <div className="flex flex-col gap-2">
-          <span>タイトル側面の離れに本文</span>
-          <Alert {...props} icon={<CheckCircle2Icon />} contentPosition="side-end" />
+          <span>タイトル側面の離れに説明文</span>
+          <Alert {...props} icon={<CheckCircle2Icon />} descriptionPosition="side-end" />
         </div>
       </div>
     );
@@ -363,7 +367,7 @@ export const WithActions = meta.story({
     size: "md",
     radius: undefined,
     outlined: true,
-    contentPosition: "bottom",
+    descriptionPosition: "bottom",
     title: "保存できませんでした",
     children: "入力内容を確認して、もう一度お試しください。",
   }),
@@ -402,7 +406,7 @@ export const Loading = meta.story({
     size: "md",
     radius: undefined,
     outlined: true,
-    contentPosition: "side-end",
+    descriptionPosition: "side-end",
     title: "読み込み中",
     children: "29 % 完了",
   }),
@@ -424,11 +428,11 @@ export const CustomComposition = meta.story({
     radius: undefined,
     outlined: true,
     actionsPosition: "side",
-    contentPosition: "bottom",
+    descriptionPosition: "bottom",
   }),
   render(props) {
     const Alert = AlertParts;
-    const { size, color, radius, variant, outlined, actionsPosition, contentPosition } = props;
+    const { size, color, radius, variant, outlined, actionsPosition, descriptionPosition } = props;
 
     return (
       <div className="w-[450px]">
@@ -439,15 +443,15 @@ export const CustomComposition = meta.story({
           variant={variant}
           outlined={outlined}
           actionsPosition={actionsPosition}
-          contentPosition={contentPosition}
+          descriptionPosition={descriptionPosition}
         >
           <Alert.Icon>
             <InfoIcon />
           </Alert.Icon>
           <Alert.Title>更新完了</Alert.Title>
-          <Alert.Content>
+          <Alert.Description>
             プロフィールを更新しました。詳しくはお知らせをご覧ください。
-          </Alert.Content>
+          </Alert.Description>
           <Alert.Actions>
             <Button size={props.size} variant="naked">
               閉じる

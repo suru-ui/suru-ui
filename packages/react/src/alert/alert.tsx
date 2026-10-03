@@ -10,14 +10,14 @@ import {
   type AlertTitleProps,
   type AlertRootVariant,
   type AlertActionsProps,
-  type AlertContentProps,
+  type AlertDescriptionProps,
   type AlertRootActionsPosition,
-  type AlertRootContentPosition,
+  type AlertRootDescriptionPosition,
   AlertIcon,
   AlertRoot,
   AlertTitle,
   AlertActions,
-  AlertContent,
+  AlertDescription,
 } from "./alert.parts.js";
 
 // Types
@@ -25,7 +25,7 @@ import {
 
 export type AlertColor = AlertRootColor;
 
-export type AlertContentPosition = AlertRootContentPosition;
+export type AlertDescriptionPosition = AlertRootDescriptionPosition;
 
 export type AlertRadius = AlertRootRadius;
 
@@ -43,9 +43,9 @@ export type AlertSlotProps = {
   readonly actions?: Omit<AlertActionsProps, "children"> | undefined;
 
   /**
-   * {@link AlertContent} に渡す props です。
+   * {@link AlertDescription} に渡す props です。
    */
-  readonly content?: Omit<AlertContentProps, "children"> | undefined;
+  readonly description?: Omit<AlertDescriptionProps, "children"> | undefined;
 
   /**
    * {@link AlertIcon} に渡す props です。
@@ -71,9 +71,9 @@ namespace AlertProps {
     actions?: AlertActionsProps["children"] | undefined;
 
     /**
-     * アラートの本文です。
+     * アラートの説明文です。
      */
-    children?: AlertContentProps["children"] | undefined;
+    children?: AlertDescriptionProps["children"] | undefined;
 
     /**
      * アラートに表示するアイコンです。
@@ -155,12 +155,12 @@ export class AlertAPI {
   }
 
   /**
-   * {@link AlertContent} に渡す props を取得します。
+   * {@link AlertDescription} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
    */
-  public getContentProps(): AlertContentProps | null {
-    const { content: props = {} } = this.slotProps;
+  public getDescriptionProps(): AlertDescriptionProps | null {
+    const { description: props = {} } = this.slotProps;
     const { children } = this.alertProps;
 
     if (isLikelyVisibleNode(children)) {
@@ -238,14 +238,14 @@ export const Alert: IAlert = function SuiAlert(props: AlertProps) {
   const api = useAlertAPI(props);
   const iconProps = api.getIconProps();
   const titleProps = api.getTitleProps();
-  const contentProps = api.getContentProps();
+  const descriptionProps = api.getDescriptionProps();
   const actionsProps = api.getActionsProps();
 
   return (
     <AlertRoot {...api.getRootProps()}>
       {iconProps && <AlertIcon {...iconProps} />}
       {titleProps && <AlertTitle {...titleProps} />}
-      {contentProps && <AlertContent {...contentProps} />}
+      {descriptionProps && <AlertDescription {...descriptionProps} />}
       {actionsProps && <AlertActions {...actionsProps} />}
     </AlertRoot>
   );
@@ -262,7 +262,7 @@ export namespace Alert {
 
   export type Color = AlertColor;
 
-  export type ContentPosition = AlertContentPosition;
+  export type DescriptionPosition = AlertDescriptionPosition;
 
   export type Radius = AlertRadius;
 

@@ -275,7 +275,7 @@ describe("ToastDescription", () => {
     // 検証
     const description = screen.getByText("プロフィールを更新しました。").element();
     expect(description.tagName).toBe("P");
-    expect(description.classList.contains("sui_alert_content")).toBe(true);
+    expect(description.classList.contains("sui_alert_description")).toBe(true);
   });
 });
 

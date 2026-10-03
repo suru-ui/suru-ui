@@ -10,15 +10,15 @@ import type { Override, IComponent } from "../types.js";
 /**
  * {@link ToastDescription} が持つ状態です。
  */
-export type ToastDescriptionState = Override<Alert.Content.State, Toast.Description.State>;
+export type ToastDescriptionState = Override<Alert.Description.State, Toast.Description.State>;
 
 export namespace ToastDescriptionProps {
   export type Render = RenderProps<ToastDescriptionState>;
 
-  export type SuruUI = Alert.Content.Props.SuruUI;
+  export type SuruUI = Alert.Description.Props.SuruUI;
 
   export type BaseUI = Override<
-    Alert.Content.Props.BaseUI,
+    Alert.Description.Props.BaseUI,
     Pick<
       React.ComponentProps<typeof Toast.Description>,
       Exclude<
@@ -56,8 +56,8 @@ export const ToastDescription: IToastDescription = function SuiToastDescription(
     <Toast.Description
       {...otherProps}
       render={(htmlProps: {}, toastState) => (
-        <Alert.Content
-          {...mergeProps<typeof Alert.Content>([
+        <Alert.Description
+          {...mergeProps<typeof Alert.Description>([
             htmlProps,
             proxyRenderProps(toastState, {
               style,

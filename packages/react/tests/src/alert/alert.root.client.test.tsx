@@ -12,7 +12,7 @@ describe("AlertRoot", () => {
     const root = screen.getByRole("alert", { name: "通知" }).element();
     expect(root.classList.contains("sui_alert")).toBe(true);
     expect(root.classList.contains("sui_alert-actionsposition_side")).toBe(true);
-    expect(root.classList.contains("sui_alert-contentposition_bottom")).toBe(true);
+    expect(root.classList.contains("sui_alert-descriptionposition_bottom")).toBe(true);
     expect(root.classList.contains("sui_alert-size_md")).toBe(true);
     expect(root.classList.contains("sui_alert-color_grey")).toBe(true);
     expect(root.classList.contains("sui_alert-radius_md")).toBe(true);
@@ -26,7 +26,7 @@ describe("AlertRoot", () => {
       <AlertRoot
         aria-label="通知"
         actionsPosition="bottom"
-        contentPosition="side-end"
+        descriptionPosition="side-end"
         size="lg"
         color="red"
         radius="none"
@@ -38,7 +38,7 @@ describe("AlertRoot", () => {
     // 検証
     const root = screen.getByRole("alert", { name: "通知" }).element();
     expect(root.classList.contains("sui_alert-actionsposition_bottom")).toBe(true);
-    expect(root.classList.contains("sui_alert-contentposition_side_end")).toBe(true);
+    expect(root.classList.contains("sui_alert-descriptionposition_side_end")).toBe(true);
     expect(root.classList.contains("sui_alert-size_lg")).toBe(true);
     expect(root.classList.contains("sui_alert-color_red")).toBe(true);
     expect(root.classList.contains("sui_alert-radius_none")).toBe(true);
@@ -110,11 +110,11 @@ describe("AlertRoot", () => {
     // 準備と実行
     const screen = await render(
       <AlertRoot aria-label="通知">
-        <span>本文</span>
+        <span>説明文</span>
       </AlertRoot>,
     );
 
     // 検証
-    expect(screen.getByText("本文").query()).not.toBe(null);
+    expect(screen.getByText("説明文").query()).not.toBe(null);
   });
 });

@@ -79,43 +79,43 @@ describe("AlertAPI", () => {
     expect(api.getTitleProps()).toStrictEqual({ children: "" });
   });
 
-  test("getContentProps は未指定のとき null を返す", ({ expect }) => {
+  test("getDescriptionProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
     const api = new AlertAPI({});
 
     // 検証
-    expect(api.getContentProps()).toBe(null);
+    expect(api.getDescriptionProps()).toBe(null);
   });
 
   test.for([null, undefined, false])(
-    "getContentProps は非表示の本文 (%s) で null を返す",
+    "getDescriptionProps は非表示の説明文 (%s) で null を返す",
     (children, { expect }) => {
       // 準備と実行
       const api = new AlertAPI({ children });
 
       // 検証
-      expect(api.getContentProps()).toBe(null);
+      expect(api.getDescriptionProps()).toBe(null);
     },
   );
 
-  test("getContentProps は本文を子要素にして返す", ({ expect }) => {
+  test("getDescriptionProps は説明文を子要素にして返す", ({ expect }) => {
     // 準備と実行
     const api = new AlertAPI({ children: "プロフィールを更新しました。" });
 
     // 検証
-    expect(api.getContentProps()).toStrictEqual({ children: "プロフィールを更新しました。" });
+    expect(api.getDescriptionProps()).toStrictEqual({ children: "プロフィールを更新しました。" });
   });
 
-  test("getContentProps は slotProps の指定を子要素に重ねる", ({ expect }) => {
+  test("getDescriptionProps は slotProps の指定を子要素に重ねる", ({ expect }) => {
     // 準備と実行
     const api = new AlertAPI({
       children: "プロフィールを更新しました。",
-      slotProps: { content: { id: "content" } },
+      slotProps: { description: { id: "description" } },
     });
 
     // 検証
-    expect(api.getContentProps()).toStrictEqual({
-      id: "content",
+    expect(api.getDescriptionProps()).toStrictEqual({
+      id: "description",
       children: "プロフィールを更新しました。",
     });
   });
@@ -178,7 +178,7 @@ describe("Alert", () => {
     expect(screen.getByRole("button", { name: "再試行" }).query()).not.toBe(null);
   });
 
-  test("本文だけでも描画する", async ({ expect }) => {
+  test("説明文だけでも描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Alert aria-label="通知">プロフィールを更新しました。</Alert>);
 
@@ -189,7 +189,7 @@ describe("Alert", () => {
 
   test("指定しないパーツを描画しない", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<Alert aria-label="通知">本文</Alert>);
+    const screen = await render(<Alert aria-label="通知">説明文</Alert>);
 
     // 検証
     expect(screen.getByClassName("sui_alert_icon").query()).toBe(null);
@@ -207,23 +207,23 @@ describe("Alert", () => {
         actions="再試行"
         slotProps={{
           actions: { id: "actions" },
-          content: { id: "content" },
+          description: { id: "description" },
           icon: { id: "icon" },
           title: { id: "title" },
         }}
       >
-        本文
+        説明文
       </Alert>,
     );
 
     // 検証
     expect(screen.getByClassName("sui_alert_icon").element().id).toBe("icon");
     expect(screen.getByClassName("sui_alert_title").element().id).toBe("title");
-    expect(screen.getByClassName("sui_alert_content").element().id).toBe("content");
+    expect(screen.getByClassName("sui_alert_description").element().id).toBe("description");
     expect(screen.getByClassName("sui_alert_actions").element().id).toBe("actions");
   });
 
-  test("本文が非表示のときコンテンツを描画しない", async ({ expect }) => {
+  test("説明文が非表示のとき描画しない", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <Alert aria-label="通知" title="更新完了">
@@ -233,6 +233,6 @@ describe("Alert", () => {
 
     // 検証
     expect(screen.getByText("更新完了").query()).not.toBe(null);
-    expect(screen.getByClassName("sui_alert_content").query()).toBe(null);
+    expect(screen.getByClassName("sui_alert_description").query()).toBe(null);
   });
 });
