@@ -1,6 +1,5 @@
 import * as theme from "@suru-ui/theme";
 import {
-  XIcon,
   InfoIcon,
   AlertCircleIcon,
   CheckCircle2Icon,
