@@ -16,7 +16,7 @@ import {
  * {@link AlertDialogDescription} が持つ状態です。
  */
 export type AlertDialogDescriptionState = Override<
-  Override<Card.Description.State, AlertDialogPopupContext>,
+  Override<AlertDialogPopupContext, Card.Description.State>,
   AlertDialog.Description.State
 >;
 
@@ -73,7 +73,7 @@ export const AlertDialogDescription: IAlertDialogDescription = function SuiAlert
           {...mergeProps<typeof Card.Description>([
             htmlProps,
             proxyRenderProps<Card.Description.State, AlertDialogDescriptionState>(
-              (state) => ({ ...state, ...ctx }),
+              (state) => ({ ...ctx, ...state }),
               {
                 style,
                 render,

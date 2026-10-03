@@ -121,7 +121,7 @@ export const AlertDialogPopup: IAlertDialogPopup = function SuiAlertDialogPopup(
                 htmlProps,
                 cardRootProps,
                 proxyRenderProps<AlertDialog.Popup.State, AlertDialogPopupState>(
-                  (state) => ({ ...state, ...ctx, outlined, ...popupState }),
+                  (state) => ({ ...ctx, ...state, outlined, ...popupState }),
                   {
                     style,
                     render,

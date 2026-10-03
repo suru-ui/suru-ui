@@ -11,7 +11,7 @@ import {
 /**
  * {@link AlertDialogHeader} が持つ状態です。
  */
-export type AlertDialogHeaderState = Override<Card.Header.State, AlertDialogPopupContext>;
+export type AlertDialogHeaderState = Override<AlertDialogPopupContext, Card.Header.State>;
 
 export namespace AlertDialogHeaderProps {
   export type Render = RenderProps<AlertDialogHeaderState>;
@@ -44,7 +44,7 @@ export const AlertDialogHeader: IAlertDialogHeader = function SuiAlertDialogHead
     <Card.Header
       {...otherProps}
       {...proxyRenderProps<Card.Header.State, AlertDialogHeaderState>(
-        (state) => ({ ...state, ...ctx }),
+        (state) => ({ ...ctx, ...state }),
         {
           style,
           render,

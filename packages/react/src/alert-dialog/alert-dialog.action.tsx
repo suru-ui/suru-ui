@@ -11,7 +11,7 @@ import {
 /**
  * {@link AlertDialogAction} が持つ状態です。
  */
-export type AlertDialogActionState = Override<Card.Action.State, AlertDialogPopupContext>;
+export type AlertDialogActionState = Override<AlertDialogPopupContext, Card.Action.State>;
 
 export namespace AlertDialogActionProps {
   export type Render = RenderProps<AlertDialogActionState>;
@@ -46,7 +46,7 @@ export const AlertDialogAction: IAlertDialogAction = function SuiAlertDialogActi
     <Card.Action
       {...otherProps}
       {...proxyRenderProps<Card.Action.State, AlertDialogActionState>(
-        (state) => ({ ...state, ...ctx }),
+        (state) => ({ ...ctx, ...state }),
         {
           style,
           render,

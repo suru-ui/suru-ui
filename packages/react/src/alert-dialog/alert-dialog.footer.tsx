@@ -11,7 +11,7 @@ import {
 /**
  * {@link AlertDialogFooter} が持つ状態です。
  */
-export type AlertDialogFooterState = Override<Card.Footer.State, AlertDialogPopupContext>;
+export type AlertDialogFooterState = Override<AlertDialogPopupContext, Card.Footer.State>;
 
 export namespace AlertDialogFooterProps {
   export type Render = RenderProps<AlertDialogFooterState>;
@@ -46,7 +46,7 @@ export const AlertDialogFooter: IAlertDialogFooter = function SuiAlertDialogFoot
     <Card.Footer
       {...otherProps}
       {...proxyRenderProps<Card.Footer.State, AlertDialogFooterState>(
-        (state) => ({ ...state, ...ctx }),
+        (state) => ({ ...ctx, ...state }),
         {
           style,
           render,
