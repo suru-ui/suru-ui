@@ -2,19 +2,31 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
-import { useCardContext } from "./card.context.js";
-import type { CardHeaderState } from "./card.header.jsx";
+import type { Override, IComponent } from "../types.js";
+import { type CardContext, useCardContext } from "./card.context.js";
 
 /**
  * {@link CardAction} が持つ状態です。
  */
-export type CardActionState = CardHeaderState;
+export type CardActionState = Override<
+  CardContext,
+  {
+    /**
+     * 絶対位置に配置されているかどうかです。
+     */
+    absolute: boolean;
+  }
+>;
 
 export namespace CardActionProps {
   export type Render = RenderProps<CardActionState>;
 
-  export type SuruUI = {};
+  export type SuruUI = {
+    /**
+     * 絶対位置で配置します。
+     */
+    absolute?: boolean | undefined;
+  };
 
   export type BaseUI = {};
 
@@ -39,20 +51,22 @@ export type ICardAction = IComponent<CardActionProps>;
  */
 export const CardAction: ICardAction = function SuiCardAction(props) {
   const ctx = useCardContext();
+  const { absolute = false, ...otherDivProps } = props;
 
   return useRender({
     props: [
-      props,
+      otherDivProps,
       {
         className: cn<CardActionState>(
           "sui_card_action",
           (state) => `sui_card_action-size_${state.size}`,
           (state) => `sui_card_action-radius_${state.radius}`,
+          (state) => state.absolute && "sui_card_action-absolute",
           (state) => state.outlined && "sui_card_action-outlined",
         ),
       },
     ],
-    state: ctx,
+    state: { ...ctx, absolute },
     defaultTagName: "div",
   });
 };
