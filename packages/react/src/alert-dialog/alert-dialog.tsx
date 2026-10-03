@@ -214,7 +214,9 @@ namespace AlertDialogProps {
     trigger?: AlertDialogToggleTriggerProps["children"] | undefined;
   };
 
-  export type Popup = Omit<AlertDialogPopupProps, keyof AlertDialog | keyof Root>;
+  export type Content = Pick<AlertDialogContentProps, "children">;
+
+  export type Popup = Omit<AlertDialogPopupProps, "children" | keyof AlertDialog | keyof Root>;
 
   export type Root<TPayload = any> = Omit<
     AlertDialogRootProps<TPayload>,
@@ -229,7 +231,8 @@ namespace AlertDialogProps {
  */
 export type AlertDialogProps<TPayload = any> = AlertDialogProps.AlertDialog<TPayload> &
   AlertDialogProps.Root<TPayload> &
-  AlertDialogProps.Popup;
+  AlertDialogProps.Popup &
+  AlertDialogProps.Content;
 
 export interface IUseAlertDialogAPI {
   /**
@@ -273,6 +276,8 @@ export class AlertDialogAPI<TPayload = any> {
 
   private readonly popupProps: AlertDialogProps.Popup;
 
+  private readonly contentProps: Required<AlertDialogProps.Content> | null;
+
   /**
    * @param props {@link AlertDialog} の props です。
    * @internal
@@ -290,6 +295,7 @@ export class AlertDialogAPI<TPayload = any> {
       handle,
       confirm,
       trigger,
+      children,
       onCancel,
       onConfirm,
       slotProps = {},
@@ -328,6 +334,7 @@ export class AlertDialogAPI<TPayload = any> {
       onOpenChangeComplete,
     };
     this.popupProps = popupProps;
+    this.contentProps = "children" in props ? { children } : null;
   }
 
   /**
@@ -422,9 +429,16 @@ export class AlertDialogAPI<TPayload = any> {
    * それを表示しないときは `null` を返します。
    */
   public getContentProps(): AlertDialogContentProps | null {
-    const { content: props = null } = this.slotProps;
+    const { content: props } = this.slotProps;
 
-    return props;
+    if (this.contentProps) {
+      return {
+        ...props,
+        ...this.contentProps,
+      };
+    }
+
+    return null;
   }
 
   /**
