@@ -414,7 +414,7 @@ export const Radii = meta.story({
   },
 });
 
-export const Outlined = meta.story({
+export const Outline = meta.story({
   name: "枠線",
   ...ctrl({
     children: "説明文",
