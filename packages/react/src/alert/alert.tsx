@@ -12,6 +12,7 @@ import {
   type AlertActionsProps,
   type AlertContentProps,
   type AlertRootActionsPosition,
+  type AlertRootContentPosition,
   AlertIcon,
   AlertRoot,
   AlertTitle,
@@ -23,6 +24,8 @@ import {
 // -----
 
 export type AlertColor = AlertRootColor;
+
+export type AlertContentPosition = AlertRootContentPosition;
 
 export type AlertRadius = AlertRootRadius;
 
@@ -258,6 +261,8 @@ export namespace Alert {
   export type ActionsPosition = AlertRootActionsPosition;
 
   export type Color = AlertColor;
+
+  export type ContentPosition = AlertContentPosition;
 
   export type Radius = AlertRadius;
 

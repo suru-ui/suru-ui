@@ -16,6 +16,15 @@ import type { IComponent } from "../types.js";
 export type AlertRootActionsPosition = "bottom" | "side";
 
 /**
+ * アラートの本文の配置です。
+ *
+ * - `"bottom"`: タイトルの下
+ * - `"side-start"`: タイトルの右側に横方向へ並べ、本文を左寄せにします
+ * - `"side-end"`: タイトルの右側に横方向へ並べ、本文を右寄せにします
+ */
+export type AlertRootContentPosition = "bottom" | "side-start" | "side-end";
+
+/**
  * アラートの配色です。
  */
 export type AlertRootColor = Color;
@@ -70,6 +79,17 @@ export namespace AlertRootProps {
      * @default "grey"
      */
     color?: AlertRootColor | undefined;
+
+    /**
+     * タイトルに対する本文の配置を指定します。
+     *
+     * - `"bottom"`: タイトルの下に本文を置きます
+     * - `"side-start"`: タイトルの右側に本文を横方向へ並べ、本文を左寄せにします
+     * - `"side-end"`: タイトルの右側に本文を横方向へ並べ、本文を右寄せにします
+     *
+     * @default "bottom"
+     */
+    contentPosition?: AlertRootContentPosition | undefined;
 
     /**
      * 枠線を表示するかどうかを指定します。
@@ -130,6 +150,7 @@ export const AlertRoot: IAlertRoot = function SuiAlertRoot(props) {
     variant = "muted",
     outlined = false,
     actionsPosition = "side",
+    contentPosition = "bottom",
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherDivProps
@@ -143,6 +164,7 @@ export const AlertRoot: IAlertRoot = function SuiAlertRoot(props) {
         className: cn(
           "sui_alert",
           `sui_alert-actionsposition_${actionsPosition}`,
+          `sui_alert-contentposition_${contentPosition.replaceAll("-", "_")}`,
           `sui_alert-size_${size}`,
           `sui_alert-color_${color}`,
           `sui_alert-radius_${radius}`,
@@ -176,6 +198,8 @@ export namespace Root {
   export type ActionsPosition = AlertRootActionsPosition;
 
   export type Color = AlertRootColor;
+
+  export type ContentPosition = AlertRootContentPosition;
 
   export type Radius = AlertRootRadius;
 

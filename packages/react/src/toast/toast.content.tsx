@@ -83,6 +83,7 @@ export const ToastContent: IToastContent = function SuiToastContent(props) {
     outlined,
     className,
     actionsPosition,
+    contentPosition,
     ...otherProps
   } = props;
 
@@ -97,6 +98,7 @@ export const ToastContent: IToastContent = function SuiToastContent(props) {
           variant,
           outlined,
           actionsPosition,
+          contentPosition,
         };
 
         return (

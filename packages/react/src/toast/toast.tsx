@@ -96,7 +96,7 @@ export type ToastState = ToastRootState;
 namespace ToastProps {
   export type Content = Pick<
     ToastContentProps,
-    "size" | "color" | "radius" | "variant" | "outlined" | "actionsPosition"
+    "size" | "color" | "radius" | "variant" | "outlined" | "actionsPosition" | "contentPosition"
   >;
 
   export type Root<TData extends object = any> = Omit<
@@ -253,12 +253,21 @@ export class ToastAPI<TData extends object = any> {
       slotProps = {},
       description,
       actionsPosition,
+      contentPosition,
       ...rootProps
     } = props;
     this.toastProps = { close, title, action, description };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
-    this.contentProps = { size, color, radius, variant, outlined, actionsPosition };
+    this.contentProps = {
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+      actionsPosition,
+      contentPosition,
+    };
   }
 
   /**

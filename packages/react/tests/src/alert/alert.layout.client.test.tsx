@@ -37,6 +37,102 @@ describe("AlertRoot の配置", () => {
     expect(title.bottom).toBeLessThanOrEqual(content.top);
   });
 
+  test("アクションがなくてもタイトルと本文を縦に並べる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertRoot aria-label="通知" actionsPosition="side">
+        <AlertIcon />
+        <AlertTitle>更新完了</AlertTitle>
+        <AlertContent>プロフィールを更新しました。</AlertContent>
+      </AlertRoot>,
+    );
+
+    // 検証
+    const title = screen.getByText("更新完了").element().getBoundingClientRect();
+    const content = screen
+      .getByText("プロフィールを更新しました。")
+      .element()
+      .getBoundingClientRect();
+    expect(title.bottom).toBeLessThanOrEqual(content.top);
+  });
+
+  test("タイトルと本文を横に並べて本文を右寄せにできる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertRoot aria-label="通知" actionsPosition="side" contentPosition="side-end">
+        <AlertIcon />
+        <AlertTitle>更新完了</AlertTitle>
+        <AlertContent>プロフィールを更新しました。</AlertContent>
+      </AlertRoot>,
+    );
+
+    // 検証
+    const icon = screen.getByClassName("sui_alert_icon").element().getBoundingClientRect();
+    const title = screen.getByText("更新完了").element().getBoundingClientRect();
+    const content = screen
+      .getByText("プロフィールを更新しました。")
+      .element()
+      .getBoundingClientRect();
+    expect(title.left).toBeGreaterThanOrEqual(icon.right);
+    expect(content.left).toBeGreaterThanOrEqual(title.right);
+    expect(title.top).toBeCloseTo(content.top, 0);
+    expect(
+      getComputedStyle(screen.getByText("プロフィールを更新しました。").element()).textAlign,
+    ).toBe("end");
+  });
+
+  test("タイトルと本文を横に並べて本文を左寄せにできる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertRoot aria-label="通知" actionsPosition="side" contentPosition="side-start">
+        <AlertIcon />
+        <AlertTitle>更新完了</AlertTitle>
+        <AlertContent>プロフィールを更新しました。</AlertContent>
+      </AlertRoot>,
+    );
+
+    // 検証
+    const icon = screen.getByClassName("sui_alert_icon").element().getBoundingClientRect();
+    const title = screen.getByText("更新完了").element().getBoundingClientRect();
+    const content = screen
+      .getByText("プロフィールを更新しました。")
+      .element()
+      .getBoundingClientRect();
+    expect(title.left).toBeGreaterThanOrEqual(icon.right);
+    expect(content.left).toBeGreaterThanOrEqual(title.right);
+    expect(title.top).toBeCloseTo(content.top, 0);
+    expect(
+      getComputedStyle(screen.getByText("プロフィールを更新しました。").element()).textAlign,
+    ).toBe("start");
+  });
+
+  test.skipIf(!supportsCustomFunctions())(
+    "本文を横に並べたときアクションを末尾に置く",
+    async ({ expect }) => {
+      // 準備と実行
+      const screen = await render(
+        <AlertRoot aria-label="通知" actionsPosition="side" contentPosition="side-end">
+          <AlertIcon />
+          <AlertTitle>更新完了</AlertTitle>
+          <AlertContent>プロフィールを更新しました。</AlertContent>
+          <AlertActions>
+            <button type="button">再試行</button>
+          </AlertActions>
+        </AlertRoot>,
+      );
+
+      // 検証
+      const content = screen
+        .getByText("プロフィールを更新しました。")
+        .element()
+        .getBoundingClientRect();
+      const actions = screen.getByClassName("sui_alert_actions").element();
+      expect(getComputedStyle(actions).gridColumnStart).toBe("4");
+      const actionsRect = actions.getBoundingClientRect();
+      expect(actionsRect.left).toBeGreaterThan(content.right);
+    },
+  );
+
   test("本文の下にアクションを置く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

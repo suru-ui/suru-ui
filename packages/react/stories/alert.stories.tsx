@@ -15,6 +15,7 @@ import * as AlertParts from "../src/alert/index.js";
 import { Button } from "../src/button/index.js";
 
 const ACTIONS_POSITIONS: readonly Alert.ActionsPosition[] = ["bottom", "side"];
+const CONTENT_POSITIONS: readonly Alert.ContentPosition[] = ["bottom", "side-start", "side-end"];
 const COLORS: readonly Alert.Color[] = theme.COLORS;
 const RADII: readonly Alert.Radius[] = ["none", ...theme.SIZES];
 const SIZES: readonly Alert.Size[] = theme.SIZES;
@@ -49,7 +50,7 @@ const STATUSES: readonly {
   },
   {
     status: "error",
-    title: "保存できませんでした",
+    title: "保存に失敗",
     content: "入力内容を確認して、もう一度お試しください。",
     color: "red",
     Icon: AlertCircleIcon,
@@ -75,6 +76,10 @@ const ctrl = controls(Alert, {
     control: "select",
     options: COLORS,
   },
+  contentPosition: {
+    control: "select",
+    options: CONTENT_POSITIONS,
+  },
   outlined: {
     control: "boolean",
   },
@@ -98,12 +103,12 @@ const ctrl = controls(Alert, {
 export const Basic = meta.story({
   name: "基本",
   ...ctrl({
-    children: "プロフィールを更新しました。",
     variant: "muted",
     color: "grey",
     size: "md",
     radius: undefined,
     outlined: true,
+    children: "プロフィールを更新しました。",
   }),
   render(props) {
     return (
@@ -114,233 +119,21 @@ export const Basic = meta.story({
   },
 });
 
-export const Dismissible = meta.story({
-  name: "閉じるボタン付き",
-  ...ctrl({
-    title: "更新完了",
-    children: "プロフィールを更新しました。",
-    variant: "muted",
-    color: "green",
-    size: "md",
-    radius: undefined,
-    outlined: true,
-  }),
-  render(props) {
-    const [open, setOpen] = React.useState(true);
-
-    return (
-      <div className="w-[450px]">
-        {open ? (
-          <Alert
-            {...props}
-            icon={<CheckCircle2Icon />}
-            actions={
-              <Button
-                size={props.size}
-                onClick={() => setOpen(false)}
-                squared
-                variant="naked"
-                aria-label="閉じる"
-              >
-                <XIcon />
-              </Button>
-            }
-            actionsPosition="side"
-          />
-        ) : (
-          <Button size={props.size} onClick={() => setOpen(true)}>
-            再表示
-          </Button>
-        )}
-      </div>
-    );
-  },
-});
-
-export const Sizes = meta.story({
-  name: "大きさ",
-  ...ctrl({
-    title: "更新完了",
-    children: "プロフィールを更新しました。",
-    variant: "muted",
-    color: "grey",
-    radius: undefined,
-    outlined: true,
-  }),
-  render(props) {
-    return (
-      <div className="flex w-[450px] flex-col gap-3">
-        {SIZES.map((size) => (
-          <div key={size} className="flex flex-col gap-2 w-[450px]">
-            <span>{size}</span>
-            <Alert {...props} icon={<InfoIcon />} size={size} />
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const Statuses = meta.story({
-  name: "ステータス",
-  ...ctrl({
-    variant: "muted",
-    size: "md",
-    radius: undefined,
-    outlined: true,
-  }),
-  render(props) {
-    return (
-      <div className="flex w-[450px] flex-col gap-3">
-        {STATUSES.map(({ status, title, content, color, Icon }) => (
-          <div key={status} className="flex flex-col gap-2">
-            <span>{status}</span>
-            <Alert {...props} icon={<Icon />} color={color} title={title}>
-              {content}
-            </Alert>
-          </div>
-        ))}
-      </div>
-    );
-  },
-});
-
-export const WithTitle = meta.story({
-  name: "タイトル付き",
-  ...ctrl({
-    variant: "muted",
-    color: "green",
-    size: "md",
-    radius: undefined,
-    outlined: true,
-  }),
-  render(props) {
-    return (
-      <div className="flex w-[450px] flex-col gap-3">
-        <div className="flex flex-col gap-2">
-          <span>タイトルと本文</span>
-          <Alert {...props} icon={<CheckCircle2Icon />} title="更新完了">
-            プロフィールを更新しました。
-          </Alert>
-        </div>
-        <div className="flex flex-col gap-2">
-          <span>タイトルのみ</span>
-          <Alert {...props} icon={<CheckCircle2Icon />} title="更新完了" />
-        </div>
-      </div>
-    );
-  },
-});
-
-export const WithIcon = meta.story({
-  name: "アイコン付き",
-  ...ctrl({
-    children: "新しい更新があります。",
-    variant: "muted",
-    color: "grey",
-    size: "md",
-    radius: undefined,
-    outlined: true,
-  }),
-  render(props) {
-    return (
-      <div className="w-[450px]">
-        <Alert {...props} icon={<InfoIcon />} />
-      </div>
-    );
-  },
-});
-
-export const WithIndicator = meta.story({
-  name: "インジケーター付き",
-  ...ctrl({
-    children: "プロフィールを更新しました。",
-    variant: "muted",
-    color: "green",
-    size: "md",
-    radius: undefined,
-    outlined: true,
-  }),
-  render(props) {
-    return (
-      <div className="w-[450px]">
-        <Alert {...props} icon="" />
-      </div>
-    );
-  },
-});
-
-export const WithActions = meta.story({
-  name: "アクション付き",
-  ...ctrl({
-    title: "保存できませんでした",
-    children: "入力内容を確認して、もう一度お試しください。",
-    variant: "muted",
-    color: "red",
-    size: "md",
-    radius: undefined,
-    outlined: true,
-  }),
-  render(props) {
-    const actions = (
-      <>
-        <Button size={props.size} variant="naked">
-          閉じる
-        </Button>
-        <Button size={props.size} color={props.color}>
-          再試行
-        </Button>
-      </>
-    );
-
-    return (
-      <div className="flex w-[450px] flex-col gap-3">
-        <div className="flex flex-col gap-2">
-          <span>下部</span>
-          <Alert {...props} icon={<AlertCircleIcon />} actions={actions} actionsPosition="bottom" />
-        </div>
-        <div className="flex flex-col gap-2">
-          <span>横並び</span>
-          <Alert {...props} icon={<AlertCircleIcon />} actions={actions} actionsPosition="side" />
-        </div>
-      </div>
-    );
-  },
-});
-
-export const Loading = meta.story({
-  name: "読み込み中",
-  ...ctrl({
-    variant: "muted",
-    color: "blue",
-    size: "md",
-    radius: undefined,
-    outlined: true,
-  }),
-  render(props) {
-    return (
-      <div className="w-[450px]">
-        <Alert {...props} icon={<LoaderCircleIcon className="animate-spin" />} title="読み込み中">
-          しばらくお待ちください。
-        </Alert>
-      </div>
-    );
-  },
-});
-
 export const Variants = meta.story({
   name: "主な外観",
   ...ctrl({
-    title: "更新完了",
-    children: "プロフィールを更新しました。",
     color: "blue",
     size: "md",
     radius: undefined,
     outlined: true,
+    actionsPosition: "side",
+    contentPosition: "bottom",
+    title: "更新完了",
+    children: "プロフィールを更新しました。",
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2 w-[450px]">
             <span>{variant}</span>
@@ -371,6 +164,7 @@ export const Colors = meta.story({
   ...ctrl({
     title: "更新完了",
     children: "プロフィールを更新しました。",
+    contentPosition: "bottom",
     variant: "muted",
     size: "md",
     radius: undefined,
@@ -378,11 +172,36 @@ export const Colors = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-6">
         {COLORS.map((color) => (
           <div key={color} className="flex flex-col gap-2 w-[450px]">
             <span>{color}</span>
             <Alert {...props} icon={<InfoIcon />} color={color} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Sizes = meta.story({
+  name: "大きさ",
+  ...ctrl({
+    variant: "muted",
+    color: "grey",
+    radius: undefined,
+    outlined: true,
+    contentPosition: "bottom",
+    title: "更新完了",
+    children: "プロフィールを更新しました。",
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[450px] flex-col gap-6">
+        {SIZES.map((size) => (
+          <div key={size} className="flex flex-col gap-2 w-[450px]">
+            <span>{size}</span>
+            <Alert {...props} icon={<InfoIcon />} size={size} />
           </div>
         ))}
       </div>
@@ -395,6 +214,7 @@ export const Radii = meta.story({
   ...ctrl({
     title: "更新完了",
     children: "プロフィールを更新しました。",
+    contentPosition: "bottom",
     variant: "muted",
     color: "grey",
     size: "md",
@@ -402,7 +222,7 @@ export const Radii = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex w-[450px] flex-col gap-3">
+      <div className="flex w-[450px] flex-col gap-6">
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col gap-2 w-[450px]">
             <span>{radius}</span>
@@ -418,6 +238,7 @@ export const Outline = meta.story({
   name: "枠線",
   ...ctrl({
     children: "説明文",
+    contentPosition: "bottom",
     variant: "muted",
     color: "grey",
     size: "md",
@@ -425,9 +246,170 @@ export const Outline = meta.story({
   }),
   render(props) {
     return (
-      <div className="flex w-[450px] flex-col gap-3">
+      <div className="flex w-[450px] flex-col gap-6">
         <Alert {...props} icon={<InfoIcon />} title="枠線付き" outlined />
         <Alert {...props} icon={<InfoIcon />} title="枠線無し" />
+      </div>
+    );
+  },
+});
+
+export const Statuses = meta.story({
+  name: "状態",
+  ...ctrl({
+    variant: "muted",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    contentPosition: "bottom",
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[450px] flex-col gap-6">
+        {STATUSES.map(({ status, title, content, color, Icon }) => (
+          <div key={status} className="flex flex-col gap-2">
+            <span>{status}</span>
+            <Alert {...props} icon={<Icon />} color={color} title={title}>
+              {content}
+            </Alert>
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const WithTitle = meta.story({
+  name: "タイトル付き",
+  ...ctrl({
+    variant: "muted",
+    color: "green",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    title: "更新完了",
+    children: "プロフィールを更新しました。",
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[450px] flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <span>タイトル下部に本文</span>
+          <Alert {...props} icon={<CheckCircle2Icon />} />
+        </div>
+        <div className="flex flex-col gap-2">
+          <span>タイトル側面のすぐ隣に本文</span>
+          <Alert {...props} icon={<CheckCircle2Icon />} contentPosition="side-start" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <span>タイトル側面の離れに本文</span>
+          <Alert {...props} icon={<CheckCircle2Icon />} contentPosition="side-end" />
+        </div>
+      </div>
+    );
+  },
+});
+
+export const WithIcon = meta.story({
+  name: "アイコン付き",
+  ...ctrl({
+    variant: "muted",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    children: "新しい更新があります。",
+  }),
+  render(props) {
+    return (
+      <div className="flex w-[450px] flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <span>アイコン付き</span>
+          <Alert {...props} icon={<InfoIcon />} />
+        </div>
+        <div className="flex flex-col gap-2">
+          <span>アイコンなし</span>
+          <Alert {...props} />
+        </div>
+      </div>
+    );
+  },
+});
+
+export const WithIndicator = meta.story({
+  name: "インジケーター付き",
+  ...ctrl({
+    variant: "muted",
+    color: "green",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    children: "プロフィールを更新しました。",
+  }),
+  render(props) {
+    return (
+      <div className="w-[450px]">
+        <Alert {...props} icon="" />
+      </div>
+    );
+  },
+});
+
+export const WithActions = meta.story({
+  name: "アクション付き",
+  ...ctrl({
+    variant: "muted",
+    color: "red",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    contentPosition: "bottom",
+    title: "保存できませんでした",
+    children: "入力内容を確認して、もう一度お試しください。",
+  }),
+  render(props) {
+    const actions = (
+      <>
+        <Button size={props.size} variant="naked">
+          閉じる
+        </Button>
+        <Button size={props.size} color={props.color}>
+          再試行
+        </Button>
+      </>
+    );
+
+    return (
+      <div className="flex w-[450px] flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <span>下部</span>
+          <Alert {...props} icon={<AlertCircleIcon />} actions={actions} actionsPosition="bottom" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <span>側面</span>
+          <Alert {...props} icon={<AlertCircleIcon />} actions={actions} actionsPosition="side" />
+        </div>
+      </div>
+    );
+  },
+});
+
+export const Loading = meta.story({
+  name: "読み込み中",
+  ...ctrl({
+    variant: "muted",
+    color: "grey",
+    size: "md",
+    radius: undefined,
+    outlined: true,
+    contentPosition: "side-end",
+    title: "読み込み中",
+    children: "29 % 完了",
+  }),
+  render(props) {
+    return (
+      <div className="w-[450px]">
+        <Alert {...props} icon={<LoaderCircleIcon className="animate-spin" />} />
       </div>
     );
   },
@@ -436,16 +418,17 @@ export const Outline = meta.story({
 export const CustomComposition = meta.story({
   name: "独自構成",
   ...ctrl({
-    actionsPosition: "side",
     variant: "muted",
     color: "blue",
     size: "md",
     radius: undefined,
     outlined: true,
+    actionsPosition: "side",
+    contentPosition: "bottom",
   }),
   render(props) {
     const Alert = AlertParts;
-    const { size, color, radius, variant, outlined, actionsPosition } = props;
+    const { size, color, radius, variant, outlined, actionsPosition, contentPosition } = props;
 
     return (
       <div className="w-[450px]">
@@ -456,6 +439,7 @@ export const CustomComposition = meta.story({
           variant={variant}
           outlined={outlined}
           actionsPosition={actionsPosition}
+          contentPosition={contentPosition}
         >
           <Alert.Icon>
             <InfoIcon />

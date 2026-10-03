@@ -189,9 +189,47 @@ export const Controlled = meta.story({
   },
 });
 
+export const Variants = meta.story({
+  name: "主な外観",
+  ...ctrl({
+    radius: "md",
+    outlined: true,
+    showCancelIconButton: false,
+    icon: false,
+    title: "プロジェクトを削除しますか？",
+    description:
+      "このプロジェクトに含まれるすべてのデータが削除されます。この操作は取り消せません。",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-wrap items-center gap-4">
+        {VARIANTS.map((variant) => (
+          <AlertDialog
+            key={variant}
+            {...props}
+            icon={props.icon && <Trash2Icon />}
+            title={`外観: ${variant}`}
+            cancel={<Button variant="naked">キャンセル</Button>}
+            confirm={<Button color="red">削除する</Button>}
+            trigger={<Button variant="liquid">{variant}</Button>}
+            variant={variant}
+            slotProps={{
+              icon: {
+                color: "red",
+                muted: true,
+              },
+            }}
+          />
+        ))}
+      </div>
+    );
+  },
+});
+
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
+    variant: "default",
     radius: "md",
     outlined: true,
     showCancelIconButton: false,
@@ -228,6 +266,7 @@ export const Sizes = meta.story({
 export const Radii = meta.story({
   name: "角丸",
   ...ctrl({
+    variant: "default",
     outlined: true,
     showCancelIconButton: false,
     icon: false,
@@ -301,43 +340,6 @@ export const Outline = meta.story({
             },
           }}
         />
-      </div>
-    );
-  },
-});
-
-export const Variants = meta.story({
-  name: "主な外観",
-  ...ctrl({
-    radius: "md",
-    outlined: true,
-    showCancelIconButton: false,
-    icon: false,
-    title: "プロジェクトを削除しますか？",
-    description:
-      "このプロジェクトに含まれるすべてのデータが削除されます。この操作は取り消せません。",
-  }),
-  render(props) {
-    return (
-      <div className="flex flex-wrap items-center gap-4">
-        {VARIANTS.map((variant) => (
-          <AlertDialog
-            key={variant}
-            {...props}
-            icon={props.icon && <Trash2Icon />}
-            title={`外観: ${variant}`}
-            cancel={<Button variant="naked">キャンセル</Button>}
-            confirm={<Button color="red">削除する</Button>}
-            trigger={<Button variant="liquid">{variant}</Button>}
-            variant={variant}
-            slotProps={{
-              icon: {
-                color: "red",
-                muted: true,
-              },
-            }}
-          />
-        ))}
       </div>
     );
   },
@@ -567,36 +569,36 @@ export const WithCancelIconButton = meta.story({
   },
 });
 
-export const CustomAction = meta.story({
-  name: "カスタム操作",
-  ...ctrl({
-    variant: "default",
-    radius: "md",
-    outlined: true,
-    showCancelIconButton: true,
-    icon: false,
-    title: "下書きの削除",
-    description: "閉じるアイコンの手前に独自の内容を追加できます。",
-  }),
-  render(props) {
-    return (
-      <AlertDialog
-        {...props}
-        icon={props.icon && <Trash2Icon />}
-        action={<span className="text-xs text-neutral-500">自動保存済み</span>}
-        cancel={<Button variant="naked">キャンセル</Button>}
-        confirm={<Button color="red">削除する</Button>}
-        trigger={<Button color="red">下書きを削除</Button>}
-        slotProps={{
-          icon: {
-            color: "red",
-            muted: true,
-          },
-        }}
-      />
-    );
-  },
-});
+// export const WithHelp = meta.story({
+//   name: "ヘルプ付き",
+//   ...ctrl({
+//     variant: "default",
+//     radius: "md",
+//     outlined: true,
+//     showCancelIconButton: true,
+//     icon: false,
+//     title: "下書きの削除",
+//     description: "閉じるアイコンの手前に独自の内容を追加できます。",
+//   }),
+//   render(props) {
+//     return (
+//       <AlertDialog
+//         {...props}
+//         icon={props.icon && <Trash2Icon />}
+//         action={<span className="text-xs text-neutral-500">自動保存済み</span>}
+//         cancel={<Button variant="naked">キャンセル</Button>}
+//         confirm={<Button color="red">削除する</Button>}
+//         trigger={<Button color="red">下書きを削除</Button>}
+//         slotProps={{
+//           icon: {
+//             color: "red",
+//             muted: true,
+//           },
+//         }}
+//       />
+//     );
+//   },
+// });
 
 export const Imperative = meta.story({
   name: "命令的操作",
