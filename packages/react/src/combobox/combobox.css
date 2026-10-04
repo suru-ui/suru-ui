@@ -75,6 +75,8 @@
   --sui_combobox-padding_block: ;
   --sui_combobox-button-virtual_padding_block: ;
   --sui_combobox-padding_inline: ;
+  --sui_combobox-margin: ;
+  --sui_combobox-margin_inline: ;
   --sui_combobox-font_family: ;
   --sui_combobox-font_size: ;
   --sui_combobox-font_weight: ;
@@ -104,6 +106,9 @@
   min-height: var(--sui_combobox-min_height);
   padding-block: var(--sui_combobox-padding_block);
   padding-inline: var(--sui_combobox-padding_inline);
+  margin-block-start: var(--_sui_combobox-margin_block_start, var(--sui_combobox-margin));
+  margin-block-end: var(--_sui_combobox-margin_block_end, var(--sui_combobox-margin));
+  margin-inline: var(--sui_combobox-margin);
   font-family: var(--sui_combobox-font_family);
   font-size: var(--sui_combobox-font_size);
   font-weight: var(--sui_combobox-font_weight);
@@ -156,6 +161,7 @@
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-sm);
     --sui_combobox-padding_inline: --sui-space(1);
+    --sui_combobox-margin: --sui-space(calc(1.5 / 2));
     --sui_combobox-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_combobox-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_combobox-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -167,6 +173,7 @@
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-md);
     --sui_combobox-padding_inline: --sui-space(1.5);
+    --sui_combobox-margin: --sui-space(calc(2.5 / 2));
     --sui_combobox-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_combobox-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_combobox-line_height: var(--sui-text-oln-md-n-line_height);
@@ -178,6 +185,7 @@
     --sui_combobox-icon-size: calc(var(--sui_combobox-font_size) * var(--sui_combobox-line_height));
     --sui_combobox-min_height: var(--sui-size-lg);
     --sui_combobox-padding_inline: --sui-space(2);
+    --sui_combobox-margin: --sui-space(calc(3.5 / 2));
     --sui_combobox-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_combobox-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_combobox-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -309,6 +317,41 @@
   &.sui_combobox-invalid {
     --_sui_combobox-border_color: var(--sui_combobox-border_color-invalid);
     --_sui_combobox-border_width: var(--sui_combobox-border_width-invalid);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* InputGroup */
+/* ポップアップ内の上下位置に依存し、入力グループ自身に等価なクラスが無いため、ポップアップ起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_combobox_popup) to ([data-scope]:not(.sui_combobox)) {
+
+/* 変異 */
+:scope {
+  &.sui_combobox_popup-inputposition_top .sui_combobox {
+    --_sui_combobox-margin_block_end: 0px;
+  }
+
+  &.sui_combobox_popup-inputposition_bottom .sui_combobox {
+    --_sui_combobox-margin_block_start: 0px;
+  }
+
+  &.sui_combobox_popup-inputposition_start:not(.sui_combobox_popup-side_top) .sui_combobox {
+    --_sui_combobox-margin_block_end: 0px;
+  }
+
+  &.sui_combobox_popup-inputposition_start.sui_combobox_popup-side_top .sui_combobox {
+    --_sui_combobox-margin_block_start: 0px;
+  }
+
+  &.sui_combobox_popup-inputposition_end:not(.sui_combobox_popup-side_top) .sui_combobox {
+    --_sui_combobox-margin_block_start: 0px;
+  }
+
+  &.sui_combobox_popup-inputposition_end.sui_combobox_popup-side_top .sui_combobox {
+    --_sui_combobox-margin_block_end: 0px;
   }
 }
 
@@ -1500,7 +1543,6 @@
 
 /* 変数 */
 :scope {
-  --sui_combobox_popup-gap: ;
   --sui_combobox_popup-min_width: ;
   --sui_combobox_popup-max_width: ;
   --sui_combobox_popup-virtual_padding_block: ;
@@ -1520,7 +1562,6 @@
 
 /* 代入 */
 :scope {
-  --sui_combobox_popup-gap: --sui-gap(3);
   --sui_combobox_popup-font_family: var(--sui-font-sans);
   --sui_combobox_popup-font_size: var(--sui-text-oln-md-n-font_size);
   --sui_combobox_popup-font_weight: var(--sui-text-oln-md-n-font_weight);
@@ -1615,7 +1656,6 @@
 /* 可変 */
 :scope {
   grid-template-areas: var(--_sui_combobox_popup-areas, "list");
-  gap: var(--sui_combobox_popup-gap);
   min-width: var(--sui_combobox_popup-min_width);
   max-width: var(--sui_combobox_popup-max_width);
   font-family: var(--sui_combobox_popup-font_family);
