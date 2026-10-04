@@ -1,9 +1,14 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size } from "@suru-ui/theme";
+import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import {
+  type AspectRatioContextRatio,
+  type AspectRatioContextRadius,
+  AspectRatioContext,
+} from "./aspect-ratio.context.js";
 
 /**
  * アスペクト比コンテナーの角丸の大きさです。
@@ -13,7 +18,7 @@ import type { IComponent } from "../types.js";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type AspectRatioRootRadius = "none" | Size;
+export type AspectRatioRootRadius = AspectRatioContextRadius;
 
 /**
  * アスペクト比です。
@@ -21,22 +26,12 @@ export type AspectRatioRootRadius = "none" | Size;
  * 数値は「幅 / 高さ」として解釈されます。
  * CSS の `aspect-ratio` プロパティーと同じ形式の値を指定できます。
  */
-export type AspectRatioRootRatio = number | string;
+export type AspectRatioRootRatio = AspectRatioContextRatio;
 
 /**
  * {@link AspectRatioRoot} が持つ状態です。
  */
-export type AspectRatioRootState = {
-  /**
-   * コンテナーの角丸の大きさです。
-   */
-  readonly radius: AspectRatioRootRadius;
-
-  /**
-   * コンテンツの幅と高さの比率です。
-   */
-  readonly ratio: AspectRatioRootRatio;
-};
+export type AspectRatioRootState = AspectRatioContext;
 
 export namespace AspectRatioRootProps {
   export type Render = RenderProps<AspectRatioRootState>;
@@ -92,7 +87,8 @@ export const AspectRatioRoot: IAspectRatioRoot = function SuiAspectRatioRoot(pro
     ...otherDivProps
   } = props;
 
-  return useRender({
+  const ctx = React.useMemo<AspectRatioContext>(() => ({ ratio, radius }), [radius, ratio]);
+  const element = useRender({
     props: [
       otherDivProps,
       {
@@ -106,9 +102,11 @@ export const AspectRatioRoot: IAspectRatioRoot = function SuiAspectRatioRoot(pro
         "data-scope": dataScope,
       },
     ],
-    state: { radius, ratio },
+    state: ctx,
     defaultTagName: "div",
   });
+
+  return <AspectRatioContext value={ctx}>{element}</AspectRatioContext>;
 };
 
 export { AspectRatioRoot as Root };
