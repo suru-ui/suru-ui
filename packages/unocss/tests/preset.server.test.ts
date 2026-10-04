@@ -329,6 +329,58 @@ describe("枠線と角丸", () => {
   });
 });
 
+describe("ドロップシャドウ", () => {
+  test("中立と色ごとのドロップシャドウを filter で生成する", async ({ expect }) => {
+    // 実行
+    const css = await generate([
+      "drop-shadow-sui-xs",
+      "drop-shadow-sui-sm",
+      "drop-shadow-sui-blue-md",
+      "drop-shadow-sui-red-2xl",
+    ]);
+
+    // 検証
+    expect(css).toContain(".drop-shadow-sui-xs{filter:drop-shadow(var(--sui-drop_shadow-xs));}");
+    expect(css).toContain(".drop-shadow-sui-sm{filter:drop-shadow(var(--sui-drop_shadow-sm));}");
+    expect(css).toContain(
+      ".drop-shadow-sui-blue-md{filter:drop-shadow(var(--sui-blue-drop_shadow-md));}",
+    );
+    expect(css).toContain(
+      ".drop-shadow-sui-red-2xl{filter:drop-shadow(var(--sui-red-drop_shadow-2xl));}",
+    );
+  });
+
+  test("存在しないドロップシャドウを無視する", async ({ expect }) => {
+    // 実行
+    const css = await generate([
+      "drop-shadow-sui-grey-xs",
+      "drop-shadow-sui-blue-1",
+      "drop-shadow-sui-unknown",
+    ]);
+
+    // 検証
+    expect(css).toBe("");
+  });
+
+  test("名前空間を外して生成する", async ({ expect }) => {
+    // 準備
+    const uno = await createGenerator({
+      presets: [presetSuruUI({ namespace: false })],
+    });
+
+    // 実行
+    const { css } = await uno.generate(["drop-shadow-sm", "drop-shadow-blue-lg"], {
+      preflights: false,
+    });
+
+    // 検証
+    expect(css).toContain(".drop-shadow-sm{filter:drop-shadow(var(--sui-drop_shadow-sm));}");
+    expect(css).toContain(
+      ".drop-shadow-blue-lg{filter:drop-shadow(var(--sui-blue-drop_shadow-lg));}",
+    );
+  });
+});
+
 describe("フォント", () => {
   test("フォントファミリーをトークンで生成する", async ({ expect }) => {
     // 実行

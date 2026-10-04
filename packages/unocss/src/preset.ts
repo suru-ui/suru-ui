@@ -24,6 +24,7 @@ export type PresetSuruUIOptions = CreateRulesOptions;
  * - コンテナー: `w-sui-3xs`、`max-w-sui-7xl`、`basis-sui-lg`、`min-inline-sui-xl`、`max-inline-sui-2xl` など。幅などのインライン軸に適用され、`--sui-container-*` を参照します。
  * - 枠線: `border-sui-2` など。段階を省略すると `1` になり、`border-style` も併せて設定します。
  * - 角丸: `rounded-sui-2` など。段階を省略すると `1` になり、`corner-shape` も併せて設定します。
+ * - ドロップシャドウ: `drop-shadow-sui-sm`、`drop-shadow-sui-blue-md` など。`filter: drop-shadow()` にトークンを参照します。
  * - フォント: `font-sui-sans`、`font-sui-mono` など。
  * - 文字スタイル: `text-sui-oln-md-m` など。
  *

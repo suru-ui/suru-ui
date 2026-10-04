@@ -350,6 +350,48 @@ export const RADIUS_PROPERTIES = {
 } as const satisfies Properties;
 
 /**
+ * ドロップシャドウが持つ大きさの一覧です。
+ */
+export const DROP_SHADOW_SIZES = ["xs", "sm", "md", "lg", "xl", "2xl"] as const;
+
+/**
+ * ドロップシャドウが持つ大きさです。
+ */
+export type DropShadowSize = (typeof DROP_SHADOW_SIZES)[number];
+
+/**
+ * ドロップシャドウが持つ色の一覧です。
+ *
+ * 中立の影には色を付けないため、`grey` を含みません。
+ */
+export const DROP_SHADOW_COLORS = [
+  "blue",
+  "purple",
+  "magenta",
+  "red",
+  "orange",
+  "yellow",
+  "green",
+] as const;
+
+/**
+ * ドロップシャドウが持つ色です。
+ */
+export type DropShadowColor = (typeof DROP_SHADOW_COLORS)[number];
+
+/**
+ * ドロップシャドウを設定するユーティリティーの対応表です。
+ */
+export const DROP_SHADOW_PROPERTIES = {
+  "drop-shadow": ["filter"],
+} as const satisfies Properties;
+
+/**
+ * ドロップシャドウの色と大きさをキャプチャーする正規表現のソースです。
+ */
+export const DROP_SHADOW_VALUE = `(?:(${DROP_SHADOW_COLORS.join("|")})-)?(${DROP_SHADOW_SIZES.join("|")})`;
+
+/**
  * フォントファミリーを設定するユーティリティーの対応表です。
  */
 export const FONT_PROPERTIES = {

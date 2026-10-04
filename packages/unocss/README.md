@@ -150,6 +150,19 @@ export default defineConfig({
 
 適用される値は `--sui-corner_radius({段階})` で、段階を省略すると `1` になります。`corner-shape: superellipse(var(--sui-superellipse))` も併せて付与されます。段階を省略する場合は `rounded-sui` のように末尾の `-` を付けません。
 
+## ドロップシャドウ
+
+| 接頭辞        | CSS プロパティー |
+| ------------- | ---------------- |
+| `drop-shadow` | `filter`         |
+
+クラス名は `drop-shadow-sui-{大きさ}`（中立）または `drop-shadow-sui-{色}-{大きさ}`（色ごと）です。`filter: drop-shadow(var(--sui-...))` を生成します。たとえば `drop-shadow-sui-sm` は `filter:drop-shadow(var(--sui-drop_shadow-sm))`、`drop-shadow-sui-blue-md` は `filter:drop-shadow(var(--sui-blue-drop_shadow-md))` になります。
+
+| 要素     | 値                                                                            |
+| -------- | ----------------------------------------------------------------------------- |
+| `色`     | `blue`, `purple`, `magenta`, `red`, `orange`, `yellow`, `green`（中立は省略） |
+| `大きさ` | `xs`, `sm`, `md`, `lg`, `xl`, `2xl`                                           |
+
 ## フォント
 
 | クラス名        | 適用される値                       |

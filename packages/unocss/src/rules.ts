@@ -19,9 +19,11 @@ import {
   SPACE_PROPERTIES,
   TEXT_STYLE_VALUE,
   DEFAULT_NAMESPACE,
+  DROP_SHADOW_VALUE,
   BORDER_STYLE_VALUE,
   CORNER_SHAPE_VALUE,
   OUTLINE_PROPERTIES,
+  DROP_SHADOW_PROPERTIES,
   NAMESPACED_SEPARATOR,
   DEFAULT_BORDER_LEVEL,
   DEFAULT_RADIUS_LEVEL,
@@ -36,7 +38,10 @@ import {
   isColorToken,
   textStyleVar,
   colorTokenVar,
+  dropShadowVar,
   isContainerSize,
+  isDropShadowSize,
+  isDropShadowColor,
 } from "./tokens.js";
 
 /**
@@ -104,6 +109,7 @@ export function createRules(options: CreateRulesOptions = {}): Rule[] {
     createBorderWidthRule(separator),
     createOutlineWidthRule(separator),
     createRadiusRule(separator),
+    createDropShadowRule(separator),
     createFontFamilyRule(separator),
     createTextStyleRule(separator),
   ];
@@ -218,6 +224,21 @@ function createRadiusRule(separator: string): Rule {
       [CORNER_SHAPE_PROPERTY, CORNER_SHAPE_VALUE],
     ],
     { optional: true },
+  );
+}
+
+function createDropShadowRule(separator: string): Rule {
+  return createPropertyRule(
+    DROP_SHADOW_PROPERTIES,
+    separator,
+    DROP_SHADOW_VALUE,
+    (properties, color, size) => {
+      if (size === undefined || !isDropShadowSize(size)) return;
+
+      if (color !== undefined && !isDropShadowColor(color)) return;
+
+      return toEntries(properties, `drop-shadow(${dropShadowVar(color, size)})`);
+    },
   );
 }
 
