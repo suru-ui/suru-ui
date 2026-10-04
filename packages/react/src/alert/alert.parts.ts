@@ -1,5 +1,6 @@
 import "./alert.css";
 
+export * from "./alert.context.js";
 export * from "./alert.root.jsx";
 export * from "./alert.icon.jsx";
 export * from "./alert.title.jsx";

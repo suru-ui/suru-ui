@@ -2,6 +2,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { AlertActions } from "../../../src/alert/alert.actions.jsx";
+import { AlertRoot } from "../../../src/alert/alert.root.jsx";
 import { Button } from "../../../src/button/button.js";
 import "../_locators.js";
 
@@ -9,9 +10,11 @@ describe("AlertActions", () => {
   test("操作ボタンをまとめて描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <AlertActions>
-        <Button>再試行</Button>
-      </AlertActions>,
+      <AlertRoot>
+        <AlertActions>
+          <Button>再試行</Button>
+        </AlertActions>
+      </AlertRoot>,
     );
 
     // 検証
@@ -22,7 +25,11 @@ describe("AlertActions", () => {
 
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<AlertActions className="custom" />);
+    const screen = await render(
+      <AlertRoot>
+        <AlertActions className="custom" />
+      </AlertRoot>,
+    );
 
     // 検証
     const actions = screen.getByClassName("sui_alert_actions").element();
@@ -32,7 +39,11 @@ describe("AlertActions", () => {
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<AlertActions render={<footer />} />);
+    const screen = await render(
+      <AlertRoot>
+        <AlertActions render={<footer />} />
+      </AlertRoot>,
+    );
 
     // 検証
     expect(screen.getByClassName("sui_alert_actions").element().tagName).toBe("FOOTER");

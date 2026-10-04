@@ -1,9 +1,10 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size } from "@suru-ui/theme";
+import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { type ImageContextFit, type ImageContextRadius, ImageContext } from "./image.context.js";
 
 /**
  * 画像の表示方法 (`object-fit`) です。
@@ -14,7 +15,7 @@ import type { IComponent } from "../types.js";
  * - `"none"`: 元の大きさのまま表示する
  * - `"scale-down"`: `none` と `contain` の小さいほうで表示する
  */
-export type ImageRootFit = "cover" | "contain" | "fill" | "none" | "scale-down";
+export type ImageRootFit = ImageContextFit;
 
 /**
  * 画像の角丸です。
@@ -25,12 +26,12 @@ export type ImageRootFit = "cover" | "contain" | "fill" | "none" | "scale-down";
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type ImageRootRadius = "none" | Size | "full";
+export type ImageRootRadius = ImageContextRadius;
 
 /**
  * {@link ImageRoot} が持つ状態です。
  */
-export type ImageRootState = {};
+export type ImageRootState = ImageContext;
 
 export namespace ImageRootProps {
   export type Render = RenderProps<ImageRootState>;
@@ -83,16 +84,24 @@ export const ImageRoot: IImageRoot = function SuiImageRoot(props) {
     ...otherImgProps
   } = props;
 
-  return useRender({
+  const ctx = React.useMemo<ImageContext>(() => ({ fit, radius }), [fit, radius]);
+  const element = useRender({
     props: [
       otherImgProps,
       {
-        className: cn("sui_image", `sui_image-radius_${radius}`, fit && `sui_image-fit_${fit}`),
+        className: cn<ImageRootState>(
+          "sui_image",
+          (state) => `sui_image-radius_${state.radius}`,
+          (state) => state.fit && `sui_image-fit_${state.fit}`,
+        ),
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "img",
   });
+
+  return <ImageContext value={ctx}>{element}</ImageContext>;
 };
 
 export { ImageRoot as Root };

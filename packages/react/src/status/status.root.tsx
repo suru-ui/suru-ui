@@ -1,14 +1,20 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size, Color } from "@suru-ui/theme";
+import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import {
+  type StatusContextSize,
+  type StatusContextColor,
+  type StatusContextRippleSize,
+  StatusContext,
+} from "./status.context.js";
 
 /**
  * ステータスの配色です。
  */
-export type StatusRootColor = Color;
+export type StatusRootColor = StatusContextColor;
 
 /**
  * インジケーターのリップルの大きさです。
@@ -20,7 +26,7 @@ export type StatusRootColor = Color;
  * - `"md"`: 標準的なリップル
  * - `"lg"`: 大きいリップル
  */
-export type StatusRootRippleSize = Size;
+export type StatusRootRippleSize = StatusContextRippleSize;
 
 /**
  * ステータスの大きさです。
@@ -29,12 +35,12 @@ export type StatusRootRippleSize = Size;
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type StatusRootSize = Size;
+export type StatusRootSize = StatusContextSize;
 
 /**
  * {@link StatusRoot} が持つ状態です。
  */
-export type StatusRootState = {};
+export type StatusRootState = StatusContext;
 
 export namespace StatusRootProps {
   export type Render = RenderProps<StatusRootState>;
@@ -117,23 +123,30 @@ export const StatusRoot: IStatusRoot = function SuiStatusRoot(props) {
     ...otherSpanProps
   } = props;
 
-  return useRender({
+  const ctx = React.useMemo<StatusContext>(
+    () => ({ ping, size, color, rippleSize, containRipple }),
+    [ping, size, color, rippleSize, containRipple],
+  );
+  const element = useRender({
     props: [
       otherSpanProps,
       {
-        className: cn(
+        className: cn<StatusRootState>(
           "sui_status",
-          `sui_status-size_${size}`,
-          `sui_status-color_${color}`,
-          `sui_status-ripple_size_${rippleSize}`,
-          ping && "sui_status-ping",
-          containRipple && "sui_status-contain_ripple",
+          (state) => `sui_status-size_${state.size}`,
+          (state) => `sui_status-color_${state.color}`,
+          (state) => `sui_status-ripple_size_${state.rippleSize}`,
+          (state) => state.ping && "sui_status-ping",
+          (state) => state.containRipple && "sui_status-contain_ripple",
         ),
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "span",
   });
+
+  return <StatusContext value={ctx}>{element}</StatusContext>;
 };
 
 export { StatusRoot as Root };

@@ -1,12 +1,15 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { useStatContext } from "./stat.context.js";
+import type { StatRootState } from "./stat.root.jsx";
 
 /**
  * {@link StatValueUnit} が持つ状態です。
  */
-export type StatValueUnitState = {};
+export type StatValueUnitState = StatRootState;
 
 export namespace StatValueUnitProps {
   export type Render = RenderProps<StatValueUnitState>;
@@ -37,13 +40,19 @@ export type IStatValueUnit = IComponent<StatValueUnitProps>;
  * `span` 要素を描画し、{@link StatValue} の子として使用します。
  */
 export const StatValueUnit: IStatValueUnit = function SuiStatValueUnit(props) {
+  const ctx = useStatContext();
+
   return useRender({
     props: [
       props,
       {
-        className: "sui_stat_value_unit",
+        className: cn<StatValueUnitState>(
+          "sui_stat_value_unit",
+          (state) => `sui_stat_value_unit-size_${state.size}`,
+        ),
       },
     ],
+    state: ctx,
     defaultTagName: "span",
   });
 };

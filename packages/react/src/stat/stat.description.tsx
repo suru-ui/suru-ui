@@ -1,12 +1,15 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { useStatContext } from "./stat.context.js";
+import type { StatRootState } from "./stat.root.jsx";
 
 /**
  * {@link StatDescription} が持つ状態です。
  */
-export type StatDescriptionState = {};
+export type StatDescriptionState = StatRootState;
 
 export namespace StatDescriptionProps {
   export type Render = RenderProps<StatDescriptionState>;
@@ -37,13 +40,19 @@ export type IStatDescription = IComponent<StatDescriptionProps>;
  * `dd` 要素を描画します。
  */
 export const StatDescription: IStatDescription = function SuiStatDescription(props) {
+  const ctx = useStatContext();
+
   return useRender({
     props: [
       props,
       {
-        className: "sui_stat_description",
+        className: cn<StatDescriptionState>(
+          "sui_stat_description",
+          (state) => `sui_stat_description-size_${state.size}`,
+        ),
       },
     ],
+    state: ctx,
     defaultTagName: "dd",
   });
 };

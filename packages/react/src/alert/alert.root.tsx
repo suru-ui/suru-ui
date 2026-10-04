@@ -1,9 +1,18 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size, Color } from "@suru-ui/theme";
+import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import {
+  type AlertContextSize,
+  type AlertContextColor,
+  type AlertContextRadius,
+  type AlertContextVariant,
+  type AlertContextActionsPosition,
+  type AlertContextDescriptionPosition,
+  AlertContext,
+} from "./alert.context.js";
 
 /**
  * アラートのアクションの配置です。
@@ -13,7 +22,7 @@ import type { IComponent } from "../types.js";
  * - `"bottom"`: 説明文の下
  * - `"side"`: タイトルと説明文の右側に縦方向へ並べます
  */
-export type AlertRootActionsPosition = "bottom" | "side";
+export type AlertRootActionsPosition = AlertContextActionsPosition;
 
 /**
  * アラートの説明文の配置です。
@@ -22,12 +31,12 @@ export type AlertRootActionsPosition = "bottom" | "side";
  * - `"side-start"`: タイトルの右側に横方向へ並べ、説明文を左寄せにします
  * - `"side-end"`: タイトルの右側に横方向へ並べ、説明文を右寄せにします
  */
-export type AlertRootDescriptionPosition = "bottom" | "side-start" | "side-end";
+export type AlertRootDescriptionPosition = AlertContextDescriptionPosition;
 
 /**
  * アラートの配色です。
  */
-export type AlertRootColor = Color;
+export type AlertRootColor = AlertContextColor;
 
 /**
  * アラートの角丸の大きさです。
@@ -37,7 +46,7 @@ export type AlertRootColor = Color;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type AlertRootRadius = "none" | Size;
+export type AlertRootRadius = AlertContextRadius;
 
 /**
  * アラートの大きさです。
@@ -46,7 +55,7 @@ export type AlertRootRadius = "none" | Size;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type AlertRootSize = Size;
+export type AlertRootSize = AlertContextSize;
 
 /**
  * アラートの主な外観です。
@@ -55,12 +64,12 @@ export type AlertRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type AlertRootVariant = "muted" | "naked" | "liquid";
+export type AlertRootVariant = AlertContextVariant;
 
 /**
  * {@link AlertRoot} が持つ状態です。
  */
-export type AlertRootState = {};
+export type AlertRootState = AlertContext;
 
 export namespace AlertRootProps {
   export type Render = RenderProps<AlertRootState>;
@@ -156,26 +165,34 @@ export const AlertRoot: IAlertRoot = function SuiAlertRoot(props) {
     ...otherDivProps
   } = props;
 
-  return useRender({
+  const ctx = React.useMemo<AlertContext>(
+    () => ({ size, color, radius, variant, outlined, actionsPosition, descriptionPosition }),
+    [size, color, radius, variant, outlined, actionsPosition, descriptionPosition],
+  );
+  const element = useRender({
     props: [
       otherDivProps,
       {
         role,
-        className: cn(
+        className: cn<AlertRootState>(
           "sui_alert",
-          `sui_alert-actionsposition_${actionsPosition}`,
-          `sui_alert-descriptionposition_${descriptionPosition.replaceAll("-", "_")}`,
-          `sui_alert-size_${size}`,
-          `sui_alert-color_${color}`,
-          `sui_alert-radius_${radius}`,
-          `sui_alert-variant_${variant}`,
-          outlined && "sui_alert-outlined",
+          (state) => `sui_alert-actionsposition_${state.actionsPosition}`,
+          (state) =>
+            `sui_alert-descriptionposition_${state.descriptionPosition.replaceAll("-", "_")}`,
+          (state) => `sui_alert-size_${state.size}`,
+          (state) => `sui_alert-color_${state.color}`,
+          (state) => `sui_alert-radius_${state.radius}`,
+          (state) => `sui_alert-variant_${state.variant}`,
+          (state) => state.outlined && "sui_alert-outlined",
         ),
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
+
+  return <AlertContext value={ctx}>{element}</AlertContext>;
 };
 
 export { AlertRoot as Root };

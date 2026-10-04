@@ -1,9 +1,14 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size } from "@suru-ui/theme";
+import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import {
+  type SkeletonContextRadius,
+  type SkeletonContextAnimation,
+  SkeletonContext,
+} from "./skeleton.context.js";
 
 /**
  * スケルトンの角丸の大きさです。
@@ -13,7 +18,7 @@ import type { IComponent } from "../types.js";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type SkeletonRootRadius = "none" | Size;
+export type SkeletonRootRadius = SkeletonContextRadius;
 
 /**
  * スケルトンのアニメーションです。
@@ -22,12 +27,12 @@ export type SkeletonRootRadius = "none" | Size;
  * - `"shine"`: 光が流れるアニメーション
  * - `"none"`: アニメーションなし
  */
-export type SkeletonRootAnimation = "pulse" | "shine" | "none";
+export type SkeletonRootAnimation = SkeletonContextAnimation;
 
 /**
  * {@link SkeletonRoot} が持つ状態です。
  */
-export type SkeletonRootState = {};
+export type SkeletonRootState = SkeletonContext;
 
 export namespace SkeletonRootProps {
   export type Render = RenderProps<SkeletonRootState>;
@@ -88,21 +93,28 @@ export const SkeletonRoot: ISkeletonRoot = function SuiSkeletonRoot(props) {
     ...otherSpanProps
   } = props;
 
-  return useRender({
+  const ctx = React.useMemo<SkeletonContext>(
+    () => ({ radius, overlay, animation }),
+    [radius, overlay, animation],
+  );
+  const element = useRender({
     props: [
       otherSpanProps,
       {
-        className: cn(
+        className: cn<SkeletonRootState>(
           "sui_skeleton",
-          `sui_skeleton-radius_${radius}`,
-          `sui_skeleton-animation_${animation}`,
-          overlay && "sui_skeleton-overlay",
+          (state) => `sui_skeleton-radius_${state.radius}`,
+          (state) => `sui_skeleton-animation_${state.animation}`,
+          (state) => state.overlay && "sui_skeleton-overlay",
         ),
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "span",
   });
+
+  return <SkeletonContext value={ctx}>{element}</SkeletonContext>;
 };
 
 export { SkeletonRoot as Root };

@@ -1,14 +1,21 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
+import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import {
+  type ChipContextSize,
+  type ChipContextColor,
+  type ChipContextRadius,
+  type ChipContextVariant,
+  ChipContext,
+} from "./chip.context.js";
 
 /**
  * チップの配色です。
  */
-export type ChipRootColor = Color;
+export type ChipRootColor = ChipContextColor;
 
 /**
  * チップの角丸の大きさです。
@@ -19,7 +26,7 @@ export type ChipRootColor = Color;
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
  */
-export type ChipRootRadius = "none" | Size | "full";
+export type ChipRootRadius = ChipContextRadius;
 
 /**
  * チップの大きさです。
@@ -28,7 +35,7 @@ export type ChipRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type ChipRootSize = Size;
+export type ChipRootSize = ChipContextSize;
 
 /**
  * チップの主な外観です。
@@ -37,12 +44,12 @@ export type ChipRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ChipRootVariant = ColorTemplate;
+export type ChipRootVariant = ChipContextVariant;
 
 /**
  * {@link ChipRoot} が持つ状態です。
  */
-export type ChipRootState = {};
+export type ChipRootState = ChipContext;
 
 export namespace ChipRootProps {
   export type Render = RenderProps<ChipRootState>;
@@ -119,23 +126,30 @@ export const ChipRoot: IChipRoot = function SuiChipRoot(props) {
     ...otherSpanProps
   } = props;
 
-  return useRender({
+  const ctx = React.useMemo<ChipContext>(
+    () => ({ size, color, radius, variant, outlined }),
+    [size, color, radius, variant, outlined],
+  );
+  const element = useRender({
     props: [
       otherSpanProps,
       {
-        className: cn(
+        className: cn<ChipRootState>(
           "sui_chip",
-          `sui_chip-size_${size}`,
-          `sui_chip-color_${color}`,
-          `sui_chip-radius_${radius}`,
-          `sui_chip-variant_${variant}`,
-          outlined && "sui_chip-outlined",
+          (state) => `sui_chip-size_${state.size}`,
+          (state) => `sui_chip-color_${state.color}`,
+          (state) => `sui_chip-radius_${state.radius}`,
+          (state) => `sui_chip-variant_${state.variant}`,
+          (state) => state.outlined && "sui_chip-outlined",
         ),
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "span",
   });
+
+  return <ChipContext value={ctx}>{element}</ChipContext>;
 };
 
 export { ChipRoot as Root };

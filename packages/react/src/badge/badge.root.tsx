@@ -1,14 +1,23 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size, Color } from "@suru-ui/theme";
+import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import {
+  type BadgeContextSize,
+  type BadgeContextColor,
+  type BadgeContextRadius,
+  type BadgeContextOverlap,
+  type BadgeContextVariant,
+  type BadgeContextPosition,
+  BadgeContext,
+} from "./badge.context.js";
 
 /**
  * バッジの配色です。
  */
-export type BadgeRootColor = Color;
+export type BadgeRootColor = BadgeContextColor;
 
 /**
  * バッジを重ねる要素の形状です。
@@ -16,7 +25,7 @@ export type BadgeRootColor = Color;
  * - `"rectangular"`: 四角形
  * - `"circular"`: 円形
  */
-export type BadgeRootOverlap = "rectangular" | "circular";
+export type BadgeRootOverlap = BadgeContextOverlap;
 
 /**
  * バッジの配置です。
@@ -26,7 +35,7 @@ export type BadgeRootOverlap = "rectangular" | "circular";
  * - `"bottom-left"`: 左下
  * - `"bottom-right"`: 右下
  */
-export type BadgeRootPosition = "top-left" | "top-right" | "bottom-left" | "bottom-right";
+export type BadgeRootPosition = BadgeContextPosition;
 
 /**
  * バッジの角丸の大きさです。
@@ -37,7 +46,7 @@ export type BadgeRootPosition = "top-left" | "top-right" | "bottom-left" | "bott
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
  */
-export type BadgeRootRadius = "none" | Size | "full";
+export type BadgeRootRadius = BadgeContextRadius;
 
 /**
  * バッジの大きさです。
@@ -46,7 +55,7 @@ export type BadgeRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type BadgeRootSize = Size;
+export type BadgeRootSize = BadgeContextSize;
 
 /**
  * バッジの主な外観です。
@@ -54,12 +63,12 @@ export type BadgeRootSize = Size;
  * - `"standard"`: 標準
  * - `"dot"`: 内容を表示しない小さな点
  */
-export type BadgeRootVariant = "standard" | "dot";
+export type BadgeRootVariant = BadgeContextVariant;
 
 /**
  * {@link BadgeRoot} が持つ状態です。
  */
-export type BadgeRootState = {};
+export type BadgeRootState = BadgeContext;
 
 export namespace BadgeRootProps {
   export type Render = RenderProps<BadgeRootState>;
@@ -165,27 +174,34 @@ export const BadgeRoot: IBadgeRoot = function SuiBadgeRoot(props) {
     ...otherSpanProps
   } = props;
 
-  return useRender({
+  const ctx = React.useMemo<BadgeContext>(
+    () => ({ ring, size, color, radius, overlap, variant, outlined, position }),
+    [ring, size, color, radius, overlap, variant, outlined, position],
+  );
+  const element = useRender({
     props: [
       otherSpanProps,
       {
         children: variant === "dot" ? null : children,
-        className: cn(
+        className: cn<BadgeRootState>(
           "sui_badge",
-          `sui_badge-size_${size}`,
-          `sui_badge-color_${color}`,
-          `sui_badge-radius_${radius}`,
-          `sui_badge-overlap_${overlap}`,
-          `sui_badge-variant_${variant}`,
-          position && `sui_badge-position_${position.replaceAll("-", "_")}`,
-          ring && "sui_badge-ring",
-          outlined && "sui_badge-outlined",
+          (state) => `sui_badge-size_${state.size}`,
+          (state) => `sui_badge-color_${state.color}`,
+          (state) => `sui_badge-radius_${state.radius}`,
+          (state) => `sui_badge-overlap_${state.overlap}`,
+          (state) => `sui_badge-variant_${state.variant}`,
+          (state) => state.position && `sui_badge-position_${state.position.replaceAll("-", "_")}`,
+          (state) => state.ring && "sui_badge-ring",
+          (state) => state.outlined && "sui_badge-outlined",
         ),
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "span",
   });
+
+  return <BadgeContext value={ctx}>{element}</BadgeContext>;
 };
 
 export { BadgeRoot as Root };

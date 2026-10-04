@@ -1,5 +1,5 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import { type Size, type Color, isSize, isColor } from "@suru-ui/theme";
+import { isSize, isColor } from "@suru-ui/theme";
 import * as React from "react";
 
 import Config from "../_config.jsx";
@@ -7,11 +7,12 @@ import { isBool } from "../_is-x.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { type LabelContextSize, type LabelContextColor, LabelContext } from "./label.context.js";
 
 /**
  * ラベルの配色です。
  */
-export type LabelRootColor = Color;
+export type LabelRootColor = LabelContextColor;
 
 /**
  * ラベルの大きさです。
@@ -20,12 +21,12 @@ export type LabelRootColor = Color;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type LabelRootSize = Size;
+export type LabelRootSize = LabelContextSize;
 
 /**
  * {@link LabelRoot} が持つ状態です。
  */
-export type LabelRootState = {};
+export type LabelRootState = LabelContext;
 
 export namespace LabelRootProps {
   export type Render = RenderProps<LabelRootState>;
@@ -90,21 +91,28 @@ export const LabelRoot: ILabelRoot = function SuiLabelRoot(props) {
     ...otherLabelProps
   } = props;
 
-  return useRender({
+  const ctx = React.useMemo<LabelContext>(
+    () => ({ size, color, disabled }),
+    [size, color, disabled],
+  );
+  const element = useRender({
     props: [
       otherLabelProps,
       {
-        className: cn(
+        className: cn<LabelRootState>(
           "sui_label",
-          `sui_label-size_${size}`,
-          `sui_label-color_${color}`,
-          disabled && "sui_label-disabled",
+          (state) => `sui_label-size_${state.size}`,
+          (state) => `sui_label-color_${state.color}`,
+          (state) => state.disabled && "sui_label-disabled",
         ),
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "label",
   });
+
+  return <LabelContext value={ctx}>{element}</LabelContext>;
 };
 
 export { LabelRoot as Root };

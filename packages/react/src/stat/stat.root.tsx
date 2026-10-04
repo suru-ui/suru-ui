@@ -1,9 +1,10 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import type { Size } from "@suru-ui/theme";
+import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { type StatContextSize, StatContext } from "./stat.context.js";
 
 /**
  * 統計の大きさです。
@@ -12,12 +13,12 @@ import type { IComponent } from "../types.js";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type StatRootSize = Size;
+export type StatRootSize = StatContextSize;
 
 /**
  * {@link StatRoot} が持つ状態です。
  */
-export type StatRootState = {};
+export type StatRootState = StatContext;
 
 export namespace StatRootProps {
   export type Render = RenderProps<StatRootState>;
@@ -62,16 +63,20 @@ export const StatRoot: IStatRoot = function SuiStatRoot(props) {
     ...otherDlProps
   } = props;
 
-  return useRender({
+  const ctx = React.useMemo<StatContext>(() => ({ size }), [size]);
+  const element = useRender({
     props: [
       otherDlProps,
       {
-        className: cn("sui_stat", `sui_stat-size_${size}`),
+        className: cn<StatRootState>("sui_stat", (state) => `sui_stat-size_${state.size}`),
         "data-scope": dataScope,
       },
     ],
+    state: ctx,
     defaultTagName: "dl",
   });
+
+  return <StatContext value={ctx}>{element}</StatContext>;
 };
 
 export { StatRoot as Root };

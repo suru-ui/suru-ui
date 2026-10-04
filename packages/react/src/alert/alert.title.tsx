@@ -1,12 +1,15 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { useAlertContext } from "./alert.context.js";
+import type { AlertRootState } from "./alert.root.jsx";
 
 /**
  * {@link AlertTitle} が持つ状態です。
  */
-export type AlertTitleState = {};
+export type AlertTitleState = AlertRootState;
 
 export namespace AlertTitleProps {
   export type Render = RenderProps<AlertTitleState>;
@@ -35,13 +38,26 @@ export type IAlertTitle = IComponent<AlertTitleProps>;
  * アラートのタイトルを表示するコンポーネントです。
  */
 export const AlertTitle: IAlertTitle = function SuiAlertTitle(props) {
+  const ctx = useAlertContext();
+
   return useRender({
     props: [
       props,
       {
-        className: "sui_alert_title",
+        className: cn<AlertTitleState>(
+          "sui_alert_title",
+          (state) => `sui_alert_title-actionsposition_${state.actionsPosition}`,
+          (state) =>
+            `sui_alert_title-descriptionposition_${state.descriptionPosition.replaceAll("-", "_")}`,
+          (state) => `sui_alert_title-size_${state.size}`,
+          (state) => `sui_alert_title-color_${state.color}`,
+          (state) => `sui_alert_title-radius_${state.radius}`,
+          (state) => `sui_alert_title-variant_${state.variant}`,
+          (state) => state.outlined && "sui_alert_title-outlined",
+        ),
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

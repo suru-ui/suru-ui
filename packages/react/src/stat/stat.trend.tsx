@@ -3,7 +3,9 @@ import * as React from "react";
 
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { useStatContext } from "./stat.context.js";
+import type { StatRootState } from "./stat.root.jsx";
 
 /**
  * 統計の変化の方向です。
@@ -17,7 +19,15 @@ export type StatTrendDirection = "up" | "down" | "flat";
 /**
  * {@link StatTrend} が持つ状態です。
  */
-export type StatTrendState = {};
+export type StatTrendState = Override<
+  StatRootState,
+  {
+    /**
+     * 変化の方向です。
+     */
+    readonly direction: StatTrendDirection;
+  }
+>;
 
 export namespace StatTrendProps {
   export type Render = RenderProps<StatTrendState>;
@@ -100,16 +110,23 @@ function getDefaultTrendDirection(value: React.ReactNode): StatTrendDirection {
  * `dd` 要素を描画し、前回からの増減を矢印と色で示します。
  */
 export const StatTrend: IStatTrend = function SuiStatTrend(props) {
+  const ctx = useStatContext();
   const { children, direction = getDefaultTrendDirection(children), ...otherDdProps } = props;
+  const state = React.useMemo<StatTrendState>(() => ({ ...ctx, direction }), [ctx, direction]);
 
   return useRender({
     props: [
       otherDdProps,
       {
         children,
-        className: cn("sui_stat_trend", `sui_stat_trend-direction_${direction}`),
+        className: cn<StatTrendState>(
+          "sui_stat_trend",
+          (state) => `sui_stat_trend-size_${state.size}`,
+          (state) => `sui_stat_trend-direction_${state.direction}`,
+        ),
       },
     ],
+    state,
     defaultTagName: "dd",
   });
 };

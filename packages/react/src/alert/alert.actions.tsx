@@ -1,12 +1,15 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { useAlertContext } from "./alert.context.js";
+import type { AlertRootState } from "./alert.root.jsx";
 
 /**
  * {@link AlertActions} が持つ状態です。
  */
-export type AlertActionsState = {};
+export type AlertActionsState = AlertRootState;
 
 export namespace AlertActionsProps {
   export type Render = RenderProps<AlertActionsState>;
@@ -35,13 +38,26 @@ export type IAlertActions = IComponent<AlertActionsProps>;
  * アラートの操作ボタンを右寄せでまとめるコンポーネントです。
  */
 export const AlertActions: IAlertActions = function SuiAlertActions(props) {
+  const ctx = useAlertContext();
+
   return useRender({
     props: [
       props,
       {
-        className: "sui_alert_actions",
+        className: cn<AlertActionsState>(
+          "sui_alert_actions",
+          (state) => `sui_alert_actions-actionsposition_${state.actionsPosition}`,
+          (state) =>
+            `sui_alert_actions-descriptionposition_${state.descriptionPosition.replaceAll("-", "_")}`,
+          (state) => `sui_alert_actions-size_${state.size}`,
+          (state) => `sui_alert_actions-color_${state.color}`,
+          (state) => `sui_alert_actions-radius_${state.radius}`,
+          (state) => `sui_alert_actions-variant_${state.variant}`,
+          (state) => state.outlined && "sui_alert_actions-outlined",
+        ),
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

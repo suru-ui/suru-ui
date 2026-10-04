@@ -1,12 +1,15 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../_use-render.js";
+import cn from "../cn.js";
 import type { IComponent } from "../types.js";
+import { useStatContext } from "./stat.context.js";
+import type { StatRootState } from "./stat.root.jsx";
 
 /**
  * {@link StatLabel} が持つ状態です。
  */
-export type StatLabelState = {};
+export type StatLabelState = StatRootState;
 
 export namespace StatLabelProps {
   export type Render = RenderProps<StatLabelState>;
@@ -37,13 +40,19 @@ export type IStatLabel = IComponent<StatLabelProps>;
  * `dt` 要素を描画します。
  */
 export const StatLabel: IStatLabel = function SuiStatLabel(props) {
+  const ctx = useStatContext();
+
   return useRender({
     props: [
       props,
       {
-        className: "sui_stat_label",
+        className: cn<StatLabelState>(
+          "sui_stat_label",
+          (state) => `sui_stat_label-size_${state.size}`,
+        ),
       },
     ],
+    state: ctx,
     defaultTagName: "dt",
   });
 };
