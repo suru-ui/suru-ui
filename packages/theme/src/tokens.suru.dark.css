@@ -59,6 +59,19 @@
   --sui-blue-liquid-canvas_text-subtle: var(--sui-blue-100);
   --sui-blue-liquid-canvas_text-strong: var(--sui-blue-100);
 
+  --sui-blue-drop_shadow-xs: 0 1px 1px
+    color-mix(in oklab, var(--sui-blue-solid-canvas-normal) 5%, transparent);
+  --sui-blue-drop_shadow-sm: 0 1px 2px
+    color-mix(in oklab, var(--sui-blue-solid-canvas-normal) 15%, transparent);
+  --sui-blue-drop_shadow-md: 0 3px 3px
+    color-mix(in oklab, var(--sui-blue-solid-canvas-normal) 12%, transparent);
+  --sui-blue-drop_shadow-lg: 0 4px 4px
+    color-mix(in oklab, var(--sui-blue-solid-canvas-normal) 15%, transparent);
+  --sui-blue-drop_shadow-xl: 0 9px 7px
+    color-mix(in oklab, var(--sui-blue-solid-canvas-normal) 10%, transparent);
+  --sui-blue-drop_shadow-2xl: 0 25px 25px
+    color-mix(in oklab, var(--sui-blue-solid-canvas-normal) 15%, transparent);
+
   --sui-green-5: var(--_flexoki-green-950);
   --sui-green-10: var(--_flexoki-green-900);
   --sui-green-15: var(--_flexoki-green-850);
@@ -116,6 +129,19 @@
   --sui-green-liquid-canvas_text-normal: var(--sui-green-90);
   --sui-green-liquid-canvas_text-subtle: var(--sui-green-100);
   --sui-green-liquid-canvas_text-strong: var(--sui-green-100);
+
+  --sui-green-drop_shadow-xs: 0 1px 1px
+    color-mix(in oklab, var(--sui-green-solid-canvas-normal) 5%, transparent);
+  --sui-green-drop_shadow-sm: 0 1px 2px
+    color-mix(in oklab, var(--sui-green-solid-canvas-normal) 15%, transparent);
+  --sui-green-drop_shadow-md: 0 3px 3px
+    color-mix(in oklab, var(--sui-green-solid-canvas-normal) 12%, transparent);
+  --sui-green-drop_shadow-lg: 0 4px 4px
+    color-mix(in oklab, var(--sui-green-solid-canvas-normal) 15%, transparent);
+  --sui-green-drop_shadow-xl: 0 9px 7px
+    color-mix(in oklab, var(--sui-green-solid-canvas-normal) 10%, transparent);
+  --sui-green-drop_shadow-2xl: 0 25px 25px
+    color-mix(in oklab, var(--sui-green-solid-canvas-normal) 15%, transparent);
 
   --sui-grey-0: var(--_flexoki-black);
   --sui-grey-5: var(--_flexoki-base-950);
@@ -179,6 +205,19 @@
   --sui-grey-liquid-canvas_text-subtle: var(--sui-grey-100);
   --sui-grey-liquid-canvas_text-strong: var(--sui-grey-100);
 
+  --sui-drop_shadow-xs: 0 1px 1px
+    color-mix(in oklab, var(--sui-grey-solid-canvas-normal) 5%, transparent);
+  --sui-drop_shadow-sm: 0 1px 2px
+    color-mix(in oklab, var(--sui-grey-solid-canvas-normal) 15%, transparent);
+  --sui-drop_shadow-md: 0 3px 3px
+    color-mix(in oklab, var(--sui-grey-solid-canvas-normal) 12%, transparent);
+  --sui-drop_shadow-lg: 0 4px 4px
+    color-mix(in oklab, var(--sui-grey-solid-canvas-normal) 15%, transparent);
+  --sui-drop_shadow-xl: 0 9px 7px
+    color-mix(in oklab, var(--sui-grey-solid-canvas-normal) 10%, transparent);
+  --sui-drop_shadow-2xl: 0 25px 25px
+    color-mix(in oklab, var(--sui-grey-solid-canvas-normal) 15%, transparent);
+
   --sui-magenta-5: var(--_flexoki-magenta-950);
   --sui-magenta-10: var(--_flexoki-magenta-900);
   --sui-magenta-15: var(--_flexoki-magenta-850);
@@ -236,6 +275,19 @@
   --sui-magenta-liquid-canvas_text-normal: var(--sui-magenta-90);
   --sui-magenta-liquid-canvas_text-subtle: var(--sui-magenta-100);
   --sui-magenta-liquid-canvas_text-strong: var(--sui-magenta-100);
+
+  --sui-magenta-drop_shadow-xs: 0 1px 1px
+    color-mix(in oklab, var(--sui-magenta-solid-canvas-normal) 5%, transparent);
+  --sui-magenta-drop_shadow-sm: 0 1px 2px
+    color-mix(in oklab, var(--sui-magenta-solid-canvas-normal) 15%, transparent);
+  --sui-magenta-drop_shadow-md: 0 3px 3px
+    color-mix(in oklab, var(--sui-magenta-solid-canvas-normal) 12%, transparent);
+  --sui-magenta-drop_shadow-lg: 0 4px 4px
+    color-mix(in oklab, var(--sui-magenta-solid-canvas-normal) 15%, transparent);
+  --sui-magenta-drop_shadow-xl: 0 9px 7px
+    color-mix(in oklab, var(--sui-magenta-solid-canvas-normal) 10%, transparent);
+  --sui-magenta-drop_shadow-2xl: 0 25px 25px
+    color-mix(in oklab, var(--sui-magenta-solid-canvas-normal) 15%, transparent);
 
   --sui-orange-5: var(--_flexoki-orange-950);
   --sui-orange-10: var(--_flexoki-orange-900);
@@ -295,6 +347,19 @@
   --sui-orange-liquid-canvas_text-subtle: var(--sui-orange-100);
   --sui-orange-liquid-canvas_text-strong: var(--sui-orange-100);
 
+  --sui-orange-drop_shadow-xs: 0 1px 1px
+    color-mix(in oklab, var(--sui-orange-solid-canvas-normal) 5%, transparent);
+  --sui-orange-drop_shadow-sm: 0 1px 2px
+    color-mix(in oklab, var(--sui-orange-solid-canvas-normal) 15%, transparent);
+  --sui-orange-drop_shadow-md: 0 3px 3px
+    color-mix(in oklab, var(--sui-orange-solid-canvas-normal) 12%, transparent);
+  --sui-orange-drop_shadow-lg: 0 4px 4px
+    color-mix(in oklab, var(--sui-orange-solid-canvas-normal) 15%, transparent);
+  --sui-orange-drop_shadow-xl: 0 9px 7px
+    color-mix(in oklab, var(--sui-orange-solid-canvas-normal) 10%, transparent);
+  --sui-orange-drop_shadow-2xl: 0 25px 25px
+    color-mix(in oklab, var(--sui-orange-solid-canvas-normal) 15%, transparent);
+
   --sui-purple-5: var(--_flexoki-purple-950);
   --sui-purple-10: var(--_flexoki-purple-900);
   --sui-purple-15: var(--_flexoki-purple-850);
@@ -352,6 +417,19 @@
   --sui-purple-liquid-canvas_text-normal: var(--sui-purple-90);
   --sui-purple-liquid-canvas_text-subtle: var(--sui-purple-100);
   --sui-purple-liquid-canvas_text-strong: var(--sui-purple-100);
+
+  --sui-purple-drop_shadow-xs: 0 1px 1px
+    color-mix(in oklab, var(--sui-purple-solid-canvas-normal) 5%, transparent);
+  --sui-purple-drop_shadow-sm: 0 1px 2px
+    color-mix(in oklab, var(--sui-purple-solid-canvas-normal) 15%, transparent);
+  --sui-purple-drop_shadow-md: 0 3px 3px
+    color-mix(in oklab, var(--sui-purple-solid-canvas-normal) 12%, transparent);
+  --sui-purple-drop_shadow-lg: 0 4px 4px
+    color-mix(in oklab, var(--sui-purple-solid-canvas-normal) 15%, transparent);
+  --sui-purple-drop_shadow-xl: 0 9px 7px
+    color-mix(in oklab, var(--sui-purple-solid-canvas-normal) 10%, transparent);
+  --sui-purple-drop_shadow-2xl: 0 25px 25px
+    color-mix(in oklab, var(--sui-purple-solid-canvas-normal) 15%, transparent);
 
   --sui-red-5: var(--_flexoki-red-950);
   --sui-red-10: var(--_flexoki-red-900);
@@ -411,6 +489,19 @@
   --sui-red-liquid-canvas_text-subtle: var(--sui-red-100);
   --sui-red-liquid-canvas_text-strong: var(--sui-red-100);
 
+  --sui-red-drop_shadow-xs: 0 1px 1px
+    color-mix(in oklab, var(--sui-red-solid-canvas-normal) 5%, transparent);
+  --sui-red-drop_shadow-sm: 0 1px 2px
+    color-mix(in oklab, var(--sui-red-solid-canvas-normal) 15%, transparent);
+  --sui-red-drop_shadow-md: 0 3px 3px
+    color-mix(in oklab, var(--sui-red-solid-canvas-normal) 12%, transparent);
+  --sui-red-drop_shadow-lg: 0 4px 4px
+    color-mix(in oklab, var(--sui-red-solid-canvas-normal) 15%, transparent);
+  --sui-red-drop_shadow-xl: 0 9px 7px
+    color-mix(in oklab, var(--sui-red-solid-canvas-normal) 10%, transparent);
+  --sui-red-drop_shadow-2xl: 0 25px 25px
+    color-mix(in oklab, var(--sui-red-solid-canvas-normal) 15%, transparent);
+
   --sui-yellow-5: var(--_flexoki-yellow-950);
   --sui-yellow-10: var(--_flexoki-yellow-900);
   --sui-yellow-15: var(--_flexoki-yellow-850);
@@ -468,6 +559,19 @@
   --sui-yellow-liquid-canvas_text-normal: var(--sui-yellow-90);
   --sui-yellow-liquid-canvas_text-subtle: var(--sui-yellow-100);
   --sui-yellow-liquid-canvas_text-strong: var(--sui-yellow-100);
+
+  --sui-yellow-drop_shadow-xs: 0 1px 1px
+    color-mix(in oklab, var(--sui-yellow-solid-canvas-normal) 5%, transparent);
+  --sui-yellow-drop_shadow-sm: 0 1px 2px
+    color-mix(in oklab, var(--sui-yellow-solid-canvas-normal) 15%, transparent);
+  --sui-yellow-drop_shadow-md: 0 3px 3px
+    color-mix(in oklab, var(--sui-yellow-solid-canvas-normal) 12%, transparent);
+  --sui-yellow-drop_shadow-lg: 0 4px 4px
+    color-mix(in oklab, var(--sui-yellow-solid-canvas-normal) 15%, transparent);
+  --sui-yellow-drop_shadow-xl: 0 9px 7px
+    color-mix(in oklab, var(--sui-yellow-solid-canvas-normal) 10%, transparent);
+  --sui-yellow-drop_shadow-2xl: 0 25px 25px
+    color-mix(in oklab, var(--sui-yellow-solid-canvas-normal) 15%, transparent);
 
   --sui-canvas-1: var(--sui-grey-0);
   --sui-canvas-2: var(--sui-grey-5);
