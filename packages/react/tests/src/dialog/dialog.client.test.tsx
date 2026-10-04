@@ -110,11 +110,11 @@ describe("Dialog", () => {
         action="操作"
         close={closeButton}
         description="説明"
+        id="popup"
         slotProps={{
           action: { id: "action" },
           content: { id: "content" },
           closeTrigger: { id: "close" },
-          popup: { id: "popup" },
           description: { id: "description" },
           footer: { id: "footer" },
           header: { id: "header" },
@@ -136,7 +136,7 @@ describe("Dialog", () => {
     expect(screen.getByClassName("sui_card_title").element().id).toBe("title");
   });
 
-  test("slotProps の render へポップアップの状態を渡す", async ({ expect }) => {
+  test("render へポップアップの状態を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <Dialog
@@ -146,16 +146,12 @@ describe("Dialog", () => {
         size="sm"
         radius="lg"
         variant="stacked"
-        slotProps={{
-          popup: {
-            render: (props, state) => (
-              <section
-                {...props}
-                data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
-              />
-            ),
-          },
-        }}
+        render={(props, state) => (
+          <section
+            {...props}
+            data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+          />
+        )}
       />,
     );
 

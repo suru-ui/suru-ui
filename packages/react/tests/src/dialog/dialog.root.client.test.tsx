@@ -18,7 +18,7 @@ const triggerButton = (props: React.ComponentProps<"button">) => (
 describe("DialogAPI", () => {
   test("getActionProps は閉じるアイコンも操作もないとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ showCloseIconButton: false });
+    const api = new DialogAPI({ handle: createDialogHandle(), showCloseIconButton: false });
 
     // 検証
     expect(api.getActionProps()).toBe(null);
@@ -26,7 +26,11 @@ describe("DialogAPI", () => {
 
   test("getActionProps は指定した内容を子要素にして返す", async ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ action: "操作", showCloseIconButton: false });
+    const api = new DialogAPI({
+      handle: createDialogHandle(),
+      action: "操作",
+      showCloseIconButton: false,
+    });
     const screen = await render(<>{api.getActionProps()?.children}</>);
 
     // 検証
@@ -35,7 +39,7 @@ describe("DialogAPI", () => {
 
   test("getActionProps は既定で閉じるアイコンボタンを表示する", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({});
+    const api = new DialogAPI({ handle: createDialogHandle() });
 
     // 検証
     expect(React.isValidElement(api.getActionProps()?.children)).toBe(true);
@@ -43,7 +47,10 @@ describe("DialogAPI", () => {
 
   test("getBackdropProps は slotProps の指定を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ slotProps: { backdrop: { id: "backdrop" } } });
+    const api = new DialogAPI({
+      handle: createDialogHandle(),
+      slotProps: { backdrop: { id: "backdrop" } },
+    });
 
     // 検証
     expect(api.getBackdropProps()).toStrictEqual({ id: "backdrop" });
@@ -51,7 +58,7 @@ describe("DialogAPI", () => {
 
   test("getCloseTriggerProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({});
+    const api = new DialogAPI({ handle: createDialogHandle() });
 
     // 検証
     expect(api.getCloseTriggerProps()).toBe(null);
@@ -59,7 +66,11 @@ describe("DialogAPI", () => {
 
   test("getCloseTriggerProps は閉じるボタンを子要素にして返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ close: closeButton, onClose: () => {} });
+    const api = new DialogAPI({
+      handle: createDialogHandle(),
+      close: closeButton,
+      onClose: () => {},
+    });
 
     // 検証
     expect(api.getCloseTriggerProps()?.children).toBe(closeButton);
@@ -68,6 +79,7 @@ describe("DialogAPI", () => {
   test("getCloseTriggerProps は描画関数を子要素にして返す", ({ expect }) => {
     // 準備と実行
     const api = new DialogAPI({
+      handle: createDialogHandle(),
       close: (props) => (
         <button type="button" {...props}>
           閉じる
@@ -82,7 +94,7 @@ describe("DialogAPI", () => {
 
   test("getContentProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({});
+    const api = new DialogAPI({ handle: createDialogHandle() });
 
     // 検証
     expect(api.getContentProps()).toBe(null);
@@ -91,6 +103,7 @@ describe("DialogAPI", () => {
   test("getContentProps は slotProps の指定を重ねる", ({ expect }) => {
     // 準備と実行
     const api = new DialogAPI({
+      handle: createDialogHandle(),
       children: "本文",
       slotProps: { content: { id: "content" } },
     });
@@ -101,7 +114,7 @@ describe("DialogAPI", () => {
 
   test("getDescriptionProps は空文字を表示対象にする", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ description: "" });
+    const api = new DialogAPI({ handle: createDialogHandle(), description: "" });
 
     // 検証
     expect(api.getDescriptionProps()).toStrictEqual({ children: "" });
@@ -109,7 +122,7 @@ describe("DialogAPI", () => {
 
   test("getFooterProps は閉じるボタンも内容もないとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({});
+    const api = new DialogAPI({ handle: createDialogHandle() });
 
     // 検証
     expect(api.getFooterProps()).toBe(null);
@@ -117,7 +130,7 @@ describe("DialogAPI", () => {
 
   test("getFooterProps は閉じるボタンだけで表示する", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ close: closeButton });
+    const api = new DialogAPI({ handle: createDialogHandle(), close: closeButton });
 
     // 検証
     expect(api.getFooterProps()).toStrictEqual({ children: undefined });
@@ -125,7 +138,7 @@ describe("DialogAPI", () => {
 
   test("getFooterProps は指定した内容を子要素にして返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ footer: "補足" });
+    const api = new DialogAPI({ handle: createDialogHandle(), footer: "補足" });
 
     // 検証
     expect(api.getFooterProps()).toStrictEqual({ children: "補足" });
@@ -133,7 +146,10 @@ describe("DialogAPI", () => {
 
   test("getHeaderProps は slotProps の指定を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ slotProps: { header: { id: "header" } } });
+    const api = new DialogAPI({
+      handle: createDialogHandle(),
+      slotProps: { header: { id: "header" } },
+    });
 
     // 検証
     expect(api.getHeaderProps()).toStrictEqual({ id: "header" });
@@ -141,7 +157,11 @@ describe("DialogAPI", () => {
 
   test("getHeaderProps は内容がないとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ children: "本文", showCloseIconButton: false });
+    const api = new DialogAPI({
+      handle: createDialogHandle(),
+      children: "本文",
+      showCloseIconButton: false,
+    });
 
     // 検証
     expect(api.getHeaderProps()).toBe(null);
@@ -149,7 +169,11 @@ describe("DialogAPI", () => {
 
   test("getHeaderProps は見出しだけで表示する", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ title: "見出し", showCloseIconButton: false });
+    const api = new DialogAPI({
+      handle: createDialogHandle(),
+      title: "見出し",
+      showCloseIconButton: false,
+    });
 
     // 検証
     expect(api.getHeaderProps()).toStrictEqual({});
@@ -157,7 +181,7 @@ describe("DialogAPI", () => {
 
   test("getHeaderProps は既定の外観で閉じるアイコンボタンだけでも表示する", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({});
+    const api = new DialogAPI({ handle: createDialogHandle() });
 
     // 検証
     expect(api.getHeaderProps()).toStrictEqual({});
@@ -165,7 +189,7 @@ describe("DialogAPI", () => {
 
   test("getHeaderProps は積み上げ式で閉じるアイコンボタンだけのとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ variant: "stacked" });
+    const api = new DialogAPI({ handle: createDialogHandle(), variant: "stacked" });
 
     // 検証
     expect(api.getHeaderProps()).toBe(null);
@@ -173,7 +197,10 @@ describe("DialogAPI", () => {
 
   test("getPortalProps は slotProps の指定を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ slotProps: { portal: { id: "portal" } } });
+    const api = new DialogAPI({
+      handle: createDialogHandle(),
+      slotProps: { portal: { id: "portal" } },
+    });
 
     // 検証
     expect(api.getPortalProps()).toStrictEqual({ id: "portal" });
@@ -181,7 +208,13 @@ describe("DialogAPI", () => {
 
   test("getPopupProps は大きさと角丸と外観と枠線を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ size: "sm", radius: "lg", variant: "stacked", outlined: true });
+    const api = new DialogAPI({
+      handle: createDialogHandle(),
+      size: "sm",
+      radius: "lg",
+      variant: "stacked",
+      outlined: true,
+    });
 
     // 検証
     expect(api.getPopupProps()).toStrictEqual({
@@ -192,23 +225,21 @@ describe("DialogAPI", () => {
     });
   });
 
-  test("getPopupProps は slotProps の指定を重ねる", ({ expect }) => {
+  test("getPopupProps は popup への指定をそのまま返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ slotProps: { popup: { id: "popup" } } });
+    const api = new DialogAPI({ handle: createDialogHandle(), id: "popup" });
 
     // 検証
-    expect(api.getPopupProps()).toStrictEqual({
-      id: "popup",
-      size: undefined,
-      radius: undefined,
-      variant: "default",
-      outlined: undefined,
-    });
+    expect(api.getPopupProps()).toStrictEqual({ id: "popup" });
   });
 
   test("getRootProps はハンドルを補完する", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ title: "見出し", close: closeButton });
+    const api = new DialogAPI({
+      handle: createDialogHandle(),
+      title: "見出し",
+      close: closeButton,
+    });
     const rootProps = api.getRootProps();
 
     // 検証
@@ -231,7 +262,7 @@ describe("DialogAPI", () => {
 
   test("getTitleProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({});
+    const api = new DialogAPI({ handle: createDialogHandle() });
 
     // 検証
     expect(api.getTitleProps()).toBe(null);
@@ -239,7 +270,7 @@ describe("DialogAPI", () => {
 
   test("getToggleTriggerProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({});
+    const api = new DialogAPI({ handle: createDialogHandle() });
 
     // 検証
     expect(api.getToggleTriggerProps()).toBe(null);
@@ -247,7 +278,7 @@ describe("DialogAPI", () => {
 
   test("getToggleTriggerProps は描画関数にハンドルを添えて返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ trigger: triggerButton });
+    const api = new DialogAPI({ handle: createDialogHandle(), trigger: triggerButton });
     const props = api.getToggleTriggerProps();
 
     // 検証
@@ -257,7 +288,10 @@ describe("DialogAPI", () => {
 
   test("getViewportProps は slotProps の指定を返す", ({ expect }) => {
     // 準備と実行
-    const api = new DialogAPI({ slotProps: { viewport: { id: "viewport" } } });
+    const api = new DialogAPI({
+      handle: createDialogHandle(),
+      slotProps: { viewport: { id: "viewport" } },
+    });
 
     // 検証
     expect(api.getViewportProps()).toStrictEqual({ id: "viewport" });

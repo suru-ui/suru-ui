@@ -126,7 +126,7 @@ describe("AlertDialog", () => {
     expect(screen.getByClassName("sui_alert_dialog_header").element().id).toBe("header");
   });
 
-  test("slotProps の render へポップアップとアイコンの状態を渡す", async ({ expect }) => {
+  test("render へポップアップとアイコンの状態を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <AlertDialog
@@ -137,15 +137,13 @@ describe("AlertDialog", () => {
         size="sm"
         radius="lg"
         variant="stacked"
+        render={(props, state) => (
+          <section
+            {...props}
+            data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+          />
+        )}
         slotProps={{
-          popup: {
-            render: (props, state) => (
-              <section
-                {...props}
-                data-probe={`${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
-              />
-            ),
-          },
           icon: {
             size: "sm",
             radius: "full",

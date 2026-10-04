@@ -20,7 +20,10 @@ const triggerButton = (props: React.ComponentProps<"button">) => (
 describe("AlertDialogAPI", () => {
   test("getBackdropProps は slotProps の指定を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ slotProps: { backdrop: { id: "backdrop" } } });
+    const api = new AlertDialogAPI({
+      handle: createAlertDialogHandle(),
+      slotProps: { backdrop: { id: "backdrop" } },
+    });
 
     // 検証
     expect(api.getBackdropProps()).toStrictEqual({ id: "backdrop" });
@@ -28,7 +31,7 @@ describe("AlertDialogAPI", () => {
 
   test("getContentProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({});
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle() });
 
     // 検証
     expect(api.getContentProps()).toBe(null);
@@ -36,7 +39,7 @@ describe("AlertDialogAPI", () => {
 
   test("getContentProps は本文を子要素にして返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ children: "本文" });
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle(), children: "本文" });
 
     // 検証
     expect(api.getContentProps()).toStrictEqual({ children: "本文" });
@@ -45,6 +48,7 @@ describe("AlertDialogAPI", () => {
   test("getContentProps は slotProps の指定を重ねる", ({ expect }) => {
     // 準備と実行
     const api = new AlertDialogAPI({
+      handle: createAlertDialogHandle(),
       children: "本文",
       slotProps: { content: { id: "content" } },
     });
@@ -55,7 +59,7 @@ describe("AlertDialogAPI", () => {
 
   test("getCancelTriggerProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({});
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle() });
 
     // 検証
     expect(api.getCancelTriggerProps()).toBe(null);
@@ -63,7 +67,11 @@ describe("AlertDialogAPI", () => {
 
   test("getCancelTriggerProps は中止ボタンを子要素にして返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ cancel: cancelButton, onCancel: () => {} });
+    const api = new AlertDialogAPI({
+      handle: createAlertDialogHandle(),
+      cancel: cancelButton,
+      onCancel: () => {},
+    });
 
     // 検証
     expect(api.getCancelTriggerProps()?.children).toBe(cancelButton);
@@ -71,7 +79,7 @@ describe("AlertDialogAPI", () => {
 
   test("getConfirmTriggerProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({});
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle() });
 
     // 検証
     expect(api.getConfirmTriggerProps()).toBe(null);
@@ -79,42 +87,44 @@ describe("AlertDialogAPI", () => {
 
   test("getConfirmTriggerProps は確認ボタンを子要素にして返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ confirm: confirmButton, onConfirm: () => {} });
+    const api = new AlertDialogAPI({
+      handle: createAlertDialogHandle(),
+      confirm: confirmButton,
+      onConfirm: () => {},
+    });
 
     // 検証
     expect(api.getConfirmTriggerProps()?.children).toBe(confirmButton);
   });
 
-  test("getPopupProps は大きさと角丸と外観と枠線を返す", ({ expect }) => {
+  test("getPopupProps は大きさと角丸と外観と枠線をそのまま返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ radius: "lg", variant: "stacked", outlined: true });
+    const api = new AlertDialogAPI({
+      handle: createAlertDialogHandle(),
+      radius: "lg",
+      variant: "stacked",
+      outlined: true,
+    });
 
     // 検証
     expect(api.getPopupProps()).toStrictEqual({
-      size: undefined,
       radius: "lg",
       variant: "stacked",
       outlined: true,
     });
   });
 
-  test("getPopupProps は slotProps の指定を重ねる", ({ expect }) => {
+  test("getPopupProps は popup への指定をそのまま返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ slotProps: { popup: { id: "popup" } } });
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle(), id: "popup" });
 
     // 検証
-    expect(api.getPopupProps()).toStrictEqual({
-      id: "popup",
-      size: undefined,
-      radius: undefined,
-      variant: "default",
-      outlined: undefined,
-    });
+    expect(api.getPopupProps()).toStrictEqual({ id: "popup" });
   });
 
   test("getActionProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({});
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle() });
 
     // 検証
     expect(api.getActionProps()).toBe(null);
@@ -122,7 +132,7 @@ describe("AlertDialogAPI", () => {
 
   test("getActionProps は指定した内容を子要素にして返す", async ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ action: "操作" });
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle(), action: "操作" });
     const screen = await render(<>{api.getActionProps()?.children}</>);
 
     // 検証
@@ -131,7 +141,10 @@ describe("AlertDialogAPI", () => {
 
   test("getActionProps は閉じるアイコンボタンを表示できる", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ showCancelIconButton: true });
+    const api = new AlertDialogAPI({
+      handle: createAlertDialogHandle(),
+      showCancelIconButton: true,
+    });
 
     // 検証
     expect(React.isValidElement(api.getActionProps()?.children)).toBe(true);
@@ -139,7 +152,7 @@ describe("AlertDialogAPI", () => {
 
   test("getDescriptionProps は空文字を表示対象にする", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ description: "" });
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle(), description: "" });
 
     // 検証
     expect(api.getDescriptionProps()).toStrictEqual({ children: "" });
@@ -147,7 +160,7 @@ describe("AlertDialogAPI", () => {
 
   test("getFooterProps は中止も確認もないとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({});
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle() });
 
     // 検証
     expect(api.getFooterProps()).toBe(null);
@@ -155,7 +168,7 @@ describe("AlertDialogAPI", () => {
 
   test("getFooterProps は中止ボタンだけで表示する", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ cancel: cancelButton });
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle(), cancel: cancelButton });
 
     // 検証
     expect(api.getFooterProps()).toStrictEqual({ children: undefined });
@@ -163,7 +176,7 @@ describe("AlertDialogAPI", () => {
 
   test("getFooterProps は確認ボタンだけで表示する", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ confirm: confirmButton });
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle(), confirm: confirmButton });
 
     // 検証
     expect(api.getFooterProps()).toStrictEqual({ children: undefined });
@@ -171,7 +184,7 @@ describe("AlertDialogAPI", () => {
 
   test("getFooterProps は指定した内容を子要素にして返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ footer: "補足" });
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle(), footer: "補足" });
 
     // 検証
     expect(api.getFooterProps()).toStrictEqual({ children: "補足" });
@@ -179,7 +192,7 @@ describe("AlertDialogAPI", () => {
 
   test("getHeaderProps は内容がないとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ children: "本文" });
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle(), children: "本文" });
 
     // 検証
     expect(api.getHeaderProps()).toBe(null);
@@ -187,7 +200,7 @@ describe("AlertDialogAPI", () => {
 
   test("getHeaderProps は見出しだけで表示する", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ title: "見出し" });
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle(), title: "見出し" });
 
     // 検証
     expect(api.getHeaderProps()).toStrictEqual({});
@@ -195,7 +208,11 @@ describe("AlertDialogAPI", () => {
 
   test("getHeaderProps は slotProps の指定を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ title: "見出し", slotProps: { header: { id: "header" } } });
+    const api = new AlertDialogAPI({
+      handle: createAlertDialogHandle(),
+      title: "見出し",
+      slotProps: { header: { id: "header" } },
+    });
 
     // 検証
     expect(api.getHeaderProps()).toStrictEqual({ id: "header" });
@@ -203,7 +220,7 @@ describe("AlertDialogAPI", () => {
 
   test("getIconProps は空文字を表示対象にする", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ icon: "" });
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle(), icon: "" });
 
     // 検証
     expect(api.getIconProps()).toStrictEqual({ children: "" });
@@ -211,7 +228,7 @@ describe("AlertDialogAPI", () => {
 
   test("getIconProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({});
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle() });
 
     // 検証
     expect(api.getIconProps()).toBe(null);
@@ -219,7 +236,10 @@ describe("AlertDialogAPI", () => {
 
   test("getPortalProps は slotProps の指定を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ slotProps: { portal: { id: "portal" } } });
+    const api = new AlertDialogAPI({
+      handle: createAlertDialogHandle(),
+      slotProps: { portal: { id: "portal" } },
+    });
 
     // 検証
     expect(api.getPortalProps()).toStrictEqual({ id: "portal" });
@@ -227,7 +247,11 @@ describe("AlertDialogAPI", () => {
 
   test("getRootProps はハンドルを補完する", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ title: "見出し", cancel: cancelButton });
+    const api = new AlertDialogAPI({
+      handle: createAlertDialogHandle(),
+      title: "見出し",
+      cancel: cancelButton,
+    });
     const rootProps = api.getRootProps();
 
     // 検証
@@ -250,7 +274,7 @@ describe("AlertDialogAPI", () => {
 
   test("getTitleProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({});
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle() });
 
     // 検証
     expect(api.getTitleProps()).toBe(null);
@@ -258,7 +282,7 @@ describe("AlertDialogAPI", () => {
 
   test("getToggleTriggerProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({});
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle() });
 
     // 検証
     expect(api.getToggleTriggerProps()).toBe(null);
@@ -266,7 +290,7 @@ describe("AlertDialogAPI", () => {
 
   test("getToggleTriggerProps は描画関数にハンドルを添えて返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ trigger: triggerButton });
+    const api = new AlertDialogAPI({ handle: createAlertDialogHandle(), trigger: triggerButton });
     const props = api.getToggleTriggerProps();
 
     // 検証
@@ -276,7 +300,10 @@ describe("AlertDialogAPI", () => {
 
   test("getViewportProps は slotProps の指定を返す", ({ expect }) => {
     // 準備と実行
-    const api = new AlertDialogAPI({ slotProps: { viewport: { id: "viewport" } } });
+    const api = new AlertDialogAPI({
+      handle: createAlertDialogHandle(),
+      slotProps: { viewport: { id: "viewport" } },
+    });
 
     // 検証
     expect(api.getViewportProps()).toStrictEqual({ id: "viewport" });
