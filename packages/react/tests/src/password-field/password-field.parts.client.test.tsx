@@ -207,7 +207,11 @@ describe("PasswordFieldInput", () => {
 describe("PasswordFieldAddon", () => {
   test("span で表示して修飾クラスを付ける", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<PasswordFieldAddon>🔒</PasswordFieldAddon>);
+    const screen = await render(
+      <PasswordFieldRoot>
+        <PasswordFieldAddon>🔒</PasswordFieldAddon>
+      </PasswordFieldRoot>,
+    );
 
     // 検証
     const addon = screen.getByText("🔒").element();
@@ -218,7 +222,11 @@ describe("PasswordFieldAddon", () => {
 
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<PasswordFieldAddon className="custom">🔒</PasswordFieldAddon>);
+    const screen = await render(
+      <PasswordFieldRoot>
+        <PasswordFieldAddon className="custom">🔒</PasswordFieldAddon>
+      </PasswordFieldRoot>,
+    );
 
     // 検証
     const addon = screen.getByText("🔒").element();
@@ -228,7 +236,11 @@ describe("PasswordFieldAddon", () => {
 
   test("render で要素を置き換える", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<PasswordFieldAddon render={<b />}>🔒</PasswordFieldAddon>);
+    const screen = await render(
+      <PasswordFieldRoot>
+        <PasswordFieldAddon render={<b />}>🔒</PasswordFieldAddon>
+      </PasswordFieldRoot>,
+    );
 
     // 検証
     const addon = screen.getByText("🔒").element();

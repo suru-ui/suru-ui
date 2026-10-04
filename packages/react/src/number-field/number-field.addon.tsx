@@ -41,23 +41,14 @@ export type NumberFieldAddonProps = NumberFieldAddonProps.Render &
 
 export type INumberFieldAddon = IComponent<NumberFieldAddonProps>;
 
-const defaultNumberFieldContext: NumberFieldContext = {
-  size: "md",
-  color: "grey",
-  radius: "md",
-  variant: "liquid",
-  outlined: false,
-};
-
 /**
  * 入力欄の左右に表示する補助コンポーネントです。
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
 export const NumberFieldAddon: INumberFieldAddon = function SuiNumberFieldAddon(props) {
-  const ctx = useNumberFieldContext(true);
+  const ctx = useNumberFieldContext();
   const { disableFocusOnClick = false, ...otherSpanProps } = props;
-  const state = ctx ?? defaultNumberFieldContext;
 
   return useRender({
     props: [
@@ -74,7 +65,7 @@ export const NumberFieldAddon: INumberFieldAddon = function SuiNumberFieldAddon(
         [DISABLE_FOCUS_ON_CLICK_DATA]: disableFocusOnClick ? "true" : undefined,
       },
     ],
-    state,
+    state: ctx,
     defaultTagName: "span",
   });
 };

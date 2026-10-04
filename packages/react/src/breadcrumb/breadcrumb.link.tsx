@@ -3,7 +3,6 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { defaultBreadcrumbContext } from "./_breadcrumb.jsx";
 import { type BreadcrumbContext, useBreadcrumbContext } from "./breadcrumb.context.js";
 
 /**
@@ -71,7 +70,7 @@ export type IBreadcrumbLink = IComponent<BreadcrumbLinkProps>;
  * `current` が `true` の場合はリンクにせず、`aria-current="page"` を持つ要素として描画します。
  */
 export const BreadcrumbLink: IBreadcrumbLink = function SuiBreadcrumbLink(props) {
-  const ctx = useBreadcrumbContext(true);
+  const ctx = useBreadcrumbContext();
   const { href, current = false, onClick, disabled = false, tabIndex, ...otherAnchorProps } = props;
   const handleOnClick: NonNullable<BreadcrumbLinkProps["onClick"]> = (event) => {
     onClick?.(event);
@@ -99,7 +98,7 @@ export const BreadcrumbLink: IBreadcrumbLink = function SuiBreadcrumbLink(props)
         "data-href": current || disabled ? href : undefined,
       },
     ],
-    state: { ...defaultBreadcrumbContext, ...ctx, current, disabled },
+    state: { ...ctx, current, disabled },
     defaultTagName: current ? "span" : "a",
   });
 };

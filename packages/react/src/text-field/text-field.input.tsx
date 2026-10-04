@@ -5,7 +5,6 @@ import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
-import { DEFAULT_TEXT_FIELD_CONTEXT } from "./_text-field.jsx";
 import { type TextFieldContext, useTextFieldContext } from "./text-field.context.js";
 
 /**
@@ -75,9 +74,9 @@ export type ITextFieldInput = IComponent<TextFieldInputProps>;
  * 文字入力欄の入力欄です。
  */
 export const TextFieldInput: ITextFieldInput = function SuiTextFieldInput(props) {
-  const ctx = useTextFieldContext(true);
+  const ctx = useTextFieldContext();
   const { type = "text", style, render, className, ...otherProps } = props;
-  const renderState = ctx ?? DEFAULT_TEXT_FIELD_CONTEXT;
+  const renderState = ctx;
 
   return (
     <BaseInput

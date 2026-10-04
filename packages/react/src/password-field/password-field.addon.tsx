@@ -58,14 +58,14 @@ export type IPasswordFieldAddon = IComponent<PasswordFieldAddonProps>;
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
 export const PasswordFieldAddon: IPasswordFieldAddon = function SuiPasswordFieldAddon(props) {
-  const ctx = usePasswordFieldContext(true);
+  const ctx = usePasswordFieldContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
     <TextFieldAddon
       {...otherProps}
       {...proxyRenderProps<TextFieldAddonState, PasswordFieldAddonState>(
-        (state) => ({ ...state, visible: ctx?.visible ?? false }),
+        (state) => ({ ...state, visible: ctx.visible }),
         {
           style,
           render,

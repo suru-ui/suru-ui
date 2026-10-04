@@ -2,13 +2,39 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { AlertDialogIcon } from "../../../src/alert-dialog/alert-dialog.icon.jsx";
+import {
+  type AlertDialogIconProps,
+  AlertDialogIcon,
+} from "../../../src/alert-dialog/alert-dialog.icon.jsx";
+import { AlertDialogPopupContext } from "../../../src/alert-dialog/alert-dialog.popup.context.js";
 import "../_locators.js";
+
+const mockPopupContext = {
+  size: "md",
+  radius: "md",
+  variant: "default",
+  outlined: false,
+  open: true,
+  nested: false,
+  nestedDialogOpen: false,
+  transitionStatus: undefined,
+} as const;
+
+/**
+ * ポップアップのコンテキスト内でアイコンを描画します。
+ */
+function renderIcon(props?: AlertDialogIconProps) {
+  return render(
+    <AlertDialogPopupContext value={mockPopupContext}>
+      <AlertDialogIcon {...props} />
+    </AlertDialogPopupContext>,
+  );
+}
 
 describe("AlertDialogIcon", () => {
   test("既定の修飾で描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<AlertDialogIcon />);
+    const screen = await renderIcon();
 
     // 検証
     const icon = screen.getByClassName("sui_alert_dialog_icon").element();
@@ -21,9 +47,14 @@ describe("AlertDialogIcon", () => {
 
   test("指定した修飾をクラスにする", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(
-      <AlertDialogIcon color="blue" muted outlined radius="full" size="lg" variant="solid" />,
-    );
+    const screen = await renderIcon({
+      color: "blue",
+      muted: true,
+      outlined: true,
+      radius: "full",
+      size: "lg",
+      variant: "solid",
+    });
 
     // 検証
     const icon = screen.getByClassName("sui_alert_dialog_icon").element();
@@ -37,7 +68,7 @@ describe("AlertDialogIcon", () => {
 
   test("角丸は大きさに追従する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<AlertDialogIcon size="sm" />);
+    const screen = await renderIcon({ size: "sm" });
 
     // 検証
     expect(
@@ -50,7 +81,7 @@ describe("AlertDialogIcon", () => {
 
   test("装飾として読み上げから隠す", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<AlertDialogIcon />);
+    const screen = await renderIcon();
 
     // 検証
     expect(
@@ -60,7 +91,7 @@ describe("AlertDialogIcon", () => {
 
   test("指定すると読み上げ対象にする", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<AlertDialogIcon aria-hidden={false} />);
+    const screen = await renderIcon({ "aria-hidden": false });
 
     // 検証
     expect(
@@ -70,11 +101,7 @@ describe("AlertDialogIcon", () => {
 
   test("子要素を描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(
-      <AlertDialogIcon>
-        <svg viewBox="0 0 16 16" />
-      </AlertDialogIcon>,
-    );
+    const screen = await renderIcon({ children: <svg viewBox="0 0 16 16" /> });
 
     // 検証
     expect(screen.getByClassName("sui_alert_dialog_icon").element().querySelector("svg")).not.toBe(
@@ -84,7 +111,7 @@ describe("AlertDialogIcon", () => {
 
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<AlertDialogIcon className="custom" />);
+    const screen = await renderIcon({ className: "custom" });
 
     // 検証
     const icon = screen.getByClassName("sui_alert_dialog_icon").element();
@@ -94,7 +121,7 @@ describe("AlertDialogIcon", () => {
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<AlertDialogIcon render={<span />} />);
+    const screen = await renderIcon({ render: <span /> });
 
     // 検証
     expect(screen.getByClassName("sui_alert_dialog_icon").element().tagName).toBe("SPAN");
@@ -102,22 +129,20 @@ describe("AlertDialogIcon", () => {
 
   test("render の関数へ状態を渡す", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(
-      <AlertDialogIcon
-        color="blue"
-        muted
-        outlined
-        radius="full"
-        size="lg"
-        variant="solid"
-        render={(props, state) => (
-          <div
-            {...props}
-            data-probe={`${state.size}/${state.color}/${state.radius}/${state.variant}/${state.muted}/${state.outlined}`}
-          />
-        )}
-      />,
-    );
+    const screen = await renderIcon({
+      color: "blue",
+      muted: true,
+      outlined: true,
+      radius: "full",
+      size: "lg",
+      variant: "solid",
+      render: (props, state) => (
+        <div
+          {...props}
+          data-probe={`${state.size}/${state.color}/${state.radius}/${state.variant}/${state.muted}/${state.outlined}`}
+        />
+      ),
+    });
 
     // 検証
     expect(
@@ -127,14 +152,12 @@ describe("AlertDialogIcon", () => {
 
   test("className と style の関数へ状態を渡す", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(
-      <AlertDialogIcon
-        muted
-        variant="solid"
-        className={(state) => `probe-variant_${state.variant}`}
-        style={(state) => ({ opacity: state.muted ? "0.5" : "1" })}
-      />,
-    );
+    const screen = await renderIcon({
+      muted: true,
+      variant: "solid",
+      className: (state) => `probe-variant_${state.variant}`,
+      style: (state) => ({ opacity: state.muted ? "0.5" : "1" }),
+    });
 
     // 検証
     const icon = screen.getByClassName("sui_alert_dialog_icon").element();

@@ -111,7 +111,7 @@ export type ISidebarRoot = IComponent<SidebarRootProps>;
  * {@link SidebarGroup}、{@link SidebarRail} を配置します。
  */
 export const SidebarRoot: ISidebarRoot = function SuiSidebarRoot(props) {
-  const ctx = useSidebarContext(true);
+  const ctx = useSidebarContext();
   const {
     side = "left",
     variant = "sidebar",
@@ -120,7 +120,7 @@ export const SidebarRoot: ISidebarRoot = function SuiSidebarRoot(props) {
     "data-scope": dataScope = "",
     ...otherAsideProps
   } = props;
-  const open = ctx?.open ?? true;
+  const open = ctx.open;
   const state: SidebarOpenState = open ? "expanded" : "collapsed";
   const renderState = React.useMemo<SidebarRootState>(
     () => ({ open, side, state, variant, collapsible }),
@@ -129,12 +129,12 @@ export const SidebarRoot: ISidebarRoot = function SuiSidebarRoot(props) {
   // collapsible・side・variant は Root の内側でだけ確定するため、子孫へ伝えます。
   const childCtx = React.useMemo<SidebarContext>(
     () => ({
-      ...(ctx ?? { open, state, toggle: () => {}, setOpen: () => {} }),
+      ...ctx,
       side,
       variant,
       collapsible,
     }),
-    [collapsible, ctx, open, side, state, variant],
+    [collapsible, ctx, side, variant],
   );
 
   const element = useRender({

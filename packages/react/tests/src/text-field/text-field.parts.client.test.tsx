@@ -140,7 +140,11 @@ describe("TextFieldRoot", () => {
 describe("TextFieldInput", () => {
   test("既定では text の入力欄を表示する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<TextFieldInput aria-label="名前" />);
+    const screen = await render(
+      <TextFieldRoot>
+        <TextFieldInput aria-label="名前" />
+      </TextFieldRoot>,
+    );
 
     // 検証
     const input = screen.getByRole("textbox", { name: "名前" }).element() as HTMLInputElement;
@@ -151,7 +155,11 @@ describe("TextFieldInput", () => {
 
   test("指定した入力項目を表示する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<TextFieldInput aria-label="メール" type="email" />);
+    const screen = await render(
+      <TextFieldRoot>
+        <TextFieldInput aria-label="メール" type="email" />
+      </TextFieldRoot>,
+    );
 
     // 検証
     expect(
@@ -162,7 +170,9 @@ describe("TextFieldInput", () => {
   test("利用者の props を入力欄へ渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <TextFieldInput autoComplete="off" name="name" placeholder="田中 太郎" required />,
+      <TextFieldRoot>
+        <TextFieldInput autoComplete="off" name="name" placeholder="田中 太郎" required />
+      </TextFieldRoot>,
     );
 
     // 検証
@@ -175,7 +185,11 @@ describe("TextFieldInput", () => {
 
   test("無効時は状態クラスを付ける", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<TextFieldInput aria-label="名前" disabled />);
+    const screen = await render(
+      <TextFieldRoot>
+        <TextFieldInput aria-label="名前" disabled />
+      </TextFieldRoot>,
+    );
 
     // 検証
     const input = screen.getByRole("textbox", { name: "名前" }).element();
@@ -186,12 +200,16 @@ describe("TextFieldInput", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <FieldRoot invalid>
-          <TextFieldInput aria-label="不正" />
-        </FieldRoot>
-        <FieldRoot>
-          <TextFieldInput aria-label="未検証" />
-        </FieldRoot>
+        <TextFieldRoot>
+          <FieldRoot invalid>
+            <TextFieldInput aria-label="不正" />
+          </FieldRoot>
+        </TextFieldRoot>
+        <TextFieldRoot>
+          <FieldRoot>
+            <TextFieldInput aria-label="未検証" />
+          </FieldRoot>
+        </TextFieldRoot>
       </>,
     );
 
@@ -212,7 +230,11 @@ describe("TextFieldInput", () => {
 
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<TextFieldInput aria-label="名前" className="custom" />);
+    const screen = await render(
+      <TextFieldRoot>
+        <TextFieldInput aria-label="名前" className="custom" />
+      </TextFieldRoot>,
+    );
 
     // 検証
     const input = screen.getByRole("textbox", { name: "名前" }).element();
@@ -222,7 +244,11 @@ describe("TextFieldInput", () => {
 
   test("render で要素を置き換える", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<TextFieldInput aria-label="名前" render={<textarea />} />);
+    const screen = await render(
+      <TextFieldRoot>
+        <TextFieldInput aria-label="名前" render={<textarea />} />
+      </TextFieldRoot>,
+    );
 
     // 検証
     const input = screen.getByRole("textbox", { name: "名前" }).element();
@@ -257,7 +283,11 @@ describe("TextFieldInput", () => {
 describe("TextFieldAddon", () => {
   test("span で表示して修飾クラスを付ける", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<TextFieldAddon>🔒</TextFieldAddon>);
+    const screen = await render(
+      <TextFieldRoot>
+        <TextFieldAddon>🔒</TextFieldAddon>
+      </TextFieldRoot>,
+    );
 
     // 検証
     const addon = screen.getByText("🔒").element();
@@ -267,7 +297,11 @@ describe("TextFieldAddon", () => {
 
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<TextFieldAddon className="custom">🔒</TextFieldAddon>);
+    const screen = await render(
+      <TextFieldRoot>
+        <TextFieldAddon className="custom">🔒</TextFieldAddon>
+      </TextFieldRoot>,
+    );
 
     // 検証
     const addon = screen.getByText("🔒").element();
@@ -277,7 +311,11 @@ describe("TextFieldAddon", () => {
 
   test("render で要素を置き換える", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<TextFieldAddon render={<b />}>🔒</TextFieldAddon>);
+    const screen = await render(
+      <TextFieldRoot>
+        <TextFieldAddon render={<b />}>🔒</TextFieldAddon>
+      </TextFieldRoot>,
+    );
 
     // 検証
     const addon = screen.getByText("🔒").element();

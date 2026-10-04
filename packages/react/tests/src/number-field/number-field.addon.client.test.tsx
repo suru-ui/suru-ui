@@ -8,7 +8,11 @@ import "../_locators.js";
 describe("NumberFieldAddon", () => {
   test("span で表示して修飾クラスを付ける", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<NumberFieldAddon>¥</NumberFieldAddon>);
+    const screen = await render(
+      <NumberFieldRoot>
+        <NumberFieldAddon>¥</NumberFieldAddon>
+      </NumberFieldRoot>,
+    );
 
     // 検証
     const addon = screen.getByText("¥").element();
@@ -18,7 +22,11 @@ describe("NumberFieldAddon", () => {
 
   test("利用者の className を保持する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<NumberFieldAddon className="custom">¥</NumberFieldAddon>);
+    const screen = await render(
+      <NumberFieldRoot>
+        <NumberFieldAddon className="custom">¥</NumberFieldAddon>
+      </NumberFieldRoot>,
+    );
 
     // 検証
     const addon = screen.getByText("¥").element();
@@ -28,7 +36,11 @@ describe("NumberFieldAddon", () => {
 
   test("render で要素を置き換える", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<NumberFieldAddon render={<b />}>¥</NumberFieldAddon>);
+    const screen = await render(
+      <NumberFieldRoot>
+        <NumberFieldAddon render={<b />}>¥</NumberFieldAddon>
+      </NumberFieldRoot>,
+    );
 
     // 検証
     const addon = screen.getByText("¥").element();

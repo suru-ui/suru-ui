@@ -15,7 +15,16 @@ import { ContextMissingError } from "../../../src/errors.js";
 describe("useAlertDialogPopupContext", () => {
   test("提供された値を返す", async ({ expect }) => {
     // 準備
-    const provided = { size: "sm", radius: "lg", variant: "stacked" } as const;
+    const provided = {
+      size: "sm",
+      radius: "lg",
+      variant: "stacked",
+      outlined: true,
+      open: true,
+      nested: false,
+      nestedDialogOpen: false,
+      transitionStatus: undefined,
+    } as const;
     function Probe() {
       const ctx = useAlertDialogPopupContext();
 

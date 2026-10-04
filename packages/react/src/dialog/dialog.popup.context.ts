@@ -4,7 +4,7 @@ import * as React from "react";
 
 import * as Card from "../card/card.parts.js";
 import { ContextMissingError } from "../errors.js";
-import type { IUseContext, Override } from "../types.js";
+import type { Override, IUseContext } from "../types.js";
 
 /**
  * ダイアログの角丸の大きさです。

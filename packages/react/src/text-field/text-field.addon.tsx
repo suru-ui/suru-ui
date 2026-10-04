@@ -3,7 +3,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { DEFAULT_TEXT_FIELD_CONTEXT, DISABLE_FOCUS_ON_CLICK_DATA } from "./_text-field.jsx";
+import { DISABLE_FOCUS_ON_CLICK_DATA } from "./_text-field.jsx";
 import { type TextFieldContext, useTextFieldContext } from "./text-field.context.js";
 
 /**
@@ -47,9 +47,9 @@ export type ITextFieldAddon = IComponent<TextFieldAddonProps>;
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
 export const TextFieldAddon: ITextFieldAddon = function SuiTextFieldAddon(props) {
-  const ctx = useTextFieldContext(true);
+  const ctx = useTextFieldContext();
   const { disableFocusOnClick = false, ...otherSpanProps } = props;
-  const state = ctx ?? DEFAULT_TEXT_FIELD_CONTEXT;
+  const state = ctx;
 
   return useRender({
     props: [

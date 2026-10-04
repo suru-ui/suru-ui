@@ -4,7 +4,6 @@ import { ChevronRightIcon } from "../_icons.jsx";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { defaultBreadcrumbContext } from "./_breadcrumb.jsx";
 import { type BreadcrumbContext, useBreadcrumbContext } from "./breadcrumb.context.js";
 
 /**
@@ -39,7 +38,7 @@ export type IBreadcrumbSeparator = IComponent<BreadcrumbSeparatorProps>;
  * パンくずの項目を区切るセパレーターコンポーネントです。
  */
 export const BreadcrumbSeparator: IBreadcrumbSeparator = function SuiBreadcrumbSeparator(props) {
-  const ctx = useBreadcrumbContext(true);
+  const ctx = useBreadcrumbContext();
   const {
     children = <ChevronRightIcon />,
     "aria-hidden": ariaHidden = true,
@@ -59,7 +58,7 @@ export const BreadcrumbSeparator: IBreadcrumbSeparator = function SuiBreadcrumbS
         "aria-hidden": ariaHidden,
       },
     ],
-    state: { ...defaultBreadcrumbContext, ...ctx },
+    state: ctx,
     defaultTagName: "li",
   });
 };

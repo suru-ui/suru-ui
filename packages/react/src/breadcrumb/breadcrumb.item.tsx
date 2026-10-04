@@ -3,7 +3,6 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { defaultBreadcrumbContext } from "./_breadcrumb.jsx";
 import { type BreadcrumbContext, useBreadcrumbContext } from "./breadcrumb.context.js";
 
 /**
@@ -38,7 +37,7 @@ export type IBreadcrumbItem = IComponent<BreadcrumbItemProps>;
  * パンくずの項目コンポーネントです。
  */
 export const BreadcrumbItem: IBreadcrumbItem = function SuiBreadcrumbItem(props) {
-  const ctx = useBreadcrumbContext(true);
+  const ctx = useBreadcrumbContext();
 
   return useRender({
     props: [
@@ -51,7 +50,7 @@ export const BreadcrumbItem: IBreadcrumbItem = function SuiBreadcrumbItem(props)
         ),
       },
     ],
-    state: { ...defaultBreadcrumbContext, ...ctx },
+    state: ctx,
     defaultTagName: "li",
   });
 };

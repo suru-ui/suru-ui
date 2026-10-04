@@ -13,6 +13,7 @@ import { BreadcrumbLink } from "../../../src/breadcrumb/breadcrumb.link.jsx";
 import { BreadcrumbList } from "../../../src/breadcrumb/breadcrumb.list.jsx";
 import { BreadcrumbRoot } from "../../../src/breadcrumb/breadcrumb.root.jsx";
 import { BreadcrumbSeparator } from "../../../src/breadcrumb/breadcrumb.separator.jsx";
+import { ContextMissingError } from "../../../src/errors.js";
 import "../_locators.js";
 
 const items = [
@@ -129,16 +130,15 @@ describe("BreadcrumbList", () => {
     expect(screen.getByText("2:Suru UI").query()).not.toBe(null);
   });
 
-  test("提供がないときは children だけを描画する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <BreadcrumbList>
-        <li>単独</li>
-      </BreadcrumbList>,
-    );
-
-    // 検証
-    expect(screen.getByRole("listitem").element().textContent).toBe("単独");
+  test("提供がないときはエラーを投げる", async ({ expect }) => {
+    // 準備と実行と検証
+    await expect(
+      render(
+        <BreadcrumbList>
+          <li>単独</li>
+        </BreadcrumbList>,
+      ),
+    ).rejects.toThrow(ContextMissingError);
   });
 
   test("render の関数へ状態を渡す", async ({ expect }) => {
@@ -161,7 +161,11 @@ describe("BreadcrumbList", () => {
 describe("BreadcrumbItem", () => {
   test("項目要素として描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<BreadcrumbItem data-testid="crumb">項目</BreadcrumbItem>);
+    const screen = await render(
+      <BreadcrumbRoot>
+        <BreadcrumbItem data-testid="crumb">項目</BreadcrumbItem>
+      </BreadcrumbRoot>,
+    );
 
     // 検証
     const item = screen.getByTestId("crumb").element();
@@ -189,7 +193,11 @@ describe("BreadcrumbItem", () => {
 describe("BreadcrumbLink", () => {
   test("通常のリンクとして描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<BreadcrumbLink href="/home">ホーム</BreadcrumbLink>);
+    const screen = await render(
+      <BreadcrumbRoot>
+        <BreadcrumbLink href="/home">ホーム</BreadcrumbLink>
+      </BreadcrumbRoot>,
+    );
 
     // 検証
     const link = screen.getByRole("link", { name: "ホーム" }).element();
@@ -201,9 +209,11 @@ describe("BreadcrumbLink", () => {
   test("現在のページではリンクにしない", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <BreadcrumbLink current href="/home">
-        現在
-      </BreadcrumbLink>,
+      <BreadcrumbRoot>
+        <BreadcrumbLink current href="/home">
+          現在
+        </BreadcrumbLink>
+      </BreadcrumbRoot>,
     );
 
     // 検証
@@ -218,9 +228,11 @@ describe("BreadcrumbLink", () => {
     // 準備
     const onClick = vi.fn<() => void>();
     const screen = await render(
-      <BreadcrumbLink disabled href="/home" onClick={onClick}>
-        無効
-      </BreadcrumbLink>,
+      <BreadcrumbRoot>
+        <BreadcrumbLink disabled href="/home" onClick={onClick}>
+          無効
+        </BreadcrumbLink>
+      </BreadcrumbRoot>,
     );
     const element = screen.getByText("無効").element();
     const event = new MouseEvent("click", { bubbles: true, cancelable: true });
@@ -241,9 +253,11 @@ describe("BreadcrumbLink", () => {
     // 準備
     const onClick = vi.fn<() => void>();
     const screen = await render(
-      <BreadcrumbLink href="#home" onClick={onClick}>
-        ホーム
-      </BreadcrumbLink>,
+      <BreadcrumbRoot>
+        <BreadcrumbLink href="#home" onClick={onClick}>
+          ホーム
+        </BreadcrumbLink>
+      </BreadcrumbRoot>,
     );
     const element = screen.getByRole("link", { name: "ホーム" }).element();
     const event = new MouseEvent("click", { bubbles: true, cancelable: true });
@@ -283,7 +297,11 @@ describe("BreadcrumbLink", () => {
 describe("BreadcrumbSeparator", () => {
   test("既定では装飾のアイコンを隠して表示する", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<BreadcrumbSeparator />);
+    const screen = await render(
+      <BreadcrumbRoot>
+        <BreadcrumbSeparator />
+      </BreadcrumbRoot>,
+    );
 
     // 検証
     const separator = screen.getByClassName("sui_breadcrumb_separator").element();
@@ -294,7 +312,11 @@ describe("BreadcrumbSeparator", () => {
 
   test("children を差し替える", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<BreadcrumbSeparator>／</BreadcrumbSeparator>);
+    const screen = await render(
+      <BreadcrumbRoot>
+        <BreadcrumbSeparator>／</BreadcrumbSeparator>
+      </BreadcrumbRoot>,
+    );
 
     // 検証
     const separator = screen.getByClassName("sui_breadcrumb_separator").element();

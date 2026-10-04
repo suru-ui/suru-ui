@@ -150,7 +150,7 @@ export type IAlertDialogIcon = IComponent<AlertDialogIconProps>;
  * アラートダイアログのアイコンコンポーネントです。
  */
 export const AlertDialogIcon: IAlertDialogIcon = function SuiAlertDialogIcon(props) {
-  const ctx = useAlertDialogPopupContext(true);
+  const ctx = useAlertDialogPopupContext();
   const {
     size = "md",
     color = "red",

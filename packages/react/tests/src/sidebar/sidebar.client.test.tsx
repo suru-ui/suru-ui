@@ -1,6 +1,7 @@
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
+import { ContextMissingError } from "../../../src/errors.js";
 import "../../../src/sidebar/sidebar.parts.js";
 import { Sidebar, SidebarAPI, useSidebarAPI } from "../../../src/sidebar/sidebar.jsx";
 import {
@@ -58,21 +59,15 @@ describe("Sidebar", () => {
     expect(provider.classList.contains("sui_sidebar_provider-expanded")).toBe(true);
   });
 
-  test("プロバイダーがなくてもルートを描画する", async ({ expect }) => {
-    // 準備と実行
-    const screen = await render(
-      <SidebarRoot>
-        <SidebarTrigger />
-      </SidebarRoot>,
-    );
-    const root = screen.getByClassName("sui_sidebar").element();
-    expect(root.classList.contains("sui_sidebar-expanded")).toBe(true);
-
-    // 実行
-    await screen.getByClassName("sui_sidebar_trigger").click();
-
-    // 検証
-    expect(root.classList.contains("sui_sidebar-expanded")).toBe(true);
+  test("プロバイダーがないときはエラーを投げる", async ({ expect }) => {
+    // 準備と実行と検証
+    await expect(
+      render(
+        <SidebarRoot>
+          <SidebarTrigger />
+        </SidebarRoot>,
+      ),
+    ).rejects.toThrow(ContextMissingError);
   });
 
   test("操作ボタンは状態と操作名を伝える", async ({ expect }) => {

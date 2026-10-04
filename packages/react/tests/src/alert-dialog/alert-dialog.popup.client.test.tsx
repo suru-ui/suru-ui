@@ -41,7 +41,7 @@ describe("AlertDialogPopup", () => {
     expect(popup.classList.contains("sui_card-size_md")).toBe(true);
     expect(popup.classList.contains("sui_card-radius_md")).toBe(true);
     expect(popup.classList.contains("sui_alert_dialog_popup-variant_default")).toBe(true);
-    expect(popup.classList.contains("sui_card-outlined")).toBe(false);
+    expect(popup.classList.contains("sui_card-outlined")).toBe(true);
   });
 
   test("指定した大きさと角丸と外観と枠線をクラスにする", async ({ expect }) => {

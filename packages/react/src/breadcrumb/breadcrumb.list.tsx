@@ -5,7 +5,7 @@ import { getItemKey } from "../_item.js";
 import useRender, { type RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { IComponent } from "../types.js";
-import { isItemObject, defaultBreadcrumbContext } from "./_breadcrumb.jsx";
+import { isItemObject } from "./_breadcrumb.jsx";
 import { type BreadcrumbContext, useBreadcrumbContext } from "./breadcrumb.context.js";
 import { BreadcrumbItem } from "./breadcrumb.item.jsx";
 import { BreadcrumbLink } from "./breadcrumb.link.jsx";
@@ -78,10 +78,10 @@ export interface IBreadcrumbList extends IComponent<BreadcrumbListProps> {
 export const BreadcrumbList: IBreadcrumbList = function SuiBreadcrumbList(
   props: BreadcrumbListProps,
 ) {
-  const ctx = useBreadcrumbContext(true);
+  const ctx = useBreadcrumbContext();
   const { children = defaultListItemRenderer, ...otherOlProps } = props;
-  const items = ctx?.items ?? [];
-  const state: BreadcrumbListState = { ...defaultBreadcrumbContext, ...ctx };
+  const items = ctx.items;
+  const state: BreadcrumbListState = ctx;
 
   return useRender({
     props: [
