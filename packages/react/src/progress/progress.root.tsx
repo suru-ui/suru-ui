@@ -1,10 +1,17 @@
 import { Progress } from "@base-ui/react/progress";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type ProgressContextSize,
+  type ProgressContextColor,
+  type ProgressContextRadius,
+  type ProgressContextVariant,
+  ProgressContext,
+} from "./progress.context.js";
 
 /**
  * 進捗の状態です。
@@ -18,7 +25,7 @@ export type ProgressRootStatus = Progress.Status;
 /**
  * 進捗の配色です。
  */
-export type ProgressRootColor = Color;
+export type ProgressRootColor = ProgressContextColor;
 
 /**
  * 進捗の角丸の大きさです。
@@ -29,7 +36,7 @@ export type ProgressRootColor = Color;
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
  */
-export type ProgressRootRadius = "none" | Size | "full";
+export type ProgressRootRadius = ProgressContextRadius;
 
 /**
  * 進捗の大きさです。
@@ -38,7 +45,7 @@ export type ProgressRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type ProgressRootSize = Size;
+export type ProgressRootSize = ProgressContextSize;
 
 /**
  * 進捗の主な外観の種類です。
@@ -46,12 +53,12 @@ export type ProgressRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type ProgressRootVariant = "naked" | "liquid";
+export type ProgressRootVariant = ProgressContextVariant;
 
 /**
  * {@link ProgressRoot} が持つ状態です。
  */
-export type ProgressRootState = Progress.Root.State;
+export type ProgressRootState = Override<ProgressContext, Progress.Root.State>;
 
 export namespace ProgressRootProps {
   export type Render = RenderProps<ProgressRootState>;
@@ -128,7 +135,9 @@ export const ProgressRoot: IProgressRoot = function SuiProgressRoot(props) {
   const {
     size = "md",
     color = "grey",
+    style,
     radius = "full",
+    render,
     variant = "liquid",
     outlined = false,
     className,
@@ -136,22 +145,35 @@ export const ProgressRoot: IProgressRoot = function SuiProgressRoot(props) {
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+  const ctx = React.useMemo<ProgressContext>(
+    () => ({ size, color, radius, variant, outlined }),
+    [size, color, radius, variant, outlined],
+  );
 
   return (
-    <Progress.Root
-      {...otherProps}
-      className={cn(
-        className,
-        "sui_progress",
-        `sui_progress-size_${size}`,
-        `sui_progress-color_${color}`,
-        `sui_progress-radius_${radius}`,
-        `sui_progress-variant_${variant}`,
-        outlined && "sui_progress-outlined",
-        (state) => `sui_progress-status_${state.status}`,
-      )}
-      data-scope={dataScope}
-    />
+    <ProgressContext value={ctx}>
+      <Progress.Root
+        {...otherProps}
+        {...proxyRenderProps<Progress.Root.State, ProgressRootState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn<ProgressRootState>(
+              className,
+              "sui_progress",
+              (state) => `sui_progress-size_${state.size}`,
+              (state) => `sui_progress-color_${state.color}`,
+              (state) => `sui_progress-radius_${state.radius}`,
+              (state) => `sui_progress-variant_${state.variant}`,
+              (state) => state.outlined && "sui_progress-outlined",
+              (state) => `sui_progress-status_${state.status}`,
+            ),
+          },
+        )}
+        data-scope={dataScope}
+      />
+    </ProgressContext>
   );
 };
 

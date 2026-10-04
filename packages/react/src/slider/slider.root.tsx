@@ -1,10 +1,17 @@
 import { Slider } from "@base-ui/react/slider";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type SliderContextSize,
+  type SliderContextColor,
+  type SliderContextRadius,
+  type SliderContextVariant,
+  SliderContext,
+} from "./slider.context.js";
 
 /**
  * {@link SliderRoot} の値が変更されたイベントの詳細です。
@@ -29,7 +36,7 @@ export type SliderRootCommitEventReason = Slider.Root.CommitEventReason;
 /**
  * スライダーの配色です。
  */
-export type SliderRootColor = Color;
+export type SliderRootColor = SliderContextColor;
 
 /**
  * スライダーの角丸です。
@@ -40,7 +47,7 @@ export type SliderRootColor = Color;
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
  */
-export type SliderRootRadius = "none" | Size | "full";
+export type SliderRootRadius = SliderContextRadius;
 
 /**
  * スライダーの大きさです。
@@ -49,7 +56,7 @@ export type SliderRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type SliderRootSize = Size;
+export type SliderRootSize = SliderContextSize;
 
 /**
  * スライダーの主な外観の種類です。
@@ -57,12 +64,12 @@ export type SliderRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type SliderRootVariant = "naked" | "liquid";
+export type SliderRootVariant = SliderContextVariant;
 
 /**
  * {@link SliderRoot} が持つ状態です。
  */
-export type SliderRootState = Slider.Root.State;
+export type SliderRootState = Override<SliderContext, Slider.Root.State>;
 
 export namespace SliderRootProps {
   export type Render = RenderProps<SliderRootState>;
@@ -167,7 +174,9 @@ export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootP
   const {
     size = "md",
     color = "grey",
+    style,
     radius = "full",
+    render,
     variant = "liquid",
     outlined = false,
     className,
@@ -175,33 +184,47 @@ export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootP
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+  const ctx = React.useMemo<SliderContext>(
+    () => ({ size, color, radius, variant, outlined }),
+    [size, color, radius, variant, outlined],
+  );
 
   return (
-    <Slider.Root
-      {...otherProps}
-      className={cn(
-        className,
-        "sui_slider",
-        `sui_slider-size_${size}`,
-        `sui_slider-color_${color}`,
-        `sui_slider-radius_${radius}`,
-        `sui_slider-variant_${variant}`,
-        outlined && "sui_slider-outlined",
-        (state) => state.disabled && "sui_slider-disabled",
-        (state) => state.dragging && "sui_slider-dragging",
-        (state) => `sui_slider-orientation_${state.orientation}`,
-        (state) => state.touched && "sui_slider-touched",
-        (state) => state.dirty && "sui_slider-dirty",
-        (state) => state.filled && "sui_slider-filled",
-        (state) => state.focused && "sui_slider-focused",
-        (state) => state.valid === false && "sui_slider-invalid",
-        (state) => state.valid === true && "sui_slider-valid",
-        (state) => state.valid === null && "sui_slider-unverified",
-        (state) =>
-          state.activeThumbIndex >= 0 && `sui_slider-active_thumb_index_${state.activeThumbIndex}`,
-      )}
-      data-scope={dataScope}
-    />
+    <SliderContext value={ctx}>
+      <Slider.Root
+        {...otherProps}
+        {...proxyRenderProps<Slider.Root.State, SliderRootState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn<SliderRootState>(
+              className,
+              "sui_slider",
+              (state) => `sui_slider-size_${state.size}`,
+              (state) => `sui_slider-color_${state.color}`,
+              (state) => `sui_slider-radius_${state.radius}`,
+              (state) => `sui_slider-variant_${state.variant}`,
+              (state) => state.outlined && "sui_slider-outlined",
+              (state) => state.disabled && "sui_slider-disabled",
+              (state) => state.dragging && "sui_slider-dragging",
+              (state) => `sui_slider-orientation_${state.orientation}`,
+              (state) => state.touched && "sui_slider-touched",
+              (state) => state.dirty && "sui_slider-dirty",
+              (state) => state.filled && "sui_slider-filled",
+              (state) => state.focused && "sui_slider-focused",
+              (state) => state.valid === false && "sui_slider-invalid",
+              (state) => state.valid === true && "sui_slider-valid",
+              (state) => state.valid === null && "sui_slider-unverified",
+              (state) =>
+                state.activeThumbIndex >= 0 &&
+                `sui_slider-active_thumb_index_${state.activeThumbIndex}`,
+            ),
+          },
+        )}
+        data-scope={dataScope}
+      />
+    </SliderContext>
   );
 };
 

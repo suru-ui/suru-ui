@@ -1,5 +1,6 @@
 import "./slider.css";
 
+export * from "./slider.context.js";
 export * from "./slider.root.jsx";
 export * from "./slider.label.jsx";
 export * from "./slider.value.jsx";

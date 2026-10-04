@@ -1,14 +1,16 @@
 import { Meter } from "@base-ui/react/meter";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type MeterContext, useMeterContext } from "./meter.context.js";
 
 /**
  * {@link MeterTrack} が持つ状態です。
  */
-export type MeterTrackState = Meter.Track.State;
+export type MeterTrackState = Override<MeterContext, Meter.Track.State>;
 
 export namespace MeterTrackProps {
   export type Render = RenderProps<MeterTrackState>;
@@ -45,9 +47,27 @@ export type IMeterTrack = IComponent<MeterTrackProps>;
  * メーターの全範囲を表すトラックコンポーネントです。
  */
 export const MeterTrack: IMeterTrack = function SuiMeterTrack(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useMeterContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Meter.Track {...otherProps} className={cn(className, "sui_meter_track")} />;
+  return (
+    <Meter.Track
+      {...otherProps}
+      {...proxyRenderProps<Meter.Track.State, MeterTrackState>((state) => ({ ...ctx, ...state }), {
+        style,
+        render,
+        className: cn<MeterTrackState>(
+          className,
+          "sui_meter_track",
+          (state) => `sui_meter_track-size_${state.size}`,
+          (state) => `sui_meter_track-color_${state.color}`,
+          (state) => `sui_meter_track-radius_${state.radius}`,
+          (state) => `sui_meter_track-variant_${state.variant}`,
+          (state) => state.outlined && "sui_meter_track-outlined",
+        ),
+      })}
+    />
+  );
 };
 
 export { MeterTrack as Track };

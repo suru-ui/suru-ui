@@ -1,14 +1,16 @@
 import { Meter } from "@base-ui/react/meter";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type MeterContext, useMeterContext } from "./meter.context.js";
 
 /**
  * {@link MeterIndicator} が持つ状態です。
  */
-export type MeterIndicatorState = Meter.Indicator.State;
+export type MeterIndicatorState = Override<MeterContext, Meter.Indicator.State>;
 
 export namespace MeterIndicatorProps {
   export type Render = RenderProps<MeterIndicatorState>;
@@ -45,9 +47,30 @@ export type IMeterIndicator = IComponent<MeterIndicatorProps>;
  * メーターの現在値を示すインジケーターコンポーネントです。
  */
 export const MeterIndicator: IMeterIndicator = function SuiMeterIndicator(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useMeterContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Meter.Indicator {...otherProps} className={cn(className, "sui_meter_indicator")} />;
+  return (
+    <Meter.Indicator
+      {...otherProps}
+      {...proxyRenderProps<Meter.Indicator.State, MeterIndicatorState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<MeterIndicatorState>(
+            className,
+            "sui_meter_indicator",
+            (state) => `sui_meter_indicator-size_${state.size}`,
+            (state) => `sui_meter_indicator-color_${state.color}`,
+            (state) => `sui_meter_indicator-radius_${state.radius}`,
+            (state) => `sui_meter_indicator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_meter_indicator-outlined",
+          ),
+        },
+      )}
+    />
+  );
 };
 
 export { MeterIndicator as Indicator };

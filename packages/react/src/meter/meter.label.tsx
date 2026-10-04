@@ -1,14 +1,16 @@
 import { Meter } from "@base-ui/react/meter";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type MeterContext, useMeterContext } from "./meter.context.js";
 
 /**
  * {@link MeterLabel} が持つ状態です。
  */
-export type MeterLabelState = Meter.Label.State;
+export type MeterLabelState = Override<MeterContext, Meter.Label.State>;
 
 export namespace MeterLabelProps {
   export type Render = RenderProps<MeterLabelState>;
@@ -45,9 +47,27 @@ export type IMeterLabel = IComponent<MeterLabelProps>;
  * メーターのラベルコンポーネントです。
  */
 export const MeterLabel: IMeterLabel = function SuiMeterLabel(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useMeterContext();
+  const { style, render, className, ...otherProps } = props;
 
-  return <Meter.Label {...otherProps} className={cn(className, "sui_meter_label")} />;
+  return (
+    <Meter.Label
+      {...otherProps}
+      {...proxyRenderProps<Meter.Label.State, MeterLabelState>((state) => ({ ...ctx, ...state }), {
+        style,
+        render,
+        className: cn<MeterLabelState>(
+          className,
+          "sui_meter_label",
+          (state) => `sui_meter_label-size_${state.size}`,
+          (state) => `sui_meter_label-color_${state.color}`,
+          (state) => `sui_meter_label-radius_${state.radius}`,
+          (state) => `sui_meter_label-variant_${state.variant}`,
+          (state) => state.outlined && "sui_meter_label-outlined",
+        ),
+      })}
+    />
+  );
 };
 
 export { MeterLabel as Label };

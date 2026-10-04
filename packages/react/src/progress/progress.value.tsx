@@ -1,9 +1,11 @@
 import { Progress } from "@base-ui/react/progress";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
+import { type ProgressContext, useProgressContext } from "./progress.context.js";
 
 /**
  * 値をレンダリングする関数のインターフェイスです。
@@ -24,7 +26,7 @@ export interface IProgressValueRenderer {
 /**
  * {@link ProgressValue} が持つ状態です。
  */
-export type ProgressValueState = Progress.Value.State;
+export type ProgressValueState = Override<ProgressContext, Progress.Value.State>;
 
 export namespace ProgressValueProps {
   export type Render = RenderProps<ProgressValueState>;
@@ -69,20 +71,34 @@ export type IProgressValue = IComponent<ProgressValueProps>;
  * 不確定状態では既定の表示が空になります。
  */
 export const ProgressValue: IProgressValue = function SuiProgressValue(props) {
-  const { children, className, ...otherProps } = props;
+  const ctx = useProgressContext();
+  const { style, render, children, className, ...otherProps } = props;
   const renderer =
     typeof children === "function" ? children : children != null ? () => children : undefined;
 
   return (
     <Progress.Value
       {...otherProps}
-      children={renderer}
-      className={cn<ProgressValueState>(
-        className,
-        "sui_progress_value",
-        (state) => `sui_progress_value-status_${state.status}`,
+      {...proxyRenderProps<Progress.Value.State, ProgressValueState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ProgressValueState>(
+            className,
+            "sui_progress_value",
+            (state) => `sui_progress_value-size_${state.size}`,
+            (state) => `sui_progress_value-color_${state.color}`,
+            (state) => `sui_progress_value-radius_${state.radius}`,
+            (state) => `sui_progress_value-variant_${state.variant}`,
+            (state) => state.outlined && "sui_progress_value-outlined",
+            (state) => `sui_progress_value-status_${state.status}`,
+          ),
+        },
       )}
-    />
+    >
+      {renderer}
+    </Progress.Value>
   );
 };
 

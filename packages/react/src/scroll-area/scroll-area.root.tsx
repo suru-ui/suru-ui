@@ -1,14 +1,23 @@
 import { ScrollArea as BaseScrollArea } from "@base-ui/react/scroll-area";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
 
 /**
  * {@link ScrollAreaRoot} が持つ状態です。
  */
-export type ScrollAreaRootState = BaseScrollArea.Root.State;
+export type ScrollAreaRootState = Override<
+  {
+    /**
+     * スクロールバーを常に表示するかどうかです。
+     */
+    readonly alwaysShowScrollbar: boolean;
+  },
+  BaseScrollArea.Root.State
+>;
 
 export namespace ScrollAreaRootProps {
   export type Render = RenderProps<ScrollAreaRootState>;
@@ -55,27 +64,38 @@ export type IScrollAreaRoot = IComponent<ScrollAreaRootProps>;
  */
 export const ScrollAreaRoot: IScrollAreaRoot = function SuiScrollAreaRoot(props) {
   const {
+    style,
+    render,
     className,
     alwaysShowScrollbar = false,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+  const styleState = React.useMemo(() => ({ alwaysShowScrollbar }), [alwaysShowScrollbar]);
+
   return (
     <BaseScrollArea.Root
       {...otherProps}
-      className={cn(
-        className,
-        "sui_scroll_area",
-        alwaysShowScrollbar && "sui_scroll_area-always_show_scrollbar",
-        (state) => state.scrolling && "sui_scroll_area-scrolling",
-        (state) => state.hasOverflowX && "sui_scroll_area-has_overflow_x",
-        (state) => state.hasOverflowY && "sui_scroll_area-has_overflow_y",
-        (state) => state.cornerHidden && "sui_scroll_area-corner_hidden",
-        (state) => state.overflowXStart && "sui_scroll_area-overflow_x_start",
-        (state) => state.overflowXEnd && "sui_scroll_area-overflow_x_end",
-        (state) => state.overflowYStart && "sui_scroll_area-overflow_y_start",
-        (state) => state.overflowYEnd && "sui_scroll_area-overflow_y_end",
+      {...proxyRenderProps<BaseScrollArea.Root.State, ScrollAreaRootState>(
+        (state) => ({ ...styleState, ...state }),
+        {
+          style,
+          render,
+          className: cn<ScrollAreaRootState>(
+            className,
+            "sui_scroll_area",
+            (state) => state.alwaysShowScrollbar && "sui_scroll_area-always_show_scrollbar",
+            (state) => state.scrolling && "sui_scroll_area-scrolling",
+            (state) => state.hasOverflowX && "sui_scroll_area-has_overflow_x",
+            (state) => state.hasOverflowY && "sui_scroll_area-has_overflow_y",
+            (state) => state.cornerHidden && "sui_scroll_area-corner_hidden",
+            (state) => state.overflowXStart && "sui_scroll_area-overflow_x_start",
+            (state) => state.overflowXEnd && "sui_scroll_area-overflow_x_end",
+            (state) => state.overflowYStart && "sui_scroll_area-overflow_y_start",
+            (state) => state.overflowYEnd && "sui_scroll_area-overflow_y_end",
+          ),
+        },
       )}
       data-scope={dataScope}
     />

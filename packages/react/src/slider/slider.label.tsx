@@ -1,14 +1,16 @@
 import { Slider } from "@base-ui/react/slider";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SliderContext, useSliderContext } from "./slider.context.js";
 
 /**
  * {@link SliderLabel} が持つ状態です。
  */
-export type SliderLabelState = Slider.Label.State;
+export type SliderLabelState = Override<SliderContext, Slider.Label.State>;
 
 export namespace SliderLabelProps {
   export type Render = RenderProps<SliderLabelState>;
@@ -45,27 +47,40 @@ export type ISliderLabel = IComponent<SliderLabelProps>;
  * スライダーのラベルコンポーネントです。
  */
 export const SliderLabel: ISliderLabel = function SuiSliderLabel(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSliderContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Slider.Label
       {...otherProps}
-      className={cn<SliderLabelState>(
-        className,
-        "sui_slider_label",
-        (state) => state.disabled && "sui_slider_label-disabled",
-        (state) => state.dragging && "sui_slider_label-dragging",
-        (state) => state.touched && "sui_slider_label-touched",
-        (state) => state.dirty && "sui_slider_label-dirty",
-        (state) => state.filled && "sui_slider_label-filled",
-        (state) => state.focused && "sui_slider_label-focused",
-        (state) => state.valid === false && "sui_slider_label-invalid",
-        (state) => state.valid === true && "sui_slider_label-valid",
-        (state) => state.valid === null && "sui_slider_label-unverified",
-        (state) => `sui_slider_label-orientation_${state.orientation}`,
-        (state) =>
-          state.activeThumbIndex >= 0 &&
-          `sui_slider_label-active_thumb_index_${state.activeThumbIndex}`,
+      {...proxyRenderProps<Slider.Label.State, SliderLabelState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SliderLabelState>(
+            className,
+            "sui_slider_label",
+            (state) => `sui_slider_label-size_${state.size}`,
+            (state) => `sui_slider_label-color_${state.color}`,
+            (state) => `sui_slider_label-radius_${state.radius}`,
+            (state) => `sui_slider_label-variant_${state.variant}`,
+            (state) => state.outlined && "sui_slider_label-outlined",
+            (state) => state.disabled && "sui_slider_label-disabled",
+            (state) => state.dragging && "sui_slider_label-dragging",
+            (state) => state.touched && "sui_slider_label-touched",
+            (state) => state.dirty && "sui_slider_label-dirty",
+            (state) => state.filled && "sui_slider_label-filled",
+            (state) => state.focused && "sui_slider_label-focused",
+            (state) => state.valid === false && "sui_slider_label-invalid",
+            (state) => state.valid === true && "sui_slider_label-valid",
+            (state) => state.valid === null && "sui_slider_label-unverified",
+            (state) => `sui_slider_label-orientation_${state.orientation}`,
+            (state) =>
+              state.activeThumbIndex >= 0 &&
+              `sui_slider_label-active_thumb_index_${state.activeThumbIndex}`,
+          ),
+        },
       )}
     />
   );

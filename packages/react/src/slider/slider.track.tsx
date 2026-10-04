@@ -1,14 +1,16 @@
 import { Slider } from "@base-ui/react/slider";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SliderContext, useSliderContext } from "./slider.context.js";
 
 /**
  * {@link SliderTrack} が持つ状態です。
  */
-export type SliderTrackState = Slider.Track.State;
+export type SliderTrackState = Override<SliderContext, Slider.Track.State>;
 
 export namespace SliderTrackProps {
   export type Render = RenderProps<SliderTrackState>;
@@ -45,27 +47,40 @@ export type ISliderTrack = IComponent<SliderTrackProps>;
  * スライダーの全範囲を表すトラックコンポーネントです。
  */
 export const SliderTrack: ISliderTrack = function SuiSliderTrack(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSliderContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Slider.Track
       {...otherProps}
-      className={cn<SliderTrackState>(
-        className,
-        "sui_slider_track",
-        (state) => state.disabled && "sui_slider_track-disabled",
-        (state) => state.dragging && "sui_slider_track-dragging",
-        (state) => state.touched && "sui_slider_track-touched",
-        (state) => state.dirty && "sui_slider_track-dirty",
-        (state) => state.filled && "sui_slider_track-filled",
-        (state) => state.focused && "sui_slider_track-focused",
-        (state) => state.valid === false && "sui_slider_track-invalid",
-        (state) => state.valid === true && "sui_slider_track-valid",
-        (state) => state.valid === null && "sui_slider_track-unverified",
-        (state) => `sui_slider_track-orientation_${state.orientation}`,
-        (state) =>
-          state.activeThumbIndex >= 0 &&
-          `sui_slider_track-active_thumb_index_${state.activeThumbIndex}`,
+      {...proxyRenderProps<Slider.Track.State, SliderTrackState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SliderTrackState>(
+            className,
+            "sui_slider_track",
+            (state) => `sui_slider_track-size_${state.size}`,
+            (state) => `sui_slider_track-color_${state.color}`,
+            (state) => `sui_slider_track-radius_${state.radius}`,
+            (state) => `sui_slider_track-variant_${state.variant}`,
+            (state) => state.outlined && "sui_slider_track-outlined",
+            (state) => state.disabled && "sui_slider_track-disabled",
+            (state) => state.dragging && "sui_slider_track-dragging",
+            (state) => state.touched && "sui_slider_track-touched",
+            (state) => state.dirty && "sui_slider_track-dirty",
+            (state) => state.filled && "sui_slider_track-filled",
+            (state) => state.focused && "sui_slider_track-focused",
+            (state) => state.valid === false && "sui_slider_track-invalid",
+            (state) => state.valid === true && "sui_slider_track-valid",
+            (state) => state.valid === null && "sui_slider_track-unverified",
+            (state) => `sui_slider_track-orientation_${state.orientation}`,
+            (state) =>
+              state.activeThumbIndex >= 0 &&
+              `sui_slider_track-active_thumb_index_${state.activeThumbIndex}`,
+          ),
+        },
       )}
     />
   );

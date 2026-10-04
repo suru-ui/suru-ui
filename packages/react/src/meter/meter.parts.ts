@@ -1,5 +1,6 @@
 import "./meter.css";
 
+export * from "./meter.context.js";
 export * from "./meter.root.jsx";
 export * from "./meter.label.jsx";
 export * from "./meter.value.jsx";

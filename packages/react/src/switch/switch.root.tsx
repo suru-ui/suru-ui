@@ -1,11 +1,18 @@
 import type { NonNativeButtonProps } from "@base-ui/react/internals/types";
 import { Switch } from "@base-ui/react/switch";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type SwitchContextSize,
+  type SwitchContextColor,
+  type SwitchContextRadius,
+  type SwitchContextVariant,
+  SwitchContext,
+} from "./switch.context.js";
 
 /**
  * スイッチの選択状態が変更されたイベントの詳細です。
@@ -20,7 +27,7 @@ export type SwitchRootChangeEventReason = Switch.Root.ChangeEventReason;
 /**
  * スイッチの配色です。
  */
-export type SwitchRootColor = Color;
+export type SwitchRootColor = SwitchContextColor;
 
 /**
  * スイッチの角丸の大きさです。
@@ -31,7 +38,7 @@ export type SwitchRootColor = Color;
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
  */
-export type SwitchRootRadius = "none" | Size | "full";
+export type SwitchRootRadius = SwitchContextRadius;
 
 /**
  * スイッチの大きさです。
@@ -40,7 +47,7 @@ export type SwitchRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  */
-export type SwitchRootSize = Size;
+export type SwitchRootSize = SwitchContextSize;
 
 /**
  * スイッチの主な外観です。
@@ -48,12 +55,12 @@ export type SwitchRootSize = Size;
  * - `"naked"`: 背景なし
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type SwitchRootVariant = "naked" | "liquid";
+export type SwitchRootVariant = SwitchContextVariant;
 
 /**
  * {@link SwitchRoot} が持つ状態です。
  */
-export type SwitchRootState = Switch.Root.State;
+export type SwitchRootState = Override<SwitchContext, Switch.Root.State>;
 
 export namespace SwitchRootProps {
   export type Render = RenderProps<SwitchRootState>;
@@ -141,7 +148,9 @@ export const SwitchRoot: ISwitchRoot = function SuiSwitchRoot(props) {
   const {
     size = "md",
     color = "grey",
+    style,
     radius = "full",
+    render,
     variant = "liquid",
     outlined = false,
     className,
@@ -149,32 +158,45 @@ export const SwitchRoot: ISwitchRoot = function SuiSwitchRoot(props) {
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+  const ctx = React.useMemo<SwitchContext>(
+    () => ({ size, color, radius, variant, outlined }),
+    [size, color, radius, variant, outlined],
+  );
 
   return (
-    <Switch.Root
-      {...otherProps}
-      className={cn(
-        className,
-        "sui_switch",
-        `sui_switch-size_${size}`,
-        `sui_switch-color_${color}`,
-        `sui_switch-radius_${radius}`,
-        `sui_switch-variant_${variant}`,
-        outlined && "sui_switch-outlined",
-        (state) => state.dirty && "sui_switch-dirty",
-        (state) => state.valid === null && "sui_switch-unverified",
-        (state) => state.valid === true && "sui_switch-valid",
-        (state) => state.valid === false && "sui_switch-invalid",
-        (state) => state.filled && "sui_switch-filled",
-        (state) => state.checked && "sui_switch-checked",
-        (state) => state.focused && "sui_switch-focused",
-        (state) => state.touched && "sui_switch-touched",
-        (state) => state.disabled && "sui_switch-disabled",
-        (state) => state.readOnly && "sui_switch-readonly",
-        (state) => state.required && "sui_switch-required",
-      )}
-      data-scope={dataScope}
-    />
+    <SwitchContext value={ctx}>
+      <Switch.Root
+        {...otherProps}
+        {...proxyRenderProps<Switch.Root.State, SwitchRootState>(
+          (state) => ({ ...ctx, ...state }),
+          {
+            style,
+            render,
+            className: cn<SwitchRootState>(
+              className,
+              "sui_switch",
+              (state) => `sui_switch-size_${state.size}`,
+              (state) => `sui_switch-color_${state.color}`,
+              (state) => `sui_switch-radius_${state.radius}`,
+              (state) => `sui_switch-variant_${state.variant}`,
+              (state) => state.outlined && "sui_switch-outlined",
+              (state) => state.dirty && "sui_switch-dirty",
+              (state) => state.valid === null && "sui_switch-unverified",
+              (state) => state.valid === true && "sui_switch-valid",
+              (state) => state.valid === false && "sui_switch-invalid",
+              (state) => state.filled && "sui_switch-filled",
+              (state) => state.checked && "sui_switch-checked",
+              (state) => state.focused && "sui_switch-focused",
+              (state) => state.touched && "sui_switch-touched",
+              (state) => state.disabled && "sui_switch-disabled",
+              (state) => state.readOnly && "sui_switch-readonly",
+              (state) => state.required && "sui_switch-required",
+            ),
+          },
+        )}
+        data-scope={dataScope}
+      />
+    </SwitchContext>
   );
 };
 

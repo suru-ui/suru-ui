@@ -1,5 +1,6 @@
 import "./progress.css";
 
+export * from "./progress.context.js";
 export * from "./progress.root.jsx";
 export * from "./progress.label.jsx";
 export * from "./progress.value.jsx";

@@ -1,9 +1,11 @@
 import { Slider } from "@base-ui/react/slider";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
+import { type SliderContext, useSliderContext } from "./slider.context.js";
 
 /**
  * 値をレンダリングする関数のインターフェイスです。
@@ -22,7 +24,7 @@ export interface ISliderValueRenderer {
 /**
  * {@link SliderValue} が持つ状態です。
  */
-export type SliderValueState = Slider.Value.State;
+export type SliderValueState = Override<SliderContext, Slider.Value.State>;
 
 export namespace SliderValueProps {
   export type Render = RenderProps<SliderValueState>;
@@ -65,32 +67,46 @@ export type ISliderValue = IComponent<SliderValueProps>;
  * スライダーの現在値を表示するコンポーネントです。
  */
 export const SliderValue: ISliderValue = function SuiSliderValue(props) {
-  const { children, className, ...otherProps } = props;
+  const ctx = useSliderContext();
+  const { style, render, children, className, ...otherProps } = props;
   const renderer =
     typeof children === "function" ? children : children != null ? () => children : undefined;
 
   return (
     <Slider.Value
       {...otherProps}
-      children={renderer}
-      className={cn<SliderValueState>(
-        className,
-        "sui_slider_value",
-        (state) => state.disabled && "sui_slider_value-disabled",
-        (state) => state.dragging && "sui_slider_value-dragging",
-        (state) => state.touched && "sui_slider_value-touched",
-        (state) => state.dirty && "sui_slider_value-dirty",
-        (state) => state.filled && "sui_slider_value-filled",
-        (state) => state.focused && "sui_slider_value-focused",
-        (state) => state.valid === false && "sui_slider_value-invalid",
-        (state) => state.valid === true && "sui_slider_value-valid",
-        (state) => state.valid === null && "sui_slider_value-unverified",
-        (state) => `sui_slider_value-orientation_${state.orientation}`,
-        (state) =>
-          state.activeThumbIndex >= 0 &&
-          `sui_slider_value-active_thumb_index_${state.activeThumbIndex}`,
+      {...proxyRenderProps<Slider.Value.State, SliderValueState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SliderValueState>(
+            className,
+            "sui_slider_value",
+            (state) => `sui_slider_value-size_${state.size}`,
+            (state) => `sui_slider_value-color_${state.color}`,
+            (state) => `sui_slider_value-radius_${state.radius}`,
+            (state) => `sui_slider_value-variant_${state.variant}`,
+            (state) => state.outlined && "sui_slider_value-outlined",
+            (state) => state.disabled && "sui_slider_value-disabled",
+            (state) => state.dragging && "sui_slider_value-dragging",
+            (state) => state.touched && "sui_slider_value-touched",
+            (state) => state.dirty && "sui_slider_value-dirty",
+            (state) => state.filled && "sui_slider_value-filled",
+            (state) => state.focused && "sui_slider_value-focused",
+            (state) => state.valid === false && "sui_slider_value-invalid",
+            (state) => state.valid === true && "sui_slider_value-valid",
+            (state) => state.valid === null && "sui_slider_value-unverified",
+            (state) => `sui_slider_value-orientation_${state.orientation}`,
+            (state) =>
+              state.activeThumbIndex >= 0 &&
+              `sui_slider_value-active_thumb_index_${state.activeThumbIndex}`,
+          ),
+        },
       )}
-    />
+    >
+      {renderer}
+    </Slider.Value>
   );
 };
 

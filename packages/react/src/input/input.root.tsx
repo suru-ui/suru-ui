@@ -1,10 +1,17 @@
 import { Input } from "@base-ui/react/input";
-import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import {
+  type InputContextSize,
+  type InputContextColor,
+  type InputContextRadius,
+  type InputContextVariant,
+  InputContext,
+} from "./input.context.js";
 
 /**
  * {@link InputRoot} の値が変更されたイベントの詳細です。
@@ -19,7 +26,7 @@ export type InputRootChangeEventReason = Input.ChangeEventReason;
 /**
  * テキスト入力欄の配色です。
  */
-export type InputRootColor = Color;
+export type InputRootColor = InputContextColor;
 
 /**
  * テキスト入力欄の角丸です。
@@ -30,7 +37,7 @@ export type InputRootColor = Color;
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
  */
-export type InputRootRadius = "none" | Size | "full";
+export type InputRootRadius = InputContextRadius;
 
 /**
  * テキスト入力欄の大きさです。
@@ -39,7 +46,7 @@ export type InputRootRadius = "none" | Size | "full";
  * - `"md"`: 標準的なサイズ
  * - `"lg"`: 大きいサイズ
  */
-export type InputRootSize = Size;
+export type InputRootSize = InputContextSize;
 
 /**
  * 入力欄で使用できる入力項目の種類です。
@@ -57,12 +64,12 @@ export type InputRootType = Exclude<
  * - `"naked"`: 背景のないテキスト入力欄
  * - `"liquid"`: 薄い塗りつぶし
  */
-export type InputRootVariant = "naked" | "liquid";
+export type InputRootVariant = InputContextVariant;
 
 /**
  * {@link InputRoot} が持つ状態です。
  */
-export type InputRootState = Input.State;
+export type InputRootState = Override<InputContext, Input.State>;
 
 export namespace InputRootProps {
   export type Render = RenderProps<InputRootState>;
@@ -145,7 +152,9 @@ export const InputRoot: IInputRoot = function SuiInputRoot(props) {
     size = "md",
     type = "text",
     color = "grey",
+    style,
     radius = size,
+    render,
     variant = "liquid",
     outlined = false,
     className,
@@ -153,30 +162,40 @@ export const InputRoot: IInputRoot = function SuiInputRoot(props) {
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+  const ctx = React.useMemo<InputContext>(
+    () => ({ size, color, radius, variant, outlined }),
+    [size, color, radius, variant, outlined],
+  );
 
   return (
-    <Input
-      {...otherProps}
-      type={type}
-      className={cn(
-        className,
-        "sui_input",
-        `sui_input-size_${size}`,
-        `sui_input-color_${color}`,
-        `sui_input-radius_${radius}`,
-        `sui_input-variant_${variant}`,
-        outlined && "sui_input-outlined",
-        (state) => state.valid === true && "sui_input-valid",
-        (state) => state.valid === false && "sui_input-invalid",
-        (state) => state.valid === null && "sui_input-unverified",
-        (state) => state.disabled && "sui_input-disabled",
-        (state) => state.touched && "sui_input-touched",
-        (state) => state.dirty && "sui_input-dirty",
-        (state) => state.filled && "sui_input-filled",
-        (state) => state.focused && "sui_input-focused",
-      )}
-      data-scope={dataScope}
-    />
+    <InputContext value={ctx}>
+      <Input
+        {...otherProps}
+        type={type}
+        {...proxyRenderProps<Input.State, InputRootState>((state) => ({ ...ctx, ...state }), {
+          style,
+          render,
+          className: cn<InputRootState>(
+            className,
+            "sui_input",
+            (state) => `sui_input-size_${state.size}`,
+            (state) => `sui_input-color_${state.color}`,
+            (state) => `sui_input-radius_${state.radius}`,
+            (state) => `sui_input-variant_${state.variant}`,
+            (state) => state.outlined && "sui_input-outlined",
+            (state) => state.valid === true && "sui_input-valid",
+            (state) => state.valid === false && "sui_input-invalid",
+            (state) => state.valid === null && "sui_input-unverified",
+            (state) => state.disabled && "sui_input-disabled",
+            (state) => state.touched && "sui_input-touched",
+            (state) => state.dirty && "sui_input-dirty",
+            (state) => state.filled && "sui_input-filled",
+            (state) => state.focused && "sui_input-focused",
+          ),
+        })}
+        data-scope={dataScope}
+      />
+    </InputContext>
   );
 };
 

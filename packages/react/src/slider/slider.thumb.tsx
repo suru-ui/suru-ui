@@ -1,14 +1,16 @@
 import { Slider } from "@base-ui/react/slider";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SliderContext, useSliderContext } from "./slider.context.js";
 
 /**
  * {@link SliderThumb} が持つ状態です。
  */
-export type SliderThumbState = Slider.Thumb.State;
+export type SliderThumbState = Override<SliderContext, Slider.Thumb.State>;
 
 export namespace SliderThumbProps {
   export type Render = RenderProps<SliderThumbState>;
@@ -56,27 +58,40 @@ export type ISliderThumb = IComponent<SliderThumbProps>;
  * 矢印キーで操作でき、フォーカス時はフォーカスリングが表示されます。
  */
 export const SliderThumb: ISliderThumb = function SuiSliderThumb(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSliderContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Slider.Thumb
       {...otherProps}
-      className={cn<SliderThumbState>(
-        className,
-        "sui_slider_thumb",
-        (state) => state.disabled && "sui_slider_thumb-disabled",
-        (state) => state.dragging && "sui_slider_thumb-dragging",
-        (state) => state.touched && "sui_slider_thumb-touched",
-        (state) => state.dirty && "sui_slider_thumb-dirty",
-        (state) => state.filled && "sui_slider_thumb-filled",
-        (state) => state.focused && "sui_slider_thumb-focused",
-        (state) => state.valid === false && "sui_slider_thumb-invalid",
-        (state) => state.valid === true && "sui_slider_thumb-valid",
-        (state) => state.valid === null && "sui_slider_thumb-unverified",
-        (state) => `sui_slider_thumb-orientation_${state.orientation}`,
-        (state) =>
-          state.activeThumbIndex >= 0 &&
-          `sui_slider_thumb-active_thumb_index_${state.activeThumbIndex}`,
+      {...proxyRenderProps<Slider.Thumb.State, SliderThumbState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SliderThumbState>(
+            className,
+            "sui_slider_thumb",
+            (state) => `sui_slider_thumb-size_${state.size}`,
+            (state) => `sui_slider_thumb-color_${state.color}`,
+            (state) => `sui_slider_thumb-radius_${state.radius}`,
+            (state) => `sui_slider_thumb-variant_${state.variant}`,
+            (state) => state.outlined && "sui_slider_thumb-outlined",
+            (state) => state.disabled && "sui_slider_thumb-disabled",
+            (state) => state.dragging && "sui_slider_thumb-dragging",
+            (state) => state.touched && "sui_slider_thumb-touched",
+            (state) => state.dirty && "sui_slider_thumb-dirty",
+            (state) => state.filled && "sui_slider_thumb-filled",
+            (state) => state.focused && "sui_slider_thumb-focused",
+            (state) => state.valid === false && "sui_slider_thumb-invalid",
+            (state) => state.valid === true && "sui_slider_thumb-valid",
+            (state) => state.valid === null && "sui_slider_thumb-unverified",
+            (state) => `sui_slider_thumb-orientation_${state.orientation}`,
+            (state) =>
+              state.activeThumbIndex >= 0 &&
+              `sui_slider_thumb-active_thumb_index_${state.activeThumbIndex}`,
+          ),
+        },
       )}
     />
   );

@@ -1,14 +1,16 @@
 import { Slider } from "@base-ui/react/slider";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
-import type { IComponent } from "../types.js";
+import type { Override, IComponent } from "../types.js";
+import { type SliderContext, useSliderContext } from "./slider.context.js";
 
 /**
  * {@link SliderIndicator} が持つ状態です。
  */
-export type SliderIndicatorState = Slider.Indicator.State;
+export type SliderIndicatorState = Override<SliderContext, Slider.Indicator.State>;
 
 export namespace SliderIndicatorProps {
   export type Render = RenderProps<SliderIndicatorState>;
@@ -45,27 +47,40 @@ export type ISliderIndicator = IComponent<SliderIndicatorProps>;
  * スライダーの現在値を示すインジケーターコンポーネントです。
  */
 export const SliderIndicator: ISliderIndicator = function SuiSliderIndicator(props) {
-  const { className, ...otherProps } = props;
+  const ctx = useSliderContext();
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Slider.Indicator
       {...otherProps}
-      className={cn<SliderIndicatorState>(
-        className,
-        "sui_slider_indicator",
-        (state) => state.disabled && "sui_slider_indicator-disabled",
-        (state) => state.dragging && "sui_slider_indicator-dragging",
-        (state) => state.touched && "sui_slider_indicator-touched",
-        (state) => state.dirty && "sui_slider_indicator-dirty",
-        (state) => state.filled && "sui_slider_indicator-filled",
-        (state) => state.focused && "sui_slider_indicator-focused",
-        (state) => state.valid === false && "sui_slider_indicator-invalid",
-        (state) => state.valid === true && "sui_slider_indicator-valid",
-        (state) => state.valid === null && "sui_slider_indicator-unverified",
-        (state) => `sui_slider_indicator-orientation_${state.orientation}`,
-        (state) =>
-          state.activeThumbIndex >= 0 &&
-          `sui_slider_indicator-active_thumb_index_${state.activeThumbIndex}`,
+      {...proxyRenderProps<Slider.Indicator.State, SliderIndicatorState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<SliderIndicatorState>(
+            className,
+            "sui_slider_indicator",
+            (state) => `sui_slider_indicator-size_${state.size}`,
+            (state) => `sui_slider_indicator-color_${state.color}`,
+            (state) => `sui_slider_indicator-radius_${state.radius}`,
+            (state) => `sui_slider_indicator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_slider_indicator-outlined",
+            (state) => state.disabled && "sui_slider_indicator-disabled",
+            (state) => state.dragging && "sui_slider_indicator-dragging",
+            (state) => state.touched && "sui_slider_indicator-touched",
+            (state) => state.dirty && "sui_slider_indicator-dirty",
+            (state) => state.filled && "sui_slider_indicator-filled",
+            (state) => state.focused && "sui_slider_indicator-focused",
+            (state) => state.valid === false && "sui_slider_indicator-invalid",
+            (state) => state.valid === true && "sui_slider_indicator-valid",
+            (state) => state.valid === null && "sui_slider_indicator-unverified",
+            (state) => `sui_slider_indicator-orientation_${state.orientation}`,
+            (state) =>
+              state.activeThumbIndex >= 0 &&
+              `sui_slider_indicator-active_thumb_index_${state.activeThumbIndex}`,
+          ),
+        },
       )}
     />
   );

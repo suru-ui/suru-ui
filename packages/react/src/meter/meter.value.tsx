@@ -1,9 +1,11 @@
 import { Meter } from "@base-ui/react/meter";
 import * as React from "react";
 
+import proxyRenderProps from "../_proxy-render-props.js";
 import type { RenderProps } from "../_use-render.js";
 import cn from "../cn.js";
 import type { Override, IComponent } from "../types.js";
+import { type MeterContext, useMeterContext } from "./meter.context.js";
 
 /**
  * 値をレンダリングする関数のインターフェイスです。
@@ -22,7 +24,7 @@ export interface IMeterValueRenderer {
 /**
  * {@link MeterValue} が持つ状態です。
  */
-export type MeterValueState = Meter.Value.State;
+export type MeterValueState = Override<MeterContext, Meter.Value.State>;
 
 export namespace MeterValueProps {
   export type Render = RenderProps<MeterValueState>;
@@ -64,12 +66,28 @@ export type IMeterValue = IComponent<MeterValueProps>;
  * メーターの現在値を表示するコンポーネントです。
  */
 export const MeterValue: IMeterValue = function SuiMeterValue(props) {
-  const { children, className, ...otherProps } = props;
+  const ctx = useMeterContext();
+  const { style, render, children, className, ...otherProps } = props;
   const renderer =
     typeof children === "function" ? children : children != null ? () => children : undefined;
 
   return (
-    <Meter.Value {...otherProps} className={cn(className, "sui_meter_value")}>
+    <Meter.Value
+      {...otherProps}
+      {...proxyRenderProps<Meter.Value.State, MeterValueState>((state) => ({ ...ctx, ...state }), {
+        style,
+        render,
+        className: cn<MeterValueState>(
+          className,
+          "sui_meter_value",
+          (state) => `sui_meter_value-size_${state.size}`,
+          (state) => `sui_meter_value-color_${state.color}`,
+          (state) => `sui_meter_value-radius_${state.radius}`,
+          (state) => `sui_meter_value-variant_${state.variant}`,
+          (state) => state.outlined && "sui_meter_value-outlined",
+        ),
+      })}
+    >
       {renderer}
     </Meter.Value>
   );
