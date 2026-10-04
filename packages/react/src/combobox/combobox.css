@@ -1635,27 +1635,23 @@
     border-style: solid;
   }
 
-  /* 入力欄を内包するポップアップは Grid で配置します。 */
+  /* 入力欄を内包するポップアップは Flexbox で配置します。 */
   &:has(> .sui_combobox) {
-    display: grid;
-    grid-template-columns: minmax(0px, 1fr);
-    align-content: start;
+    display: flex;
   }
 
   > .sui_combobox {
-    grid-area: input;
     min-width: 0px;
   }
 
   > .sui_scroll_area {
-    grid-area: list;
     min-width: 0px;
   }
 }
 
 /* 可変 */
 :scope {
-  grid-template-areas: var(--_sui_combobox_popup-areas, "list");
+  flex-direction: var(--_sui_combobox_popup-direction, column);
   min-width: var(--sui_combobox_popup-min_width);
   max-width: var(--sui_combobox_popup-max_width);
   font-family: var(--sui_combobox_popup-font_family);
@@ -1677,37 +1673,40 @@
   }
 }
 
+/* 代入 */
+:scope {
+  &.sui_combobox_popup-inputposition_top {
+    --_sui_combobox_popup-direction: column;
+  }
+
+  &.sui_combobox_popup-inputposition_bottom {
+    --_sui_combobox_popup-direction: column-reverse;
+  }
+
+  &.sui_combobox_popup-inputposition_start {
+    --_sui_combobox_popup-direction: column;
+  }
+
+  &.sui_combobox_popup-inputposition_end {
+    --_sui_combobox_popup-direction: column-reverse;
+  }
+
+  &.sui_combobox_popup-side_top {
+    &.sui_combobox_popup-inputposition_start {
+      --_sui_combobox_popup-direction: column-reverse;
+    }
+
+    &.sui_combobox_popup-inputposition_end {
+      --_sui_combobox_popup-direction: column;
+    }
+  }
+}
+
 /* 変異 */
 :scope {
   &.sui_combobox_popup-outlined {
     --_sui_combobox_popup-border_color: var(--sui_combobox_popup-border_color);
     --_sui_combobox_popup-border_width: var(--sui_combobox_popup-border_width);
-  }
-
-  &.sui_combobox_popup-inputposition_top {
-    --_sui_combobox_popup-areas: "input" "list";
-  }
-
-  &.sui_combobox_popup-inputposition_bottom {
-    --_sui_combobox_popup-areas: "list" "input";
-  }
-
-  &.sui_combobox_popup-inputposition_start {
-    --_sui_combobox_popup-areas: "input" "list";
-  }
-
-  &.sui_combobox_popup-inputposition_end {
-    --_sui_combobox_popup-areas: "list" "input";
-  }
-
-  &.sui_combobox_popup-side_top {
-    &.sui_combobox_popup-inputposition_start {
-      --_sui_combobox_popup-areas: "list" "input";
-    }
-
-    &.sui_combobox_popup-inputposition_end {
-      --_sui_combobox_popup-areas: "input" "list";
-    }
   }
 
   .sui_combobox_input {

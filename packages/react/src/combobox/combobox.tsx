@@ -1258,6 +1258,18 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
           {backdropProps && <ComboboxBackdrop {...backdropProps} />}
           <ComboboxPositioner {...api.getPositionerProps()}>
             <ComboboxPopup {...api.getPopupProps()}>
+              <ComboboxInputGroup {...api.getInputGroupInPopupProps()}>
+                {api.mapStartAddons((addon, index) => (
+                  <ComboboxAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
+                ))}
+                <ComboboxInput {...api.getInputProps()} />
+                <ComboboxAddon {...api.getAddonProps()}>
+                  <ComboboxClear {...api.getClearProps()} />
+                </ComboboxAddon>
+                {api.mapEndAddons((addon, index) => (
+                  <ComboboxAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
+                ))}
+              </ComboboxInputGroup>
               <ScrollAreaRoot {...api.getScrollAreaProps()}>
                 <ScrollAreaViewport {...api.getViewportProps()}>
                   <ScrollAreaContent {...api.getContentProps()}>
@@ -1271,18 +1283,6 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
                 </ScrollAreaScrollbar>
                 <ScrollAreaCorner {...api.getCornerProps()} />
               </ScrollAreaRoot>
-              <ComboboxInputGroup {...api.getInputGroupInPopupProps()}>
-                {api.mapStartAddons((addon, index) => (
-                  <ComboboxAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
-                ))}
-                <ComboboxInput {...api.getInputProps()} />
-                <ComboboxAddon {...api.getAddonProps()}>
-                  <ComboboxClear {...api.getClearProps()} />
-                </ComboboxAddon>
-                {api.mapEndAddons((addon, index) => (
-                  <ComboboxAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
-                ))}
-              </ComboboxInputGroup>
               {arrowProps && <ComboboxArrow {...arrowProps} />}
             </ComboboxPopup>
           </ComboboxPositioner>
