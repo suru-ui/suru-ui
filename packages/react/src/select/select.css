@@ -410,7 +410,7 @@
 :scope {
   --sui_select_content-min_width: ;
   --sui_select_content-max_width: ;
-  --sui_select_content-padding: ;
+  --sui_select_content-virtual_padding_block: ;
   --sui_select_content-font_family: ;
   --sui_select_content-font_size: ;
   --sui_select_content-font_weight: ;
@@ -425,13 +425,13 @@
   --sui_select_content-opacity: ;
   --sui_select_content-transform_origin: ;
   --sui_select_content-scale: ;
+  --sui_select_content-drop_shadow: ;
 }
 
 /* 可変 */
 :scope {
   min-width: var(--sui_select_content-min_width);
   max-width: var(--sui_select_content-max_width);
-  padding: var(--sui_select_content-padding);
   font-family: var(--sui_select_content-font_family);
   font-size: var(--sui_select_content-font_size);
   font-weight: var(--sui_select_content-font_weight);
@@ -444,6 +444,7 @@
   border-radius: var(--sui_select_content-border_radius);
   corner-shape: var(--sui_select_content-corner_shape);
   opacity: var(--_sui_select_content-opacity, var(--sui_select_content-opacity));
+  filter: drop-shadow(var(--sui_select_content-drop_shadow));
   transform-origin: var(--sui_select_content-transform_origin);
   scale: var(--_sui_select_content-scale, var(--sui_select_content-scale));
 }
@@ -452,26 +453,26 @@
 :scope {
   --sui_select_content-min_width: var(--anchor-width);
   --sui_select_content-max_width: var(--available-width);
-  --sui_select_content-padding: --sui-space(2);
   --sui_select_content-font_family: var(--sui-font-sans);
   --sui_select_content-font_size: var(--sui-text-oln-md-n-font_size);
   --sui_select_content-font_weight: var(--sui-text-oln-md-n-font_weight);
   --sui_select_content-line_height: var(--sui-text-oln-md-n-line_height);
   --sui_select_content-color: var(--sui-canvas_text-1);
   --sui_select_content-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
-  --sui_select_content-background_color: var(--sui-canvas-2);
+  --sui_select_content-background_color: --sui-light-dark(var(--sui-canvas-1), var(--sui-canvas-2));
   --sui_select_content-border_color: var(--sui-grey-naked-border-normal);
   --sui_select_content-border_width: --sui-border_width(1);
   --sui_select_content-border_radius: --sui-corner_radius(3);
   --sui_select_content-corner_shape: superellipse(var(--sui-superellipse));
+  --sui_select_content-opacity: 1;
 
   /* 位置調整の変数は Positioner が持つため、Content 自身で参照します。 */
-  --sui_select_content-opacity: 1;
   --sui_select_content-transform_origin: var(--transform-origin);
   --sui_select_content-scale: 1;
+  --sui_select_content-drop_shadow: var(--sui-drop_shadow-md);
 
   &.sui_select_content-size_sm {
-    --sui_select_content-padding: --sui-space(3);
+    --sui_select_content-virtual_padding_block: --sui-space(calc(1.5 / 2));
     --sui_select_content-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_select_content-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_select_content-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -479,6 +480,7 @@
   }
 
   &.sui_select_content-size_md {
+    --sui_select_content-virtual_padding_block: --sui-space(calc(2.5 / 2));
     --sui_select_content-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_select_content-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_select_content-line_height: var(--sui-text-oln-md-n-line_height);
@@ -486,7 +488,7 @@
   }
 
   &.sui_select_content-size_lg {
-    --sui_select_content-padding: --sui-space(4);
+    --sui_select_content-virtual_padding_block: --sui-space(calc(3.5 / 2));
     --sui_select_content-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_select_content-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_select_content-line_height: var(--sui-text-oln-lg-n-line_height);
@@ -672,21 +674,6 @@
   flex-direction: column;
 }
 
-/* 変数 */
-:scope {
-  --sui_select_list-gap: ;
-}
-
-/* 可変 */
-:scope {
-  gap: var(--sui_select_list-gap);
-}
-
-/* 代入 */
-:scope {
-  --sui_select_list-gap: --sui-gap(1);
-}
-
 } /* @scope */
 } /* @layer */
 
@@ -712,7 +699,7 @@
 
 /* 代入 */
 :scope {
-  --sui_select_group-gap: var(--sui_select_list-gap);
+  --sui_select_group-gap: --sui-gap(1);
 }
 
 } /* @scope */
@@ -767,38 +754,72 @@
 } /* @scope */
 } /* @layer */
 
-/* ItemText */
-/* 項目は ButtonRoot 経由で描画され、ButtonRoot が data-scope を持つため、項目内部のスタイルは下限なしの別ブロックにします。 */
+/* Item */
 @layer sui.component {
-@scope (.sui_select_portal) {
+@scope (.sui_select_item) to ([data-scope]) {
 
-/* 固定 */
+/* 変数 */
 :scope {
-  .sui_select_item_text {
-    flex: 1 1 auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  --sui_select_item-margin_inline: ;
+}
+
+/* 可変 */
+:scope {
+  margin-inline: var(--sui_select_item-margin_inline);
+
+  &:first-child {
+    margin-block-start: var(--sui_select_content-virtual_padding_block);
+  }
+
+  &:last-child {
+    margin-block-end: var(--sui_select_content-virtual_padding_block);
+  }
+}
+
+/* 代入 */
+:scope {
+  &.sui_select_item-size_sm {
+    --sui_select_item-margin_inline: --sui-space(calc(1.5 / 2));
+  }
+
+  &.sui_select_item-size_md {
+    --sui_select_item-margin_inline: --sui-space(calc(2.5 / 2));
+  }
+
+  &.sui_select_item-size_lg {
+    --sui_select_item-margin_inline: --sui-space(calc(3.5 / 2));
   }
 }
 
 } /* @scope */
 } /* @layer */
 
-/* ItemIndicator */
-/* 項目は ButtonRoot 経由で描画され、ButtonRoot が data-scope を持つため、選択状態による表示切替を含め、下限なしの別ブロックにします。 */
+/* ItemText */
 @layer sui.component {
-@scope (.sui_select_portal) {
+@scope (.sui_select_item_text) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_select_item_indicator {
-    display: inline-flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-  }
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+} /* @scope */
+} /* @layer */
+
+/* ItemIndicator */
+@layer sui.component {
+@scope (.sui_select_item_indicator) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
 }
 
 /* 変数 */
@@ -811,36 +832,40 @@
 
 /* 可変 */
 :scope {
-  .sui_select_item_indicator {
-    width: var(--sui_select_item_indicator-size);
-    height: var(--sui_select_item_indicator-size);
-    opacity: var(--_sui_select_item_indicator-opacity, var(--sui_select_item_indicator-opacity));
+  width: var(--sui_select_item_indicator-size);
+  height: var(--sui_select_item_indicator-size);
+  opacity: var(--_sui_select_item_indicator-opacity, var(--sui_select_item_indicator-opacity));
 
-    svg:not(.sui-ignore) {
-      width: var(--sui_select_item_indicator__svg-size);
-      height: var(--sui_select_item_indicator__svg-size);
-      color: var(--sui_select_item_indicator__svg-color);
-    }
+  svg:not(.sui-ignore) {
+    width: var(--sui_select_item_indicator__svg-size);
+    height: var(--sui_select_item_indicator__svg-size);
+    color: var(--sui_select_item_indicator__svg-color);
   }
 }
 
 /* 代入 */
 :scope {
+  --sui_select_item_indicator-size: calc(
+                                      var(--sui_button_content-font_size)
+                                      * var(--sui_button_content-line_height)
+                                    );
   --sui_select_item_indicator-opacity: 1;
   --sui_select_item_indicator__svg-size: 100%;
+
+  /* ButtonRoot が持つ文字サイズを参照するため、ItemIndicator 自身で代入します。 */
   --sui_select_item_indicator__svg-color: --sui-icon_color(
                                             var(--sui_select_content-color),
                                             var(--sui_select_content-background_color)
                                           );
-
-  /* ButtonRoot が持つ文字サイズを参照するため、ItemIndicator 自身で代入します。 */
-  .sui_select_item_indicator {
-    --sui_select_item_indicator-size: calc(
-                                        var(--sui_button_content-font_size)
-                                        * var(--sui_button_content-line_height)
-                                      );
-  }
 }
+
+} /* @scope */
+} /* @layer */
+
+/* ItemIndicator */
+/* 項目の選択状態に依存し、表示要素自身に等価なクラスが無いため、ポータル起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_select_portal) {
 
 /* 変異 */
 :scope {

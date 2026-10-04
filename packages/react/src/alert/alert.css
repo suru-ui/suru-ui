@@ -139,7 +139,7 @@
   }
 
   &.sui_alert-variant_muted {
-    --sui_alert-background_color: var(--sui-canvas-2);
+    --sui_alert-background_color: --sui-light-dark(var(--sui-canvas-1), var(--sui-canvas-2));
     --sui_alert-border_color: var(--sui-border-1);
   }
 

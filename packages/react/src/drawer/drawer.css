@@ -364,7 +364,7 @@
   --sui_drawer_popup-focusring_width: var(--sui-focusring_width);
   --sui_drawer_popup-outline_color: var(--sui-focusring_color);
   --sui_drawer_popup-outline_offset: var(--sui-focusring_offset);
-  --sui_drawer_popup-background_color: var(--sui-canvas-2);
+  --sui_drawer_popup-background_color: --sui-light-dark(var(--sui-canvas-1), var(--sui-canvas-2));
   --sui_drawer_popup-border_color: var(--sui-border-1);
   --sui_drawer_popup-border_width: --sui-border_width(1);
   --sui_drawer_popup-border_top_left_radius: --sui-corner_radius(3);

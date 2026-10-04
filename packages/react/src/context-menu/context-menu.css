@@ -108,6 +108,7 @@
   border-radius: var(--sui_context_menu_content-border_radius);
   corner-shape: var(--sui_context_menu_content-corner_shape);
   opacity: var(--_sui_context_menu_content-opacity, var(--sui_context_menu_content-opacity));
+  filter: drop-shadow(var(--sui_context_menu_content-drop_shadow));
   transform-origin: var(--sui_context_menu_content-transform_origin);
   scale: var(--_sui_context_menu_content-scale, var(--sui_context_menu_content-scale));
 }
@@ -192,7 +193,7 @@
 } /* @layer */
 
 /* Content */
-/* 背景色と枠線の変数は矢印（別パーツ）からも参照されるため、ポータル起点の別ブロックに残します。 */
+/* 背景色と枠線の変数は矢印（別パーツ）からも参照されるため、ポータル起点の別ブロックに残します。影はポップアップ表示のため併せて持ちます。 */
 @layer sui.component {
 @scope (.sui_context_menu_portal) to ([data-scope]) {
 
@@ -201,6 +202,7 @@
   --sui_context_menu_content-background_color: ;
   --sui_context_menu_content-border_color: ;
   --sui_context_menu_content-border_width: ;
+  --sui_context_menu_content-drop_shadow: ;
 }
 
 /* 代入 */
@@ -208,6 +210,7 @@
   --sui_context_menu_content-background_color: var(--sui-canvas-2);
   --sui_context_menu_content-border_color: var(--sui-border-1);
   --sui_context_menu_content-border_width: --sui-border_width(1);
+  --sui_context_menu_content-drop_shadow: var(--sui-drop_shadow-md);
 }
 
 } /* @scope */
@@ -259,15 +262,12 @@
 } /* @layer */
 
 /* ItemIndicator */
-/* 項目は ButtonRoot 経由で描画され、ButtonRoot が data-scope を持つため、選択状態による表示切替だけ下限なしの別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_context_menu_portal) {
+@scope (.sui_context_menu_item_indicator) to ([data-scope]) {
 
 /* 固定 */
 :scope {
-  .sui_context_menu_item_indicator {
-    display: contents;
-  }
+  display: contents;
 }
 
 /* 変数 */
@@ -277,12 +277,10 @@
 
 /* 可変 */
 :scope {
-  .sui_context_menu_item_indicator {
-    visibility: var(
-                --_sui_context_menu_item_indicator-visibility,
-                var(--sui_context_menu_item_indicator-visibility)
-              );
-  }
+  visibility: var(
+              --_sui_context_menu_item_indicator-visibility,
+              var(--sui_context_menu_item_indicator-visibility)
+            );
 }
 
 /* 代入 */
@@ -292,7 +290,7 @@
 
 /* 変異 */
 :scope {
-  .sui_context_menu_item_indicator-unchecked {
+  &.sui_context_menu_item_indicator-unchecked {
     --_sui_context_menu_item_indicator-visibility: hidden;
   }
 }
