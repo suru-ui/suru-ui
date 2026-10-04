@@ -155,19 +155,19 @@
 
   &.sui_button-item {
     &.sui_button-size_xs {
-      --sui_button-padding_inline: --sui-space(1);
+      --sui_button-padding_inline: --sui-space(calc(1.5 / 2));
     }
 
     &.sui_button-size_sm {
-      --sui_button-padding_inline: --sui-space(1);
+      --sui_button-padding_inline: --sui-space(calc(1.5 / 2));
     }
 
     &.sui_button-size_md {
-      --sui_button-padding_inline: --sui-space(2);
+      --sui_button-padding_inline: --sui-space(calc(2.5 / 2));
     }
 
     &.sui_button-size_lg {
-      --sui_button-padding_inline: --sui-space(3);
+      --sui_button-padding_inline: --sui-space(calc(3.5 / 2));
     }
   }
 
