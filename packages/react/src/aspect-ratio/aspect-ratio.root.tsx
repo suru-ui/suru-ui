@@ -26,7 +26,17 @@ export type AspectRatioRootRatio = number | string;
 /**
  * {@link AspectRatioRoot} が持つ状態です。
  */
-export type AspectRatioRootState = {};
+export type AspectRatioRootState = {
+  /**
+   * コンテナーの角丸の大きさです。
+   */
+  readonly radius: AspectRatioRootRadius;
+
+  /**
+   * コンテンツの幅と高さの比率です。
+   */
+  readonly ratio: AspectRatioRootRatio;
+};
 
 export namespace AspectRatioRootProps {
   export type Render = RenderProps<AspectRatioRootState>;
@@ -89,10 +99,14 @@ export const AspectRatioRoot: IAspectRatioRoot = function SuiAspectRatioRoot(pro
         style: {
           "--sui_aspect_ratio-ratio": `${ratio}`,
         },
-        className: cn("sui_aspect_ratio", `sui_aspect_ratio-radius_${radius}`),
+        className: cn<AspectRatioRootState>(
+          "sui_aspect_ratio",
+          (state) => `sui_aspect_ratio-radius_${state.radius}`,
+        ),
         "data-scope": dataScope,
       },
     ],
+    state: { radius, ratio },
     defaultTagName: "div",
   });
 };
