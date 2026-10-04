@@ -1,8 +1,10 @@
+import type { Dialog } from "@base-ui/react/dialog";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import * as Card from "../card/card.parts.js";
 import { ContextMissingError } from "../errors.js";
-import type { IUseContext } from "../types.js";
+import type { IUseContext, Override } from "../types.js";
 
 /**
  * ダイアログの角丸の大きさです。
@@ -34,22 +36,15 @@ export type DialogPopupContextVariant = "default" | "stacked";
 /**
  * {@link DialogPopup} が子パーツへ提供する状態です。
  */
-export type DialogPopupContext = {
-  /**
-   * ダイアログの角丸の大きさです。
-   */
-  readonly radius: DialogPopupContextRadius;
-
-  /**
-   * ダイアログの大きさです。
-   */
-  readonly size: DialogPopupContextSize;
-
-  /**
-   * ダイアログの主な外観です。
-   */
-  readonly variant: DialogPopupContextVariant;
-};
+export type DialogPopupContext = Override<
+  Override<Dialog.Popup.State, Card.Root.State>,
+  {
+    /**
+     * ダイアログの主な外観です。
+     */
+    readonly variant: DialogPopupContextVariant;
+  }
+>;
 
 /**
  * ダイアログの修飾を子パーツへ伝播するコンテキストです。

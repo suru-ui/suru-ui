@@ -3,6 +3,7 @@ import * as React from "react";
 
 import mergeProps from "../_merge-props.js";
 import proxyRenderProps from "../_proxy-render-props.js";
+import RenderElement from "../_render-element.jsx";
 import type { RenderProps } from "../_use-render.js";
 import * as Card from "../card/card.parts.js";
 import cn from "../cn.js";
@@ -35,10 +36,7 @@ export type AlertDialogPopupVariant = AlertDialogPopupContextVariant;
 /**
  * {@link AlertDialogPopup} が持つ状態です。
  */
-export type AlertDialogPopupState = Override<
-  Override<Card.Root.State, { variant: AlertDialogPopupVariant }>,
-  AlertDialog.Popup.State
->;
+export type AlertDialogPopupState = AlertDialogPopupContext;
 
 export namespace AlertDialogPopupProps {
   export type Render = RenderProps<AlertDialogPopupState>;
@@ -90,64 +88,69 @@ export type IAlertDialogPopup = IComponent<AlertDialogPopupProps>;
  */
 export const AlertDialogPopup: IAlertDialogPopup = function SuiAlertDialogPopup(props) {
   const {
-    size = "md",
+    size,
     style,
-    radius = size,
+    radius,
     render,
     variant = "default",
-    outlined = false,
+    outlined = true,
     className,
     ...otherProps
   } = props;
-  const ctx = React.useMemo<AlertDialogPopupContext>(
-    () => ({ size, radius, variant }),
-    [radius, size, variant],
-  );
 
   return (
-    <AlertDialogPopupContext value={ctx}>
-      <AlertDialog.Popup
-        {...otherProps}
-        render={(htmlProps: {}, popupState) => {
-          const cardRootProps: Required<Card.Root.Props.SuruUI> = {
-            size,
-            radius,
-            outlined,
-          };
+    <AlertDialog.Popup
+      {...otherProps}
+      render={(htmlProps: {}, popupState) => {
+        const cardRootProps: Required<Card.Root.Props.SuruUI> = {
+          size,
+          radius,
+          outlined,
+        };
 
-          return (
-            <Card.Root
-              {...mergeProps<typeof Card.Root>([
-                htmlProps,
-                cardRootProps,
-                proxyRenderProps<AlertDialog.Popup.State, AlertDialogPopupState>(
-                  (state) => ({ ...ctx, ...state, outlined, ...popupState }),
-                  {
-                    style,
-                    render,
-                    className: cn<AlertDialogPopupState>(
-                      className,
-                      "sui_alert_dialog_popup",
-                      (state) => `sui_alert_dialog_popup-size_${state.size}`,
-                      (state) => `sui_alert_dialog_popup-radius_${state.radius}`,
-                      (state) => `sui_alert_dialog_popup-variant_${state.variant}`,
-                      (state) => state.outlined && "sui_alert_dialog_popup-outlined",
-                      (state) => state.open && "sui_alert_dialog_popup-open",
-                      (state) => state.nested && "sui_alert_dialog_popup-nested",
-                      (state) =>
-                        state.nestedDialogOpen && "sui_alert_dialog_popup-nested_dialog_open",
-                      (state) =>
-                        state.transitionStatus !== undefined &&
-                        `sui_alert_dialog_popup-transition_status_${state.transitionStatus}`,
-                    ),
+        return (
+          <Card.Root
+            {...mergeProps<typeof Card.Root>([
+              htmlProps,
+              cardRootProps,
+              proxyRenderProps<Card.Root.State, AlertDialogPopupState>(
+                (cardState) => ({ ...popupState, ...cardState, variant }),
+                {
+                  style,
+                  render(htmlProps: {}, state) {
+                    return (
+                      <AlertDialogPopupContext value={state}>
+                        <RenderElement
+                          state={state}
+                          render={render}
+                          htmlProps={htmlProps}
+                          defaultTagName="div"
+                        />
+                      </AlertDialogPopupContext>
+                    );
                   },
-                ),
-              ])}
-            />
-          );
-        }}
-      />
-    </AlertDialogPopupContext>
+                  className: cn<AlertDialogPopupState>(
+                    className,
+                    "sui_alert_dialog_popup",
+                    (state) => `sui_alert_dialog_popup-size_${state.size}`,
+                    (state) => `sui_alert_dialog_popup-radius_${state.radius}`,
+                    (state) => `sui_alert_dialog_popup-variant_${state.variant}`,
+                    (state) => state.outlined && "sui_alert_dialog_popup-outlined",
+                    (state) => state.open && "sui_alert_dialog_popup-open",
+                    (state) => state.nested && "sui_alert_dialog_popup-nested",
+                    (state) =>
+                      state.nestedDialogOpen && "sui_alert_dialog_popup-nested_dialog_open",
+                    (state) =>
+                      state.transitionStatus !== undefined &&
+                      `sui_alert_dialog_popup-transition_status_${state.transitionStatus}`,
+                  ),
+                },
+              ),
+            ])}
+          />
+        );
+      }}
+    />
   );
 };
 

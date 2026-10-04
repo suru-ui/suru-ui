@@ -1,8 +1,10 @@
+import type { AlertDialog } from "@base-ui/react/alert-dialog";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
+import * as Card from "../card/card.parts.js";
 import { ContextMissingError } from "../errors.js";
-import type { IUseContext } from "../types.js";
+import type { IUseContext, Override } from "../types.js";
 
 /**
  * アラートダイアログの角丸の大きさです。
@@ -34,22 +36,15 @@ export type AlertDialogPopupContextVariant = "default" | "stacked";
 /**
  * {@link AlertDialogPopup} が子パーツへ提供する状態です。
  */
-export type AlertDialogPopupContext = {
-  /**
-   * アラートダイアログの角丸の大きさです。
-   */
-  readonly radius: AlertDialogPopupContextRadius;
-
-  /**
-   * アラートダイアログの大きさです。
-   */
-  readonly size: AlertDialogPopupContextSize;
-
-  /**
-   * アラートダイアログの主な外観です。
-   */
-  readonly variant: AlertDialogPopupContextVariant;
-};
+export type AlertDialogPopupContext = Override<
+  Override<AlertDialog.Popup.State, Card.Root.State>,
+  {
+    /**
+     * アラートダイアログの主な外観です。
+     */
+    readonly variant: AlertDialogPopupContextVariant;
+  }
+>;
 
 /**
  * アラートダイアログの修飾を子パーツへ伝播するコンテキストです。
