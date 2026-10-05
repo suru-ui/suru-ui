@@ -5,8 +5,8 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type TextFieldContext, useTextFieldContext } from "../root/text-field.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useTextFieldContext } from "../root/text-field.root.context.js";
 import { TextFieldInputContext } from "./text-field.input.context.js";
 
 /**
@@ -32,7 +32,7 @@ export type TextFieldInputType = Exclude<
 /**
  * {@link TextFieldInput} の状態です。
  */
-export type TextFieldInputState = Override<TextFieldContext, BaseInput.State>;
+export type TextFieldInputState = TextFieldInputContext;
 
 export namespace TextFieldInputProps {
   export type Render = RenderProps<TextFieldInputState>;

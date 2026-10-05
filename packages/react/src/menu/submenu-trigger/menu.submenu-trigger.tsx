@@ -9,7 +9,7 @@ import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import { useMenuContext } from "../root/menu.root.context.js";
 import { MenuSubmenuTriggerContext } from "./menu.submenu-trigger.context.js";
 
 /**
@@ -34,10 +34,7 @@ export type MenuSubmenuTriggerVariant = Button.Root.Variant;
 /**
  * {@link MenuSubmenuTrigger} が持つ状態です。
  */
-export type MenuSubmenuTriggerState = Override<
-  MenuContext,
-  Override<Button.Root.State, Menu.SubmenuTrigger.State>
->;
+export type MenuSubmenuTriggerState = MenuSubmenuTriggerContext;
 
 export namespace MenuSubmenuTriggerProps {
   export type Render = RenderProps<MenuSubmenuTriggerState>;

@@ -1,13 +1,16 @@
+import type { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { ContextMenuRadioGroupState } from "./context-menu.radio-group.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { ContextMenuContext } from "../root/context-menu.root.context.js";
 
 /**
  * {@link ContextMenuRadioGroup} が子パーツへ提供する状態です。
  */
-export type ContextMenuRadioGroupContext = Readonly<ContextMenuRadioGroupState>;
+export type ContextMenuRadioGroupContext = Readonly<
+  Override<ContextMenuContext, ContextMenu.RadioGroup.State>
+>;
 
 /**
  * {@link ContextMenuRadioGroup} が子パーツへ提供するコンテキストです。

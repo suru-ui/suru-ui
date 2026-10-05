@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type SliderContext, useSliderContext } from "../root/slider.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useSliderContext } from "../root/slider.root.context.js";
 import { SliderLabelContext } from "./slider.label.context.js";
 
 /**
  * {@link SliderLabel} が持つ状態です。
  */
-export type SliderLabelState = Override<SliderContext, Slider.Label.State>;
+export type SliderLabelState = SliderLabelContext;
 
 export namespace SliderLabelProps {
   export type Render = RenderProps<SliderLabelState>;

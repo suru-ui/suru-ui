@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useMenuContext } from "../root/menu.root.context.js";
 import { MenuPositionerContext } from "./menu.positioner.context.js";
 
 /**
  * {@link MenuPositioner} が持つ状態です。
  */
-export type MenuPositionerState = Override<MenuContext, Menu.Positioner.State>;
+export type MenuPositionerState = MenuPositionerContext;
 
 export namespace MenuPositionerProps {
   export type Render = RenderProps<MenuPositionerState>;

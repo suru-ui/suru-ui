@@ -1,13 +1,14 @@
+import type { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SelectGroupState } from "./select.group.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SelectContext } from "../root/select.root.context.js";
 
 /**
  * {@link SelectGroup} が子パーツへ提供する状態です。
  */
-export type SelectGroupContext = Readonly<SelectGroupState>;
+export type SelectGroupContext = Readonly<Override<SelectContext, BaseSelect.Group.State>>;
 
 /**
  * {@link SelectGroup} が子パーツへ提供するコンテキストです。

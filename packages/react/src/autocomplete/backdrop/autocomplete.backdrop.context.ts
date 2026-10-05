@@ -1,13 +1,16 @@
+import type { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { AutocompleteBackdropState } from "./autocomplete.backdrop.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { AutocompleteContext } from "../root/autocomplete.root.context.js";
 
 /**
  * {@link AutocompleteBackdrop} が子パーツへ提供する状態です。
  */
-export type AutocompleteBackdropContext = Readonly<AutocompleteBackdropState>;
+export type AutocompleteBackdropContext = Readonly<
+  Override<AutocompleteContext, Autocomplete.Backdrop.State>
+>;
 
 /**
  * {@link AutocompleteBackdrop} が子パーツへ提供するコンテキストです。

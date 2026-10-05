@@ -1,13 +1,14 @@
+import type { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { TooltipPortalState } from "./tooltip.portal.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { TooltipContext } from "../root/tooltip.root.context.js";
 
 /**
  * {@link TooltipPortal} が子パーツへ提供する状態です。
  */
-export type TooltipPortalContext = Readonly<TooltipPortalState>;
+export type TooltipPortalContext = Readonly<Override<TooltipContext, Tooltip.Portal.State>>;
 
 /**
  * {@link TooltipPortal} が子パーツへ提供するコンテキストです。

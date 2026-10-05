@@ -5,9 +5,8 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import {
-  type AutocompleteContext,
   type AutocompleteContextSize,
   type AutocompleteContextColor,
   type AutocompleteContextRadius,
@@ -19,10 +18,7 @@ import { AutocompleteInputGroupContext } from "./autocomplete.input-group.contex
 /**
  * {@link AutocompleteInputGroup} の状態です。
  */
-export type AutocompleteInputGroupState = Override<
-  AutocompleteContext,
-  Autocomplete.InputGroup.State
->;
+export type AutocompleteInputGroupState = AutocompleteInputGroupContext;
 
 /**
  * 入力グループの配色です。

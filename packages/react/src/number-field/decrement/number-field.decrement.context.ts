@@ -1,13 +1,16 @@
+import type { NumberField } from "@base-ui/react/number-field";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { NumberFieldDecrementState } from "./number-field.decrement.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { NumberFieldContext } from "../root/number-field.root.context.js";
 
 /**
  * {@link NumberFieldDecrement} が子パーツへ提供する状態です。
  */
-export type NumberFieldDecrementContext = Readonly<NumberFieldDecrementState>;
+export type NumberFieldDecrementContext = Readonly<
+  Override<NumberFieldContext, NumberField.Decrement.State>
+>;
 
 /**
  * {@link NumberFieldDecrement} が子パーツへ提供するコンテキストです。

@@ -6,8 +6,8 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type TabsContext, useTabsContext } from "../root/tabs.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useTabsContext } from "../root/tabs.root.context.js";
 import { TabsTabContext } from "./tabs.tab.context.js";
 
 /**
@@ -44,7 +44,7 @@ export type TabsTabValue = BaseTabs.Tab.Value;
 /**
  * {@link TabsTab} が持つ状態です。
  */
-export type TabsTabState = Override<TabsContext, BaseTabs.Tab.State>;
+export type TabsTabState = TabsTabContext;
 
 export namespace TabsTabProps {
   export type Render = RenderProps<TabsTabState>;

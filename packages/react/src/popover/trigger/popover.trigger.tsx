@@ -6,15 +6,15 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import type { PopoverHandle } from "../handle/popover.handle.js";
-import { type PopoverContext, usePopoverContext } from "../root/popover.root.context.js";
+import { usePopoverContext } from "../root/popover.root.context.js";
 import { PopoverTriggerContext } from "./popover.trigger.context.js";
 
 /**
  * {@link PopoverTrigger} が持つ状態です。
  */
-export type PopoverTriggerState = Override<PopoverContext, Popover.Trigger.State>;
+export type PopoverTriggerState = PopoverTriggerContext;
 
 export namespace PopoverTriggerProps {
   export type Render = Omit<RenderProps<PopoverTriggerState>, "render">;

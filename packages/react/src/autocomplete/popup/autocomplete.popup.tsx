@@ -5,17 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import {
-  type AutocompleteContext,
-  useAutocompleteContext,
-} from "../root/autocomplete.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
 import { AutocompletePopupContext } from "./autocomplete.popup.context.js";
 
 /**
  * {@link AutocompletePopup} の状態です。
  */
-export type AutocompletePopupState = Override<AutocompleteContext, Autocomplete.Popup.State>;
+export type AutocompletePopupState = AutocompletePopupContext;
 
 export namespace AutocompletePopupProps {
   export type Render = RenderProps<AutocompletePopupState>;

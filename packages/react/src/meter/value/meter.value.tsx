@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { type MeterContext, useMeterContext } from "../root/meter.root.context.js";
+import { useMeterContext } from "../root/meter.root.context.js";
 import { MeterValueContext } from "./meter.value.context.js";
 
 /**
@@ -26,7 +26,7 @@ export interface IMeterValueRenderer {
 /**
  * {@link MeterValue} が持つ状態です。
  */
-export type MeterValueState = Override<MeterContext, Meter.Value.State>;
+export type MeterValueState = MeterValueContext;
 
 export namespace MeterValueProps {
   export type Render = RenderProps<MeterValueState>;

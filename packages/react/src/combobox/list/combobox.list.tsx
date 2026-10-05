@@ -10,7 +10,7 @@ import {
   type IComboboxCollectionItemRenderer,
   ComboboxCollection,
 } from "../collection/combobox.collection.jsx";
-import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxContext } from "../root/combobox.root.context.js";
 import { ComboboxListContext } from "./combobox.list.context.js";
 
 export type IComboboxListItemRenderer<TItem = any> = IComboboxCollectionItemRenderer<TItem>;
@@ -18,7 +18,7 @@ export type IComboboxListItemRenderer<TItem = any> = IComboboxCollectionItemRend
 /**
  * {@link ComboboxList} の状態です。
  */
-export type ComboboxListState = Override<ComboboxContext, Combobox.List.State>;
+export type ComboboxListState = ComboboxListContext;
 
 export namespace ComboboxListProps {
   export type Render = RenderProps<ComboboxListState>;

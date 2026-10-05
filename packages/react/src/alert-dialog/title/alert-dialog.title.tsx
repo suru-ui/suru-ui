@@ -8,19 +8,13 @@ import type { RenderProps } from "../../_use-render.js";
 import * as Card from "../../card/card.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import {
-  type AlertDialogPopupContext,
-  useAlertDialogPopupContext,
-} from "../popup/alert-dialog.popup.context.js";
+import { useAlertDialogPopupContext } from "../popup/alert-dialog.popup.context.js";
 import { AlertDialogTitleContext } from "./alert-dialog.title.context.js";
 
 /**
  * {@link AlertDialogTitle} が持つ状態です。
  */
-export type AlertDialogTitleState = Override<
-  Override<AlertDialogPopupContext, Card.Title.State>,
-  AlertDialog.Title.State
->;
+export type AlertDialogTitleState = AlertDialogTitleContext;
 
 export namespace AlertDialogTitleProps {
   export type Render = RenderProps<AlertDialogTitleState>;

@@ -32,7 +32,7 @@ export type ToastActionVariant = Button.Root.Variant;
 /**
  * {@link ToastAction} が持つ状態です。
  */
-export type ToastActionState = Override<Button.Root.State, Toast.Action.State>;
+export type ToastActionState = ToastActionContext;
 
 export namespace ToastActionProps {
   export type Render = RenderProps<ToastActionState>;

@@ -1,13 +1,17 @@
+import type { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
+import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { ContextMenuSubmenuTriggerState } from "./context-menu.submenu-trigger.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { ContextMenuContext } from "../root/context-menu.root.context.js";
 
 /**
  * {@link ContextMenuSubmenuTrigger} が子パーツへ提供する状態です。
  */
-export type ContextMenuSubmenuTriggerContext = Readonly<ContextMenuSubmenuTriggerState>;
+export type ContextMenuSubmenuTriggerContext = Readonly<
+  Override<ContextMenuContext, Override<Button.Root.State, ContextMenu.SubmenuTrigger.State>>
+>;
 
 /**
  * {@link ContextMenuSubmenuTrigger} が子パーツへ提供するコンテキストです。

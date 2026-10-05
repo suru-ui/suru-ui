@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type MeterContext, useMeterContext } from "../root/meter.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useMeterContext } from "../root/meter.root.context.js";
 import { MeterIndicatorContext } from "./meter.indicator.context.js";
 
 /**
  * {@link MeterIndicator} が持つ状態です。
  */
-export type MeterIndicatorState = Override<MeterContext, Meter.Indicator.State>;
+export type MeterIndicatorState = MeterIndicatorContext;
 
 export namespace MeterIndicatorProps {
   export type Render = RenderProps<MeterIndicatorState>;

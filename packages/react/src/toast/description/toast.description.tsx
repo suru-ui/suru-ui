@@ -12,7 +12,7 @@ import { ToastDescriptionContext } from "./toast.description.context.js";
 /**
  * {@link ToastDescription} が持つ状態です。
  */
-export type ToastDescriptionState = Override<Alert.Description.State, Toast.Description.State>;
+export type ToastDescriptionState = ToastDescriptionContext;
 
 export namespace ToastDescriptionProps {
   export type Render = RenderProps<ToastDescriptionState>;

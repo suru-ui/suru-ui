@@ -3,25 +3,14 @@ import * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import {
-  type FileUploadContextState,
-  useFileUploadContext,
-} from "../root/file-upload.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useFileUploadContext } from "../root/file-upload.root.context.js";
 import { FileUploadItemContext } from "./file-upload.item.context.js";
 
 /**
  * {@link FileUploadItem} が持つ状態です。
  */
-export type FileUploadItemState = Override<
-  FileUploadContextState,
-  {
-    /**
-     * 表示対象のファイルです。
-     */
-    readonly file: File;
-  }
->;
+export type FileUploadItemState = FileUploadItemContext;
 
 export namespace FileUploadItemProps {
   export type Render = RenderProps<FileUploadItemState>;

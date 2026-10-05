@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type SliderContext, useSliderContext } from "../root/slider.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useSliderContext } from "../root/slider.root.context.js";
 import { SliderThumbContext } from "./slider.thumb.context.js";
 
 /**
  * {@link SliderThumb} が持つ状態です。
  */
-export type SliderThumbState = Override<SliderContext, Slider.Thumb.State>;
+export type SliderThumbState = SliderThumbContext;
 
 export namespace SliderThumbProps {
   export type Render = RenderProps<SliderThumbState>;

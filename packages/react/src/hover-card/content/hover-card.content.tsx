@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type HoverCardContext, useHoverCardContext } from "../root/hover-card.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useHoverCardContext } from "../root/hover-card.root.context.js";
 import { HoverCardContentContext } from "./hover-card.content.context.js";
 
 /**
  * {@link HoverCardContent} が持つ状態です。
  */
-export type HoverCardContentState = Override<HoverCardContext, PreviewCard.Popup.State>;
+export type HoverCardContentState = HoverCardContentContext;
 
 export namespace HoverCardContentProps {
   export type Render = RenderProps<HoverCardContentState>;

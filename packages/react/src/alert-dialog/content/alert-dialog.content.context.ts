@@ -1,13 +1,16 @@
 import * as React from "react";
 
+import type * as Card from "../../card/card.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { AlertDialogContentState } from "./alert-dialog.content.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { AlertDialogPopupContext } from "../popup/alert-dialog.popup.context.js";
 
 /**
  * {@link AlertDialogContent} が子パーツへ提供する状態です。
  */
-export type AlertDialogContentContext = Readonly<AlertDialogContentState>;
+export type AlertDialogContentContext = Readonly<
+  Override<AlertDialogPopupContext, Card.Content.State>
+>;
 
 /**
  * {@link AlertDialogContent} が子パーツへ提供するコンテキストです。

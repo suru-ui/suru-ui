@@ -1,13 +1,14 @@
+import type { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { TooltipPositionerState } from "./tooltip.positioner.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { TooltipContext } from "../root/tooltip.root.context.js";
 
 /**
  * {@link TooltipPositioner} が子パーツへ提供する状態です。
  */
-export type TooltipPositionerContext = Readonly<TooltipPositionerState>;
+export type TooltipPositionerContext = Readonly<Override<TooltipContext, Tooltip.Positioner.State>>;
 
 /**
  * {@link TooltipPositioner} が子パーツへ提供するコンテキストです。

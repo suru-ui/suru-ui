@@ -1,13 +1,16 @@
+import type { Accordion } from "@base-ui/react/accordion";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { AccordionContentState } from "./accordion.content.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { AccordionItemContext } from "../item/accordion.item.context.js";
 
 /**
  * {@link AccordionContent} が子パーツへ提供する状態です。
  */
-export type AccordionContentContext = Readonly<AccordionContentState>;
+export type AccordionContentContext = Readonly<
+  Override<AccordionItemContext, Accordion.Panel.State>
+>;
 
 /**
  * {@link AccordionContent} が子パーツへ提供するコンテキストです。

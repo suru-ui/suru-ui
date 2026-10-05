@@ -33,7 +33,7 @@ export type ToastContentVariant = Alert.Root.Variant;
 /**
  * {@link ToastContent} が持つ状態です。
  */
-export type ToastContentState = Override<Alert.Root.State, Toast.Content.State>;
+export type ToastContentState = ToastContentContext;
 
 export namespace ToastContentProps {
   export type Render = RenderProps<ToastContentState>;

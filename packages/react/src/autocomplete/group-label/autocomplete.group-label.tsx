@@ -5,20 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import {
-  type AutocompleteContext,
-  useAutocompleteContext,
-} from "../root/autocomplete.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
 import { AutocompleteGroupLabelContext } from "./autocomplete.group-label.context.js";
 
 /**
  * {@link AutocompleteGroupLabel} の状態です。
  */
-export type AutocompleteGroupLabelState = Override<
-  AutocompleteContext,
-  Autocomplete.GroupLabel.State
->;
+export type AutocompleteGroupLabelState = AutocompleteGroupLabelContext;
 
 export namespace AutocompleteGroupLabelProps {
   export type Render = RenderProps<AutocompleteGroupLabelState>;

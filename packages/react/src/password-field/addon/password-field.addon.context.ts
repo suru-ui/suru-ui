@@ -1,13 +1,16 @@
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { PasswordFieldAddonState } from "./password-field.addon.jsx";
+import type { TextFieldAddonState } from "../../text-field/text-field.parts.js";
+import type { Override, IUseContext } from "../../types.js";
+import type { PasswordFieldContextState } from "../root/password-field.root.context.js";
 
 /**
  * {@link PasswordFieldAddon} が子パーツへ提供する状態です。
  */
-export type PasswordFieldAddonContext = Readonly<PasswordFieldAddonState>;
+export type PasswordFieldAddonContext = Readonly<
+  Override<PasswordFieldContextState, TextFieldAddonState>
+>;
 
 /**
  * {@link PasswordFieldAddon} が子パーツへ提供するコンテキストです。

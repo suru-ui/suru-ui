@@ -1,13 +1,16 @@
+import type { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SelectScrollDownArrowState } from "./select.scroll-down-arrow.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SelectContext } from "../root/select.root.context.js";
 
 /**
  * {@link SelectScrollDownArrow} が子パーツへ提供する状態です。
  */
-export type SelectScrollDownArrowContext = Readonly<SelectScrollDownArrowState>;
+export type SelectScrollDownArrowContext = Readonly<
+  Override<SelectContext, BaseSelect.ScrollDownArrow.State>
+>;
 
 /**
  * {@link SelectScrollDownArrow} が子パーツへ提供するコンテキストです。

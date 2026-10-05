@@ -1,13 +1,17 @@
+import type { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
+import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { MenuItemState } from "./menu.item.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { MenuContext } from "../root/menu.root.context.js";
 
 /**
  * {@link MenuItem} が子パーツへ提供する状態です。
  */
-export type MenuItemContext = Readonly<MenuItemState>;
+export type MenuItemContext = Readonly<
+  Override<MenuContext, Override<Button.Root.State, Menu.Item.State>>
+>;
 
 /**
  * {@link MenuItem} が子パーツへ提供するコンテキストです。

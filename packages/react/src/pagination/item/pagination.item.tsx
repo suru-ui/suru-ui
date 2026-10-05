@@ -5,22 +5,14 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type PaginationContext, usePaginationContext } from "../root/pagination.root.context.js";
+import type { IComponent } from "../../types.js";
+import { usePaginationContext } from "../root/pagination.root.context.js";
 import { PaginationItemContext } from "./pagination.item.context.js";
 
 /**
  * {@link PaginationItem} が持つ状態です。
  */
-export type PaginationItemState = Override<
-  Override<PaginationContext, Button.Root.State>,
-  {
-    /**
-     * 現在のページかどうかです。
-     */
-    readonly selected: boolean;
-  }
->;
+export type PaginationItemState = PaginationItemContext;
 
 export namespace PaginationItemProps {
   export type Render = RenderProps<PaginationItemState>;

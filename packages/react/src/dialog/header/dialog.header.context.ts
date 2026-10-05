@@ -1,13 +1,14 @@
 import * as React from "react";
 
+import type * as Card from "../../card/card.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { DialogHeaderState } from "./dialog.header.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { DialogPopupContext } from "../popup/dialog.popup.context.js";
 
 /**
  * {@link DialogHeader} が子パーツへ提供する状態です。
  */
-export type DialogHeaderContext = Readonly<DialogHeaderState>;
+export type DialogHeaderContext = Readonly<Override<DialogPopupContext, Card.Header.State>>;
 
 /**
  * {@link DialogHeader} が子パーツへ提供するコンテキストです。

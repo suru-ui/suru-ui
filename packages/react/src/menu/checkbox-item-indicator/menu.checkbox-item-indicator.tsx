@@ -5,17 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useMenuContext } from "../root/menu.root.context.js";
 import { MenuCheckboxItemIndicatorContext } from "./menu.checkbox-item-indicator.context.js";
 
 /**
  * {@link MenuCheckboxItemIndicator} が持つ状態です。
  */
-export type MenuCheckboxItemIndicatorState = Override<
-  MenuContext,
-  Menu.CheckboxItemIndicator.State
->;
+export type MenuCheckboxItemIndicatorState = MenuCheckboxItemIndicatorContext;
 
 export namespace MenuCheckboxItemIndicatorProps {
   export type Render = RenderProps<MenuCheckboxItemIndicatorState>;

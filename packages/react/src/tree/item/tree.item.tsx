@@ -6,9 +6,9 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import { getSelectAction } from "../_tree.jsx";
-import { type TreeContextState, useTreeContext } from "../root/tree.root.context.js";
+import { useTreeContext } from "../root/tree.root.context.js";
 import { TreeItemContext } from "./tree.item.context.js";
 
 /**
@@ -37,30 +37,7 @@ export type TreeItemVariant = "liquid" | "solid";
 /**
  * {@link TreeItem} が持つ状態です。
  */
-export type TreeItemState = Override<
-  TreeContextState,
-  {
-    /**
-     * 項目が無効かどうかです。
-     */
-    readonly disabled: boolean;
-
-    /**
-     * 項目が展開されているかどうかです。
-     */
-    readonly expanded: boolean;
-
-    /**
-     * 項目の角丸です。
-     */
-    readonly radius: TreeItemRadius;
-
-    /**
-     * 項目が選択されているかどうかです。
-     */
-    readonly selected: boolean;
-  }
->;
+export type TreeItemState = TreeItemContext;
 
 export namespace TreeItemProps {
   export type Render = RenderProps<TreeItemState>;

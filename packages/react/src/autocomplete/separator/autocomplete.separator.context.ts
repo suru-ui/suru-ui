@@ -1,13 +1,16 @@
+import type { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { AutocompleteSeparatorState } from "./autocomplete.separator.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { AutocompleteContext } from "../root/autocomplete.root.context.js";
 
 /**
  * {@link AutocompleteSeparator} が子パーツへ提供する状態です。
  */
-export type AutocompleteSeparatorContext = Readonly<AutocompleteSeparatorState>;
+export type AutocompleteSeparatorContext = Readonly<
+  Override<AutocompleteContext, Autocomplete.Separator.State>
+>;
 
 /**
  * {@link AutocompleteSeparator} が子パーツへ提供するコンテキストです。

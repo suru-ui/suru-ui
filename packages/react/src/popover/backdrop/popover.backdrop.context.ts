@@ -1,13 +1,14 @@
+import type { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { PopoverBackdropState } from "./popover.backdrop.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { PopoverContext } from "../root/popover.root.context.js";
 
 /**
  * {@link PopoverBackdrop} が子パーツへ提供する状態です。
  */
-export type PopoverBackdropContext = Readonly<PopoverBackdropState>;
+export type PopoverBackdropContext = Readonly<Override<PopoverContext, Popover.Backdrop.State>>;
 
 /**
  * {@link PopoverBackdrop} が子パーツへ提供するコンテキストです。

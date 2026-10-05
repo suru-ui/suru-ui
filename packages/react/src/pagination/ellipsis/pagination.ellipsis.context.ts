@@ -1,13 +1,14 @@
 import * as React from "react";
 
+import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { PaginationEllipsisState } from "./pagination.ellipsis.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { PaginationContext } from "../root/pagination.root.context.js";
 
 /**
  * {@link PaginationEllipsis} が子パーツへ提供する状態です。
  */
-export type PaginationEllipsisContext = Readonly<PaginationEllipsisState>;
+export type PaginationEllipsisContext = Readonly<Override<PaginationContext, Button.Root.State>>;
 
 /**
  * {@link PaginationEllipsis} が子パーツへ提供するコンテキストです。

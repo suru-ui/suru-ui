@@ -5,20 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import {
-  type NumberFieldContext,
-  useNumberFieldContext,
-} from "../root/number-field.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useNumberFieldContext } from "../root/number-field.root.context.js";
 import { NumberFieldScrubAreaCursorContext } from "./number-field.scrub-area-cursor.context.js";
 
 /**
  * {@link NumberFieldScrubAreaCursor} が持つ状態です。
  */
-export type NumberFieldScrubAreaCursorState = Override<
-  NumberFieldContext,
-  NumberField.ScrubAreaCursor.State
->;
+export type NumberFieldScrubAreaCursorState = NumberFieldScrubAreaCursorContext;
 
 export namespace NumberFieldScrubAreaCursorProps {
   export type Render = RenderProps<NumberFieldScrubAreaCursorState>;

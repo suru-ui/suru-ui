@@ -8,7 +8,7 @@ import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import { useMenuContext } from "../root/menu.root.context.js";
 import { MenuLinkItemContext } from "./menu.link-item.context.js";
 
 /**
@@ -33,10 +33,7 @@ export type MenuLinkItemVariant = Button.Root.Variant;
 /**
  * {@link MenuLinkItem} が持つ状態です。
  */
-export type MenuLinkItemState = Override<
-  MenuContext,
-  Override<Button.Root.State, Menu.LinkItem.State>
->;
+export type MenuLinkItemState = MenuLinkItemContext;
 
 export namespace MenuLinkItemProps {
   export type Render = RenderProps<MenuLinkItemState>;

@@ -1,13 +1,14 @@
+import type { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SelectSeparatorState } from "./select.separator.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SelectContext } from "../root/select.root.context.js";
 
 /**
  * {@link SelectSeparator} が子パーツへ提供する状態です。
  */
-export type SelectSeparatorContext = Readonly<SelectSeparatorState>;
+export type SelectSeparatorContext = Readonly<Override<SelectContext, BaseSelect.Separator.State>>;
 
 /**
  * {@link SelectSeparator} が子パーツへ提供するコンテキストです。

@@ -10,7 +10,12 @@ import type { ComboboxChipVariant } from "./combobox.chip.jsx";
  * {@link ComboboxChip} が子パーツへ提供する状態です。
  */
 export type ComboboxChipContext = Readonly<
-  Override<Override<ComboboxContext, Combobox.Chip.State>, { variant: ComboboxChipVariant }>
+  Override<
+    Override<ComboboxContext, Combobox.Chip.State>,
+    {
+      variant: ComboboxChipVariant;
+    }
+  >
 >;
 
 /**

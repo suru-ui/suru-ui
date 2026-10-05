@@ -6,14 +6,14 @@ import RenderElement from "../../_render-element.jsx";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type PaginationContext, usePaginationContext } from "../root/pagination.root.context.js";
+import type { IComponent } from "../../types.js";
+import { usePaginationContext } from "../root/pagination.root.context.js";
 import { PaginationEllipsisContext } from "./pagination.ellipsis.context.js";
 
 /**
  * {@link PaginationEllipsis} が持つ状態です。
  */
-export type PaginationEllipsisState = Override<PaginationContext, Button.Root.State>;
+export type PaginationEllipsisState = PaginationEllipsisContext;
 
 export namespace PaginationEllipsisProps {
   export type Render = RenderProps<PaginationEllipsisState>;

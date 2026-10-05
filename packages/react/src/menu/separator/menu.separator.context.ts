@@ -1,13 +1,14 @@
+import type { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { MenuSeparatorState } from "./menu.separator.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { MenuContext } from "../root/menu.root.context.js";
 
 /**
  * {@link MenuSeparator} が子パーツへ提供する状態です。
  */
-export type MenuSeparatorContext = Readonly<MenuSeparatorState>;
+export type MenuSeparatorContext = Readonly<Override<MenuContext, Menu.Separator.State>>;
 
 /**
  * {@link MenuSeparator} が子パーツへ提供するコンテキストです。

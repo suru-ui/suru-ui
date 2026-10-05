@@ -1,13 +1,23 @@
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { FileUploadItemState } from "./file-upload.item.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { FileUploadContextState } from "../root/file-upload.root.context.js";
 
 /**
  * {@link FileUploadItem} が子パーツへ提供する状態です。
  */
-export type FileUploadItemContext = Readonly<FileUploadItemState>;
+export type FileUploadItemContext = Readonly<
+  Override<
+    FileUploadContextState,
+    {
+      /**
+       * 表示対象のファイルです。
+       */
+      readonly file: File;
+    }
+  >
+>;
 
 /**
  * {@link FileUploadItem} が子パーツへ提供するコンテキストです。

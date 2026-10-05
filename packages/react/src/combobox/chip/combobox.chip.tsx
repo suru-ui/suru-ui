@@ -6,9 +6,9 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import { ComboboxItemContext } from "../item/combobox.item.context.js";
-import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxContext } from "../root/combobox.root.context.js";
 import { ComboboxChipContext } from "./combobox.chip.context.js";
 
 /**
@@ -39,12 +39,7 @@ export type ComboboxChipVariant = ColorTemplate;
 /**
  * {@link ComboboxChip} の状態です。
  */
-export type ComboboxChipState = Override<
-  Override<ComboboxContext, Combobox.Chip.State>,
-  {
-    variant: ComboboxChipVariant;
-  }
->;
+export type ComboboxChipState = ComboboxChipContext;
 
 export namespace ComboboxChipProps {
   export type Render = RenderProps<ComboboxChipState>;

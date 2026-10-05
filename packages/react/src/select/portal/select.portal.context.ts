@@ -1,13 +1,14 @@
+import type { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SelectPortalState } from "./select.portal.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SelectContext } from "../root/select.root.context.js";
 
 /**
  * {@link SelectPortal} が子パーツへ提供する状態です。
  */
-export type SelectPortalContext = Readonly<SelectPortalState>;
+export type SelectPortalContext = Readonly<Override<SelectContext, BaseSelect.Portal.State>>;
 
 /**
  * {@link SelectPortal} が子パーツへ提供するコンテキストです。

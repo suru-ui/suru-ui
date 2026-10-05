@@ -1,13 +1,14 @@
+import type { Meter } from "@base-ui/react/meter";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { MeterTrackState } from "./meter.track.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { MeterContext } from "../root/meter.root.context.js";
 
 /**
  * {@link MeterTrack} が子パーツへ提供する状態です。
  */
-export type MeterTrackContext = Readonly<MeterTrackState>;
+export type MeterTrackContext = Readonly<Override<MeterContext, Meter.Track.State>>;
 
 /**
  * {@link MeterTrack} が子パーツへ提供するコンテキストです。

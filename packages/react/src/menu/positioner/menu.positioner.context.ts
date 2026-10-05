@@ -1,13 +1,14 @@
+import type { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { MenuPositionerState } from "./menu.positioner.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { MenuContext } from "../root/menu.root.context.js";
 
 /**
  * {@link MenuPositioner} が子パーツへ提供する状態です。
  */
-export type MenuPositionerContext = Readonly<MenuPositionerState>;
+export type MenuPositionerContext = Readonly<Override<MenuContext, Menu.Positioner.State>>;
 
 /**
  * {@link MenuPositioner} が子パーツへ提供するコンテキストです。

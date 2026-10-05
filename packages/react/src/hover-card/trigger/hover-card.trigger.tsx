@@ -5,15 +5,15 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import type { HoverCardHandle } from "../handle/hover-card.handle.js";
-import { type HoverCardContext, useHoverCardContext } from "../root/hover-card.root.context.js";
+import { useHoverCardContext } from "../root/hover-card.root.context.js";
 import { HoverCardTriggerContext } from "./hover-card.trigger.context.js";
 
 /**
  * {@link HoverCardTrigger} が持つ状態です。
  */
-export type HoverCardTriggerState = Override<HoverCardContext, PreviewCard.Trigger.State>;
+export type HoverCardTriggerState = HoverCardTriggerContext;
 
 export namespace HoverCardTriggerProps {
   export type Render = Omit<RenderProps<HoverCardTriggerState>, "render">;

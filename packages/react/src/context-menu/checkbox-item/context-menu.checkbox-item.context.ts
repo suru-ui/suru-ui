@@ -1,13 +1,17 @@
+import type { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
+import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { ContextMenuCheckboxItemState } from "./context-menu.checkbox-item.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { ContextMenuContext } from "../root/context-menu.root.context.js";
 
 /**
  * {@link ContextMenuCheckboxItem} が子パーツへ提供する状態です。
  */
-export type ContextMenuCheckboxItemContext = Readonly<ContextMenuCheckboxItemState>;
+export type ContextMenuCheckboxItemContext = Readonly<
+  Override<ContextMenuContext, Override<Button.Root.State, ContextMenu.CheckboxItem.State>>
+>;
 
 /**
  * {@link ContextMenuCheckboxItem} が子パーツへ提供するコンテキストです。

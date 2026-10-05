@@ -1,13 +1,16 @@
+import type { Collapsible } from "@base-ui/react/collapsible";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { CollapsibleContentState } from "./collapsible.content.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { CollapsibleContext } from "../root/collapsible.root.context.js";
 
 /**
  * {@link CollapsibleContent} が子パーツへ提供する状態です。
  */
-export type CollapsibleContentContext = Readonly<CollapsibleContentState>;
+export type CollapsibleContentContext = Readonly<
+  Override<CollapsibleContext, Collapsible.Panel.State>
+>;
 
 /**
  * {@link CollapsibleContent} が子パーツへ提供するコンテキストです。

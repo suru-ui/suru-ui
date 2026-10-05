@@ -1,13 +1,14 @@
+import type { Toast } from "@base-ui/react/toast";
 import * as React from "react";
 
+import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { ToastCloseState } from "./toast.close.jsx";
+import type { Override, IUseContext } from "../../types.js";
 
 /**
  * {@link ToastClose} が子パーツへ提供する状態です。
  */
-export type ToastCloseContext = Readonly<ToastCloseState>;
+export type ToastCloseContext = Readonly<Override<Button.Root.State, Toast.Close.State>>;
 
 /**
  * {@link ToastClose} が子パーツへ提供するコンテキストです。

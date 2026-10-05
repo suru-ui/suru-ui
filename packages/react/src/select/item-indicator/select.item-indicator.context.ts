@@ -1,13 +1,16 @@
+import type { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SelectItemIndicatorState } from "./select.item-indicator.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SelectContext } from "../root/select.root.context.js";
 
 /**
  * {@link SelectItemIndicator} が子パーツへ提供する状態です。
  */
-export type SelectItemIndicatorContext = Readonly<SelectItemIndicatorState>;
+export type SelectItemIndicatorContext = Readonly<
+  Override<SelectContext, BaseSelect.ItemIndicator.State>
+>;
 
 /**
  * {@link SelectItemIndicator} が子パーツへ提供するコンテキストです。

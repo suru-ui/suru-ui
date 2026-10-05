@@ -6,14 +6,14 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type PaginationContext, usePaginationContext } from "../root/pagination.root.context.js";
+import type { IComponent } from "../../types.js";
+import { usePaginationContext } from "../root/pagination.root.context.js";
 import { PaginationNextButtonContext } from "./pagination.next-button.context.js";
 
 /**
  * {@link PaginationNextButton} が持つ状態です。
  */
-export type PaginationNextButtonState = Override<PaginationContext, Button.Root.State>;
+export type PaginationNextButtonState = PaginationNextButtonContext;
 
 export namespace PaginationNextButtonProps {
   export type Render = RenderProps<PaginationNextButtonState>;

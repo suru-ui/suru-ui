@@ -16,7 +16,7 @@ import { SelectGroup } from "../group/select.group.jsx";
 import { SelectItemIndicator } from "../item-indicator/select.item-indicator.jsx";
 import { SelectItemText } from "../item-text/select.item-text.jsx";
 import { SelectItem } from "../item/select.item.jsx";
-import { type SelectContext, useSelectContext } from "../root/select.root.context.js";
+import { useSelectContext } from "../root/select.root.context.js";
 import type {
   SelectRootItems,
   SelectRootItemObjectGroup,
@@ -77,7 +77,7 @@ export interface ISelectListItemRenderer<TValue = any> {
 /**
  * {@link SelectList} が持つ状態です。
  */
-export type SelectListState = Override<SelectContext, BaseSelect.List.State>;
+export type SelectListState = SelectListContext;
 
 export namespace SelectListProps {
   export type Render = RenderProps<SelectListState>;

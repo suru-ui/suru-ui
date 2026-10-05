@@ -5,9 +5,8 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import {
-  type ComboboxContext,
   type ComboboxContextSize,
   type ComboboxContextColor,
   type ComboboxContextRadius,
@@ -19,7 +18,7 @@ import { ComboboxInputGroupContext } from "./combobox.input-group.context.js";
 /**
  * {@link ComboboxInputGroup} の状態です。
  */
-export type ComboboxInputGroupState = Override<ComboboxContext, Combobox.InputGroup.State>;
+export type ComboboxInputGroupState = ComboboxInputGroupContext;
 
 /**
  * 入力グループの配色です。

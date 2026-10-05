@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type SelectContext, useSelectContext } from "../root/select.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useSelectContext } from "../root/select.root.context.js";
 import { SelectPortalContext } from "./select.portal.context.js";
 
 /**
  * {@link SelectPortal} が持つ状態です。
  */
-export type SelectPortalState = Override<SelectContext, BaseSelect.Portal.State>;
+export type SelectPortalState = SelectPortalContext;
 
 export namespace SelectPortalProps {
   export type Render = RenderProps<SelectPortalState>;

@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useComboboxContext } from "../root/combobox.root.context.js";
 import { ComboboxInputContext } from "./combobox.input.context.js";
 
 /**
  * {@link ComboboxInput} の状態です。
  */
-export type ComboboxInputState = Override<ComboboxContext, Combobox.Input.State>;
+export type ComboboxInputState = ComboboxInputContext;
 
 export namespace ComboboxInputProps {
   export type Render = RenderProps<ComboboxInputState>;

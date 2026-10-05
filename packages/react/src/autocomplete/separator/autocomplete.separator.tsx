@@ -7,20 +7,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import {
-  type AutocompleteContext,
-  useAutocompleteContext,
-} from "../root/autocomplete.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
 import { AutocompleteSeparatorContext } from "./autocomplete.separator.context.js";
 
 /**
  * {@link AutocompleteSeparator} が持つ状態です。
  */
-export type AutocompleteSeparatorState = Override<
-  AutocompleteContext,
-  Autocomplete.Separator.State
->;
+export type AutocompleteSeparatorState = AutocompleteSeparatorContext;
 
 export namespace AutocompleteSeparatorProps {
   export type Render = RenderProps<AutocompleteSeparatorState>;

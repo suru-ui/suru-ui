@@ -1,13 +1,17 @@
+import type { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
+import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { MenuRadioItemState } from "./menu.radio-item.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { MenuContext } from "../root/menu.root.context.js";
 
 /**
  * {@link MenuRadioItem} が子パーツへ提供する状態です。
  */
-export type MenuRadioItemContext = Readonly<MenuRadioItemState>;
+export type MenuRadioItemContext = Readonly<
+  Override<MenuContext, Override<Button.Root.State, Menu.RadioItem.State>>
+>;
 
 /**
  * {@link MenuRadioItem} が子パーツへ提供するコンテキストです。

@@ -1,13 +1,14 @@
+import type { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { HoverCardContentState } from "./hover-card.content.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { HoverCardContext } from "../root/hover-card.root.context.js";
 
 /**
  * {@link HoverCardContent} が子パーツへ提供する状態です。
  */
-export type HoverCardContentContext = Readonly<HoverCardContentState>;
+export type HoverCardContentContext = Readonly<Override<HoverCardContext, PreviewCard.Popup.State>>;
 
 /**
  * {@link HoverCardContent} が子パーツへ提供するコンテキストです。

@@ -5,17 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import {
-  type CollapsibleContext,
-  useCollapsibleContext,
-} from "../root/collapsible.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useCollapsibleContext } from "../root/collapsible.root.context.js";
 import { CollapsibleContentContext } from "./collapsible.content.context.js";
 
 /**
  * {@link CollapsibleContent} が持つ状態です。
  */
-export type CollapsibleContentState = Override<CollapsibleContext, Collapsible.Panel.State>;
+export type CollapsibleContentState = CollapsibleContentContext;
 
 export namespace CollapsibleContentProps {
   export type Render = RenderProps<CollapsibleContentState>;

@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type SelectContext, useSelectContext } from "../root/select.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useSelectContext } from "../root/select.root.context.js";
 import { SelectArrowContext } from "./select.arrow.context.js";
 
 /**
  * {@link SelectArrow} が持つ状態です。
  */
-export type SelectArrowState = Override<SelectContext, BaseSelect.Arrow.State>;
+export type SelectArrowState = SelectArrowContext;
 
 export namespace SelectArrowProps {
   export type Render = RenderProps<SelectArrowState>;

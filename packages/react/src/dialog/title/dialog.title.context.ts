@@ -1,13 +1,17 @@
+import type { Dialog } from "@base-ui/react/dialog";
 import * as React from "react";
 
+import type * as Card from "../../card/card.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { DialogTitleState } from "./dialog.title.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { DialogPopupContext } from "../popup/dialog.popup.context.js";
 
 /**
  * {@link DialogTitle} が子パーツへ提供する状態です。
  */
-export type DialogTitleContext = Readonly<DialogTitleState>;
+export type DialogTitleContext = Readonly<
+  Override<Override<DialogPopupContext, Card.Title.State>, Dialog.Title.State>
+>;
 
 /**
  * {@link DialogTitle} が子パーツへ提供するコンテキストです。

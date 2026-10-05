@@ -6,14 +6,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useComboboxContext } from "../root/combobox.root.context.js";
 import { ComboboxTriggerContext } from "./combobox.trigger.context.js";
 
 /**
  * {@link ComboboxTrigger} の状態です。
  */
-export type ComboboxTriggerState = Override<ComboboxContext, Combobox.Trigger.State>;
+export type ComboboxTriggerState = ComboboxTriggerContext;
 
 export namespace ComboboxTriggerProps {
   export type Render = Omit<RenderProps<ComboboxTriggerState>, "render">;

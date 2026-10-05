@@ -1,13 +1,16 @@
+import type { Progress } from "@base-ui/react/progress";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { ProgressIndicatorState } from "./progress.indicator.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { ProgressContext } from "../root/progress.root.context.js";
 
 /**
  * {@link ProgressIndicator} が子パーツへ提供する状態です。
  */
-export type ProgressIndicatorContext = Readonly<ProgressIndicatorState>;
+export type ProgressIndicatorContext = Readonly<
+  Override<ProgressContext, Progress.Indicator.State>
+>;
 
 /**
  * {@link ProgressIndicator} が子パーツへ提供するコンテキストです。

@@ -6,8 +6,8 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type SegmentsContext, useSegmentsContext } from "../root/segments.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useSegmentsContext } from "../root/segments.root.context.js";
 import { SegmentsItemContext } from "./segments.item.context.js";
 
 /**
@@ -44,7 +44,7 @@ export type SegmentsItemValue = BaseTabs.Tab.Value;
 /**
  * {@link SegmentsItem} が持つ状態です。
  */
-export type SegmentsItemState = Override<SegmentsContext, BaseTabs.Tab.State>;
+export type SegmentsItemState = SegmentsItemContext;
 
 export namespace SegmentsItemProps {
   export type Render = RenderProps<SegmentsItemState>;

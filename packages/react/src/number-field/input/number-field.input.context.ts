@@ -1,13 +1,16 @@
+import type { NumberField } from "@base-ui/react/number-field";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { NumberFieldInputState } from "./number-field.input.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { NumberFieldContext } from "../root/number-field.root.context.js";
 
 /**
  * {@link NumberFieldInput} が子パーツへ提供する状態です。
  */
-export type NumberFieldInputContext = Readonly<NumberFieldInputState>;
+export type NumberFieldInputContext = Readonly<
+  Override<NumberFieldContext, NumberField.Input.State>
+>;
 
 /**
  * {@link NumberFieldInput} が子パーツへ提供するコンテキストです。

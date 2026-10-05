@@ -1,13 +1,14 @@
+import type { Slider } from "@base-ui/react/slider";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SliderThumbState } from "./slider.thumb.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SliderContext } from "../root/slider.root.context.js";
 
 /**
  * {@link SliderThumb} が子パーツへ提供する状態です。
  */
-export type SliderThumbContext = Readonly<SliderThumbState>;
+export type SliderThumbContext = Readonly<Override<SliderContext, Slider.Thumb.State>>;
 
 /**
  * {@link SliderThumb} が子パーツへ提供するコンテキストです。

@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type PopoverContext, usePopoverContext } from "../root/popover.root.context.js";
+import type { IComponent } from "../../types.js";
+import { usePopoverContext } from "../root/popover.root.context.js";
 import { PopoverPortalContext } from "./popover.portal.context.js";
 
 /**
  * {@link PopoverPortal} が持つ状態です。
  */
-export type PopoverPortalState = Override<PopoverContext, Popover.Portal.State>;
+export type PopoverPortalState = PopoverPortalContext;
 
 export namespace PopoverPortalProps {
   export type Render = RenderProps<PopoverPortalState>;

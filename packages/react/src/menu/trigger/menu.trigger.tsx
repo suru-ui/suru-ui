@@ -5,15 +5,15 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import type { MenuHandle } from "../handle/menu.handle.js";
-import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import { useMenuContext } from "../root/menu.root.context.js";
 import { MenuTriggerContext } from "./menu.trigger.context.js";
 
 /**
  * {@link MenuTrigger} が持つ状態です。
  */
-export type MenuTriggerState = Override<MenuContext, Menu.Trigger.State>;
+export type MenuTriggerState = MenuTriggerContext;
 
 export namespace MenuTriggerProps {
   export type Render = Omit<RenderProps<MenuTriggerState>, "render">;

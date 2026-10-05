@@ -1,13 +1,14 @@
+import type { Toast } from "@base-ui/react/toast";
 import * as React from "react";
 
+import type * as Alert from "../../alert/alert.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { ToastTitleState } from "./toast.title.jsx";
+import type { Override, IUseContext } from "../../types.js";
 
 /**
  * {@link ToastTitle} が子パーツへ提供する状態です。
  */
-export type ToastTitleContext = Readonly<ToastTitleState>;
+export type ToastTitleContext = Readonly<Override<Alert.Title.State, Toast.Title.State>>;
 
 /**
  * {@link ToastTitle} が子パーツへ提供するコンテキストです。

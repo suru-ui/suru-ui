@@ -1,13 +1,16 @@
+import type { NumberField } from "@base-ui/react/number-field";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { NumberFieldScrubAreaState } from "./number-field.scrub-area.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { NumberFieldContext } from "../root/number-field.root.context.js";
 
 /**
  * {@link NumberFieldScrubArea} が子パーツへ提供する状態です。
  */
-export type NumberFieldScrubAreaContext = Readonly<NumberFieldScrubAreaState>;
+export type NumberFieldScrubAreaContext = Readonly<
+  Override<NumberFieldContext, NumberField.ScrubArea.State>
+>;
 
 /**
  * {@link NumberFieldScrubArea} が子パーツへ提供するコンテキストです。

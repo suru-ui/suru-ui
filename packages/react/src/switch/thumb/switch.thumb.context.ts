@@ -1,13 +1,14 @@
+import type { Switch } from "@base-ui/react/switch";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SwitchThumbState } from "./switch.thumb.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SwitchContext } from "../root/switch.root.context.js";
 
 /**
  * {@link SwitchThumb} が子パーツへ提供する状態です。
  */
-export type SwitchThumbContext = Readonly<SwitchThumbState>;
+export type SwitchThumbContext = Readonly<Override<SwitchContext, Switch.Thumb.State>>;
 
 /**
  * {@link SwitchThumb} が子パーツへ提供するコンテキストです。

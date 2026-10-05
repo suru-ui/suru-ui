@@ -5,15 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import type { AccordionItemContext } from "../item/accordion.item.context.js";
+import type { IComponent } from "../../types.js";
 import { useAccordionContext } from "../root/accordion.root.context.js";
 import { AccordionContentContext } from "./accordion.content.context.js";
 
 /**
  * {@link AccordionContent} が持つ状態です。
  */
-export type AccordionContentState = Override<AccordionItemContext, Accordion.Panel.State>;
+export type AccordionContentState = AccordionContentContext;
 
 export namespace AccordionContentProps {
   export type Render = RenderProps<AccordionContentState>;

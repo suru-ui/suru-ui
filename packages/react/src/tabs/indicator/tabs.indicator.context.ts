@@ -1,13 +1,14 @@
+import type { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { TabsIndicatorState } from "./tabs.indicator.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { TabsContext } from "../root/tabs.root.context.js";
 
 /**
  * {@link TabsIndicator} が子パーツへ提供する状態です。
  */
-export type TabsIndicatorContext = Readonly<TabsIndicatorState>;
+export type TabsIndicatorContext = Readonly<Override<TabsContext, BaseTabs.Indicator.State>>;
 
 /**
  * {@link TabsIndicator} が子パーツへ提供するコンテキストです。

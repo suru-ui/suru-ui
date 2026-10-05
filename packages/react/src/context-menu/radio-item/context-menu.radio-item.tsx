@@ -10,10 +10,7 @@ import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { getItemVariant } from "../_context-menu.utils.jsx";
-import {
-  type ContextMenuContext,
-  useContextMenuContext,
-} from "../root/context-menu.root.context.js";
+import { useContextMenuContext } from "../root/context-menu.root.context.js";
 import { ContextMenuRadioItemContext } from "./context-menu.radio-item.context.js";
 
 /**
@@ -38,10 +35,7 @@ export type ContextMenuRadioItemVariant = Button.Root.Variant;
 /**
  * {@link ContextMenuRadioItem} が持つ状態です。
  */
-export type ContextMenuRadioItemState = Override<
-  ContextMenuContext,
-  Override<Button.Root.State, ContextMenu.RadioItem.State>
->;
+export type ContextMenuRadioItemState = ContextMenuRadioItemContext;
 
 export namespace ContextMenuRadioItemProps {
   export type Render = RenderProps<ContextMenuRadioItemState>;

@@ -6,23 +6,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import type { AccordionItemContext } from "../item/accordion.item.context.js";
+import type { IComponent } from "../../types.js";
 import { useAccordionContext } from "../root/accordion.root.context.js";
 import { AccordionTriggerContext } from "./accordion.trigger.context.js";
 
 /**
  * {@link AccordionTrigger} が持つ状態です。
  */
-export type AccordionTriggerState = Override<
-  Override<AccordionItemContext, Accordion.Trigger.State>,
-  {
-    /**
-     * `true` の場合、Suru UI のスタイルがついていません。
-     */
-    unstyled: boolean;
-  }
->;
+export type AccordionTriggerState = AccordionTriggerContext;
 
 export namespace AccordionTriggerProps {
   export type Render = RenderProps<AccordionTriggerState>;

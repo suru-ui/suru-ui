@@ -1,13 +1,14 @@
+import type { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SelectItemTextState } from "./select.item-text.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SelectContext } from "../root/select.root.context.js";
 
 /**
  * {@link SelectItemText} が子パーツへ提供する状態です。
  */
-export type SelectItemTextContext = Readonly<SelectItemTextState>;
+export type SelectItemTextContext = Readonly<Override<SelectContext, BaseSelect.ItemText.State>>;
 
 /**
  * {@link SelectItemText} が子パーツへ提供するコンテキストです。

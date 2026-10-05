@@ -5,16 +5,16 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import { createItemRenderer, getSegmentsItemLabel, getSegmentsItemProps } from "../_segments.jsx";
-import { type SegmentsContext, useSegmentsContext } from "../root/segments.root.context.js";
+import { useSegmentsContext } from "../root/segments.root.context.js";
 import type { SegmentsRootItemObject, ISegmentsRootItemRenderer } from "../root/segments.root.jsx";
 import { SegmentsListContext } from "./segments.list.context.js";
 
 /**
  * {@link SegmentsList} が持つ状態です。
  */
-export type SegmentsListState = Override<SegmentsContext, BaseTabs.List.State>;
+export type SegmentsListState = SegmentsListContext;
 
 export namespace SegmentsListProps {
   export type Render = RenderProps<SegmentsListState>;

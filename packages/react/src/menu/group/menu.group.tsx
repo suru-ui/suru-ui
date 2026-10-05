@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useMenuContext } from "../root/menu.root.context.js";
 import { MenuGroupContext } from "./menu.group.context.js";
 
 /**
  * {@link MenuGroup} が持つ状態です。
  */
-export type MenuGroupState = Override<MenuContext, Menu.Group.State>;
+export type MenuGroupState = MenuGroupContext;
 
 export namespace MenuGroupProps {
   export type Render = RenderProps<MenuGroupState>;

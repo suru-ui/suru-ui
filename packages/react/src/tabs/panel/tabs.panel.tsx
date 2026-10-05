@@ -5,8 +5,8 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type TabsContext, useTabsContext } from "../root/tabs.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useTabsContext } from "../root/tabs.root.context.js";
 import { TabsPanelContext } from "./tabs.panel.context.js";
 
 /**
@@ -17,7 +17,7 @@ export type TabsPanelMetadata = BaseTabs.Panel.Metadata;
 /**
  * {@link TabsPanel} が持つ状態です。
  */
-export type TabsPanelState = Override<TabsContext, BaseTabs.Panel.State>;
+export type TabsPanelState = TabsPanelContext;
 
 export namespace TabsPanelProps {
   export type Render = RenderProps<TabsPanelState>;

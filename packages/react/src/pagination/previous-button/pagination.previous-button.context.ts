@@ -1,13 +1,16 @@
 import * as React from "react";
 
+import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { PaginationPreviousButtonState } from "./pagination.previous-button.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { PaginationContext } from "../root/pagination.root.context.js";
 
 /**
  * {@link PaginationPreviousButton} が子パーツへ提供する状態です。
  */
-export type PaginationPreviousButtonContext = Readonly<PaginationPreviousButtonState>;
+export type PaginationPreviousButtonContext = Readonly<
+  Override<PaginationContext, Button.Root.State>
+>;
 
 /**
  * {@link PaginationPreviousButton} が子パーツへ提供するコンテキストです。

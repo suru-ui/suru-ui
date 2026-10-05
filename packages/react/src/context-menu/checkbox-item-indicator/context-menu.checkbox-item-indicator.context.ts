@@ -1,14 +1,16 @@
+import type { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { ContextMenuCheckboxItemIndicatorState } from "./context-menu.checkbox-item-indicator.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { ContextMenuContext } from "../root/context-menu.root.context.js";
 
 /**
  * {@link ContextMenuCheckboxItemIndicator} が子パーツへ提供する状態です。
  */
-export type ContextMenuCheckboxItemIndicatorContext =
-  Readonly<ContextMenuCheckboxItemIndicatorState>;
+export type ContextMenuCheckboxItemIndicatorContext = Readonly<
+  Override<ContextMenuContext, ContextMenu.CheckboxItemIndicator.State>
+>;
 
 /**
  * {@link ContextMenuCheckboxItemIndicator} が子パーツへ提供するコンテキストです。

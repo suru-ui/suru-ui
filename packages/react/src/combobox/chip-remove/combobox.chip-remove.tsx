@@ -8,9 +8,9 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import { useComboboxItemContext } from "../item/combobox.item.context.js";
-import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxContext } from "../root/combobox.root.context.js";
 import { ComboboxChipRemoveContext } from "./combobox.chip-remove.context.js";
 
 /**
@@ -27,7 +27,7 @@ export type ComboboxChipRemoveRadius = "none" | Size | "full";
 /**
  * {@link ComboboxChipRemove} の状態です。
  */
-export type ComboboxChipRemoveState = Override<ComboboxContext, Combobox.ChipRemove.State>;
+export type ComboboxChipRemoveState = ComboboxChipRemoveContext;
 
 export namespace ComboboxChipRemoveProps {
   export type Render = RenderProps<ComboboxChipRemoveState>;

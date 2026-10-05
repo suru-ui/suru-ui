@@ -32,7 +32,7 @@ export type ToastCloseVariant = Button.Root.Variant;
 /**
  * {@link ToastClose} が持つ状態です。
  */
-export type ToastCloseState = Override<Button.Root.State, Toast.Close.State>;
+export type ToastCloseState = ToastCloseContext;
 
 export namespace ToastCloseProps {
   export type Render = RenderProps<ToastCloseState>;

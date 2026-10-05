@@ -5,18 +5,15 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import { DISABLE_FOCUS_ON_CLICK_DATA } from "../_number-field.jsx";
-import {
-  type NumberFieldContext,
-  useNumberFieldContext,
-} from "../root/number-field.root.context.js";
+import { useNumberFieldContext } from "../root/number-field.root.context.js";
 import { NumberFieldGroupContext } from "./number-field.group.context.js";
 
 /**
  * {@link NumberFieldGroup} が持つ状態です。
  */
-export type NumberFieldGroupState = Override<NumberFieldContext, NumberField.Group.State>;
+export type NumberFieldGroupState = NumberFieldGroupContext;
 
 export namespace NumberFieldGroupProps {
   export type Render = RenderProps<NumberFieldGroupState>;

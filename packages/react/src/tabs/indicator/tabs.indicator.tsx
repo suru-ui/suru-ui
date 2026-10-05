@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type TabsContext, useTabsContext } from "../root/tabs.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useTabsContext } from "../root/tabs.root.context.js";
 import { TabsIndicatorContext } from "./tabs.indicator.context.js";
 
 /**
  * {@link TabsIndicator} が持つ状態です。
  */
-export type TabsIndicatorState = Override<TabsContext, BaseTabs.Indicator.State>;
+export type TabsIndicatorState = TabsIndicatorContext;
 
 export namespace TabsIndicatorProps {
   export type Render = RenderProps<TabsIndicatorState>;

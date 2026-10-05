@@ -5,17 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import {
-  type ContextMenuContext,
-  useContextMenuContext,
-} from "../root/context-menu.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useContextMenuContext } from "../root/context-menu.root.context.js";
 import { ContextMenuBackdropContext } from "./context-menu.backdrop.context.js";
 
 /**
  * {@link ContextMenuBackdrop} が持つ状態です。
  */
-export type ContextMenuBackdropState = Override<ContextMenuContext, ContextMenu.Backdrop.State>;
+export type ContextMenuBackdropState = ContextMenuBackdropContext;
 
 export namespace ContextMenuBackdropProps {
   export type Render = RenderProps<ContextMenuBackdropState>;

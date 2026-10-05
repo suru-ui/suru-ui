@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { type ProgressContext, useProgressContext } from "../root/progress.root.context.js";
+import { useProgressContext } from "../root/progress.root.context.js";
 import { ProgressValueContext } from "./progress.value.context.js";
 
 /**
@@ -28,7 +28,7 @@ export interface IProgressValueRenderer {
 /**
  * {@link ProgressValue} が持つ状態です。
  */
-export type ProgressValueState = Override<ProgressContext, Progress.Value.State>;
+export type ProgressValueState = ProgressValueContext;
 
 export namespace ProgressValueProps {
   export type Render = RenderProps<ProgressValueState>;

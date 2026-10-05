@@ -8,16 +8,13 @@ import type { RenderProps } from "../../_use-render.js";
 import * as Card from "../../card/card.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { type DialogPopupContext, useDialogPopupContext } from "../popup/dialog.popup.context.js";
+import { useDialogPopupContext } from "../popup/dialog.popup.context.js";
 import { DialogDescriptionContext } from "./dialog.description.context.js";
 
 /**
  * {@link DialogDescription} が持つ状態です。
  */
-export type DialogDescriptionState = Override<
-  Override<DialogPopupContext, Card.Description.State>,
-  Dialog.Description.State
->;
+export type DialogDescriptionState = DialogDescriptionContext;
 
 export namespace DialogDescriptionProps {
   export type Render = RenderProps<DialogDescriptionState>;

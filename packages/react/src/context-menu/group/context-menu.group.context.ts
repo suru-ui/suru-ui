@@ -1,13 +1,16 @@
+import type { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { ContextMenuGroupState } from "./context-menu.group.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { ContextMenuContext } from "../root/context-menu.root.context.js";
 
 /**
  * {@link ContextMenuGroup} が子パーツへ提供する状態です。
  */
-export type ContextMenuGroupContext = Readonly<ContextMenuGroupState>;
+export type ContextMenuGroupContext = Readonly<
+  Override<ContextMenuContext, ContextMenu.Group.State>
+>;
 
 /**
  * {@link ContextMenuGroup} が子パーツへ提供するコンテキストです。

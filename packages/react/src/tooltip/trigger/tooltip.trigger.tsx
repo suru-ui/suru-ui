@@ -5,15 +5,15 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import type { TooltipHandle } from "../handle/tooltip.handle.js";
-import { type TooltipContext, useTooltipContext } from "../root/tooltip.root.context.js";
+import { useTooltipContext } from "../root/tooltip.root.context.js";
 import { TooltipTriggerContext } from "./tooltip.trigger.context.js";
 
 /**
  * {@link TooltipTrigger} が持つ状態です。
  */
-export type TooltipTriggerState = Override<TooltipContext, Tooltip.Trigger.State>;
+export type TooltipTriggerState = TooltipTriggerContext;
 
 export namespace TooltipTriggerProps {
   export type Render = Omit<RenderProps<TooltipTriggerState>, "render">;

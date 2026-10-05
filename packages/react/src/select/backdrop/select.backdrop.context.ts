@@ -1,13 +1,14 @@
+import type { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SelectBackdropState } from "./select.backdrop.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SelectContext } from "../root/select.root.context.js";
 
 /**
  * {@link SelectBackdrop} が子パーツへ提供する状態です。
  */
-export type SelectBackdropContext = Readonly<SelectBackdropState>;
+export type SelectBackdropContext = Readonly<Override<SelectContext, BaseSelect.Backdrop.State>>;
 
 /**
  * {@link SelectBackdrop} が子パーツへ提供するコンテキストです。

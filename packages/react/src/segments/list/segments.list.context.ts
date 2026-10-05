@@ -1,13 +1,14 @@
+import type { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SegmentsListState } from "./segments.list.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SegmentsContext } from "../root/segments.root.context.js";
 
 /**
  * {@link SegmentsList} が子パーツへ提供する状態です。
  */
-export type SegmentsListContext = Readonly<SegmentsListState>;
+export type SegmentsListContext = Readonly<Override<SegmentsContext, BaseTabs.List.State>>;
 
 /**
  * {@link SegmentsList} が子パーツへ提供するコンテキストです。

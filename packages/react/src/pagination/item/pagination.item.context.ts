@@ -1,13 +1,24 @@
 import * as React from "react";
 
+import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { PaginationItemState } from "./pagination.item.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { PaginationContext } from "../root/pagination.root.context.js";
 
 /**
  * {@link PaginationItem} が子パーツへ提供する状態です。
  */
-export type PaginationItemContext = Readonly<PaginationItemState>;
+export type PaginationItemContext = Readonly<
+  Override<
+    Override<PaginationContext, Button.Root.State>,
+    {
+      /**
+       * 現在のページかどうかです。
+       */
+      readonly selected: boolean;
+    }
+  >
+>;
 
 /**
  * {@link PaginationItem} が子パーツへ提供するコンテキストです。

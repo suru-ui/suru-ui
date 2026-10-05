@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type TooltipContext, useTooltipContext } from "../root/tooltip.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useTooltipContext } from "../root/tooltip.root.context.js";
 import { TooltipViewportContext } from "./tooltip.viewport.context.js";
 
 /**
  * {@link TooltipViewport} が持つ状態です。
  */
-export type TooltipViewportState = Override<TooltipContext, Tooltip.Viewport.State>;
+export type TooltipViewportState = TooltipViewportContext;
 
 export namespace TooltipViewportProps {
   export type Render = RenderProps<TooltipViewportState>;

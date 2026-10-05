@@ -5,20 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import {
-  type ContextMenuContext,
-  useContextMenuContext,
-} from "../root/context-menu.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useContextMenuContext } from "../root/context-menu.root.context.js";
 import { ContextMenuRadioItemIndicatorContext } from "./context-menu.radio-item-indicator.context.js";
 
 /**
  * {@link ContextMenuRadioItemIndicator} が持つ状態です。
  */
-export type ContextMenuRadioItemIndicatorState = Override<
-  ContextMenuContext,
-  ContextMenu.RadioItemIndicator.State
->;
+export type ContextMenuRadioItemIndicatorState = ContextMenuRadioItemIndicatorContext;
 
 export namespace ContextMenuRadioItemIndicatorProps {
   export type Render = RenderProps<ContextMenuRadioItemIndicatorState>;

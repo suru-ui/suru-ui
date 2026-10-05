@@ -10,10 +10,7 @@ import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { getItemVariant } from "../_context-menu.utils.jsx";
-import {
-  type ContextMenuContext,
-  useContextMenuContext,
-} from "../root/context-menu.root.context.js";
+import { useContextMenuContext } from "../root/context-menu.root.context.js";
 import { ContextMenuCheckboxItemContext } from "./context-menu.checkbox-item.context.js";
 
 /**
@@ -48,10 +45,7 @@ export type ContextMenuCheckboxItemVariant = Button.Root.Variant;
 /**
  * {@link ContextMenuCheckboxItem} が持つ状態です。
  */
-export type ContextMenuCheckboxItemState = Override<
-  ContextMenuContext,
-  Override<Button.Root.State, ContextMenu.CheckboxItem.State>
->;
+export type ContextMenuCheckboxItemState = ContextMenuCheckboxItemContext;
 
 export namespace ContextMenuCheckboxItemProps {
   export type Render = RenderProps<ContextMenuCheckboxItemState>;

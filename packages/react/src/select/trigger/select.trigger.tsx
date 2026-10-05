@@ -6,14 +6,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type SelectContext, useSelectContext } from "../root/select.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useSelectContext } from "../root/select.root.context.js";
 import { SelectTriggerContext } from "./select.trigger.context.js";
 
 /**
  * {@link SelectTrigger} が持つ状態です。
  */
-export type SelectTriggerState = Override<SelectContext, BaseSelect.Trigger.State>;
+export type SelectTriggerState = SelectTriggerContext;
 
 export namespace SelectTriggerProps {
   export type Render = RenderProps<SelectTriggerState>;

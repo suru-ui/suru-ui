@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { type SliderContext, useSliderContext } from "../root/slider.root.context.js";
+import { useSliderContext } from "../root/slider.root.context.js";
 import { SliderValueContext } from "./slider.value.context.js";
 
 /**
@@ -26,7 +26,7 @@ export interface ISliderValueRenderer {
 /**
  * {@link SliderValue} が持つ状態です。
  */
-export type SliderValueState = Override<SliderContext, Slider.Value.State>;
+export type SliderValueState = SliderValueContext;
 
 export namespace SliderValueProps {
   export type Render = RenderProps<SliderValueState>;

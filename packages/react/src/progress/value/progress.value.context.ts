@@ -1,13 +1,14 @@
+import type { Progress } from "@base-ui/react/progress";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { ProgressValueState } from "./progress.value.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { ProgressContext } from "../root/progress.root.context.js";
 
 /**
  * {@link ProgressValue} が子パーツへ提供する状態です。
  */
-export type ProgressValueContext = Readonly<ProgressValueState>;
+export type ProgressValueContext = Readonly<Override<ProgressContext, Progress.Value.State>>;
 
 /**
  * {@link ProgressValue} が子パーツへ提供するコンテキストです。

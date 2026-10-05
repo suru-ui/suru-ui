@@ -7,17 +7,14 @@ import {
   type TextFieldAddonState,
   TextFieldAddon,
 } from "../../text-field/text-field.parts.js";
-import type { Override, IComponent } from "../../types.js";
-import {
-  type PasswordFieldContextState,
-  usePasswordFieldContext,
-} from "../root/password-field.root.context.js";
+import type { IComponent } from "../../types.js";
+import { usePasswordFieldContext } from "../root/password-field.root.context.js";
 import { PasswordFieldAddonContext } from "./password-field.addon.context.js";
 
 /**
  * {@link PasswordFieldAddon} の状態です。
  */
-export type PasswordFieldAddonState = Override<PasswordFieldContextState, TextFieldAddonState>;
+export type PasswordFieldAddonState = PasswordFieldAddonContext;
 
 export namespace PasswordFieldAddonProps {
   export type Render = RenderProps<PasswordFieldAddonState>;

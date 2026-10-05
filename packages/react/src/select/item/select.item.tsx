@@ -9,16 +9,13 @@ import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { type SelectContext, useSelectContext } from "../root/select.root.context.js";
+import { useSelectContext } from "../root/select.root.context.js";
 import { SelectItemContext } from "./select.item.context.js";
 
 /**
  * {@link SelectItem} が持つ状態です。
  */
-export type SelectItemState = Override<
-  SelectContext,
-  Override<Button.Root.State, BaseSelect.Item.State>
->;
+export type SelectItemState = SelectItemContext;
 
 export namespace SelectItemProps {
   export type Render = RenderProps<SelectItemState>;

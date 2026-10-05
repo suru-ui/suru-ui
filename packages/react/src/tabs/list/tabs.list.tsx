@@ -7,14 +7,14 @@ import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { getTabsItemLabel, getTabsItemProps, createItemRenderer } from "../_tabs.jsx";
-import { type TabsContext, useTabsContext } from "../root/tabs.root.context.js";
+import { useTabsContext } from "../root/tabs.root.context.js";
 import type { TabsRootItemObject, ITabsRootItemRenderer } from "../root/tabs.root.jsx";
 import { TabsListContext } from "./tabs.list.context.js";
 
 /**
  * {@link TabsList} が持つ状態です。
  */
-export type TabsListState = Override<TabsContext, BaseTabs.List.State>;
+export type TabsListState = TabsListContext;
 
 export namespace TabsListProps {
   export type Render = RenderProps<TabsListState>;

@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type SwitchContext, useSwitchContext } from "../root/switch.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useSwitchContext } from "../root/switch.root.context.js";
 import { SwitchThumbContext } from "./switch.thumb.context.js";
 
 /**
  * {@link SwitchThumb} が持つ状態です。
  */
-export type SwitchThumbState = Override<SwitchContext, Switch.Thumb.State>;
+export type SwitchThumbState = SwitchThumbContext;
 
 export namespace SwitchThumbProps {
   export type Render = RenderProps<SwitchThumbState>;

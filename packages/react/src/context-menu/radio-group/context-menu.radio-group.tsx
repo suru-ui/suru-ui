@@ -7,14 +7,11 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import { isRadioItemObject } from "../_context-menu.utils.jsx";
 import { ContextMenuRadioItemIndicator } from "../radio-item-indicator/context-menu.radio-item-indicator.jsx";
 import { ContextMenuRadioItem } from "../radio-item/context-menu.radio-item.jsx";
-import {
-  type ContextMenuContext,
-  useContextMenuContext,
-} from "../root/context-menu.root.context.js";
+import { useContextMenuContext } from "../root/context-menu.root.context.js";
 import { ContextMenuRadioGroupContext } from "./context-menu.radio-group.context.js";
 
 /**
@@ -47,7 +44,7 @@ export interface IContextMenuRadioGroupItemRenderer<TItem = any> {
 /**
  * {@link ContextMenuRadioGroup} が持つ状態です。
  */
-export type ContextMenuRadioGroupState = Override<ContextMenuContext, ContextMenu.RadioGroup.State>;
+export type ContextMenuRadioGroupState = ContextMenuRadioGroupContext;
 
 export namespace ContextMenuRadioGroupProps {
   export type Render = RenderProps<ContextMenuRadioGroupState>;

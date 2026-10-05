@@ -1,13 +1,14 @@
+import type { Slider } from "@base-ui/react/slider";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SliderLabelState } from "./slider.label.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SliderContext } from "../root/slider.root.context.js";
 
 /**
  * {@link SliderLabel} が子パーツへ提供する状態です。
  */
-export type SliderLabelContext = Readonly<SliderLabelState>;
+export type SliderLabelContext = Readonly<Override<SliderContext, Slider.Label.State>>;
 
 /**
  * {@link SliderLabel} が子パーツへ提供するコンテキストです。

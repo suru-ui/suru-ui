@@ -8,7 +8,7 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import {
   isLinkItemObject,
   isItemObjectGroup,
@@ -26,10 +26,7 @@ import { ContextMenuLinkItem } from "../link-item/context-menu.link-item.jsx";
 import { ContextMenuPortal } from "../portal/context-menu.portal.jsx";
 import { ContextMenuPositioner } from "../positioner/context-menu.positioner.jsx";
 import { ContextMenuRadioGroup } from "../radio-group/context-menu.radio-group.jsx";
-import {
-  type ContextMenuContext,
-  useContextMenuContext,
-} from "../root/context-menu.root.context.js";
+import { useContextMenuContext } from "../root/context-menu.root.context.js";
 import type {
   ContextMenuRootItemObject,
   // oxlint-disable-next-line no-unused-vars JSDoc で使用
@@ -60,7 +57,7 @@ export interface IContextMenuContentItemRenderer<TItem = any> {
 /**
  * {@link ContextMenuContent} が持つ状態です。
  */
-export type ContextMenuContentState = Override<ContextMenuContext, ContextMenu.Popup.State>;
+export type ContextMenuContentState = ContextMenuContentContext;
 
 export namespace ContextMenuContentProps {
   export type Render = RenderProps<ContextMenuContentState>;

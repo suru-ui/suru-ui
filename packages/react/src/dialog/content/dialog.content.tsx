@@ -3,14 +3,14 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Card from "../../card/card.parts.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type DialogPopupContext, useDialogPopupContext } from "../popup/dialog.popup.context.js";
+import type { IComponent } from "../../types.js";
+import { useDialogPopupContext } from "../popup/dialog.popup.context.js";
 import { DialogContentContext } from "./dialog.content.context.js";
 
 /**
  * {@link DialogContent} が持つ状態です。
  */
-export type DialogContentState = Override<DialogPopupContext, Card.Content.State>;
+export type DialogContentState = DialogContentContext;
 
 export namespace DialogContentProps {
   export type Render = RenderProps<DialogContentState>;

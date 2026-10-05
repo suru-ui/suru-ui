@@ -5,14 +5,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import { type ProgressContext, useProgressContext } from "../root/progress.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useProgressContext } from "../root/progress.root.context.js";
 import { ProgressTrackContext } from "./progress.track.context.js";
 
 /**
  * {@link ProgressTrack} が持つ状態です。
  */
-export type ProgressTrackState = Override<ProgressContext, Progress.Track.State>;
+export type ProgressTrackState = ProgressTrackContext;
 
 export namespace ProgressTrackProps {
   export type Render = RenderProps<ProgressTrackState>;

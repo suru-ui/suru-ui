@@ -8,7 +8,7 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
+import type { IComponent } from "../../types.js";
 import {
   isLinkItemObject,
   isItemObjectGroup,
@@ -26,7 +26,7 @@ import { MenuLinkItem } from "../link-item/menu.link-item.jsx";
 import { MenuPortal } from "../portal/menu.portal.jsx";
 import { MenuPositioner } from "../positioner/menu.positioner.jsx";
 import { MenuRadioGroup } from "../radio-group/menu.radio-group.jsx";
-import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import { useMenuContext } from "../root/menu.root.context.js";
 import type {
   MenuRootItemObject,
   // oxlint-disable-next-line no-unused-vars JSDoc で使用
@@ -57,7 +57,7 @@ export interface IMenuContentItemRenderer<TItem = any> {
 /**
  * {@link MenuContent} が持つ状態です。
  */
-export type MenuContentState = Override<MenuContext, Menu.Popup.State>;
+export type MenuContentState = MenuContentContext;
 
 export namespace MenuContentProps {
   export type Render = RenderProps<MenuContentState>;

@@ -8,11 +8,8 @@ import {
   type TextFieldInputChangeEventDetails,
   TextFieldInput,
 } from "../../text-field/text-field.parts.js";
-import type { Override, IComponent } from "../../types.js";
-import {
-  type PasswordFieldContextState,
-  usePasswordFieldContext,
-} from "../root/password-field.root.context.js";
+import type { IComponent } from "../../types.js";
+import { usePasswordFieldContext } from "../root/password-field.root.context.js";
 import { PasswordFieldInputContext } from "./password-field.input.context.js";
 
 /**
@@ -28,7 +25,7 @@ export type PasswordFieldInputChangeEventReason = TextFieldInputChangeEventReaso
 /**
  * {@link PasswordFieldInput} の状態です。
  */
-export type PasswordFieldInputState = Override<PasswordFieldContextState, TextFieldInputState>;
+export type PasswordFieldInputState = PasswordFieldInputContext;
 
 export namespace PasswordFieldInputProps {
   export type Render = RenderProps<PasswordFieldInputState>;

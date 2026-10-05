@@ -7,17 +7,14 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { Override, IComponent } from "../../types.js";
-import {
-  type NumberFieldContext,
-  useNumberFieldContext,
-} from "../root/number-field.root.context.js";
+import type { IComponent } from "../../types.js";
+import { useNumberFieldContext } from "../root/number-field.root.context.js";
 import { NumberFieldIncrementContext } from "./number-field.increment.context.js";
 
 /**
  * {@link NumberFieldIncrement} が持つ状態です。
  */
-export type NumberFieldIncrementState = Override<NumberFieldContext, NumberField.Increment.State>;
+export type NumberFieldIncrementState = NumberFieldIncrementContext;
 
 export namespace NumberFieldIncrementProps {
   export type Render = RenderProps<NumberFieldIncrementState>;

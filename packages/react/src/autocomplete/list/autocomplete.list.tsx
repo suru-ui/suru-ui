@@ -10,10 +10,7 @@ import {
   type IAutocompleteCollectionItemRenderer,
   AutocompleteCollection,
 } from "../collection/autocomplete.collection.jsx";
-import {
-  type AutocompleteContext,
-  useAutocompleteContext,
-} from "../root/autocomplete.root.context.js";
+import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
 import { AutocompleteListContext } from "./autocomplete.list.context.js";
 
 export type IAutocompleteListItemRenderer<TItem = any> = IAutocompleteCollectionItemRenderer<TItem>;
@@ -21,7 +18,7 @@ export type IAutocompleteListItemRenderer<TItem = any> = IAutocompleteCollection
 /**
  * {@link AutocompleteList} の状態です。
  */
-export type AutocompleteListState = Override<AutocompleteContext, Autocomplete.List.State>;
+export type AutocompleteListState = AutocompleteListContext;
 
 export namespace AutocompleteListProps {
   export type Render = RenderProps<AutocompleteListState>;

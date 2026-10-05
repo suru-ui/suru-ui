@@ -1,13 +1,16 @@
+import type { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
-import type { SelectPositionerState } from "./select.positioner.jsx";
+import type { Override, IUseContext } from "../../types.js";
+import type { SelectContext } from "../root/select.root.context.js";
 
 /**
  * {@link SelectPositioner} が子パーツへ提供する状態です。
  */
-export type SelectPositionerContext = Readonly<SelectPositionerState>;
+export type SelectPositionerContext = Readonly<
+  Override<SelectContext, BaseSelect.Positioner.State>
+>;
 
 /**
  * {@link SelectPositioner} が子パーツへ提供するコンテキストです。
