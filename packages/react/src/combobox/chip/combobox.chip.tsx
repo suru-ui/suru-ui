@@ -8,7 +8,7 @@ import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { ComboboxItemContext } from "../item/combobox.item.context.js";
-import { ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
 import { ComboboxChipContext } from "./combobox.chip.context.js";
 
 /**
@@ -133,44 +133,41 @@ export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: Combo
     className,
     ...otherProps
   } = props;
-  const childCtx = React.useMemo<ComboboxContext>(() => ({ ...ctx, radius }), [ctx, radius]);
   const itemCtx = React.useMemo<ComboboxItemContext>(() => ({ value }), [value]);
 
   return (
-    <ComboboxContext value={childCtx}>
-      <ComboboxItemContext value={itemCtx}>
-        <Combobox.Chip
-          {...otherProps}
-          {...proxyRenderProps<Combobox.Chip.State, ComboboxChipState>(
-            (state) => ({ ...ctx, color, radius, variant, outlined, ...state }),
-            {
-              style,
-              render: (htmlProps, state) => (
-                <ComboboxChipContext value={state}>
-                  <RenderElement
-                    state={state}
-                    render={render}
-                    htmlProps={htmlProps}
-                    defaultTagName="div"
-                  />
-                </ComboboxChipContext>
-              ),
-              className: cn<ComboboxChipState>(
-                className,
-                "sui_combobox_chip",
-                (state) => `sui_combobox_chip-color_${state.color}`,
-                (state) => `sui_combobox_chip-radius_${state.radius}`,
-                (state) => `sui_combobox_chip-variant_${state.variant}`,
-                (state) => state.outlined && "sui_combobox_chip-outlined",
-                (state) => `sui_combobox_chip-size_${state.size}`,
-                (state) => state.multiple && "sui_combobox_chip-multiple",
-                (state) => state.disabled && "sui_combobox_chip-disabled",
-              ),
-            },
-          )}
-        />
-      </ComboboxItemContext>
-    </ComboboxContext>
+    <ComboboxItemContext value={itemCtx}>
+      <Combobox.Chip
+        {...otherProps}
+        {...proxyRenderProps<Combobox.Chip.State, ComboboxChipState>(
+          (state) => ({ ...ctx, color, radius, variant, outlined, ...state }),
+          {
+            style,
+            render: (htmlProps, state) => (
+              <ComboboxChipContext value={state}>
+                <RenderElement
+                  state={state}
+                  render={render}
+                  htmlProps={htmlProps}
+                  defaultTagName="div"
+                />
+              </ComboboxChipContext>
+            ),
+            className: cn<ComboboxChipState>(
+              className,
+              "sui_combobox_chip",
+              (state) => `sui_combobox_chip-color_${state.color}`,
+              (state) => `sui_combobox_chip-radius_${state.radius}`,
+              (state) => `sui_combobox_chip-variant_${state.variant}`,
+              (state) => state.outlined && "sui_combobox_chip-outlined",
+              (state) => `sui_combobox_chip-size_${state.size}`,
+              (state) => state.multiple && "sui_combobox_chip-multiple",
+              (state) => state.disabled && "sui_combobox_chip-disabled",
+            ),
+          },
+        )}
+      />
+    </ComboboxItemContext>
   );
 };
 

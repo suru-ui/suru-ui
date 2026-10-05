@@ -7,11 +7,11 @@ import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import {
+  type ComboboxContext,
   type ComboboxContextSize,
   type ComboboxContextColor,
   type ComboboxContextRadius,
   type ComboboxContextVariant,
-  ComboboxContext,
   useComboboxContext,
 } from "../root/combobox.root.context.js";
 import { ComboboxInputGroupContext } from "./combobox.input-group.context.js";
@@ -140,58 +140,51 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const childCtx = React.useMemo<ComboboxContext>(
-    () => ({ ...ctx, size, color, radius, variant, outlined }),
-    [ctx, size, color, radius, variant, outlined],
-  );
-
   return (
-    <ComboboxContext value={childCtx}>
-      <Combobox.InputGroup
-        {...otherProps}
-        {...proxyRenderProps<Combobox.InputGroup.State, ComboboxInputGroupState>(
-          (state) => ({ ...childCtx, ...state }),
-          {
-            style,
-            render: (htmlProps, state) => (
-              <ComboboxInputGroupContext value={state}>
-                <RenderElement
-                  state={state}
-                  render={render}
-                  htmlProps={htmlProps}
-                  defaultTagName="div"
-                />
-              </ComboboxInputGroupContext>
-            ),
-            className: cn<ComboboxInputGroupState>(
-              className,
-              "sui_combobox",
-              (state) => `sui_combobox-size_${state.size}`,
-              (state) => `sui_combobox-color_${state.color}`,
-              (state) => `sui_combobox-radius_${state.radius}`,
-              (state) => `sui_combobox-variant_${state.variant}`,
-              (state) => state.outlined && "sui_combobox-outlined",
-              (state) => state.disabled && "sui_combobox-disabled",
-              (state) => state.touched && "sui_combobox-touched",
-              (state) => state.dirty && "sui_combobox-dirty",
-              (state) => state.valid === false && "sui_combobox-invalid",
-              (state) => state.valid === true && "sui_combobox-valid",
-              (state) => state.valid === null && "sui_combobox-unverified",
-              (state) => state.filled && "sui_combobox-filled",
-              (state) => state.focused && "sui_combobox-focused",
-              (state) => state.open && "sui_combobox-open",
-              (state) => state.readOnly && "sui_combobox-readonly",
-              (state) =>
-                state.popupSide !== null &&
-                `sui_combobox-popupside_${state.popupSide.replaceAll("-", "_")}`,
-              (state) => state.listEmpty && "sui_combobox-listempty",
-              (state) => state.placeholder && "sui_combobox-placeholder",
-            ),
-          },
-        )}
-        data-scope={dataScope}
-      />
-    </ComboboxContext>
+    <Combobox.InputGroup
+      {...otherProps}
+      {...proxyRenderProps<Combobox.InputGroup.State, ComboboxInputGroupState>(
+        (state) => ({ ...ctx, size, color, radius, variant, outlined, ...state }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <ComboboxInputGroupContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ComboboxInputGroupContext>
+          ),
+          className: cn<ComboboxInputGroupState>(
+            className,
+            "sui_combobox",
+            (state) => `sui_combobox-size_${state.size}`,
+            (state) => `sui_combobox-color_${state.color}`,
+            (state) => `sui_combobox-radius_${state.radius}`,
+            (state) => `sui_combobox-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox-outlined",
+            (state) => state.disabled && "sui_combobox-disabled",
+            (state) => state.touched && "sui_combobox-touched",
+            (state) => state.dirty && "sui_combobox-dirty",
+            (state) => state.valid === false && "sui_combobox-invalid",
+            (state) => state.valid === true && "sui_combobox-valid",
+            (state) => state.valid === null && "sui_combobox-unverified",
+            (state) => state.filled && "sui_combobox-filled",
+            (state) => state.focused && "sui_combobox-focused",
+            (state) => state.open && "sui_combobox-open",
+            (state) => state.readOnly && "sui_combobox-readonly",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_combobox-popupside_${state.popupSide.replaceAll("-", "_")}`,
+            (state) => state.listEmpty && "sui_combobox-listempty",
+            (state) => state.placeholder && "sui_combobox-placeholder",
+          ),
+        },
+      )}
+      data-scope={dataScope}
+    />
   );
 };
 

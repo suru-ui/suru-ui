@@ -7,11 +7,11 @@ import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import {
+  type AutocompleteContext,
   type AutocompleteContextSize,
   type AutocompleteContextColor,
   type AutocompleteContextRadius,
   type AutocompleteContextVariant,
-  AutocompleteContext,
   useAutocompleteContext,
 } from "../root/autocomplete.root.context.js";
 import { AutocompleteInputGroupContext } from "./autocomplete.input-group.context.js";
@@ -145,57 +145,50 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const childCtx = React.useMemo<AutocompleteContext>(
-    () => ({ ...ctx, size, color, radius, variant, outlined }),
-    [ctx, size, color, radius, variant, outlined],
-  );
-
   return (
-    <AutocompleteContext value={childCtx}>
-      <Autocomplete.InputGroup
-        {...otherProps}
-        {...proxyRenderProps<Autocomplete.InputGroup.State, AutocompleteInputGroupState>(
-          (state) => ({ ...childCtx, ...state }),
-          {
-            style,
-            render: (htmlProps, state) => (
-              <AutocompleteInputGroupContext value={state}>
-                <RenderElement
-                  state={state}
-                  render={render}
-                  htmlProps={htmlProps}
-                  defaultTagName="div"
-                />
-              </AutocompleteInputGroupContext>
-            ),
-            className: cn<AutocompleteInputGroupState>(
-              className,
-              "sui_autocomplete",
-              (state) => `sui_autocomplete-size_${state.size}`,
-              (state) => `sui_autocomplete-color_${state.color}`,
-              (state) => `sui_autocomplete-radius_${state.radius}`,
-              (state) => `sui_autocomplete-variant_${state.variant}`,
-              (state) => state.outlined && "sui_autocomplete-outlined",
-              (state) => state.disabled && "sui_autocomplete-disabled",
-              (state) => state.touched && "sui_autocomplete-touched",
-              (state) => state.dirty && "sui_autocomplete-dirty",
-              (state) => state.valid === false && "sui_autocomplete-invalid",
-              (state) => state.valid === true && "sui_autocomplete-valid",
-              (state) => state.valid === null && "sui_autocomplete-unverified",
-              (state) => state.filled && "sui_autocomplete-filled",
-              (state) => state.focused && "sui_autocomplete-focused",
-              (state) => state.open && "sui_autocomplete-open",
-              (state) => state.readOnly && "sui_autocomplete-readonly",
-              (state) =>
-                state.popupSide !== null &&
-                `sui_autocomplete-popupside_${state.popupSide.replaceAll("-", "_")}`,
-              (state) => state.listEmpty && "sui_autocomplete-listempty",
-            ),
-          },
-        )}
-        data-scope={dataScope}
-      />
-    </AutocompleteContext>
+    <Autocomplete.InputGroup
+      {...otherProps}
+      {...proxyRenderProps<Autocomplete.InputGroup.State, AutocompleteInputGroupState>(
+        (state) => ({ ...ctx, size, color, radius, variant, outlined, ...state }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <AutocompleteInputGroupContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </AutocompleteInputGroupContext>
+          ),
+          className: cn<AutocompleteInputGroupState>(
+            className,
+            "sui_autocomplete",
+            (state) => `sui_autocomplete-size_${state.size}`,
+            (state) => `sui_autocomplete-color_${state.color}`,
+            (state) => `sui_autocomplete-radius_${state.radius}`,
+            (state) => `sui_autocomplete-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete-outlined",
+            (state) => state.disabled && "sui_autocomplete-disabled",
+            (state) => state.touched && "sui_autocomplete-touched",
+            (state) => state.dirty && "sui_autocomplete-dirty",
+            (state) => state.valid === false && "sui_autocomplete-invalid",
+            (state) => state.valid === true && "sui_autocomplete-valid",
+            (state) => state.valid === null && "sui_autocomplete-unverified",
+            (state) => state.filled && "sui_autocomplete-filled",
+            (state) => state.focused && "sui_autocomplete-focused",
+            (state) => state.open && "sui_autocomplete-open",
+            (state) => state.readOnly && "sui_autocomplete-readonly",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_autocomplete-popupside_${state.popupSide.replaceAll("-", "_")}`,
+            (state) => state.listEmpty && "sui_autocomplete-listempty",
+          ),
+        },
+      )}
+      data-scope={dataScope}
+    />
   );
 };
 

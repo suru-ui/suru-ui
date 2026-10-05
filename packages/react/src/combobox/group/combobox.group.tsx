@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
 import { ComboboxGroupContext } from "./combobox.group.context.js";
 
 /**
@@ -56,42 +56,37 @@ export type IComboboxGroup = IComponent<ComboboxGroupProps>;
 export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
   const ctx = useComboboxContext();
   const { items, style, render, className, ...otherProps } = props;
-  // items が未指定であっても上位の items が透過しないように、必ず新しい items を子要素に伝搬します。
-  const groupCtx = React.useMemo<ComboboxContext>(() => ({ ...ctx, items }), [ctx, items]);
-
   return (
-    <ComboboxContext value={groupCtx}>
-      <Combobox.Group
-        {...otherProps}
-        items={items}
-        {...proxyRenderProps<Combobox.Group.State, ComboboxGroupState>(
-          (state) => ({ ...groupCtx, ...state }),
-          {
-            style,
-            render: (htmlProps, state) => (
-              <ComboboxGroupContext value={state}>
-                <RenderElement
-                  state={state}
-                  render={render}
-                  htmlProps={htmlProps}
-                  defaultTagName="div"
-                />
-              </ComboboxGroupContext>
-            ),
-            className: cn<ComboboxGroupState>(
-              className,
-              "sui_combobox_group",
-              (state) => `sui_combobox_group-size_${state.size}`,
-              (state) => `sui_combobox_group-color_${state.color}`,
-              (state) => `sui_combobox_group-radius_${state.radius}`,
-              (state) => `sui_combobox_group-variant_${state.variant}`,
-              (state) => state.outlined && "sui_combobox_group-outlined",
-              (state) => state.multiple && "sui_combobox_group-multiple",
-            ),
-          },
-        )}
-      />
-    </ComboboxContext>
+    <Combobox.Group
+      {...otherProps}
+      items={items}
+      {...proxyRenderProps<Combobox.Group.State, ComboboxGroupState>(
+        (state) => ({ ...ctx, items, ...state }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <ComboboxGroupContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ComboboxGroupContext>
+          ),
+          className: cn<ComboboxGroupState>(
+            className,
+            "sui_combobox_group",
+            (state) => `sui_combobox_group-size_${state.size}`,
+            (state) => `sui_combobox_group-color_${state.color}`,
+            (state) => `sui_combobox_group-radius_${state.radius}`,
+            (state) => `sui_combobox_group-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_group-outlined",
+            (state) => state.multiple && "sui_combobox_group-multiple",
+          ),
+        },
+      )}
+    />
   );
 };
 

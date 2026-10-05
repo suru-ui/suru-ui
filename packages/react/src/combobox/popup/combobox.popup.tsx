@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
 import { ComboboxPopupContext } from "./combobox.popup.context.js";
 
 /**
@@ -84,49 +84,45 @@ export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
     inputPosition = "start",
     ...otherProps
   } = props;
-  const childCtx = React.useMemo<ComboboxContext>(() => ({ ...ctx, outlined }), [ctx, outlined]);
-
   return (
-    <ComboboxContext value={childCtx}>
-      <Combobox.Popup
-        {...otherProps}
-        {...proxyRenderProps<Combobox.Popup.State, ComboboxPopupState>(
-          (state) => ({ ...childCtx, ...state }),
-          {
-            style,
-            render: (htmlProps, state) => (
-              <ComboboxPopupContext value={state}>
-                <RenderElement
-                  state={state}
-                  render={render}
-                  htmlProps={htmlProps}
-                  defaultTagName="div"
-                />
-              </ComboboxPopupContext>
-            ),
-            className: cn<ComboboxPopupState>(
-              className,
-              "sui_combobox_popup",
-              (state) => state.outlined && "sui_combobox_popup-outlined",
-              `sui_combobox_popup-inputposition_${inputPosition}`,
-              (state) => `sui_combobox_popup-size_${state.size}`,
-              (state) => `sui_combobox_popup-color_${state.color}`,
-              (state) => `sui_combobox_popup-radius_${state.radius}`,
-              (state) => `sui_combobox_popup-variant_${state.variant}`,
-              (state) => state.multiple && "sui_combobox_popup-multiple",
-              (state) => state.open && "sui_combobox_popup-open",
-              (state) => state.empty && "sui_combobox_popup-empty",
-              (state) => state.anchorHidden && "sui_combobox_popup-anchorhidden",
-              (state) => `sui_combobox_popup-side_${state.side.replaceAll("-", "_")}`,
-              (state) => `sui_combobox_popup-align_${state.align}`,
-              (state) =>
-                state.transitionStatus !== undefined &&
-                `sui_combobox_popup-transition_status_${state.transitionStatus}`,
-            ),
-          },
-        )}
-      />
-    </ComboboxContext>
+    <Combobox.Popup
+      {...otherProps}
+      {...proxyRenderProps<Combobox.Popup.State, ComboboxPopupState>(
+        (state) => ({ ...ctx, outlined, ...state }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <ComboboxPopupContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ComboboxPopupContext>
+          ),
+          className: cn<ComboboxPopupState>(
+            className,
+            "sui_combobox_popup",
+            (state) => state.outlined && "sui_combobox_popup-outlined",
+            `sui_combobox_popup-inputposition_${inputPosition}`,
+            (state) => `sui_combobox_popup-size_${state.size}`,
+            (state) => `sui_combobox_popup-color_${state.color}`,
+            (state) => `sui_combobox_popup-radius_${state.radius}`,
+            (state) => `sui_combobox_popup-variant_${state.variant}`,
+            (state) => state.multiple && "sui_combobox_popup-multiple",
+            (state) => state.open && "sui_combobox_popup-open",
+            (state) => state.empty && "sui_combobox_popup-empty",
+            (state) => state.anchorHidden && "sui_combobox_popup-anchorhidden",
+            (state) => `sui_combobox_popup-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_combobox_popup-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_combobox_popup-transition_status_${state.transitionStatus}`,
+          ),
+        },
+      )}
+    />
   );
 };
 

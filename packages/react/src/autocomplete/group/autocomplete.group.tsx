@@ -6,7 +6,10 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { AutocompleteContext, useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import {
+  type AutocompleteContext,
+  useAutocompleteContext,
+} from "../root/autocomplete.root.context.js";
 import { AutocompleteGroupContext } from "./autocomplete.group.context.js";
 
 /**
@@ -58,41 +61,36 @@ export type IAutocompleteGroup = IComponent<AutocompleteGroupProps>;
 export const AutocompleteGroup: IAutocompleteGroup = function SuiAutocompleteGroup(props) {
   const ctx = useAutocompleteContext();
   const { items, style, render, className, ...otherProps } = props;
-  // items が未指定であっても上位の items が透過しないように、必ず新しい items を子要素に伝搬します。
-  const groupCtx = React.useMemo<AutocompleteContext>(() => ({ ...ctx, items }), [ctx, items]);
-
   return (
-    <AutocompleteContext value={groupCtx}>
-      <Autocomplete.Group
-        {...otherProps}
-        items={items}
-        {...proxyRenderProps<Autocomplete.Group.State, AutocompleteGroupState>(
-          (state) => ({ ...groupCtx, ...state }),
-          {
-            style,
-            render: (htmlProps, state) => (
-              <AutocompleteGroupContext value={state}>
-                <RenderElement
-                  state={state}
-                  render={render}
-                  htmlProps={htmlProps}
-                  defaultTagName="div"
-                />
-              </AutocompleteGroupContext>
-            ),
-            className: cn<AutocompleteGroupState>(
-              className,
-              "sui_autocomplete_group",
-              (state) => `sui_autocomplete_group-size_${state.size}`,
-              (state) => `sui_autocomplete_group-color_${state.color}`,
-              (state) => `sui_autocomplete_group-radius_${state.radius}`,
-              (state) => `sui_autocomplete_group-variant_${state.variant}`,
-              (state) => state.outlined && "sui_autocomplete_group-outlined",
-            ),
-          },
-        )}
-      />
-    </AutocompleteContext>
+    <Autocomplete.Group
+      {...otherProps}
+      items={items}
+      {...proxyRenderProps<Autocomplete.Group.State, AutocompleteGroupState>(
+        (state) => ({ ...ctx, items, ...state }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <AutocompleteGroupContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </AutocompleteGroupContext>
+          ),
+          className: cn<AutocompleteGroupState>(
+            className,
+            "sui_autocomplete_group",
+            (state) => `sui_autocomplete_group-size_${state.size}`,
+            (state) => `sui_autocomplete_group-color_${state.color}`,
+            (state) => `sui_autocomplete_group-radius_${state.radius}`,
+            (state) => `sui_autocomplete_group-variant_${state.variant}`,
+            (state) => state.outlined && "sui_autocomplete_group-outlined",
+          ),
+        },
+      )}
+    />
   );
 };
 

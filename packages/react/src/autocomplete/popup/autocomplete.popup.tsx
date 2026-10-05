@@ -6,7 +6,10 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { AutocompleteContext, useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import {
+  type AutocompleteContext,
+  useAutocompleteContext,
+} from "../root/autocomplete.root.context.js";
 import { AutocompletePopupContext } from "./autocomplete.popup.context.js";
 
 /**
@@ -58,42 +61,35 @@ export type IAutocompletePopup = IComponent<AutocompletePopupProps>;
 export const AutocompletePopup: IAutocompletePopup = function SuiAutocompletePopup(props) {
   const ctx = useAutocompleteContext();
   const { style, render, outlined = ctx.outlined, className, ...otherProps } = props;
-  const childCtx = React.useMemo<AutocompleteContext>(
-    () => ({ ...ctx, outlined }),
-    [ctx, outlined],
-  );
-
   return (
-    <AutocompleteContext value={childCtx}>
-      <Autocomplete.Popup
-        {...otherProps}
-        {...proxyRenderProps<Autocomplete.Popup.State, AutocompletePopupState>(
-          (state) => ({ ...childCtx, ...state }),
-          {
-            style,
-            render: (htmlProps, state) => (
-              <AutocompletePopupContext value={state}>
-                <RenderElement
-                  state={state}
-                  render={render}
-                  htmlProps={htmlProps}
-                  defaultTagName="div"
-                />
-              </AutocompletePopupContext>
-            ),
-            className: cn<AutocompletePopupState>(
-              className,
-              "sui_autocomplete_popup",
-              (state) => state.outlined && "sui_autocomplete_popup-outlined",
-              (state) => `sui_autocomplete_popup-size_${state.size}`,
-              (state) => `sui_autocomplete_popup-color_${state.color}`,
-              (state) => `sui_autocomplete_popup-radius_${state.radius}`,
-              (state) => `sui_autocomplete_popup-variant_${state.variant}`,
-            ),
-          },
-        )}
-      />
-    </AutocompleteContext>
+    <Autocomplete.Popup
+      {...otherProps}
+      {...proxyRenderProps<Autocomplete.Popup.State, AutocompletePopupState>(
+        (state) => ({ ...ctx, outlined, ...state }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <AutocompletePopupContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </AutocompletePopupContext>
+          ),
+          className: cn<AutocompletePopupState>(
+            className,
+            "sui_autocomplete_popup",
+            (state) => state.outlined && "sui_autocomplete_popup-outlined",
+            (state) => `sui_autocomplete_popup-size_${state.size}`,
+            (state) => `sui_autocomplete_popup-color_${state.color}`,
+            (state) => `sui_autocomplete_popup-radius_${state.radius}`,
+            (state) => `sui_autocomplete_popup-variant_${state.variant}`,
+          ),
+        },
+      )}
+    />
   );
 };
 
