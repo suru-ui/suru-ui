@@ -140,13 +140,6 @@ export namespace ComboboxRootProps {
     items?: readonly TItem[] | undefined;
 
     /**
-     * 枠線を表示するかどうかを指定します。
-     *
-     * @default false
-     */
-    outlined?: boolean | undefined;
-
-    /**
      * 入力を含むグループ要素の角丸を指定します。
      *
      * 既定値は {@link ComboboxRootProps.size|size} です。
@@ -264,7 +257,6 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
     variant = "liquid",
     disabled = false,
     multiple = false,
-    outlined = false,
     readOnly = false,
     required = false,
     itemToStringLabel = defaultItemToStringLabel,
@@ -279,10 +271,10 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
       radius,
       variant,
       multiple,
-      outlined,
+      outlined: false,
       itemToStringLabel,
     }),
-    [size, color, items, radius, variant, multiple, outlined, itemToStringLabel],
+    [size, color, items, radius, variant, multiple, itemToStringLabel],
   );
 
   return (
@@ -292,7 +284,6 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
       radius={radius}
       variant={variant}
       disabled={disabled}
-      outlined={outlined}
       readOnly={readOnly}
       required={required}
     >

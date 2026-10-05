@@ -26,14 +26,14 @@ describe("useComboboxContext", () => {
 
     // 実行
     const screen = await render(
-      <ComboboxRoot size="lg" color="blue" items={fruits} variant="naked" multiple outlined>
+      <ComboboxRoot size="lg" color="blue" items={fruits} variant="naked" multiple>
         <Probe />
       </ComboboxRoot>,
     );
 
     // 検証
-    expect(screen.getByText("lg,blue,naked,true,true").query()?.textContent).toBe(
-      "lg,blue,naked,true,true",
+    expect(screen.getByText("lg,blue,naked,true,false").query()?.textContent).toBe(
+      "lg,blue,naked,true,false",
     );
   });
 
@@ -96,7 +96,7 @@ describe("useComboboxContext", () => {
 
     // 実行
     const screen = await render(
-      <ComboboxRoot open items={fruits} outlined>
+      <ComboboxRoot open items={fruits}>
         <ComboboxPortal>
           <ComboboxPositioner>
             <ComboboxPopup outlined={false}>

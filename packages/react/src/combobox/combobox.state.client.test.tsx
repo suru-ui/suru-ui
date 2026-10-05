@@ -18,15 +18,7 @@ describe("Combobox の状態", () => {
   test("入力グループの render へスタイル情報と入力グループの状態を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <ComboboxRoot
-        open
-        size="lg"
-        color="blue"
-        items={fruits}
-        radius="none"
-        variant="naked"
-        outlined
-      >
+      <ComboboxRoot open size="lg" color="blue" items={fruits} radius="none" variant="naked">
         <ComboboxInputGroup
           render={(props, state) => (
             <div
@@ -34,6 +26,7 @@ describe("Combobox の状態", () => {
               data-probe={`${state.size}/${state.color}/${state.radius}/${state.variant}/${String(state.outlined)}/${String(state.open)}`}
             />
           )}
+          outlined
         />
       </ComboboxRoot>,
     );
@@ -72,7 +65,7 @@ describe("Combobox の状態", () => {
   test("ポップアップの render へスタイル情報とポップアップの状態を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <ComboboxRoot open size="lg" color="blue" items={fruits} outlined>
+      <ComboboxRoot open size="lg" color="blue" items={fruits}>
         <ComboboxPortal>
           <ComboboxPositioner>
             <ComboboxPopup
@@ -82,6 +75,7 @@ describe("Combobox の状態", () => {
                   data-probe={`${state.size}/${state.color}/${String(state.outlined)}/${String(state.open)}`}
                 />
               )}
+              outlined
             />
           </ComboboxPositioner>
         </ComboboxPortal>

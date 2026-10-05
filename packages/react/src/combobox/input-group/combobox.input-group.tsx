@@ -64,6 +64,13 @@ export namespace ComboboxInputGroupProps {
     color?: ComboboxInputGroupColor | undefined;
 
     /**
+     * 入力グループに枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
+
+    /**
      * 入力グループの角丸を指定します。
      *
      * 省略時はコンボボックスの角丸を使います。
@@ -125,14 +132,15 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
     radius = ctx.radius,
     render,
     variant = ctx.variant,
+    outlined = false,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const childCtx = React.useMemo<ComboboxContext>(
-    () => ({ ...ctx, size, color, radius, variant }),
-    [ctx, size, color, radius, variant],
+    () => ({ ...ctx, size, color, radius, variant, outlined }),
+    [ctx, size, color, radius, variant, outlined],
   );
 
   return (
