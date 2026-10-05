@@ -1,6 +1,7 @@
 {
   "extends": ["@tsconfig/node24", "@tsconfig/strictest"],
-  "include": ["./global.d.ts", "../scripts/**/*", "../src/**/*", "../stories/**/*"],
+  "exclude": ["../src/**/*.stories.tsx", "../src/**/*.test.ts", "../src/**/*.test.tsx"],
+  "include": ["./global.d.ts", "../scripts/**/*", "../src/**/*"],
   "compilerOptions": {
     "types": ["node"],
     "lib": ["DOM", "ESNext"],

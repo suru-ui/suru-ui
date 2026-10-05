@@ -5,7 +5,7 @@ import { parse } from "@babel/parser";
 import type { Expression, Node, TSInterfaceBody, TSTypeElement, TSTypeLiteral } from "@babel/types";
 
 /** 対象ファイルのディレクトリー。 */
-const TARGET_DIRS = ["src", "stories"];
+const TARGET_DIRS = ["src"];
 
 /** 型の本体 (`{ ... }` の部分)。 */
 type TypeBody = TSTypeLiteral | TSInterfaceBody;
@@ -328,7 +328,9 @@ export function sortTypeProps(source: string): string {
 async function main(): Promise<void> {
   const isCheck = process.argv.includes("--check");
   const files = TARGET_DIRS.flatMap((dir) =>
-    fs.globSync("**/*.tsx", { cwd: dir }).map((fullpath) => path.join(dir, fullpath)),
+    fs
+      .globSync("**/*.tsx", { cwd: dir, exclude: ["**/__screenshots__/**"] })
+      .map((fullpath) => path.join(dir, fullpath)),
   );
 
   const changedFiles: string[] = [];

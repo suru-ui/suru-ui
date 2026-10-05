@@ -5,7 +5,7 @@ import { parse } from "@babel/parser";
 import type { JSXAttribute, JSXOpeningElement, JSXSpreadAttribute, Node } from "@babel/types";
 
 /** 対象ファイルのディレクトリー。 */
-const TARGET_DIRS = ["src", "stories"];
+const TARGET_DIRS = ["src"];
 
 /** JSX の property を並べ替える。 */
 type Prop = JSXAttribute | JSXSpreadAttribute;
@@ -284,7 +284,9 @@ export function sortJsxProps(source: string): string {
 async function main(): Promise<void> {
   const isCheck = process.argv.includes("--check");
   const files = TARGET_DIRS.flatMap((dir) =>
-    fs.globSync("**/*.tsx", { cwd: dir }).map((fullpath) => path.join(dir, fullpath)),
+    fs
+      .globSync("**/*.tsx", { cwd: dir, exclude: ["**/__screenshots__/**"] })
+      .map((fullpath) => path.join(dir, fullpath)),
   );
 
   const changedFiles: string[] = [];

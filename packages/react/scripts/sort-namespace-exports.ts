@@ -5,7 +5,7 @@ import { parse } from "@babel/parser";
 import type { Node, Statement, TSModuleBlock, TSModuleDeclaration } from "@babel/types";
 
 /** 対象ファイルのディレクトリー。 */
-const TARGET_DIRS = ["src", "stories"];
+const TARGET_DIRS = ["src"];
 
 /**
  * 名前順より先に固定で並べる型エクスポートの名前。
@@ -478,7 +478,9 @@ export function sortNamespaceExports(source: string, options?: SortOptions): str
 async function main(): Promise<void> {
   const isCheck = process.argv.includes("--check");
   const files = TARGET_DIRS.flatMap((dir) =>
-    fs.globSync("**/*.tsx", { cwd: dir }).map((fullpath) => path.join(dir, fullpath)),
+    fs
+      .globSync("**/*.tsx", { cwd: dir, exclude: ["**/__screenshots__/**"] })
+      .map((fullpath) => path.join(dir, fullpath)),
   );
 
   const changedFiles: string[] = [];

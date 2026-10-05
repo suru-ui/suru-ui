@@ -1,6 +1,12 @@
 {
   "extends": ["@tsconfig/node24", "@tsconfig/strictest"],
-  "include": ["./global.d.ts", "../tests/**/*.server.test.{ts,tsx}"],
+  "include": [
+    "./global.d.ts",
+    "../src/**/*.server.test.ts",
+    "../src/**/*.server.test.tsx",
+    "../tests/**/*.server.test.ts",
+    "../tests/**/*.server.test.tsx"
+  ],
   "compilerOptions": {
     "types": ["node", "vite/client"],
     "lib": ["ESNext"],

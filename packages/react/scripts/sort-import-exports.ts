@@ -11,7 +11,7 @@ import type {
 } from "@babel/types";
 
 /** 対象ファイルのディレクトリー。 */
-const TARGET_DIRS = ["src", "stories"];
+const TARGET_DIRS = ["src"];
 
 type Decl = ImportDeclaration | ExportNamedDeclaration;
 
@@ -195,7 +195,9 @@ export function sortImportExports(source: string): string {
 async function main(): Promise<void> {
   const isCheck = process.argv.includes("--check");
   const files = TARGET_DIRS.flatMap((dir) =>
-    fs.globSync("**/*.{ts,tsx}", { cwd: dir }).map((fullpath) => path.join(dir, fullpath)),
+    fs
+      .globSync("**/*.{ts,tsx}", { cwd: dir, exclude: ["**/__screenshots__/**"] })
+      .map((fullpath) => path.join(dir, fullpath)),
   );
 
   const changedFiles: string[] = [];

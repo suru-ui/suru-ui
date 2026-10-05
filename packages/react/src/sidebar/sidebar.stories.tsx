@@ -1,0 +1,199 @@
+import * as React from "react";
+
+import { preview, controls } from "../../.config/storybook/preview.js";
+import { Sidebar } from "./index.js";
+import type {
+  SidebarSide,
+  SidebarProps,
+  SidebarVariant,
+  SidebarRootProps,
+  SidebarCollapsible,
+} from "./index.js";
+
+const meta = preview.meta({
+  title: "Sidebar",
+  component: Sidebar,
+});
+
+export default meta;
+
+const ctrl = controls(Sidebar, {
+  defaultOpen: {
+    control: "boolean",
+  },
+});
+
+function DemoSidebar(
+  props: Omit<SidebarProps, "children"> &
+    Partial<Pick<SidebarRootProps, "collapsible" | "side" | "variant">>,
+) {
+  const { side = "left", variant = "sidebar", collapsible = "offcanvas", ...otherProps } = props;
+
+  return (
+    <Sidebar {...otherProps} className="h-96 overflow-hidden rounded-lg border">
+      <Sidebar.Root side={side} variant={variant} collapsible={collapsible}>
+        <Sidebar.Header>
+          <p className="font-bold">Suru UI</p>
+        </Sidebar.Header>
+        <Sidebar.Content>
+          <Sidebar.Group>
+            <Sidebar.GroupLabel>プラットフォーム</Sidebar.GroupLabel>
+            <Sidebar.GroupContent>
+              <a href="#dashboard">ダッシュボード</a>
+              <a href="#projects">プロジェクト</a>
+              <a href="#members">メンバー</a>
+            </Sidebar.GroupContent>
+          </Sidebar.Group>
+          <Sidebar.Group>
+            <Sidebar.GroupLabel>設定</Sidebar.GroupLabel>
+            <Sidebar.GroupContent>
+              <a href="#general">一般</a>
+              <a href="#security">セキュリティー</a>
+            </Sidebar.GroupContent>
+          </Sidebar.Group>
+        </Sidebar.Content>
+        <Sidebar.Footer>
+          <p>footer@example.com</p>
+        </Sidebar.Footer>
+        <Sidebar.Rail />
+      </Sidebar.Root>
+      <Sidebar.Inset>
+        <div className="flex items-center gap-2 p-4">
+          <Sidebar.Trigger />
+          <p>メインコンテンツ</p>
+        </div>
+      </Sidebar.Inset>
+    </Sidebar>
+  );
+}
+
+export const Usage = meta.story({
+  name: "使い方",
+  ...ctrl({
+    defaultOpen: true,
+  }),
+  render(props) {
+    return <DemoSidebar defaultOpen={props.defaultOpen} />;
+  },
+});
+
+export const Sides = meta.story({
+  name: "辺",
+  ...ctrl({
+    variant: "sidebar",
+    collapsible: "offcanvas",
+    defaultOpen: true,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-4">
+        {(["left", "right"] as readonly SidebarSide[]).map((side) => (
+          <div key={side}>
+            <p>{`辺 "${side}"`}</p>
+            <DemoSidebar side={side} defaultOpen={props.defaultOpen} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Variants = meta.story({
+  name: "バリアント",
+  ...ctrl({
+    side: "left",
+    collapsible: "offcanvas",
+    defaultOpen: true,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-4">
+        {(["sidebar", "floating", "inset"] as readonly SidebarVariant[]).map((variant) => (
+          <div key={variant}>
+            <p>{`バリアント "${variant}"`}</p>
+            <DemoSidebar variant={variant} defaultOpen={props.defaultOpen} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Collapsibles = meta.story({
+  name: "折りたたみ",
+  ...ctrl({
+    side: "left",
+    variant: "sidebar",
+    defaultOpen: true,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-4">
+        {(["offcanvas", "icon", "none"] as readonly SidebarCollapsible[]).map((collapsible) => (
+          <div key={collapsible}>
+            <p>{`折りたたみ "${collapsible}"`}</p>
+            <DemoSidebar collapsible={collapsible} defaultOpen={props.defaultOpen} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Controlled = meta.story({
+  name: "制御",
+  ...ctrl({}),
+  render() {
+    const [open, setOpen] = React.useState(true);
+
+    return (
+      <div className="flex flex-col gap-2">
+        <p>{`開閉状態: ${open ? "展開" : "折りたたみ"}`}</p>
+        <DemoSidebar open={open} onOpenChange={setOpen} />
+      </div>
+    );
+  },
+});
+
+export const Closed = meta.story({
+  name: "閉じた状態",
+  ...ctrl({
+    defaultOpen: false,
+  }),
+  render(props) {
+    return <DemoSidebar defaultOpen={props.defaultOpen} />;
+  },
+});
+
+export const CustomTrigger = meta.story({
+  name: "独自トリガー",
+  ...ctrl({}),
+  render() {
+    return (
+      <Sidebar className="h-96 overflow-hidden rounded-lg border" defaultOpen>
+        <Sidebar.Root>
+          <Sidebar.Header>
+            <p className="font-bold">Suru UI</p>
+          </Sidebar.Header>
+          <Sidebar.Content>
+            <Sidebar.Group>
+              <Sidebar.GroupLabel>プラットフォーム</Sidebar.GroupLabel>
+              <Sidebar.GroupContent>
+                <a href="#dashboard">ダッシュボード</a>
+              </Sidebar.GroupContent>
+            </Sidebar.Group>
+          </Sidebar.Content>
+          <Sidebar.Footer>
+            <p>footer@example.com</p>
+          </Sidebar.Footer>
+        </Sidebar.Root>
+        <Sidebar.Inset>
+          <div className="flex items-center gap-2 p-4">
+            <Sidebar.Trigger>開閉</Sidebar.Trigger>
+            <p>メインコンテンツ</p>
+          </div>
+        </Sidebar.Inset>
+      </Sidebar>
+    );
+  },
+});

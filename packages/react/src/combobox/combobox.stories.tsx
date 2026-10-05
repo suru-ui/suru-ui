@@ -1,0 +1,935 @@
+import * as theme from "@suru-ui/theme";
+import { SearchIcon } from "lucide-react";
+import * as React from "react";
+
+import { preview, controls } from "../../.config/storybook/preview.js";
+import { Field } from "../index.js";
+import { Combobox } from "./index.js";
+
+const COLORS: readonly Combobox.Color[] = theme.COLORS;
+const SIZES: readonly Combobox.Size[] = theme.SIZES;
+const RADII: readonly Combobox.Radius[] = ["none", ...SIZES, "full"];
+const VARIANTS: readonly Combobox.Variant[] = ["naked", "liquid"];
+
+const fruits = ["りんご", "ばなな", "ぶどう", "みかん", "いちご", "もも"];
+
+type DirectoryUser = {
+  readonly email: string;
+  readonly id: string;
+  readonly name: string;
+  readonly title: string;
+  readonly username: string;
+};
+
+const directoryUsers: readonly DirectoryUser[] = [
+  {
+    id: "yamada-taro",
+    name: "山田 太郎",
+    email: "yamada.taro@example.com",
+    title: "プロダクトマネージャー",
+    username: "yamada",
+  },
+  {
+    id: "suzuki-hanako",
+    name: "鈴木 花子",
+    email: "suzuki.hanako@example.com",
+    title: "マーケティングリード",
+    username: "suzuki",
+  },
+  {
+    id: "sato-ichiro",
+    name: "佐藤 一郎",
+    email: "sato.ichiro@example.com",
+    title: "デザイナー",
+    username: "sato",
+  },
+  {
+    id: "takahashi-jiro",
+    name: "高橋 二郎",
+    email: "takahashi.jiro@example.com",
+    title: "エンジニアリングマネージャー",
+    username: "takahashi",
+  },
+  {
+    id: "tanaka-saburo",
+    name: "田中 三郎",
+    email: "tanaka.saburo@example.com",
+    title: "プロダクトデザイナー",
+    username: "tanaka",
+  },
+  {
+    id: "watanabe-shiro",
+    name: "渡辺 四郎",
+    email: "watanabe.shiro@example.com",
+    title: "フロントエンドエンジニア",
+    username: "watanabe",
+  },
+  {
+    id: "yamamoto-goro",
+    name: "山本 五郎",
+    email: "yamamoto.goro@example.com",
+    title: "カスタマーサクセス",
+    username: "yamamoto",
+  },
+  {
+    id: "nakamura-rokuro",
+    name: "中村 六郎",
+    email: "nakamura.rokuro@example.com",
+    title: "セキュリティエンジニア",
+    username: "nakamura",
+  },
+  {
+    id: "kobayashi-nanako",
+    name: "小林 奈々子",
+    email: "kobayashi.nanako@example.com",
+    title: "データアナリスト",
+    username: "kobayashi",
+  },
+  {
+    id: "ito-hachiro",
+    name: "伊藤 八郎",
+    email: "ito.hachiro@example.com",
+    title: "QAスペシャリスト",
+    username: "ito",
+  },
+  {
+    id: "kato-kyoko",
+    name: "加藤 京子",
+    email: "kato.kyoko@example.com",
+    title: "オペレーション",
+    username: "kato",
+  },
+  {
+    id: "yoshida-juro",
+    name: "吉田 十郎",
+    email: "yoshida.juro@example.com",
+    title: "DevOpsエンジニア",
+    username: "yoshida",
+  },
+];
+
+async function searchDirectoryUsers(
+  query: string,
+  filter: Combobox.IFilter,
+): Promise<{ error: string | null; users: DirectoryUser[] }> {
+  // ネットワークの遅延を模擬します。
+  await new Promise((resolve) => {
+    setTimeout(resolve, 1_000);
+  });
+
+  // ネットワークエラーを模擬します (10% の確率、`will_error` と入力しても再現できます)。
+  if (Math.random() < 0.1 || query === "will_error") {
+    return {
+      error: "担当者の取得に失敗しました。もう一度お試しください。",
+      users: [],
+    };
+  }
+
+  const users = directoryUsers.filter((user) => {
+    return (
+      filter.contains(user.name, query) ||
+      filter.contains(user.username, query) ||
+      filter.contains(user.email, query) ||
+      filter.contains(user.title, query)
+    );
+  });
+
+  return {
+    error: null,
+    users: [...users],
+  };
+}
+
+const meta = preview.meta({
+  title: "Combobox",
+  component: Combobox<any, boolean>,
+});
+
+export default meta;
+
+const ctrl = controls(Combobox<any, boolean>, {
+  size: {
+    control: "select",
+    options: SIZES,
+  },
+  arrow: {
+    control: "boolean",
+  },
+  color: {
+    control: "select",
+    options: COLORS,
+  },
+  items: {
+    control: "object",
+  },
+  label: {
+    control: "text",
+  },
+  radius: {
+    control: "select",
+    options: RADII,
+  },
+  variant: {
+    control: "select",
+    options: VARIANTS,
+  },
+  backdrop: {
+    control: "boolean",
+  },
+  disabled: {
+    control: "boolean",
+  },
+  multiple: {
+    control: "boolean",
+  },
+  outlined: {
+    control: "boolean",
+  },
+  readOnly: {
+    control: "boolean",
+  },
+  separator: {
+    control: "boolean",
+  },
+  placeholder: {
+    control: "text",
+  },
+  inputInPopup: {
+    control: "boolean",
+  },
+  keepFilterOnSelect: {
+    control: "boolean",
+  },
+});
+
+export const Usage = meta.story({
+  name: "使い方",
+  ...ctrl({
+    size: "md",
+    arrow: false,
+    color: "grey",
+    items: fruits,
+    radius: undefined,
+    variant: "liquid",
+    backdrop: false,
+    disabled: false,
+    multiple: false,
+    outlined: false,
+    readOnly: false,
+    placeholder: "選択",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    return <Combobox {...props} className="w-[200px]" />;
+  },
+});
+
+export const Variants = meta.story({
+  name: "主な外観",
+  ...ctrl({
+    size: "md",
+    arrow: false,
+    color: "grey",
+    items: fruits,
+    radius: undefined,
+    backdrop: false,
+    disabled: false,
+    multiple: false,
+    outlined: false,
+    readOnly: false,
+    placeholder: "選択",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-3">
+            <span>{variant}</span>
+            <Combobox {...props} variant={variant} className="w-[200px]" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Colors = meta.story({
+  name: "配色",
+  ...ctrl({
+    size: "md",
+    arrow: false,
+    items: fruits,
+    radius: undefined,
+    variant: "liquid",
+    backdrop: false,
+    disabled: false,
+    multiple: true,
+    outlined: true,
+    readOnly: false,
+    placeholder: "選択",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        {COLORS.map((color) => (
+          <div key={color} className="flex flex-col gap-3">
+            <span>{color}</span>
+            <Combobox
+              {...props}
+              color={color}
+              items={fruits}
+              className="w-[200px]"
+              defaultValue={props.multiple ? [fruits[0]] : fruits[0]}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Sizes = meta.story({
+  name: "大きさ",
+  ...ctrl({
+    arrow: false,
+    color: "grey",
+    items: fruits,
+    radius: undefined,
+    variant: "liquid",
+    backdrop: false,
+    disabled: false,
+    multiple: false,
+    outlined: false,
+    readOnly: false,
+    placeholder: "選択",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        {SIZES.map((size) => (
+          <div key={size} className="flex flex-col gap-3">
+            <span>{size}</span>
+            <Combobox {...props} size={size} items={fruits} className="w-[200px]" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Radii = meta.story({
+  name: "角丸",
+  ...ctrl({
+    size: "md",
+    arrow: false,
+    color: "grey",
+    items: fruits,
+    variant: "liquid",
+    backdrop: false,
+    disabled: false,
+    multiple: false,
+    readOnly: false,
+    placeholder: "選択",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        {RADII.map((radius) => (
+          <div key={radius} className="flex flex-col gap-3">
+            <span>{radius}</span>
+            <Combobox {...props} radius={radius} outlined className="w-[200px]" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const WithOutline = meta.story({
+  name: "枠線付き",
+  ...ctrl({
+    size: "md",
+    arrow: false,
+    color: "grey",
+    items: fruits,
+    radius: undefined,
+    backdrop: false,
+    disabled: false,
+    multiple: false,
+    readOnly: false,
+    placeholder: "選択",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-3">
+            <span>{variant}</span>
+            <Combobox {...props} variant={variant} outlined className="w-[200px]" />
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Multiple = meta.story({
+  name: "複数選択",
+  ...ctrl({
+    size: "md",
+    arrow: false,
+    color: "grey",
+    items: ["TypeScript", "Rust", "Go", "Python"],
+    radius: undefined,
+    variant: "liquid",
+    backdrop: false,
+    disabled: false,
+    multiple: true,
+    outlined: false,
+    readOnly: false,
+    placeholder: "言語を追加",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    return <Combobox {...props} multiple className="w-[300px]" defaultValue={["TypeScript"]} />;
+  },
+});
+
+export const WithArrow = meta.story({
+  name: "矢印付き",
+  ...ctrl({
+    size: "md",
+    color: "grey",
+    items: fruits,
+    radius: undefined,
+    variant: "liquid",
+    backdrop: false,
+    disabled: false,
+    multiple: true,
+    outlined: false,
+    readOnly: false,
+    placeholder: "選択",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    return <Combobox {...props} arrow className="w-[200px]" />;
+  },
+});
+
+export const WithBackdrop = meta.story({
+  name: "背景付き",
+  ...ctrl({
+    size: "md",
+    arrow: false,
+    color: "grey",
+    items: fruits,
+    radius: undefined,
+    variant: "liquid",
+    disabled: false,
+    multiple: true,
+    outlined: false,
+    readOnly: false,
+    placeholder: "選択",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    return <Combobox {...props} backdrop className="w-[200px]" />;
+  },
+});
+
+export const Disabled = meta.story({
+  name: "無効",
+  ...ctrl({
+    size: "md",
+    color: "grey",
+    items: fruits,
+    radius: undefined,
+    outlined: false,
+    readOnly: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-3">
+            <div>{variant}</div>
+            <div className="flex flex-col gap-3">
+              <span>未選択</span>
+              <Combobox
+                {...props}
+                items={fruits}
+                variant={variant}
+                disabled
+                className="w-[300px]"
+                placeholder="選択"
+              />
+
+              <span>選択済み</span>
+              <Combobox
+                {...props}
+                items={fruits}
+                variant={variant}
+                disabled
+                className="w-[300px]"
+                defaultValue={props.items?.[0]}
+              />
+
+              <span>複数選択</span>
+              <Combobox
+                {...props}
+                items={fruits}
+                variant={variant}
+                disabled
+                multiple
+                className="w-[300px]"
+                defaultValue={props.items?.slice(0, 2)}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const ReadOnly = meta.story({
+  name: "読み取り専用",
+  ...ctrl({
+    size: "md",
+    color: "grey",
+    items: fruits,
+    radius: undefined,
+    outlined: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        {VARIANTS.map((variant) => (
+          <div key={variant} className="flex flex-col gap-3">
+            <div>{variant}</div>
+            <div className="flex flex-col gap-3">
+              <span>未選択</span>
+              <Combobox
+                {...props}
+                items={fruits}
+                variant={variant}
+                readOnly
+                className="w-[300px]"
+                placeholder="選択"
+              />
+
+              <span>選択済み</span>
+              <Combobox
+                {...props}
+                items={fruits}
+                variant={variant}
+                readOnly
+                className="w-[300px]"
+                defaultValue={props.items?.[0]}
+              />
+
+              <span>複数選択</span>
+              <Combobox
+                {...props}
+                items={fruits}
+                variant={variant}
+                multiple
+                readOnly
+                className="w-[300px]"
+                defaultValue={props.items?.slice(0, 2)}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Addons = meta.story({
+  name: "付属要素",
+  ...ctrl({
+    size: "md",
+    arrow: false,
+    color: "grey",
+    items: fruits,
+    radius: undefined,
+    variant: "liquid",
+    backdrop: false,
+    disabled: false,
+    multiple: false,
+    outlined: false,
+    readOnly: false,
+    placeholder: "選択",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-6">
+        <Combobox
+          {...props}
+          className="w-[240px]"
+          endAddons={["について"]}
+          startAddons={[<SearchIcon key={0} />]}
+        />
+        <Combobox
+          {...props}
+          className="w-[240px]"
+          endAddons={["について"]}
+          startAddons={[<SearchIcon key={0} />]}
+          inputInPopup
+        />
+      </div>
+    );
+  },
+});
+
+export const Labeled = meta.story({
+  name: "ラベル付き",
+  ...ctrl({
+    size: "md",
+    arrow: false,
+    color: "grey",
+    items: fruits,
+    label: "果物",
+    radius: undefined,
+    variant: "liquid",
+    backdrop: false,
+    disabled: false,
+    multiple: true,
+    outlined: false,
+    readOnly: false,
+    placeholder: "選択",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    if (props.inputInPopup) {
+      const { label, ...otherProps } = props;
+
+      return (
+        <Combobox
+          {...otherProps}
+          label={<Combobox.TriggerLabel>{label}</Combobox.TriggerLabel>}
+          className="w-[200px]"
+        />
+      );
+    } else {
+      const { label, disabled, ...otherProps } = props;
+
+      return (
+        <Field label={label} disabled={disabled}>
+          <Combobox {...otherProps} className="w-[200px]" />
+        </Field>
+      );
+    }
+  },
+});
+
+export const Grouped = meta.story({
+  name: "グループ化",
+  ...ctrl({
+    size: "md",
+    arrow: false,
+    color: "grey",
+    items: [
+      {
+        items: ["りんご", "ばなな", "みかん"],
+        label: "果物",
+      },
+      {
+        items: ["にんじん", "きゅうり", "トマト"],
+        label: "野菜",
+      },
+    ],
+    radius: undefined,
+    variant: "liquid",
+    backdrop: false,
+    disabled: false,
+    multiple: false,
+    outlined: false,
+    readOnly: false,
+    separator: false,
+    placeholder: "食材を選択",
+    inputInPopup: false,
+    keepFilterOnSelect: false,
+  }),
+  render(props) {
+    return <Combobox {...props} className="w-[200px]" onValueChange={console.log} />;
+  },
+});
+
+export const AsyncSearchSingle = meta.story({
+  name: "非同期検索（単一）",
+  render() {
+    const [searchResults, setSearchResults] = React.useState<DirectoryUser[]>([]);
+    const [selectedValue, setSelectedValue] = React.useState<DirectoryUser | null>(null);
+    const [searchValue, setSearchValue] = React.useState("");
+    const [error, setError] = React.useState<string | null>(null);
+    const [isPending, startTransition] = React.useTransition();
+
+    const filter = Combobox.useFilter();
+
+    const abortControllerRef = React.useRef<AbortController | null>(null);
+
+    const trimmedSearchValue = searchValue.trim();
+
+    const items = React.useMemo(() => {
+      if (!selectedValue || searchResults.some((user) => user.id === selectedValue.id)) {
+        return searchResults;
+      }
+
+      return [...searchResults, selectedValue];
+    }, [searchResults, selectedValue]);
+
+    function getStatus() {
+      if (isPending) {
+        return "検索中…";
+      }
+
+      if (error) {
+        return error;
+      }
+
+      if (trimmedSearchValue === "") {
+        return selectedValue ? null : "入力して担当者を検索…";
+      }
+
+      if (searchResults.length === 0) {
+        return `「${trimmedSearchValue}」に一致する候補がありません。`;
+      }
+
+      return null;
+    }
+
+    function getEmptyMessage() {
+      if (trimmedSearchValue === "" || isPending || searchResults.length > 0 || error) {
+        return null;
+      }
+
+      return "別のキーワードで試してください。";
+    }
+
+    const status = getStatus();
+    const emptyMessage = getEmptyMessage();
+
+    return (
+      <Combobox<DirectoryUser>
+        empty={emptyMessage}
+        items={items}
+        filter={null}
+        status={status}
+        className="w-[300px]"
+        placeholder="例：山田"
+        onValueChange={(nextSelectedValue) => {
+          setSelectedValue(nextSelectedValue);
+          setSearchValue("");
+          setError(null);
+        }}
+        itemLabelRenderer={(user: DirectoryUser) => (
+          <span className="flex min-w-0 flex-col text-left">
+            <span className="truncate font-medium">{user.name}</span>
+            <span className="truncate text-xs opacity-70">
+              {user.email} ・ @{user.username} ・ {user.title}
+            </span>
+          </span>
+        )}
+        itemToStringLabel={(user) => user.name}
+        isItemEqualToValue={(item, value) => item.id === value.id}
+        onInputValueChange={(nextSearchValue, { reason }) => {
+          setSearchValue(nextSearchValue);
+
+          const controller = new AbortController();
+          abortControllerRef.current?.abort();
+          abortControllerRef.current = controller;
+
+          if (nextSearchValue === "") {
+            setSearchResults([]);
+            setError(null);
+            return;
+          }
+
+          if (reason === "item-press") {
+            return;
+          }
+
+          startTransition(async () => {
+            setError(null);
+
+            const result = await searchDirectoryUsers(nextSearchValue, filter);
+
+            if (controller.signal.aborted) {
+              return;
+            }
+
+            startTransition(() => {
+              setSearchResults(result.users);
+              setError(result.error);
+            });
+          });
+        }}
+        onOpenChangeComplete={(open) => {
+          if (!open && selectedValue) {
+            setSearchResults([selectedValue]);
+          }
+        }}
+      />
+    );
+  },
+});
+
+export const AsyncSearchMultiple = meta.story({
+  name: "非同期検索（複数）",
+  render() {
+    const [searchResults, setSearchResults] = React.useState<DirectoryUser[]>([]);
+    const [selectedValues, setSelectedValues] = React.useState<DirectoryUser[]>([]);
+    const [searchValue, setSearchValue] = React.useState("");
+    const [error, setError] = React.useState<string | null>(null);
+    const [blockStartStatus, setBlockStartStatus] = React.useState(false);
+    const [isPending, startTransition] = React.useTransition();
+
+    const filter = Combobox.useFilter();
+
+    const abortControllerRef = React.useRef<AbortController | null>(null);
+    const selectedValuesRef = React.useRef<DirectoryUser[]>([]);
+
+    const trimmedSearchValue = searchValue.trim();
+
+    const items = React.useMemo(() => {
+      if (selectedValues.length === 0) {
+        return searchResults;
+      }
+
+      const merged = [...searchResults];
+
+      selectedValues.forEach((user) => {
+        if (!merged.some((result) => result.id === user.id)) {
+          merged.push(user);
+        }
+      });
+
+      return merged;
+    }, [searchResults, selectedValues]);
+
+    function getStatus() {
+      if (isPending) {
+        return "検索中…";
+      }
+
+      if (error) {
+        return error;
+      }
+
+      if (trimmedSearchValue === "" && !blockStartStatus) {
+        return selectedValues.length > 0 ? null : "入力して担当者を検索…";
+      }
+
+      if (searchResults.length === 0 && !blockStartStatus) {
+        return `「${trimmedSearchValue}」に一致する候補がありません。`;
+      }
+
+      return null;
+    }
+
+    function getEmptyMessage() {
+      if (trimmedSearchValue === "" || isPending || searchResults.length > 0 || error) {
+        return null;
+      }
+
+      return "別のキーワードで試してください。";
+    }
+
+    const status = getStatus();
+    const emptyMessage = getEmptyMessage();
+
+    return (
+      <Combobox<DirectoryUser, true>
+        empty={emptyMessage}
+        items={items}
+        filter={null}
+        status={status}
+        multiple
+        className="w-[300px]"
+        placeholder="例：山田"
+        onValueChange={(nextSelectedValues) => {
+          selectedValuesRef.current = nextSelectedValues;
+          setSelectedValues(nextSelectedValues);
+          setSearchValue("");
+          setError(null);
+
+          if (nextSelectedValues.length === 0) {
+            setSearchResults([]);
+            setBlockStartStatus(false);
+          } else {
+            setBlockStartStatus(true);
+          }
+        }}
+        chipLabelRenderer={(user: DirectoryUser) => user.name}
+        itemLabelRenderer={(user: DirectoryUser) => (
+          <span className="flex min-w-0 flex-col text-left">
+            <span className="truncate font-medium">{user.name}</span>
+            <span className="truncate text-xs opacity-70">
+              {user.email} ・ @{user.username} ・ {user.title}
+            </span>
+          </span>
+        )}
+        itemToStringLabel={(user) => user.name}
+        isItemEqualToValue={(item, value) => item.id === value.id}
+        onInputValueChange={(nextSearchValue, { reason }) => {
+          setSearchValue(nextSearchValue);
+
+          const controller = new AbortController();
+          abortControllerRef.current?.abort();
+          abortControllerRef.current = controller;
+
+          if (nextSearchValue === "") {
+            setSearchResults(selectedValuesRef.current);
+            setError(null);
+            setBlockStartStatus(false);
+            return;
+          }
+
+          if (reason === "item-press") {
+            return;
+          }
+
+          startTransition(async () => {
+            setError(null);
+
+            const result = await searchDirectoryUsers(nextSearchValue, filter);
+
+            if (controller.signal.aborted) {
+              return;
+            }
+
+            startTransition(() => {
+              setSearchResults(result.users);
+              setError(result.error);
+            });
+          });
+        }}
+        onOpenChangeComplete={(open) => {
+          if (!open) {
+            setSearchResults(selectedValuesRef.current);
+            setBlockStartStatus(false);
+          }
+        }}
+      />
+    );
+  },
+});

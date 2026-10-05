@@ -7,7 +7,7 @@ import { mergeConfig } from "vite";
 
 export default defineMain({
   framework: "@storybook/react-vite",
-  stories: ["../../stories/**/*.stories.tsx"],
+  stories: ["../../src/**/*.stories.tsx"],
   addons: ["@storybook/addon-docs", "@storybook/addon-themes", "@storybook/addon-vitest"],
   core: {
     builder: "@storybook/builder-vite",

@@ -18,8 +18,8 @@ export default defineConfig({
     __SERVER__: "false",
   },
   test: {
-    include: ["tests/**/*.test.{ts,tsx}"],
-    exclude: ["tests/**/*.server.test.{ts,tsx}"],
+    include: ["src/**/*.test.{ts,tsx}", "tests/**/*.test.{ts,tsx}"],
+    exclude: ["src/**/*.server.test.{ts,tsx}", "tests/**/*.server.test.{ts,tsx}"],
     setupFiles: ["./tests/setup.client.ts"],
     browser: {
       provider: playwright(),

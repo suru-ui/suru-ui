@@ -1,0 +1,83 @@
+import * as React from "react";
+import { test, describe } from "vitest";
+import { render } from "vitest-browser-react";
+
+import { HoverCardContent } from "../content/hover-card.content.jsx";
+import { HoverCardPortal } from "../portal/hover-card.portal.jsx";
+import { HoverCardPositioner } from "../positioner/hover-card.positioner.jsx";
+import { HoverCardRoot } from "../root/hover-card.root.jsx";
+import { HoverCardTrigger } from "./hover-card.trigger.jsx";
+import "../../../tests/src/_locators.js";
+
+/**
+ * 開いた状態を検証できるよう、ホバーカードのパーツを直接組み立てます。
+ */
+function renderCard(trigger: React.ReactNode) {
+  return render(
+    <HoverCardRoot>
+      {trigger}
+      <HoverCardPortal>
+        <HoverCardPositioner>
+          <HoverCardContent>内容</HoverCardContent>
+        </HoverCardPositioner>
+      </HoverCardPortal>
+    </HoverCardRoot>,
+  );
+}
+
+describe("HoverCardTrigger", () => {
+  test("指定した要素をそのまま描画する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderCard(
+      <HoverCardTrigger>
+        {(props) => (
+          <a href="#terms" {...props}>
+            利用規約
+          </a>
+        )}
+      </HoverCardTrigger>,
+    );
+
+    // 検証
+    const trigger = screen.getByRole("link", { name: "利用規約" }).element();
+    expect(trigger.tagName).toBe("A");
+    expect(trigger.getAttribute("href")).toBe("#terms");
+    expect(trigger.classList.contains("sui_hover_card_trigger")).toBe(true);
+  });
+
+  test("要素を直接指定して描画する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await renderCard(
+      <HoverCardTrigger>
+        <a href="#help">ヘルプ</a>
+      </HoverCardTrigger>,
+    );
+
+    // 検証
+    const trigger = screen.getByRole("link", { name: "ヘルプ" }).element();
+    expect(trigger.getAttribute("href")).toBe("#help");
+  });
+
+  test("描画関数へルートの状態を渡す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <HoverCardRoot size="lg" radius="sm" outlined>
+        <HoverCardTrigger>
+          {(props, state) => (
+            <a
+              href="#terms"
+              {...props}
+              data-probe={`${state.size}/${state.radius}/${state.outlined}`}
+            >
+              利用規約
+            </a>
+          )}
+        </HoverCardTrigger>
+      </HoverCardRoot>,
+    );
+
+    // 検証
+    const trigger = screen.getByRole("link", { name: "利用規約" }).element();
+    expect(trigger.getAttribute("data-probe")).toBe("lg/sm/true");
+  });
+});
