@@ -1,6 +1,6 @@
 ---
 name: react-component
-description: Suru UI の React コンポーネント (`packages/react/src/<名前>/` のパーツファイルとバレル) を書くときに使用します。ファイル配置・型・API・namespace を定めます。
+description: Suru UI の React コンポーネント (`packages/react/src/<名前>/` のパートディレクトリー・パーツファイルとバレル) を書くときに使用します。ファイル配置・型・API・namespace を定めます。
 ---
 
 # React コンポーネント
@@ -22,18 +22,18 @@ description: Suru UI の React コンポーネント (`packages/react/src/<名�
 - `packages/react/src/accordion/`
 
 パターン別の代表例 (同型の実装はどれも同等に参照してよく、以下の列挙にない新設も模範になりえます):
-- `combobox.root.tsx` — Root 定型の例 (DOM を持たない Root + Config + Context 提供)
-- `accordion.root.tsx` — DOM を持つ Root + `items` レンダラーの例 (`data-scope` 起点・`TItem` / `TValue`・スタイル情報の state 化)
-- `combobox.input-group.tsx` — スタイル起点・状態集約の例
-- `combobox.item.tsx` — 継承パターン (Outer の Base UI + Inner の Suru UI) の例
-- `combobox.collection.tsx` / `combobox.list.tsx` / `combobox.value.tsx` — 一覧描画・レンダラーの例
-- `combobox.context.ts` / `combobox.item.context.ts` — Context・サブコンテキストの例
-- `accordion.item.context.ts` / `accordion.trigger.context.ts` — パーツ状態のサブコンテキスト例 (短名は `ItemContext` / `TriggerContext`)
-- `combobox.trigger.tsx` — render 関数を `children` に付け替える場合の例
-- `combobox.use-filter.ts` / `combobox.use-filtered-items.ts` — フックラッパーの例
-- `accordion.item.tsx` / `accordion.trigger.tsx` — Base UI ラッパーで Context を state に合成する例 (Trigger はサブ Context の提供も行う)
-- `accordion.heading.tsx` / `accordion.content.tsx` — Context を state に合成する薄い Base UI ラッパーの例
-- `accordion.indicator.tsx` — `useRender` 素要素 + 既定子 (`<ChevronIcon />`) + `ItemContext` 読み取りの例
+- `combobox/root/combobox.root.tsx` — Root 定型の例 (DOM を持たない Root + Config + Context 提供)
+- `accordion/root/accordion.root.tsx` — DOM を持つ Root + `items` レンダラーの例 (`data-scope` 起点・`TItem` / `TValue`・スタイル情報の state 化)
+- `combobox/input-group/combobox.input-group.tsx` — スタイル起点・状態集約の例
+- `combobox/item/combobox.item.tsx` — 継承パターン (Outer の Base UI + Inner の Suru UI) の例
+- `combobox/collection/combobox.collection.tsx` / `combobox/list/combobox.list.tsx` / `combobox/value/combobox.value.tsx` — 一覧描画・レンダラーの例
+- `combobox/root/combobox.root.context.ts` / `combobox/item/combobox.item.context.ts` — Context・サブコンテキストの例
+- `accordion/item/accordion.item.context.ts` / `accordion/trigger/accordion.trigger.context.ts` — パーツ状態のサブコンテキスト例 (短名は `ItemContext` / `TriggerContext`)
+- `combobox/trigger/combobox.trigger.tsx` — render 関数を `children` に付け替える場合の例
+- `combobox/use-filter/combobox.use-filter.ts` / `combobox/use-filtered-items/combobox.use-filtered-items.ts` — フックラッパーの例
+- `accordion/item/accordion.item.tsx` / `accordion/trigger/accordion.trigger.tsx` — Base UI ラッパーで Context を state に合成する例 (Trigger はサブ Context の提供も行う)
+- `accordion/heading/accordion.heading.tsx` / `accordion/content/accordion.content.tsx` — Context を state に合成する薄い Base UI ラッパーの例
+- `accordion/indicator/accordion.indicator.tsx` — `useRender` 素要素 + 既定子 (`<ChevronIcon />`) + `ItemContext` 読み取りの例
 - `_accordion.ts` — `ItemObject` 判定・値推論ヘルパーの例
 - `combobox.tsx` — 合成 (Types + クラス API + 分岐 Component) の例
 - `accordion.tsx` — 単一 Root 描画の合成 (`slotProps` + `rootProps` の 2 分割 + `Object.assign` での Context 公開) の例
@@ -45,7 +45,7 @@ CSS は `../css/SKILL.md`、JSDoc と日本語は `../jsdoc/SKILL.md` と `../ja
 次の順で進めます。
 
 1. Base UI の型確認
-2. パーツファイル (`<kebab>.<パーツ>.tsx` または `<kebab>.<パーツ>.context.ts`) を書く
+2. パーツファイル (`<パート>/<kebab>.<パーツ>.tsx`、Context は同階の `<kebab>.<パーツ>.context.ts`) を書く
 3. バレル (`<kebab>.parts.ts`) を書く
 4. `.tsx` (合成) を書く
 5. 周辺ファイル
@@ -68,38 +68,45 @@ CSS は `../css/SKILL.md`、JSDoc と日本語は `../jsdoc/SKILL.md` と `../ja
 
 ```text
 packages/react/src/<kebab>/
-  _<kebab>.tsx                  # パーツ横断の内部ヘルパー (必要な場合のみ)
-  <kebab>.context.ts            # ルート Context パーツ
-  <kebab>.<対象>.context.ts     # サブ Context パーツ (Item / Trigger など、必要な場合のみ)
-  <kebab>.root.tsx              # パーツごとのファイル
-  <kebab>.<パーツ>.tsx          # 例: <kebab>.content.tsx
-  <kebab>.use-<名前>.ts         # Base UI フックの薄いラッパー (必要な場合のみ)
-  <kebab>.utils.ts              # 公開ヘルパー (必要な場合のみ)
+  _<kebab>.ts(x)                 # パーツ横断の内部ヘルパー (必要な場合のみ)
   <kebab>.parts.ts              # パーツのバレル
   <kebab>.tsx                   # 合成 + API フック
-  <kebab>.css                   # css スキルに従う
+  <kebab>.stories.tsx           # Storybook (コンポーネント単位)
   index.ts                      # 再輸出のみ
+  <パート>/                     # 1 パーツ 1 ディレクトリー (ディレクトリー名はパーツ名の kebab)
+    <kebab>.<パーツ>.tsx        # 例: root/combobox.root.tsx
+    <kebab>.<パーツ>.css        # 例: root/combobox.root.css (css スキルに従う)
+    <kebab>.<パーツ>.context.ts # そのパーツの Context (必要な場合のみ)
+    <kebab>.<パーツ>.client.test.tsx  # そのパーツのテスト (必要な場合のみ)
+  utils/                        # 公開ヘルパー (必要な場合のみ)
+    <kebab>.utils.ts
+  handle/                       # 命令ハンドル (必要な場合のみ)
+    <kebab>.handle.ts
+  use-<名前>/                   # Base UI フックの薄いラッパー (必要な場合のみ)
+    <kebab>.use-<名前>.ts
 ```
 
-- 1 パーツ 1 ファイルです。ファイル名は `<kebab>.<パーツ名の kebab>.tsx` にします (例: `ComboboxRoot` → `combobox.root.tsx`)。
+- 1 パーツ 1 ディレクトリーです。ディレクトリー名はパーツ名の kebab にし、中のファイル名は `<kebab>.<パーツ名の kebab>.tsx` にします (例: `ComboboxRoot` → `root/combobox.root.tsx`)。
 - コンポーネント (JSX を書くか `IComponent` を使うもの) は `.tsx`、Context・型・フックのみのパーツは `.ts` にします。
-- Context は `<kebab>.<対象の kebab>.context.ts` にします (例: `ButtonContext` → `button.context.ts`、`ButtonCircularProgressContext` → `button.circular-progress.context.ts`)。対象がない場合は `<kebab>.context.ts` です。項目値の伝播など、2 つ目以降の Context は `<kebab>.<対象>.context.ts` の形にします (例: `ComboboxItemContext` → `combobox.item.context.ts`、`AccordionTriggerContext` → `accordion.trigger.context.ts`)。短名は、ルート Context が `Context` / `useContext`、ルート以外が `<対象>Context` / `use<対象>Context` です (`ItemContext` / `useItemContext`、`TriggerContext` / `useTriggerContext`)。ルート以外で `Context` / `useContext` を使いません。
-- Base UI フックの薄いラッパーは `<kebab>.use-<名前>.ts` にします (例: `combobox.use-filter.ts`、`combobox.use-filtered-items.ts`)。`I<名前>` + `IUse<名前>Options` (ある場合) + `IUse<名前>` interface + `useSui...` 実装 + 短名再輸出の順にします。
-- `_` 始まりは非公開です。2 つ以上のパーツが共有する補助だけを置きます。バレルと公開 `index.ts` から再輸出しません。公開するパーツ横断の補助 (`decompose...` など) は `<kebab>.utils.ts` に置き、バレルから再輸出します。
-- バレル `<kebab>.parts.ts` は再輸出だけを行い、先頭で `./<kebab>.css` を import します。実装を書きません。Context (`<kebab>.context.ts`・`<kebab>.<対象>.context.ts`) と公開ヘルパー (`<kebab>.utils.ts`) も再輸出します。
-- `index.ts` は実装を書かず、parts → 合成の順に再輸出します。
+- Context は所有するパーツのディレクトリーに置き、`<kebab>.<パーツの kebab>.context.ts` にします (例: `ButtonContext` → `root/button.root.context.ts`、`ButtonCircularProgressContext` → `circular-progress/button.circular-progress.context.ts`、`ComboboxItemContext` → `item/combobox.item.context.ts`、`AccordionTriggerContext` → `trigger/accordion.trigger.context.ts`)。短名は、ルート Context が `Context` / `useContext`、ルート以外が `<対象>Context` / `use<対象>Context` です (`ItemContext` / `useItemContext`、`TriggerContext` / `useTriggerContext`)。ルート以外で `Context` / `useContext` を使いません。
+- Base UI フックの薄いラッパーは `use-<名前>/<kebab>.use-<名前>.ts` にします (例: `use-filter/combobox.use-filter.ts`、`use-filtered-items/combobox.use-filtered-items.ts`)。`I<名前>` + `IUse<名前>Options` (ある場合) + `IUse<名前>` interface + `useSui...` 実装 + 短名再輸出の順にします。
+- 命令ハンドルは `handle/<kebab>.handle.ts` にします (例: `handle/menu.handle.ts`)。
+- `_` 始まりは非公開で、コンポーネント直下に置きます。2 つ以上のパーツが共有する補助だけを置きます。バレルと公開 `index.ts` から再輸出しません。公開するパーツ横断の補助 (`decompose...` など) は `utils/<kebab>.utils.ts` に置き、バレルから再輸出します。
+- バレル `<kebab>.parts.ts` は再輸出だけを行い、先頭で各パートの CSS をパーツツリー順 (描画順) に import します。実装を書きません。Context と公開ヘルパーも再輸出します。
+- `index.ts` は実装を書かず、parts → (`utils/` を持つ場合は `./utils/<kebab>.utils.js`) → 合成の順に再輸出します。
 - バレルの再輸出は Context → パーツツリー → 公開ヘルパーの順に並べます。文と指定子の最終的な順序は自動整形に任せます。
-- 自ファイルの import には `.js` / `.jsx` を付けます。他コンポーネントもパーツ同士も相対で import します。
+- 自ファイルの import には `.js` / `.jsx` を付けます。他コンポーネントもパーツ同士も相対で import します。共有 (`src/` 直下) へはパーツから `../../` で上がります。兄弟パーツへは `../<パート>/` を経由し、自パーツの Context へは `./` で参照します。
 
 ```ts
 // <kebab>.parts.ts
-import "./<kebab>.css";
+import "./root/<kebab>.root.css";
+import "./content/<kebab>.content.css";
 
-export * from "./<kebab>.context.js";
-export * from "./<kebab>.<対象>.context.js";
-export * from "./<kebab>.root.jsx";
-export * from "./<kebab>.content.jsx";
-export * from "./<kebab>.utils.js";
+export * from "./root/<kebab>.root.context.js";
+export * from "./item/<kebab>.item.context.js";
+export * from "./root/<kebab>.root.jsx";
+export * from "./content/<kebab>.content.jsx";
+export * from "./utils/<kebab>.utils.js";
 ```
 
 ```ts
@@ -109,7 +116,9 @@ export * from "./<kebab>.js";
 ```
 
 ```tsx
-import { XIcon } from "../_icons.jsx";
+import { XIcon } from "../../_icons.jsx";
+import { ButtonContext } from "./button.root.context.js";
+import { ComboboxItem } from "../item/combobox.item.jsx";
 ```
 
 ## パーツファイルの土台
@@ -118,9 +127,9 @@ import { XIcon } from "../_icons.jsx";
 
 - import / export の文と指定子、`src/index.ts` の順は規定しません。フォーマッターに任せます。
 - CSS の import はバレルだけが行います。パーツファイルでは import しません。
-- パーツをまたぐ参照は、参照する側のパーツファイルから相対で import します (例: `import { ButtonContext } from "./button.context.js";`)。ファイル内部では正式名を使い、短名を使いません。
+- パーツをまたぐ参照は、参照する側のパーツファイルから相対で import します (例: 自パーツの Context は `import { ButtonContext } from "./button.root.context.js";`、兄弟パーツは `import { ComboboxItem } from "../item/combobox.item.jsx";`)。ファイル内部では正式名を使い、短名を使いません。
 - 型だけを import する場合は `import type { X } from "..."` にします。値と型が混ざる場合だけ `import { type X, value }` にします。
-- 旧 `.parts.tsx` にあった `// <名>` のセクション見出しは不要です。ファイルそのものが 1 パーツを表します。
+- 旧 `.parts.tsx` にあった `// <名>` のセクション見出しは不要です。ディレクトリーそのものが 1 パーツを表します。
 - `.tsx` (合成) の見出しは同様です (`// Types` / `// API` / `// Component` と同文字数の `-`)。
 
 ### Base UI の型確認
@@ -129,13 +138,13 @@ import { XIcon } from "../_icons.jsx";
 
 1. `<パート>/*.d.ts` の namespace が公開する型を列挙します。`State`・`Props` のほか、`Actions`・`ChangeEventDetails`・`ChangeEventReason` があれば含めます。
 2. 公開メンバーは漏らさず再輸出します。`State` と `Props` だけでは終えません。
-3. `Handle` / `createHandle` の有無を確認します。ないものは作りません。あるものは `<kebab>.handle.ts` に置きます。
+3. `Handle` / `createHandle` の有無を確認します。ないものは作りません。あるものは `handle/<kebab>.handle.ts` に置きます。
 4. 他から再輸出のパーツ (例: `Separator`) は `index.parts.d.ts` と `index.d.ts` で実体と型の両方を確認します。
 5. 各パーツの `State` フィールドを列挙し、状態クラス化の対象を決めます。`State` にない状態は扱いません。
 
 ### Context 定型
 
-子に値を渡す場合のみ、独立した `<kebab>.context.ts` に置きます。`ComboboxContext` を例とします。`Stat` のように Root の修飾が Root 自身に集約し子が読まない場合は Context ファイルを作りません。
+子に値を渡す場合のみ、そのパーツのディレクトリーの `<kebab>.<パーツ>.context.ts` に置きます。`ComboboxContext` を例とします。`Stat` のように Root の修飾が Root 自身に集約し子が読まない場合は Context ファイルを作りません。
 
 - Context の値型は `readonly` フィールドのオブジェクトにし、汎型は既定値付き (`<TItem = any>`) にします。各フィールドに JSDoc を付けます。
 - 修飾値型 (`Color`・`Radius`・`Size`・`Variant`・`IItemToStringLabel` など) は Context ファイルに分離し、JSDoc を付けます。`Color`・`Size` はテーマ型をそのまま使い (`Color`、`Size`)、`Radius` は `"none" | Size | "full"` の定型にします。
@@ -233,7 +242,7 @@ return (
 
 ### フックラッパー定型
 
-Base UI フックの薄いラッパーは `useSui...` 名の関数にし、短名を同ファイルで再輸出します。`combobox.use-filter.ts` / `combobox.use-filtered-items.ts` を例とします。
+Base UI フックの薄いラッパーは `useSui...` 名の関数にし、短名を同ファイルで再輸出します。`use-filter/combobox.use-filter.ts` / `use-filtered-items/combobox.use-filtered-items.ts` を例とします。
 
 ```ts
 export type IComboboxFilter = ReturnType<typeof Combobox.useFilter>;
@@ -252,7 +261,7 @@ export { useComboboxFilter as useFilter };
 
 ### 型の置き方
 
-1 パーツ内は Base UI 由来、独自の値型、`Value`・`State`、`Props` の順にします。`Props` を最後にします。`combobox.root.tsx` を例とします。
+1 パーツ内は Base UI 由来、独自の値型、`Value`・`State`、`Props` の順にします。`Props` を最後にします。`root/combobox.root.tsx` を例とします。
 
 - `State` は Base UI から取ります。スタイル情報を伝播する場合は Context と合成します (`State の継承` を参照)。状態を持たない素の要素・非要素は空オブジェクト (`= {}`) にします (`ComboboxCollectionState`・`ComboboxItemLabelState` を参照)。
 - 型引数名は必ず `T` 始まりにします (`TItem`・`TValue`・`TMultiple`)。複数選択の有無は `TMultiple extends boolean | undefined` にし、合成の公開面では `const` 修飾子を付けます (`<TItem = any, const TMultiple extends boolean | undefined = ...>`)。
@@ -654,7 +663,7 @@ const {
 ```
 
 - `data-scope` は CSS の `@scope` 始点 (スタイル起点) だけが持ちます。`// @ts-expect-error` + 空文字既定にします。余剰プロパティーチェックを避ける必要がある場合 (合成 API の `getScrollAreaProps` を参照) は `null` 既定 + 変数経由にします。
-- ボタン系の既定値は `nativeButton = false`、`aria-label` (例: `"候補リストを開閉"`、`"選択値を消去"`)、`children = <ClearIcon />` (共有 `../_icons.jsx` から import) の形にします。
+- ボタン系の既定値は `nativeButton = false`、`aria-label` (例: `"候補リストを開閉"`、`"選択値を消去"`)、`children = <ClearIcon />` (共有 `../../_icons.jsx` から import) の形にします。
 
 ### Root 定型 (DOM を持たない場合)
 
@@ -787,7 +796,7 @@ return (
 | 素の要素 | `useRender` | JSX 直書きしない |
 
 - `render` 受領型は `render={children}` に渡します。
-- 独自なしの素要素は引数ごと渡します。既定子ありは `children` に既定値を与えます (`accordion.indicator.tsx` の `children = <ChevronIcon />` を参照)。
+- 独自なしの素要素は引数ごと渡します。既定子ありは `children` に既定値を与えます (`indicator/accordion.indicator.tsx` の `children = <ChevronIcon />` を参照)。
 
 ### Base UI ラッパーの state 合成
 
@@ -835,7 +844,7 @@ export const AccordionItem: IAccordionItem = function SuiAccordionItem(props) {
 
 ### useRender 定型
 
-素の要素を作る場合のみ使います。`accordion.indicator.tsx` を例とします。
+素の要素を作る場合のみ使います。`indicator/accordion.indicator.tsx` を例とします。
 
 利用者の `className` は分解せず残余に残し、自動マージに任せます。`cn` に含めません。
 
@@ -1408,8 +1417,8 @@ export const Accordion: IAccordion = Object.assign(
 
 ## 周辺ファイル
 
-- `_<kebab>.tsx` はパーツファイルと合成 (`.tsx`) からのみ import します。パーツ横断の補助 (`ItemObject` 判定・値推論など) を置き、バレルと公開 `index.ts` からは再輸出しません。公開する補助は `<kebab>.utils.ts` に置き、バレルから再輸出します (例: `decomposeAccordionItemObject`)。
-- バレル `<kebab>.parts.ts` は全パーツ・Context・公開ヘルパーを `export *` で再輸出し、`./<kebab>.css` を import します。短名 (`Context` や `Root`、`ItemContext`、`useFilter` など) は各パーツファイルの再輸出から伝わります。並びは Context → パーツツリー (描画順) → 公開ヘルパーにします。アルファベット順にしません。
+- `_<kebab>.tsx` はパーツファイルと合成 (`.tsx`) からのみ import します。パーツ横断の補助 (`ItemObject` 判定・値推論など) を置き、バレルと公開 `index.ts` からは再輸出しません。公開する補助は `utils/<kebab>.utils.ts` に置き、バレルから再輸出します (例: `decomposeAccordionItemObject`)。
+- バレル `<kebab>.parts.ts` は全パーツ・Context・公開ヘルパーを `export *` で再輸出し、各パートの CSS をパーツツリー順 (描画順) に import します。短名 (`Context` や `Root`、`ItemContext`、`useFilter` など) は各パーツファイルの再輸出から伝わります。並びは Context → パーツツリー (描画順) → 公開ヘルパーにします。アルファベット順にしません。
 - `src/index.ts` には合成 (`.tsx`) の公開型と値を網羅列挙します。パーツ単体の型は列挙せず、合成の再命名型を使います。`ItemGroup` だけでなく `ItemValue`・`ItemLabeledValue`・`IFilter`・`IFilteredItems` など合成 namespace が公開する型を落としません。値には `type` を付けず、型のみには `type` を付けます。
 
 ```ts
@@ -1424,7 +1433,18 @@ export {
 } from "./combobox/index.js";
 ```
 
-- 既定アイコンは共有 `../_icons.tsx` に置きます。コンポーネント専用ファイルに実装しません。型は `IComponent` の素関数にし、`svg` にフォーカス外しと装飾隠しを付けます。
+- 既定アイコンは共有 `../../_icons.jsx` に置きます。コンポーネント専用ファイルに実装しません。型は `IComponent` の素関数にし、`svg` にフォーカス外しと装飾隠しを付けます。
+
+## テストとストーリー
+
+テストと Storybook はコンポーネント・パートと同居させます。ファイル名は変えず、置き場所だけを移します。
+
+- パーツのテスト (`<kebab>.<パーツ>.client.test.tsx` など) はそのパートのディレクトリーに置きます (例: `combobox.input.client.test.tsx` → `input/`)。`context` は `root/` に置きます (`item-context` のように `-context` 接尾辞があるものは接尾辞を除いたパートに置きます)。
+- 全体テスト (`<kebab>.client.test.tsx`・`<kebab>.layout.client.test.tsx`・`<kebab>.api.client.test.tsx`・`<kebab>.parts.client.test.tsx` など) と Story (`<kebab>.stories.tsx`) とコンポーネント固有ヘルパー (`_supports-...`・`_probe`・`_sidebar` など) はコンポーネント直下に置きます。
+- ストーリー専用アセットはそのコンポーネントの `_assets/` に置き、`./_assets/...` で参照します。
+- 共有のテスト基盤 (`tests/src/_locators.ts` など) は動かしません。移動後の相対 import (`../../../tests/src/_locators.js` など) は機械的に書き換えます。
+- テスト内のオブジェクトキーも整形対象 (`sort-object-props`) になるため、キー順序に依存するアサーションは避けます。順序が意味を持つ場合は配列で持ちます。
+- `tsconfig.*.json` の `include` / `exclude` に `{ts,tsx}` の brace 展開は使えません (TypeScript が解釈せず無黙示に外れます)。`.ts` と `.tsx` を別々に書きます。
 
 ## 見直しと検証
 
@@ -1446,11 +1466,11 @@ mise run test:typecheck
 
 提出前にすべて満たすことを確認します。
 
-- 1 パーツ 1 ファイルで、ファイル名が `<kebab>.<パーツの kebab>.tsx` である。Context は `<kebab>.<対象の kebab>.context.ts`、Context・型・フックのみのパーツは `.ts` である。フックラッパーが `<kebab>.use-<名前>.ts`、公開ヘルパーが `<kebab>.utils.ts` である。
-- CSS の import がバレルだけにある。バレルが `export *` だけを行い、Context → パーツツリー → 公開ヘルパーの順に並んでいる。
+- 1 パーツ 1 ディレクトリーで、中のファイル名が `<kebab>.<パーツの kebab>.tsx` である。Context は所有パーツの `<kebab>.<パーツの kebab>.context.ts`、Context・型・フックのみのパーツは `.ts` である。フックラッパーが `use-<名前>/<kebab>.use-<名前>.ts`、公開ヘルパーが `utils/<kebab>.utils.ts`、命令ハンドルが `handle/<kebab>.handle.ts` である。
+- CSS の import がバレルだけにあり、各パートの CSS をパーツツリー順 (描画順) に import している。バレルが `export *` だけを行い、Context → パーツツリー → 公開ヘルパーの順に並んでいる。
 - パーツをまたぐ参照が相対 import で、ファイル内部では正式名を使っている。
 - 型だけの import が `import type { X } from "..."` になっている。値と型が混ざる場合だけ `import { type X, value }` にしている。
-- パーツ横断の補助が `_<kebab>.tsx` にあり、バレルと公開 `index.ts` から再輸出されていない。公開ヘルパーが `<kebab>.utils.ts` にあり、バレルから再輸出されている。
+- パーツ横断の補助が `_<kebab>.tsx` にあり、バレルと公開 `index.ts` から再輸出されていない。公開ヘルパーが `utils/<kebab>.utils.ts` にあり、バレルから再輸出されている。
 - `erasableSyntaxOnly` に反する構文 (`enum`・パラメータープロパティーなど) がない。
 - `IComponent` 以外で宣言していない。`Sui` / `useSui` 接頭辞を省略していない。`const` 型引数 (`TMultiple`) を落としていない。
 - `useRender` 対象に JSX 直書きしていない。Base UI 対象に `useRender` を使っていない。
