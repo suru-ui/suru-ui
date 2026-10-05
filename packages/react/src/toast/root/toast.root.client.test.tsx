@@ -174,6 +174,8 @@ describe("ToastAPI", () => {
       radius: "sm",
       variant: "naked",
       outlined: true,
+      actionsPosition: undefined,
+      descriptionPosition: undefined,
     });
   });
 

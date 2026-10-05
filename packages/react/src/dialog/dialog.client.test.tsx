@@ -84,20 +84,22 @@ describe("Dialog", () => {
       <Dialog close={closeButton} title="見出し" action="操作" variant="stacked" defaultOpen />,
     );
 
-    // 検証
+    // 検証 (操作はヘッダー内に描画し、見た目だけ絶対配置で外へ重ねます)
     const action = screen.getByClassName("sui_dialog_action").element();
     expect(action.closest(".sui_dialog_popup")).not.toBe(null);
-    expect(action.closest(".sui_dialog_header")).toBe(null);
+    expect(getComputedStyle(action).position).toBe("absolute");
     expect(action.closest(".sui_dialog_footer")).toBe(null);
   });
 
-  test("積み上げ式で操作だけのときヘッダーを描画しない", async ({ expect }) => {
+  test("積み上げ式で操作だけのときもヘッダーを描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Dialog variant="stacked" defaultOpen />);
 
-    // 検証
-    expect(screen.getByClassName("sui_dialog_header").query()).toBe(null);
-    expect(screen.getByClassName("sui_dialog_action").query()).not.toBe(null);
+    // 検証 (ヘッダーは空でも描画しますが、操作が絶対配置のため高さを持ちません)
+    const header = screen.getByClassName("sui_dialog_header").element();
+    const action = screen.getByClassName("sui_dialog_action").element();
+    expect(action.closest(".sui_dialog_header")).not.toBe(null);
+    expect(header.getBoundingClientRect().height).toBe(0);
   });
 
   test("slotProps で各パーツに props を渡す", async ({ expect }) => {

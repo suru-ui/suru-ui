@@ -96,7 +96,8 @@ describe("ContextMenu の配置", () => {
       const style = getComputedStyle(item);
       expect(style.justifyContent).toBe("space-between");
       expect(Number.parseFloat(style.minHeight)).toBeCloseTo(32, 0);
-      expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(8, 1);
+      // 項目ボタンは一覧向けに狭い余白 (`--sui-space(2.5 / 2)` = 5px) を持ちます。
+      expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(5, 1);
       expect(item.getBoundingClientRect().width).toBeCloseTo(
         content.getBoundingClientRect().width - 12 * 2,
         0,

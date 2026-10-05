@@ -187,12 +187,12 @@ describe("DialogAPI", () => {
     expect(api.getHeaderProps()).toStrictEqual({});
   });
 
-  test("getHeaderProps は積み上げ式で閉じるアイコンボタンだけのとき null を返す", ({ expect }) => {
+  test("getHeaderProps は積み上げ式でも閉じるアイコンボタンだけで表示する", ({ expect }) => {
     // 準備と実行
     const api = new DialogAPI({ handle: createDialogHandle(), variant: "stacked" });
 
-    // 検証
-    expect(api.getHeaderProps()).toBe(null);
+    // 検証 (外観によらず、操作があるかぎりヘッダーを描画します)
+    expect(api.getHeaderProps()).toStrictEqual({});
   });
 
   test("getPortalProps は slotProps の指定を返す", ({ expect }) => {

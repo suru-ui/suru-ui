@@ -138,7 +138,10 @@ describe("AlertDialog の配置", () => {
       .element()
       .getBoundingClientRect();
     expect(cancelRect.right).toBeLessThan(confirmRect.left);
-    expect(confirmRect.right).toBeCloseTo(popup.getBoundingClientRect().right - 16, 1);
+    // ポップアップは Card 継承で枠線を持つため、rect (border box) から枠線幅を除いて比べます。
+    const popupRect = popup.getBoundingClientRect();
+    const borderRight = Number.parseFloat(getComputedStyle(popup).borderRightWidth);
+    expect(confirmRect.right).toBeCloseTo(popupRect.right - borderRight - 16, 1);
   });
 
   test.skipIf(!supportsCustomFunctions())(
@@ -202,8 +205,11 @@ describe("AlertDialog の配置", () => {
       expect(getComputedStyle(action).position).toBe("absolute");
       const popupRect = popup.getBoundingClientRect();
       const actionRect = action.getBoundingClientRect();
-      expect(actionRect.right).toBeCloseTo(popupRect.right - 16, 1);
-      expect(actionRect.top).toBeCloseTo(popupRect.top + 16, 1);
+      // ポップアップは Card 継承で枠線を持つため、rect (border box) から枠線幅を除いて比べます。
+      const borderRight = Number.parseFloat(getComputedStyle(popup).borderRightWidth);
+      const borderTop = Number.parseFloat(getComputedStyle(popup).borderTopWidth);
+      expect(actionRect.right).toBeCloseTo(popupRect.right - borderRight - 16, 1);
+      expect(actionRect.top).toBeCloseTo(popupRect.top + borderTop + 16, 1);
     },
   );
 

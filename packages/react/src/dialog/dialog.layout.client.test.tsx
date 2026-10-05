@@ -97,7 +97,12 @@ describe("Dialog の配置", () => {
         .getByRole("button", { name: "閉じる" })
         .element()
         .getBoundingClientRect();
-      expect(buttonRect.right).toBeCloseTo(content.getBoundingClientRect().right - 16, 1);
+      // ポップアップは Card 継承で枠線を持つため、rect (border box) から枠線幅を除いて比べます。
+      const borderRight = Number.parseFloat(getComputedStyle(content).borderRightWidth);
+      expect(buttonRect.right).toBeCloseTo(
+        content.getBoundingClientRect().right - borderRight - 16,
+        1,
+      );
     },
   );
 
@@ -106,7 +111,14 @@ describe("Dialog の配置", () => {
     async ({ expect }) => {
       // 準備と実行
       const screen = await render(
-        <Dialog close={closeButton} title="見出し" variant="stacked" defaultOpen description="説明">
+        <Dialog
+          close={closeButton}
+          title="見出し"
+          footer={<button type="button">保存</button>}
+          variant="stacked"
+          defaultOpen
+          description="説明"
+        >
           本文
         </Dialog>,
       );
@@ -148,8 +160,11 @@ describe("Dialog の配置", () => {
       expect(getComputedStyle(action).position).toBe("absolute");
       const contentRect = content.getBoundingClientRect();
       const actionRect = action.getBoundingClientRect();
-      expect(actionRect.right).toBeCloseTo(contentRect.right - 16, 1);
-      expect(actionRect.top).toBeCloseTo(contentRect.top + 16, 1);
+      // ポップアップは Card 継承で枠線を持つため、rect (border box) から枠線幅を除いて比べます。
+      const borderRight = Number.parseFloat(getComputedStyle(content).borderRightWidth);
+      const borderTop = Number.parseFloat(getComputedStyle(content).borderTopWidth);
+      expect(actionRect.right).toBeCloseTo(contentRect.right - borderRight - 16, 1);
+      expect(actionRect.top).toBeCloseTo(contentRect.top + borderTop + 16, 1);
     },
   );
 
@@ -246,7 +261,9 @@ describe("Dialog の配置", () => {
       const body = screen.getByClassName("sui_dialog_content").element();
       const contentRect = content.getBoundingClientRect();
       const bodyRect = body.getBoundingClientRect();
-      expect(bodyRect.top - contentRect.top).toBeCloseTo(16, 1);
+      // ポップアップは Card 継承で枠線を持つため、rect (border box) から枠線幅を除いて比べます。
+      const borderTop = Number.parseFloat(getComputedStyle(content).borderTopWidth);
+      expect(bodyRect.top - contentRect.top - borderTop).toBeCloseTo(16, 1);
     },
   );
 });
