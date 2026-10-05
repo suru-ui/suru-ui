@@ -2,6 +2,7 @@ import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -13,6 +14,7 @@ import {
   ComboboxContext,
   useComboboxContext,
 } from "../root/combobox.root.context.js";
+import { ComboboxInputGroupContext } from "./combobox.input-group.context.js";
 
 /**
  * {@link ComboboxInputGroup} の状態です。
@@ -151,7 +153,16 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
           (state) => ({ ...childCtx, ...state }),
           {
             style,
-            render,
+            render: (htmlProps, state) => (
+              <ComboboxInputGroupContext value={state}>
+                <RenderElement
+                  state={state}
+                  render={render}
+                  htmlProps={htmlProps}
+                  defaultTagName="div"
+                />
+              </ComboboxInputGroupContext>
+            ),
             className: cn<ComboboxInputGroupState>(
               className,
               "sui_combobox",

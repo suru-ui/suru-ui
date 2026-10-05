@@ -2,6 +2,7 @@ import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -10,6 +11,7 @@ import {
   ComboboxCollection,
 } from "../collection/combobox.collection.jsx";
 import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { ComboboxListContext } from "./combobox.list.context.js";
 
 export type IComboboxListItemRenderer<TItem = any> = IComboboxCollectionItemRenderer<TItem>;
 
@@ -81,7 +83,16 @@ export const ComboboxList: IComboboxList = function SuiComboboxList(props: Combo
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ComboboxListContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ComboboxListContext>
+          ),
           className: cn<ComboboxListState>(
             className,
             "sui_combobox_list",

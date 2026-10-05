@@ -2,10 +2,12 @@ import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { ComboboxPortalContext } from "./combobox.portal.context.js";
 
 /**
  * {@link ComboboxPortal} の状態です。
@@ -66,7 +68,16 @@ export const ComboboxPortal: IComboboxPortal = function SuiComboboxPortal(props)
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ComboboxPortalContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ComboboxPortalContext>
+          ),
           className: cn<ComboboxPortalState>(
             className,
             "sui_combobox_portal",

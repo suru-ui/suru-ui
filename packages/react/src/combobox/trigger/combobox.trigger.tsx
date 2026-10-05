@@ -3,10 +3,12 @@ import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { ComboboxTriggerContext } from "./combobox.trigger.context.js";
 
 /**
  * {@link ComboboxTrigger} の状態です。
@@ -69,7 +71,16 @@ export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(pro
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render: children,
+          render: (htmlProps, state) => (
+            <ComboboxTriggerContext value={state}>
+              <RenderElement
+                state={state}
+                render={children}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </ComboboxTriggerContext>
+          ),
           className: cn<ComboboxTriggerState>(
             className,
             "sui_combobox_trigger",

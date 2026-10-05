@@ -3,10 +3,12 @@ import * as React from "react";
 
 import { ChevronIcon } from "../../_icons.jsx";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { ComboboxIconContext } from "./combobox.icon.context.js";
 
 /**
  * {@link ComboboxIcon} の状態です。
@@ -58,7 +60,16 @@ export const ComboboxIcon: IComboboxIcon = function SuiComboboxIcon(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ComboboxIconContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="span"
+              />
+            </ComboboxIconContext>
+          ),
           className: cn<ComboboxIconState>(
             className,
             "sui_combobox_icon",

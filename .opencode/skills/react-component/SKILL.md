@@ -24,10 +24,10 @@ description: Suru UI の React コンポーネント (`packages/react/src/<名�
 パターン別の代表例 (同型の実装はどれも同等に参照してよく、以下の列挙にない新設も模範になりえます):
 - `combobox/root/combobox.root.tsx` — Root 定型の例 (DOM を持たない Root + Config + Context 提供)
 - `accordion/root/accordion.root.tsx` — DOM を持つ Root + `items` レンダラーの例 (`data-scope` 起点・`TItem` / `TValue`・スタイル情報の state 化)
-- `combobox/input-group/combobox.input-group.tsx` — スタイル起点・状態集約の例
+- `combobox/input-group/combobox.input-group.tsx` — スタイル起点・状態集約 + パーツ Context 提供の例
 - `combobox/item/combobox.item.tsx` — 継承パターン (Outer の Base UI + Inner の Suru UI) の例
 - `combobox/collection/combobox.collection.tsx` / `combobox/list/combobox.list.tsx` / `combobox/value/combobox.value.tsx` — 一覧描画・レンダラーの例
-- `combobox/root/combobox.root.context.ts` / `combobox/item/combobox.item.context.ts` — Context・サブコンテキストの例
+- `combobox/root/combobox.root.context.ts` / `combobox/item/combobox.item.context.ts` / `combobox/input-group/combobox.input-group.context.ts` — Context・サブコンテキストの例 (InputGroup は全パーツ Context のひな形)
 - `accordion/item/accordion.item.context.ts` / `accordion/trigger/accordion.trigger.context.ts` — パーツ状態のサブコンテキスト例 (短名は `ItemContext` / `TriggerContext`)
 - `combobox/trigger/combobox.trigger.tsx` — render 関数を `children` に付け替える場合の例
 - `combobox/use-filter/combobox.use-filter.ts` / `combobox/use-filtered-items/combobox.use-filtered-items.ts` — フックラッパーの例
@@ -200,7 +200,7 @@ const ctx = React.use(XxxContext);
 const ctx = React.useMemo<XxxContext>(() => ({ ... }), [...]);
 ```
 
-- 一部のキーだけ上書きして子へ伝える派生コンテキストは `useMemo` + スプレッドにします。意図が分かる範囲で上書きキーを最小化し、横に意図注釈を残します (例: `InputGroup` の `size/color/radius/variant`、`Chip` の `radius`、`Popup` の `outlined`、`Group` の `items` など)。
+- 一部のキーだけ上書きして子へ伝える派生コンテキストは `useMemo` + スプレッドにします。意図が分かる範囲で上書きキーを最小化し、横に意図注釈を残します (例: `InputGroup` の `size/color/radius/variant/outlined`、`Chip` の `radius`、`Popup` の `outlined`、`Group` の `items` など)。
 
 ```tsx
 const ctx = useComboboxContext();
@@ -228,6 +228,32 @@ return (
 - 短名再輸出は束縛を作りません。ファイル内部 (JSX 含む) は正式名のままにします。
 - 他パーツが内部フック (`useSuiXxxContext`) を使いたい場合は、公開済みの `useXxxContext` を相対 import します。内部フックは export しません。
 - ルート以外の Context (`ComboboxItemContext`・`AccordionTriggerContext` を例とします) は値伝播やパーツ状態用の型にし、短名は対象名に合わせます (`ItemContext` / `useItemContext`、`TriggerContext` / `useTriggerContext`)。ルート以外で `Context` / `useContext` を使いません。オーバーロード関数 + `IUseContext` 別名の形も許容します。
+
+### パーツ Context
+
+合成 state を持つ Base UI ラッパーは、そのパーツの Context を所有ディレクトリーの `<kebab>.<パーツ>.context.ts` に持ちます (`input-group/combobox.input-group.context.ts` をひな形とします)。
+
+- 値型は対応する `State` の `Readonly` 別名にします (`ComboboxInputGroupContext = Readonly<Override<ComboboxContext, Combobox.InputGroup.State>>`)。独自 Suru UI 状態を持つ場合 (例: Chip の `variant`) は値型にも含めます。型が所有パーツのファイルにあるときは `import type` で参照します (実行時循環を作りません)。
+- React コンテキスト・`IUse...` フック (`useSui...` 実装 + `ContextMissingError`)・短名再輸出 (`<対象>Context` / `use<対象>Context`) を同じファイルに置きます。`providerName` は所有パーツにします。
+- `State` が親 Context と同一で変更・拡張がない場合 (例: `ComboboxAddonState = ComboboxContext`) は独自定義を作りません。その旨のコメントを残し、親をリネーム再輸出するだけにします。汎用の短名 (`Context` / `useContext`) は再輸出せず、バレルの `export *` 衝突を避けます。
+
+```ts
+import {
+  ComboboxContext,
+  useComboboxContext,
+} from "../root/combobox.root.context.js";
+
+// ComboboxAddon は Context を変更・拡張しないため、親の ComboboxContext をそのまま使う。
+export {
+  ComboboxContext as ComboboxAddonContext,
+  ComboboxContext as AddonContext,
+  useComboboxContext as useComboboxAddonContext,
+  useComboboxContext as useAddonContext,
+};
+```
+
+- 提供は `render` を関数にして自パーツの Context で `RenderElement` を包みます。外側の親 Context 提供は残します (`Base UI ラッパーの state 合成` を参照)。
+- 状態を持たない非要素 (`State = {}` の Collection / ItemLabel、Base UI のみを中継する Value など) と、既に値伝播の Context を持つパーツ (例: `ComboboxItem`) には作りません。
 
 ### State の継承
 
@@ -401,7 +427,7 @@ export namespace ComboboxRootProps {
      * グループの配列を指定するとグループごとに区切って表示します。
      */
     items?: readonly TItem[] | undefined;
-    // ...outlined・radius・size・variant
+    // ...radius・size・variant
   };
 
   export type BaseUI<
@@ -680,7 +706,6 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
     variant = "liquid",
     disabled = false,
     multiple = false,
-    outlined = false,
     readOnly = false,
     required = false,
     itemToStringLabel = defaultItemToStringLabel,
@@ -695,10 +720,10 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
       radius,
       variant,
       multiple,
-      outlined,
+      outlined: false,
       itemToStringLabel,
     }),
-    [size, color, items, radius, variant, multiple, outlined, itemToStringLabel],
+    [size, color, items, radius, variant, multiple, itemToStringLabel],
   );
 
   return (
@@ -708,7 +733,6 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
       radius={radius}
       variant={variant}
       disabled={disabled}
-      outlined={outlined}
       readOnly={readOnly}
       required={required}
     >
@@ -730,6 +754,7 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
 ```
 
 - `items`・`disabled`・`multiple` など Base UI へ渡す主要 props は明示列挙で渡し直します。残余任せにしません。
+- Root が所有しない修飾 (例: `InputGroup` が所有する `outlined`) は props に置きません。`ctx` には既定値を直書きし、`config.Context` へは渡しません。
 
 ### Root 定型 (DOM を持つ場合)
 
@@ -838,7 +863,7 @@ export const AccordionItem: IAccordionItem = function SuiAccordionItem(props) {
 
 - `render`・`style`・`className` の 3 つを分解し、`proxyRenderProps` の戻り値を Base UI へ展開します。残余へ残しません。
 - 合成関数は `(state) => ({ ...ctx, ...state })` にします。Context が先、Base UI の `state` が後です。`unstyled` のような独自フラグは末尾に足します (`(state) => ({ ...ctx, ...state, unstyled })`)。
-- 子孫へ Context を提供する場合は、`render` を関数にして `RenderElement` を包みます (`defaultTagName` は Base UI の既定要素)。提供しない場合は `render` をそのまま渡します (`AccordionHeading`)。
+- 合成 state を持つ Base UI ラッパーは、そのパーツの Context を子孫へ提供します。`render` を関数にして自パーツの Context で `RenderElement` を包みます (`defaultTagName` は Base UI の既定要素。`children` 付け替えの Trigger は `render={children}` で同様に包みます)。外側の親 Context 提供は残します。Context を持たない薄いラッパーは `render` をそのまま渡します (`AccordionHeading`)。
 - 子パーツの `State` 型は `Override<上位Context, BaseUI.State>` にします (`State の継承` を参照)。
 - クラス名はマージ後の state で作ります。クロージャー変数を使いません。
 
@@ -910,7 +935,7 @@ cn(
   `sui_combobox-color_${color}`,
   `sui_combobox-radius_${radius}`,
   `sui_combobox-variant_${variant}`,
-  childCtx.outlined && "sui_combobox-outlined",
+  (state) => state.outlined && "sui_combobox-outlined",
   (state) => state.disabled && "sui_combobox-disabled",
   (state) => state.touched && "sui_combobox-touched",
   (state) => state.dirty && "sui_combobox-dirty",
@@ -939,7 +964,7 @@ cn(
 
 1. `data-scope=""` は CSS の `@scope` 始点 (スタイル起点) だけに付けます。付け忘れ・付け過ぎの両方を避けます。Root が DOM を持たない場合はスタイル起点となる子 (例: InputGroup / Portal / TriggerLabel) が起点になります。
 2. 状態クラスはスタイル起点の要素に集約します。分散させません。Root が DOM を持たない場合の起点は対象のコンポーネントが定めます (例: 入力系の状態を持つ InputGroup とポップアップ系の修飾を持つ Portal)。
-3. SuruUI 由来の値・フラグ・バリアントは原則として最上位の `SuruUI` に集約し、Context で子へ伝えます。Context の値は `State` に合成し、`render`・`className`・`style` から読めるようにします (スタイル情報の state 化。`State の継承` を参照)。ただし独立装飾を持つ子 (例: `color/radius/variant` を持つ Chip、`outlined/inputPosition` を持つ Popup、`radius` を持つ ChipRemove など) は、Context フォールバック付きの独自 `SuruUI` + 自身要素への修飾クラスを許します (`color = ctx.color` + `sui_combobox_chip-color_${color}` を例とします)。同名 prop の二重管理にならないよう、フォールバック元を JSDoc に明記します。
+3. SuruUI 由来の値・フラグ・バリアントは原則として最上位の `SuruUI` に集約し、Context で子へ伝えます。Context の値は `State` に合成し、`render`・`className`・`style` から読めるようにします (スタイル情報の state 化。`State の継承` を参照)。ただし独立装飾を持つ子 (例: `color/radius/variant` を持つ Chip、`outlined/inputPosition` を持つ Popup、`outlined` を持つ InputGroup、`radius` を持つ ChipRemove など) は、Context フォールバック付きの独自 `SuruUI` + 自身要素への修飾クラスを許します (`color = ctx.color` + `sui_combobox_chip-color_${color}` を例とします)。同名 prop の二重管理にならないよう、フォールバック元を JSDoc に明記します。
 4. Base UI の `data-*` 属性を CSS セレクターに使いません (`[data-scope]` を除く)。状態装飾は `cn` の状態関数による自前クラスで行います。
 
 真偽状態は `sui_<基底>-<状態>`、値付き状態は `sui_<基底>-<属性>_<値>` にします。
@@ -1440,7 +1465,8 @@ export {
 テストと Storybook はコンポーネント・パートと同居させます。ファイル名は変えず、置き場所だけを移します。
 
 - パーツのテスト (`<kebab>.<パーツ>.client.test.tsx` など) はそのパートのディレクトリーに置きます (例: `combobox.input.client.test.tsx` → `input/`)。`context` は `root/` に置きます (`item-context` のように `-context` 接尾辞があるものは接尾辞を除いたパートに置きます)。
-- 全体テスト (`<kebab>.client.test.tsx`・`<kebab>.layout.client.test.tsx`・`<kebab>.api.client.test.tsx`・`<kebab>.parts.client.test.tsx` など) と Story (`<kebab>.stories.tsx`) とコンポーネント固有ヘルパー (`_supports-...`・`_probe`・`_sidebar` など) はコンポーネント直下に置きます。
+- 全体テスト (`<kebab>.client.test.tsx`・`<kebab>.layout.client.test.tsx`・`<kebab>.api.client.test.tsx`・`<kebab>.parts.client.test.tsx`・`<kebab>.parts-context.client.test.tsx` など) と Story (`<kebab>.stories.tsx`) とコンポーネント固有ヘルパー (`_supports-...`・`_probe`・`_sidebar` など) はコンポーネント直下に置きます。
+- Context 伝搬のテストは `render` に Probe を返してフックで読みます (void 要素も `render` 経由なら配置できます。Base UI が条件付きで描画するパーツ (例: `Clear`・`ItemIndicator`) は既定値などで描画条件を満たします)。
 - ストーリー専用アセットはそのコンポーネントの `_assets/` に置き、`./_assets/...` で参照します。
 - 共有のテスト基盤 (`tests/src/_locators.ts` など) は動かしません。移動後の相対 import (`../../../tests/src/_locators.js` など) は機械的に書き換えます。
 - テスト内のオブジェクトキーも整形対象 (`sort-object-props`) になるため、キー順序に依存するアサーションは避けます。順序が意味を持つ場合は配列で持ちます。
@@ -1484,8 +1510,8 @@ mise run test:typecheck
 - 型引数名が `T` 始まりである。テーマ型 (`Color`・`Size`) を union 再定義していない。`Radius` が `"none" | Size | "full"` または `"none" | Size` (Accordion のように `full` が要らない形状は後者) である。
 - 他コンポーネントの型参照に短名 namespace を使っている (`Card.Root.Props.SuruUI`・`Card.Root.State` など)。長名 (`Card.CardRootProps.SuruUI`・`Card.CardRootState`) を使っていない。
 - Base UI の公開型に漏れがない。`Handle` の有無を確認している。根拠コメントの型名が実体と一致している。
-- Context を持つ場合、`Context` 値型が `readonly` + 汎型既定値付きである。フック型が `IUseContext` 継承 + オーバーロードである。`ContextMissingError` の `contextName` / `providerName` が正しい。ローカル変数は `ctx` である。派生コンテキストが `useMemo` + スプレッドで、意図注釈がある。短名がルートは `Context` / `useContext`、ルート以外は `ItemContext` / `useItemContext` のように対象名に合っている。Context を持たない場合 (`Stat` のように修飾が Root 自身に集約し子が読まない場合) は Context ファイルがない。
-- State の継承が規則通りである。ルートは `Context` または `Override<Context, BaseUI.State>`、子は上位 `State` と同じか `Override<上位Context, BaseUI.State>` で、独自の Suru UI 状態は `Override` の入れ子で足している。Base UI ラッパーの子は `(state) => ({ ...ctx, ...state })` で合成している。子が読む Context がそのパーツの必ず置かれる範囲のものである (`AccordionIndicator` は `ItemContext`)。
+- Context を持つ場合、`Context` 値型が `readonly` + 汎型既定値付きである。フック型が `IUseContext` 継承 + オーバーロードである。`ContextMissingError` の `contextName` / `providerName` が正しい。ローカル変数は `ctx` である。派生コンテキストが `useMemo` + スプレッドで、意図注釈がある。短名がルートは `Context` / `useContext`、ルート以外は `ItemContext` / `useItemContext` のように対象名に合っている。各パーツの Context が所有ディレクトリーにあり、親と同一の場合はリネーム再輸出 + コメントになっている。Context を持たない場合 (`Stat` のように修飾が Root 自身に集約し子が読まない場合) は Context ファイルがない。
+- State の継承が規則通りである。ルートは `Context` または `Override<Context, BaseUI.State>`、子は上位 `State` と同じか `Override<上位Context, BaseUI.State>` で、独自の Suru UI 状態は `Override` の入れ子で足している。Base UI ラッパーの子は `(state) => ({ ...ctx, ...state })` で合成している。子が読む Context がそのパーツの必ず置かれる範囲のものである (`AccordionIndicator` は `ItemContext`)。提供の `defaultTagName` が Base UI の既定要素と一致している。
 - 再輸出・再命名に JSDoc (`{@link X}` のみを含む) を付けていない。`State` / `Props` を省略していない。該当するフック短名 (例: `useFilter`・`useFilteredItems`・`ItemContext`・`useItemContext`・`TriggerContext`・`useTriggerContext` など) を落としていない。
 - 一覧描画を持つ場合、レンダラー型 (例: `ICollectionItemRenderer`・`IListItemRenderer`・`IValueRenderer`・`IItemLabelRenderer`・`IAccordionRootItemRenderer` など) が定義されている。分離描画 (`Collection`・`List`・`Value`) では `children` 強化 (`Override` + `BaseUI の型を強化します。`) にし、Root 内描画 (Accordion) では `SuruUI` の `children: React.ReactNode | I...ItemRenderer` にする。`switch (true)` の順序と `getItemKey ?? index` が正しい。
 - 反復要素に `key` を付けている。判定関数を公開・再定義していない。

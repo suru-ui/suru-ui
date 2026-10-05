@@ -4,10 +4,12 @@ import * as React from "react";
 
 import { ClearIcon } from "../../_icons.jsx";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { ComboboxClearContext } from "./combobox.clear.context.js";
 
 /**
  * {@link ComboboxClear} の状態です。
@@ -69,7 +71,16 @@ export const ComboboxClear: IComboboxClear = function SuiComboboxClear(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ComboboxClearContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </ComboboxClearContext>
+          ),
           className: cn<ComboboxClearState>(
             className,
             "sui_combobox_clear",

@@ -2,10 +2,12 @@ import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { ComboboxChipsContext } from "./combobox.chips.context.js";
 
 /**
  * {@link ComboboxChips} の状態です。
@@ -57,7 +59,16 @@ export const ComboboxChips: IComboboxChips = function SuiComboboxChips(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ComboboxChipsContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ComboboxChipsContext>
+          ),
           className: cn<ComboboxChipsState>(
             className,
             "sui_combobox_chips",

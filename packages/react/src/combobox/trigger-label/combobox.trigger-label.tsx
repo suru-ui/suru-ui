@@ -2,10 +2,12 @@ import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { ComboboxTriggerLabelContext } from "./combobox.trigger-label.context.js";
 
 /**
  * {@link ComboboxTriggerLabel} の状態です。
@@ -57,7 +59,16 @@ export const ComboboxTriggerLabel: IComboboxTriggerLabel = function SuiComboboxT
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ComboboxTriggerLabelContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ComboboxTriggerLabelContext>
+          ),
           className: cn<ComboboxTriggerLabelState>(
             className,
             "sui_combobox_trigger_label",

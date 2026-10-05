@@ -3,11 +3,13 @@ import type { Size, Color, ColorTemplate } from "@suru-ui/theme";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { ComboboxItemContext } from "../item/combobox.item.context.js";
 import { ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { ComboboxChipContext } from "./combobox.chip.context.js";
 
 /**
  * チップの配色です。
@@ -143,7 +145,16 @@ export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: Combo
             (state) => ({ ...ctx, color, radius, variant, outlined, ...state }),
             {
               style,
-              render,
+              render: (htmlProps, state) => (
+                <ComboboxChipContext value={state}>
+                  <RenderElement
+                    state={state}
+                    render={render}
+                    htmlProps={htmlProps}
+                    defaultTagName="div"
+                  />
+                </ComboboxChipContext>
+              ),
               className: cn<ComboboxChipState>(
                 className,
                 "sui_combobox_chip",

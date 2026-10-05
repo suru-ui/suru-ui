@@ -5,11 +5,13 @@ import * as React from "react";
 
 import { ClearIcon } from "../../_icons.jsx";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { useComboboxItemContext } from "../item/combobox.item.context.js";
 import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { ComboboxChipRemoveContext } from "./combobox.chip-remove.context.js";
 
 /**
  * チップを選択値から削除するボタンの角丸の大きさです。
@@ -91,7 +93,16 @@ export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipR
         (state) => ({ ...ctx, radius, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ComboboxChipRemoveContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </ComboboxChipRemoveContext>
+          ),
           className: cn<ComboboxChipRemoveState>(
             className,
             "sui_combobox_chip_remove",

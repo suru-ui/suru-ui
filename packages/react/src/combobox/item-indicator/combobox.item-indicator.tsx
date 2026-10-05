@@ -3,10 +3,12 @@ import * as React from "react";
 
 import { CheckIcon } from "../../_icons.jsx";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { ComboboxItemIndicatorContext } from "./combobox.item-indicator.context.js";
 
 /**
  * {@link ComboboxItemIndicator} の状態です。
@@ -60,7 +62,16 @@ export const ComboboxItemIndicator: IComboboxItemIndicator = function SuiCombobo
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ComboboxItemIndicatorContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="span"
+              />
+            </ComboboxItemIndicatorContext>
+          ),
           className: cn<ComboboxItemIndicatorState>(
             className,
             "sui_combobox_item_indicator",

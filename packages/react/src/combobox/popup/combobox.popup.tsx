@@ -2,10 +2,12 @@ import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { ComboboxPopupContext } from "./combobox.popup.context.js";
 
 /**
  * {@link ComboboxPopup} の状態です。
@@ -92,7 +94,16 @@ export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
           (state) => ({ ...childCtx, ...state }),
           {
             style,
-            render,
+            render: (htmlProps, state) => (
+              <ComboboxPopupContext value={state}>
+                <RenderElement
+                  state={state}
+                  render={render}
+                  htmlProps={htmlProps}
+                  defaultTagName="div"
+                />
+              </ComboboxPopupContext>
+            ),
             className: cn<ComboboxPopupState>(
               className,
               "sui_combobox_popup",

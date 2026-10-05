@@ -1,0 +1,37 @@
+import type { Combobox } from "@base-ui/react/combobox";
+import * as React from "react";
+
+import { ContextMissingError } from "../../errors.js";
+import type { Override, IUseContext } from "../../types.js";
+import type { ComboboxContext } from "../root/combobox.root.context.js";
+
+/**
+ * {@link ComboboxChips} が子パーツへ提供する状態です。
+ */
+export type ComboboxChipsContext = Readonly<Override<ComboboxContext, Combobox.Chips.State>>;
+
+/**
+ * {@link ComboboxChips} が子パーツへ提供するコンテキストです。
+ */
+export const ComboboxChipsContext: React.Context<ComboboxChipsContext | null> =
+  React.createContext<ComboboxChipsContext | null>(null);
+
+export type IUseComboboxChipsContext = IUseContext<ComboboxChipsContext>;
+
+/**
+ * {@link ComboboxChipsContext} を読み取るフックです。
+ */
+export const useComboboxChipsContext: IUseComboboxChipsContext =
+  function useSuiComboboxChipsContext(optional): any {
+    const ctx = React.use(ComboboxChipsContext);
+    if (ctx === null && !optional) {
+      throw new ContextMissingError({
+        contextName: "ComboboxChipsContext",
+        providerName: "ComboboxChips",
+      });
+    }
+
+    return ctx;
+  };
+
+export { ComboboxChipsContext as ChipsContext, useComboboxChipsContext as useChipsContext };

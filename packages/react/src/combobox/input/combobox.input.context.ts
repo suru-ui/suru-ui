@@ -1,0 +1,37 @@
+import type { Combobox } from "@base-ui/react/combobox";
+import * as React from "react";
+
+import { ContextMissingError } from "../../errors.js";
+import type { Override, IUseContext } from "../../types.js";
+import type { ComboboxContext } from "../root/combobox.root.context.js";
+
+/**
+ * {@link ComboboxInput} が子パーツへ提供する状態です。
+ */
+export type ComboboxInputContext = Readonly<Override<ComboboxContext, Combobox.Input.State>>;
+
+/**
+ * {@link ComboboxInput} が子パーツへ提供するコンテキストです。
+ */
+export const ComboboxInputContext: React.Context<ComboboxInputContext | null> =
+  React.createContext<ComboboxInputContext | null>(null);
+
+export type IUseComboboxInputContext = IUseContext<ComboboxInputContext>;
+
+/**
+ * {@link ComboboxInputContext} を読み取るフックです。
+ */
+export const useComboboxInputContext: IUseComboboxInputContext =
+  function useSuiComboboxInputContext(optional): any {
+    const ctx = React.use(ComboboxInputContext);
+    if (ctx === null && !optional) {
+      throw new ContextMissingError({
+        contextName: "ComboboxInputContext",
+        providerName: "ComboboxInput",
+      });
+    }
+
+    return ctx;
+  };
+
+export { ComboboxInputContext as InputContext, useComboboxInputContext as useInputContext };
