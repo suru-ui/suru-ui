@@ -1,10 +1,16 @@
-import "./slider.css";
+import "./root/slider.root.css";
+import "./label/slider.label.css";
+import "./value/slider.value.css";
+import "./control/slider.control.css";
+import "./track/slider.track.css";
+import "./indicator/slider.indicator.css";
+import "./thumb/slider.thumb.css";
 
-export * from "./slider.context.js";
-export * from "./slider.root.jsx";
-export * from "./slider.label.jsx";
-export * from "./slider.value.jsx";
-export * from "./slider.control.jsx";
-export * from "./slider.track.jsx";
-export * from "./slider.indicator.jsx";
-export * from "./slider.thumb.jsx";
+export * from "./root/slider.root.context.js";
+export * from "./root/slider.root.jsx";
+export * from "./label/slider.label.jsx";
+export * from "./value/slider.value.jsx";
+export * from "./control/slider.control.jsx";
+export * from "./track/slider.track.jsx";
+export * from "./indicator/slider.indicator.jsx";
+export * from "./thumb/slider.thumb.jsx";

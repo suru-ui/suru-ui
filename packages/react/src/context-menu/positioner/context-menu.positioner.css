@@ -1,0 +1,10 @@
+@layer sui.component {
+@scope (.sui_context_menu_positioner) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  z-index: 100;
+}
+
+} /* @scope */
+} /* @layer */

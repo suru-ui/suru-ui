@@ -4,8 +4,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/field/field.parts.js";
-import { FieldError } from "../../../src/field/field.error.jsx";
-import { FieldRoot } from "../../../src/field/field.root.jsx";
+import { FieldError } from "../../../src/field/error/field.error.jsx";
+import { FieldRoot } from "../../../src/field/root/field.root.jsx";
 import "../_locators.js";
 
 describe("FieldError", () => {

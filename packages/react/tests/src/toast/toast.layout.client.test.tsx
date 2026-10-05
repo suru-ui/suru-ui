@@ -3,7 +3,7 @@ import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useToastClient } from "../../../src/toast/toast.client.js";
+import { useToastClient } from "../../../src/toast/client/toast.client.js";
 import { Toast } from "../../../src/toast/toast.jsx";
 import "../../../src/toast/toast.parts.js";
 import "../_locators.js";

@@ -3,7 +3,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { Alert, AlertAPI, useAlertAPI } from "../../../src/alert/alert.jsx";
-import { Button } from "../../../src/button/button.js";
+import { Button } from "../../../src/button/button.jsx";
 import "../_locators.js";
 
 describe("AlertAPI", () => {

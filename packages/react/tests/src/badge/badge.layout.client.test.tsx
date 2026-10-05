@@ -3,7 +3,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/badge/badge.parts.js";
-import { BadgeRoot } from "../../../src/badge/badge.root.jsx";
+import { BadgeRoot } from "../../../src/badge/root/badge.root.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

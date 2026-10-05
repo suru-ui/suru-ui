@@ -1,0 +1,68 @@
+@layer sui.component {
+@scope (.sui_meter_indicator) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: absolute;
+  inset-block: 0px;
+  inset-inline-start: 0px;
+  display: block;
+  border-radius: inherit;
+  corner-shape: inherit;
+  transition: width 500ms;
+}
+
+/* 可変 */
+:scope {
+  background-color: var(--sui_meter_indicator-background_color);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 配色の代入はルートの色の修飾クラスに依存し、インジケーター自身には対応するクラスが無いため、空宣言と代入をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_meter) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_meter_indicator-background_color: ;
+}
+
+/* 代入 */
+:scope {
+  &.sui_meter-color_grey {
+    --sui_meter_indicator-background_color: var(--sui-grey-solid-canvas-normal);
+  }
+
+  &.sui_meter-color_blue {
+    --sui_meter_indicator-background_color: var(--sui-blue-solid-canvas-normal);
+  }
+
+  &.sui_meter-color_purple {
+    --sui_meter_indicator-background_color: var(--sui-purple-solid-canvas-normal);
+  }
+
+  &.sui_meter-color_magenta {
+    --sui_meter_indicator-background_color: var(--sui-magenta-solid-canvas-normal);
+  }
+
+  &.sui_meter-color_red {
+    --sui_meter_indicator-background_color: var(--sui-red-solid-canvas-normal);
+  }
+
+  &.sui_meter-color_orange {
+    --sui_meter_indicator-background_color: var(--sui-orange-solid-canvas-normal);
+  }
+
+  &.sui_meter-color_yellow {
+    --sui_meter_indicator-background_color: var(--sui-yellow-solid-canvas-normal);
+  }
+
+  &.sui_meter-color_green {
+    --sui_meter_indicator-background_color: var(--sui-green-solid-canvas-normal);
+  }
+}
+
+} /* @scope */
+} /* @layer */

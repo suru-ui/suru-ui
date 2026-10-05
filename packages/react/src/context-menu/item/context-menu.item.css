@@ -1,0 +1,12 @@
+/* disabled */
+@layer sui.important {
+@scope (.sui_context_menu_item) to ([data-scope]) {
+
+:scope {
+  &.sui_context_menu_item-disabled {
+    cursor: not-allowed;
+  }
+}
+
+} /* @scope */
+} /* @layer */

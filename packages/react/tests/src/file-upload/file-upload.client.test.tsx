@@ -11,7 +11,7 @@ import {
 import {
   type FileUploadAcceptEventDetails,
   type FileUploadRejectEventDetails,
-} from "../../../src/file-upload/file-upload.root.jsx";
+} from "../../../src/file-upload/root/file-upload.root.jsx";
 import "../../../src/file-upload/file-upload.parts.js";
 import "../_locators.js";
 

@@ -1,0 +1,68 @@
+@layer sui.component {
+  @scope (.sui_sidebar_inset) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      min-width: 0px;
+      border-style: solid;
+    }
+
+    /* 変数 */
+    :scope {
+      --sui_sidebar_inset-padding_block: ;
+      --sui_sidebar_inset-padding_inline: ;
+      --sui_sidebar_inset-margin_block: ;
+      --sui_sidebar_inset-margin_inline: ;
+      --sui_sidebar_inset-background_color: ;
+      --sui_sidebar_inset-border_color: ;
+      --sui_sidebar_inset-border_width: ;
+      --sui_sidebar_inset-border_radius: ;
+      --sui_sidebar_inset-corner_shape: ;
+    }
+
+    /* 可変 */
+    :scope {
+      padding-block: var(--sui_sidebar_inset-padding_block);
+      padding-inline: var(--sui_sidebar_inset-padding_inline);
+      margin-block: var(--sui_sidebar_inset-margin_block);
+      margin-inline: var(--sui_sidebar_inset-margin_inline);
+      background-color: var(--sui_sidebar_inset-background_color);
+      border-color: var(--sui_sidebar_inset-border_color);
+      border-width: var(--sui_sidebar_inset-border_width);
+      border-radius: var(--sui_sidebar_inset-border_radius);
+      corner-shape: var(--sui_sidebar_inset-corner_shape);
+    }
+
+    /* 代入 */
+    :scope {
+      --sui_sidebar_inset-padding_block: 0px;
+      --sui_sidebar_inset-padding_inline: 0px;
+      --sui_sidebar_inset-margin_block: 0px;
+      --sui_sidebar_inset-margin_inline: 0px;
+      --sui_sidebar_inset-background_color: transparent;
+      --sui_sidebar_inset-border_color: transparent;
+      --sui_sidebar_inset-border_width: 0px;
+      --sui_sidebar_inset-border_radius: 0px;
+    }
+  } /* @scope */
+} /* @layer */
+
+/* となり合うルートの variant_inset に依存し、インセット自身に等価なクラスが無いため、プロバイダー起点の別ブロックにします。 */
+@layer sui.component {
+  @scope (.sui_sidebar_provider) to ([data-scope]) {
+    /* 代入 */
+    :scope {
+      &:has(> .sui_sidebar-variant_inset) > .sui_sidebar_inset {
+        --sui_sidebar_inset-margin_block: --sui-space(1);
+        --sui_sidebar_inset-margin_inline: --sui-space(1);
+        --sui_sidebar_inset-background_color: var(--sui-canvas-1);
+        --sui_sidebar_inset-border_color: var(--sui-border-2);
+        --sui_sidebar_inset-border_width: --sui-border_width(1);
+        --sui_sidebar_inset-border_radius: --sui-corner_radius(3);
+        --sui_sidebar_inset-corner_shape: superellipse(var(--sui-superellipse));
+      }
+    }
+  } /* @scope */
+} /* @layer */

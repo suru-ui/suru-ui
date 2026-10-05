@@ -1,15 +1,18 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { AccordionContext, useAccordionContext } from "../../../src/accordion/accordion.context.js";
-import { AccordionHeading } from "../../../src/accordion/accordion.heading.jsx";
-import { AccordionItem } from "../../../src/accordion/accordion.item.jsx";
-import { AccordionRoot } from "../../../src/accordion/accordion.root.jsx";
+import { AccordionHeading } from "../../../src/accordion/heading/accordion.heading.jsx";
+import { AccordionItem } from "../../../src/accordion/item/accordion.item.jsx";
+import {
+  AccordionContext,
+  useAccordionContext,
+} from "../../../src/accordion/root/accordion.root.context.js";
+import { AccordionRoot } from "../../../src/accordion/root/accordion.root.jsx";
 import {
   AccordionTriggerContext,
   useAccordionTriggerContext,
-} from "../../../src/accordion/accordion.trigger.context.js";
-import { AccordionTrigger } from "../../../src/accordion/accordion.trigger.jsx";
+} from "../../../src/accordion/trigger/accordion.trigger.context.js";
+import { AccordionTrigger } from "../../../src/accordion/trigger/accordion.trigger.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useAccordionContext", () => {

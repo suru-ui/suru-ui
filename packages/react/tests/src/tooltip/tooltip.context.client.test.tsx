@@ -3,8 +3,11 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { TooltipContext, useTooltipContext } from "../../../src/tooltip/tooltip.context.js";
-import { TooltipRoot } from "../../../src/tooltip/tooltip.root.jsx";
+import {
+  TooltipContext,
+  useTooltipContext,
+} from "../../../src/tooltip/root/tooltip.root.context.js";
+import { TooltipRoot } from "../../../src/tooltip/root/tooltip.root.jsx";
 
 describe("useTooltipContext", () => {
   test("提供された値を返す", async ({ expect }) => {

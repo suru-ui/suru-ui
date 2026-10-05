@@ -5,7 +5,7 @@ import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import { isItemObject } from "./_tree.jsx";
-import type { TreeContext } from "./tree.context.js";
+import type { TreeContext } from "./root/tree.root.context.js";
 import {
   type TreeRootSize,
   type TreeItemProps,
@@ -21,7 +21,7 @@ import {
   TreeRoot,
   TreeItemIndicator,
 } from "./tree.parts.js";
-import { decomposeItemObject } from "./tree.utils.js";
+import { decomposeItemObject } from "./utils/tree.utils.js";
 
 // Types
 // -----

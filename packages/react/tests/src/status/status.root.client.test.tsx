@@ -2,7 +2,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/status/status.parts.js";
-import { StatusRoot } from "../../../src/status/status.root.jsx";
+import { StatusRoot } from "../../../src/status/root/status.root.jsx";
 import "../_locators.js";
 
 describe("StatusRoot", () => {

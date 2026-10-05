@@ -4,9 +4,9 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/field/field.parts.js";
-import { FieldControl } from "../../../src/field/field.control.jsx";
-import { FieldDescription } from "../../../src/field/field.description.jsx";
-import { FieldRoot } from "../../../src/field/field.root.jsx";
+import { FieldControl } from "../../../src/field/control/field.control.jsx";
+import { FieldDescription } from "../../../src/field/description/field.description.jsx";
+import { FieldRoot } from "../../../src/field/root/field.root.jsx";
 import "../_locators.js";
 
 describe("FieldDescription", () => {

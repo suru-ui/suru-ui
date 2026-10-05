@@ -6,8 +6,8 @@ import {
   type PaginationContext,
   PaginationContext as PaginationContextProvider,
   usePaginationContext,
-} from "../../../src/pagination/pagination.context.js";
-import { PaginationRoot } from "../../../src/pagination/pagination.root.jsx";
+} from "../../../src/pagination/root/pagination.root.context.js";
+import { PaginationRoot } from "../../../src/pagination/root/pagination.root.jsx";
 
 describe("usePaginationContext", () => {
   test("提供された値を返す", async ({ expect }) => {

@@ -7,7 +7,7 @@ import {
   NumberFieldAPI,
   useNumberFieldAPI,
 } from "../../../src/number-field/number-field.jsx";
-import { NumberFieldRoot } from "../../../src/number-field/number-field.root.jsx";
+import { NumberFieldRoot } from "../../../src/number-field/root/number-field.root.jsx";
 import "../_locators.js";
 
 describe("NumberFieldAPI", () => {

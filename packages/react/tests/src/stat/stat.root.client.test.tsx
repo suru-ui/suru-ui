@@ -2,7 +2,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/stat/stat.parts.js";
-import { StatRoot } from "../../../src/stat/stat.root.jsx";
+import { StatRoot } from "../../../src/stat/root/stat.root.jsx";
 import "../_locators.js";
 
 describe("StatRoot", () => {

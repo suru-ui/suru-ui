@@ -1,7 +1,9 @@
-import "./collapsible.css";
+import "./indicator/collapsible.indicator.css";
+import "./content/collapsible.content.css";
+import "./root/collapsible.root.css";
 
-export * from "./collapsible.context.js";
-export * from "./collapsible.root.jsx";
-export * from "./collapsible.trigger.jsx";
-export * from "./collapsible.indicator.jsx";
-export * from "./collapsible.content.jsx";
+export * from "./root/collapsible.root.context.js";
+export * from "./root/collapsible.root.jsx";
+export * from "./trigger/collapsible.trigger.jsx";
+export * from "./indicator/collapsible.indicator.jsx";
+export * from "./content/collapsible.content.jsx";

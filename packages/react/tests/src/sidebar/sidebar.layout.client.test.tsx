@@ -4,7 +4,7 @@ import { render } from "vitest-browser-react";
 
 import { SidebarProvider, SidebarTrigger } from "../../../src/sidebar/sidebar.parts.js";
 import "../_locators.js";
-import { FullSidebar } from "./_sidebar.js";
+import { FullSidebar } from "./_sidebar.jsx";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 
 /**

@@ -2,7 +2,7 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useComboboxFilter } from "../../../src/combobox/combobox.use-filter.js";
+import { useComboboxFilter } from "../../../src/combobox/use-filter/combobox.use-filter.js";
 
 describe("useComboboxFilter", () => {
   test("照合関数を返す", async ({ expect }) => {

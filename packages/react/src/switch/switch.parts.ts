@@ -1,5 +1,6 @@
-import "./switch.css";
+import "./root/switch.root.css";
+import "./thumb/switch.thumb.css";
 
-export * from "./switch.context.js";
-export * from "./switch.root.jsx";
-export * from "./switch.thumb.jsx";
+export * from "./root/switch.root.context.js";
+export * from "./root/switch.root.jsx";
+export * from "./thumb/switch.thumb.jsx";

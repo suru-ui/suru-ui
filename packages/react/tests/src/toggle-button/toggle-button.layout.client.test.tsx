@@ -3,14 +3,14 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/toggle-button/toggle-button.parts.js";
-import { ButtonRoot } from "../../../src/button/button.root.jsx";
-import { ToggleButtonCircularProgressFillRotation } from "../../../src/toggle-button/toggle-button.circular-progress-fill-rotation.jsx";
-import { ToggleButtonCircularProgressFill } from "../../../src/toggle-button/toggle-button.circular-progress-fill.jsx";
-import { ToggleButtonCircularProgressTrack } from "../../../src/toggle-button/toggle-button.circular-progress-track.jsx";
-import { ToggleButtonCircularProgress } from "../../../src/toggle-button/toggle-button.circular-progress.jsx";
-import { ToggleButtonContent } from "../../../src/toggle-button/toggle-button.content.jsx";
-import { ToggleButtonPending } from "../../../src/toggle-button/toggle-button.pending.jsx";
-import { ToggleButtonRoot } from "../../../src/toggle-button/toggle-button.root.jsx";
+import { ButtonRoot } from "../../../src/button/root/button.root.jsx";
+import { ToggleButtonCircularProgressFillRotation } from "../../../src/toggle-button/circular-progress-fill-rotation/toggle-button.circular-progress-fill-rotation.jsx";
+import { ToggleButtonCircularProgressFill } from "../../../src/toggle-button/circular-progress-fill/toggle-button.circular-progress-fill.jsx";
+import { ToggleButtonCircularProgressTrack } from "../../../src/toggle-button/circular-progress-track/toggle-button.circular-progress-track.jsx";
+import { ToggleButtonCircularProgress } from "../../../src/toggle-button/circular-progress/toggle-button.circular-progress.jsx";
+import { ToggleButtonContent } from "../../../src/toggle-button/content/toggle-button.content.jsx";
+import { ToggleButtonPending } from "../../../src/toggle-button/pending/toggle-button.pending.jsx";
+import { ToggleButtonRoot } from "../../../src/toggle-button/root/toggle-button.root.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

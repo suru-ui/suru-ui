@@ -1,0 +1,53 @@
+@layer sui.component {
+@scope (.sui_drawer_backdrop) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: absolute;
+  inset: 0px;
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  transition-property: opacity;
+}
+
+/* 変数 */
+:scope {
+  --sui_drawer_backdrop-background_color: ;
+  --sui_drawer_backdrop-opacity: ;
+  --sui_drawer_backdrop-filter-blur: ;
+  --sui_drawer_backdrop-transition_duration: ;
+}
+
+/* 可変 */
+:scope {
+  background-color: var(--sui_drawer_backdrop-background_color);
+  opacity: var(--_sui_drawer_backdrop-opacity,
+              calc(var(--sui_drawer_backdrop-opacity) * (1 - var(--drawer-swipe-progress, 0)))
+            );
+  backdrop-filter: var(--sui_drawer_backdrop-filter-blur);
+  transition-duration: var(--_sui_drawer_backdrop-transition_duration,
+                         var(--sui_drawer_backdrop-transition_duration)
+                       );
+}
+
+/* 代入 */
+:scope {
+  --sui_drawer_backdrop-background_color: var(--sui-backdrop-color);
+  --sui_drawer_backdrop-opacity: 1;
+  --sui_drawer_backdrop-filter-blur: blur(var(--sui-backdrop-blur));
+  --sui_drawer_backdrop-transition_duration: 450ms;
+}
+
+/* 変異 */
+:scope {
+  &.sui_drawer_backdrop-transition_status_starting,
+  &.sui_drawer_backdrop-transition_status_ending {
+    --_sui_drawer_backdrop-opacity: 0;
+  }
+
+  &.sui_drawer_backdrop-transition_status_ending {
+    --_sui_drawer_backdrop-transition_duration: calc(var(--drawer-swipe-strength, 1) * 400ms);
+  }
+}
+
+} /* @scope */
+} /* @layer */

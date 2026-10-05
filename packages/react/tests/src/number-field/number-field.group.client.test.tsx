@@ -1,9 +1,9 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { NumberFieldGroup } from "../../../src/number-field/number-field.group.jsx";
-import { NumberFieldInput } from "../../../src/number-field/number-field.input.jsx";
-import { NumberFieldRoot } from "../../../src/number-field/number-field.root.jsx";
+import { NumberFieldGroup } from "../../../src/number-field/group/number-field.group.jsx";
+import { NumberFieldInput } from "../../../src/number-field/input/number-field.input.jsx";
+import { NumberFieldRoot } from "../../../src/number-field/root/number-field.root.jsx";
 import "../_locators.js";
 
 describe("NumberFieldGroup", () => {

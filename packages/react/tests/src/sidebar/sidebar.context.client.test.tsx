@@ -2,9 +2,12 @@ import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { SidebarContext, useSidebarContext } from "../../../src/sidebar/sidebar.context.js";
-import { SidebarProvider } from "../../../src/sidebar/sidebar.provider.jsx";
-import { SidebarRoot } from "../../../src/sidebar/sidebar.root.jsx";
+import { SidebarProvider } from "../../../src/sidebar/provider/sidebar.provider.jsx";
+import {
+  SidebarContext,
+  useSidebarContext,
+} from "../../../src/sidebar/root/sidebar.root.context.js";
+import { SidebarRoot } from "../../../src/sidebar/root/sidebar.root.jsx";
 
 describe("useSidebarContext", () => {
   test("提供された値を返す", async ({ expect }) => {

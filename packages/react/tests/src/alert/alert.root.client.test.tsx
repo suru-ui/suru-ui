@@ -1,7 +1,7 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { AlertRoot } from "../../../src/alert/alert.root.jsx";
+import { AlertRoot } from "../../../src/alert/root/alert.root.jsx";
 
 describe("AlertRoot", () => {
   test("既定の修飾クラスを付ける", async ({ expect }) => {

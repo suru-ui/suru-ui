@@ -3,8 +3,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { TreeContext, useTreeContext } from "../../../src/tree/tree.context.js";
-import { TreeRoot } from "../../../src/tree/tree.root.jsx";
+import { TreeContext, useTreeContext } from "../../../src/tree/root/tree.root.context.js";
+import { TreeRoot } from "../../../src/tree/root/tree.root.jsx";
 
 describe("useTreeContext", () => {
   test("提供された値を返す", async ({ expect }) => {

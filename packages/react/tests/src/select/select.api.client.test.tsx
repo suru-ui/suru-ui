@@ -1,10 +1,10 @@
 import { describe, test } from "vitest";
 
-import { SelectAPI } from "../../../src/select/select.jsx";
 import {
   type SelectListLabeledItemObject,
   type SelectListItemObjectGroup,
-} from "../../../src/select/select.list.jsx";
+} from "../../../src/select/list/select.list.jsx";
+import { SelectAPI } from "../../../src/select/select.jsx";
 
 describe("getLabelProps", () => {
   test("指定しないときは表示しない", ({ expect }) => {

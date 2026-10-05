@@ -1,6 +1,6 @@
 import isReactNode from "../_is-react-node.js";
 import { hasItems, isObject } from "../_item.js";
-import type { MenubarRootItemObject } from "./menubar.root.jsx";
+import type { MenubarRootItemObject } from "./root/menubar.root.jsx";
 
 /**
  * メニューバーの項目であるオブジェクトかどうかを判定します。

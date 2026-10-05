@@ -1,0 +1,14 @@
+/* disabled */
+@layer sui.important {
+@scope (.sui_pagination_ellipsis_input) to ([data-scope]) {
+
+:scope {
+  &.sui_pagination_ellipsis_input-disabled {
+    color: var(--sui-disabled-liquid-canvas_text);
+    cursor: not-allowed;
+    background-color: var(--sui-disabled-liquid-canvas);
+  }
+}
+
+} /* @scope */
+} /* @layer */

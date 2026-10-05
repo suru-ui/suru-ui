@@ -1,4 +1,4 @@
-import "./aspect-ratio.css";
+import "./root/aspect-ratio.root.css";
 
-export * from "./aspect-ratio.context.js";
-export * from "./aspect-ratio.root.jsx";
+export * from "./root/aspect-ratio.root.context.js";
+export * from "./root/aspect-ratio.root.jsx";

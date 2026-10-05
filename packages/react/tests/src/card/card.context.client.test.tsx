@@ -1,8 +1,8 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { CardContext, useCardContext } from "../../../src/card/card.context.js";
-import { CardRoot } from "../../../src/card/card.root.jsx";
+import { CardContext, useCardContext } from "../../../src/card/root/card.root.context.js";
+import { CardRoot } from "../../../src/card/root/card.root.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useCardContext", () => {

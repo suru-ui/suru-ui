@@ -3,8 +3,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { TabsContext, useTabsContext } from "../../../src/tabs/tabs.context.js";
-import { TabsRoot } from "../../../src/tabs/tabs.root.jsx";
+import { TabsContext, useTabsContext } from "../../../src/tabs/root/tabs.root.context.js";
+import { TabsRoot } from "../../../src/tabs/root/tabs.root.jsx";
 
 describe("useTabsContext", () => {
   test("提供された値を返す", async ({ expect }) => {

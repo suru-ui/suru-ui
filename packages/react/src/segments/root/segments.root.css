@@ -1,0 +1,47 @@
+@layer sui.component {
+@scope (.sui_segments) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: inline-flex;
+  min-width: 0px;
+}
+
+/* 変数 */
+:scope {
+  --sui_segments-border_radius: ;
+  --sui_segments-corner_shape: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_segments-border_radius: --sui-corner_radius(2);
+  --sui_segments-corner_shape: superellipse(var(--sui-superellipse));
+
+  &.sui_segments-radius_none {
+    --sui_segments-border_radius: 0px;
+  }
+
+  &.sui_segments-radius_sm {
+    --sui_segments-border_radius: --sui-corner_radius(1);
+    --sui_segments-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_segments-radius_md {
+    --sui_segments-border_radius: --sui-corner_radius(2);
+    --sui_segments-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_segments-radius_lg {
+    --sui_segments-border_radius: --sui-corner_radius(3);
+    --sui_segments-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_segments-radius_full {
+    --sui_segments-border_radius: 999px;
+    --sui_segments-corner_shape: superellipse(var(--sui-superellipse));
+  }
+}
+
+} /* @scope */
+} /* @layer */

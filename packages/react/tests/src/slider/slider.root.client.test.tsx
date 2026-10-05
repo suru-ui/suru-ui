@@ -2,7 +2,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/slider/slider.parts.js";
-import { SliderRoot } from "../../../src/slider/slider.root.jsx";
+import { SliderRoot } from "../../../src/slider/root/slider.root.jsx";
 import "../_locators.js";
 
 describe("SliderRoot", () => {

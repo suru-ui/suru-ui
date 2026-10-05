@@ -1,4 +1,4 @@
-import "./skeleton.css";
+import "./root/skeleton.root.css";
 
-export * from "./skeleton.context.js";
-export * from "./skeleton.root.jsx";
+export * from "./root/skeleton.root.context.js";
+export * from "./root/skeleton.root.jsx";

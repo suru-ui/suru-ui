@@ -2,7 +2,7 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FieldRoot } from "../../../src/field/field.root.jsx";
+import { FieldRoot } from "../../../src/field/root/field.root.jsx";
 import "../../../src/select/select.parts.js";
 import { Select } from "../../../src/select/select.jsx";
 import "../_locators.js";

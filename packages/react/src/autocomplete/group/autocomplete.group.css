@@ -1,0 +1,43 @@
+@layer sui.component {
+@scope (.sui_autocomplete_group) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 変数 */
+:scope {
+  --sui_autocomplete_group-gap: ;
+  --sui_autocomplete_group-padding_bottom: ;
+}
+
+/* 可変 */
+:scope {
+  gap: var(--sui_autocomplete_group-gap);
+
+  &:not(:last-child):not(:has(> .sui_autocomplete_separator:last-child)) {
+    padding-bottom: var(--sui_autocomplete_group-padding_bottom);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_autocomplete_group-gap: --sui-gap(2);
+
+  &.sui_autocomplete_group-size_sm {
+    --sui_autocomplete_group-padding_bottom: --sui-space(2);
+  }
+
+  &.sui_autocomplete_group-size_md {
+    --sui_autocomplete_group-padding_bottom: --sui-space(3);
+  }
+
+  &.sui_autocomplete_group-size_lg {
+    --sui_autocomplete_group-padding_bottom: --sui-space(4);
+  }
+}
+
+} /* @scope */
+} /* @layer */

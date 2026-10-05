@@ -1,0 +1,36 @@
+@layer sui.component {
+@scope (.sui_breadcrumb) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  align-items: center;
+}
+
+/* 変数 */
+:scope {
+  --sui_breadcrumb-gap: ;
+}
+
+/* 可変 */
+:scope {
+  gap: var(--sui_breadcrumb-gap);
+}
+
+/* 代入 */
+:scope {
+  &.sui_breadcrumb-size_sm {
+    --sui_breadcrumb-gap: --sui-gap(0.5);
+  }
+
+  &.sui_breadcrumb-size_md {
+    --sui_breadcrumb-gap: --sui-gap(1);
+  }
+
+  &.sui_breadcrumb-size_lg {
+    --sui_breadcrumb-gap: --sui-gap(1.5);
+  }
+}
+
+} /* @scope */
+} /* @layer */

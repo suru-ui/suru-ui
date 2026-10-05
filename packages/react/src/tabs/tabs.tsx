@@ -9,7 +9,7 @@ import {
   createItemRenderer,
   getTabsItemContent,
 } from "./_tabs.jsx";
-import type { TabsContext } from "./tabs.context.js";
+import type { TabsContext } from "./root/tabs.root.context.js";
 import {
   type TabsRootSize,
   type TabsTabProps,

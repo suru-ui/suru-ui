@@ -2,8 +2,8 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { TreeItem } from "../../../src/tree/tree.item.jsx";
-import { TreeRoot } from "../../../src/tree/tree.root.jsx";
+import { TreeItem } from "../../../src/tree/item/tree.item.jsx";
+import { TreeRoot } from "../../../src/tree/root/tree.root.jsx";
 import "../_locators.js";
 
 describe("TreeItem", () => {

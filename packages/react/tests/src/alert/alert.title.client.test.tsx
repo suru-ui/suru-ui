@@ -1,8 +1,8 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { AlertRoot } from "../../../src/alert/alert.root.jsx";
-import { AlertTitle } from "../../../src/alert/alert.title.jsx";
+import { AlertRoot } from "../../../src/alert/root/alert.root.jsx";
+import { AlertTitle } from "../../../src/alert/title/alert.title.jsx";
 import "../_locators.js";
 
 describe("AlertTitle", () => {

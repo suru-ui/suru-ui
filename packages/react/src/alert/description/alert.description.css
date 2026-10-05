@@ -1,0 +1,77 @@
+@layer sui.component {
+@scope (.sui_alert_description) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_alert_description-font_family);
+  font-size: var(--sui_alert_description-font_size);
+  font-weight: var(--sui_alert_description-font_weight);
+  line-height: var(--sui_alert_description-line_height);
+  color: var(--sui_alert_description-color);
+  letter-spacing: var(--sui_alert_description-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 活字と配色の指定はルートの修飾クラスに依存し、説明文自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_alert) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  &.sui_alert-descriptionposition_side_start:has(.sui_alert_title):has(.sui_alert_description) .sui_alert_description {
+    text-align: start;
+  }
+
+  &.sui_alert-descriptionposition_side_end:has(.sui_alert_title):has(.sui_alert_description) .sui_alert_description {
+    text-align: end;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_alert_description-font_family: ;
+  --sui_alert_description-font_size: ;
+  --sui_alert_description-font_weight: ;
+  --sui_alert_description-line_height: ;
+  --sui_alert_description-color: ;
+  --sui_alert_description-letter_spacing: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_alert_description-font_family: var(--sui-font-sans);
+  --sui_alert_description-color: var(--sui-canvas_text-1);
+
+  &.sui_alert-size_sm {
+    --sui_alert_description-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_alert_description-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_alert_description-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_alert_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  }
+
+  &.sui_alert-size_md {
+    --sui_alert_description-font_size: var(--sui-text-std-md-n-font_size);
+    --sui_alert_description-font_weight: var(--sui-text-std-md-n-font_weight);
+    --sui_alert_description-line_height: var(--sui-text-std-md-n-line_height);
+    --sui_alert_description-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+  }
+
+  &.sui_alert-size_lg {
+    --sui_alert_description-font_size: var(--sui-text-std-lg-n-font_size);
+    --sui_alert_description-font_weight: var(--sui-text-std-lg-n-font_weight);
+    --sui_alert_description-line_height: var(--sui-text-std-lg-n-line_height);
+    --sui_alert_description-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+  }
+}
+
+} /* @scope */
+} /* @layer */

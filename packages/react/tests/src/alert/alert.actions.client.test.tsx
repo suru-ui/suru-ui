@@ -1,9 +1,9 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { AlertActions } from "../../../src/alert/alert.actions.jsx";
-import { AlertRoot } from "../../../src/alert/alert.root.jsx";
-import { Button } from "../../../src/button/button.js";
+import { AlertActions } from "../../../src/alert/actions/alert.actions.jsx";
+import { AlertRoot } from "../../../src/alert/root/alert.root.jsx";
+import { Button } from "../../../src/button/button.jsx";
 import "../_locators.js";
 
 describe("AlertActions", () => {

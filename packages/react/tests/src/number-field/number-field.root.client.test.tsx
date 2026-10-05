@@ -1,10 +1,10 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FieldRoot } from "../../../src/field/field.root.jsx";
-import { NumberFieldInput } from "../../../src/number-field/number-field.input.jsx";
+import { FieldRoot } from "../../../src/field/root/field.root.jsx";
+import { NumberFieldInput } from "../../../src/number-field/input/number-field.input.jsx";
 import "../../../src/number-field/number-field.parts.js";
-import { NumberFieldRoot } from "../../../src/number-field/number-field.root.jsx";
+import { NumberFieldRoot } from "../../../src/number-field/root/number-field.root.jsx";
 import "../_locators.js";
 
 describe("NumberFieldRoot", () => {

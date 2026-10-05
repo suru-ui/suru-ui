@@ -2,8 +2,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/stat/stat.parts.js";
-import { StatLabel } from "../../../src/stat/stat.label.jsx";
-import { StatRoot } from "../../../src/stat/stat.root.jsx";
+import { StatLabel } from "../../../src/stat/label/stat.label.jsx";
+import { StatRoot } from "../../../src/stat/root/stat.root.jsx";
 import "../_locators.js";
 
 describe("StatLabel", () => {

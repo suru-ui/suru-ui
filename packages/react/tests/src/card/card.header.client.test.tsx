@@ -1,8 +1,8 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { CardHeader } from "../../../src/card/card.header.jsx";
-import { CardRoot } from "../../../src/card/card.root.jsx";
+import { CardHeader } from "../../../src/card/header/card.header.jsx";
+import { CardRoot } from "../../../src/card/root/card.root.jsx";
 import "../_locators.js";
 
 describe("CardHeader", () => {

@@ -3,7 +3,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/skeleton/skeleton.parts.js";
-import { SkeletonRoot } from "../../../src/skeleton/skeleton.root.jsx";
+import { SkeletonRoot } from "../../../src/skeleton/root/skeleton.root.jsx";
 import "../_locators.js";
 
 describe("SkeletonRoot の配置", () => {

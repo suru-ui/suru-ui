@@ -5,11 +5,11 @@ import { render } from "vitest-browser-react";
 import {
   AlertDialogPopupContext,
   useAlertDialogPopupContext,
-} from "../../../src/alert-dialog/alert-dialog.popup.context.js";
-import { AlertDialogPopup } from "../../../src/alert-dialog/alert-dialog.popup.jsx";
-import { AlertDialogPortal } from "../../../src/alert-dialog/alert-dialog.portal.jsx";
-import { AlertDialogRoot } from "../../../src/alert-dialog/alert-dialog.root.jsx";
-import { AlertDialogViewport } from "../../../src/alert-dialog/alert-dialog.viewport.jsx";
+} from "../../../src/alert-dialog/popup/alert-dialog.popup.context.js";
+import { AlertDialogPopup } from "../../../src/alert-dialog/popup/alert-dialog.popup.jsx";
+import { AlertDialogPortal } from "../../../src/alert-dialog/portal/alert-dialog.portal.jsx";
+import { AlertDialogRoot } from "../../../src/alert-dialog/root/alert-dialog.root.jsx";
+import { AlertDialogViewport } from "../../../src/alert-dialog/viewport/alert-dialog.viewport.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useAlertDialogPopupContext", () => {

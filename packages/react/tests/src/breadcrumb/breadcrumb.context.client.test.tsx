@@ -4,8 +4,8 @@ import { render } from "vitest-browser-react";
 import {
   BreadcrumbContext,
   useBreadcrumbContext,
-} from "../../../src/breadcrumb/breadcrumb.context.js";
-import { BreadcrumbRoot } from "../../../src/breadcrumb/breadcrumb.root.jsx";
+} from "../../../src/breadcrumb/root/breadcrumb.root.context.js";
+import { BreadcrumbRoot } from "../../../src/breadcrumb/root/breadcrumb.root.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 const items = [{ label: "ホーム", href: "/" }, { label: "現在" }] as const;

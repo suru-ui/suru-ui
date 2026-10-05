@@ -1,0 +1,12 @@
+/* disabled */
+@layer sui.important {
+@scope (.sui_field_control) to ([data-scope]) {
+
+:scope {
+  &.sui_field_control-disabled {
+    cursor: not-allowed;
+  }
+}
+
+} /* @scope */
+} /* @layer */

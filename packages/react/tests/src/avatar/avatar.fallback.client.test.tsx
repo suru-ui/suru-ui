@@ -2,8 +2,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/avatar/avatar.parts.js";
-import { AvatarFallback } from "../../../src/avatar/avatar.fallback.jsx";
-import { AvatarRoot } from "../../../src/avatar/avatar.root.jsx";
+import { AvatarFallback } from "../../../src/avatar/fallback/avatar.fallback.jsx";
+import { AvatarRoot } from "../../../src/avatar/root/avatar.root.jsx";
 import "../_locators.js";
 
 describe("AvatarFallback", () => {

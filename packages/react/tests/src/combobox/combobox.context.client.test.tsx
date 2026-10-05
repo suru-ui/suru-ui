@@ -3,11 +3,14 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { defaultItemToStringLabel } from "../../../src/_item.js";
-import { ComboboxContext, useComboboxContext } from "../../../src/combobox/combobox.context.js";
-import { ComboboxPopup } from "../../../src/combobox/combobox.popup.jsx";
-import { ComboboxPortal } from "../../../src/combobox/combobox.portal.jsx";
-import { ComboboxPositioner } from "../../../src/combobox/combobox.positioner.jsx";
-import { ComboboxRoot } from "../../../src/combobox/combobox.root.jsx";
+import { ComboboxPopup } from "../../../src/combobox/popup/combobox.popup.jsx";
+import { ComboboxPortal } from "../../../src/combobox/portal/combobox.portal.jsx";
+import { ComboboxPositioner } from "../../../src/combobox/positioner/combobox.positioner.jsx";
+import {
+  ComboboxContext,
+  useComboboxContext,
+} from "../../../src/combobox/root/combobox.root.context.js";
+import { ComboboxRoot } from "../../../src/combobox/root/combobox.root.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 const fruits = ["りんご", "ばなな"];

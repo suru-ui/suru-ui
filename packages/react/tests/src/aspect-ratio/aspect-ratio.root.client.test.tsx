@@ -2,7 +2,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/aspect-ratio/aspect-ratio.parts.js";
-import { AspectRatioRoot } from "../../../src/aspect-ratio/aspect-ratio.root.jsx";
+import { AspectRatioRoot } from "../../../src/aspect-ratio/root/aspect-ratio.root.jsx";
 import "../_locators.js";
 
 describe("AspectRatioRoot", () => {

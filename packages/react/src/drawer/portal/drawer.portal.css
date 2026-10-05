@@ -1,0 +1,18 @@
+@layer sui.component {
+@scope (.sui_drawer_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: fixed;
+  inset: 0;
+  z-index: calc(infinity);
+  min-height: 100dvh;
+
+  /* iOS 26以降: 背景が画面全体を覆うようにします。 */
+  @supports (-webkit-touch-callout: none) {
+    position: absolute;
+  }
+}
+
+} /* @scope */
+} /* @layer */

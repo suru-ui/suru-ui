@@ -1,0 +1,55 @@
+@layer sui.component {
+@scope (.sui_combobox_item_indicator) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 変数 */
+:scope {
+  --sui_combobox_item_indicator-size: ;
+  --sui_combobox_item_indicator-virtual_padding_block: ;
+}
+
+/* 可変 */
+:scope {
+  width: var(--sui_combobox_item_indicator-size);
+}
+
+/* 代入 */
+:scope {
+  --sui_combobox_item_indicator-size: calc(
+                                        var(--sui_combobox-font_size)
+                                        * var(--sui_combobox-line_height)
+                                        + (
+                                         var(--sui_combobox_item_indicator-virtual_padding_block)
+                                         * 2
+                                        )
+                                      );
+  --sui_combobox_item_indicator-virtual_padding_block: --sui-space(1);
+
+  &.sui_combobox_item_indicator-size_sm {
+    --sui_combobox-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_combobox-line_height: var(--sui-text-oln-sm-n-line_height);
+  }
+
+  &.sui_combobox_item_indicator-size_md {
+    --sui_combobox-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_combobox-line_height: var(--sui-text-oln-md-n-line_height);
+  }
+
+  &.sui_combobox_item_indicator-size_lg {
+    --sui_combobox-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_combobox-line_height: var(--sui-text-oln-lg-n-line_height);
+  }
+}
+
+} /* @scope */
+} /* @layer */

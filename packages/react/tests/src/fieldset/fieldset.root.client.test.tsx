@@ -4,7 +4,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/fieldset/fieldset.parts.js";
-import { FieldsetRoot } from "../../../src/fieldset/fieldset.root.jsx";
+import { FieldsetRoot } from "../../../src/fieldset/root/fieldset.root.jsx";
 import "../_locators.js";
 
 describe("FieldsetRoot", () => {

@@ -1,0 +1,76 @@
+@layer sui.component {
+@scope (.sui_scroll_area_scrollbar) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  touch-action: none;
+  user-select: none;
+  transition: opacity 150ms ease-out;
+
+  &.sui_scroll_area_scrollbar-orientation_horizontal {
+    flex-direction: row;
+  }
+}
+
+/* 可変 */
+:scope {
+  padding: var(--sui_scroll_area_scrollbar-padding);
+  opacity: var(--_sui_scroll_area_scrollbar-opacity, var(--sui_scroll_area_scrollbar-opacity));
+
+  &.sui_scroll_area_scrollbar-orientation_vertical {
+    width: var(--sui_scroll_area_scrollbar-size);
+  }
+
+  &.sui_scroll_area_scrollbar-orientation_horizontal {
+    height: var(--sui_scroll_area_scrollbar-size);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 公開変数はルートで上書きできる必要があり、スクロール状態もルートにしかないため、ルート起点の別ブロックに残します。 */
+@layer sui.component {
+@scope (.sui_scroll_area) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_scroll_area_scrollbar-size: ;
+  --sui_scroll_area_scrollbar-padding: ;
+  --sui_scroll_area_scrollbar-opacity: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_scroll_area_scrollbar-size: 10px;
+  --sui_scroll_area_scrollbar-padding: 2px;
+  --sui_scroll_area_scrollbar-opacity: 0;
+}
+
+/* 変異 */
+:scope {
+  .sui_scroll_area_scrollbar-scrolling {
+    --_sui_scroll_area_scrollbar-opacity: 1;
+  }
+
+  @media (any-hover: hover) {
+    &:hover .sui_scroll_area_scrollbar-has_overflow_y.sui_scroll_area_scrollbar-orientation_vertical,
+    &:hover .sui_scroll_area_scrollbar-has_overflow_x.sui_scroll_area_scrollbar-orientation_horizontal {
+      --_sui_scroll_area_scrollbar-opacity: 1;
+    }
+  }
+
+  &.sui_scroll_area-always_show_scrollbar {
+    .sui_scroll_area_scrollbar-has_overflow_y.sui_scroll_area_scrollbar-orientation_vertical,
+    .sui_scroll_area_scrollbar-has_overflow_x.sui_scroll_area_scrollbar-orientation_horizontal {
+      --_sui_scroll_area_scrollbar-opacity: 1;
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */

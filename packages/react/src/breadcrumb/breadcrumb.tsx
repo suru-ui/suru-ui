@@ -4,7 +4,6 @@ import { getItemKey } from "../_item.js";
 import mergeProps from "../_merge-props.js";
 import type { IComponent } from "../types.js";
 import { isItemObject } from "./_breadcrumb.jsx";
-import type { BreadcrumbContext } from "./breadcrumb.context.js";
 import {
   type BreadcrumbRootSize,
   type BreadcrumbItemProps,
@@ -24,7 +23,8 @@ import {
   BreadcrumbSeparator,
   useBreadcrumbContext,
 } from "./breadcrumb.parts.js";
-import { decomposeItemObject } from "./breadcrumb.utils.js";
+import type { BreadcrumbContext } from "./root/breadcrumb.root.context.js";
+import { decomposeItemObject } from "./utils/breadcrumb.utils.js";
 
 // Types
 // -----

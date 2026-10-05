@@ -1,8 +1,10 @@
-import "./pagination.css";
+import "./root/pagination.root.css";
+import "./ellipsis/pagination.ellipsis.css";
+import "./ellipsis-input/pagination.ellipsis-input.css";
 
-export * from "./pagination.context.js";
-export * from "./pagination.root.jsx";
-export * from "./pagination.previous-button.jsx";
-export * from "./pagination.item.jsx";
-export * from "./pagination.ellipsis.jsx";
-export * from "./pagination.next-button.jsx";
+export * from "./root/pagination.root.context.js";
+export * from "./root/pagination.root.jsx";
+export * from "./previous-button/pagination.previous-button.jsx";
+export * from "./item/pagination.item.jsx";
+export * from "./ellipsis/pagination.ellipsis.jsx";
+export * from "./next-button/pagination.next-button.jsx";

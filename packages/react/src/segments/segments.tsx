@@ -4,7 +4,7 @@ import mergeProps from "../_merge-props.js";
 import toReactNode from "../_to-react-node.js";
 import type { IComponent } from "../types.js";
 import { createItemRenderer, getSegmentsItemLabel, getSegmentsItemProps } from "./_segments.jsx";
-import type { SegmentsContext } from "./segments.context.js";
+import type { SegmentsContext } from "./root/segments.root.context.js";
 import {
   type SegmentsRootSize,
   type SegmentsItemProps,

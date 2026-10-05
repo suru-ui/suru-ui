@@ -3,10 +3,10 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/stat/stat.parts.js";
+import { StatRoot } from "../../../src/stat/root/stat.root.jsx";
 import { Stat } from "../../../src/stat/stat.jsx";
-import { StatRoot } from "../../../src/stat/stat.root.jsx";
-import { StatTrend } from "../../../src/stat/stat.trend.jsx";
-import { StatValueUnit } from "../../../src/stat/stat.value-unit.jsx";
+import { StatTrend } from "../../../src/stat/trend/stat.trend.jsx";
+import { StatValueUnit } from "../../../src/stat/value-unit/stat.value-unit.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

@@ -1,11 +1,15 @@
-import "./tooltip.css";
+import "./portal/tooltip.portal.css";
+import "./positioner/tooltip.positioner.css";
+import "./content/tooltip.content.css";
+import "./arrow/tooltip.arrow.css";
+import "./viewport/tooltip.viewport.css";
 
-export * from "./tooltip.context.js";
-export * from "./tooltip.handle.js";
-export * from "./tooltip.root.jsx";
-export * from "./tooltip.trigger.jsx";
-export * from "./tooltip.portal.jsx";
-export * from "./tooltip.positioner.jsx";
-export * from "./tooltip.content.jsx";
-export * from "./tooltip.arrow.jsx";
-export * from "./tooltip.viewport.jsx";
+export * from "./root/tooltip.root.context.js";
+export * from "./handle/tooltip.handle.js";
+export * from "./root/tooltip.root.jsx";
+export * from "./trigger/tooltip.trigger.jsx";
+export * from "./portal/tooltip.portal.jsx";
+export * from "./positioner/tooltip.positioner.jsx";
+export * from "./content/tooltip.content.jsx";
+export * from "./arrow/tooltip.arrow.jsx";
+export * from "./viewport/tooltip.viewport.jsx";

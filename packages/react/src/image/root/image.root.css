@@ -1,0 +1,72 @@
+@layer sui.component {
+@scope (.sui_image) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: block;
+  max-width: 100%;
+}
+
+/* 変数 */
+:scope {
+  --sui_image-object_fit: ;
+  --sui_image-border_radius: ;
+  --sui_image-corner_shape: ;
+}
+
+/* 可変 */
+:scope {
+  object-fit: var(--sui_image-object_fit);
+  border-radius: var(--sui_image-border_radius);
+  corner-shape: var(--sui_image-corner_shape);
+}
+
+/* 代入 */
+:scope {
+  &.sui_image-fit_cover {
+    --sui_image-object_fit: cover;
+  }
+
+  &.sui_image-fit_contain {
+    --sui_image-object_fit: contain;
+  }
+
+  &.sui_image-fit_fill {
+    --sui_image-object_fit: fill;
+  }
+
+  &.sui_image-fit_none {
+    --sui_image-object_fit: none;
+  }
+
+  &.sui_image-fit_scale-down {
+    --sui_image-object_fit: scale-down;
+  }
+
+  &.sui_image-radius_none {
+    --sui_image-border_radius: 0px;
+  }
+
+  &.sui_image-radius_sm {
+    --sui_image-border_radius: --sui-corner_radius(1);
+    --sui_image-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_image-radius_md {
+    --sui_image-border_radius: --sui-corner_radius(2);
+    --sui_image-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_image-radius_lg {
+    --sui_image-border_radius: --sui-corner_radius(3);
+    --sui_image-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_image-radius_full {
+    --sui_image-border_radius: 9999px;
+    --sui_image-corner_shape: superellipse(var(--sui-superellipse));
+  }
+}
+
+} /* @scope */
+} /* @layer */

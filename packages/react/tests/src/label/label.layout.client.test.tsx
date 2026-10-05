@@ -3,7 +3,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/label/label.parts.js";
-import { LabelRoot } from "../../../src/label/label.root.jsx";
+import { LabelRoot } from "../../../src/label/root/label.root.jsx";
 import "../_locators.js";
 
 describe("LabelRoot の配置", () => {

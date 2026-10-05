@@ -1,0 +1,29 @@
+@layer sui.component {
+@scope (.sui_file_upload_item_group) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+
+/* 変数 */
+:scope {
+  --sui_file_upload_item_group-gap: ;
+}
+
+/* 可変 */
+:scope {
+  gap: var(--sui_file_upload_item_group-gap);
+}
+
+/* 代入 */
+:scope {
+  --sui_file_upload_item_group-gap: --sui-gap(2);
+}
+
+} /* @scope */
+} /* @layer */

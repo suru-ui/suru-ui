@@ -1,8 +1,8 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { AlertIcon } from "../../../src/alert/alert.icon.jsx";
-import { AlertRoot } from "../../../src/alert/alert.root.jsx";
+import { AlertIcon } from "../../../src/alert/icon/alert.icon.jsx";
+import { AlertRoot } from "../../../src/alert/root/alert.root.jsx";
 import "../_locators.js";
 
 describe("AlertIcon", () => {

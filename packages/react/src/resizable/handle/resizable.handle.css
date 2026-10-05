@@ -1,0 +1,103 @@
+@layer sui.component {
+@scope (.sui_resizable_handle) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  touch-action: none;
+  user-select: none;
+  outline-style: solid;
+
+  &.sui_resizable_handle-direction_vertical {
+    cursor: col-resize;
+  }
+
+  &.sui_resizable_handle-direction_horizontal {
+    cursor: row-resize;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_resizable_handle-size: ;
+  --sui_resizable_handle-color-active: ;
+  --sui_resizable_handle-color-hover: ;
+  --sui_resizable_handle-color-idle: ;
+  --sui_resizable_handle-focusring_width: ;
+  --sui_resizable_handle-focusring_color: ;
+  --sui_resizable_handle-focusring_offset: ;
+}
+
+/* 可変 */
+:scope {
+  outline-width: var(--_sui_resizable_handle-outline_width, 0px);
+  outline-color: var(--_sui_resizable_handle-outline_color, transparent);
+  outline-offset: var(--_sui_resizable_handle-outline_offset, 0px);
+  background-color: var(--_sui_resizable_handle-color, var(--sui_resizable_handle-color-idle));
+
+  &.sui_resizable_handle-direction_vertical {
+    width: var(--_sui_resizable_handle-size, var(--sui_resizable_handle-size));
+  }
+
+  &.sui_resizable_handle-direction_horizontal {
+    height: var(--_sui_resizable_handle-size, var(--sui_resizable_handle-size));
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_resizable_handle-size: max(1px, --sui-border_width(1));
+  --sui_resizable_handle-color-idle: var(--sui-border-1);
+  --sui_resizable_handle-color-hover: var(--sui-border-2);
+  --sui_resizable_handle-color-active: var(--sui-border-3);
+  --sui_resizable_handle-focusring_width: var(--sui-focusring_width);
+  --sui_resizable_handle-focusring_color: var(--sui-focusring_color);
+  --sui_resizable_handle-focusring_offset: var(--sui-focusring_offset);
+}
+
+/* 変異 */
+:scope {
+  /* react-resizable-panels は data-separator 属性でホバー・操作中の状態を出力します。 */
+  &:not(.sui_resizable_handle-disabled) {
+    &[data-separator="hover"] {
+      --_sui_resizable_handle-color: var(--sui_resizable_handle-color-hover);
+    }
+
+    &[data-separator="active"] {
+      --_sui_resizable_handle-color: var(--sui_resizable_handle-color-active);
+    }
+
+    &:focus-visible {
+      --_sui_resizable_handle-outline_width: var(--sui_resizable_handle-focusring_width);
+      --_sui_resizable_handle-outline_color: var(--sui_resizable_handle-focusring_color);
+      --_sui_resizable_handle-outline_offset: var(--sui_resizable_handle-focusring_offset);
+    }
+  }
+
+  &.sui_resizable_handle-invisible {
+    --_sui_resizable_handle-size: 0px;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_resizable_handle) to ([data-scope]) {
+
+:scope {
+  &.sui_resizable_handle-disabled {
+    cursor: not-allowed;
+    background-color: var(--sui-disabled-naked-border);
+  }
+}
+
+} /* @scope */
+} /* @layer */

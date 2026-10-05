@@ -1,0 +1,64 @@
+@layer sui.component {
+@scope (.sui_select_scroll_down_arrow) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* 変数 */
+:scope {
+  --sui_select_scroll_down_arrow-size: ;
+  --sui_select_scroll_down_arrow-background_color: ;
+  --sui_select_scroll_down_arrow-background_image: ;
+  --sui_select_scroll_down_arrow-border_radius: ;
+  --sui_select_scroll_down_arrow-corner_shape: ;
+  --sui_select_scroll_down_arrow__svg-size: ;
+  --sui_select_scroll_down_arrow__svg-color: ;
+}
+
+/* 可変 */
+:scope {
+  height: var(--sui_select_scroll_down_arrow-size);
+  background-image: var(--sui_select_scroll_down_arrow-background_image);
+  border-bottom-right-radius: var(--sui_select_scroll_down_arrow-border_radius);
+  border-bottom-left-radius: var(--sui_select_scroll_down_arrow-border_radius);
+  corner-shape: var(--sui_select_scroll_down_arrow-corner_shape);
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_select_scroll_down_arrow__svg-size);
+    height: var(--sui_select_scroll_down_arrow__svg-size);
+    color: var(--sui_select_scroll_down_arrow__svg-color);
+  }
+}
+
+/* 代入 */
+:scope {
+  /* 内容の大きさと角丸に追従させるため、要素起点で代入します。 */
+  --sui_select_scroll_down_arrow-size: calc(
+                                         var(--sui_select_content-font_size)
+                                         * var(--sui_select_content-line_height)
+                                       );
+  --sui_select_scroll_down_arrow-background_color: var(--sui_select_content-background_color);
+  --sui_select_scroll_down_arrow-background_image: linear-gradient(
+                                                      to top,
+                                                      var(--sui_select_scroll_down_arrow-background_color) 60%,
+                                                      transparent
+                                                    );
+  --sui_select_scroll_down_arrow-border_radius: var(--sui_select_content-border_radius);
+  --sui_select_scroll_down_arrow-corner_shape: var(--sui_select_content-corner_shape);
+  --sui_select_scroll_down_arrow__svg-size: var(--sui_select_scroll_down_arrow-size);
+  --sui_select_scroll_down_arrow__svg-color: --sui-icon_color(
+                                               var(--sui_select_content-color),
+                                               var(--sui_select_content-background_color)
+                                             );
+}
+
+} /* @scope */
+} /* @layer */

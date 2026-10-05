@@ -4,7 +4,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/form/form.parts.js";
-import { FormRoot } from "../../../src/form/form.root.jsx";
+import { FormRoot } from "../../../src/form/root/form.root.jsx";
 import "../_locators.js";
 
 describe("FormRoot", () => {

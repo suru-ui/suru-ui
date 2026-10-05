@@ -1,0 +1,94 @@
+@layer sui.component {
+@scope (.sui_progress_indicator) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: absolute;
+  inset-block: 0px;
+  inset-inline-start: 0px;
+  display: block;
+  border-radius: inherit;
+  corner-shape: inherit;
+  transition: width 500ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/* 可変 */
+:scope {
+  width: var(--_sui_progress_indicator-width, auto);
+  background-color: var(--sui_progress_indicator-background_color);
+  animation-name: var(--_sui_progress_indicator-animation_name, none);
+  animation-duration: var(--sui_progress_indicator-animation_duration);
+}
+
+/* 変異 */
+:scope {
+  &.sui_progress_indicator-status_indeterminate {
+    --_sui_progress_indicator-width: 40%;
+    --_sui_progress_indicator-animation_name: sui_progress-indeterminate;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 配色とアニメーション時間の代入はルートの修飾クラスに依存し、インジケーター自身には対応するクラスが無いため、空宣言と代入をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_progress) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_progress_indicator-background_color: ;
+  --sui_progress_indicator-animation_duration: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_progress_indicator-animation_duration: 1.5s;
+
+  &.sui_progress-color_grey {
+    --sui_progress_indicator-background_color: var(--sui-grey-solid-canvas-normal);
+  }
+
+  &.sui_progress-color_blue {
+    --sui_progress_indicator-background_color: var(--sui-blue-solid-canvas-normal);
+  }
+
+  &.sui_progress-color_purple {
+    --sui_progress_indicator-background_color: var(--sui-purple-solid-canvas-normal);
+  }
+
+  &.sui_progress-color_magenta {
+    --sui_progress_indicator-background_color: var(--sui-magenta-solid-canvas-normal);
+  }
+
+  &.sui_progress-color_red {
+    --sui_progress_indicator-background_color: var(--sui-red-solid-canvas-normal);
+  }
+
+  &.sui_progress-color_orange {
+    --sui_progress_indicator-background_color: var(--sui-orange-solid-canvas-normal);
+  }
+
+  &.sui_progress-color_yellow {
+    --sui_progress_indicator-background_color: var(--sui-yellow-solid-canvas-normal);
+  }
+
+  &.sui_progress-color_green {
+    --sui_progress_indicator-background_color: var(--sui-green-solid-canvas-normal);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+@keyframes sui_progress-indeterminate {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(250%);
+  }
+}

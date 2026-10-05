@@ -3,11 +3,11 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { defaultItemToStringLabel } from "../../../src/_item.js";
+import { ComboboxInputDisplay } from "../../../src/combobox/input-display/combobox.input-display.jsx";
 import {
   type ComboboxContext,
   ComboboxContext as ComboboxContextValue,
-} from "../../../src/combobox/combobox.context.js";
-import { ComboboxInputDisplay } from "../../../src/combobox/combobox.input-display.jsx";
+} from "../../../src/combobox/root/combobox.root.context.js";
 
 const fruits = ["りんご", "ばなな"];
 

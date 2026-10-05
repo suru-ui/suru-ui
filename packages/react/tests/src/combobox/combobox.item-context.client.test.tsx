@@ -5,7 +5,7 @@ import { render } from "vitest-browser-react";
 import {
   ComboboxItemContext,
   useComboboxItemContext,
-} from "../../../src/combobox/combobox.item.context.js";
+} from "../../../src/combobox/item/combobox.item.context.js";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useComboboxItemContext", () => {

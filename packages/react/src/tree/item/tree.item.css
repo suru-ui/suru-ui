@@ -1,0 +1,55 @@
+/* 項目は ButtonRoot 経由で描画され、ButtonRoot が data-scope を持つため、下限なしのブロックにします。 */
+/* `@function` を解決できないブラウザーでは Button の余白と間隔が無効なトークン列になるため、長さとして登録して初期値 `0px` に落とします。 */
+@property --sui_tree_item-gap {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --sui_tree_item-padding_inline {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@layer sui.component {
+@scope (.sui_tree_item) {
+
+/* 固定 */
+:scope {
+  /* Button の宣言より優先させるため、項目自身のクラスで詳細度を上げます。 */
+  &.sui_tree_item {
+    justify-content: start;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_tree_item-gap: ;
+  --sui_tree_item-padding_inline: ;
+  --sui_tree_item-padding_inline_start: ;
+  --sui_tree_item-level: ;
+}
+
+/* 可変 */
+:scope {
+  /* Button の宣言より優先させるため、項目自身のクラスで詳細度を上げます。 */
+  &.sui_tree_item {
+    padding-inline-start: var(--sui_tree_item-padding_inline_start);
+  }
+}
+
+/* 代入 */
+:scope {
+  /* 型付き attr() は Firefox / WebKit で解決されないため、深さは項目要素の style で設定した --sui_tree_item-level から求めます。 */
+  --sui_tree_item-gap: var(--sui_button-gap);
+  --sui_tree_item-padding_inline: var(--sui_button-padding_inline);
+  --sui_tree_item-padding_inline_start: calc(
+                                          var(--sui_tree_item-padding_inline)
+                                          + (var(--sui_button__svg-size) + var(--sui_tree_item-gap))
+                                          * (var(--sui_tree_item-level, 1) - 1)
+                                        );
+}
+
+} /* @scope */
+} /* @layer */

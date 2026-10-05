@@ -3,7 +3,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/input/input.parts.js";
-import { InputRoot } from "../../../src/input/input.root.jsx";
+import { InputRoot } from "../../../src/input/root/input.root.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

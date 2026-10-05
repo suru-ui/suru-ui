@@ -2,10 +2,10 @@ import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useContextMenuContext } from "../../../src/context-menu/context-menu.context.js";
 import { ContextMenu } from "../../../src/context-menu/context-menu.jsx";
-import { ContextMenuRoot } from "../../../src/context-menu/context-menu.root.jsx";
-import { ContextMenuTrigger } from "../../../src/context-menu/context-menu.trigger.jsx";
+import { useContextMenuContext } from "../../../src/context-menu/root/context-menu.root.context.js";
+import { ContextMenuRoot } from "../../../src/context-menu/root/context-menu.root.jsx";
+import { ContextMenuTrigger } from "../../../src/context-menu/trigger/context-menu.trigger.jsx";
 import "../_locators.js";
 
 const trigger = <div>右クリック領域</div>;

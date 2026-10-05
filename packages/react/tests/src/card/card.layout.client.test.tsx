@@ -3,13 +3,13 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/card/card.parts.js";
-import { CardAction } from "../../../src/card/card.action.jsx";
-import { CardContent } from "../../../src/card/card.content.jsx";
-import { CardDescription } from "../../../src/card/card.description.jsx";
-import { CardFooter } from "../../../src/card/card.footer.jsx";
-import { CardHeader } from "../../../src/card/card.header.jsx";
-import { CardRoot } from "../../../src/card/card.root.jsx";
-import { CardTitle } from "../../../src/card/card.title.jsx";
+import { CardAction } from "../../../src/card/action/card.action.jsx";
+import { CardContent } from "../../../src/card/content/card.content.jsx";
+import { CardDescription } from "../../../src/card/description/card.description.jsx";
+import { CardFooter } from "../../../src/card/footer/card.footer.jsx";
+import { CardHeader } from "../../../src/card/header/card.header.jsx";
+import { CardRoot } from "../../../src/card/root/card.root.jsx";
+import { CardTitle } from "../../../src/card/title/card.title.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

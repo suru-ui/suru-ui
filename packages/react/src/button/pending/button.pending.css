@@ -1,0 +1,251 @@
+/* 公開変数 --sui_button_pending-canvas をルート自身が消費するため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_button) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_button_pending {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_button_pending-font_family: ;
+  --sui_button_pending-font_size: ;
+  --sui_button_pending-font_weight: ;
+  --sui_button_pending-line_height: ;
+  --sui_button_pending-color: ;
+  --sui_button_pending-letter_spacing: ;
+  --sui_button_pending-canvas: ;
+  --sui_button_pending__svg-size: ;
+  --sui_button_pending__svg-color: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_button_pending {
+    position: var(--_sui_button_pending-position, relative);
+    visibility: var(--_sui_button_pending-visibility, visible);
+    font-family: var(--sui_button_pending-font_family);
+    font-size: var(--sui_button_pending-font_size);
+    font-weight: var(--sui_button_pending-font_weight);
+    line-height: var(--sui_button_pending-line_height);
+    color: var(--sui_button_pending-color);
+    letter-spacing: var(--sui_button_pending-letter_spacing);
+
+    svg:not(.sui-ignore) {
+      width: var(--sui_button_pending__svg-size);
+      height: var(--sui_button_pending__svg-size);
+      color: var(--sui_button_pending__svg-color);
+    }
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_button_pending-font_family: var(--sui-font-sans);
+  --sui_button_pending-canvas: var(--sui_button-background_color-idle);
+  --sui_button_pending__svg-color: --sui-icon_color(
+                                     var(--sui_button_pending-color),
+                                     var(--sui_button_pending-canvas)
+                                   );
+
+  /* 大きさで変わる活字に追従させるため、要素起点で代入します。 */
+  .sui_button_pending {
+    --sui_button_pending__svg-size: calc(
+                                      var(--sui_button_pending-font_size)
+                                      * var(--sui_button_pending-line_height)
+                                    );
+  }
+
+  .sui_button_pending-size_xs {
+    --sui_button_pending-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_button_pending-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_button_pending-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_button_pending-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+  }
+
+  .sui_button_pending-size_sm {
+    --sui_button_pending-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_button_pending-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_button_pending-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_button_pending-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+  }
+
+  .sui_button_pending-size_md {
+    --sui_button_pending-font_size: var(--sui-text-oln-md-m-font_size);
+    --sui_button_pending-font_weight: var(--sui-text-oln-md-m-font_weight);
+    --sui_button_pending-line_height: var(--sui-text-oln-md-m-line_height);
+    --sui_button_pending-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
+  }
+
+  .sui_button_pending-size_lg {
+    --sui_button_pending-font_size: var(--sui-text-oln-lg-m-font_size);
+    --sui_button_pending-font_weight: var(--sui-text-oln-lg-m-font_weight);
+    --sui_button_pending-line_height: var(--sui-text-oln-lg-m-line_height);
+    --sui_button_pending-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
+  }
+
+  &.sui_button-color_grey {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-grey-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-grey-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-grey-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_blue {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-blue-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-blue-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-blue-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_purple {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-purple-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-purple-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-purple-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_magenta {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-magenta-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-magenta-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-magenta-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_red {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-red-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-red-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-red-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_orange {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-orange-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-orange-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-orange-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_yellow {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-yellow-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-yellow-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-yellow-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-color_green {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-green-solid-canvas_text-normal);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button_pending-color: var(--sui-green-naked-canvas_text-normal);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button_pending-color: var(--sui-green-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_button-muted:not(.sui_button-color_grey) {
+    &.sui_button-variant_solid {
+      --sui_button_pending-color: var(--sui-grey-solid-canvas_text-normal);
+    }
+
+    &.sui_button_pending-color_blue:not(.sui_button_pending-variant_solid) {
+      --sui_button_pending-color: var(--sui-blue-naked-canvas_text-normal);
+    }
+
+    &.sui_button_pending-color_purple:not(.sui_button_pending-variant_solid) {
+      --sui_button_pending-color: var(--sui-purple-naked-canvas_text-normal);
+    }
+
+    &.sui_button_pending-color_magenta:not(.sui_button_pending-variant_solid) {
+      --sui_button_pending-color: var(--sui-magenta-naked-canvas_text-normal);
+    }
+
+    &.sui_button_pending-color_red:not(.sui_button_pending-variant_solid) {
+      --sui_button_pending-color: var(--sui-red-naked-canvas_text-normal);
+    }
+
+    &.sui_button_pending-color_orange:not(.sui_button_pending-variant_solid) {
+      --sui_button_pending-color: var(--sui-orange-naked-canvas_text-normal);
+    }
+
+    &.sui_button_pending-color_yellow:not(.sui_button_pending-variant_solid) {
+      --sui_button_pending-color: var(--sui-yellow-naked-canvas_text-normal);
+    }
+
+    &.sui_button_pending-color_green:not(.sui_button_pending-variant_solid) {
+      --sui_button_pending-color: var(--sui-green-naked-canvas_text-normal);
+    }
+  }
+}
+
+/* 変異 */
+:scope {
+  .sui_button_pending-overlay {
+    --_sui_button_pending-position: absolute;
+  }
+
+  .sui_button_pending-visibility_hidden {
+    --_sui_button_pending-visibility: hidden;
+  }
+}
+
+} /* @scope */
+} /* @layer */

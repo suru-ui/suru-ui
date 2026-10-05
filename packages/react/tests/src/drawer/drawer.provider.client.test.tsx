@@ -2,12 +2,12 @@ import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { DrawerIndentBackground } from "../../../src/drawer/drawer.indent-background.jsx";
-import { DrawerIndent } from "../../../src/drawer/drawer.indent.jsx";
-import { DrawerPortal } from "../../../src/drawer/drawer.portal.jsx";
-import { DrawerProvider } from "../../../src/drawer/drawer.provider.jsx";
-import { DrawerRoot } from "../../../src/drawer/drawer.root.jsx";
-import { DrawerVirtualKeyboardProvider } from "../../../src/drawer/drawer.virtual-keyboard-provider.jsx";
+import { DrawerIndentBackground } from "../../../src/drawer/indent-background/drawer.indent-background.jsx";
+import { DrawerIndent } from "../../../src/drawer/indent/drawer.indent.jsx";
+import { DrawerPortal } from "../../../src/drawer/portal/drawer.portal.jsx";
+import { DrawerProvider } from "../../../src/drawer/provider/drawer.provider.jsx";
+import { DrawerRoot } from "../../../src/drawer/root/drawer.root.jsx";
+import { DrawerVirtualKeyboardProvider } from "../../../src/drawer/virtual-keyboard-provider/drawer.virtual-keyboard-provider.jsx";
 import "../../../src/drawer/drawer.parts.js";
 import "../_locators.js";
 

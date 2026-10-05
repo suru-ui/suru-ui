@@ -1,0 +1,76 @@
+@layer sui.component {
+@scope (.sui_breadcrumb_item) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  align-items: center;
+  outline-style: solid;
+}
+
+/* 変数 */
+:scope {
+  --sui_breadcrumb_item-focusring_width: ;
+  --sui_breadcrumb_item-focusring_color: ;
+  --sui_breadcrumb_item-focusring_offset: ;
+  --sui_breadcrumb_item-border_radius: ;
+  --sui_breadcrumb_item-corner_shape: ;
+}
+
+/* 可変 */
+:scope {
+  outline-width: var(--_sui_breadcrumb_item-outline_width, 0px);
+  outline-color: var(--_sui_breadcrumb_item-outline_color, transparent);
+  outline-offset: var(--_sui_breadcrumb_item-outline_offset, 0px);
+  border-radius: var(--sui_breadcrumb_item-border_radius);
+  corner-shape: var(--sui_breadcrumb_item-corner_shape);
+}
+
+/* 代入 */
+:scope {
+  --sui_breadcrumb_item-focusring_width: var(--sui-focusring_width);
+  --sui_breadcrumb_item-focusring_color: var(--sui-focusring_color);
+  --sui_breadcrumb_item-focusring_offset: var(--sui-focusring_offset);
+  --sui_breadcrumb_item-corner_shape: superellipse(var(--sui-superellipse));
+
+  /* Firefox では長さ同士を除算できないため、比率 (角丸 / 大きさ) を除数で表します。 */
+  &.sui_breadcrumb_item-size_sm {
+    /* --sui-corner_radius(1) / --sui-size-sm (4px / 20px = 1/5) */
+    --sui_breadcrumb_item-border_radius: calc(
+                                           var(--sui-text-oln-sm-m-font_size)
+                                           * var(--sui-text-oln-sm-m-line_height)
+                                           / 5
+                                         );
+  }
+
+  &.sui_breadcrumb_item-size_md {
+    /* --sui-corner_radius(2) / --sui-size-md (8px / 28px = 2/7) */
+    --sui_breadcrumb_item-border_radius: calc(
+                                           var(--sui-text-oln-md-m-font_size)
+                                           * var(--sui-text-oln-md-m-line_height)
+                                           * 2
+                                           / 7
+                                         );
+  }
+
+  &.sui_breadcrumb_item-size_lg {
+    /* --sui-corner_radius(3) / --sui-size-lg (12px / 36px = 1/3) */
+    --sui_breadcrumb_item-border_radius: calc(
+                                           var(--sui-text-oln-lg-m-font_size)
+                                           * var(--sui-text-oln-lg-m-line_height)
+                                           / 3
+                                         );
+  }
+}
+
+/* 変異 */
+:scope {
+  &:has(.sui_breadcrumb_link:focus-visible) {
+    --_sui_breadcrumb_item-outline_width: var(--sui_breadcrumb_item-focusring_width);
+    --_sui_breadcrumb_item-outline_color: var(--sui_breadcrumb_item-focusring_color);
+    --_sui_breadcrumb_item-outline_offset: var(--sui_breadcrumb_item-focusring_offset);
+  }
+}
+
+} /* @scope */
+} /* @layer */

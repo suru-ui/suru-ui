@@ -2,8 +2,8 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ComboboxRoot } from "../../../src/combobox/combobox.root.jsx";
-import { ComboboxValue } from "../../../src/combobox/combobox.value.jsx";
+import { ComboboxRoot } from "../../../src/combobox/root/combobox.root.jsx";
+import { ComboboxValue } from "../../../src/combobox/value/combobox.value.jsx";
 
 const fruits = ["りんご", "ばなな"];
 

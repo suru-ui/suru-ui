@@ -3,13 +3,13 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/button/button.parts.js";
-import { ButtonCircularProgressFillRotation } from "../../../src/button/button.circular-progress-fill-rotation.jsx";
-import { ButtonCircularProgressFill } from "../../../src/button/button.circular-progress-fill.jsx";
-import { ButtonCircularProgressTrack } from "../../../src/button/button.circular-progress-track.jsx";
-import { ButtonCircularProgress } from "../../../src/button/button.circular-progress.jsx";
-import { ButtonContent } from "../../../src/button/button.content.jsx";
-import { ButtonPending } from "../../../src/button/button.pending.jsx";
-import { ButtonRoot } from "../../../src/button/button.root.jsx";
+import { ButtonCircularProgressFillRotation } from "../../../src/button/circular-progress-fill-rotation/button.circular-progress-fill-rotation.jsx";
+import { ButtonCircularProgressFill } from "../../../src/button/circular-progress-fill/button.circular-progress-fill.jsx";
+import { ButtonCircularProgressTrack } from "../../../src/button/circular-progress-track/button.circular-progress-track.jsx";
+import { ButtonCircularProgress } from "../../../src/button/circular-progress/button.circular-progress.jsx";
+import { ButtonContent } from "../../../src/button/content/button.content.jsx";
+import { ButtonPending } from "../../../src/button/pending/button.pending.jsx";
+import { ButtonRoot } from "../../../src/button/root/button.root.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

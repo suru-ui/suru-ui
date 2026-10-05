@@ -1,0 +1,151 @@
+@layer sui.component {
+@scope (.sui_tabs_indicator) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: absolute;
+  pointer-events: none;
+  border-style: solid;
+}
+
+/* 変数 */
+:scope {
+  --sui_tabs_indicator-inset: ;
+  --sui_tabs_indicator-z_index: ;
+  --sui_tabs_indicator-display: ;
+  --sui_tabs_indicator-size: ;
+  --sui_tabs_indicator-min_height: ;
+  --sui_tabs_indicator-background_color: ;
+  --sui_tabs_indicator-border_color: ;
+  --sui_tabs_indicator-border_width: ;
+  --sui_tabs_indicator-border_radius: ;
+  --sui_tabs_indicator-corner_shape: ;
+  --sui_tabs_indicator-active_bottom: ;
+  --sui_tabs_indicator-active_height: ;
+  --sui_tabs_indicator-active_left: ;
+  --sui_tabs_indicator-active_right: ;
+  --sui_tabs_indicator-active_top: ;
+  --sui_tabs_indicator-active_width: ;
+}
+
+/* 可変 */
+:scope {
+  z-index: var(--sui_tabs_indicator-z_index);
+  display: var(--sui_tabs_indicator-display);
+  background-color: var(--sui_tabs_indicator-background_color);
+  border-color: var(--sui_tabs_indicator-border_color);
+  border-width: var(--sui_tabs_indicator-border_width);
+  border-radius: var(--sui_tabs_indicator-border_radius);
+  corner-shape: var(--sui_tabs_indicator-corner_shape);
+  transition: var(--_sui_tabs_indicator-transition,
+                inset-inline-start 240ms cubic-bezier(0.25, 0.7, 0.3, 1),
+                width              240ms cubic-bezier(0.25, 0.7, 0.3, 1),
+                inset-block-start  240ms cubic-bezier(0.25, 0.7, 0.3, 1),
+                height             240ms cubic-bezier(0.25, 0.7, 0.3, 1)
+              );
+
+  &.sui_tabs_indicator-orientation_horizontal.sui_tabs_indicator-variant_line {
+    inset-block-end: var(--sui_tabs_indicator-active_bottom);
+    inset-inline-start: calc(var(--sui_tabs_indicator-active_left) + var(--sui_tabs_indicator-inset));
+    width: calc(var(--sui_tabs_indicator-active_width) - var(--sui_tabs_indicator-inset) * 2);
+    height: var(--sui_tabs_indicator-size);
+  }
+
+  &.sui_tabs_indicator-orientation_vertical.sui_tabs_indicator-variant_line {
+    inset-block-start: calc(var(--sui_tabs_indicator-active_top) + var(--sui_tabs_indicator-inset));
+    inset-inline-end: var(--sui_tabs_indicator-active_right);
+    width: var(--sui_tabs_indicator-size);
+    height: calc(var(--sui_tabs_indicator-active_height) - var(--sui_tabs_indicator-inset) * 2);
+  }
+
+  &.sui_tabs_indicator-variant_segments {
+    inset-block-start: var(--sui_tabs_indicator-active_top);
+    inset-inline-start: var(--sui_tabs_indicator-active_left);
+    width: var(--sui_tabs_indicator-active_width);
+    height: var(--sui_tabs_indicator-active_height);
+    min-height: var(--sui_tabs_indicator-min_height);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_tabs_indicator-inset: var(--sui_tabs-border_radius);
+  --sui_tabs_indicator-size: --sui-border_width(2);
+  --sui_tabs_indicator-border_color: transparent;
+  --sui_tabs_indicator-border_width: 0px;
+
+  /* Base UI がインジケーター自身に設定する変数を受けるため、要素起点で代入します。 */
+  --sui_tabs_indicator-active_bottom: var(--active-tab-bottom, 0px);
+  --sui_tabs_indicator-active_height: var(--active-tab-height, 0px);
+  --sui_tabs_indicator-active_left: var(--active-tab-left, 0px);
+  --sui_tabs_indicator-active_right: var(--active-tab-right, 0px);
+  --sui_tabs_indicator-active_top: var(--active-tab-top, 0px);
+  --sui_tabs_indicator-active_width: var(--active-tab-width, 0px);
+
+  &.sui_tabs_indicator-variant_segments {
+    &.sui_tabs_indicator-size_sm {
+      --sui_tabs_indicator-min_height: var(--sui-size-sm);
+    }
+
+    &.sui_tabs_indicator-size_md {
+      --sui_tabs_indicator-min_height: var(--sui-size-md);
+    }
+
+    &.sui_tabs_indicator-size_lg {
+      --sui_tabs_indicator-min_height: var(--sui-size-lg);
+    }
+
+    &.sui_tabs_indicator-active_variant_solid {
+      --sui_tabs_indicator-z_index: 0;
+      --sui_tabs_indicator-display: block;
+      --sui_tabs_indicator-background_color: var(--sui-grey-solid-canvas-normal);
+      --sui_tabs_indicator-border_radius: var(--sui_tabs-border_radius);
+      --sui_tabs_indicator-corner_shape: var(--sui_tabs-corner_shape);
+    }
+
+    &.sui_tabs_indicator-active_variant_naked {
+      --sui_tabs_indicator-z_index: 0;
+      --sui_tabs_indicator-display: block;
+      --sui_tabs_indicator-background_color: color-mix(
+                                               in oklab,
+                                               var(--sui_tabs_list-background_color) 100%,
+                                               var(--sui-grey-naked-canvas-normal) 100%
+                                             );
+      --sui_tabs_indicator-border_color: var(--sui-grey-naked-border-normal);
+      --sui_tabs_indicator-border_width: --sui-border_width(1);
+      --sui_tabs_indicator-border_radius: var(--sui_tabs-border_radius);
+      --sui_tabs_indicator-corner_shape: var(--sui_tabs-corner_shape);
+    }
+
+    &.sui_tabs_indicator-active_variant_liquid {
+      --sui_tabs_indicator-z_index: 0;
+      --sui_tabs_indicator-display: block;
+      --sui_tabs_indicator-background_color: color-mix(
+                                               in oklab,
+                                               var(--sui-canvas-1) 100%,
+                                               var(--sui-grey-liquid-canvas-normal) 100%
+                                             );
+      --sui_tabs_indicator-border_color: var(--sui-grey-liquid-border-normal);
+      --sui_tabs_indicator-border_width: --sui-border_width(1);
+      --sui_tabs_indicator-border_radius: var(--sui_tabs-border_radius);
+      --sui_tabs_indicator-corner_shape: var(--sui_tabs-corner_shape);
+    }
+  }
+
+  &.sui_tabs_indicator-variant_line {
+    --sui_tabs_indicator-z_index: 2;
+    --sui_tabs_indicator-display: block;
+    --sui_tabs_indicator-background_color: var(--sui-canvas_text-1);
+    --sui_tabs_indicator-border_radius: 999px;
+  }
+}
+
+/* 変異 */
+:scope {
+  @media (prefers-reduced-motion: reduce) {
+    --_sui_tabs_indicator-transition: none;
+  }
+}
+
+} /* @scope */
+} /* @layer */

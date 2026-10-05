@@ -2,8 +2,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/stat/stat.parts.js";
-import { StatRoot } from "../../../src/stat/stat.root.jsx";
-import { StatTrend } from "../../../src/stat/stat.trend.jsx";
+import { StatRoot } from "../../../src/stat/root/stat.root.jsx";
+import { StatTrend } from "../../../src/stat/trend/stat.trend.jsx";
 import "../_locators.js";
 
 function getTrend(screen: Awaited<ReturnType<typeof render>>): HTMLElement {

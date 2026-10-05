@@ -4,9 +4,9 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/field/field.parts.js";
-import { FieldControl } from "../../../src/field/field.control.jsx";
-import { FieldItem } from "../../../src/field/field.item.jsx";
+import { FieldControl } from "../../../src/field/control/field.control.jsx";
 import { Field, FieldAPI, useFieldAPI } from "../../../src/field/field.jsx";
+import { FieldItem } from "../../../src/field/item/field.item.jsx";
 
 describe("FieldAPI", () => {
   test("Root の props から構成用の props を除く", ({ expect }) => {

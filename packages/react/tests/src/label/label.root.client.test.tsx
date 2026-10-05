@@ -4,7 +4,7 @@ import { render } from "vitest-browser-react";
 
 import Config from "../../../src/_config.jsx";
 import "../../../src/label/label.parts.js";
-import { LabelRoot } from "../../../src/label/label.root.jsx";
+import { LabelRoot } from "../../../src/label/root/label.root.jsx";
 import "../_locators.js";
 
 /**

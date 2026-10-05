@@ -3,8 +3,11 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { SegmentsContext, useSegmentsContext } from "../../../src/segments/segments.context.js";
-import { SegmentsRoot } from "../../../src/segments/segments.root.jsx";
+import {
+  SegmentsContext,
+  useSegmentsContext,
+} from "../../../src/segments/root/segments.root.context.js";
+import { SegmentsRoot } from "../../../src/segments/root/segments.root.jsx";
 
 describe("useSegmentsContext", () => {
   test("提供された値を返す", async ({ expect }) => {

@@ -4,8 +4,8 @@ import { render } from "vitest-browser-react";
 import {
   CollapsibleContext,
   useCollapsibleContext,
-} from "../../../src/collapsible/collapsible.context.js";
-import { CollapsibleRoot } from "../../../src/collapsible/collapsible.root.jsx";
+} from "../../../src/collapsible/root/collapsible.root.context.js";
+import { CollapsibleRoot } from "../../../src/collapsible/root/collapsible.root.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useCollapsibleContext", () => {

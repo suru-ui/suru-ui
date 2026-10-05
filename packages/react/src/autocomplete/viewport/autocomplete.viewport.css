@@ -1,0 +1,30 @@
+/* ScrollArea コンポーネント経由で描画され、パーツ自身を起点にできないため、ポータル起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_autocomplete_portal) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_scroll_area_viewport {
+    height: fit-content;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_autocomplete_viewport-max_height: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_scroll_area_viewport {
+    max-height: min(var(--sui_autocomplete_viewport-max_height), var(--available-height));
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_autocomplete_viewport-max_height: var(--sui_autocomplete_scroll_area-max_height);
+}
+
+} /* @scope */
+} /* @layer */

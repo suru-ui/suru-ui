@@ -2,8 +2,8 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { SegmentsList } from "../../../src/segments/segments.list.jsx";
-import { SegmentsRoot } from "../../../src/segments/segments.root.jsx";
+import { SegmentsList } from "../../../src/segments/list/segments.list.jsx";
+import { SegmentsRoot } from "../../../src/segments/root/segments.root.jsx";
 import "../_locators.js";
 
 const items = [

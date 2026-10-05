@@ -1,11 +1,11 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { CollapsibleRoot } from "../../../src/collapsible/collapsible.root.jsx";
+import { CollapsibleRoot } from "../../../src/collapsible/root/collapsible.root.jsx";
 import {
   type CollapsibleTriggerProps,
   CollapsibleTrigger,
-} from "../../../src/collapsible/collapsible.trigger.jsx";
+} from "../../../src/collapsible/trigger/collapsible.trigger.jsx";
 import "../_locators.js";
 
 function renderTrigger(label = "開閉"): CollapsibleTriggerProps["children"] {

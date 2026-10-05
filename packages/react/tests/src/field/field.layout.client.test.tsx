@@ -4,12 +4,12 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/field/field.parts.js";
-import { FieldControl } from "../../../src/field/field.control.jsx";
-import { FieldDescription } from "../../../src/field/field.description.jsx";
-import { FieldItem } from "../../../src/field/field.item.jsx";
+import { FieldControl } from "../../../src/field/control/field.control.jsx";
+import { FieldDescription } from "../../../src/field/description/field.description.jsx";
 import { Field } from "../../../src/field/field.jsx";
-import { FieldLabel } from "../../../src/field/field.label.jsx";
-import { FieldRoot } from "../../../src/field/field.root.jsx";
+import { FieldItem } from "../../../src/field/item/field.item.jsx";
+import { FieldLabel } from "../../../src/field/label/field.label.jsx";
+import { FieldRoot } from "../../../src/field/root/field.root.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

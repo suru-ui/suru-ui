@@ -4,8 +4,8 @@ import { render } from "vitest-browser-react";
 import {
   AvatarGroupContext,
   useAvatarGroupContext,
-} from "../../../src/avatar-group/avatar-group.context.js";
-import { AvatarGroupRoot } from "../../../src/avatar-group/avatar-group.root.jsx";
+} from "../../../src/avatar-group/root/avatar-group.root.context.js";
+import { AvatarGroupRoot } from "../../../src/avatar-group/root/avatar-group.root.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useAvatarGroupContext", () => {

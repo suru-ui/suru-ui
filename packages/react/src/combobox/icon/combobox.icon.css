@@ -1,0 +1,40 @@
+@layer sui.component {
+@scope (.sui_combobox_icon) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: contents;
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* ルートの無効化状態と外観の組み合わせに依存し、アイコン自身に無効クラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_combobox) to ([data-scope]) {
+
+:scope {
+  &.sui_combobox-disabled {
+    .sui_combobox_icon {
+      cursor: not-allowed;
+    }
+
+    &.sui_combobox-variant_naked .sui_combobox_icon svg:not(.sui-ignore) {
+      color: --sui-icon_color(
+               var(--sui-disabled-naked-canvas_text),
+               var(--sui-disabled-naked-canvas)
+             );
+    }
+
+    &.sui_combobox-variant_liquid .sui_combobox_icon svg:not(.sui-ignore) {
+      color: --sui-icon_color(
+               var(--sui-disabled-liquid-canvas_text),
+               var(--sui-disabled-liquid-canvas)
+             );
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */

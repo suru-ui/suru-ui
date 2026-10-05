@@ -1,6 +1,8 @@
-import "./text-field.css";
+import "./root/text-field.root.css";
+import "./input/text-field.input.css";
+import "./addon/text-field.addon.css";
 
-export * from "./text-field.context.js";
-export * from "./text-field.root.jsx";
-export * from "./text-field.input.jsx";
-export * from "./text-field.addon.jsx";
+export * from "./root/text-field.root.context.js";
+export * from "./root/text-field.root.jsx";
+export * from "./input/text-field.input.jsx";
+export * from "./addon/text-field.addon.jsx";

@@ -3,10 +3,10 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/slider/slider.parts.js";
-import { SliderControl } from "../../../src/slider/slider.control.jsx";
-import { SliderRoot } from "../../../src/slider/slider.root.jsx";
-import { SliderThumb } from "../../../src/slider/slider.thumb.jsx";
-import { SliderTrack } from "../../../src/slider/slider.track.jsx";
+import { SliderControl } from "../../../src/slider/control/slider.control.jsx";
+import { SliderRoot } from "../../../src/slider/root/slider.root.jsx";
+import { SliderThumb } from "../../../src/slider/thumb/slider.thumb.jsx";
+import { SliderTrack } from "../../../src/slider/track/slider.track.jsx";
 import "../_locators.js";
 
 describe("SliderThumb", () => {

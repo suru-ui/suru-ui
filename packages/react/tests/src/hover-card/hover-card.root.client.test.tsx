@@ -2,9 +2,9 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useHoverCardContext } from "../../../src/hover-card/hover-card.context.js";
 import { HoverCard } from "../../../src/hover-card/hover-card.jsx";
-import { HoverCardRoot } from "../../../src/hover-card/hover-card.root.jsx";
+import { useHoverCardContext } from "../../../src/hover-card/root/hover-card.root.context.js";
+import { HoverCardRoot } from "../../../src/hover-card/root/hover-card.root.jsx";
 import "../_locators.js";
 
 describe("HoverCardRoot", () => {

@@ -3,7 +3,7 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { MenubarRoot } from "../../../src/menubar/menubar.root.jsx";
+import { MenubarRoot } from "../../../src/menubar/root/menubar.root.jsx";
 import "../../../src/menubar/menubar.parts.js";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";

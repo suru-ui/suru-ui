@@ -3,11 +3,11 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FileUploadHiddenInput } from "../../../src/file-upload/file-upload.hidden-input.jsx";
+import { FileUploadHiddenInput } from "../../../src/file-upload/hidden-input/file-upload.hidden-input.jsx";
 import "../../../src/file-upload/file-upload.parts.js";
-import { FileUploadRoot } from "../../../src/file-upload/file-upload.root.jsx";
+import { FileUploadRoot } from "../../../src/file-upload/root/file-upload.root.jsx";
 import "../_locators.js";
-import FilesProbe from "./_probe.js";
+import FilesProbe from "./_probe.jsx";
 
 const textFile = new File(["hello"], "hello.txt", { type: "text/plain" });
 const anotherFile = new File(["world!"], "world.txt", { type: "text/plain" });

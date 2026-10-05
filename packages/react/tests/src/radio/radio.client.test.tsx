@@ -4,7 +4,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/radio/radio.parts.js";
-import { RadioGroupRoot } from "../../../src/radio-group/radio-group.root.jsx";
+import { RadioGroupRoot } from "../../../src/radio-group/root/radio-group.root.jsx";
 import { Radio, RadioAPI, useRadioAPI } from "../../../src/radio/radio.jsx";
 import "../_locators.js";
 

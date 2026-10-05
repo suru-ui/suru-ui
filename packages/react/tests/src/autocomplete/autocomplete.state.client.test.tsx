@@ -1,13 +1,13 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { AutocompleteInputGroup } from "../../../src/autocomplete/autocomplete.input-group.jsx";
-import { AutocompleteItem } from "../../../src/autocomplete/autocomplete.item.jsx";
-import { AutocompleteList } from "../../../src/autocomplete/autocomplete.list.jsx";
-import { AutocompletePopup } from "../../../src/autocomplete/autocomplete.popup.jsx";
-import { AutocompletePortal } from "../../../src/autocomplete/autocomplete.portal.jsx";
-import { AutocompletePositioner } from "../../../src/autocomplete/autocomplete.positioner.jsx";
-import { AutocompleteRoot } from "../../../src/autocomplete/autocomplete.root.jsx";
+import { AutocompleteInputGroup } from "../../../src/autocomplete/input-group/autocomplete.input-group.jsx";
+import { AutocompleteItem } from "../../../src/autocomplete/item/autocomplete.item.jsx";
+import { AutocompleteList } from "../../../src/autocomplete/list/autocomplete.list.jsx";
+import { AutocompletePopup } from "../../../src/autocomplete/popup/autocomplete.popup.jsx";
+import { AutocompletePortal } from "../../../src/autocomplete/portal/autocomplete.portal.jsx";
+import { AutocompletePositioner } from "../../../src/autocomplete/positioner/autocomplete.positioner.jsx";
+import { AutocompleteRoot } from "../../../src/autocomplete/root/autocomplete.root.jsx";
 import "../_locators.js";
 
 const fruits = ["りんご", "ばなな"];

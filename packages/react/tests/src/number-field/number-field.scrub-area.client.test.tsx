@@ -1,8 +1,8 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { NumberFieldRoot } from "../../../src/number-field/number-field.root.jsx";
-import { NumberFieldScrubArea } from "../../../src/number-field/number-field.scrub-area.jsx";
+import { NumberFieldRoot } from "../../../src/number-field/root/number-field.root.jsx";
+import { NumberFieldScrubArea } from "../../../src/number-field/scrub-area/number-field.scrub-area.jsx";
 import "../_locators.js";
 
 describe("NumberFieldScrubArea", () => {

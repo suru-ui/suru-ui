@@ -2,7 +2,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/resizable/resizable.parts.js";
-import { ResizableRoot } from "../../../src/resizable/resizable.root.jsx";
+import { ResizableRoot } from "../../../src/resizable/root/resizable.root.jsx";
 import "../_locators.js";
 
 describe("ResizableRoot", () => {

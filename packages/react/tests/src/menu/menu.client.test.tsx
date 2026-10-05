@@ -2,10 +2,10 @@ import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useMenuContext } from "../../../src/menu/menu.context.js";
 import { Menu, MenuAPI, useMenuAPI } from "../../../src/menu/menu.jsx";
-import { MenuRoot } from "../../../src/menu/menu.root.jsx";
-import { MenuTrigger } from "../../../src/menu/menu.trigger.jsx";
+import { useMenuContext } from "../../../src/menu/root/menu.root.context.js";
+import { MenuRoot } from "../../../src/menu/root/menu.root.jsx";
+import { MenuTrigger } from "../../../src/menu/trigger/menu.trigger.jsx";
 import "../_locators.js";
 
 const trigger = <button>メニューを開く</button>;

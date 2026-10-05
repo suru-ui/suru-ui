@@ -1,1 +1,1 @@
-export * from "./tooltip-group.root.jsx";
+export * from "./root/tooltip-group.root.jsx";

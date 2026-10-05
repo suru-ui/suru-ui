@@ -1,4 +1,5 @@
-import "./radio.css";
+import "./root/radio.root.css";
+import "./indicator/radio.indicator.css";
 
-export * from "./radio.root.jsx";
-export * from "./radio.indicator.jsx";
+export * from "./root/radio.root.jsx";
+export * from "./indicator/radio.indicator.jsx";

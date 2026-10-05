@@ -1,7 +1,7 @@
-import "./password-field.css";
+import "./toggle-button/password-field.toggle-button.css";
 
-export * from "./password-field.context.js";
-export * from "./password-field.root.jsx";
-export * from "./password-field.input.jsx";
-export * from "./password-field.addon.jsx";
-export * from "./password-field.toggle-button.jsx";
+export * from "./root/password-field.root.context.js";
+export * from "./root/password-field.root.jsx";
+export * from "./input/password-field.input.jsx";
+export * from "./addon/password-field.addon.jsx";
+export * from "./toggle-button/password-field.toggle-button.jsx";

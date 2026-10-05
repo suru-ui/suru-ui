@@ -2,9 +2,9 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useTooltipContext } from "../../../src/tooltip/tooltip.context.js";
+import { useTooltipContext } from "../../../src/tooltip/root/tooltip.root.context.js";
+import { TooltipRoot } from "../../../src/tooltip/root/tooltip.root.jsx";
 import { Tooltip } from "../../../src/tooltip/tooltip.jsx";
-import { TooltipRoot } from "../../../src/tooltip/tooltip.root.jsx";
 import "../_locators.js";
 
 describe("TooltipRoot", () => {

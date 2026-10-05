@@ -2,17 +2,17 @@ import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useBreadcrumbContext } from "../../../src/breadcrumb/breadcrumb.context.js";
-import { BreadcrumbItem } from "../../../src/breadcrumb/breadcrumb.item.jsx";
 import {
   Breadcrumb,
   BreadcrumbAPI,
   useBreadcrumbAPI,
 } from "../../../src/breadcrumb/breadcrumb.jsx";
-import { BreadcrumbLink } from "../../../src/breadcrumb/breadcrumb.link.jsx";
-import { BreadcrumbList } from "../../../src/breadcrumb/breadcrumb.list.jsx";
-import { BreadcrumbRoot } from "../../../src/breadcrumb/breadcrumb.root.jsx";
-import { BreadcrumbSeparator } from "../../../src/breadcrumb/breadcrumb.separator.jsx";
+import { BreadcrumbItem } from "../../../src/breadcrumb/item/breadcrumb.item.jsx";
+import { BreadcrumbLink } from "../../../src/breadcrumb/link/breadcrumb.link.jsx";
+import { BreadcrumbList } from "../../../src/breadcrumb/list/breadcrumb.list.jsx";
+import { useBreadcrumbContext } from "../../../src/breadcrumb/root/breadcrumb.root.context.js";
+import { BreadcrumbRoot } from "../../../src/breadcrumb/root/breadcrumb.root.jsx";
+import { BreadcrumbSeparator } from "../../../src/breadcrumb/separator/breadcrumb.separator.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 import "../_locators.js";
 

@@ -1,0 +1,183 @@
+@layer sui.component {
+@scope (.sui_alert_icon) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  grid-row: 1 / span 2;
+  grid-column: 1;
+  align-items: flex-start;
+  justify-content: center;
+
+  &:empty::before {
+    display: block;
+    content: "";
+    border-radius: 50%;
+  }
+}
+
+/* 可変 */
+:scope {
+  translate: 0 var(--sui_alert_icon-translate_block);
+
+  &:empty::before {
+    width: var(--sui_alert_icon-size);
+    height: var(--sui_alert_icon-size);
+    background-color: var(--sui_alert_icon-color);
+  }
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_alert_icon-size);
+    height: var(--sui_alert_icon-size);
+    color: var(--sui_alert_icon-color);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* サイズはルートの :has() に、配色はルートの修飾クラスに依存し、アイコン自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_alert) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_alert_icon-size: ;
+  --sui_alert_icon-font_size: ;
+  --sui_alert_icon-line_height: ;
+  --sui_alert_icon-color: ;
+  --sui_alert_icon-translate_block: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_alert_icon-size: calc(
+                           var(--sui_alert_icon-font_size)
+                           * min(1.25, var(--sui_alert_icon-line_height))
+                         );
+  --sui_alert_icon-translate_block: max(
+                                      0px,
+                                      calc(
+                                        (
+                                          var(--sui_alert_icon-font_size)
+                                          * var(--sui_alert_icon-line_height)
+                                          - var(--sui_alert_icon-size)
+                                        ) / 2
+                                      )
+                                    );
+
+  &:has(.sui_alert_icon) {
+    --sui_alert_icon-font_size: var(--sui_alert_description-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_description-line_height);
+  }
+
+  &:has(.sui_alert_icon):has(.sui_alert_title) {
+    --sui_alert_icon-font_size: var(--sui_alert_title-font_size);
+    --sui_alert_icon-line_height: var(--sui_alert_title-line_height);
+  }
+
+  &.sui_alert-color_grey {
+    --sui_alert_icon-color: var(--sui-canvas_text-1);
+  }
+
+  &.sui_alert-color_blue {
+    &.sui_alert-variant_muted {
+      --sui_alert_icon-color: var(--sui-blue-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      --sui_alert_icon-color: var(--sui-blue-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      --sui_alert_icon-color: var(--sui-blue-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_alert-color_purple {
+    &.sui_alert-variant_muted {
+      --sui_alert_icon-color: var(--sui-purple-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      --sui_alert_icon-color: var(--sui-purple-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      --sui_alert_icon-color: var(--sui-purple-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_alert-color_magenta {
+    &.sui_alert-variant_muted {
+      --sui_alert_icon-color: var(--sui-magenta-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      --sui_alert_icon-color: var(--sui-magenta-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      --sui_alert_icon-color: var(--sui-magenta-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_alert-color_red {
+    &.sui_alert-variant_muted {
+      --sui_alert_icon-color: var(--sui-red-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      --sui_alert_icon-color: var(--sui-red-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      --sui_alert_icon-color: var(--sui-red-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_alert-color_orange {
+    &.sui_alert-variant_muted {
+      --sui_alert_icon-color: var(--sui-orange-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      --sui_alert_icon-color: var(--sui-orange-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      --sui_alert_icon-color: var(--sui-orange-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_alert-color_yellow {
+    &.sui_alert-variant_muted {
+      --sui_alert_icon-color: var(--sui-yellow-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      --sui_alert_icon-color: var(--sui-yellow-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      --sui_alert_icon-color: var(--sui-yellow-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_alert-color_green {
+    &.sui_alert-variant_muted {
+      --sui_alert_icon-color: var(--sui-green-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_naked {
+      --sui_alert_icon-color: var(--sui-green-naked-canvas_text-normal);
+    }
+
+    &.sui_alert-variant_liquid {
+      --sui_alert_icon-color: var(--sui-green-liquid-canvas_text-normal);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */

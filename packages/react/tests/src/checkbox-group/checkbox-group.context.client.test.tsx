@@ -5,8 +5,8 @@ import { render } from "vitest-browser-react";
 import {
   CheckboxGroupContext,
   useCheckboxGroupContext,
-} from "../../../src/checkbox-group/checkbox-group.context.js";
-import { CheckboxGroupRoot } from "../../../src/checkbox-group/checkbox-group.root.jsx";
+} from "../../../src/checkbox-group/root/checkbox-group.root.context.js";
+import { CheckboxGroupRoot } from "../../../src/checkbox-group/root/checkbox-group.root.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useCheckboxGroupContext", () => {

@@ -3,9 +3,12 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { PopoverContext, usePopoverContext } from "../../../src/popover/popover.context.js";
 import { Popover } from "../../../src/popover/popover.jsx";
-import { PopoverRoot } from "../../../src/popover/popover.root.jsx";
+import {
+  PopoverContext,
+  usePopoverContext,
+} from "../../../src/popover/root/popover.root.context.js";
+import { PopoverRoot } from "../../../src/popover/root/popover.root.jsx";
 
 describe("usePopoverContext", () => {
   test("提供された値を返す", async ({ expect }) => {

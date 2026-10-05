@@ -3,9 +3,9 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FileUploadItemGroup } from "../../../src/file-upload/file-upload.item-group.jsx";
+import { FileUploadItemGroup } from "../../../src/file-upload/item-group/file-upload.item-group.jsx";
 import "../../../src/file-upload/file-upload.parts.js";
-import { FileUploadRoot } from "../../../src/file-upload/file-upload.root.jsx";
+import { FileUploadRoot } from "../../../src/file-upload/root/file-upload.root.jsx";
 import "../_locators.js";
 
 describe("FileUploadItemGroup", () => {

@@ -1,0 +1,34 @@
+@layer sui.component {
+@scope (.sui_context_menu_separator) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: block;
+}
+
+/* 変数 */
+:scope {
+  --sui_context_menu_separator-height: ;
+  --sui_context_menu_separator-margin_block: ;
+  --sui_context_menu_separator-margin_inline: ;
+  --sui_context_menu_separator-color: ;
+}
+
+/* 可変 */
+:scope {
+  height: var(--sui_context_menu_separator-height);
+  margin-block: var(--sui_context_menu_separator-margin_block);
+  margin-inline: var(--sui_context_menu_separator-margin_inline);
+  background-color: var(--sui_context_menu_separator-color);
+}
+
+/* 代入 */
+:scope {
+  --sui_context_menu_separator-height: --sui-border_width(1);
+  --sui_context_menu_separator-margin_block: --sui-space(3);
+  --sui_context_menu_separator-margin_inline: 0px;
+  --sui_context_menu_separator-color: var(--sui-border-1);
+}
+
+} /* @scope */
+} /* @layer */

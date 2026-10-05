@@ -2,9 +2,9 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { TabsList } from "../../../src/tabs/tabs.list.jsx";
-import { TabsRoot } from "../../../src/tabs/tabs.root.jsx";
-import { TabsTab } from "../../../src/tabs/tabs.tab.jsx";
+import { TabsList } from "../../../src/tabs/list/tabs.list.jsx";
+import { TabsRoot } from "../../../src/tabs/root/tabs.root.jsx";
+import { TabsTab } from "../../../src/tabs/tab/tabs.tab.jsx";
 import "../_locators.js";
 
 describe("TabsTab", () => {

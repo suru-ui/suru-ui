@@ -1,0 +1,119 @@
+/* トリガーは Button などの [data-scope] を持つ要素で描画されるため、インジケーターのスタイルは下限なしの別ブロックにまとめます。下限を設けるとスタイルが届きません。 */
+@layer sui.component {
+@scope (.sui_collapsible_indicator) {
+
+/* 固定 */
+:scope {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 変数 */
+:scope {
+  --sui_collapsible_indicator-size: ;
+  --sui_collapsible_indicator-font_family: ;
+  --sui_collapsible_indicator-font_size: ;
+  --sui_collapsible_indicator-font_weight: ;
+  --sui_collapsible_indicator-line_height: ;
+  --sui_collapsible_indicator-color: ;
+  --sui_collapsible_indicator-letter_spacing: ;
+  --sui_collapsible_indicator-rotate-closed: ;
+  --sui_collapsible_indicator-rotate-open: ;
+}
+
+/* 可変 */
+:scope {
+  width: var(--sui_collapsible_indicator-size);
+  height: var(--sui_collapsible_indicator-size);
+  font-family: var(--sui_collapsible_indicator-font_family);
+  font-size: var(--sui_collapsible_indicator-font_size);
+  font-weight: var(--sui_collapsible_indicator-font_weight);
+  line-height: var(--sui_collapsible_indicator-line_height);
+  color: var(--sui_collapsible_indicator-color);
+  letter-spacing: var(--sui_collapsible_indicator-letter_spacing);
+  rotate: var(--_sui_collapsible_indicator-rotate,
+            var(--sui_collapsible_indicator-rotate-closed)
+          );
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_collapsible_indicator-size);
+    height: var(--sui_collapsible_indicator-size);
+    color: var(--sui_collapsible_indicator-color);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_collapsible_indicator-size: calc(
+                                      var(--sui_collapsible_indicator-font_size)
+                                      * var(--sui_collapsible_indicator-line_height)
+                                    );
+  --sui_collapsible_indicator-font_family: var(--sui-font-sans);
+  --sui_collapsible_indicator-color: --sui-icon_color(
+                                       var(--sui-grey-solid-canvas_text-normal),
+                                       var(--sui-canvas-1)
+                                     );
+  --sui_collapsible_indicator-rotate-closed: 0deg;
+
+  /* 大きさで変わる活字に追従させるため、要素起点で代入します。 */
+  --sui_collapsible_indicator-rotate-open: 90deg;
+
+  &.sui_collapsible_indicator-size_sm {
+    --sui_collapsible_indicator-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_collapsible_indicator-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_collapsible_indicator-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_collapsible_indicator-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+  }
+
+  &.sui_collapsible_indicator-size_md {
+    --sui_collapsible_indicator-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_collapsible_indicator-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_collapsible_indicator-line_height: var(--sui-text-oln-md-n-line_height);
+    --sui_collapsible_indicator-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+  }
+
+  &.sui_collapsible_indicator-size_lg {
+    --sui_collapsible_indicator-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_collapsible_indicator-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_collapsible_indicator-line_height: var(--sui-text-oln-lg-n-line_height);
+    --sui_collapsible_indicator-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 開閉状態はルートにのみあり、インジケーター自身に等価な状態クラスが無いため、ルート起点の別ブロックに残します。 */
+@layer sui.component {
+@scope (.sui_collapsible) {
+
+/* 変異 */
+:scope {
+  &.sui_collapsible-open .sui_collapsible_indicator {
+    --_sui_collapsible_indicator-rotate: var(--sui_collapsible_indicator-rotate-open);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* トリガーは Button などの [data-scope] を持つ要素で描画されるため、インジケーターの無効状態は下限なしの別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_collapsible_indicator) {
+
+:scope {
+  &.sui_collapsible_indicator-disabled {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
+
+    svg:not(.sui-ignore) {
+      color: var(--sui-disabled-naked-canvas_text);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */

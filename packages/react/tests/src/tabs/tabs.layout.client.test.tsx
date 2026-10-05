@@ -4,12 +4,12 @@ import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/tabs/tabs.parts.js";
-import { TabsIndicator } from "../../../src/tabs/tabs.indicator.jsx";
+import { TabsIndicator } from "../../../src/tabs/indicator/tabs.indicator.jsx";
+import { TabsList } from "../../../src/tabs/list/tabs.list.jsx";
+import { TabsPanel } from "../../../src/tabs/panel/tabs.panel.jsx";
+import { TabsRoot } from "../../../src/tabs/root/tabs.root.jsx";
+import { TabsTab } from "../../../src/tabs/tab/tabs.tab.jsx";
 import { Tabs } from "../../../src/tabs/tabs.jsx";
-import { TabsList } from "../../../src/tabs/tabs.list.jsx";
-import { TabsPanel } from "../../../src/tabs/tabs.panel.jsx";
-import { TabsRoot } from "../../../src/tabs/tabs.root.jsx";
-import { TabsTab } from "../../../src/tabs/tabs.tab.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "../button/_supports-custom-functions.js";
 

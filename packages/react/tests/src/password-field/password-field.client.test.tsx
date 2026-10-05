@@ -7,7 +7,7 @@ import {
   PasswordFieldAPI,
   usePasswordFieldAPI,
 } from "../../../src/password-field/password-field.jsx";
-import { PasswordFieldRoot } from "../../../src/password-field/password-field.root.jsx";
+import { PasswordFieldRoot } from "../../../src/password-field/root/password-field.root.jsx";
 import "../_locators.js";
 
 describe("PasswordFieldAPI", () => {

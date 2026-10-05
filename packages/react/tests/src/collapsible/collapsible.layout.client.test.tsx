@@ -3,10 +3,10 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/collapsible/collapsible.parts.js";
-import { CollapsibleContent } from "../../../src/collapsible/collapsible.content.jsx";
-import { CollapsibleIndicator } from "../../../src/collapsible/collapsible.indicator.jsx";
-import { CollapsibleRoot } from "../../../src/collapsible/collapsible.root.jsx";
-import { CollapsibleTrigger } from "../../../src/collapsible/collapsible.trigger.jsx";
+import { CollapsibleContent } from "../../../src/collapsible/content/collapsible.content.jsx";
+import { CollapsibleIndicator } from "../../../src/collapsible/indicator/collapsible.indicator.jsx";
+import { CollapsibleRoot } from "../../../src/collapsible/root/collapsible.root.jsx";
+import { CollapsibleTrigger } from "../../../src/collapsible/trigger/collapsible.trigger.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

@@ -4,9 +4,9 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/resizable/resizable.parts.js";
-import { ResizableHandle } from "../../../src/resizable/resizable.handle.jsx";
-import { ResizablePanel } from "../../../src/resizable/resizable.panel.jsx";
-import { ResizableRoot } from "../../../src/resizable/resizable.root.jsx";
+import { ResizableHandle } from "../../../src/resizable/handle/resizable.handle.jsx";
+import { ResizablePanel } from "../../../src/resizable/panel/resizable.panel.jsx";
+import { ResizableRoot } from "../../../src/resizable/root/resizable.root.jsx";
 import "../_locators.js";
 
 /**

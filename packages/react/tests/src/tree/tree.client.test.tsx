@@ -2,7 +2,7 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { TreeItem } from "../../../src/tree/tree.item.jsx";
+import { TreeItem } from "../../../src/tree/item/tree.item.jsx";
 import { Tree, TreeAPI, useTreeAPI } from "../../../src/tree/tree.jsx";
 import "../_locators.js";
 

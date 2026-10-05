@@ -1,0 +1,55 @@
+/* 保留パーツ側で代入される公開変数を代入が参照し、代入の評価位置を維持するため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_button) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_button_circular_progress_fill {
+    transform-origin: center center;
+    rotate: -90deg;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_button_circular_progress_fill-color: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_button_circular_progress_fill {
+    color: var(--sui_button_circular_progress_fill-color);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_button_circular_progress_fill-color: var(--sui_button_pending-color);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* フィル自身に disabled / variant 相当のクラスが無く、ルートの状態に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_button) to ([data-scope]) {
+
+:scope {
+  &.sui_button-disabled {
+    &.sui_button-variant_solid .sui_button_circular_progress_fill {
+      color: var(--sui-disabled-solid-canvas_text);
+    }
+
+    &.sui_button-variant_naked .sui_button_circular_progress_fill {
+      color: var(--sui-disabled-naked-canvas_text);
+    }
+
+    &.sui_button-variant_liquid .sui_button_circular_progress_fill {
+      color: var(--sui-disabled-liquid-canvas_text);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */

@@ -2,9 +2,9 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { createDialogHandle } from "../../../src/dialog/dialog.handle.js";
 import { DialogAPI, useDialogAPI } from "../../../src/dialog/dialog.jsx";
-import { DialogRoot } from "../../../src/dialog/dialog.root.jsx";
+import { createDialogHandle } from "../../../src/dialog/handle/dialog.handle.js";
+import { DialogRoot } from "../../../src/dialog/root/dialog.root.jsx";
 import "../_locators.js";
 
 const closeButton = <button type="button">閉じる</button>;

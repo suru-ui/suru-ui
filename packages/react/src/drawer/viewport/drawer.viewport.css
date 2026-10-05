@@ -1,0 +1,30 @@
+@layer sui.component {
+@scope (.sui_drawer_viewport) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: fixed;
+  inset: 0px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: auto;
+  pointer-events: none;
+
+  &:has(.sui_drawer_popup-swipe_direction_up) {
+    align-items: flex-start;
+  }
+
+  &:has(.sui_drawer_popup-swipe_direction_left) {
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  &:has(.sui_drawer_popup-swipe_direction_right) {
+    align-items: stretch;
+    justify-content: flex-end;
+  }
+}
+
+} /* @scope */
+} /* @layer */

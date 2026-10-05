@@ -1,0 +1,106 @@
+@layer sui.component {
+@scope (.sui_text_field_input) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0px;
+  touch-action: manipulation;
+}
+
+/* 変数 */
+:scope {
+  --sui_text_field_input-font_family: ;
+  --sui_text_field_input-font_size: ;
+  --sui_text_field_input-font_weight: ;
+  --sui_text_field_input-line_height: ;
+  --sui_text_field_input-color: ;
+  --sui_text_field_input-placeholder-color: ;
+  --sui_text_field_input-letter_spacing: ;
+  --sui_text_field_input-caret_color: ;
+}
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_text_field_input-font_family);
+  font-size: var(--sui_text_field_input-font_size);
+  font-weight: var(--sui_text_field_input-font_weight);
+  line-height: var(--sui_text_field_input-line_height);
+  color: var(--sui_text_field_input-color);
+  letter-spacing: var(--sui_text_field_input-letter_spacing);
+  caret-color: var(--sui_text_field_input-caret_color);
+
+  &::placeholder {
+    color: var(--sui_text_field_input-placeholder-color);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_text_field_input-font_family: var(--sui-font-sans);
+  --sui_text_field_input-placeholder-color: var(--sui-canvas_text-2);
+
+  &.sui_text_field_input-size_sm {
+    --sui_text_field_input-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_text_field_input-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_text_field_input-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_text_field_input-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+  }
+
+  &.sui_text_field_input-size_md {
+    --sui_text_field_input-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_text_field_input-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_text_field_input-line_height: var(--sui-text-oln-md-n-line_height);
+    --sui_text_field_input-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+  }
+
+  &.sui_text_field_input-size_lg {
+    --sui_text_field_input-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_text_field_input-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_text_field_input-line_height: var(--sui-text-oln-lg-n-line_height);
+    --sui_text_field_input-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+  }
+
+  &.sui_text_field_input-variant_naked {
+    --sui_text_field_input-color: var(--sui-grey-naked-canvas_text-normal);
+    --sui_text_field_input-caret_color: var(--sui_text_field_input-color);
+  }
+
+  &.sui_text_field_input-variant_liquid {
+    --sui_text_field_input-color: var(--sui-grey-liquid-canvas_text-normal);
+    --sui_text_field_input-caret_color: var(--sui_text_field_input-color);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_text_field_input) to ([data-scope]) {
+
+:scope {
+  &.sui_text_field_input-disabled {
+    cursor: not-allowed;
+  }
+
+  &.sui_text_field_input-disabled.sui_text_field_input-variant_naked {
+    color: var(--sui-disabled-naked-canvas_text);
+
+    &::placeholder {
+      color: var(--sui-disabled-naked-canvas_text);
+    }
+  }
+
+  &.sui_text_field_input-disabled.sui_text_field_input-variant_liquid {
+    color: var(--sui-disabled-liquid-canvas_text);
+
+    &::placeholder {
+      color: var(--sui-disabled-liquid-canvas_text);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */

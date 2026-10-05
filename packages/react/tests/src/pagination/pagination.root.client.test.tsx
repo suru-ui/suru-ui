@@ -2,8 +2,8 @@ import "@suru-ui/theme/suru.css";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { usePaginationContext } from "../../../src/pagination/pagination.context.js";
-import { PaginationRoot } from "../../../src/pagination/pagination.root.jsx";
+import { usePaginationContext } from "../../../src/pagination/root/pagination.root.context.js";
+import { PaginationRoot } from "../../../src/pagination/root/pagination.root.jsx";
 import "../_locators.js";
 
 /**

@@ -8,7 +8,7 @@ import type {
   MenuRootSubmenuItemObject,
   MenuRootCheckboxItemObject,
   MenuRootRadioItemObjectGroup,
-} from "./menu.root.jsx";
+} from "./root/menu.root.jsx";
 
 function isObject(x: unknown): x is object {
   return typeof x === "object" && x !== null;

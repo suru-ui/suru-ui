@@ -3,9 +3,9 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { MenuContext, useMenuContext } from "../../../src/menu/menu.context.js";
-import { MenuRoot } from "../../../src/menu/menu.root.jsx";
-import { MenuSubmenuRoot } from "../../../src/menu/menu.submenu-root.jsx";
+import { MenuContext, useMenuContext } from "../../../src/menu/root/menu.root.context.js";
+import { MenuRoot } from "../../../src/menu/root/menu.root.jsx";
+import { MenuSubmenuRoot } from "../../../src/menu/submenu-root/menu.submenu-root.jsx";
 
 describe("useMenuContext", () => {
   test("提供された値を返す", async ({ expect }) => {

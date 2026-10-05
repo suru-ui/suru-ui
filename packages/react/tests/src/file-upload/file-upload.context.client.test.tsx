@@ -8,9 +8,9 @@ import {
   type FileUploadContext,
   FileUploadContext as Context,
   useFileUploadContext,
-} from "../../../src/file-upload/file-upload.context.js";
+} from "../../../src/file-upload/root/file-upload.root.context.js";
 import "../../../src/file-upload/file-upload.parts.js";
-import { FileUploadRoot } from "../../../src/file-upload/file-upload.root.jsx";
+import { FileUploadRoot } from "../../../src/file-upload/root/file-upload.root.jsx";
 
 const file = new File(["hello"], "hello.txt", { type: "text/plain" });
 

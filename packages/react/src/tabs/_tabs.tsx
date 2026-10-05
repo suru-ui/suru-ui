@@ -3,9 +3,9 @@ import * as React from "react";
 import isReactNode from "../_is-react-node.js";
 import { hasLabel, isObject, getItemKey, isPrimitiveItem } from "../_item.js";
 import toReactNode from "../_to-react-node.js";
-import type { TabsRootItemObject, ITabsRootItemRenderer } from "./tabs.root.jsx";
-import { type TabsTabProps, TabsTab } from "./tabs.tab.jsx";
-import { decomposeItemObject } from "./tabs.utils.js";
+import type { TabsRootItemObject, ITabsRootItemRenderer } from "./root/tabs.root.jsx";
+import { type TabsTabProps, TabsTab } from "./tab/tabs.tab.jsx";
+import { decomposeItemObject } from "./utils/tabs.utils.js";
 
 /**
  * 項目が `label` を持つオブジェクトかどうかを判定します。

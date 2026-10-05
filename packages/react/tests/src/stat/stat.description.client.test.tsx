@@ -2,8 +2,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/stat/stat.parts.js";
-import { StatDescription } from "../../../src/stat/stat.description.jsx";
-import { StatRoot } from "../../../src/stat/stat.root.jsx";
+import { StatDescription } from "../../../src/stat/description/stat.description.jsx";
+import { StatRoot } from "../../../src/stat/root/stat.root.jsx";
 import "../_locators.js";
 
 describe("StatDescription", () => {

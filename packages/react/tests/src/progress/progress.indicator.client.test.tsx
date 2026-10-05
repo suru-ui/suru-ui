@@ -2,8 +2,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/progress/progress.parts.js";
-import { ProgressIndicator } from "../../../src/progress/progress.indicator.jsx";
-import { ProgressRoot } from "../../../src/progress/progress.root.jsx";
+import { ProgressIndicator } from "../../../src/progress/indicator/progress.indicator.jsx";
+import { ProgressRoot } from "../../../src/progress/root/progress.root.jsx";
 import "../_locators.js";
 
 describe("ProgressIndicator", () => {

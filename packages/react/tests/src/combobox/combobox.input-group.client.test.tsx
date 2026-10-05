@@ -2,9 +2,9 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useComboboxContext } from "../../../src/combobox/combobox.context.js";
-import { ComboboxInputGroup } from "../../../src/combobox/combobox.input-group.jsx";
-import { ComboboxRoot } from "../../../src/combobox/combobox.root.jsx";
+import { ComboboxInputGroup } from "../../../src/combobox/input-group/combobox.input-group.jsx";
+import { useComboboxContext } from "../../../src/combobox/root/combobox.root.context.js";
+import { ComboboxRoot } from "../../../src/combobox/root/combobox.root.jsx";
 
 const fruits = ["りんご", "ばなな"];
 

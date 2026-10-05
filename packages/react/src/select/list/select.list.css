@@ -1,0 +1,11 @@
+@layer sui.component {
+@scope (.sui_select_list) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  flex-direction: column;
+}
+
+} /* @scope */
+} /* @layer */

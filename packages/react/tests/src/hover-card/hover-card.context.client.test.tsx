@@ -6,8 +6,8 @@ import { ContextMissingError } from "../../../src/errors.js";
 import {
   HoverCardContext,
   useHoverCardContext,
-} from "../../../src/hover-card/hover-card.context.js";
-import { HoverCardRoot } from "../../../src/hover-card/hover-card.root.jsx";
+} from "../../../src/hover-card/root/hover-card.root.context.js";
+import { HoverCardRoot } from "../../../src/hover-card/root/hover-card.root.jsx";
 
 describe("useHoverCardContext", () => {
   test("提供された値を返す", async ({ expect }) => {

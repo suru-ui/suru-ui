@@ -4,7 +4,7 @@ import { render } from "vitest-browser-react";
 import { defaultItemToStringLabel, defaultItemToStringValue } from "../../../src/_item.js";
 import { ComboboxAPI } from "../../../src/combobox/combobox.jsx";
 import { Combobox } from "../../../src/combobox/combobox.jsx";
-import { ComboboxRoot } from "../../../src/combobox/combobox.root.jsx";
+import { ComboboxRoot } from "../../../src/combobox/root/combobox.root.jsx";
 import "../_locators.js";
 
 describe("isInputInPopup", () => {

@@ -2,8 +2,8 @@ import type * as React from "react";
 
 import isReactNode from "../_is-react-node.js";
 import { isObject } from "../_item.js";
-import type { TreeSelectAction } from "./tree.context.js";
-import type { TreeRootItemObject } from "./tree.root.jsx";
+import type { TreeSelectAction } from "./root/tree.root.context.js";
+import type { TreeRootItemObject } from "./root/tree.root.jsx";
 
 /**
  * 項目が `id` と `label` を持つオブジェクトかどうかを判定します。

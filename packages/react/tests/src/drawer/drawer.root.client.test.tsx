@@ -2,14 +2,14 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { type DrawerCloseProps, DrawerClose } from "../../../src/drawer/drawer.close.jsx";
-import { DrawerContent } from "../../../src/drawer/drawer.content.jsx";
-import { createDrawerHandle } from "../../../src/drawer/drawer.handle.js";
+import { type DrawerCloseProps, DrawerClose } from "../../../src/drawer/close/drawer.close.jsx";
+import { DrawerContent } from "../../../src/drawer/content/drawer.content.jsx";
 import { DrawerAPI, useDrawerAPI } from "../../../src/drawer/drawer.jsx";
-import { DrawerPopup } from "../../../src/drawer/drawer.popup.jsx";
-import { DrawerPortal } from "../../../src/drawer/drawer.portal.jsx";
-import { DrawerRoot } from "../../../src/drawer/drawer.root.jsx";
-import { DrawerViewport } from "../../../src/drawer/drawer.viewport.jsx";
+import { createDrawerHandle } from "../../../src/drawer/handle/drawer.handle.js";
+import { DrawerPopup } from "../../../src/drawer/popup/drawer.popup.jsx";
+import { DrawerPortal } from "../../../src/drawer/portal/drawer.portal.jsx";
+import { DrawerRoot } from "../../../src/drawer/root/drawer.root.jsx";
+import { DrawerViewport } from "../../../src/drawer/viewport/drawer.viewport.jsx";
 import "../_locators.js";
 
 const closeButton = <button type="button">閉じる</button>;

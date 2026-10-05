@@ -2,11 +2,11 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ComboboxCollection } from "../../../src/combobox/combobox.collection.jsx";
-import { useComboboxContext } from "../../../src/combobox/combobox.context.js";
-import { ComboboxGroup } from "../../../src/combobox/combobox.group.jsx";
+import { ComboboxCollection } from "../../../src/combobox/collection/combobox.collection.jsx";
 import { Combobox } from "../../../src/combobox/combobox.jsx";
-import { ComboboxRoot } from "../../../src/combobox/combobox.root.jsx";
+import { ComboboxGroup } from "../../../src/combobox/group/combobox.group.jsx";
+import { useComboboxContext } from "../../../src/combobox/root/combobox.root.context.js";
+import { ComboboxRoot } from "../../../src/combobox/root/combobox.root.jsx";
 
 const fruits = ["りんご", "ばなな"];
 const grouped = [

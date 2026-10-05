@@ -1,8 +1,8 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { CollapsibleIndicator } from "../../../src/collapsible/collapsible.indicator.jsx";
-import { CollapsibleRoot } from "../../../src/collapsible/collapsible.root.jsx";
+import { CollapsibleIndicator } from "../../../src/collapsible/indicator/collapsible.indicator.jsx";
+import { CollapsibleRoot } from "../../../src/collapsible/root/collapsible.root.jsx";
 import "../_locators.js";
 
 describe("CollapsibleIndicator", () => {

@@ -3,9 +3,9 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/aspect-ratio/aspect-ratio.parts.js";
-import { AspectRatioRoot } from "../../../src/aspect-ratio/aspect-ratio.root.jsx";
+import { AspectRatioRoot } from "../../../src/aspect-ratio/root/aspect-ratio.root.jsx";
 import "../../../src/image/image.parts.js";
-import { ImageRoot } from "../../../src/image/image.root.jsx";
+import { ImageRoot } from "../../../src/image/root/image.root.jsx";
 import "../_locators.js";
 
 describe("AspectRatioRoot の配置", () => {

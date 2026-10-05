@@ -2,10 +2,10 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { SegmentsIndicator } from "../../../src/segments/segments.indicator.jsx";
-import { SegmentsItem } from "../../../src/segments/segments.item.jsx";
-import { SegmentsList } from "../../../src/segments/segments.list.jsx";
-import { SegmentsRoot } from "../../../src/segments/segments.root.jsx";
+import { SegmentsIndicator } from "../../../src/segments/indicator/segments.indicator.jsx";
+import { SegmentsItem } from "../../../src/segments/item/segments.item.jsx";
+import { SegmentsList } from "../../../src/segments/list/segments.list.jsx";
+import { SegmentsRoot } from "../../../src/segments/root/segments.root.jsx";
 import "../_locators.js";
 
 describe("SegmentsIndicator", () => {

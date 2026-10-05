@@ -1,9 +1,9 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { CardDescription } from "../../../src/card/card.description.jsx";
-import { CardHeader } from "../../../src/card/card.header.jsx";
-import { CardRoot } from "../../../src/card/card.root.jsx";
+import { CardDescription } from "../../../src/card/description/card.description.jsx";
+import { CardHeader } from "../../../src/card/header/card.header.jsx";
+import { CardRoot } from "../../../src/card/root/card.root.jsx";
 import "../_locators.js";
 
 describe("CardDescription", () => {

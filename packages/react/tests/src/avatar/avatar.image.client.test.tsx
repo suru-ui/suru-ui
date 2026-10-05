@@ -2,8 +2,8 @@ import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/avatar/avatar.parts.js";
-import { AvatarImage } from "../../../src/avatar/avatar.image.jsx";
-import { AvatarRoot } from "../../../src/avatar/avatar.root.jsx";
+import { AvatarImage } from "../../../src/avatar/image/avatar.image.jsx";
+import { AvatarRoot } from "../../../src/avatar/root/avatar.root.jsx";
 import "../_locators.js";
 
 const imageSrc = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";

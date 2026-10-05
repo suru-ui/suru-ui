@@ -1,7 +1,9 @@
-import "./tree.css";
+import "./root/tree.root.css";
+import "./item/tree.item.css";
+import "./indicator/tree.indicator.css";
 
-export * from "./tree.context.js";
-export * from "./tree.root.jsx";
-export * from "./tree.item.jsx";
-export * from "./tree.indicator.jsx";
-export * from "./tree.utils.js";
+export * from "./root/tree.root.context.js";
+export * from "./root/tree.root.jsx";
+export * from "./item/tree.item.jsx";
+export * from "./indicator/tree.indicator.jsx";
+export * from "./utils/tree.utils.js";

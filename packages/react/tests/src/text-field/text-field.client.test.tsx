@@ -2,8 +2,8 @@ import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/text-field/text-field.parts.js";
+import { TextFieldRoot } from "../../../src/text-field/root/text-field.root.jsx";
 import { TextField, TextFieldAPI, useTextFieldAPI } from "../../../src/text-field/text-field.jsx";
-import { TextFieldRoot } from "../../../src/text-field/text-field.root.jsx";
 import "../_locators.js";
 
 describe("TextFieldAPI", () => {

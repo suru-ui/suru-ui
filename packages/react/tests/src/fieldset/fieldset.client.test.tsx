@@ -3,8 +3,8 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FieldControl } from "../../../src/field/field.control.jsx";
-import { FieldRoot } from "../../../src/field/field.root.jsx";
+import { FieldControl } from "../../../src/field/control/field.control.jsx";
+import { FieldRoot } from "../../../src/field/root/field.root.jsx";
 import "../../../src/fieldset/fieldset.parts.js";
 import { Fieldset, FieldsetAPI, useFieldsetAPI } from "../../../src/fieldset/fieldset.jsx";
 import "../_locators.js";

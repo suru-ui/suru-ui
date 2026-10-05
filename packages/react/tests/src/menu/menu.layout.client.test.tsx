@@ -3,14 +3,14 @@ import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { MenuContent } from "../../../src/menu/menu.content.jsx";
-import { MenuItem } from "../../../src/menu/menu.item.jsx";
+import { MenuContent } from "../../../src/menu/content/menu.content.jsx";
+import { MenuItem } from "../../../src/menu/item/menu.item.jsx";
 import { Menu } from "../../../src/menu/menu.jsx";
-import { MenuPortal } from "../../../src/menu/menu.portal.jsx";
-import { MenuPositioner } from "../../../src/menu/menu.positioner.jsx";
-import { MenuRoot } from "../../../src/menu/menu.root.jsx";
-import { MenuSubmenuRoot } from "../../../src/menu/menu.submenu-root.jsx";
-import { MenuSubmenuTrigger } from "../../../src/menu/menu.submenu-trigger.jsx";
+import { MenuPortal } from "../../../src/menu/portal/menu.portal.jsx";
+import { MenuPositioner } from "../../../src/menu/positioner/menu.positioner.jsx";
+import { MenuRoot } from "../../../src/menu/root/menu.root.jsx";
+import { MenuSubmenuRoot } from "../../../src/menu/submenu-root/menu.submenu-root.jsx";
+import { MenuSubmenuTrigger } from "../../../src/menu/submenu-trigger/menu.submenu-trigger.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

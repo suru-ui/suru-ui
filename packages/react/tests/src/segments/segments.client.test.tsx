@@ -2,7 +2,7 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { SegmentsItem } from "../../../src/segments/segments.item.jsx";
+import { SegmentsItem } from "../../../src/segments/item/segments.item.jsx";
 import { Segments, SegmentsAPI, useSegmentsAPI } from "../../../src/segments/segments.jsx";
 import "../_locators.js";
 

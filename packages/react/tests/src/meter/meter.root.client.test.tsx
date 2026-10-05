@@ -3,7 +3,7 @@ import { render } from "vitest-browser-react";
 
 import "../../../src/meter/meter.parts.js";
 import { MeterAPI } from "../../../src/meter/meter.jsx";
-import { MeterRoot } from "../../../src/meter/meter.root.jsx";
+import { MeterRoot } from "../../../src/meter/root/meter.root.jsx";
 import "../_locators.js";
 
 describe("MeterRoot", () => {

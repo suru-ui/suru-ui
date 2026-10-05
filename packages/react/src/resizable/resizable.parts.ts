@@ -1,6 +1,7 @@
-import "./resizable.css";
+import "./root/resizable.root.css";
+import "./handle/resizable.handle.css";
 
-export * from "./resizable.context.js";
-export * from "./resizable.root.jsx";
-export * from "./resizable.panel.jsx";
-export * from "./resizable.handle.jsx";
+export * from "./root/resizable.root.context.js";
+export * from "./root/resizable.root.jsx";
+export * from "./panel/resizable.panel.jsx";
+export * from "./handle/resizable.handle.jsx";

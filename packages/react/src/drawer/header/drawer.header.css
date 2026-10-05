@@ -1,0 +1,68 @@
+@layer sui.component {
+@scope (.sui_drawer_header) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+
+  &:has(.sui_drawer_title) {
+    grid-template: "title" auto
+                   /auto ;
+  }
+
+  &:has(.sui_drawer_description) {
+    grid-template: "description" auto
+                   /auto       ;
+  }
+
+  &:has(.sui_drawer_controls) {
+    grid-template: "controls" auto
+                   /auto    ;
+  }
+
+  &:has(.sui_drawer_title):has(.sui_drawer_description) {
+    grid-template: "title      " auto
+                   "description" auto
+                   /auto       ;
+  }
+
+  &:has(.sui_drawer_title):has(.sui_drawer_controls) {
+    grid-template: "title controls" auto
+                   /1fr   auto    ;
+  }
+
+  &:has(.sui_drawer_controls):has(.sui_drawer_description) {
+    grid-template: ".           controls   " auto
+                   "description description" auto
+                   /1fr         auto       ;
+  }
+
+  &:has(.sui_drawer_title):has(.sui_drawer_controls):has(.sui_drawer_description) {
+    grid-template: "title       controls   " auto
+                   "description description" auto
+                   /1fr         auto       ;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_drawer_header-row_gap: ;
+  --sui_drawer_header-padding: ;
+}
+
+/* 可変 */
+:scope {
+  row-gap: var(--sui_drawer_header-row_gap);
+  padding: var(--sui_drawer_header-padding);
+}
+
+/* 代入 */
+:scope {
+  --sui_drawer_header-row_gap: --sui-gap(1);
+  --sui_drawer_header-padding: --sui-space(4);
+}
+
+} /* @scope */
+} /* @layer */

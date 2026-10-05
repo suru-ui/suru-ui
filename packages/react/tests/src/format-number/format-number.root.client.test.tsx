@@ -1,7 +1,7 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FormatNumberRoot } from "../../../src/format-number/format-number.root.jsx";
+import { FormatNumberRoot } from "../../../src/format-number/root/format-number.root.jsx";
 
 describe("FormatNumberRoot", () => {
   test("指定したロケールで小数を書式化する", async ({ expect }) => {

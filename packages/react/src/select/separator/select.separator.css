@@ -1,0 +1,31 @@
+@layer sui.component {
+@scope (.sui_select_separator) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  margin-block: 0px;
+}
+
+/* 変数 */
+:scope {
+  --sui_select_separator-height: ;
+  --sui_select_separator-margin_inline: ;
+  --sui_select_separator-background_color: ;
+}
+
+/* 可変 */
+:scope {
+  height: var(--sui_select_separator-height);
+  margin-inline: var(--sui_select_separator-margin_inline);
+  background-color: var(--sui_select_separator-background_color);
+}
+
+/* 代入 */
+:scope {
+  --sui_select_separator-height: --sui-border_width(1);
+  --sui_select_separator-margin_inline: 0px;
+  --sui_select_separator-background_color: var(--sui-grey-naked-border-normal);
+}
+
+} /* @scope */
+} /* @layer */

@@ -1,0 +1,31 @@
+@layer sui.component {
+@scope (.sui_select_value) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* 変数 */
+:scope {
+  --sui_select_value-color: ;
+}
+
+/* 可変 */
+:scope {
+  &.sui_select_value-placeholder {
+    color: var(--sui_select_value-color);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_select_value-color: var(--sui_select-placeholder-color);
+}
+
+} /* @scope */
+} /* @layer */

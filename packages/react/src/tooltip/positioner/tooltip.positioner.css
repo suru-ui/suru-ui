@@ -1,0 +1,10 @@
+@layer sui.component {
+@scope (.sui_tooltip_positioner) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  z-index: calc(infinity);
+}
+
+} /* @scope */
+} /* @layer */

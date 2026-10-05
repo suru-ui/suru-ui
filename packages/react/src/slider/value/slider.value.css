@@ -1,0 +1,95 @@
+@layer sui.component {
+@scope (.sui_slider_value) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_slider_value-font_family);
+  font-size: var(--sui_slider_value-font_size);
+  font-weight: var(--sui_slider_value-font_weight);
+  line-height: var(--sui_slider_value-line_height);
+  color: var(--sui_slider_value-color);
+  letter-spacing: var(--sui_slider_value-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 活字の指定はルートの大きさの修飾クラスに依存し、値表示自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_slider) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_slider_value-font_family: ;
+  --sui_slider_value-font_size: ;
+  --sui_slider_value-font_weight: ;
+  --sui_slider_value-line_height: ;
+  --sui_slider_value-color: ;
+  --sui_slider_value-letter_spacing: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_slider_value-font_family: var(--sui-font-sans);
+  --sui_slider_value-color: var(--sui-canvas_text-2);
+
+  &.sui_slider-size_sm {
+    --sui_slider_value-font_size: var(--sui-text-dns-sm-n-font_size);
+    --sui_slider_value-font_weight: var(--sui-text-dns-sm-n-font_weight);
+    --sui_slider_value-line_height: var(--sui-text-dns-sm-n-line_height);
+    --sui_slider_value-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
+  }
+
+  &.sui_slider-size_md {
+    --sui_slider_value-font_size: var(--sui-text-dns-md-n-font_size);
+    --sui_slider_value-font_weight: var(--sui-text-dns-md-n-font_weight);
+    --sui_slider_value-line_height: var(--sui-text-dns-md-n-line_height);
+    --sui_slider_value-letter_spacing: var(--sui-text-dns-md-n-letter_spacing);
+  }
+
+  &.sui_slider-size_lg {
+    --sui_slider_value-font_size: var(--sui-text-dns-lg-n-font_size);
+    --sui_slider_value-font_weight: var(--sui-text-dns-lg-n-font_weight);
+    --sui_slider_value-line_height: var(--sui-text-dns-lg-n-line_height);
+    --sui_slider_value-letter_spacing: var(--sui-text-dns-lg-n-letter_spacing);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_slider_value) to ([data-scope]) {
+
+:scope {
+  &.sui_slider_value-disabled {
+    cursor: not-allowed;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* 配色の指定はルートのバリアントに依存し、値表示自身にはバリアントの修飾クラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_slider) to ([data-scope]) {
+
+:scope {
+  &.sui_slider-disabled.sui_slider-variant_naked .sui_slider_value {
+    color: var(--sui-disabled-naked-canvas_text);
+  }
+
+  &.sui_slider-disabled.sui_slider-variant_liquid .sui_slider_value {
+    color: var(--sui-disabled-liquid-canvas_text);
+  }
+}
+
+} /* @scope */
+} /* @layer */

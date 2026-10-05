@@ -4,8 +4,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/checkbox/checkbox.parts.js";
-import { CheckboxIndicator } from "../../../src/checkbox/checkbox.indicator.jsx";
-import { CheckboxRoot } from "../../../src/checkbox/checkbox.root.jsx";
+import { CheckboxIndicator } from "../../../src/checkbox/indicator/checkbox.indicator.jsx";
+import { CheckboxRoot } from "../../../src/checkbox/root/checkbox.root.jsx";
 import "../_locators.js";
 
 describe("CheckboxIndicator", () => {

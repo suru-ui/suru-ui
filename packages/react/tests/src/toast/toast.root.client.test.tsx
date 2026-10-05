@@ -1,8 +1,8 @@
 import * as React from "react";
 import { describe, test, vi } from "vitest";
 
+import { type ToastRootToastObject } from "../../../src/toast/root/toast.root.jsx";
 import { type IToastListRenderer, ToastAPI, ToastListAPI } from "../../../src/toast/toast.jsx";
-import { type ToastRootToastObject } from "../../../src/toast/toast.root.jsx";
 
 const toast: ToastRootToastObject = { id: "toast-1", title: "見出し" };
 

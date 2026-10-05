@@ -1,5 +1,6 @@
-import "./status.css";
+import "./root/status.root.css";
+import "./indicator/status.indicator.css";
 
-export * from "./status.context.js";
-export * from "./status.root.jsx";
-export * from "./status.indicator.jsx";
+export * from "./root/status.root.context.js";
+export * from "./root/status.root.jsx";
+export * from "./indicator/status.indicator.jsx";

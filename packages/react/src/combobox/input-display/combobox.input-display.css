@@ -1,0 +1,107 @@
+@layer sui.component {
+@scope (.sui_combobox_input_display) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: block;
+  flex: 1 1 auto;
+  width: 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-feature-settings: "palt";
+  text-align: start;
+  white-space: nowrap;
+  touch-action: manipulation;
+
+  &.sui_combobox_input_display-placeholder {
+    user-select: none;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_combobox_input_display-min_width: ;
+  --sui_combobox_input_display-padding_block: ;
+  --sui_combobox_input_display-padding_inline: ;
+  --sui_combobox_input_display-font_family: ;
+  --sui_combobox_input_display-font_size: ;
+  --sui_combobox_input_display-font_weight: ;
+  --sui_combobox_input_display-line_height: ;
+  --sui_combobox_input_display-color: ;
+  --sui_combobox_input_display-placeholder-color: ;
+  --sui_combobox_input_display-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
+  min-width: var(--sui_combobox_input_display-min_width);
+  padding-block: var(--sui_combobox_input_display-padding_block);
+  padding-inline: var(--sui_combobox_input_display-padding_inline);
+  font-family: var(--sui_combobox_input_display-font_family);
+  font-size: var(--sui_combobox_input_display-font_size);
+  font-weight: var(--sui_combobox_input_display-font_weight);
+  line-height: var(--sui_combobox_input_display-line_height);
+  color: var(--_sui_combobox_input_display-color, var(--sui_combobox_input_display-color));
+  letter-spacing: var(--sui_combobox_input_display-letter_spacing);
+}
+
+/* 代入 */
+:scope {
+  --sui_combobox_input_display-min_width: var(--sui_combobox_input-min_width);
+  --sui_combobox_input_display-padding_block: calc(
+                                                (
+                                                  var(--sui_combobox_input-height)
+                                                  - var(--sui_combobox_input_display-font_size)
+                                                  * var(--sui_combobox_input_display-line_height)
+                                                ) / 2
+                                              );
+  --sui_combobox_input_display-font_family: var(--sui_combobox_input-font_family);
+  --sui_combobox_input_display-font_size: var(--sui_combobox_input-font_size);
+  --sui_combobox_input_display-font_weight: var(--sui_combobox_input-font_weight);
+  --sui_combobox_input_display-line_height: var(--sui_combobox_input-line_height);
+  --sui_combobox_input_display-color: var(--sui_combobox_input-color);
+  --sui_combobox_input_display-placeholder-color: var(--sui_combobox_input-placeholder-color);
+  --sui_combobox_input_display-letter_spacing: var(--sui_combobox_input-letter_spacing);
+
+  &.sui_combobox_input_display-size_sm {
+    --sui_combobox_input_display-padding_inline: --sui-space(0.5);
+  }
+
+  &.sui_combobox_input_display-size_md {
+    --sui_combobox_input_display-padding_inline: --sui-space(1);
+  }
+
+  &.sui_combobox_input_display-size_lg {
+    --sui_combobox_input_display-padding_inline: --sui-space(1.5);
+  }
+}
+
+/* 変異 */
+:scope {
+  &.sui_combobox_input_display-placeholder {
+    --_sui_combobox_input_display-color: var(--sui_combobox_input_display-placeholder-color);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* ルートの無効化状態と外観の組み合わせに依存し、表示欄自身に無効クラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_combobox) to ([data-scope]) {
+
+:scope {
+  &.sui_combobox-disabled {
+    &.sui_combobox-variant_naked .sui_combobox_input_display {
+      color: var(--sui-disabled-naked-canvas_text);
+    }
+
+    &.sui_combobox-variant_liquid .sui_combobox_input_display {
+      color: var(--sui-disabled-liquid-canvas_text);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */

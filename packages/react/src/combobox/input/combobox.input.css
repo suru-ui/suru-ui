@@ -1,0 +1,114 @@
+@layer sui.component {
+@scope (.sui_combobox_input) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: block;
+  flex: 1 1 auto;
+  width: 0px;
+  font-feature-settings: "palt";
+  white-space: nowrap;
+  touch-action: manipulation;
+
+  &::placeholder {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* 可変 */
+:scope {
+  min-width: var(--sui_combobox_input-min_width);
+  height: var(--sui_combobox_input-height);
+  padding-inline: var(--_sui_combobox_input-padding_inline,
+                    var(--sui_combobox_input-padding_inline)
+                  );
+  font-family: var(--sui_combobox_input-font_family);
+  font-size: var(--sui_combobox_input-font_size);
+  font-weight: var(--sui_combobox_input-font_weight);
+  line-height: var(--sui_combobox_input-line_height);
+  color: var(--sui_combobox_input-color);
+  letter-spacing: var(--sui_combobox_input-letter_spacing);
+  caret-color: var(--sui_combobox_input-color);
+
+  &::placeholder {
+    color: var(--sui_combobox_input-placeholder-color);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 入力欄の変数は入力表示（別パーツ）からも参照されるため、入力グループ起点の別ブロックにまとめます。 */
+@layer sui.component {
+@scope (.sui_combobox) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_combobox_input-min_width: ;
+  --sui_combobox_input-height: ;
+  --sui_combobox_input-padding_inline: ;
+  --sui_combobox_input-font_family: ;
+  --sui_combobox_input-font_size: ;
+  --sui_combobox_input-font_weight: ;
+  --sui_combobox_input-line_height: ;
+  --sui_combobox_input-color: ;
+  --sui_combobox_input-placeholder-color: ;
+  --sui_combobox_input-letter_spacing: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_combobox_input-min_width: 5em;
+  --sui_combobox_input-height: var(--sui_combobox-button-size);
+  --sui_combobox_input-font_family: var(--sui_combobox-font_family);
+  --sui_combobox_input-font_size: var(--sui_combobox-font_size);
+  --sui_combobox_input-font_weight: var(--sui_combobox-font_weight);
+  --sui_combobox_input-line_height: var(--sui_combobox-line_height);
+  --sui_combobox_input-color: var(--sui_combobox-color);
+  --sui_combobox_input-placeholder-color: var(--sui_combobox-placeholder-color);
+  --sui_combobox_input-letter_spacing: var(--sui_combobox-letter_spacing);
+
+  .sui_combobox_input-size_sm {
+    --sui_combobox_input-padding_inline: --sui-space(0.5);
+  }
+
+  .sui_combobox_input-size_md {
+    --sui_combobox_input-padding_inline: --sui-space(1);
+  }
+
+  .sui_combobox_input-size_lg {
+    --sui_combobox_input-padding_inline: --sui-space(1.5);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_combobox_input) to ([data-scope]) {
+
+:scope {
+  &.sui_combobox_input-disabled {
+    &.sui_combobox_input-variant_naked {
+      color: var(--sui-disabled-naked-canvas_text);
+
+      &::placeholder {
+        color: var(--sui-disabled-naked-canvas_text);
+      }
+    }
+
+    &.sui_combobox_input-variant_liquid {
+      color: var(--sui-disabled-liquid-canvas_text);
+
+      &::placeholder {
+        color: var(--sui-disabled-liquid-canvas_text);
+      }
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */

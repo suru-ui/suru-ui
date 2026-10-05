@@ -1,0 +1,324 @@
+@layer sui.component {
+@scope (.sui_badge) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 0px;
+  text-decoration: none;
+  user-select: none;
+  outline-style: solid;
+  border-style: none;
+
+  &::after {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    content: "";
+    background-color: transparent;
+    border-style: solid;
+  }
+
+  &.sui_badge-position_top_left {
+    position: absolute;
+    translate: -50% -50%;
+  }
+
+  &.sui_badge-position_top_right {
+    position: absolute;
+    translate: 50% -50%;
+  }
+
+  &.sui_badge-position_bottom_left {
+    position: absolute;
+    translate: -50% 50%;
+  }
+
+  &.sui_badge-position_bottom_right {
+    position: absolute;
+    translate: 50% 50%;
+  }
+
+  &.sui_badge-overlap_rectangular {
+    &.sui_badge-position_top_left {
+      top: 0px;
+      left: 0px;
+    }
+
+    &.sui_badge-position_top_right {
+      top: 0px;
+      right: 0px;
+    }
+
+    &.sui_badge-position_bottom_left {
+      bottom: 0px;
+      left: 0px;
+    }
+
+    &.sui_badge-position_bottom_right {
+      right: 0px;
+      bottom: 0px;
+    }
+  }
+
+  &.sui_badge-overlap_circular {
+    &.sui_badge-position_top_left {
+      top: 14%;
+      left: 14%;
+    }
+
+    &.sui_badge-position_top_right {
+      top: 14%;
+      right: 14%;
+    }
+
+    &.sui_badge-position_bottom_left {
+      bottom: 14%;
+      left: 14%;
+    }
+
+    &.sui_badge-position_bottom_right {
+      right: 14%;
+      bottom: 14%;
+    }
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_badge-gap: ;
+  --sui_badge-min_size: ;
+  --sui_badge-padding_inline: ;
+  --sui_badge-font_family: ;
+  --sui_badge-font_size: ;
+  --sui_badge-font_weight: ;
+  --sui_badge-line_height: ;
+  --sui_badge-color: ;
+  --sui_badge-letter_spacing: ;
+  --sui_badge-focusring_width: ;
+  --sui_badge-focusring_color: ;
+  --sui_badge-focusring_offset: ;
+  --sui_badge-background_color: ;
+  --sui_badge-border_color: ;
+  --sui_badge-border_width: ;
+  --sui_badge-border_radius: ;
+  --sui_badge-corner_shape: ;
+  --sui_badge-virtual_ring_color: ;
+  --sui_badge-virtual_ring_width: ;
+  --sui_badge-virtual_text_height: ;
+  --sui_badge__svg-size: ;
+  --sui_badge__svg-color: ;
+}
+
+/* 可変 */
+:scope {
+  gap: var(--sui_badge-gap);
+  min-width: var(--sui_badge-min_size);
+  min-height: var(--sui_badge-min_size);
+  padding-inline: var(--sui_badge-padding_inline);
+  font-family: var(--sui_badge-font_family);
+  font-size: var(--sui_badge-font_size);
+  font-weight: var(--sui_badge-font_weight);
+  line-height: var(--sui_badge-line_height);
+  color: var(--sui_badge-color);
+  letter-spacing: var(--sui_badge-letter_spacing);
+  outline-width: var(--_sui_badge-outline_width, 0px);
+  outline-color: var(--_sui_badge-outline_color, transparent);
+  outline-offset: var(--_sui_badge-outline_offset, 0px);
+  background-color: var(--sui_badge-background_color);
+  border-radius: var(--sui_badge-border_radius);
+  corner-shape: var(--sui_badge-corner_shape);
+  box-shadow: 0px
+              0px
+              0px
+              var(--_sui_badge-box_shadow_width, 0px)
+              var(--_sui_badge-box_shadow_color, transparent);
+
+  &::after {
+    border-color: var(--_sui_badge-border_color, transparent);
+    border-width: var(--_sui_badge-border_width, 0px);
+    border-radius: var(--sui_badge-border_radius);
+    corner-shape: var(--sui_badge-corner_shape);
+  }
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_badge__svg-size);
+    height: var(--sui_badge__svg-size);
+    color: var(--sui_badge__svg-color);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_badge-font_family: var(--sui-font-sans);
+  --sui_badge-focusring_width: var(--sui-focusring_width);
+  --sui_badge-focusring_color: var(--sui-focusring_color);
+  --sui_badge-focusring_offset: var(--sui-focusring_offset);
+  --sui_badge-virtual_ring_color: var(--sui-canvas-1);
+  --sui_badge-virtual_ring_width: --sui-border_width(3);
+  --sui_badge-virtual_text_height: calc(var(--sui_badge-font_size) * var(--sui_badge-line_height));
+  --sui_badge__svg-size: var(--sui_badge-virtual_text_height);
+  --sui_badge__svg-color: var(--sui_badge-color);
+
+  &.sui_badge-size_sm {
+    --sui_badge-gap: --sui-gap(0.5);
+    --sui_badge-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_badge-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_badge-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_badge-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+    --sui_badge-border_width: --sui-border_width(1);
+  }
+
+  &.sui_badge-size_md {
+    --sui_badge-gap: --sui-gap(1);
+    --sui_badge-font_size: var(--sui-text-oln-md-m-font_size);
+    --sui_badge-font_weight: var(--sui-text-oln-md-m-font_weight);
+    --sui_badge-line_height: var(--sui-text-oln-md-m-line_height);
+    --sui_badge-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
+    --sui_badge-border_width: --sui-border_width(1);
+  }
+
+  &.sui_badge-size_lg {
+    --sui_badge-gap: --sui-gap(1.5);
+    --sui_badge-font_size: var(--sui-text-oln-lg-m-font_size);
+    --sui_badge-font_weight: var(--sui-text-oln-lg-m-font_weight);
+    --sui_badge-line_height: var(--sui-text-oln-lg-m-line_height);
+    --sui_badge-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
+    --sui_badge-border_width: --sui-border_width(1);
+  }
+
+  &.sui_badge-radius_none {
+    --sui_badge-border_radius: 0px;
+  }
+
+  &.sui_badge-radius_sm {
+    --sui_badge-border_radius: --sui-corner_radius(1);
+    --sui_badge-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_badge-radius_md {
+    --sui_badge-border_radius: --sui-corner_radius(2);
+    --sui_badge-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_badge-radius_lg {
+    --sui_badge-border_radius: --sui-corner_radius(3);
+    --sui_badge-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_badge-radius_full {
+    --sui_badge-border_radius: calc(var(--sui_badge-min_size) / 2);
+    --sui_badge-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_badge-variant_standard {
+    &.sui_badge-size_sm {
+      --sui_badge-min_size: var(--sui-size-sm);
+      --sui_badge-padding_inline: --sui-space(1.5);
+    }
+
+    &.sui_badge-size_md {
+      --sui_badge-min_size: var(--sui-size-md);
+      --sui_badge-padding_inline: --sui-space(2.5);
+    }
+
+    &.sui_badge-size_lg {
+      --sui_badge-min_size: var(--sui-size-lg);
+      --sui_badge-padding_inline: --sui-space(3.5);
+    }
+  }
+
+  &.sui_badge-variant_dot {
+    --sui_badge-padding_inline: 0px;
+
+    &.sui_badge-size_sm {
+      --sui_badge-min_size: calc(var(--sui-size-sm) / 2);
+    }
+
+    &.sui_badge-size_md {
+      --sui_badge-min_size: calc(var(--sui-size-md) / 2);
+    }
+
+    &.sui_badge-size_lg {
+      --sui_badge-min_size: calc(var(--sui-size-lg) / 2);
+    }
+  }
+
+  &.sui_badge-color_grey {
+    --sui_badge-color: var(--sui-grey-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-grey-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-grey-solid-border-normal);
+  }
+
+  &.sui_badge-color_blue {
+    --sui_badge-color: var(--sui-blue-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-blue-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-blue-solid-border-normal);
+  }
+
+  &.sui_badge-color_purple {
+    --sui_badge-color: var(--sui-purple-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-purple-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-purple-solid-border-normal);
+  }
+
+  &.sui_badge-color_magenta {
+    --sui_badge-color: var(--sui-magenta-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-magenta-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-magenta-solid-border-normal);
+  }
+
+  &.sui_badge-color_red {
+    --sui_badge-color: var(--sui-red-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-red-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-red-solid-border-normal);
+  }
+
+  &.sui_badge-color_orange {
+    --sui_badge-color: var(--sui-orange-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-orange-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-orange-solid-border-normal);
+  }
+
+  &.sui_badge-color_yellow {
+    --sui_badge-color: var(--sui-yellow-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-yellow-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-yellow-solid-border-normal);
+  }
+
+  &.sui_badge-color_green {
+    --sui_badge-color: var(--sui-green-solid-canvas_text-normal);
+    --sui_badge-background_color: var(--sui-green-solid-canvas-normal);
+    --sui_badge-border_color: var(--sui-green-solid-border-normal);
+  }
+}
+
+/* 変異 */
+:scope {
+  &:focus-visible {
+    --_sui_badge-outline_width: var(--sui_badge-focusring_width);
+    --_sui_badge-outline_color: var(--sui_badge-focusring_color);
+    --_sui_badge-outline_offset: var(--sui_badge-focusring_offset);
+  }
+
+  &.sui_badge-outlined {
+    --_sui_badge-border_color: var(--sui_badge-border_color);
+    --_sui_badge-border_width: var(--sui_badge-border_width);
+  }
+
+  &.sui_badge-ring {
+    --_sui_badge-box_shadow_color: var(--sui_badge-virtual_ring_color);
+    --_sui_badge-box_shadow_width: var(--sui_badge-virtual_ring_width);
+  }
+}
+
+} /* @scope */
+} /* @layer */

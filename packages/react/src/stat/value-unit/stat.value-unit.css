@@ -1,0 +1,62 @@
+@layer sui.component {
+@scope (.sui_stat_value_unit) to ([data-scope]) {
+
+/* 可変 */
+:scope {
+  padding-inline: var(--sui_stat_value_unit-padding_inline);
+  font-family: var(--sui_stat_value_unit-font_family);
+  font-size: var(--sui_stat_value_unit-font_size);
+  font-weight: var(--sui_stat_value_unit-font_weight);
+  line-height: var(--sui_stat_value_unit-line_height);
+  color: var(--sui_stat_value_unit-color);
+  letter-spacing: var(--sui_stat_value_unit-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* ルートの size 修飾クラスで代入する変数群のため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_stat) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_stat_value_unit-padding_inline: ;
+  --sui_stat_value_unit-font_family: ;
+  --sui_stat_value_unit-font_size: ;
+  --sui_stat_value_unit-font_weight: ;
+  --sui_stat_value_unit-line_height: ;
+  --sui_stat_value_unit-color: ;
+  --sui_stat_value_unit-letter_spacing: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_stat_value_unit-padding_inline: --sui-space(0.5);
+  --sui_stat_value_unit-font_family: var(--sui-font-sans);
+  --sui_stat_value_unit-color: var(--sui_stat_label-color);
+
+  &.sui_stat-size_sm {
+    --sui_stat_value_unit-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_stat_value_unit-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_stat_value_unit-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_stat_value_unit-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  }
+
+  &.sui_stat-size_md {
+    --sui_stat_value_unit-font_size: var(--sui-text-std-md-n-font_size);
+    --sui_stat_value_unit-font_weight: var(--sui-text-std-md-n-font_weight);
+    --sui_stat_value_unit-line_height: var(--sui-text-std-md-n-line_height);
+    --sui_stat_value_unit-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+  }
+
+  &.sui_stat-size_lg {
+    --sui_stat_value_unit-font_size: var(--sui-text-std-lg-n-font_size);
+    --sui_stat_value_unit-font_weight: var(--sui-text-std-lg-n-font_weight);
+    --sui_stat_value_unit-line_height: var(--sui-text-std-lg-n-line_height);
+    --sui_stat_value_unit-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+  }
+}
+
+} /* @scope */
+} /* @layer */

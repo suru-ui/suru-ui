@@ -8,7 +8,7 @@ import type {
   ContextMenuRootSubmenuItemObject,
   ContextMenuRootCheckboxItemObject,
   ContextMenuRootRadioItemObjectGroup,
-} from "./context-menu.root.jsx";
+} from "./root/context-menu.root.jsx";
 
 function isObject(x: unknown): x is object {
   return typeof x === "object" && x !== null;

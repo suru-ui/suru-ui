@@ -1,7 +1,7 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { TooltipGroupRoot } from "../../../src/tooltip-group/tooltip-group.root.jsx";
+import { TooltipGroupRoot } from "../../../src/tooltip-group/root/tooltip-group.root.jsx";
 
 describe("TooltipGroupRoot", () => {
   test("自身の要素を描画せず子だけを描画する", async ({ expect }) => {

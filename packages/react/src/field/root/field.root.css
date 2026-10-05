@@ -1,0 +1,40 @@
+@layer sui.component {
+@scope (.sui_field) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* 変数 */
+:scope {
+  --sui_field-gap: ;
+}
+
+/* 可変 */
+:scope {
+  gap: var(--sui_field-gap);
+}
+
+/* 代入 */
+:scope {
+  --sui_field-gap: --sui-gap(2);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_field) to ([data-scope]) {
+
+:scope {
+  &.sui_field-disabled {
+    cursor: not-allowed;
+  }
+}
+
+} /* @scope */
+} /* @layer */

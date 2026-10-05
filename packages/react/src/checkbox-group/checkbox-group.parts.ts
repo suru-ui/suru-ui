@@ -1,4 +1,4 @@
-import "./checkbox-group.css";
+import "./root/checkbox-group.root.css";
 
-export * from "./checkbox-group.context.js";
-export * from "./checkbox-group.root.jsx";
+export * from "./root/checkbox-group.root.context.js";
+export * from "./root/checkbox-group.root.jsx";

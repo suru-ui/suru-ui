@@ -3,14 +3,14 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { TooltipArrow } from "../../../src/tooltip/tooltip.arrow.jsx";
-import { TooltipContent } from "../../../src/tooltip/tooltip.content.jsx";
+import { TooltipArrow } from "../../../src/tooltip/arrow/tooltip.arrow.jsx";
+import { TooltipContent } from "../../../src/tooltip/content/tooltip.content.jsx";
+import { TooltipPortal } from "../../../src/tooltip/portal/tooltip.portal.jsx";
+import { TooltipPositioner } from "../../../src/tooltip/positioner/tooltip.positioner.jsx";
+import { TooltipRoot } from "../../../src/tooltip/root/tooltip.root.jsx";
 import { Tooltip } from "../../../src/tooltip/tooltip.jsx";
-import { TooltipPortal } from "../../../src/tooltip/tooltip.portal.jsx";
-import { TooltipPositioner } from "../../../src/tooltip/tooltip.positioner.jsx";
-import { TooltipRoot } from "../../../src/tooltip/tooltip.root.jsx";
-import { TooltipTrigger } from "../../../src/tooltip/tooltip.trigger.jsx";
-import { TooltipViewport } from "../../../src/tooltip/tooltip.viewport.jsx";
+import { TooltipTrigger } from "../../../src/tooltip/trigger/tooltip.trigger.jsx";
+import { TooltipViewport } from "../../../src/tooltip/viewport/tooltip.viewport.jsx";
 import "../../../src/tooltip/tooltip.parts.js";
 import "../_locators.js";
 

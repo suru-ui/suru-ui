@@ -1,0 +1,13 @@
+@layer sui.component {
+@scope (.sui_scroll_area) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  min-width: 0px;
+  min-height: 0px;
+  overflow: hidden;
+}
+
+} /* @scope */
+} /* @layer */

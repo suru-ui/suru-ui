@@ -6,7 +6,7 @@ import {
   AvatarGroupAPI,
   useAvatarGroupAPI,
 } from "../../../src/avatar-group/avatar-group.jsx";
-import { Avatar } from "../../../src/avatar/avatar.js";
+import { Avatar } from "../../../src/avatar/avatar.jsx";
 import "../_locators.js";
 
 describe("AvatarGroupAPI", () => {

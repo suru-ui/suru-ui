@@ -1,13 +1,13 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { CollapsibleIndicator } from "../../../src/collapsible/collapsible.indicator.jsx";
 import {
   type CollapsibleProps,
   Collapsible,
   CollapsibleAPI,
   useCollapsibleAPI,
 } from "../../../src/collapsible/collapsible.jsx";
+import { CollapsibleIndicator } from "../../../src/collapsible/indicator/collapsible.indicator.jsx";
 import "../_locators.js";
 
 function renderTrigger(label = "開閉"): CollapsibleProps["trigger"] {

@@ -1,0 +1,166 @@
+/* タブ自体に枠線は付けません。選択中の背景と枠線は Indicator が描画します。 */
+@layer sui.component {
+@scope (.sui_tabs_tab) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  touch-action: manipulation;
+  cursor: default;
+  user-select: none;
+  outline-style: solid;
+  background-color: transparent;
+}
+
+/* 変数 */
+:scope {
+  --sui_tabs_tab-min_height: ;
+  --sui_tabs_tab-padding_block: ;
+  --sui_tabs_tab-padding_inline: ;
+  --sui_tabs_tab-font_family: ;
+  --sui_tabs_tab-font_size: ;
+  --sui_tabs_tab-font_weight: ;
+  --sui_tabs_tab-line_height: ;
+  --sui_tabs_tab-color-idle: ;
+  --sui_tabs_tab-color-active: ;
+  --sui_tabs_tab-color-hover: ;
+  --sui_tabs_tab-letter_spacing: ;
+  --sui_tabs_tab-focusring_width: ;
+  --sui_tabs_tab-focusring_color: ;
+  --sui_tabs_tab-focusring_offset: ;
+  --sui_tabs_tab-virtual_content-leading: ;
+  --sui_tabs_tab-border_radius: ;
+  --sui_tabs_tab-corner_shape: ;
+}
+
+/* 可変 */
+:scope {
+  min-height: var(--sui_tabs_tab-min_height);
+  padding-block: var(--sui_tabs_tab-padding_block);
+  padding-inline: var(--sui_tabs_tab-padding_inline);
+  font-family: var(--sui_tabs_tab-font_family);
+  font-size: var(--sui_tabs_tab-font_size);
+  font-weight: var(--sui_tabs_tab-font_weight);
+  line-height: var(--sui_tabs_tab-line_height);
+  color: var(--_sui_tabs_tab-color, var(--sui_tabs_tab-color-idle));
+  letter-spacing: var(--sui_tabs_tab-letter_spacing);
+  outline-width: var(--_sui_tabs_tab-outline_width, 0px);
+  outline-color: var(--_sui_tabs_tab-outline_color, transparent);
+  outline-offset: var(--_sui_tabs_tab-outline_offset, 0px);
+  border-radius: var(--sui_tabs_tab-border_radius);
+  corner-shape: var(--sui_tabs_tab-corner_shape);
+}
+
+/* 代入 */
+:scope {
+  --sui_tabs_tab-padding_block: calc(
+                                  (
+                                    var(--sui_tabs_tab-min_height)
+                                    - var(--sui_tabs_tab-virtual_content-leading)
+                                  ) / 2
+                                );
+  --sui_tabs_tab-font_family: var(--sui-font-sans);
+  --sui_tabs_tab-color-idle: var(--sui-canvas_text-2);
+  --sui_tabs_tab-color-hover: var(--sui-canvas_text-1);
+  --sui_tabs_tab-focusring_width: var(--sui-focusring_width);
+  --sui_tabs_tab-focusring_color: var(--sui-focusring_color);
+  --sui_tabs_tab-focusring_offset: var(--sui-focusring_offset);
+  --sui_tabs_tab-virtual_content-leading: calc(
+                                            var(--sui_tabs_tab-font_size)
+                                            * var(--sui_tabs_tab-line_height)
+                                          );
+
+  /* 大きさで変わる活字と最小の高さに追従させるため、要素起点で代入します。 */
+  --sui_tabs_tab-border_radius: var(--sui_tabs-border_radius);
+  --sui_tabs_tab-corner_shape: var(--sui_tabs-corner_shape);
+
+  &.sui_tabs_tab-size_sm {
+    --sui_tabs_tab-min_height: var(--sui-size-sm);
+    --sui_tabs_tab-padding_inline: --sui-space(2);
+    --sui_tabs_tab-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_tabs_tab-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_tabs_tab-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_tabs_tab-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+  }
+
+  &.sui_tabs_tab-size_md {
+    --sui_tabs_tab-min_height: var(--sui-size-md);
+    --sui_tabs_tab-padding_inline: --sui-space(3);
+    --sui_tabs_tab-font_size: var(--sui-text-oln-md-m-font_size);
+    --sui_tabs_tab-font_weight: var(--sui-text-oln-md-m-font_weight);
+    --sui_tabs_tab-line_height: var(--sui-text-oln-md-m-line_height);
+    --sui_tabs_tab-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
+  }
+
+  &.sui_tabs_tab-size_lg {
+    --sui_tabs_tab-min_height: var(--sui-size-lg);
+    --sui_tabs_tab-padding_inline: --sui-space(4);
+    --sui_tabs_tab-font_size: var(--sui-text-oln-lg-m-font_size);
+    --sui_tabs_tab-font_weight: var(--sui-text-oln-lg-m-font_weight);
+    --sui_tabs_tab-line_height: var(--sui-text-oln-lg-m-line_height);
+    --sui_tabs_tab-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
+  }
+
+  &.sui_tabs_tab-variant_segments {
+    &.sui_tabs_tab-active_variant_solid {
+      --sui_tabs_tab-color-active: var(--sui-grey-solid-canvas_text-normal);
+    }
+
+    &.sui_tabs_tab-active_variant_naked {
+      --sui_tabs_tab-color-active: var(--sui-grey-naked-canvas_text-normal);
+    }
+
+    &.sui_tabs_tab-active_variant_liquid {
+      --sui_tabs_tab-color-active: var(--sui-grey-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_tabs_tab-variant_line {
+    --sui_tabs_tab-color-active: var(--sui-canvas_text-1);
+  }
+}
+
+/* 変異 */
+:scope {
+  &.sui_tabs_tab-active {
+    --_sui_tabs_tab-color: var(--sui_tabs_tab-color-active);
+  }
+
+  &:not(.sui_tabs_tab-disabled) {
+    @media (any-hover: hover) {
+      &:not(.sui_tabs_tab-active):hover {
+        --_sui_tabs_tab-color: var(--sui_tabs_tab-color-hover);
+      }
+    }
+
+    &:focus-visible {
+      --_sui_tabs_tab-outline_width: var(--sui_tabs_tab-focusring_width);
+      --_sui_tabs_tab-outline_color: var(--sui_tabs_tab-focusring_color);
+      --_sui_tabs_tab-outline_offset: var(--sui_tabs_tab-focusring_offset);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_tabs_tab) to ([data-scope]) {
+
+:scope {
+  &.sui_tabs_tab-disabled {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
+    background-color: var(--sui-disabled-naked-canvas);
+  }
+}
+
+} /* @scope */
+} /* @layer */

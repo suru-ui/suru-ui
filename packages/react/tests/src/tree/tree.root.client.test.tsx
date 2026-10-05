@@ -2,8 +2,8 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useTreeContext } from "../../../src/tree/tree.context.js";
-import { TreeRoot } from "../../../src/tree/tree.root.jsx";
+import { useTreeContext } from "../../../src/tree/root/tree.root.context.js";
+import { TreeRoot } from "../../../src/tree/root/tree.root.jsx";
 import "../_locators.js";
 
 const items = [

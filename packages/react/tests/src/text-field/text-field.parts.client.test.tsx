@@ -2,14 +2,14 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { FieldRoot } from "../../../src/field/field.root.jsx";
-import { TextFieldAddon } from "../../../src/text-field/text-field.addon.jsx";
+import { FieldRoot } from "../../../src/field/root/field.root.jsx";
+import { TextFieldAddon } from "../../../src/text-field/addon/text-field.addon.jsx";
+import { TextFieldInput } from "../../../src/text-field/input/text-field.input.jsx";
 import {
   TextFieldContext,
   useTextFieldContext,
-} from "../../../src/text-field/text-field.context.js";
-import { TextFieldInput } from "../../../src/text-field/text-field.input.jsx";
-import { TextFieldRoot } from "../../../src/text-field/text-field.root.jsx";
+} from "../../../src/text-field/root/text-field.root.context.js";
+import { TextFieldRoot } from "../../../src/text-field/root/text-field.root.jsx";
 import "../../../src/text-field/text-field.parts.js";
 import "../_locators.js";
 

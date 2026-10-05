@@ -1,0 +1,60 @@
+@layer sui.component {
+@scope (.sui_button_circular_progress_track) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_button_circular_progress_track-color: ;
+}
+
+/* 可変 */
+:scope {
+  color: var(--sui_button_circular_progress_track-color);
+}
+
+/* 代入 */
+:scope {
+  --sui_button_circular_progress_track-color: color-mix(
+                                                in oklab,
+                                                var(--sui_button_pending__svg-color) 30%,
+                                                var(--sui_button_pending-canvas) 100%
+                                              );
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* トラック自身に disabled / variant 相当のクラスが無く、ルートの状態に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_button) to ([data-scope]) {
+
+:scope {
+  &.sui_button-disabled {
+    &.sui_button-variant_solid .sui_button_circular_progress_track {
+      color: color-mix(
+               in oklab,
+               var(--sui-disabled-solid-canvas_text) 30%,
+               var(--sui-disabled-solid-canvas) 100%
+             );
+    }
+
+    &.sui_button-variant_naked .sui_button_circular_progress_track {
+      color: color-mix(
+               in oklab,
+               var(--sui-disabled-naked-canvas_text) 30%,
+               var(--sui-disabled-naked-canvas) 100%
+             );
+    }
+
+    &.sui_button-variant_liquid .sui_button_circular_progress_track {
+      color: color-mix(
+               in oklab,
+               var(--sui-disabled-liquid-canvas_text) 30%,
+               var(--sui-disabled-liquid-canvas) 100%
+             );
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */

@@ -1,7 +1,7 @@
 import isReactNode from "../_is-react-node.js";
 import { isObject } from "../_item.js";
 import type { Override } from "../types.js";
-import type { AccordionRootItemObject } from "./accordion.root.jsx";
+import type { AccordionRootItemObject } from "./root/accordion.root.jsx";
 
 /**
  * 項目オブジェクトの値を推論します。

@@ -3,7 +3,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/switch/switch.parts.js";
-import { SwitchRoot } from "../../../src/switch/switch.root.jsx";
+import { SwitchRoot } from "../../../src/switch/root/switch.root.jsx";
 import "../_locators.js";
 
 describe("SwitchRoot", () => {

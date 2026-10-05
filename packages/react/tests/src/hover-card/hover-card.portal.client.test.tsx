@@ -3,11 +3,11 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { HoverCardContent } from "../../../src/hover-card/hover-card.content.jsx";
+import { HoverCardContent } from "../../../src/hover-card/content/hover-card.content.jsx";
 import { HoverCard } from "../../../src/hover-card/hover-card.jsx";
-import { HoverCardPortal } from "../../../src/hover-card/hover-card.portal.jsx";
-import { HoverCardPositioner } from "../../../src/hover-card/hover-card.positioner.jsx";
-import { HoverCardRoot } from "../../../src/hover-card/hover-card.root.jsx";
+import { HoverCardPortal } from "../../../src/hover-card/portal/hover-card.portal.jsx";
+import { HoverCardPositioner } from "../../../src/hover-card/positioner/hover-card.positioner.jsx";
+import { HoverCardRoot } from "../../../src/hover-card/root/hover-card.root.jsx";
 import "../_locators.js";
 
 describe("HoverCardPortal", () => {

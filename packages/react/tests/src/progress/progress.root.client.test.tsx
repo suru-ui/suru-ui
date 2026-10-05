@@ -2,7 +2,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/progress/progress.parts.js";
-import { ProgressRoot } from "../../../src/progress/progress.root.jsx";
+import { ProgressRoot } from "../../../src/progress/root/progress.root.jsx";
 import "../_locators.js";
 
 describe("ProgressRoot", () => {

@@ -1,0 +1,155 @@
+@layer sui.component {
+@scope (.sui_file_upload_trigger) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  outline-style: solid;
+}
+
+/* 変数 */
+:scope {
+  --sui_file_upload_trigger-min_height: ;
+  --sui_file_upload_trigger-padding_inline: ;
+  --sui_file_upload_trigger-font_family: ;
+  --sui_file_upload_trigger-font_size: ;
+  --sui_file_upload_trigger-font_weight: ;
+  --sui_file_upload_trigger-line_height: ;
+  --sui_file_upload_trigger-color: ;
+  --sui_file_upload_trigger-letter_spacing: ;
+  --sui_file_upload_trigger-focusring_width: ;
+  --sui_file_upload_trigger-focusring_color: ;
+  --sui_file_upload_trigger-focusring_offset: ;
+  --sui_file_upload_trigger-background_color-idle: ;
+  --sui_file_upload_trigger-background_color-hover: ;
+  --sui_file_upload_trigger-background_color-active: ;
+  --sui_file_upload_trigger-border_radius: ;
+  --sui_file_upload_trigger-corner_shape: ;
+}
+
+/* 可変 */
+:scope {
+  min-height: var(--sui_file_upload_trigger-min_height);
+  padding-inline: var(--sui_file_upload_trigger-padding_inline);
+  font-family: var(--sui_file_upload_trigger-font_family);
+  font-size: var(--sui_file_upload_trigger-font_size);
+  font-weight: var(--sui_file_upload_trigger-font_weight);
+  line-height: var(--sui_file_upload_trigger-line_height);
+  color: var(--sui_file_upload_trigger-color);
+  letter-spacing: var(--sui_file_upload_trigger-letter_spacing);
+  outline-width: var(--_sui_file_upload_trigger-outline_width, 0px);
+  outline-color: var(--sui_file_upload_trigger-focusring_color);
+  outline-offset: var(--sui_file_upload_trigger-focusring_offset);
+  background-color: var(--_sui_file_upload_trigger-background_color,
+                      var(--sui_file_upload_trigger-background_color-idle)
+                    );
+  border-radius: var(--sui_file_upload_trigger-border_radius);
+  corner-shape: var(--sui_file_upload_trigger-corner_shape);
+}
+
+/* 代入 */
+:scope {
+  --sui_file_upload_trigger-font_family: var(--sui-font-sans);
+  --sui_file_upload_trigger-color: var(--sui-canvas_text-1);
+  --sui_file_upload_trigger-focusring_width: var(--sui-focusring_width);
+  --sui_file_upload_trigger-focusring_color: var(--sui-focusring_color);
+  --sui_file_upload_trigger-focusring_offset: var(--sui-focusring_offset);
+  --sui_file_upload_trigger-background_color-idle: var(--sui-grey-naked-canvas-normal);
+  --sui_file_upload_trigger-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+  --sui_file_upload_trigger-background_color-active: var(--sui-grey-naked-canvas-strong);
+
+  &.sui_file_upload_trigger-size_sm {
+    --sui_file_upload_trigger-min_height: var(--sui-size-sm);
+    --sui_file_upload_trigger-padding_inline: --sui-space(1.5);
+    --sui_file_upload_trigger-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_file_upload_trigger-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_file_upload_trigger-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_file_upload_trigger-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+  }
+
+  &.sui_file_upload_trigger-size_md {
+    --sui_file_upload_trigger-min_height: var(--sui-size-md);
+    --sui_file_upload_trigger-padding_inline: --sui-space(2.5);
+    --sui_file_upload_trigger-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_file_upload_trigger-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_file_upload_trigger-line_height: var(--sui-text-oln-md-n-line_height);
+    --sui_file_upload_trigger-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+  }
+
+  &.sui_file_upload_trigger-size_lg {
+    --sui_file_upload_trigger-min_height: var(--sui-size-lg);
+    --sui_file_upload_trigger-padding_inline: --sui-space(3.5);
+    --sui_file_upload_trigger-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_file_upload_trigger-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_file_upload_trigger-line_height: var(--sui-text-oln-lg-n-line_height);
+    --sui_file_upload_trigger-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+  }
+
+  &.sui_file_upload_trigger-radius_none {
+    --sui_file_upload_trigger-border_radius: 0px;
+  }
+
+  &.sui_file_upload_trigger-radius_sm {
+    --sui_file_upload_trigger-border_radius: --sui-corner_radius(1);
+    --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_file_upload_trigger-radius_md {
+    --sui_file_upload_trigger-border_radius: --sui-corner_radius(2);
+    --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_file_upload_trigger-radius_lg {
+    --sui_file_upload_trigger-border_radius: --sui-corner_radius(3);
+    --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_file_upload_trigger-radius_full {
+    --sui_file_upload_trigger-border_radius: calc(var(--sui_file_upload_trigger-min_height) / 2);
+    --sui_file_upload_trigger-corner_shape: superellipse(var(--sui-superellipse));
+  }
+}
+
+/* 変異 */
+:scope {
+  &:not(.sui_file_upload_trigger-disabled) {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_file_upload_trigger-background_color:
+          var(--sui_file_upload_trigger-background_color-hover);
+      }
+    }
+
+    &:active {
+      --_sui_file_upload_trigger-background_color:
+        var(--sui_file_upload_trigger-background_color-active);
+    }
+
+    &:focus-visible {
+      --_sui_file_upload_trigger-outline_width: var(--sui_file_upload_trigger-focusring_width);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* ルートの無効状態と外観に依存するため、ルート起点の別ブロックにまとめます。 */
+@layer sui.important {
+@scope (.sui_file_upload) to ([data-scope]) {
+
+:scope {
+  &.sui_file_upload-disabled .sui_file_upload_trigger {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
+    background-color: var(--sui-disabled-naked-canvas);
+  }
+}
+
+} /* @scope */
+} /* @layer */

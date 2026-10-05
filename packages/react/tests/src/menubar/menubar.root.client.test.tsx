@@ -2,7 +2,7 @@ import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { MenubarRoot } from "../../../src/menubar/menubar.root.jsx";
+import { MenubarRoot } from "../../../src/menubar/root/menubar.root.jsx";
 import "../_locators.js";
 
 /** トリガーとメニュー項目を持つメニューバーの項目です。 */

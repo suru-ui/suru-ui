@@ -1,4 +1,5 @@
-import "./fieldset.css";
+import "./root/fieldset.root.css";
+import "./legend/fieldset.legend.css";
 
-export * from "./fieldset.root.jsx";
-export * from "./fieldset.legend.jsx";
+export * from "./root/fieldset.root.jsx";
+export * from "./legend/fieldset.legend.jsx";

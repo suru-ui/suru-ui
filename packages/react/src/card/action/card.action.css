@@ -1,0 +1,58 @@
+@layer sui.component {
+@scope (.sui_card_action) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  inset-block-start: 0px;
+  display: flex;
+  grid-row-start: 1;
+  grid-column-start: 2;
+  align-items: center;
+  justify-content: flex-end;
+  justify-self: end;
+}
+
+/* 変数 */
+:scope {
+  --sui_card_action-row_gap: ;
+  --sui_card_action-column_gap: ;
+}
+
+/* 可変 */
+:scope {
+  position: var(--sui_card_action-position, unset);
+  inset-inline-end: var(--sui_card_action-inset_inline_end, auto);
+  row-gap: var(--sui_card_action-row_gap);
+  column-gap: var(--sui_card_action-column_gap);
+}
+
+/* 代入 */
+:scope {
+  --sui_card_action-row_gap: --sui-gap(1);
+  --sui_card_action-column_gap: --sui-gap(2);
+}
+
+/* 変異 */
+:scope {
+  &.sui_card_action-absolute {
+    --sui_card_action-position: absolute;
+    --sui_card_action-inset_inline_end: var(--sui_card-padding_block_start);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 兄弟パーツの有無に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_card) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  &:has(.sui_card_title):has(.sui_card_description) .sui_card_action {
+    grid-row-end: 3;
+  }
+}
+
+} /* @scope */
+} /* @layer */

@@ -2,7 +2,7 @@ import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { MenuItem } from "../../../src/menu/menu.item.jsx";
+import { MenuItem } from "../../../src/menu/item/menu.item.jsx";
 import { Menubar, MenubarAPI } from "../../../src/menubar/menubar.jsx";
 import "../_locators.js";
 

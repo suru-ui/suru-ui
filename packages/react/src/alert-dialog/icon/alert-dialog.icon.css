@@ -1,0 +1,308 @@
+@layer sui.component {
+@scope (.sui_alert_dialog_icon) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  align-items: center;
+  align-self: start;
+  justify-content: center;
+  justify-self: start;
+  aspect-ratio: 1/1;
+  border-style: solid;
+}
+
+/* 変数 */
+:scope {
+  --sui_alert_dialog_icon-size: ;
+  --sui_alert_dialog_icon-virtual_padding: ;
+  --sui_alert_dialog_icon-font_size: ;
+  --sui_alert_dialog_icon-line_height: ;
+  --sui_alert_dialog_icon-color: ;
+  --sui_alert_dialog_icon-background_color: ;
+  --sui_alert_dialog_icon-border_color: ;
+  --sui_alert_dialog_icon-border_width: ;
+  --sui_alert_dialog_icon-border_radius: ;
+  --sui_alert_dialog_icon-corner_shape: ;
+  --sui_alert_dialog_icon-floating: ;
+  --sui_alert_dialog_icon__svg-size: ;
+}
+
+/* 可変 */
+:scope {
+  width: var(--sui_alert_dialog_icon-size);
+  font-size: var(--sui_alert_dialog_icon-font_size);
+  line-height: var(--sui_alert_dialog_icon-line_height);
+  color: var(--sui_alert_dialog_icon-color);
+  background-color: var(--sui_alert_dialog_icon-background_color);
+  border-color: var(--_sui_alert_dialog_icon-border_color, transparent);
+  border-width: var(--_sui_alert_dialog_icon-border_width, 0px);
+  border-radius: var(--sui_alert_dialog_icon-border_radius);
+  corner-shape: var(--sui_alert_dialog_icon-corner_shape);
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_alert_dialog_icon__svg-size);
+    height: var(--sui_alert_dialog_icon__svg-size);
+    color: var(--sui_alert_dialog_icon-color);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_alert_dialog_icon-font_size: 1em;
+  --sui_alert_dialog_icon-line_height: 1;
+  --sui_alert_dialog_icon-color: var(--sui-canvas_text-1);
+  --sui_alert_dialog_icon-border_width: --sui-border_width(1);
+  --sui_alert_dialog_icon-floating: --sui-space(2);
+  --sui_alert_dialog_icon__svg-size: calc(
+                                       var(--sui_alert_dialog_icon-size)
+                                       - var(--sui_alert_dialog_icon-virtual_padding) * 2
+                                     );
+
+  &.sui_alert_dialog_icon-size_sm {
+    --sui_alert_dialog_icon-size: calc(
+                                    var(--sui-size-sm)
+                                    + var(--sui_alert_dialog_icon-virtual_padding) * 2
+                                  );
+    --sui_alert_dialog_icon-virtual_padding: --sui-space(1.5);
+  }
+
+  &.sui_alert_dialog_icon-size_md {
+    --sui_alert_dialog_icon-size: calc(
+                                    var(--sui-size-md)
+                                    + var(--sui_alert_dialog_icon-virtual_padding) * 2
+                                  );
+    --sui_alert_dialog_icon-virtual_padding: --sui-space(2);
+  }
+
+  &.sui_alert_dialog_icon-size_lg {
+    --sui_alert_dialog_icon-size: calc(
+                                    var(--sui-size-lg)
+                                    + var(--sui_alert_dialog_icon-virtual_padding) * 2
+                                  );
+    --sui_alert_dialog_icon-virtual_padding: --sui-space(3);
+  }
+
+  &.sui_alert_dialog_icon-radius_none {
+    --sui_alert_dialog_icon-border_radius: 0px;
+  }
+
+  &.sui_alert_dialog_icon-radius_sm {
+    --sui_alert_dialog_icon-border_radius: --sui-corner_radius(1);
+    --sui_alert_dialog_icon-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_alert_dialog_icon-radius_md {
+    --sui_alert_dialog_icon-border_radius: --sui-corner_radius(2);
+    --sui_alert_dialog_icon-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_alert_dialog_icon-radius_lg {
+    --sui_alert_dialog_icon-border_radius: --sui-corner_radius(3);
+    --sui_alert_dialog_icon-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_alert_dialog_icon-radius_full {
+    --sui_alert_dialog_icon-border_radius: calc(var(--sui_alert_dialog_icon-size) / 2);
+    --sui_alert_dialog_icon-corner_shape: none;
+  }
+
+  &.sui_alert_dialog_icon-color_grey.sui_alert_dialog_icon-variant_solid {
+    --sui_alert_dialog_icon-color: var(--sui-grey-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-solid-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_grey.sui_alert_dialog_icon-variant_naked {
+    --sui_alert_dialog_icon-color: var(--sui-grey-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-naked-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_grey.sui_alert_dialog_icon-variant_liquid {
+    --sui_alert_dialog_icon-color: var(--sui-grey-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-liquid-border-normal);
+  }
+
+  &.sui_alert_dialog_icon-color_blue.sui_alert_dialog_icon-variant_solid {
+    --sui_alert_dialog_icon-color: var(--sui-blue-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-blue-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-blue-solid-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_blue.sui_alert_dialog_icon-variant_naked {
+    --sui_alert_dialog_icon-color: var(--sui-blue-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-blue-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-blue-naked-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_blue.sui_alert_dialog_icon-variant_liquid {
+    --sui_alert_dialog_icon-color: var(--sui-blue-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-blue-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-blue-liquid-border-normal);
+  }
+
+  &.sui_alert_dialog_icon-color_purple.sui_alert_dialog_icon-variant_solid {
+    --sui_alert_dialog_icon-color: var(--sui-purple-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-purple-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-purple-solid-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_purple.sui_alert_dialog_icon-variant_naked {
+    --sui_alert_dialog_icon-color: var(--sui-purple-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-purple-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-purple-naked-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_purple.sui_alert_dialog_icon-variant_liquid {
+    --sui_alert_dialog_icon-color: var(--sui-purple-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-purple-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-purple-liquid-border-normal);
+  }
+
+  &.sui_alert_dialog_icon-color_magenta.sui_alert_dialog_icon-variant_solid {
+    --sui_alert_dialog_icon-color: var(--sui-magenta-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-magenta-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-magenta-solid-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_magenta.sui_alert_dialog_icon-variant_naked {
+    --sui_alert_dialog_icon-color: var(--sui-magenta-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-magenta-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-magenta-naked-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_magenta.sui_alert_dialog_icon-variant_liquid {
+    --sui_alert_dialog_icon-color: var(--sui-magenta-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-magenta-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-magenta-liquid-border-normal);
+  }
+
+  &.sui_alert_dialog_icon-color_red.sui_alert_dialog_icon-variant_solid {
+    --sui_alert_dialog_icon-color: var(--sui-red-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-red-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-red-solid-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_red.sui_alert_dialog_icon-variant_naked {
+    --sui_alert_dialog_icon-color: var(--sui-red-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-red-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-red-naked-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_red.sui_alert_dialog_icon-variant_liquid {
+    --sui_alert_dialog_icon-color: var(--sui-red-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-red-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-red-liquid-border-normal);
+  }
+
+  &.sui_alert_dialog_icon-color_orange.sui_alert_dialog_icon-variant_solid {
+    --sui_alert_dialog_icon-color: var(--sui-orange-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-orange-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-orange-solid-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_orange.sui_alert_dialog_icon-variant_naked {
+    --sui_alert_dialog_icon-color: var(--sui-orange-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-orange-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-orange-naked-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_orange.sui_alert_dialog_icon-variant_liquid {
+    --sui_alert_dialog_icon-color: var(--sui-orange-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-orange-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-orange-liquid-border-normal);
+  }
+
+  &.sui_alert_dialog_icon-color_yellow.sui_alert_dialog_icon-variant_solid {
+    --sui_alert_dialog_icon-color: var(--sui-yellow-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-yellow-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-yellow-solid-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_yellow.sui_alert_dialog_icon-variant_naked {
+    --sui_alert_dialog_icon-color: var(--sui-yellow-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-yellow-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-yellow-naked-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_yellow.sui_alert_dialog_icon-variant_liquid {
+    --sui_alert_dialog_icon-color: var(--sui-yellow-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-yellow-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-yellow-liquid-border-normal);
+  }
+
+  &.sui_alert_dialog_icon-color_green.sui_alert_dialog_icon-variant_solid {
+    --sui_alert_dialog_icon-color: var(--sui-green-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-green-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-green-solid-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_green.sui_alert_dialog_icon-variant_naked {
+    --sui_alert_dialog_icon-color: var(--sui-green-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-green-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-green-naked-border-normal);
+  }
+  &.sui_alert_dialog_icon-color_green.sui_alert_dialog_icon-variant_liquid {
+    --sui_alert_dialog_icon-color: var(--sui-green-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-green-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-green-liquid-border-normal);
+  }
+
+  &.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-variant_solid {
+    --sui_alert_dialog_icon-color: var(--sui-grey-solid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-solid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-solid-border-normal);
+  }
+  &.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-variant_naked {
+    --sui_alert_dialog_icon-color: var(--sui-grey-naked-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-naked-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-naked-border-normal);
+  }
+  &.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-variant_liquid {
+    --sui_alert_dialog_icon-color: var(--sui-grey-liquid-canvas_text-normal);
+    --sui_alert_dialog_icon-background_color: var(--sui-grey-liquid-canvas-normal);
+    --sui_alert_dialog_icon-border_color: var(--sui-grey-liquid-border-normal);
+  }
+
+  &.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_blue:not(.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-blue-naked-canvas_text-normal);
+  }
+
+  &.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_purple:not(.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-purple-naked-canvas_text-normal);
+  }
+
+  &.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_magenta:not(.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-magenta-naked-canvas_text-normal);
+  }
+
+  &.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_red:not(.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-red-naked-canvas_text-normal);
+  }
+
+  &.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_orange:not(.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-orange-naked-canvas_text-normal);
+  }
+
+  &.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_yellow:not(.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-yellow-naked-canvas_text-normal);
+  }
+
+  &.sui_alert_dialog_icon-muted.sui_alert_dialog_icon-color_green:not(.sui_alert_dialog_icon-variant_solid) {
+    --sui_alert_dialog_icon-color: var(--sui-green-naked-canvas_text-normal);
+  }
+}
+
+/* 変異 */
+:scope {
+  &.sui_alert_dialog_icon-outlined {
+    --_sui_alert_dialog_icon-border_color: var(--sui_alert_dialog_icon-border_color);
+    --_sui_alert_dialog_icon-border_width: var(--sui_alert_dialog_icon-border_width);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 積み上げ式ヘッダーの構造に依存するため、ヘッダー起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_alert_dialog_header) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  &.sui_alert_dialog_header-variant_stacked .sui_alert_dialog_icon {
+    justify-self: center;
+    /* 見出しとの間隔を広げます。 */
+    margin-block-end: var(--sui_alert_dialog_icon-floating);
+  }
+}
+
+} /* @scope */
+} /* @layer */

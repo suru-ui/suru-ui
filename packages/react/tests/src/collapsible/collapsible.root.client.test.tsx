@@ -1,7 +1,7 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { CollapsibleRoot } from "../../../src/collapsible/collapsible.root.jsx";
+import { CollapsibleRoot } from "../../../src/collapsible/root/collapsible.root.jsx";
 import "../_locators.js";
 
 describe("CollapsibleRoot", () => {

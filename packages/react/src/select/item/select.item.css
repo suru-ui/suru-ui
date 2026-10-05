@@ -1,0 +1,38 @@
+@layer sui.component {
+@scope (.sui_select_item) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_select_item-margin_inline: ;
+}
+
+/* 可変 */
+:scope {
+  margin-inline: var(--sui_select_item-margin_inline);
+
+  &:first-child {
+    margin-block-start: var(--sui_select_content-virtual_padding_block);
+  }
+
+  &:last-child {
+    margin-block-end: var(--sui_select_content-virtual_padding_block);
+  }
+}
+
+/* 代入 */
+:scope {
+  &.sui_select_item-size_sm {
+    --sui_select_item-margin_inline: --sui-space(calc(1.5 / 2));
+  }
+
+  &.sui_select_item-size_md {
+    --sui_select_item-margin_inline: --sui-space(calc(2.5 / 2));
+  }
+
+  &.sui_select_item-size_lg {
+    --sui_select_item-margin_inline: --sui-space(calc(3.5 / 2));
+  }
+}
+
+} /* @scope */
+} /* @layer */

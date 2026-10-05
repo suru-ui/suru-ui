@@ -2,22 +2,22 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { AlertDialogAction } from "../../../src/alert-dialog/alert-dialog.action.jsx";
-import { AlertDialogBackdrop } from "../../../src/alert-dialog/alert-dialog.backdrop.jsx";
-import { AlertDialogCloseTrigger } from "../../../src/alert-dialog/alert-dialog.close-trigger.jsx";
-import { AlertDialogContent } from "../../../src/alert-dialog/alert-dialog.content.jsx";
-import { AlertDialogDescription } from "../../../src/alert-dialog/alert-dialog.description.jsx";
-import { AlertDialogFooter } from "../../../src/alert-dialog/alert-dialog.footer.jsx";
-import { AlertDialogHeader } from "../../../src/alert-dialog/alert-dialog.header.jsx";
+import { AlertDialogAction } from "../../../src/alert-dialog/action/alert-dialog.action.jsx";
+import { AlertDialogBackdrop } from "../../../src/alert-dialog/backdrop/alert-dialog.backdrop.jsx";
+import { AlertDialogCloseTrigger } from "../../../src/alert-dialog/close-trigger/alert-dialog.close-trigger.jsx";
+import { AlertDialogContent } from "../../../src/alert-dialog/content/alert-dialog.content.jsx";
+import { AlertDialogDescription } from "../../../src/alert-dialog/description/alert-dialog.description.jsx";
+import { AlertDialogFooter } from "../../../src/alert-dialog/footer/alert-dialog.footer.jsx";
+import { AlertDialogHeader } from "../../../src/alert-dialog/header/alert-dialog.header.jsx";
 import {
   type AlertDialogPopupProps,
   AlertDialogPopup,
-} from "../../../src/alert-dialog/alert-dialog.popup.jsx";
-import { AlertDialogPortal } from "../../../src/alert-dialog/alert-dialog.portal.jsx";
-import { AlertDialogRoot } from "../../../src/alert-dialog/alert-dialog.root.jsx";
-import { AlertDialogTitle } from "../../../src/alert-dialog/alert-dialog.title.jsx";
-import { AlertDialogToggleTrigger } from "../../../src/alert-dialog/alert-dialog.toggle-trigger.jsx";
-import { AlertDialogViewport } from "../../../src/alert-dialog/alert-dialog.viewport.jsx";
+} from "../../../src/alert-dialog/popup/alert-dialog.popup.jsx";
+import { AlertDialogPortal } from "../../../src/alert-dialog/portal/alert-dialog.portal.jsx";
+import { AlertDialogRoot } from "../../../src/alert-dialog/root/alert-dialog.root.jsx";
+import { AlertDialogTitle } from "../../../src/alert-dialog/title/alert-dialog.title.jsx";
+import { AlertDialogToggleTrigger } from "../../../src/alert-dialog/toggle-trigger/alert-dialog.toggle-trigger.jsx";
+import { AlertDialogViewport } from "../../../src/alert-dialog/viewport/alert-dialog.viewport.jsx";
 import "../../../src/alert-dialog/alert-dialog.parts.js";
 import "../_locators.js";
 

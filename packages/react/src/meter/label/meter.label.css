@@ -1,0 +1,64 @@
+@layer sui.component {
+@scope (.sui_meter_label) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  min-width: 0px;
+}
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_meter_label-font_family);
+  font-size: var(--sui_meter_label-font_size);
+  font-weight: var(--sui_meter_label-font_weight);
+  line-height: var(--sui_meter_label-line_height);
+  color: var(--sui_meter_label-color);
+  letter-spacing: var(--sui_meter_label-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 活字の代入はルートの大きさの修飾クラスに依存し、ラベル自身には対応するクラスが無いため、空宣言と代入をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_meter) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_meter_label-font_family: ;
+  --sui_meter_label-font_size: ;
+  --sui_meter_label-font_weight: ;
+  --sui_meter_label-line_height: ;
+  --sui_meter_label-color: ;
+  --sui_meter_label-letter_spacing: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_meter_label-font_family: var(--sui-font-sans);
+  --sui_meter_label-color: var(--sui-canvas_text-1);
+
+  &.sui_meter-size_sm {
+    --sui_meter_label-font_size: var(--sui-text-dns-sm-b-font_size);
+    --sui_meter_label-font_weight: var(--sui-text-dns-sm-b-font_weight);
+    --sui_meter_label-line_height: var(--sui-text-dns-sm-b-line_height);
+    --sui_meter_label-letter_spacing: var(--sui-text-dns-sm-b-letter_spacing);
+  }
+
+  &.sui_meter-size_md {
+    --sui_meter_label-font_size: var(--sui-text-dns-md-b-font_size);
+    --sui_meter_label-font_weight: var(--sui-text-dns-md-b-font_weight);
+    --sui_meter_label-line_height: var(--sui-text-dns-md-b-line_height);
+    --sui_meter_label-letter_spacing: var(--sui-text-dns-md-b-letter_spacing);
+  }
+
+  &.sui_meter-size_lg {
+    --sui_meter_label-font_size: var(--sui-text-dns-lg-b-font_size);
+    --sui_meter_label-font_weight: var(--sui-text-dns-lg-b-font_weight);
+    --sui_meter_label-line_height: var(--sui-text-dns-lg-b-line_height);
+    --sui_meter_label-letter_spacing: var(--sui-text-dns-lg-b-letter_spacing);
+  }
+}
+
+} /* @scope */
+} /* @layer */

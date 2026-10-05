@@ -1,0 +1,122 @@
+import { Accordion } from "@base-ui/react/accordion";
+import * as React from "react";
+
+import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
+import type { RenderProps } from "../../_use-render.js";
+import cn from "../../cn.js";
+import type { Override, IComponent } from "../../types.js";
+import { type AccordionContext, useAccordionContext } from "../root/accordion.root.context.js";
+import { AccordionItemContext } from "./accordion.item.context.js";
+
+/**
+ * アコーディオンの項目の開閉状態が変更するイベントの詳細です。
+ */
+export type AccordionItemChangeEventDetails = Accordion.Item.ChangeEventDetails;
+
+/**
+ * アコーディオンの項目の開閉状態を変更する理由です。
+ */
+export type AccordionItemChangeEventReason = Accordion.Item.ChangeEventReason;
+
+/**
+ * {@link AccordionItem} が持つ状態です。
+ */
+export type AccordionItemState = Override<AccordionContext, Accordion.Item.State>;
+
+export namespace AccordionItemProps {
+  export type Render = RenderProps<AccordionItemState>;
+
+  export type SuruUI = {};
+
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof Accordion.Item>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // Pick<UseCollapsibleRootParameters, 'disabled'>:
+      | "disabled"
+      // AccordionItemProps:
+      | "value"
+      | "onOpenChange",
+      keyof Render | keyof SuruUI
+    >
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<typeof Accordion.Item>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
+/**
+ * {@link AccordionItem} に渡す props です。
+ */
+export type AccordionItemProps = AccordionItemProps.Render &
+  AccordionItemProps.SuruUI &
+  AccordionItemProps.BaseUI &
+  AccordionItemProps.HTML;
+
+export type IAccordionItem = IComponent<AccordionItemProps>;
+
+/**
+ * アコーディオンの項目コンポーネントです。
+ */
+export const AccordionItem: IAccordionItem = function SuiAccordionItem(props) {
+  const ctx = useAccordionContext();
+  const { style, render, className, ...otherProps } = props;
+
+  return (
+    <Accordion.Item
+      {...otherProps}
+      {...proxyRenderProps<Accordion.Item.State, AccordionItemState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <AccordionItemContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </AccordionItemContext>
+          ),
+          className: cn<AccordionItemState>(
+            className,
+            "sui_accordion_item",
+            (state) => state.open && "sui_accordion_item-open",
+            (state) => state.hidden && "sui_accordion_item-hidden",
+            (state) => state.disabled && "sui_accordion_item-disabled",
+            (state) => `sui_accordion_item-size_${state.size}`,
+            (state) => `sui_accordion_item-radius_${state.radius}`,
+            (state) => state.separator && "sui_accordion_item-separator",
+            (state) => `sui_accordion_item-index_${state.index}`,
+          ),
+        },
+      )}
+    />
+  );
+};
+
+export { AccordionItem as Item };
+
+export namespace Item {
+  export type State = AccordionItemState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = AccordionItemProps.Render;
+
+    export type SuruUI = AccordionItemProps.SuruUI;
+
+    export type BaseUI = AccordionItemProps.BaseUI;
+
+    export type HTML = AccordionItemProps.HTML;
+  }
+
+  export type ChangeEventDetails = AccordionItemChangeEventDetails;
+
+  export type ChangeEventReason = AccordionItemChangeEventReason;
+}

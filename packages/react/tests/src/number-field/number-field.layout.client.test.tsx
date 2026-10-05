@@ -2,7 +2,7 @@ import "@suru-ui/theme/suru.css";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FieldRoot } from "../../../src/field/field.root.jsx";
+import { FieldRoot } from "../../../src/field/root/field.root.jsx";
 import "../../../src/number-field/number-field.parts.js";
 import { NumberField } from "../../../src/number-field/number-field.jsx";
 import "../_locators.js";

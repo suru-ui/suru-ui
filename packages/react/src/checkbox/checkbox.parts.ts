@@ -1,4 +1,6 @@
-import "./checkbox.css";
+import "./root/checkbox.root.css";
+import "./indicator/checkbox.indicator.css";
+import "./icon/checkbox.icon.css";
 
-export * from "./checkbox.root.jsx";
-export * from "./checkbox.indicator.jsx";
+export * from "./root/checkbox.root.jsx";
+export * from "./indicator/checkbox.indicator.jsx";

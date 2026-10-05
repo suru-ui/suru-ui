@@ -2,8 +2,8 @@ import { COLORS } from "@suru-ui/theme";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { AvatarGroupRoot } from "../../../src/avatar-group/avatar-group.root.jsx";
-import { AvatarRoot } from "../../../src/avatar/avatar.root.jsx";
+import { AvatarGroupRoot } from "../../../src/avatar-group/root/avatar-group.root.jsx";
+import { AvatarRoot } from "../../../src/avatar/root/avatar.root.jsx";
 import "../_locators.js";
 
 describe("AvatarGroupRoot", () => {

@@ -1,0 +1,58 @@
+@layer sui.component {
+@scope (.sui_drawer_indent) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  min-height: 100%;
+  transform-origin: center top;
+  transition:
+    scale 400ms cubic-bezier(0.32, 0.72, 0, 1),
+    translate 400ms cubic-bezier(0.32, 0.72, 0, 1),
+    border-radius 250ms cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: scale, translate;
+}
+
+/* 変数 */
+:scope {
+  --sui_drawer_indent-border_top_left_radius: ;
+  --sui_drawer_indent-border_top_right_radius: ;
+  --sui_drawer_indent-corner_shape: ;
+  --sui_drawer_indent-scale: ;
+  --sui_drawer_indent-translate: ;
+}
+
+/* 可変 */
+:scope {
+  border-top-left-radius: var(--_sui_drawer_indent-border_top_left_radius,
+                            var(--sui_drawer_indent-border_top_left_radius)
+                          );
+  border-top-right-radius: var(--_sui_drawer_indent-border_top_right_radius,
+                             var(--sui_drawer_indent-border_top_right_radius)
+                           );
+  corner-shape: var(--sui_drawer_indent-corner_shape);
+  scale: var(--_sui_drawer_indent-scale, var(--sui_drawer_indent-scale));
+  translate: var(--_sui_drawer_indent-translate, var(--sui_drawer_indent-translate));
+}
+
+/* 代入 */
+:scope {
+  --sui_drawer_indent-border_top_left_radius: 0px;
+  --sui_drawer_indent-border_top_right_radius: 0px;
+  --sui_drawer_indent-corner_shape: superellipse(var(--sui-superellipse));
+  --sui_drawer_indent-scale: 1;
+  --sui_drawer_indent-translate: 0px;
+}
+
+/* 変異 */
+:scope {
+  &.sui_drawer_indent-active {
+    --_sui_drawer_indent-border_top_left_radius: --sui-corner_radius(3);
+    --_sui_drawer_indent-border_top_right_radius: --sui-corner_radius(3);
+    --_sui_drawer_indent-scale: 0.98;
+    --_sui_drawer_indent-translate: --sui-space(1);
+  }
+}
+
+} /* @scope */
+} /* @layer */

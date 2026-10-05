@@ -1,4 +1,7 @@
-import type { SelectRootItemObjectGroup, SelectRootLabeledItemObject } from "./select.root.jsx";
+import type {
+  SelectRootItemObjectGroup,
+  SelectRootLabeledItemObject,
+} from "./root/select.root.jsx";
 
 /**
  * 値がラベル付き項目かどうかを判定します。

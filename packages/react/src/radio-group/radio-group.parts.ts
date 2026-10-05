@@ -1,4 +1,4 @@
-import "./radio-group.css";
+import "./root/radio-group.root.css";
 
-export * from "./radio-group.context.js";
-export * from "./radio-group.root.jsx";
+export * from "./root/radio-group.root.context.js";
+export * from "./root/radio-group.root.jsx";

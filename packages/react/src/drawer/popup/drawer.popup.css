@@ -1,0 +1,261 @@
+@layer sui.component {
+@scope (.sui_drawer_popup) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: auto;
+  touch-action: auto;
+  outline-style: solid;
+  border-style: solid;
+  transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  transition-property: transform;
+  will-change: transform;
+
+  &.sui_drawer_popup-swipe_direction_left {
+    align-self: stretch;
+    margin-right: auto;
+  }
+
+  &.sui_drawer_popup-swipe_direction_right {
+    align-self: stretch;
+    margin-left: auto;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_drawer_popup-width: ;
+  --sui_drawer_popup-max_width: ;
+  --sui_drawer_popup-max_height: ;
+  --sui_drawer_popup-padding: ;
+  --sui_drawer_popup-padding_block_end: ;
+  --sui_drawer_popup-color: ;
+  --sui_drawer_popup-user_select: ;
+  --sui_drawer_popup-focusring_width: ;
+  --sui_drawer_popup-outline_color: ;
+  --sui_drawer_popup-outline_offset: ;
+  --sui_drawer_popup-background_color: ;
+  --sui_drawer_popup-border_color: ;
+  --sui_drawer_popup-border_width: ;
+  --sui_drawer_popup-border_top_left_radius: ;
+  --sui_drawer_popup-border_top_right_radius: ;
+  --sui_drawer_popup-border_bottom_right_radius: ;
+  --sui_drawer_popup-border_bottom_left_radius: ;
+  --sui_drawer_popup-corner_shape: ;
+  --sui_drawer_popup-opacity: ;
+  --sui_drawer_popup-transform: ;
+  --sui_drawer_popup-transition_duration: ;
+  --sui_drawer_popup-virtual_bleed: ;
+}
+
+/* 可変 */
+:scope {
+  width: var(--_sui_drawer_popup-width, var(--sui_drawer_popup-width));
+  max-width: var(--sui_drawer_popup-max_width);
+  max-height: var(--_sui_drawer_popup-max_height, var(--sui_drawer_popup-max_height));
+  padding: var(--sui_drawer_popup-padding);
+  padding-block-end: var(--sui_drawer_popup-padding_block_end);
+  color: var(--sui_drawer_popup-color);
+  user-select: var(--_sui_drawer_popup-user_select, var(--sui_drawer_popup-user_select));
+  outline-width: var(--_sui_drawer_popup-outline_width, 0px);
+  outline-color: var(--sui_drawer_popup-outline_color);
+  outline-offset: var(--sui_drawer_popup-outline_offset);
+  background-color: var(--sui_drawer_popup-background_color);
+  border-color: var(--sui_drawer_popup-border_color);
+  border-top-width: var(--_sui_drawer_popup-border_top_width, 0px);
+  border-right-width: var(--_sui_drawer_popup-border_right_width, 0px);
+  border-bottom-width: var(--_sui_drawer_popup-border_bottom_width, 0px);
+  border-left-width: var(--_sui_drawer_popup-border_left_width, 0px);
+  border-top-left-radius: var(--_sui_drawer_popup-border_top_left_radius,
+                           var(--sui_drawer_popup-border_top_left_radius)
+                         );
+  border-top-right-radius: var(--_sui_drawer_popup-border_top_right_radius,
+                            var(--sui_drawer_popup-border_top_right_radius)
+                          );
+  border-bottom-right-radius: var(--_sui_drawer_popup-border_bottom_right_radius,
+                               var(--sui_drawer_popup-border_bottom_right_radius)
+                             );
+  border-bottom-left-radius: var(--_sui_drawer_popup-border_bottom_left_radius,
+                              var(--sui_drawer_popup-border_bottom_left_radius)
+                            );
+  corner-shape: var(--sui_drawer_popup-corner_shape);
+  opacity: var(--_sui_drawer_popup-opacity, var(--sui_drawer_popup-opacity));
+  transform: var(--_sui_drawer_popup-transform, var(--sui_drawer_popup-transform));
+  transition-duration: var(--_sui_drawer_popup-transition_duration,
+                         var(--sui_drawer_popup-transition_duration)
+                       );
+}
+
+/* 代入 */
+:scope {
+  --sui_drawer_popup-width: 100%;
+  --sui_drawer_popup-max_width: 640px;
+  --sui_drawer_popup-max_height: calc(100dvh - --sui-space(20));
+  --sui_drawer_popup-padding: 0px;
+  --sui_drawer_popup-padding_block_end: calc(
+                                          env(safe-area-inset-bottom, 0px)
+                                          + var(--sui_drawer_popup-virtual_bleed)
+                                        );
+  --sui_drawer_popup-color: var(--sui-canvas_text-1);
+  --sui_drawer_popup-focusring_width: var(--sui-focusring_width);
+  --sui_drawer_popup-outline_color: var(--sui-focusring_color);
+  --sui_drawer_popup-outline_offset: var(--sui-focusring_offset);
+  --sui_drawer_popup-background_color: --sui-light-dark(var(--sui-canvas-1), var(--sui-canvas-2));
+  --sui_drawer_popup-border_color: var(--sui-border-1);
+  --sui_drawer_popup-border_width: --sui-border_width(1);
+  --sui_drawer_popup-border_top_left_radius: --sui-corner_radius(3);
+  --sui_drawer_popup-border_top_right_radius: --sui-corner_radius(3);
+  --sui_drawer_popup-border_bottom_right_radius: 0px;
+  --sui_drawer_popup-border_bottom_left_radius: 0px;
+  --sui_drawer_popup-corner_shape: superellipse(var(--sui-superellipse));
+  --sui_drawer_popup-opacity: 1;
+  --sui_drawer_popup-transform: translate3d(0px, 0px, 0px);
+  --sui_drawer_popup-transition_duration: 450ms;
+  --sui_drawer_popup-virtual_bleed: --sui-space(12);
+}
+
+/* 変異 */
+:scope {
+  &.sui_drawer_popup-swipe_direction_down {
+    --_sui_drawer_popup-border_top_width: var(--sui_drawer_popup-border_width);
+    --_sui_drawer_popup-transform: translateY(
+                                     calc(
+                                       var(--drawer-snap-point-offset, 0px)
+                                       + var(--drawer-swipe-movement-y, 0px)
+                                     )
+                                   );
+  }
+
+  &.sui_drawer_popup-swipe_direction_up {
+    --_sui_drawer_popup-transform: translateY(
+                                     calc(
+                                       var(--drawer-snap-point-offset, 0px)
+                                       + var(--drawer-swipe-movement-y, 0px)
+                                     )
+                                   );
+  }
+
+  &.sui_drawer_popup-swipe_direction_left {
+    --_sui_drawer_popup-transform: translateX(
+                                     calc(
+                                       var(--drawer-snap-point-offset, 0px)
+                                       + var(--drawer-swipe-movement-x, 0px)
+                                     )
+                                   );
+  }
+
+  &.sui_drawer_popup-swipe_direction_right {
+    --_sui_drawer_popup-transform: translateX(
+                                     calc(
+                                       var(--drawer-snap-point-offset, 0px)
+                                       + var(--drawer-swipe-movement-x, 0px)
+                                     )
+                                   );
+  }
+
+  &.sui_drawer_popup-swipe_direction_down:is(
+    .sui_drawer_popup-transition_status_starting,
+    .sui_drawer_popup-transition_status_ending
+  ) {
+    --_sui_drawer_popup-transform: translateY(
+                                     calc(
+                                       100%
+                                       - var(--sui_drawer_popup-virtual_bleed)
+                                       + 2px
+                                     )
+                                   );
+  }
+
+  &.sui_drawer_popup-swipe_direction_up:is(
+    .sui_drawer_popup-transition_status_starting,
+    .sui_drawer_popup-transition_status_ending
+  ) {
+    --_sui_drawer_popup-transform: translateY(
+                                     calc(
+                                       -100%
+                                       + var(--sui_drawer_popup-virtual_bleed)
+                                       - 2px
+                                     )
+                                   );
+  }
+
+  &.sui_drawer_popup-swipe_direction_left:is(
+    .sui_drawer_popup-transition_status_starting,
+    .sui_drawer_popup-transition_status_ending
+  ) {
+    --_sui_drawer_popup-transform: translateX(
+                                     calc(
+                                       -100%
+                                       + var(--sui_drawer_popup-virtual_bleed)
+                                       - 2px
+                                     )
+                                   );
+  }
+
+  &.sui_drawer_popup-swipe_direction_right:is(
+    .sui_drawer_popup-transition_status_starting,
+    .sui_drawer_popup-transition_status_ending
+  ) {
+    --_sui_drawer_popup-transform: translateX(
+                                     calc(
+                                       100%
+                                       - var(--sui_drawer_popup-virtual_bleed)
+                                       + 2px
+                                     )
+                                   );
+  }
+
+  &.sui_drawer_popup-swiping,
+  &.sui_drawer_popup-nested_drawer_swiping {
+    --_sui_drawer_popup-user_select: none;
+    --_sui_drawer_popup-transition_duration: 0ms;
+  }
+
+  &.sui_drawer_popup-transition_status_ending {
+    --_sui_drawer_popup-transition_duration: calc(var(--drawer-swipe-strength, 1) * 400ms);
+  }
+
+  &:focus-visible {
+    --_sui_drawer_popup-outline_width: var(--sui_drawer_popup-focusring_width);
+  }
+
+  &.sui_drawer_popup-nested_drawer_open {
+    --_sui_drawer_popup-opacity: 0.9999;
+  }
+
+  &.sui_drawer_popup-swipe_direction_up {
+    --_sui_drawer_popup-border_bottom_width: var(--sui_drawer_popup-border_width);
+    --_sui_drawer_popup-border_top_left_radius: 0px;
+    --_sui_drawer_popup-border_top_right_radius: 0px;
+    --_sui_drawer_popup-border_bottom_right_radius: --sui-corner_radius(3);
+    --_sui_drawer_popup-border_bottom_left_radius: --sui-corner_radius(3);
+  }
+
+  &.sui_drawer_popup-swipe_direction_left {
+    --_sui_drawer_popup-width: min(75vw, 384px);
+    --_sui_drawer_popup-max_height: 100%;
+    --_sui_drawer_popup-border_right_width: var(--sui_drawer_popup-border_width);
+    --_sui_drawer_popup-border_top_left_radius: 0px;
+    --_sui_drawer_popup-border_top_right_radius: 0px;
+    --_sui_drawer_popup-border_bottom_right_radius: 0px;
+    --_sui_drawer_popup-border_bottom_left_radius: 0px;
+  }
+
+  &.sui_drawer_popup-swipe_direction_right {
+    --_sui_drawer_popup-width: min(75vw, 384px);
+    --_sui_drawer_popup-max_height: 100%;
+    --_sui_drawer_popup-border_left_width: var(--sui_drawer_popup-border_width);
+    --_sui_drawer_popup-border_top_left_radius: 0px;
+    --_sui_drawer_popup-border_top_right_radius: 0px;
+    --_sui_drawer_popup-border_bottom_right_radius: 0px;
+    --_sui_drawer_popup-border_bottom_left_radius: 0px;
+  }
+}
+
+} /* @scope */
+} /* @layer */

@@ -3,8 +3,11 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { ResizableContext, useResizableContext } from "../../../src/resizable/resizable.context.js";
-import { ResizableRoot } from "../../../src/resizable/resizable.root.jsx";
+import {
+  ResizableContext,
+  useResizableContext,
+} from "../../../src/resizable/root/resizable.root.context.js";
+import { ResizableRoot } from "../../../src/resizable/root/resizable.root.jsx";
 
 describe("useResizableContext", () => {
   test("提供された向きを返す", async ({ expect }) => {

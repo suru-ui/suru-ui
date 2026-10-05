@@ -1,4 +1,4 @@
-import "./chip.css";
+import "./root/chip.root.css";
 
-export * from "./chip.context.js";
-export * from "./chip.root.jsx";
+export * from "./root/chip.root.context.js";
+export * from "./root/chip.root.jsx";

@@ -2,8 +2,8 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useSegmentsContext } from "../../../src/segments/segments.context.js";
-import { SegmentsRoot } from "../../../src/segments/segments.root.jsx";
+import { useSegmentsContext } from "../../../src/segments/root/segments.root.context.js";
+import { SegmentsRoot } from "../../../src/segments/root/segments.root.jsx";
 import "../_locators.js";
 
 describe("SegmentsRoot", () => {

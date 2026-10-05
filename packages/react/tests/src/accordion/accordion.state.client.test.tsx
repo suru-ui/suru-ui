@@ -1,12 +1,12 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { AccordionContent } from "../../../src/accordion/accordion.content.jsx";
-import { AccordionHeading } from "../../../src/accordion/accordion.heading.jsx";
-import { AccordionIndicator } from "../../../src/accordion/accordion.indicator.jsx";
-import { AccordionItem } from "../../../src/accordion/accordion.item.jsx";
-import { AccordionRoot } from "../../../src/accordion/accordion.root.jsx";
-import { AccordionTrigger } from "../../../src/accordion/accordion.trigger.jsx";
+import { AccordionContent } from "../../../src/accordion/content/accordion.content.jsx";
+import { AccordionHeading } from "../../../src/accordion/heading/accordion.heading.jsx";
+import { AccordionIndicator } from "../../../src/accordion/indicator/accordion.indicator.jsx";
+import { AccordionItem } from "../../../src/accordion/item/accordion.item.jsx";
+import { AccordionRoot } from "../../../src/accordion/root/accordion.root.jsx";
+import { AccordionTrigger } from "../../../src/accordion/trigger/accordion.trigger.jsx";
 import "../_locators.js";
 
 describe("Accordion の状態", () => {

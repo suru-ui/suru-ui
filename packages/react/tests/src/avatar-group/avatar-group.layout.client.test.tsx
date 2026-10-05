@@ -4,8 +4,8 @@ import { render } from "vitest-browser-react";
 
 import "../../../src/avatar-group/avatar-group.parts.js";
 import "../../../src/avatar/avatar.parts.js";
-import { AvatarGroupRoot } from "../../../src/avatar-group/avatar-group.root.jsx";
-import { AvatarRoot } from "../../../src/avatar/avatar.root.jsx";
+import { AvatarGroupRoot } from "../../../src/avatar-group/root/avatar-group.root.jsx";
+import { AvatarRoot } from "../../../src/avatar/root/avatar.root.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 import supportsSiblingIndex from "./_supports-sibling-index.js";

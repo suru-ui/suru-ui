@@ -2,9 +2,9 @@ import "@suru-ui/theme/suru.css";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FieldRoot } from "../../../src/field/field.root.jsx";
+import { FieldRoot } from "../../../src/field/root/field.root.jsx";
 import "../../../src/textarea/textarea.parts.js";
-import { TextareaRoot } from "../../../src/textarea/textarea.root.jsx";
+import { TextareaRoot } from "../../../src/textarea/root/textarea.root.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

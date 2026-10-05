@@ -1,0 +1,50 @@
+/* ポップアップは Card を継承しており、自身が data-scope を持つため、Card.Root の要素をスコープの始点にします。 */
+@layer sui.component {
+@scope (.sui_alert_dialog_popup) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 変数 */
+:scope {
+  --sui_alert_dialog_popup-max_width-desktop: ;
+  --sui_alert_dialog_popup-max_width-mobile: ;
+  --sui_alert_dialog_popup-max_width: ;
+  --sui_alert_dialog_popup-max_height: ;
+  --sui_alert_dialog_popup-virtual_margin_block: ;
+  --sui_alert_dialog_popup-virtual_margin_inline: ;
+}
+
+/* 可変 */
+:scope {
+  max-width: var(--sui_alert_dialog_popup-max_width);
+  max-height: var(--sui_alert_dialog_popup-max_height);
+}
+
+/* 代入 */
+:scope {
+  --sui_alert_dialog_popup-max_width-desktop: var(--sui-container-md);
+  --sui_alert_dialog_popup-max_width-mobile: calc(
+                                               100vw
+                                               - var(--sui_alert_dialog_popup-virtual_margin_inline)
+                                               * 2
+                                             );
+  --sui_alert_dialog_popup-max_width: min(
+                                        var(--sui_alert_dialog_popup-max_width-desktop),
+                                        var(--sui_alert_dialog_popup-max_width-mobile)
+                                      );
+  --sui_alert_dialog_popup-max_height: calc(
+                                         100%
+                                         - var(--sui_alert_dialog_popup-virtual_margin_block) * 2
+                                       );
+  --sui_alert_dialog_popup-virtual_margin_block: --sui-space(2);
+  --sui_alert_dialog_popup-virtual_margin_inline: --sui-space(2);
+}
+
+} /* @scope */
+} /* @layer */

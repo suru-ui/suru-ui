@@ -1,12 +1,17 @@
-import "./accordion.css";
+import "./root/accordion.root.css";
+import "./item/accordion.item.css";
+import "./heading/accordion.heading.css";
+import "./trigger/accordion.trigger.css";
+import "./indicator/accordion.indicator.css";
+import "./content/accordion.content.css";
 
-export * from "./accordion.context.js";
-export * from "./accordion.trigger.context.js";
-export * from "./accordion.item.context.js";
-export * from "./accordion.root.jsx";
-export * from "./accordion.item.jsx";
-export * from "./accordion.heading.jsx";
-export * from "./accordion.trigger.jsx";
-export * from "./accordion.indicator.jsx";
-export * from "./accordion.content.jsx";
-export * from "./accordion.utils.jsx";
+export * from "./root/accordion.root.context.js";
+export * from "./trigger/accordion.trigger.context.js";
+export * from "./item/accordion.item.context.js";
+export * from "./root/accordion.root.jsx";
+export * from "./item/accordion.item.jsx";
+export * from "./heading/accordion.heading.jsx";
+export * from "./trigger/accordion.trigger.jsx";
+export * from "./indicator/accordion.indicator.jsx";
+export * from "./content/accordion.content.jsx";
+export * from "./utils/accordion.utils.js";

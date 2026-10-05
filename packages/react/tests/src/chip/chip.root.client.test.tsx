@@ -2,7 +2,7 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/chip/chip.parts.js";
-import { ChipRoot } from "../../../src/chip/chip.root.jsx";
+import { ChipRoot } from "../../../src/chip/root/chip.root.jsx";
 import "../_locators.js";
 
 describe("ChipRoot", () => {

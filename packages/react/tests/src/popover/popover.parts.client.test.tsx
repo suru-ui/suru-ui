@@ -3,17 +3,17 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { PopoverArrow } from "../../../src/popover/popover.arrow.jsx";
-import { PopoverBackdrop } from "../../../src/popover/popover.backdrop.jsx";
-import { PopoverContent } from "../../../src/popover/popover.content.jsx";
-import { PopoverDescription } from "../../../src/popover/popover.description.jsx";
+import { PopoverArrow } from "../../../src/popover/arrow/popover.arrow.jsx";
+import { PopoverBackdrop } from "../../../src/popover/backdrop/popover.backdrop.jsx";
+import { PopoverContent } from "../../../src/popover/content/popover.content.jsx";
+import { PopoverDescription } from "../../../src/popover/description/popover.description.jsx";
 import { Popover } from "../../../src/popover/popover.jsx";
-import { PopoverPortal } from "../../../src/popover/popover.portal.jsx";
-import { PopoverPositioner } from "../../../src/popover/popover.positioner.jsx";
-import { PopoverRoot } from "../../../src/popover/popover.root.jsx";
-import { PopoverTitle } from "../../../src/popover/popover.title.jsx";
-import { PopoverTrigger } from "../../../src/popover/popover.trigger.jsx";
-import { PopoverViewport } from "../../../src/popover/popover.viewport.jsx";
+import { PopoverPortal } from "../../../src/popover/portal/popover.portal.jsx";
+import { PopoverPositioner } from "../../../src/popover/positioner/popover.positioner.jsx";
+import { PopoverRoot } from "../../../src/popover/root/popover.root.jsx";
+import { PopoverTitle } from "../../../src/popover/title/popover.title.jsx";
+import { PopoverTrigger } from "../../../src/popover/trigger/popover.trigger.jsx";
+import { PopoverViewport } from "../../../src/popover/viewport/popover.viewport.jsx";
 import "../../../src/popover/popover.parts.js";
 import "../_locators.js";
 

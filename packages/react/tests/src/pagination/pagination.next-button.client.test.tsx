@@ -2,8 +2,8 @@ import "@suru-ui/theme/suru.css";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { PaginationNextButton } from "../../../src/pagination/pagination.next-button.jsx";
-import { PaginationRoot } from "../../../src/pagination/pagination.root.jsx";
+import { PaginationNextButton } from "../../../src/pagination/next-button/pagination.next-button.jsx";
+import { PaginationRoot } from "../../../src/pagination/root/pagination.root.jsx";
 import "../_locators.js";
 
 describe("PaginationNextButton", () => {

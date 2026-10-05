@@ -1,8 +1,8 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { NumberFieldAddon } from "../../../src/number-field/number-field.addon.jsx";
-import { NumberFieldRoot } from "../../../src/number-field/number-field.root.jsx";
+import { NumberFieldAddon } from "../../../src/number-field/addon/number-field.addon.jsx";
+import { NumberFieldRoot } from "../../../src/number-field/root/number-field.root.jsx";
 import "../_locators.js";
 
 describe("NumberFieldAddon", () => {

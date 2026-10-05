@@ -1,0 +1,39 @@
+@layer sui.component {
+@scope (.sui_popover_backdrop) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: fixed;
+  inset: 0px;
+  pointer-events: none;
+  transition: opacity 150ms ease-out;
+}
+
+/* 変数 */
+:scope {
+  --sui_popover_backdrop-background_color: ;
+  --sui_popover_backdrop-opacity: ;
+}
+
+/* 可変 */
+:scope {
+  background-color: var(--sui_popover_backdrop-background_color);
+  opacity: var(--_sui_popover_backdrop-opacity, var(--sui_popover_backdrop-opacity));
+}
+
+/* 代入 */
+:scope {
+  --sui_popover_backdrop-background_color: transparent;
+  --sui_popover_backdrop-opacity: 1;
+}
+
+/* 変異 */
+:scope {
+  &.sui_popover_backdrop-transition_status_starting,
+  &.sui_popover_backdrop-transition_status_ending {
+    --_sui_popover_backdrop-opacity: 0;
+  }
+}
+
+} /* @scope */
+} /* @layer */

@@ -7,14 +7,14 @@ import {
   ToggleButtonCircularProgressContext,
   useCircularProgressContext,
   useToggleButtonCircularProgressContext,
-} from "../../../src/toggle-button/toggle-button.circular-progress.context.js";
-import { ToggleButtonCircularProgress } from "../../../src/toggle-button/toggle-button.circular-progress.jsx";
+} from "../../../src/toggle-button/circular-progress/toggle-button.circular-progress.context.js";
+import { ToggleButtonCircularProgress } from "../../../src/toggle-button/circular-progress/toggle-button.circular-progress.jsx";
 import {
   Context,
   ToggleButtonContext,
   useContext,
   useToggleButtonContext,
-} from "../../../src/toggle-button/toggle-button.context.js";
+} from "../../../src/toggle-button/root/toggle-button.root.context.js";
 
 describe("useToggleButtonContext", () => {
   test("提供された値を返す", async ({ expect }) => {

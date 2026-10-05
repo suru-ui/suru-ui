@@ -2,14 +2,14 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { PasswordFieldAddon } from "../../../src/password-field/password-field.addon.jsx";
+import { PasswordFieldAddon } from "../../../src/password-field/addon/password-field.addon.jsx";
+import { PasswordFieldInput } from "../../../src/password-field/input/password-field.input.jsx";
 import {
   PasswordFieldContext,
   usePasswordFieldContext,
-} from "../../../src/password-field/password-field.context.js";
-import { PasswordFieldInput } from "../../../src/password-field/password-field.input.jsx";
-import { PasswordFieldRoot } from "../../../src/password-field/password-field.root.jsx";
-import { PasswordFieldToggleButton } from "../../../src/password-field/password-field.toggle-button.jsx";
+} from "../../../src/password-field/root/password-field.root.context.js";
+import { PasswordFieldRoot } from "../../../src/password-field/root/password-field.root.jsx";
+import { PasswordFieldToggleButton } from "../../../src/password-field/toggle-button/password-field.toggle-button.jsx";
 import "../../../src/password-field/password-field.parts.js";
 import "../_locators.js";
 

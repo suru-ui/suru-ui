@@ -5,8 +5,8 @@ import { render } from "vitest-browser-react";
 import {
   type AlertDialogIconProps,
   AlertDialogIcon,
-} from "../../../src/alert-dialog/alert-dialog.icon.jsx";
-import { AlertDialogPopupContext } from "../../../src/alert-dialog/alert-dialog.popup.context.js";
+} from "../../../src/alert-dialog/icon/alert-dialog.icon.jsx";
+import { AlertDialogPopupContext } from "../../../src/alert-dialog/popup/alert-dialog.popup.context.js";
 import "../_locators.js";
 
 const mockPopupContext = {

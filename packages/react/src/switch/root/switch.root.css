@@ -1,0 +1,325 @@
+@layer sui.component {
+@scope (.sui_switch) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  touch-action: manipulation;
+  cursor: default;
+  user-select: none;
+  outline-style: solid;
+  transition:
+    background-color 250ms cubic-bezier(0.32, 0.72, 0, 1),
+    outline-color 250ms cubic-bezier(0.32, 0.72, 0, 1);
+  -webkit-tap-highlight-color: transparent;
+
+  &::after {
+    position: absolute;
+    inset: 0px;
+    pointer-events: none;
+    outline-style: solid;
+    content: "";
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_switch-width: ;
+  --sui_switch-height: ;
+  --sui_switch-padding: ;
+  --sui_switch-focusring_width: ;
+  --sui_switch-focusring_color: ;
+  --sui_switch-focusring_offset: ;
+  --sui_switch-border_color-idle: ;
+  --sui_switch-border_color-hover: ;
+  --sui_switch-border_color-active: ;
+  --sui_switch-border_color-checked: ;
+  --sui_switch-border_width: ;
+  --sui_switch-border_radius: ;
+  --sui_switch-corner_shape: ;
+  --sui_switch-canvas-idle: ;
+  --sui_switch-canvas-idle-checked: ;
+  --sui_switch-canvas-hover: ;
+  --sui_switch-canvas-hover-checked: ;
+  --sui_switch-canvas-active: ;
+  --sui_switch-canvas-active-checked: ;
+}
+
+/* 可変 */
+:scope {
+  width: var(--sui_switch-width);
+  height: var(--sui_switch-height);
+  padding: var(--sui_switch-padding);
+  outline-width: var(--_sui_switch-outline_width, 0px);
+  outline-color: var(--_sui_switch-outline_color, transparent);
+  outline-offset: var(--_sui_switch-outline_offset, 0px);
+  background-color: var(--_sui_switch-canvas, var(--sui_switch-canvas-idle));
+  border-radius: var(--sui_switch-border_radius);
+  corner-shape: var(--sui_switch-corner_shape);
+
+  &::after {
+    outline-width: var(--_sui_switch-border_width, 0px);
+    outline-color: var(--_sui_switch-border_color, transparent);
+    outline-offset: calc(var(--_sui_switch-border_width, 0px) * -1);
+    border-radius: var(--sui_switch-border_radius);
+    corner-shape: var(--sui_switch-corner_shape);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_switch-width: calc(var(--sui_switch-height) * 1.75);
+  --sui_switch-focusring_width: var(--sui-focusring_width);
+  --sui_switch-focusring_color: var(--sui-focusring_color);
+  --sui_switch-focusring_offset: var(--sui-focusring_offset);
+  --sui_switch-border_width: 1px;
+
+  /* @function 非対応ブラウザーでは --sui-border_width() を解決できず outlined の枠線が既定の 3px になるため、対応ブラウザーにだけ適用します。 */
+  @supports (outline-width: --sui-border_width(1)) {
+    & {
+      --sui_switch-border_width: --sui-border_width(1);
+    }
+  }
+
+  &.sui_switch-size_sm {
+    --sui_switch-height: calc(
+                           var(--sui-text-oln-sm-m-font_size)
+                           * var(--sui-text-oln-sm-m-line_height)
+                           * 1.2
+                         );
+    --sui_switch-padding: 2px;
+  }
+
+  &.sui_switch-size_md {
+    --sui_switch-height: calc(
+                           var(--sui-text-oln-md-m-font_size)
+                           * var(--sui-text-oln-md-m-line_height)
+                           * 1.2
+                         );
+    --sui_switch-padding: 2px;
+  }
+
+  &.sui_switch-size_lg {
+    --sui_switch-height: calc(
+                           var(--sui-text-oln-lg-m-font_size)
+                           * var(--sui-text-oln-lg-m-line_height)
+                           * 1.2
+                         );
+    --sui_switch-padding: 2px;
+  }
+
+  /* @function 非対応ブラウザーでは --sui-space() を解決できずつまみの寸法が 0 になるため、対応ブラウザーにだけ適用します。 */
+  @supports (padding-block: --sui-space(0.5)) {
+    &.sui_switch-size_sm,
+    &.sui_switch-size_md,
+    &.sui_switch-size_lg {
+      --sui_switch-padding: --sui-space(0.5);
+    }
+  }
+
+  &.sui_switch-radius_none {
+    --sui_switch-border_radius: 0px;
+  }
+
+  &.sui_switch-radius_sm {
+    --sui_switch-border_radius: --sui-corner_radius(1);
+    --sui_switch-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_switch-radius_md {
+    --sui_switch-border_radius: --sui-corner_radius(2);
+    --sui_switch-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_switch-radius_lg {
+    --sui_switch-border_radius: --sui-corner_radius(3);
+    --sui_switch-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_switch-radius_full {
+    --sui_switch-border_radius: calc(var(--sui_switch-height) / 2);
+    --sui_switch-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_switch-color_grey {
+    --sui_switch-border_color-checked: var(--sui-grey-solid-border-normal);
+    --sui_switch-canvas-idle-checked: var(--sui-grey-solid-canvas-normal);
+    --sui_switch-canvas-hover-checked: var(--sui-grey-solid-canvas-subtle);
+    --sui_switch-canvas-active-checked: var(--sui-grey-solid-canvas-strong);
+  }
+
+  &.sui_switch-color_blue {
+    --sui_switch-border_color-checked: var(--sui-blue-solid-border-normal);
+    --sui_switch-canvas-idle-checked: var(--sui-blue-solid-canvas-normal);
+    --sui_switch-canvas-hover-checked: var(--sui-blue-solid-canvas-subtle);
+    --sui_switch-canvas-active-checked: var(--sui-blue-solid-canvas-strong);
+  }
+
+  &.sui_switch-color_purple {
+    --sui_switch-border_color-checked: var(--sui-purple-solid-border-normal);
+    --sui_switch-canvas-idle-checked: var(--sui-purple-solid-canvas-normal);
+    --sui_switch-canvas-hover-checked: var(--sui-purple-solid-canvas-subtle);
+    --sui_switch-canvas-active-checked: var(--sui-purple-solid-canvas-strong);
+  }
+
+  &.sui_switch-color_magenta {
+    --sui_switch-border_color-checked: var(--sui-magenta-solid-border-normal);
+    --sui_switch-canvas-idle-checked: var(--sui-magenta-solid-canvas-normal);
+    --sui_switch-canvas-hover-checked: var(--sui-magenta-solid-canvas-subtle);
+    --sui_switch-canvas-active-checked: var(--sui-magenta-solid-canvas-strong);
+  }
+
+  &.sui_switch-color_red {
+    --sui_switch-border_color-checked: var(--sui-red-solid-border-normal);
+    --sui_switch-canvas-idle-checked: var(--sui-red-solid-canvas-normal);
+    --sui_switch-canvas-hover-checked: var(--sui-red-solid-canvas-subtle);
+    --sui_switch-canvas-active-checked: var(--sui-red-solid-canvas-strong);
+  }
+
+  &.sui_switch-color_orange {
+    --sui_switch-border_color-checked: var(--sui-orange-solid-border-normal);
+    --sui_switch-canvas-idle-checked: var(--sui-orange-solid-canvas-normal);
+    --sui_switch-canvas-hover-checked: var(--sui-orange-solid-canvas-subtle);
+    --sui_switch-canvas-active-checked: var(--sui-orange-solid-canvas-strong);
+  }
+
+  &.sui_switch-color_yellow {
+    --sui_switch-border_color-checked: var(--sui-yellow-solid-border-normal);
+    --sui_switch-canvas-idle-checked: var(--sui-yellow-solid-canvas-normal);
+    --sui_switch-canvas-hover-checked: var(--sui-yellow-solid-canvas-subtle);
+    --sui_switch-canvas-active-checked: var(--sui-yellow-solid-canvas-strong);
+  }
+
+  &.sui_switch-color_green {
+    --sui_switch-border_color-checked: var(--sui-green-solid-border-normal);
+    --sui_switch-canvas-idle-checked: var(--sui-green-solid-canvas-normal);
+    --sui_switch-canvas-hover-checked: var(--sui-green-solid-canvas-subtle);
+    --sui_switch-canvas-active-checked: var(--sui-green-solid-canvas-strong);
+  }
+
+  &.sui_switch-variant_naked {
+    --sui_switch-border_color-idle: var(--sui-grey-naked-border-normal);
+    --sui_switch-border_color-hover: var(--sui-grey-naked-border-subtle);
+    --sui_switch-border_color-active: var(--sui-grey-naked-border-strong);
+    --sui_switch-canvas-idle: var(--sui-grey-naked-canvas-normal);
+    --sui_switch-canvas-hover: var(--sui-grey-naked-canvas-subtle);
+    --sui_switch-canvas-active: var(--sui-grey-naked-canvas-strong);
+  }
+
+  &.sui_switch-variant_liquid {
+    --sui_switch-border_color-idle: var(--sui-grey-liquid-border-normal);
+    --sui_switch-border_color-hover: var(--sui-grey-liquid-border-subtle);
+    --sui_switch-border_color-active: var(--sui-grey-liquid-border-strong);
+    --sui_switch-canvas-idle: var(--sui-grey-liquid-canvas-normal);
+    --sui_switch-canvas-hover: var(--sui-grey-liquid-canvas-subtle);
+    --sui_switch-canvas-active: var(--sui-grey-liquid-canvas-strong);
+  }
+}
+
+/* 変異 */
+:scope {
+  &:not(.sui_switch-checked):not(.sui_switch-disabled) {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_switch-canvas: var(--sui_switch-canvas-hover);
+      }
+    }
+
+    &:active {
+      --_sui_switch-canvas: var(--sui_switch-canvas-active);
+    }
+  }
+
+  &.sui_switch-checked {
+    --_sui_switch-canvas: var(--sui_switch-canvas-idle-checked);
+  }
+
+  &.sui_switch-checked:not(.sui_switch-disabled) {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_switch-canvas: var(--sui_switch-canvas-hover-checked);
+      }
+    }
+
+    &:active {
+      --_sui_switch-canvas: var(--sui_switch-canvas-active-checked);
+    }
+  }
+
+  &:focus-visible:not(.sui_switch-disabled) {
+    --_sui_switch-outline_width: var(--sui_switch-focusring_width);
+    --_sui_switch-outline_color: var(--sui_switch-focusring_color);
+    --_sui_switch-outline_offset: var(--sui_switch-focusring_offset);
+  }
+
+  &.sui_switch-outlined:not(.sui_switch-checked) {
+    --_sui_switch-border_color: var(--sui_switch-border_color-idle);
+    --_sui_switch-border_width: var(--sui_switch-border_width);
+
+    &:not(.sui_switch-disabled) {
+      @media (any-hover: hover) {
+        &:hover {
+          --_sui_switch-border_color: var(--sui_switch-border_color-hover);
+        }
+      }
+
+      &:active {
+        --_sui_switch-border_color: var(--sui_switch-border_color-active);
+      }
+    }
+  }
+
+  &.sui_switch-outlined.sui_switch-checked {
+    --_sui_switch-border_color: var(--sui_switch-border_color-checked);
+    --_sui_switch-border_width: var(--sui_switch-border_width);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_switch) to ([data-scope]) {
+
+:scope {
+  &.sui_switch-disabled {
+    cursor: not-allowed;
+  }
+
+  &.sui_switch-disabled:not(.sui_switch-checked) {
+    &.sui_switch-variant_naked {
+      background-color: var(--sui-disabled-naked-canvas);
+    }
+
+    &.sui_switch-variant_liquid {
+      background-color: var(--sui-disabled-liquid-canvas);
+    }
+
+    &.sui_switch-variant_naked.sui_switch-outlined::after {
+      outline-width: var(--sui-disabled-border_width);
+      outline-color: var(--sui-disabled-naked-border);
+    }
+
+    &.sui_switch-variant_liquid.sui_switch-outlined::after {
+      outline-width: var(--sui-disabled-border_width);
+      outline-color: var(--sui-disabled-liquid-border);
+    }
+  }
+
+  &.sui_switch-disabled.sui_switch-checked {
+    background-color: var(--sui-disabled-solid-canvas);
+  }
+
+  &.sui_switch-disabled.sui_switch-checked.sui_switch-outlined::after {
+    outline-width: var(--sui-disabled-border_width);
+    outline-color: var(--sui-disabled-solid-border);
+  }
+}
+
+} /* @scope */
+} /* @layer */

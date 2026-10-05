@@ -1,6 +1,9 @@
 import * as React from "react";
 
-import type { PaginationGoToPage, PaginationRootChangeEventDetails } from "./pagination.context.js";
+import type {
+  PaginationGoToPage,
+  PaginationRootChangeEventDetails,
+} from "./root/pagination.root.context.js";
 
 /**
  * 総ページ数を 1 以上の整数へ丸めます。

@@ -6,8 +6,8 @@ import { ContextMissingError } from "../../../src/errors.js";
 import {
   RadioGroupContext,
   useRadioGroupContext,
-} from "../../../src/radio-group/radio-group.context.js";
-import { RadioGroupRoot } from "../../../src/radio-group/radio-group.root.jsx";
+} from "../../../src/radio-group/root/radio-group.root.context.js";
+import { RadioGroupRoot } from "../../../src/radio-group/root/radio-group.root.jsx";
 
 describe("useRadioGroupContext", () => {
   test("提供された値を返す", async ({ expect }) => {

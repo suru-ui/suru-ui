@@ -19,7 +19,7 @@ import {
   useSidebarContext,
 } from "../../../src/sidebar/sidebar.parts.js";
 import "../_locators.js";
-import { FullSidebar } from "./_sidebar.js";
+import { FullSidebar } from "./_sidebar.jsx";
 
 describe("Sidebar", () => {
   test("公開パーツをすべて描画する", async ({ expect }) => {

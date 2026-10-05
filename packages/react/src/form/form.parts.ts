@@ -1,3 +1,3 @@
-import "./form.css";
+import "./root/form.root.css";
 
-export * from "./form.root.jsx";
+export * from "./root/form.root.jsx";

@@ -3,7 +3,7 @@ import * as React from "react";
 import { getItemKey } from "../_item.js";
 import mergeProps from "../_merge-props.js";
 import type { IComponent } from "../types.js";
-import { type $InferItemObjectValue, isItemObject } from "./_accordion.jsx";
+import { type $InferItemObjectValue, isItemObject } from "./_accordion.js";
 import {
   type AccordionContext,
   type AccordionRootSize,

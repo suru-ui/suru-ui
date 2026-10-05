@@ -1,4 +1,4 @@
-import "./input.css";
+import "./root/input.root.css";
 
-export * from "./input.context.js";
-export * from "./input.root.jsx";
+export * from "./root/input.root.context.js";
+export * from "./root/input.root.jsx";

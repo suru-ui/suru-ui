@@ -3,12 +3,12 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { defaultItemToStringLabel } from "../../../src/_item.js";
+import { ComboboxItemLabel } from "../../../src/combobox/item-label/combobox.item-label.jsx";
+import { ComboboxItemContext as ComboboxItemContextValue } from "../../../src/combobox/item/combobox.item.context.js";
 import {
   type ComboboxContext,
   ComboboxContext as ComboboxContextValue,
-} from "../../../src/combobox/combobox.context.js";
-import { ComboboxItemLabel } from "../../../src/combobox/combobox.item-label.jsx";
-import { ComboboxItemContext as ComboboxItemContextValue } from "../../../src/combobox/combobox.item.context.js";
+} from "../../../src/combobox/root/combobox.root.context.js";
 
 function Provider(props: {
   children: React.ReactNode;

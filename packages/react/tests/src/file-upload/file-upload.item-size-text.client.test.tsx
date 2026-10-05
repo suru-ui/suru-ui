@@ -3,10 +3,10 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FileUploadItemSizeText } from "../../../src/file-upload/file-upload.item-size-text.jsx";
-import { FileUploadItem } from "../../../src/file-upload/file-upload.item.jsx";
+import { FileUploadItemSizeText } from "../../../src/file-upload/item-size-text/file-upload.item-size-text.jsx";
+import { FileUploadItem } from "../../../src/file-upload/item/file-upload.item.jsx";
 import "../../../src/file-upload/file-upload.parts.js";
-import { FileUploadRoot } from "../../../src/file-upload/file-upload.root.jsx";
+import { FileUploadRoot } from "../../../src/file-upload/root/file-upload.root.jsx";
 import "../_locators.js";
 
 /**

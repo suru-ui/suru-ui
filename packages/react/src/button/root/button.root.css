@@ -1,0 +1,752 @@
+@layer sui.component {
+@scope (.sui_button) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-feature-settings: "palt";
+  vertical-align: middle;
+  white-space: nowrap;
+  text-decoration: none;
+  touch-action: manipulation;
+  cursor: default;
+  user-select: none;
+  outline-style: solid;
+  border-style: solid;
+  text-box: trim-both cap alphabetic;
+}
+
+/* 変数 */
+:scope {
+  --sui_button-gap: ;
+  --sui_button-min_height: ;
+  --sui_button-padding_block: ;
+  --sui_button-padding_inline: ;
+  --sui_button-font_family: ;
+  --sui_button-font_size: ;
+  --sui_button-font_weight: ;
+  --sui_button-line_height: ;
+  --sui_button-color-idle: ;
+  --sui_button-color-hover: ;
+  --sui_button-color-active: ;
+  --sui_button-letter_spacing: ;
+  --sui_button-focusring_width: ;
+  --sui_button-focusring_color: ;
+  --sui_button-focusring_offset: ;
+  --sui_button-virtual_content-leading: ;
+  --sui_button-background_color-idle: ;
+  --sui_button-background_color-hover: ;
+  --sui_button-background_color-active: ;
+  --sui_button-border_color-idle: ;
+  --sui_button-border_color-hover: ;
+  --sui_button-border_color-active: ;
+  --sui_button-border_width: ;
+  --sui_button-border_radius: ;
+  --sui_button-corner_shape: ;
+  --sui_button__svg-size: ;
+  --sui_button__svg-color: ;
+}
+
+/* 可変 */
+:scope {
+  z-index: var(--_sui_button-z_index, 0);
+  gap: var(--sui_button-gap);
+  justify-content: var(--_sui_button-justify_content, center);
+  min-width: var(--_sui_button-min_width, calc(var(--sui_button-min_height) * 2));
+  min-height: var(--sui_button-min_height);
+  aspect-ratio: var(--_sui_button-aspect_ratio, unset);
+  padding-block: var(--_sui_button-padding, var(--sui_button-padding_block));
+  padding-inline: var(--_sui_button-padding, var(--sui_button-padding_inline));
+  font-family: var(--sui_button-font_family);
+  font-size: var(--sui_button-font_size);
+  font-weight: var(--sui_button-font_weight);
+  line-height: var(--sui_button-line_height);
+  color: var(--_sui_button-color, var(--sui_button-color-idle));
+  letter-spacing: var(--sui_button-letter_spacing);
+  outline-width: var(--_sui_button-outline_width, 0px);
+  outline-color: var(--_sui_button-outline_color, transparent);
+  outline-offset: var(--_sui_button-outline_offset, 0px);
+  background-color: var(--_sui_button-background_color, var(--sui_button-background_color-idle));
+  border-color: var(--_sui_button-border_color, transparent);
+  border-width: var(--_sui_button-border_width, 0px);
+  border-radius: var(--sui_button-border_radius);
+  corner-shape: var(--sui_button-corner_shape);
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_button__svg-size);
+    height: var(--sui_button__svg-size);
+    color: var(--sui_button__svg-color);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_button-padding_block: calc(
+                                (
+                                  var(--sui_button-min_height)
+                                  - var(--sui_button-virtual_content-leading)
+                                ) / 2
+                                - var(--_sui_button-border_width, 0px)
+                              );
+  --sui_button-font_family: var(--sui-font-sans);
+  --sui_button-focusring_width: var(--sui-focusring_width);
+  --sui_button-focusring_color: var(--sui-focusring_color);
+  --sui_button-focusring_offset: var(--sui-focusring_offset);
+  --sui_button-virtual_content-leading: max(
+                                          calc(
+                                            var(--sui_button-font_size)
+                                            * var(--sui_button-line_height)
+                                          ),
+                                          var(--sui_button__svg-size)
+                                        );
+  --sui_button-border_width: --sui-border_width(1);
+  --sui_button__svg-size: calc(var(--sui_button-font_size) * var(--sui_button-line_height));
+  --sui_button__svg-color: --sui-icon_color(
+                             var(--_sui_button-color, var(--sui_button-color-idle)),
+                             var(--_sui_button-background_color,
+                               var(--sui_button-background_color-idle)
+                             )
+                           );
+
+  &.sui_button-size_xs {
+    --sui_button-gap: --sui-gap(0.5);
+    --sui_button-min_height: var(--sui-size-xs);
+    --sui_button-padding_inline: --sui-space(1.5);
+    --sui_button-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_button-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_button-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_button-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+  }
+
+  &.sui_button-size_sm {
+    --sui_button-gap: --sui-gap(0.5);
+    --sui_button-min_height: var(--sui-size-sm);
+    --sui_button-padding_inline: --sui-space(1.5);
+    --sui_button-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_button-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_button-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_button-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+  }
+
+  &.sui_button-size_md {
+    --sui_button-gap: --sui-gap(1);
+    --sui_button-min_height: var(--sui-size-md);
+    --sui_button-padding_inline: --sui-space(2.5);
+    --sui_button-font_size: var(--sui-text-oln-md-m-font_size);
+    --sui_button-font_weight: var(--sui-text-oln-md-m-font_weight);
+    --sui_button-line_height: var(--sui-text-oln-md-m-line_height);
+    --sui_button-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
+  }
+
+  &.sui_button-size_lg {
+    --sui_button-gap: --sui-gap(1.5);
+    --sui_button-min_height: var(--sui-size-lg);
+    --sui_button-padding_inline: --sui-space(3.5);
+    --sui_button-font_size: var(--sui-text-oln-lg-m-font_size);
+    --sui_button-font_weight: var(--sui-text-oln-lg-m-font_weight);
+    --sui_button-line_height: var(--sui-text-oln-lg-m-line_height);
+    --sui_button-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
+  }
+
+  &.sui_button-item {
+    &.sui_button-size_xs {
+      --sui_button-padding_inline: --sui-space(calc(1.5 / 2));
+      --sui_button-font_size: var(--sui-text-oln-sm-n-font_size);
+      --sui_button-font_weight: var(--sui-text-oln-sm-n-font_weight);
+      --sui_button-line_height: var(--sui-text-oln-sm-n-line_height);
+      --sui_button-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+    }
+
+    &.sui_button-size_sm {
+      --sui_button-padding_inline: --sui-space(calc(1.5 / 2));
+      --sui_button-font_size: var(--sui-text-oln-sm-n-font_size);
+      --sui_button-font_weight: var(--sui-text-oln-sm-n-font_weight);
+      --sui_button-line_height: var(--sui-text-oln-sm-n-line_height);
+      --sui_button-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+    }
+
+    &.sui_button-size_md {
+      --sui_button-padding_inline: --sui-space(calc(2.5 / 2));
+      --sui_button-font_size: var(--sui-text-oln-md-n-font_size);
+      --sui_button-font_weight: var(--sui-text-oln-md-n-font_weight);
+      --sui_button-line_height: var(--sui-text-oln-md-n-line_height);
+      --sui_button-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+    }
+
+    &.sui_button-size_lg {
+      --sui_button-padding_inline: --sui-space(calc(3.5 / 2));
+      --sui_button-font_size: var(--sui-text-oln-lg-n-font_size);
+      --sui_button-font_weight: var(--sui-text-oln-lg-n-font_weight);
+      --sui_button-line_height: var(--sui-text-oln-lg-n-line_height);
+      --sui_button-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+    }
+  }
+
+  &.sui_button-radius_none {
+    --sui_button-border_radius: 0px;
+  }
+
+  &.sui_button-radius_xs {
+    --sui_button-border_radius: --sui-corner_radius(1);
+    --sui_button-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_button-radius_sm {
+    --sui_button-border_radius: --sui-corner_radius(2);
+    --sui_button-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_button-radius_md {
+    --sui_button-border_radius: --sui-corner_radius(3);
+    --sui_button-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_button-radius_lg {
+    --sui_button-border_radius: --sui-corner_radius(4);
+    --sui_button-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_button-radius_full {
+    --sui_button-border_radius: calc(var(--sui_button-min_height) / 2);
+    --sui_button-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_button-radius_circle {
+    --sui_button-border_radius: calc(var(--sui_button-min_height) / 2);
+    --sui_button-corner_shape: none;
+  }
+
+  &.sui_button-color_grey {
+    &.sui_button-variant_solid {
+      --sui_button-color-idle: var(--sui-grey-solid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-grey-solid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-grey-solid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-grey-solid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-grey-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-solid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-grey-solid-border-normal);
+      --sui_button-border_color-hover: var(--sui-grey-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-solid-border-strong);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button-color-idle: var(--sui-grey-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-grey-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-grey-naked-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-grey-naked-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-naked-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-grey-naked-border-normal);
+      --sui_button-border_color-hover: var(--sui-grey-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-naked-border-strong);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button-color-idle: var(--sui-grey-liquid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-grey-liquid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-grey-liquid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-grey-liquid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-liquid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-grey-liquid-border-normal);
+      --sui_button-border_color-hover: var(--sui-grey-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-liquid-border-strong);
+    }
+  }
+
+  &.sui_button-color_blue {
+    &.sui_button-variant_solid {
+      --sui_button-color-idle: var(--sui-blue-solid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-blue-solid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-blue-solid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-blue-solid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-blue-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-blue-solid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-blue-solid-border-normal);
+      --sui_button-border_color-hover: var(--sui-blue-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-blue-solid-border-strong);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button-color-idle: var(--sui-blue-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-blue-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-blue-naked-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-blue-naked-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-blue-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-blue-naked-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-blue-naked-border-normal);
+      --sui_button-border_color-hover: var(--sui-blue-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-blue-naked-border-strong);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button-color-idle: var(--sui-blue-liquid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-blue-liquid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-blue-liquid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-blue-liquid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-blue-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-blue-liquid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-blue-liquid-border-normal);
+      --sui_button-border_color-hover: var(--sui-blue-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-blue-liquid-border-strong);
+    }
+  }
+
+  &.sui_button-color_purple {
+    &.sui_button-variant_solid {
+      --sui_button-color-idle: var(--sui-purple-solid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-purple-solid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-purple-solid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-purple-solid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-purple-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-purple-solid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-purple-solid-border-normal);
+      --sui_button-border_color-hover: var(--sui-purple-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-purple-solid-border-strong);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button-color-idle: var(--sui-purple-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-purple-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-purple-naked-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-purple-naked-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-purple-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-purple-naked-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-purple-naked-border-normal);
+      --sui_button-border_color-hover: var(--sui-purple-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-purple-naked-border-strong);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button-color-idle: var(--sui-purple-liquid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-purple-liquid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-purple-liquid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-purple-liquid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-purple-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-purple-liquid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-purple-liquid-border-normal);
+      --sui_button-border_color-hover: var(--sui-purple-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-purple-liquid-border-strong);
+    }
+  }
+
+  &.sui_button-color_magenta {
+    &.sui_button-variant_solid {
+      --sui_button-color-idle: var(--sui-magenta-solid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-magenta-solid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-magenta-solid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-magenta-solid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-magenta-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-magenta-solid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-magenta-solid-border-normal);
+      --sui_button-border_color-hover: var(--sui-magenta-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-magenta-solid-border-strong);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button-color-idle: var(--sui-magenta-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-magenta-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-magenta-naked-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-magenta-naked-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-magenta-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-magenta-naked-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-magenta-naked-border-normal);
+      --sui_button-border_color-hover: var(--sui-magenta-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-magenta-naked-border-strong);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button-color-idle: var(--sui-magenta-liquid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-magenta-liquid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-magenta-liquid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-magenta-liquid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-magenta-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-magenta-liquid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-magenta-liquid-border-normal);
+      --sui_button-border_color-hover: var(--sui-magenta-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-magenta-liquid-border-strong);
+    }
+  }
+
+  &.sui_button-color_red {
+    &.sui_button-variant_solid {
+      --sui_button-color-idle: var(--sui-red-solid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-red-solid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-red-solid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-red-solid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-red-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-red-solid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-red-solid-border-normal);
+      --sui_button-border_color-hover: var(--sui-red-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-red-solid-border-strong);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button-color-idle: var(--sui-red-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-red-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-red-naked-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-red-naked-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-red-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-red-naked-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-red-naked-border-normal);
+      --sui_button-border_color-hover: var(--sui-red-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-red-naked-border-strong);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button-color-idle: var(--sui-red-liquid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-red-liquid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-red-liquid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-red-liquid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-red-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-red-liquid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-red-liquid-border-normal);
+      --sui_button-border_color-hover: var(--sui-red-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-red-liquid-border-strong);
+    }
+  }
+
+  &.sui_button-color_orange {
+    &.sui_button-variant_solid {
+      --sui_button-color-idle: var(--sui-orange-solid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-orange-solid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-orange-solid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-orange-solid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-orange-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-orange-solid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-orange-solid-border-normal);
+      --sui_button-border_color-hover: var(--sui-orange-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-orange-solid-border-strong);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button-color-idle: var(--sui-orange-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-orange-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-orange-naked-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-orange-naked-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-orange-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-orange-naked-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-orange-naked-border-normal);
+      --sui_button-border_color-hover: var(--sui-orange-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-orange-naked-border-strong);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button-color-idle: var(--sui-orange-liquid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-orange-liquid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-orange-liquid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-orange-liquid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-orange-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-orange-liquid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-orange-liquid-border-normal);
+      --sui_button-border_color-hover: var(--sui-orange-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-orange-liquid-border-strong);
+    }
+  }
+
+  &.sui_button-color_yellow {
+    &.sui_button-variant_solid {
+      --sui_button-color-idle: var(--sui-yellow-solid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-yellow-solid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-yellow-solid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-yellow-solid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-yellow-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-yellow-solid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-yellow-solid-border-normal);
+      --sui_button-border_color-hover: var(--sui-yellow-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-yellow-solid-border-strong);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button-color-idle: var(--sui-yellow-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-yellow-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-yellow-naked-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-yellow-naked-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-yellow-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-yellow-naked-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-yellow-naked-border-normal);
+      --sui_button-border_color-hover: var(--sui-yellow-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-yellow-naked-border-strong);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button-color-idle: var(--sui-yellow-liquid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-yellow-liquid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-yellow-liquid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-yellow-liquid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-yellow-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-yellow-liquid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-yellow-liquid-border-normal);
+      --sui_button-border_color-hover: var(--sui-yellow-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-yellow-liquid-border-strong);
+    }
+  }
+
+  &.sui_button-color_green {
+    &.sui_button-variant_solid {
+      --sui_button-color-idle: var(--sui-green-solid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-green-solid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-green-solid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-green-solid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-green-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-green-solid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-green-solid-border-normal);
+      --sui_button-border_color-hover: var(--sui-green-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-green-solid-border-strong);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button-color-idle: var(--sui-green-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-green-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-green-naked-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-green-naked-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-green-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-green-naked-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-green-naked-border-normal);
+      --sui_button-border_color-hover: var(--sui-green-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-green-naked-border-strong);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button-color-idle: var(--sui-green-liquid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-green-liquid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-green-liquid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-green-liquid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-green-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-green-liquid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-green-liquid-border-normal);
+      --sui_button-border_color-hover: var(--sui-green-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-green-liquid-border-strong);
+    }
+  }
+
+  &.sui_button-muted {
+    &.sui_button-variant_solid {
+      --sui_button-color-idle: var(--sui-grey-solid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-grey-solid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-grey-solid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-grey-solid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-grey-solid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-solid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-grey-solid-border-normal);
+      --sui_button-border_color-hover: var(--sui-grey-solid-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-solid-border-strong);
+    }
+
+    &.sui_button-variant_naked {
+      --sui_button-color-idle: var(--sui-grey-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-grey-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-grey-naked-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-grey-naked-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-naked-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-grey-naked-border-normal);
+      --sui_button-border_color-hover: var(--sui-grey-naked-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-naked-border-strong);
+    }
+
+    &.sui_button-variant_liquid {
+      --sui_button-color-idle: var(--sui-grey-liquid-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-grey-liquid-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-grey-liquid-canvas_text-strong);
+      --sui_button-background_color-idle: var(--sui-grey-liquid-canvas-normal);
+      --sui_button-background_color-hover: var(--sui-grey-liquid-canvas-subtle);
+      --sui_button-background_color-active: var(--sui-grey-liquid-canvas-strong);
+      --sui_button-border_color-idle: var(--sui-grey-liquid-border-normal);
+      --sui_button-border_color-hover: var(--sui-grey-liquid-border-subtle);
+      --sui_button-border_color-active: var(--sui-grey-liquid-border-strong);
+    }
+
+    &.sui_button-color_blue:not(.sui_button-variant_solid) {
+      --sui_button-color-idle: var(--sui-blue-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-blue-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-blue-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_purple:not(.sui_button-variant_solid) {
+      --sui_button-color-idle: var(--sui-purple-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-purple-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-purple-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_magenta:not(.sui_button-variant_solid) {
+      --sui_button-color-idle: var(--sui-magenta-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-magenta-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-magenta-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_red:not(.sui_button-variant_solid) {
+      --sui_button-color-idle: var(--sui-red-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-red-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-red-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_orange:not(.sui_button-variant_solid) {
+      --sui_button-color-idle: var(--sui-orange-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-orange-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-orange-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_yellow:not(.sui_button-variant_solid) {
+      --sui_button-color-idle: var(--sui-yellow-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-yellow-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-yellow-naked-canvas_text-strong);
+    }
+
+    &.sui_button-color_green:not(.sui_button-variant_solid) {
+      --sui_button-color-idle: var(--sui-green-naked-canvas_text-normal);
+      --sui_button-color-hover: var(--sui-green-naked-canvas_text-subtle);
+      --sui_button-color-active: var(--sui-green-naked-canvas_text-strong);
+    }
+  }
+}
+
+/* 変異 */
+:scope {
+  &:not(.sui_button-disabled) {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_button-z_index: 1;
+        --_sui_button-color: var(--sui_button-color-hover);
+        --_sui_button-background_color: var(--sui_button-background_color-hover);
+      }
+    }
+
+    &:active {
+      --_sui_button-z_index: 1;
+      --_sui_button-color: var(--sui_button-color-active);
+      --_sui_button-background_color: var(--sui_button-background_color-active);
+    }
+  }
+
+  &:focus-visible {
+    --_sui_button-z_index: 1;
+  }
+
+  &:focus-visible:not(.sui_button-item) {
+    --_sui_button-outline_width: var(--sui_button-focusring_width);
+    --_sui_button-outline_color: var(--sui_button-focusring_color);
+    --_sui_button-outline_offset: var(--sui_button-focusring_offset);
+  }
+
+  &.sui_button-squared {
+    --_sui_button-min_width: var(--sui_button-min_height);
+    --_sui_button-aspect_ratio: 1 / 1;
+    --_sui_button-padding: 0px;
+  }
+
+  &.sui_button-item {
+    --_sui_button-justify_content: space-between;
+  }
+
+  &.sui_button-outlined {
+    --_sui_button-border_color: var(--sui_button-border_color-idle);
+    --_sui_button-border_width: var(--sui_button-border_width);
+
+    &:not(.sui_button-disabled) {
+      @media (any-hover: hover) {
+        &:hover {
+          --_sui_button-border_color: var(--sui_button-border_color-hover);
+        }
+      }
+
+      &:active {
+        --_sui_button-border_color: var(--sui_button-border_color-active);
+      }
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* pending */
+@layer sui.important {
+@scope (.sui_button) to ([data-scope]) {
+
+:scope {
+  &.sui_button-pending {
+    cursor: progress;
+    background-color: var(--sui_button_pending-canvas);
+
+    &.sui_button-outlined {
+      border-color: var(--sui_button-border_color-idle);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_button) to ([data-scope]) {
+
+:scope {
+  &.sui_button-disabled {
+    cursor: not-allowed;
+
+    &.sui_button-variant_solid {
+      color: var(--sui-disabled-solid-canvas_text);
+      background-color: var(--sui-disabled-solid-canvas);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-solid-canvas_text),
+                 var(--sui-disabled-solid-canvas)
+               );
+      }
+    }
+
+    &.sui_button-variant_naked {
+      color: var(--sui-disabled-naked-canvas_text);
+      background-color: var(--sui-disabled-naked-canvas);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-naked-canvas_text),
+                 var(--sui-disabled-naked-canvas)
+               );
+      }
+    }
+
+    &.sui_button-variant_liquid {
+      color: var(--sui-disabled-liquid-canvas_text);
+      background-color: var(--sui-disabled-liquid-canvas);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-liquid-canvas_text),
+                 var(--sui-disabled-liquid-canvas)
+               );
+      }
+    }
+
+    &.sui_button-outlined {
+      /* --sui_button-padding_block を調整するために枠線の幅を設定します。 */
+      --_sui_button-border_width: var(--sui-disabled-border_width);
+
+      border-style: solid;
+      border-width: var(--sui-disabled-border_width);
+
+      &.sui_button-variant_solid {
+        border-color: var(--sui-disabled-solid-border);
+      }
+
+      &.sui_button-variant_naked {
+        border-color: var(--sui-disabled-naked-border);
+      }
+
+      &.sui_button-variant_liquid {
+        border-color: var(--sui-disabled-liquid-border);
+      }
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */

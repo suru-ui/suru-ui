@@ -2,8 +2,8 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ComboboxRoot } from "../../../src/combobox/combobox.root.jsx";
-import { useComboboxFilteredItems } from "../../../src/combobox/combobox.use-filtered-items.js";
+import { ComboboxRoot } from "../../../src/combobox/root/combobox.root.jsx";
+import { useComboboxFilteredItems } from "../../../src/combobox/use-filtered-items/combobox.use-filtered-items.js";
 
 const fruits = ["りんご", "ばなな"];
 

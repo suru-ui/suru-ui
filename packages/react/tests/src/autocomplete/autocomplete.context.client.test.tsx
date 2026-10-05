@@ -4,8 +4,8 @@ import { render } from "vitest-browser-react";
 import {
   AutocompleteContext,
   useAutocompleteContext,
-} from "../../../src/autocomplete/autocomplete.context.js";
-import { AutocompleteRoot } from "../../../src/autocomplete/autocomplete.root.jsx";
+} from "../../../src/autocomplete/root/autocomplete.root.context.js";
+import { AutocompleteRoot } from "../../../src/autocomplete/root/autocomplete.root.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 const fruits = ["りんご", "ばなな"];

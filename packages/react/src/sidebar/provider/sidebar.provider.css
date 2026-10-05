@@ -1,0 +1,10 @@
+@layer sui.component {
+  @scope (.sui_sidebar_provider) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+    }
+  } /* @scope */
+} /* @layer */

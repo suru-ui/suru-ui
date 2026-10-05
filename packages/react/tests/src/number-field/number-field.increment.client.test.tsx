@@ -1,10 +1,10 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { NumberFieldGroup } from "../../../src/number-field/number-field.group.jsx";
-import { NumberFieldIncrement } from "../../../src/number-field/number-field.increment.jsx";
-import { NumberFieldInput } from "../../../src/number-field/number-field.input.jsx";
-import { NumberFieldRoot } from "../../../src/number-field/number-field.root.jsx";
+import { NumberFieldGroup } from "../../../src/number-field/group/number-field.group.jsx";
+import { NumberFieldIncrement } from "../../../src/number-field/increment/number-field.increment.jsx";
+import { NumberFieldInput } from "../../../src/number-field/input/number-field.input.jsx";
+import { NumberFieldRoot } from "../../../src/number-field/root/number-field.root.jsx";
 import "../_locators.js";
 
 describe("NumberFieldIncrement", () => {

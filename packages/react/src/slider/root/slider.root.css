@@ -1,0 +1,48 @@
+@layer sui.component {
+@scope (.sui_slider) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: grid;
+  grid-template-columns: minmax(0px, 1fr) auto;
+  width: 100%;
+}
+
+/* 変数 */
+:scope {
+  --sui_slider-gap: ;
+}
+
+/* 可変 */
+:scope {
+  gap: var(--sui_slider-gap);
+}
+
+/* 代入 */
+:scope {
+  --sui_slider-gap: --sui-gap(2);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* Thumb をドラッグ中はポインターが Thumb の外側へ出てもカーソルを維持する必要があります。
+   `:root` は `@scope` の範囲に含まれないため、ページ全体に適用するこの宣言だけを @scope の外に分けています。 */
+@layer sui.component {
+:root:has(.sui_slider-dragging) {
+  cursor: grabbing;
+}
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_slider) to ([data-scope]) {
+
+:scope {
+  &.sui_slider-disabled {
+    cursor: not-allowed;
+  }
+}
+
+} /* @scope */
+} /* @layer */

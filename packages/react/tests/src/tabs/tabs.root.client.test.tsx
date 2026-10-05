@@ -2,8 +2,8 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useTabsContext } from "../../../src/tabs/tabs.context.js";
-import { TabsRoot } from "../../../src/tabs/tabs.root.jsx";
+import { useTabsContext } from "../../../src/tabs/root/tabs.root.context.js";
+import { TabsRoot } from "../../../src/tabs/root/tabs.root.jsx";
 import "../_locators.js";
 
 describe("TabsRoot", () => {

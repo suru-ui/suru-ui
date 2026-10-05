@@ -1,0 +1,76 @@
+@layer sui.component {
+@scope (.sui_autocomplete_status) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  /* 内容の変化をスクリーンリーダーに通知するため、ルート要素は常に描画します。そのため内容が空でも非表示にしません。 */
+  display: flex;
+  align-items: center;
+}
+
+/* 変数 */
+:scope {
+  --sui_autocomplete_status-min_height: ;
+  --sui_autocomplete_status-padding_inline: ;
+  --sui_autocomplete_status-font_family: ;
+  --sui_autocomplete_status-font_size: ;
+  --sui_autocomplete_status-font_weight: ;
+  --sui_autocomplete_status-line_height: ;
+  --sui_autocomplete_status-color: ;
+  --sui_autocomplete_status-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
+  min-height: var(--_sui_autocomplete_status-min_height, var(--sui_autocomplete_status-min_height));
+  padding-inline: var(--sui_autocomplete_status-padding_inline);
+  font-family: var(--sui_autocomplete_status-font_family);
+  font-size: var(--sui_autocomplete_status-font_size);
+  font-weight: var(--sui_autocomplete_status-font_weight);
+  line-height: var(--sui_autocomplete_status-line_height);
+  color: var(--sui_autocomplete_status-color);
+  letter-spacing: var(--sui_autocomplete_status-letter_spacing);
+}
+
+/* 代入 */
+:scope {
+  --sui_autocomplete_status-font_family: var(--sui-font-sans);
+  --sui_autocomplete_status-color: var(--sui-canvas_text-2);
+
+  &.sui_autocomplete_status-size_sm {
+    --sui_autocomplete_status-min_height: var(--sui-size-md);
+    --sui_autocomplete_status-padding_inline: --sui-space(2);
+    --sui_autocomplete_status-font_size: var(--sui-text-std-sm-n-font_size);
+    --sui_autocomplete_status-font_weight: var(--sui-text-std-sm-n-font_weight);
+    --sui_autocomplete_status-line_height: var(--sui-text-std-sm-n-line_height);
+    --sui_autocomplete_status-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  }
+
+  &.sui_autocomplete_status-size_md {
+    --sui_autocomplete_status-min_height: var(--sui-size-md);
+    --sui_autocomplete_status-padding_inline: --sui-space(3);
+    --sui_autocomplete_status-font_size: var(--sui-text-std-md-n-font_size);
+    --sui_autocomplete_status-font_weight: var(--sui-text-std-md-n-font_weight);
+    --sui_autocomplete_status-line_height: var(--sui-text-std-md-n-line_height);
+    --sui_autocomplete_status-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+  }
+
+  &.sui_autocomplete_status-size_lg {
+    --sui_autocomplete_status-min_height: var(--sui-size-md);
+    --sui_autocomplete_status-padding_inline: --sui-space(4);
+    --sui_autocomplete_status-font_size: var(--sui-text-std-lg-n-font_size);
+    --sui_autocomplete_status-font_weight: var(--sui-text-std-lg-n-font_weight);
+    --sui_autocomplete_status-line_height: var(--sui-text-std-lg-n-line_height);
+    --sui_autocomplete_status-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+  }
+}
+
+/* 変異 */
+:scope {
+  &:empty {
+    --_sui_autocomplete_status-min_height: 0px;
+  }
+}
+
+} /* @scope */
+} /* @layer */

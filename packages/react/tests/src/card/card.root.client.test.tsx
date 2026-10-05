@@ -1,7 +1,7 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { CardRoot } from "../../../src/card/card.root.jsx";
+import { CardRoot } from "../../../src/card/root/card.root.jsx";
 import "../_locators.js";
 
 describe("CardRoot", () => {

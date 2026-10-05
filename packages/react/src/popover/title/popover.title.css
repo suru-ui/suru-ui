@@ -1,0 +1,43 @@
+@layer sui.component {
+@scope (.sui_popover_title) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: block;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+/* 変数 */
+:scope {
+  --sui_popover_title-font_family: ;
+  --sui_popover_title-font_size: ;
+  --sui_popover_title-font_weight: ;
+  --sui_popover_title-line_height: ;
+  --sui_popover_title-color: ;
+  --sui_popover_title-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_popover_title-font_family);
+  font-size: var(--sui_popover_title-font_size);
+  font-weight: var(--sui_popover_title-font_weight);
+  line-height: var(--sui_popover_title-line_height);
+  color: var(--sui_popover_title-color);
+  letter-spacing: var(--sui_popover_title-letter_spacing);
+}
+
+/* 代入 */
+:scope {
+  --sui_popover_title-font_family: var(--sui-font-sans);
+  --sui_popover_title-font_size: var(--sui-text-std-md-b-font_size);
+  --sui_popover_title-font_weight: var(--sui-text-std-md-b-font_weight);
+  --sui_popover_title-line_height: var(--sui-text-std-md-b-line_height);
+  --sui_popover_title-color: var(--sui-canvas_text-1);
+  --sui_popover_title-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */

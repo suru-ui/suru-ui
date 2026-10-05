@@ -1,0 +1,52 @@
+@layer sui.component {
+@scope (.sui_scroll_area_thumb) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  flex: none;
+  transition: background-color 150ms ease-out;
+
+  &.sui_scroll_area_thumb-orientation_vertical {
+    width: 100%;
+  }
+
+  &.sui_scroll_area_thumb-orientation_horizontal {
+    height: 100%;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_scroll_area_thumb-background_color-idle: ;
+  --sui_scroll_area_thumb-background_color-hover: ;
+  --sui_scroll_area_thumb-border_radius: ;
+}
+
+/* 可変 */
+:scope {
+  background-color: var(--_sui_scroll_area_thumb-background_color,
+                      var(--sui_scroll_area_thumb-background_color-idle)
+                    );
+  border-radius: var(--sui_scroll_area_thumb-border_radius);
+}
+
+/* 代入 */
+:scope {
+  --sui_scroll_area_thumb-background_color-idle:
+    color-mix(in srgb, var(--sui-canvas_text-1) 38%, transparent);
+  --sui_scroll_area_thumb-background_color-hover:
+    color-mix(in srgb, var(--sui-canvas_text-1) 58%, transparent);
+  --sui_scroll_area_thumb-border_radius: 999px;
+}
+
+/* 変異 */
+:scope {
+  @media (any-hover: hover) {
+    &:hover {
+      --_sui_scroll_area_thumb-background_color: var(--sui_scroll_area_thumb-background_color-hover);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */

@@ -1,8 +1,8 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { AvatarGroupRoot } from "../../../src/avatar-group/avatar-group.root.jsx";
-import { AvatarGroupSurplus } from "../../../src/avatar-group/avatar-group.surplus.jsx";
+import { AvatarGroupRoot } from "../../../src/avatar-group/root/avatar-group.root.jsx";
+import { AvatarGroupSurplus } from "../../../src/avatar-group/surplus/avatar-group.surplus.jsx";
 
 describe("AvatarGroupSurplus", () => {
   test("内容をそのまま表示する", async ({ expect }) => {

@@ -1,6 +1,6 @@
 import isReactNode from "../_is-react-node.js";
 import { hasLabel, isObject } from "../_item.js";
-import type { BreadcrumbRootItemObject } from "./breadcrumb.root.jsx";
+import type { BreadcrumbRootItemObject } from "./root/breadcrumb.root.jsx";
 
 /**
  * 項目が `label` を持つオブジェクトかどうかを判定します。

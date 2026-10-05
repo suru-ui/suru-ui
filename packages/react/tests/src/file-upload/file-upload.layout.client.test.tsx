@@ -3,13 +3,13 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FileUploadDropzone } from "../../../src/file-upload/file-upload.dropzone.jsx";
-import { FileUploadItemGroup } from "../../../src/file-upload/file-upload.item-group.jsx";
-import { FileUploadItemName } from "../../../src/file-upload/file-upload.item-name.jsx";
-import { FileUploadItemSizeText } from "../../../src/file-upload/file-upload.item-size-text.jsx";
-import { FileUploadItem } from "../../../src/file-upload/file-upload.item.jsx";
+import { FileUploadDropzone } from "../../../src/file-upload/dropzone/file-upload.dropzone.jsx";
+import { FileUploadItemGroup } from "../../../src/file-upload/item-group/file-upload.item-group.jsx";
+import { FileUploadItemName } from "../../../src/file-upload/item-name/file-upload.item-name.jsx";
+import { FileUploadItemSizeText } from "../../../src/file-upload/item-size-text/file-upload.item-size-text.jsx";
+import { FileUploadItem } from "../../../src/file-upload/item/file-upload.item.jsx";
 import "../../../src/file-upload/file-upload.parts.js";
-import { FileUploadRoot } from "../../../src/file-upload/file-upload.root.jsx";
+import { FileUploadRoot } from "../../../src/file-upload/root/file-upload.root.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

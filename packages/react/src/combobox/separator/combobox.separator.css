@@ -1,0 +1,60 @@
+@layer sui.component {
+@scope (.sui_combobox_separator) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: block;
+}
+
+/* 変数 */
+:scope {
+  --sui_combobox_separator-height: ;
+  --sui_combobox_separator-margin_block: ;
+  --sui_combobox_separator-margin_inline: ;
+  --sui_combobox_separator-color: ;
+}
+
+/* 可変 */
+:scope {
+  height: var(--sui_combobox_separator-height);
+  margin-block: var(--sui_combobox_separator-margin_block);
+  margin-inline: var(--sui_combobox_separator-margin_inline);
+  background-color: var(--sui_combobox_separator-color);
+}
+
+/* 代入 */
+:scope {
+  --sui_combobox_separator-height: --sui-border_width(1);
+  --sui_combobox_separator-margin_inline: --sui-space(0);
+  --sui_combobox_separator-color: var(--sui-border-1);
+
+  &.sui_combobox_separator-size_sm {
+    --sui_combobox_separator-margin_block: --sui-space(2);
+  }
+
+  &.sui_combobox_separator-size_md {
+    --sui_combobox_separator-margin_block: --sui-space(3);
+  }
+
+  &.sui_combobox_separator-size_lg {
+    --sui_combobox_separator-margin_block: --sui-space(3);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 末尾グループの位置に依存するため、グループ起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_combobox_group) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  /* 末尾グループの区切り線は表示しません。 */
+  &:last-child .sui_combobox_separator:last-child {
+    display: none;
+  }
+}
+
+} /* @scope */
+} /* @layer */

@@ -1,0 +1,98 @@
+import { ContextMenu } from "@base-ui/react/context-menu";
+import * as React from "react";
+
+import proxyRenderProps from "../../_proxy-render-props.js";
+import type { RenderProps } from "../../_use-render.js";
+import cn from "../../cn.js";
+import type { Override, IComponent } from "../../types.js";
+import {
+  type ContextMenuContext,
+  useContextMenuContext,
+} from "../root/context-menu.root.context.js";
+
+/**
+ * {@link ContextMenuArrow} が持つ状態です。
+ */
+export type ContextMenuArrowState = Override<ContextMenuContext, ContextMenu.Arrow.State>;
+
+export namespace ContextMenuArrowProps {
+  export type Render = RenderProps<ContextMenuArrowState>;
+
+  export type SuruUI = {};
+
+  export type BaseUI = Pick<
+    React.ComponentProps<typeof ContextMenu.Arrow>,
+    Exclude<
+      // Base UI の型を確認して取り出すプロパティーを決めます。
+      // MenuArrowProps:
+      never,
+      keyof Render | keyof SuruUI
+    >
+  >;
+
+  export type HTML = Omit<
+    React.ComponentProps<typeof ContextMenu.Arrow>,
+    keyof Render | keyof SuruUI | keyof BaseUI
+  >;
+}
+
+/**
+ * {@link ContextMenuArrow} に渡す props です。
+ */
+export type ContextMenuArrowProps = ContextMenuArrowProps.Render &
+  ContextMenuArrowProps.SuruUI &
+  ContextMenuArrowProps.BaseUI &
+  ContextMenuArrowProps.HTML;
+
+export type IContextMenuArrow = IComponent<ContextMenuArrowProps>;
+
+/**
+ * ポップアップとトリガーをつなぐ矢印要素です。
+ */
+export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(props) {
+  const ctx = useContextMenuContext();
+  const { style, render, className, ...otherProps } = props;
+
+  return (
+    <ContextMenu.Arrow
+      {...otherProps}
+      {...proxyRenderProps<ContextMenu.Arrow.State, ContextMenuArrowState>(
+        (state) => ({ ...ctx, ...state }),
+        {
+          style,
+          render,
+          className: cn<ContextMenuArrowState>(
+            className,
+            "sui_context_menu_arrow",
+            (state) => `sui_context_menu_arrow-size_${state.size}`,
+            (state) => `sui_context_menu_arrow-radius_${state.radius}`,
+            (state) => `sui_context_menu_arrow-variant_${state.variant}`,
+            (state) => state.outlined && "sui_context_menu_arrow-outlined",
+            (state) => state.open && "sui_context_menu_arrow-open",
+            (state) => state.uncentered && "sui_context_menu_arrow-uncentered",
+            (state) => `sui_context_menu_arrow-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_context_menu_arrow-align_${state.align}`,
+          ),
+        },
+      )}
+    />
+  );
+};
+
+export { ContextMenuArrow as Arrow };
+
+export namespace Arrow {
+  export type State = ContextMenuArrowState;
+
+  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+
+  export namespace Props {
+    export type Render = ContextMenuArrowProps.Render;
+
+    export type SuruUI = ContextMenuArrowProps.SuruUI;
+
+    export type BaseUI = ContextMenuArrowProps.BaseUI;
+
+    export type HTML = ContextMenuArrowProps.HTML;
+  }
+}

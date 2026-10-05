@@ -1,15 +1,15 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ComboboxChip } from "../../../src/combobox/combobox.chip.jsx";
-import { ComboboxChips } from "../../../src/combobox/combobox.chips.jsx";
-import { ComboboxInputGroup } from "../../../src/combobox/combobox.input-group.jsx";
-import { ComboboxItem } from "../../../src/combobox/combobox.item.jsx";
-import { ComboboxList } from "../../../src/combobox/combobox.list.jsx";
-import { ComboboxPopup } from "../../../src/combobox/combobox.popup.jsx";
-import { ComboboxPortal } from "../../../src/combobox/combobox.portal.jsx";
-import { ComboboxPositioner } from "../../../src/combobox/combobox.positioner.jsx";
-import { ComboboxRoot } from "../../../src/combobox/combobox.root.jsx";
+import { ComboboxChip } from "../../../src/combobox/chip/combobox.chip.jsx";
+import { ComboboxChips } from "../../../src/combobox/chips/combobox.chips.jsx";
+import { ComboboxInputGroup } from "../../../src/combobox/input-group/combobox.input-group.jsx";
+import { ComboboxItem } from "../../../src/combobox/item/combobox.item.jsx";
+import { ComboboxList } from "../../../src/combobox/list/combobox.list.jsx";
+import { ComboboxPopup } from "../../../src/combobox/popup/combobox.popup.jsx";
+import { ComboboxPortal } from "../../../src/combobox/portal/combobox.portal.jsx";
+import { ComboboxPositioner } from "../../../src/combobox/positioner/combobox.positioner.jsx";
+import { ComboboxRoot } from "../../../src/combobox/root/combobox.root.jsx";
 import "../_locators.js";
 
 const fruits = ["りんご", "ばなな"];

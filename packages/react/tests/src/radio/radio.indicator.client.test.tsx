@@ -4,9 +4,9 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/radio/radio.parts.js";
-import { RadioGroupRoot } from "../../../src/radio-group/radio-group.root.jsx";
-import { RadioIndicator } from "../../../src/radio/radio.indicator.jsx";
-import { RadioRoot } from "../../../src/radio/radio.root.jsx";
+import { RadioGroupRoot } from "../../../src/radio-group/root/radio-group.root.jsx";
+import { RadioIndicator } from "../../../src/radio/indicator/radio.indicator.jsx";
+import { RadioRoot } from "../../../src/radio/root/radio.root.jsx";
 import "../_locators.js";
 
 describe("RadioIndicator", () => {

@@ -4,11 +4,11 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/segments/segments.parts.js";
-import { SegmentsIndicator } from "../../../src/segments/segments.indicator.jsx";
-import { SegmentsItem } from "../../../src/segments/segments.item.jsx";
+import { SegmentsIndicator } from "../../../src/segments/indicator/segments.indicator.jsx";
+import { SegmentsItem } from "../../../src/segments/item/segments.item.jsx";
+import { SegmentsList } from "../../../src/segments/list/segments.list.jsx";
+import { SegmentsRoot } from "../../../src/segments/root/segments.root.jsx";
 import { Segments } from "../../../src/segments/segments.jsx";
-import { SegmentsList } from "../../../src/segments/segments.list.jsx";
-import { SegmentsRoot } from "../../../src/segments/segments.root.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "../button/_supports-custom-functions.js";
 

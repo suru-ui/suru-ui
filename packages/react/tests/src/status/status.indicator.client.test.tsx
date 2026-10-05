@@ -2,8 +2,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/status/status.parts.js";
-import { StatusIndicator } from "../../../src/status/status.indicator.jsx";
-import { StatusRoot } from "../../../src/status/status.root.jsx";
+import { StatusIndicator } from "../../../src/status/indicator/status.indicator.jsx";
+import { StatusRoot } from "../../../src/status/root/status.root.jsx";
 import "../_locators.js";
 
 describe("StatusIndicator", () => {

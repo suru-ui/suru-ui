@@ -1,0 +1,123 @@
+@layer sui.component {
+@scope (.sui_file_upload_item_delete_trigger) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  outline-style: solid;
+}
+
+/* 変数 */
+:scope {
+  --sui_file_upload_item_delete_trigger-size: ;
+  --sui_file_upload_item_delete_trigger-font_size: ;
+  --sui_file_upload_item_delete_trigger-color: ;
+  --sui_file_upload_item_delete_trigger-focusring_width: ;
+  --sui_file_upload_item_delete_trigger-focusring_color: ;
+  --sui_file_upload_item_delete_trigger-focusring_offset: ;
+  --sui_file_upload_item_delete_trigger-background_color-hover: ;
+  --sui_file_upload_item_delete_trigger-border_radius: ;
+  --sui_file_upload_item_delete_trigger-corner_shape: ;
+}
+
+/* 可変 */
+:scope {
+  width: var(--sui_file_upload_item_delete_trigger-size);
+  height: var(--sui_file_upload_item_delete_trigger-size);
+  font-size: var(--sui_file_upload_item_delete_trigger-font_size);
+  color: var(--sui_file_upload_item_delete_trigger-color);
+  outline-width: var(--_sui_file_upload_item_delete_trigger-outline_width, 0px);
+  outline-color: var(--sui_file_upload_item_delete_trigger-focusring_color);
+  outline-offset: var(--sui_file_upload_item_delete_trigger-focusring_offset);
+  background-color: var(--_sui_file_upload_item_delete_trigger-background_color, transparent);
+  border-radius: var(--sui_file_upload_item_delete_trigger-border_radius);
+  corner-shape: var(--sui_file_upload_item_delete_trigger-corner_shape);
+}
+
+/* 代入 */
+:scope {
+  --sui_file_upload_item_delete_trigger-color: var(--sui-canvas_text-2);
+  --sui_file_upload_item_delete_trigger-focusring_width: var(--sui-focusring_width);
+  --sui_file_upload_item_delete_trigger-focusring_color: var(--sui-focusring_color);
+  --sui_file_upload_item_delete_trigger-focusring_offset: var(--sui-focusring_offset);
+  --sui_file_upload_item_delete_trigger-background_color-hover: var(--sui-grey-naked-canvas-subtle);
+
+  &.sui_file_upload_item_delete_trigger-size_sm {
+    --sui_file_upload_item_delete_trigger-size: var(--sui-size-sm);
+    --sui_file_upload_item_delete_trigger-font_size: var(--sui-text-oln-sm-n-font_size);
+  }
+
+  &.sui_file_upload_item_delete_trigger-size_md {
+    --sui_file_upload_item_delete_trigger-size: var(--sui-size-md);
+    --sui_file_upload_item_delete_trigger-font_size: var(--sui-text-oln-md-n-font_size);
+  }
+
+  &.sui_file_upload_item_delete_trigger-size_lg {
+    --sui_file_upload_item_delete_trigger-size: var(--sui-size-lg);
+    --sui_file_upload_item_delete_trigger-font_size: var(--sui-text-oln-lg-n-font_size);
+  }
+
+  &.sui_file_upload_item_delete_trigger-radius_none {
+    --sui_file_upload_item_delete_trigger-border_radius: 0px;
+  }
+
+  &.sui_file_upload_item_delete_trigger-radius_sm {
+    --sui_file_upload_item_delete_trigger-border_radius: --sui-corner_radius(1);
+    --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_file_upload_item_delete_trigger-radius_md {
+    --sui_file_upload_item_delete_trigger-border_radius: --sui-corner_radius(2);
+    --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_file_upload_item_delete_trigger-radius_lg {
+    --sui_file_upload_item_delete_trigger-border_radius: --sui-corner_radius(3);
+    --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_file_upload_item_delete_trigger-radius_full {
+    --sui_file_upload_item_delete_trigger-border_radius: calc(var(--sui_file_upload_item_delete_trigger-size) / 2);
+    --sui_file_upload_item_delete_trigger-corner_shape: superellipse(var(--sui-superellipse));
+  }
+}
+
+/* 変異 */
+:scope {
+  &:not(.sui_file_upload_item_delete_trigger-disabled) {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_file_upload_item_delete_trigger-background_color:
+          var(--sui_file_upload_item_delete_trigger-background_color-hover);
+      }
+    }
+
+    &:focus-visible {
+      --_sui_file_upload_item_delete_trigger-outline_width:
+        var(--sui_file_upload_item_delete_trigger-focusring_width);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* ルートの無効状態と外観に依存するため、ルート起点の別ブロックにまとめます。 */
+@layer sui.important {
+@scope (.sui_file_upload) to ([data-scope]) {
+
+:scope {
+  &.sui_file_upload-disabled .sui_file_upload_item_delete_trigger {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
+  }
+}
+
+} /* @scope */
+} /* @layer */

@@ -1,0 +1,74 @@
+@layer sui.component {
+@scope (.sui_drawer_controls) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  z-index: 1;
+  display: flex;
+  grid-area: controls;
+  justify-content: flex-end;
+
+  &.sui_drawer_controls-absolute {
+    position: absolute;
+  }
+
+  &.sui_drawer_controls-relative {
+    position: relative;
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_drawer_controls-gap: ;
+  --sui_drawer_controls-virtual_margin: ;
+  --sui_drawer_controls-margin_left: ;
+}
+
+/* 可変 */
+:scope {
+  top: var(--_sui_drawer_controls-top, unset);
+  right: var(--_sui_drawer_controls-right, unset);
+  gap: var(--sui_drawer_controls-gap);
+  margin-left: var(--sui_drawer_controls-margin_left);
+}
+
+/* 代入 */
+:scope {
+  --sui_drawer_controls-gap: --sui-gap(2);
+  --sui_drawer_controls-virtual_margin: var(--sui_drawer_header-padding);
+
+  &.sui_drawer_controls-absolute {
+    --sui_drawer_controls-margin_left: auto;
+  }
+
+  &.sui_drawer_controls-relative {
+    --sui_drawer_controls-margin_left: var(--sui_drawer_controls-virtual_margin);
+  }
+}
+
+/* 変異 */
+:scope {
+  &.sui_drawer_controls-absolute {
+    --_sui_drawer_controls-top: var(--sui_drawer_controls-virtual_margin);
+    --_sui_drawer_controls-right: var(--sui_drawer_controls-virtual_margin);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 祖先のヘッダー構造に依存するため、ヘッダー起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_drawer_header) to ([data-scope]) {
+
+/* 変異 */
+:scope {
+  /* コントロール起点の宣言より優先させるため、ヘッダー自身のクラスで詳細度を上げます。 */
+  &.sui_drawer_header .sui_drawer_controls-absolute {
+    --_sui_drawer_controls-top: 0px;
+    --_sui_drawer_controls-right: 0px;
+  }
+}
+
+} /* @scope */
+} /* @layer */

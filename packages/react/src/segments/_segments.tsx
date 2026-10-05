@@ -3,9 +3,9 @@ import * as React from "react";
 import isReactNode from "../_is-react-node.js";
 import { hasLabel, isObject, getItemKey, isPrimitiveItem } from "../_item.js";
 import toReactNode from "../_to-react-node.js";
-import { type SegmentsItemProps, SegmentsItem } from "./segments.item.jsx";
-import type { SegmentsRootItemObject, ISegmentsRootItemRenderer } from "./segments.root.jsx";
-import { decomposeItemObject } from "./segments.utils.js";
+import { type SegmentsItemProps, SegmentsItem } from "./item/segments.item.jsx";
+import type { SegmentsRootItemObject, ISegmentsRootItemRenderer } from "./root/segments.root.jsx";
+import { decomposeItemObject } from "./utils/segments.utils.js";
 
 /**
  * 項目が `label` を持つオブジェクトかどうかを判定します。

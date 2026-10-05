@@ -2,9 +2,9 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { createAlertDialogHandle } from "../../../src/alert-dialog/alert-dialog.handle.js";
 import { AlertDialogAPI, useAlertDialogAPI } from "../../../src/alert-dialog/alert-dialog.jsx";
-import { AlertDialogRoot } from "../../../src/alert-dialog/alert-dialog.root.jsx";
+import { createAlertDialogHandle } from "../../../src/alert-dialog/handle/alert-dialog.handle.js";
+import { AlertDialogRoot } from "../../../src/alert-dialog/root/alert-dialog.root.jsx";
 import "../_locators.js";
 
 const cancelButton = <button type="button">キャンセル</button>;

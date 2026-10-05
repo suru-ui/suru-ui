@@ -1,0 +1,44 @@
+@layer sui.component {
+@scope (.sui_alert_dialog_footer) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  flex-shrink: 0;
+
+  &.sui_alert_dialog_footer-variant_stacked {
+    display: grid;
+
+    /* 要素が 1 つの場合は、その要素を横いっぱいに広げます。 */
+    &:has(> :nth-child(1):last-child) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    /* 要素が 2 つ以上の場合は、それらの要素を 2 行以上 2 列でグリッド状に並べます。 */
+    &:has(> :nth-child(2)) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* 要素が 3 つ以上の場合は、そ最初の要素を横いっぱいに広げます。 */
+    &:has(> :nth-child(3)) :first-child {
+      grid-column: span 2;
+    }
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_alert_dialog_footer-justify_content: ;
+}
+
+/* 可変 */
+:scope {
+  justify-content: var(--sui_alert_dialog_footer-justify_content);
+}
+
+/* 代入 */
+:scope {
+  --sui_alert_dialog_footer-justify_content: flex-end;
+}
+
+} /* @scope */
+} /* @layer */

@@ -1,9 +1,9 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FieldRoot } from "../../../src/field/field.root.jsx";
+import { FieldRoot } from "../../../src/field/root/field.root.jsx";
 import "../../../src/input/input.parts.js";
-import { InputRoot } from "../../../src/input/input.root.jsx";
+import { InputRoot } from "../../../src/input/root/input.root.jsx";
 import "../_locators.js";
 
 describe("InputRoot", () => {

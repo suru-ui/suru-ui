@@ -1,0 +1,44 @@
+@layer sui.component {
+@scope (.sui_drawer_description) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: block;
+  grid-area: description;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+/* 変数 */
+:scope {
+  --sui_drawer_description-font_family: ;
+  --sui_drawer_description-font_size: ;
+  --sui_drawer_description-font_weight: ;
+  --sui_drawer_description-line_height: ;
+  --sui_drawer_description-color: ;
+  --sui_drawer_description-letter_spacing: ;
+}
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_drawer_description-font_family);
+  font-size: var(--sui_drawer_description-font_size);
+  font-weight: var(--sui_drawer_description-font_weight);
+  line-height: var(--sui_drawer_description-line_height);
+  color: var(--sui_drawer_description-color);
+  letter-spacing: var(--sui_drawer_description-letter_spacing);
+}
+
+/* 代入 */
+:scope {
+  --sui_drawer_description-font_family: var(--sui-font-sans);
+  --sui_drawer_description-font_size: var(--sui-text-std-sm-n-font_size);
+  --sui_drawer_description-font_weight: var(--sui-text-std-sm-n-font_weight);
+  --sui_drawer_description-line_height: var(--sui-text-std-sm-n-line_height);
+  --sui_drawer_description-color: var(--sui-canvas_text-2);
+  --sui_drawer_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */

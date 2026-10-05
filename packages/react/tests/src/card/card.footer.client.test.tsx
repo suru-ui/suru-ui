@@ -1,8 +1,8 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { CardFooter } from "../../../src/card/card.footer.jsx";
-import { CardRoot } from "../../../src/card/card.root.jsx";
+import { CardFooter } from "../../../src/card/footer/card.footer.jsx";
+import { CardRoot } from "../../../src/card/root/card.root.jsx";
 import "../_locators.js";
 
 describe("CardFooter", () => {

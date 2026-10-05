@@ -1,0 +1,20 @@
+@layer sui.component {
+@scope (.sui_scroll_area_corner) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_scroll_area_corner-background_color: ;
+}
+
+/* 可変 */
+:scope {
+  background-color: var(--sui_scroll_area_corner-background_color);
+}
+
+/* 代入 */
+:scope {
+  --sui_scroll_area_corner-background_color: transparent;
+}
+
+} /* @scope */
+} /* @layer */

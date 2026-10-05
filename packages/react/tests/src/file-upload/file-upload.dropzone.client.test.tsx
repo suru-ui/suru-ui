@@ -3,16 +3,16 @@ import * as React from "react";
 import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { FileUploadDropzone } from "../../../src/file-upload/file-upload.dropzone.jsx";
-import { FileUploadHiddenInput } from "../../../src/file-upload/file-upload.hidden-input.jsx";
+import { FileUploadDropzone } from "../../../src/file-upload/dropzone/file-upload.dropzone.jsx";
+import { FileUploadHiddenInput } from "../../../src/file-upload/hidden-input/file-upload.hidden-input.jsx";
 import "../../../src/file-upload/file-upload.parts.js";
 import {
   type FileUploadAcceptEventDetails,
   type FileUploadRejectEventDetails,
   FileUploadRoot,
-} from "../../../src/file-upload/file-upload.root.jsx";
+} from "../../../src/file-upload/root/file-upload.root.jsx";
 import "../_locators.js";
-import FilesProbe from "./_probe.js";
+import FilesProbe from "./_probe.jsx";
 
 const textFile = new File(["hello"], "hello.txt", { type: "text/plain" });
 

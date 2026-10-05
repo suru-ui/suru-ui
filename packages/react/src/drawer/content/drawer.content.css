@@ -1,0 +1,33 @@
+@layer sui.component {
+@scope (.sui_drawer_content) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0px;
+  margin-inline: auto;
+  overflow: visible;
+}
+
+/* 変数 */
+:scope {
+  --sui_drawer_content-width: ;
+  --sui_drawer_content-max_width: ;
+}
+
+/* 可変 */
+:scope {
+  width: var(--sui_drawer_content-width);
+  max-width: var(--sui_drawer_content-max_width);
+}
+
+/* 代入 */
+:scope {
+  --sui_drawer_content-width: 100%;
+  --sui_drawer_content-max_width: 512px;
+}
+
+} /* @scope */
+} /* @layer */

@@ -3,11 +3,11 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/pagination/pagination.parts.js";
-import { PaginationEllipsis } from "../../../src/pagination/pagination.ellipsis.jsx";
-import { PaginationItem } from "../../../src/pagination/pagination.item.jsx";
-import { PaginationNextButton } from "../../../src/pagination/pagination.next-button.jsx";
-import { PaginationPreviousButton } from "../../../src/pagination/pagination.previous-button.jsx";
-import { PaginationRoot } from "../../../src/pagination/pagination.root.jsx";
+import { PaginationEllipsis } from "../../../src/pagination/ellipsis/pagination.ellipsis.jsx";
+import { PaginationItem } from "../../../src/pagination/item/pagination.item.jsx";
+import { PaginationNextButton } from "../../../src/pagination/next-button/pagination.next-button.jsx";
+import { PaginationPreviousButton } from "../../../src/pagination/previous-button/pagination.previous-button.jsx";
+import { PaginationRoot } from "../../../src/pagination/root/pagination.root.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "../button/_supports-custom-functions.js";
 

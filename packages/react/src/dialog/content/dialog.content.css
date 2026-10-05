@@ -1,0 +1,13 @@
+@layer sui.component {
+@scope (.sui_dialog_content) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  flex: 1 1 auto;
+  min-height: 0px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+} /* @scope */
+} /* @layer */

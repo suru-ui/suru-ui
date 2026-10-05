@@ -1,0 +1,103 @@
+@layer sui.component {
+@scope (.sui_text_field_addon) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* 変数 */
+:scope {
+  --sui_text_field_addon-font_family: ;
+  --sui_text_field_addon-font_size: ;
+  --sui_text_field_addon-font_weight: ;
+  --sui_text_field_addon-line_height: ;
+  --sui_text_field_addon-color: ;
+  --sui_text_field_addon-letter_spacing: ;
+  --sui_text_field_addon__svg-size: ;
+  --sui_text_field_addon__svg-color: ;
+}
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_text_field_addon-font_family);
+  font-size: var(--sui_text_field_addon-font_size);
+  font-weight: var(--sui_text_field_addon-font_weight);
+  line-height: var(--sui_text_field_addon-line_height);
+  color: var(--sui_text_field_addon-color);
+  letter-spacing: var(--sui_text_field_addon-letter_spacing);
+
+  /* 内包するボタンなどのアイコン配色より優先させるため、アドオン自身のクラスで詳細度を上げます。 */
+  &.sui_text_field_addon svg:not(.sui-ignore) {
+    width: var(--sui_text_field_addon__svg-size);
+    height: var(--sui_text_field_addon__svg-size);
+    color: var(--sui_text_field_addon__svg-color);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_text_field_addon-font_family: var(--sui-font-sans);
+  --sui_text_field_addon-color: var(--sui-canvas_text-2);
+  --sui_text_field_addon__svg-color: var(--sui_text_field_addon-color);
+
+  &.sui_text_field_addon-size_sm {
+    --sui_text_field_addon-font_size: var(--sui-text-oln-sm-n-font_size);
+    --sui_text_field_addon-font_weight: var(--sui-text-oln-sm-n-font_weight);
+    --sui_text_field_addon-line_height: var(--sui-text-oln-sm-n-line_height);
+    --sui_text_field_addon-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+    --sui_text_field_addon__svg-size: calc(
+                                        var(--sui_text_field_addon-font_size)
+                                        * var(--sui_text_field_addon-line_height)
+                                      );
+  }
+
+  &.sui_text_field_addon-size_md {
+    --sui_text_field_addon-font_size: var(--sui-text-oln-md-n-font_size);
+    --sui_text_field_addon-font_weight: var(--sui-text-oln-md-n-font_weight);
+    --sui_text_field_addon-line_height: var(--sui-text-oln-md-n-line_height);
+    --sui_text_field_addon-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+    --sui_text_field_addon__svg-size: calc(
+                                        var(--sui_text_field_addon-font_size)
+                                        * var(--sui_text_field_addon-line_height)
+                                      );
+  }
+
+  &.sui_text_field_addon-size_lg {
+    --sui_text_field_addon-font_size: var(--sui-text-oln-lg-n-font_size);
+    --sui_text_field_addon-font_weight: var(--sui-text-oln-lg-n-font_weight);
+    --sui_text_field_addon-line_height: var(--sui-text-oln-lg-n-line_height);
+    --sui_text_field_addon-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+    --sui_text_field_addon__svg-size: calc(
+                                        var(--sui_text_field_addon-font_size)
+                                        * var(--sui_text_field_addon-line_height)
+                                      );
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* 入力欄の無効状態はルートの子孫に依存し、アドオン自身に無効クラスが無いため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_text_field) to ([data-scope]) {
+
+:scope {
+  &.sui_text_field-variant_naked:has(.sui_text_field_input-disabled) .sui_text_field_addon {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
+  }
+
+  &.sui_text_field-variant_liquid:has(.sui_text_field_input-disabled) .sui_text_field_addon {
+    color: var(--sui-disabled-liquid-canvas_text);
+    cursor: not-allowed;
+  }
+}
+
+} /* @scope */
+} /* @layer */

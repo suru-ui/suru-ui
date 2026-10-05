@@ -3,8 +3,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../../src/errors.js";
-import { SelectContext, useSelectContext } from "../../../src/select/select.context.js";
-import { SelectRoot } from "../../../src/select/select.root.jsx";
+import { SelectContext, useSelectContext } from "../../../src/select/root/select.root.context.js";
+import { SelectRoot } from "../../../src/select/root/select.root.jsx";
 
 const fruits = ["りんご", "ばなな"];
 

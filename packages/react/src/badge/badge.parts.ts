@@ -1,4 +1,4 @@
-import "./badge.css";
+import "./root/badge.root.css";
 
-export * from "./badge.context.js";
-export * from "./badge.root.jsx";
+export * from "./root/badge.root.context.js";
+export * from "./root/badge.root.jsx";

@@ -4,8 +4,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/switch/switch.parts.js";
-import { SwitchRoot } from "../../../src/switch/switch.root.jsx";
-import { SwitchThumb } from "../../../src/switch/switch.thumb.jsx";
+import { SwitchRoot } from "../../../src/switch/root/switch.root.jsx";
+import { SwitchThumb } from "../../../src/switch/thumb/switch.thumb.jsx";
 import "../_locators.js";
 
 describe("SwitchThumb", () => {

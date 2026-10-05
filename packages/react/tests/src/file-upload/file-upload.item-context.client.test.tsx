@@ -6,7 +6,7 @@ import { ContextMissingError } from "../../../src/errors.js";
 import {
   FileUploadItemContext,
   useFileUploadItemContext,
-} from "../../../src/file-upload/file-upload.item.context.js";
+} from "../../../src/file-upload/item/file-upload.item.context.js";
 
 const textFile = new File(["hello"], "hello.txt", { type: "text/plain" });
 

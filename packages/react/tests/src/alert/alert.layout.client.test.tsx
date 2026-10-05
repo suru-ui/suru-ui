@@ -4,11 +4,11 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/alert/alert.parts.js";
-import { AlertActions } from "../../../src/alert/alert.actions.jsx";
-import { AlertDescription } from "../../../src/alert/alert.description.jsx";
-import { AlertIcon } from "../../../src/alert/alert.icon.jsx";
-import { AlertRoot } from "../../../src/alert/alert.root.jsx";
-import { AlertTitle } from "../../../src/alert/alert.title.jsx";
+import { AlertActions } from "../../../src/alert/actions/alert.actions.jsx";
+import { AlertDescription } from "../../../src/alert/description/alert.description.jsx";
+import { AlertIcon } from "../../../src/alert/icon/alert.icon.jsx";
+import { AlertRoot } from "../../../src/alert/root/alert.root.jsx";
+import { AlertTitle } from "../../../src/alert/title/alert.title.jsx";
 import "../_locators.js";
 import supportsCustomFunctions from "./_supports-custom-functions.js";
 

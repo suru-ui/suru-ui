@@ -4,9 +4,9 @@ import { render } from "vitest-browser-react";
 import {
   ButtonCircularProgressContext,
   useButtonCircularProgressContext,
-} from "../../../src/button/button.circular-progress.context.js";
-import { ButtonContext, useButtonContext } from "../../../src/button/button.context.js";
-import { ButtonRoot } from "../../../src/button/button.root.jsx";
+} from "../../../src/button/circular-progress/button.circular-progress.context.js";
+import { ButtonContext, useButtonContext } from "../../../src/button/root/button.root.context.js";
+import { ButtonRoot } from "../../../src/button/root/button.root.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useButtonContext", () => {

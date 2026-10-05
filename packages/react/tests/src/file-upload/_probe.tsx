@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useFileUploadContext } from "../../../src/file-upload/file-upload.context.js";
+import { useFileUploadContext } from "../../../src/file-upload/root/file-upload.root.context.js";
 
 /**
  * 選択済みのファイル名をテキストで観察するプローブです。

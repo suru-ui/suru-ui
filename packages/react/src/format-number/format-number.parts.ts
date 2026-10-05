@@ -1,1 +1,1 @@
-export * from "./format-number.root.jsx";
+export * from "./root/format-number.root.jsx";

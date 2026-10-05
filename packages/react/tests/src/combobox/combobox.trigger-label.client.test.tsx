@@ -2,9 +2,9 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ComboboxRoot } from "../../../src/combobox/combobox.root.jsx";
-import { ComboboxTriggerLabel } from "../../../src/combobox/combobox.trigger-label.jsx";
-import { FieldRoot } from "../../../src/field/field.root.jsx";
+import { ComboboxRoot } from "../../../src/combobox/root/combobox.root.jsx";
+import { ComboboxTriggerLabel } from "../../../src/combobox/trigger-label/combobox.trigger-label.jsx";
+import { FieldRoot } from "../../../src/field/root/field.root.jsx";
 
 const fruits = ["りんご", "ばなな"];
 

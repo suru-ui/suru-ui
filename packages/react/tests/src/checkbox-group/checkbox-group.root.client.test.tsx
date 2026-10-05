@@ -5,8 +5,8 @@ import { render } from "vitest-browser-react";
 
 import "../../../src/checkbox-group/checkbox-group.parts.js";
 import "../../../src/checkbox/checkbox.parts.js";
-import { CheckboxGroupRoot } from "../../../src/checkbox-group/checkbox-group.root.jsx";
-import { CheckboxRoot } from "../../../src/checkbox/checkbox.root.jsx";
+import { CheckboxGroupRoot } from "../../../src/checkbox-group/root/checkbox-group.root.jsx";
+import { CheckboxRoot } from "../../../src/checkbox/root/checkbox.root.jsx";
 import "../_locators.js";
 
 describe("CheckboxGroupRoot", () => {

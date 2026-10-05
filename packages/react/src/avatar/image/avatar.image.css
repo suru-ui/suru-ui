@@ -1,0 +1,31 @@
+@layer sui.component {
+@scope (.sui_avatar_image) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 変数 */
+:scope {
+  --sui_avatar_image-border_radius: ;
+  --sui_avatar_image-corner_shape: ;
+}
+
+/* 可変 */
+:scope {
+  border-radius: var(--sui_avatar_image-border_radius);
+  corner-shape: var(--sui_avatar_image-corner_shape);
+}
+
+/* 代入 */
+:scope {
+  --sui_avatar_image-border_radius: var(--sui_avatar-border_radius);
+  --sui_avatar_image-corner_shape: var(--sui_avatar-corner_shape);
+}
+
+} /* @scope */
+} /* @layer */

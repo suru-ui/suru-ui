@@ -1,0 +1,261 @@
+/* セグメント自体に背景は付けません。選択中の背景は Indicator が描画します。 */
+@layer sui.component {
+@scope (.sui_segments_item) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  touch-action: manipulation;
+  cursor: default;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline-style: solid;
+  background-color: transparent;
+}
+
+/* 変数 */
+:scope {
+  --sui_segments_item-min_height: ;
+  --sui_segments_item-padding_block: ;
+  --sui_segments_item-padding_inline: ;
+  --sui_segments_item-font_family: ;
+  --sui_segments_item-font_size: ;
+  --sui_segments_item-font_weight: ;
+  --sui_segments_item-line_height: ;
+  --sui_segments_item-color-idle: ;
+  --sui_segments_item-color-active: ;
+  --sui_segments_item-color-hover: ;
+  --sui_segments_item-letter_spacing: ;
+  --sui_segments_item-focusring_width: ;
+  --sui_segments_item-focusring_color: ;
+  --sui_segments_item-focusring_offset: ;
+  --sui_segments_item-virtual_content-leading: ;
+  --sui_segments_item-border_radius: ;
+  --sui_segments_item-corner_shape: ;
+}
+
+/* 可変 */
+:scope {
+  min-height: var(--sui_segments_item-min_height);
+  padding-block: var(--sui_segments_item-padding_block);
+  padding-inline: var(--sui_segments_item-padding_inline);
+  font-family: var(--sui_segments_item-font_family);
+  font-size: var(--sui_segments_item-font_size);
+  font-weight: var(--sui_segments_item-font_weight);
+  line-height: var(--sui_segments_item-line_height);
+  color: var(--_sui_segments_item-color, var(--sui_segments_item-color-idle));
+  letter-spacing: var(--sui_segments_item-letter_spacing);
+  outline-width: var(--_sui_segments_item-outline_width, 0px);
+  outline-color: var(--_sui_segments_item-outline_color, transparent);
+  outline-offset: var(--_sui_segments_item-outline_offset, 0px);
+  border-radius: var(--sui_segments_item-border_radius);
+  corner-shape: var(--sui_segments_item-corner_shape);
+}
+
+/* 代入 */
+:scope {
+  --sui_segments_item-padding_block: calc(
+                                  (
+                                    var(--sui_segments_item-min_height)
+                                    - var(--sui_segments_item-virtual_content-leading)
+                                  ) / 2
+                                );
+  --sui_segments_item-font_family: var(--sui-font-sans);
+  --sui_segments_item-color-idle: var(--sui-canvas_text-2);
+  --sui_segments_item-color-hover: var(--sui-canvas_text-1);
+  --sui_segments_item-focusring_width: var(--sui-focusring_width);
+  --sui_segments_item-focusring_color: var(--sui-focusring_color);
+  --sui_segments_item-focusring_offset: var(--sui-focusring_offset);
+  --sui_segments_item-virtual_content-leading: calc(
+                                            var(--sui_segments_item-font_size)
+                                            * var(--sui_segments_item-line_height)
+                                          );
+
+  /* 大きさで変わる活字と最小の高さに追従させるため、要素起点で代入します。 */
+  --sui_segments_item-border_radius: var(--sui_segments-border_radius);
+  --sui_segments_item-corner_shape: var(--sui_segments-corner_shape);
+
+  &.sui_segments_item-size_sm {
+    --sui_segments_item-min_height: var(--sui-size-sm);
+    --sui_segments_item-padding_inline: --sui-space(1.5);
+    --sui_segments_item-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_segments_item-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_segments_item-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_segments_item-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+  }
+
+  &.sui_segments_item-size_md {
+    --sui_segments_item-min_height: var(--sui-size-md);
+    --sui_segments_item-padding_inline: --sui-space(2.5);
+    --sui_segments_item-font_size: var(--sui-text-oln-md-m-font_size);
+    --sui_segments_item-font_weight: var(--sui-text-oln-md-m-font_weight);
+    --sui_segments_item-line_height: var(--sui-text-oln-md-m-line_height);
+    --sui_segments_item-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
+  }
+
+  &.sui_segments_item-size_lg {
+    --sui_segments_item-min_height: var(--sui-size-lg);
+    --sui_segments_item-padding_inline: --sui-space(3.5);
+    --sui_segments_item-font_size: var(--sui-text-oln-lg-m-font_size);
+    --sui_segments_item-font_weight: var(--sui-text-oln-lg-m-font_weight);
+    --sui_segments_item-line_height: var(--sui-text-oln-lg-m-line_height);
+    --sui_segments_item-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
+  }
+
+  &.sui_segments_item-color_grey {
+    &.sui_segments_item-active_variant_solid {
+      --sui_segments_item-color-active: var(--sui-grey-solid-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_naked {
+      --sui_segments_item-color-active: var(--sui-grey-naked-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_liquid {
+      --sui_segments_item-color-active: var(--sui-grey-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_segments_item-color_blue {
+    &.sui_segments_item-active_variant_solid {
+      --sui_segments_item-color-active: var(--sui-blue-solid-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_naked {
+      --sui_segments_item-color-active: var(--sui-blue-naked-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_liquid {
+      --sui_segments_item-color-active: var(--sui-blue-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_segments_item-color_purple {
+    &.sui_segments_item-active_variant_solid {
+      --sui_segments_item-color-active: var(--sui-purple-solid-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_naked {
+      --sui_segments_item-color-active: var(--sui-purple-naked-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_liquid {
+      --sui_segments_item-color-active: var(--sui-purple-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_segments_item-color_magenta {
+    &.sui_segments_item-active_variant_solid {
+      --sui_segments_item-color-active: var(--sui-magenta-solid-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_naked {
+      --sui_segments_item-color-active: var(--sui-magenta-naked-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_liquid {
+      --sui_segments_item-color-active: var(--sui-magenta-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_segments_item-color_red {
+    &.sui_segments_item-active_variant_solid {
+      --sui_segments_item-color-active: var(--sui-red-solid-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_naked {
+      --sui_segments_item-color-active: var(--sui-red-naked-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_liquid {
+      --sui_segments_item-color-active: var(--sui-red-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_segments_item-color_orange {
+    &.sui_segments_item-active_variant_solid {
+      --sui_segments_item-color-active: var(--sui-orange-solid-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_naked {
+      --sui_segments_item-color-active: var(--sui-orange-naked-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_liquid {
+      --sui_segments_item-color-active: var(--sui-orange-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_segments_item-color_yellow {
+    &.sui_segments_item-active_variant_solid {
+      --sui_segments_item-color-active: var(--sui-yellow-solid-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_naked {
+      --sui_segments_item-color-active: var(--sui-yellow-naked-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_liquid {
+      --sui_segments_item-color-active: var(--sui-yellow-liquid-canvas_text-normal);
+    }
+  }
+
+  &.sui_segments_item-color_green {
+    &.sui_segments_item-active_variant_solid {
+      --sui_segments_item-color-active: var(--sui-green-solid-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_naked {
+      --sui_segments_item-color-active: var(--sui-green-naked-canvas_text-normal);
+    }
+
+    &.sui_segments_item-active_variant_liquid {
+      --sui_segments_item-color-active: var(--sui-green-liquid-canvas_text-normal);
+    }
+  }
+}
+
+/* 変異 */
+:scope {
+  &.sui_segments_item-active {
+    --_sui_segments_item-color: var(--sui_segments_item-color-active);
+  }
+
+  &:enabled {
+    @media (any-hover: hover) {
+      &:not(.sui_segments_item-active):hover {
+        --_sui_segments_item-color: var(--sui_segments_item-color-hover);
+      }
+    }
+
+    &:focus-visible {
+      --_sui_segments_item-outline_width: var(--sui_segments_item-focusring_width);
+      --_sui_segments_item-outline_color: var(--sui_segments_item-focusring_color);
+      --_sui_segments_item-outline_offset: var(--sui_segments_item-focusring_offset);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+@layer sui.important {
+@scope (.sui_segments_item) to ([data-scope]) {
+
+:scope {
+  &.sui_segments_item-disabled {
+    color: var(--sui-disabled-naked-canvas_text);
+    cursor: not-allowed;
+    background-color: var(--sui-disabled-naked-canvas);
+  }
+}
+
+} /* @scope */
+} /* @layer */

@@ -5,9 +5,9 @@ import { render } from "vitest-browser-react";
 import {
   ContextMenuContext,
   useContextMenuContext,
-} from "../../../src/context-menu/context-menu.context.js";
-import { ContextMenuRoot } from "../../../src/context-menu/context-menu.root.jsx";
-import { ContextMenuSubmenuRoot } from "../../../src/context-menu/context-menu.submenu-root.jsx";
+} from "../../../src/context-menu/root/context-menu.root.context.js";
+import { ContextMenuRoot } from "../../../src/context-menu/root/context-menu.root.jsx";
+import { ContextMenuSubmenuRoot } from "../../../src/context-menu/submenu-root/context-menu.submenu-root.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useContextMenuContext", () => {

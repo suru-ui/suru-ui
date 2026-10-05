@@ -5,11 +5,11 @@ import { render } from "vitest-browser-react";
 import {
   DialogPopupContext,
   useDialogPopupContext,
-} from "../../../src/dialog/dialog.popup.context.js";
-import { DialogPopup } from "../../../src/dialog/dialog.popup.jsx";
-import { DialogPortal } from "../../../src/dialog/dialog.portal.jsx";
-import { DialogRoot } from "../../../src/dialog/dialog.root.jsx";
-import { DialogViewport } from "../../../src/dialog/dialog.viewport.jsx";
+} from "../../../src/dialog/popup/dialog.popup.context.js";
+import { DialogPopup } from "../../../src/dialog/popup/dialog.popup.jsx";
+import { DialogPortal } from "../../../src/dialog/portal/dialog.portal.jsx";
+import { DialogRoot } from "../../../src/dialog/root/dialog.root.jsx";
+import { DialogViewport } from "../../../src/dialog/viewport/dialog.viewport.jsx";
 import { ContextMissingError } from "../../../src/errors.js";
 
 describe("useDialogPopupContext", () => {

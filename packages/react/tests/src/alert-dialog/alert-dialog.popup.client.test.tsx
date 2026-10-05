@@ -2,14 +2,14 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useAlertDialogPopupContext } from "../../../src/alert-dialog/alert-dialog.popup.context.js";
+import { useAlertDialogPopupContext } from "../../../src/alert-dialog/popup/alert-dialog.popup.context.js";
 import {
   type AlertDialogPopupProps,
   AlertDialogPopup,
-} from "../../../src/alert-dialog/alert-dialog.popup.jsx";
-import { AlertDialogPortal } from "../../../src/alert-dialog/alert-dialog.portal.jsx";
-import { AlertDialogRoot } from "../../../src/alert-dialog/alert-dialog.root.jsx";
-import { AlertDialogViewport } from "../../../src/alert-dialog/alert-dialog.viewport.jsx";
+} from "../../../src/alert-dialog/popup/alert-dialog.popup.jsx";
+import { AlertDialogPortal } from "../../../src/alert-dialog/portal/alert-dialog.portal.jsx";
+import { AlertDialogRoot } from "../../../src/alert-dialog/root/alert-dialog.root.jsx";
+import { AlertDialogViewport } from "../../../src/alert-dialog/viewport/alert-dialog.viewport.jsx";
 import "../../../src/alert-dialog/alert-dialog.parts.js";
 import "../_locators.js";
 

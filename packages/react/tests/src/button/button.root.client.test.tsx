@@ -1,7 +1,7 @@
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { ButtonRoot } from "../../../src/button/button.root.jsx";
+import { ButtonRoot } from "../../../src/button/root/button.root.jsx";
 import "../_locators.js";
 
 describe("ButtonRoot", () => {

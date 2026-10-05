@@ -1,4 +1,4 @@
-import "./image.css";
+import "./root/image.root.css";
 
-export * from "./image.context.js";
-export * from "./image.root.jsx";
+export * from "./root/image.root.context.js";
+export * from "./root/image.root.jsx";

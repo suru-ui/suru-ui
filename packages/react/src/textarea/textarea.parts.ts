@@ -1,4 +1,4 @@
-import "./textarea.css";
+import "./root/textarea.root.css";
 
-export * from "./textarea.context.js";
-export * from "./textarea.root.jsx";
+export * from "./root/textarea.root.context.js";
+export * from "./root/textarea.root.jsx";

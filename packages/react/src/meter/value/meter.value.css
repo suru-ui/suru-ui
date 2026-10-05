@@ -1,0 +1,64 @@
+@layer sui.component {
+@scope (.sui_meter_value) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 可変 */
+:scope {
+  font-family: var(--sui_meter_value-font_family);
+  font-size: var(--sui_meter_value-font_size);
+  font-weight: var(--sui_meter_value-font_weight);
+  line-height: var(--sui_meter_value-line_height);
+  color: var(--sui_meter_value-color);
+  letter-spacing: var(--sui_meter_value-letter_spacing);
+}
+
+} /* @scope */
+} /* @layer */
+
+/* 活字の代入はルートの大きさの修飾クラスに依存し、値表示自身には対応するクラスが無いため、空宣言と代入をまとめてルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_meter) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_meter_value-font_family: ;
+  --sui_meter_value-font_size: ;
+  --sui_meter_value-font_weight: ;
+  --sui_meter_value-line_height: ;
+  --sui_meter_value-color: ;
+  --sui_meter_value-letter_spacing: ;
+}
+
+/* 代入 */
+:scope {
+  --sui_meter_value-font_family: var(--sui-font-sans);
+  --sui_meter_value-color: var(--sui-canvas_text-2);
+
+  &.sui_meter-size_sm {
+    --sui_meter_value-font_size: var(--sui-text-dns-sm-n-font_size);
+    --sui_meter_value-font_weight: var(--sui-text-dns-sm-n-font_weight);
+    --sui_meter_value-line_height: var(--sui-text-dns-sm-n-line_height);
+    --sui_meter_value-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
+  }
+
+  &.sui_meter-size_md {
+    --sui_meter_value-font_size: var(--sui-text-dns-md-n-font_size);
+    --sui_meter_value-font_weight: var(--sui-text-dns-md-n-font_weight);
+    --sui_meter_value-line_height: var(--sui-text-dns-md-n-line_height);
+    --sui_meter_value-letter_spacing: var(--sui-text-dns-md-n-letter_spacing);
+  }
+
+  &.sui_meter-size_lg {
+    --sui_meter_value-font_size: var(--sui-text-dns-lg-n-font_size);
+    --sui_meter_value-font_weight: var(--sui-text-dns-lg-n-font_weight);
+    --sui_meter_value-line_height: var(--sui-text-dns-lg-n-line_height);
+    --sui_meter_value-letter_spacing: var(--sui-text-dns-lg-n-letter_spacing);
+  }
+}
+
+} /* @scope */
+} /* @layer */

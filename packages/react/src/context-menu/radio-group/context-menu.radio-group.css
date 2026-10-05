@@ -1,0 +1,26 @@
+@layer sui.component {
+@scope (.sui_context_menu_radio_group) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 変数 */
+:scope {
+  --sui_context_menu_radio_group-gap: ;
+}
+
+/* 可変 */
+:scope {
+  gap: var(--sui_context_menu_radio_group-gap);
+}
+
+/* 代入 */
+:scope {
+  --sui_context_menu_radio_group-gap: --sui-gap(1);
+}
+
+} /* @scope */
+} /* @layer */

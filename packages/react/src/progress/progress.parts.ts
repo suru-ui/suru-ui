@@ -1,8 +1,12 @@
-import "./progress.css";
+import "./root/progress.root.css";
+import "./label/progress.label.css";
+import "./value/progress.value.css";
+import "./track/progress.track.css";
+import "./indicator/progress.indicator.css";
 
-export * from "./progress.context.js";
-export * from "./progress.root.jsx";
-export * from "./progress.label.jsx";
-export * from "./progress.value.jsx";
-export * from "./progress.track.jsx";
-export * from "./progress.indicator.jsx";
+export * from "./root/progress.root.context.js";
+export * from "./root/progress.root.jsx";
+export * from "./label/progress.label.jsx";
+export * from "./value/progress.value.jsx";
+export * from "./track/progress.track.jsx";
+export * from "./indicator/progress.indicator.jsx";

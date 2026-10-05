@@ -1,3 +1,3 @@
-import "./menubar.css";
+import "./root/menubar.root.css";
 
-export * from "./menubar.root.jsx";
+export * from "./root/menubar.root.jsx";

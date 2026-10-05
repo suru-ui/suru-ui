@@ -2,9 +2,9 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { usePopoverContext } from "../../../src/popover/popover.context.js";
 import { Popover } from "../../../src/popover/popover.jsx";
-import { PopoverRoot } from "../../../src/popover/popover.root.jsx";
+import { usePopoverContext } from "../../../src/popover/root/popover.root.context.js";
+import { PopoverRoot } from "../../../src/popover/root/popover.root.jsx";
 import "../_locators.js";
 
 describe("PopoverRoot", () => {

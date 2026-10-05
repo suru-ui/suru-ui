@@ -3,9 +3,9 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/tree/tree.parts.js";
-import { TreeItemIndicator } from "../../../src/tree/tree.indicator.jsx";
-import { TreeItem } from "../../../src/tree/tree.item.jsx";
-import { TreeRoot } from "../../../src/tree/tree.root.jsx";
+import { TreeItemIndicator } from "../../../src/tree/indicator/tree.indicator.jsx";
+import { TreeItem } from "../../../src/tree/item/tree.item.jsx";
+import { TreeRoot } from "../../../src/tree/root/tree.root.jsx";
 import "../_locators.js";
 
 const items = [

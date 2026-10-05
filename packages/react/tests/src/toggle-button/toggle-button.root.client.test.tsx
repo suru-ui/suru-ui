@@ -2,8 +2,8 @@ import * as React from "react";
 import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { useToggleButtonContext } from "../../../src/toggle-button/toggle-button.context.js";
-import { ToggleButtonRoot } from "../../../src/toggle-button/toggle-button.root.jsx";
+import { useToggleButtonContext } from "../../../src/toggle-button/root/toggle-button.root.context.js";
+import { ToggleButtonRoot } from "../../../src/toggle-button/root/toggle-button.root.jsx";
 import "../_locators.js";
 
 describe("ToggleButtonRoot", () => {

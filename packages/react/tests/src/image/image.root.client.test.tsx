@@ -2,7 +2,7 @@ import { describe, test, vi } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/image/image.parts.js";
-import { type ImageRootProps, ImageRoot } from "../../../src/image/image.root.jsx";
+import { type ImageRootProps, ImageRoot } from "../../../src/image/root/image.root.jsx";
 import "../_locators.js";
 
 const imageSrc = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";

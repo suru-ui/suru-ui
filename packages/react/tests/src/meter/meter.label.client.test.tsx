@@ -2,8 +2,8 @@ import { describe, test } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../../src/meter/meter.parts.js";
-import { MeterLabel } from "../../../src/meter/meter.label.jsx";
-import { MeterRoot } from "../../../src/meter/meter.root.jsx";
+import { MeterLabel } from "../../../src/meter/label/meter.label.jsx";
+import { MeterRoot } from "../../../src/meter/root/meter.root.jsx";
 import "../_locators.js";
 
 describe("MeterLabel", () => {
