@@ -2,6 +2,7 @@ import { Collapsible } from "@base-ui/react/collapsible";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -9,6 +10,7 @@ import {
   type CollapsibleContext,
   useCollapsibleContext,
 } from "../root/collapsible.root.context.js";
+import { CollapsibleContentContext } from "./collapsible.content.context.js";
 
 /**
  * {@link CollapsibleContent} が持つ状態です。
@@ -60,7 +62,16 @@ export const CollapsibleContent: ICollapsibleContent = function SuiCollapsibleCo
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <CollapsibleContentContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </CollapsibleContentContext>
+          ),
           className: cn<CollapsibleContentState>(
             className,
             "sui_collapsible_content",

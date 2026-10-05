@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { PlusIcon } from "../../_icons.jsx";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -11,6 +12,7 @@ import {
   type NumberFieldContext,
   useNumberFieldContext,
 } from "../root/number-field.root.context.js";
+import { NumberFieldIncrementContext } from "./number-field.increment.context.js";
 
 /**
  * {@link NumberFieldIncrement} が持つ状態です。
@@ -71,7 +73,16 @@ export const NumberFieldIncrement: INumberFieldIncrement = function SuiNumberFie
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <NumberFieldIncrementContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </NumberFieldIncrementContext>
+          ),
           className: cn<NumberFieldIncrementState>(
             className,
             "sui_number_field_stepper",

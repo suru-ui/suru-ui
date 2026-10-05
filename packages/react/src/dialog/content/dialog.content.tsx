@@ -1,9 +1,11 @@
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Card from "../../card/card.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type DialogPopupContext, useDialogPopupContext } from "../popup/dialog.popup.context.js";
+import { DialogContentContext } from "./dialog.content.context.js";
 
 /**
  * {@link DialogContent} が持つ状態です。
@@ -44,7 +46,16 @@ export const DialogContent: IDialogContent = function SuiDialogContent(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <DialogContentContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </DialogContentContext>
+          ),
           className: cn<DialogContentState>(
             className,
             "sui_dialog_content",

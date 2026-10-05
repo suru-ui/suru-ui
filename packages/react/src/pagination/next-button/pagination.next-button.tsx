@@ -2,11 +2,13 @@ import * as React from "react";
 
 import { ChevronRightIcon } from "../../_icons.jsx";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type PaginationContext, usePaginationContext } from "../root/pagination.root.context.js";
+import { PaginationNextButtonContext } from "./pagination.next-button.context.js";
 
 /**
  * {@link PaginationNextButton} が持つ状態です。
@@ -75,7 +77,16 @@ export const PaginationNextButton: IPaginationNextButton = function SuiPaginatio
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <PaginationNextButtonContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </PaginationNextButtonContext>
+          ),
           className: cn<PaginationNextButtonState>(
             className,
             "sui_pagination_next",

@@ -8,6 +8,13 @@ import "./decrement/number-field.decrement.css";
 import "./increment/number-field.increment.css";
 
 export * from "./root/number-field.root.context.js";
+export * from "./scrub-area/number-field.scrub-area.context.js";
+export * from "./scrub-area-cursor/number-field.scrub-area-cursor.context.js";
+export * from "./group/number-field.group.context.js";
+export * from "./input/number-field.input.context.js";
+export * from "./decrement/number-field.decrement.context.js";
+export * from "./increment/number-field.increment.context.js";
+export * from "./addon/number-field.addon.context.js";
 export * from "./root/number-field.root.jsx";
 export * from "./scrub-area/number-field.scrub-area.jsx";
 export * from "./scrub-area-cursor/number-field.scrub-area-cursor.jsx";

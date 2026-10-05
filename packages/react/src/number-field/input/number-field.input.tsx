@@ -2,6 +2,7 @@ import { NumberField } from "@base-ui/react/number-field";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -9,6 +10,7 @@ import {
   type NumberFieldContext,
   useNumberFieldContext,
 } from "../root/number-field.root.context.js";
+import { NumberFieldInputContext } from "./number-field.input.context.js";
 
 /**
  * {@link NumberFieldInput} が持つ状態です。
@@ -60,7 +62,16 @@ export const NumberFieldInput: INumberFieldInput = function SuiNumberFieldInput(
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <NumberFieldInputContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="input"
+              />
+            </NumberFieldInputContext>
+          ),
           className: cn<NumberFieldInputState>(
             className,
             "sui_number_field_input",

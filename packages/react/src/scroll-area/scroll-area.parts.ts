@@ -1,4 +1,5 @@
 import "./root/scroll-area.root.css";
+export * from "./root/scroll-area.root.context.js";
 import "./viewport/scroll-area.viewport.css";
 import "./content/scroll-area.content.css";
 import "./scrollbar/scroll-area.scrollbar.css";

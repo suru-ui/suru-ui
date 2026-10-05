@@ -3,11 +3,13 @@ import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import type { PopoverHandle } from "../handle/popover.handle.js";
 import { type PopoverContext, usePopoverContext } from "../root/popover.root.context.js";
+import { PopoverTriggerContext } from "./popover.trigger.context.js";
 
 /**
  * {@link PopoverTrigger} が持つ状態です。
@@ -94,7 +96,16 @@ export const PopoverTrigger: IPopoverTrigger = function SuiPopoverTrigger<TPaylo
         (state) => ({ size: "md", radius: "md", outlined: false, ...ctx, ...state }),
         {
           style,
-          render: children,
+          render: (htmlProps, state) => (
+            <PopoverTriggerContext value={state}>
+              <RenderElement
+                state={state}
+                render={children}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </PopoverTriggerContext>
+          ),
           className: cn<PopoverTriggerState>(
             className,
             "sui_popover_trigger",

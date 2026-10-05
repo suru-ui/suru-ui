@@ -3,11 +3,13 @@ import * as React from "react";
 
 import mergeProps from "../../_merge-props.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Card from "../../card/card.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type DialogPopupContext, useDialogPopupContext } from "../popup/dialog.popup.context.js";
+import { DialogTitleContext } from "./dialog.title.context.js";
 
 /**
  * {@link DialogTitle} が持つ状態です。
@@ -77,7 +79,16 @@ export const DialogTitle: IDialogTitle = function SuiDialogTitle(props) {
               (state) => ({ ...ctx, ...state }),
               {
                 style,
-                render,
+                render: (htmlProps, state) => (
+                  <DialogTitleContext value={state}>
+                    <RenderElement
+                      state={state}
+                      render={render}
+                      htmlProps={htmlProps}
+                      defaultTagName="h2"
+                    />
+                  </DialogTitleContext>
+                ),
                 className: cn<DialogTitleState>(
                   className,
                   "sui_dialog_title",

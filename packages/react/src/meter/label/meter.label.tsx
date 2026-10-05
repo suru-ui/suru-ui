@@ -2,10 +2,12 @@ import { Meter } from "@base-ui/react/meter";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type MeterContext, useMeterContext } from "../root/meter.root.context.js";
+import { MeterLabelContext } from "./meter.label.context.js";
 
 /**
  * {@link MeterLabel} が持つ状態です。
@@ -55,7 +57,16 @@ export const MeterLabel: IMeterLabel = function SuiMeterLabel(props) {
       {...otherProps}
       {...proxyRenderProps<Meter.Label.State, MeterLabelState>((state) => ({ ...ctx, ...state }), {
         style,
-        render,
+        render: (htmlProps, state) => (
+          <MeterLabelContext value={state}>
+            <RenderElement
+              state={state}
+              render={render}
+              htmlProps={htmlProps}
+              defaultTagName="span"
+            />
+          </MeterLabelContext>
+        ),
         className: cn<MeterLabelState>(
           className,
           "sui_meter_label",

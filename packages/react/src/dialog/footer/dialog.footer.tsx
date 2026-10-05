@@ -1,9 +1,11 @@
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Card from "../../card/card.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type DialogPopupContext, useDialogPopupContext } from "../popup/dialog.popup.context.js";
+import { DialogFooterContext } from "./dialog.footer.context.js";
 
 /**
  * {@link DialogFooter} が持つ状態です。
@@ -46,7 +48,16 @@ export const DialogFooter: IDialogFooter = function SuiDialogFooter(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <DialogFooterContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </DialogFooterContext>
+          ),
           className: cn<DialogFooterState>(
             className,
             "sui_dialog_footer",

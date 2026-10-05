@@ -2,10 +2,12 @@ import { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type TooltipContext, useTooltipContext } from "../root/tooltip.root.context.js";
+import { TooltipArrowContext } from "./tooltip.arrow.context.js";
 
 /**
  * {@link TooltipArrow} が持つ状態です。
@@ -57,7 +59,16 @@ export const TooltipArrow: ITooltipArrow = function SuiTooltipArrow(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <TooltipArrowContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </TooltipArrowContext>
+          ),
           className: cn<TooltipArrowState>(
             className,
             "sui_tooltip_arrow",

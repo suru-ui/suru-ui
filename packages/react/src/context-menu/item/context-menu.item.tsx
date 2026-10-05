@@ -4,6 +4,7 @@ import * as React from "react";
 
 import mergeProps from "../../_merge-props.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
@@ -12,6 +13,7 @@ import {
   type ContextMenuContext,
   useContextMenuContext,
 } from "../root/context-menu.root.context.js";
+import { ContextMenuItemContext } from "./context-menu.item.context.js";
 
 /**
  * コンテキストメニューの操作項目の配色です。
@@ -165,7 +167,16 @@ export const ContextMenuItem: IContextMenuItem = function SuiContextMenuItem(pro
                 (state) => ({ ...ctx, ...state, ...itemState }),
                 {
                   style,
-                  render: render ?? <div />,
+                  render: (htmlProps, state) => (
+                    <ContextMenuItemContext value={state}>
+                      <RenderElement
+                        state={state}
+                        render={render ?? <div />}
+                        htmlProps={htmlProps}
+                        defaultTagName="div"
+                      />
+                    </ContextMenuItemContext>
+                  ),
                   className: cn<ContextMenuItemState>(
                     className,
                     "sui_context_menu_item",

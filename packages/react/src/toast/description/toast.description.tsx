@@ -3,9 +3,11 @@ import * as React from "react";
 
 import mergeProps from "../../_merge-props.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Alert from "../../alert/alert.parts.js";
 import type { Override, IComponent } from "../../types.js";
+import { ToastDescriptionContext } from "./toast.description.context.js";
 
 /**
  * {@link ToastDescription} が持つ状態です。
@@ -61,7 +63,16 @@ export const ToastDescription: IToastDescription = function SuiToastDescription(
             htmlProps,
             proxyRenderProps(toastState, {
               style,
-              render,
+              render: (htmlProps, state) => (
+                <ToastDescriptionContext value={state}>
+                  <RenderElement
+                    state={state}
+                    render={render}
+                    htmlProps={htmlProps}
+                    defaultTagName="p"
+                  />
+                </ToastDescriptionContext>
+              ),
               className,
             }),
           ])}

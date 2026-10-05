@@ -1,4 +1,5 @@
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Card from "../../card/card.parts.js";
 import cn from "../../cn.js";
@@ -7,6 +8,7 @@ import {
   type AlertDialogPopupContext,
   useAlertDialogPopupContext,
 } from "../popup/alert-dialog.popup.context.js";
+import { AlertDialogActionContext } from "./alert-dialog.action.context.js";
 
 /**
  * {@link AlertDialogAction} が持つ状態です。
@@ -49,7 +51,16 @@ export const AlertDialogAction: IAlertDialogAction = function SuiAlertDialogActi
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <AlertDialogActionContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </AlertDialogActionContext>
+          ),
           className: cn<AlertDialogActionState>(
             className,
             "sui_alert_dialog_action",

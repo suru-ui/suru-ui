@@ -2,10 +2,12 @@ import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type PopoverContext, usePopoverContext } from "../root/popover.root.context.js";
+import { PopoverViewportContext } from "./popover.viewport.context.js";
 
 /**
  * {@link PopoverViewport} が持つ状態です。
@@ -59,7 +61,16 @@ export const PopoverViewport: IPopoverViewport = function SuiPopoverViewport(pro
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <PopoverViewportContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </PopoverViewportContext>
+          ),
           className: cn<PopoverViewportState>(
             className,
             "sui_popover_viewport",

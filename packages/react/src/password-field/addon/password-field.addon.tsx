@@ -1,4 +1,5 @@
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import {
@@ -11,6 +12,7 @@ import {
   type PasswordFieldContextState,
   usePasswordFieldContext,
 } from "../root/password-field.root.context.js";
+import { PasswordFieldAddonContext } from "./password-field.addon.context.js";
 
 /**
  * {@link PasswordFieldAddon} の状態です。
@@ -68,7 +70,16 @@ export const PasswordFieldAddon: IPasswordFieldAddon = function SuiPasswordField
         (state) => ({ ...state, visible: ctx.visible }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <PasswordFieldAddonContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </PasswordFieldAddonContext>
+          ),
           className: cn<PasswordFieldAddonState>(
             className,
             "sui_password_field_addon",

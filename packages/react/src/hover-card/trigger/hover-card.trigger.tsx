@@ -2,11 +2,13 @@ import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import type { HoverCardHandle } from "../handle/hover-card.handle.js";
 import { type HoverCardContext, useHoverCardContext } from "../root/hover-card.root.context.js";
+import { HoverCardTriggerContext } from "./hover-card.trigger.context.js";
 
 /**
  * {@link HoverCardTrigger} が持つ状態です。
@@ -88,7 +90,16 @@ export const HoverCardTrigger: IHoverCardTrigger = function SuiHoverCardTrigger<
         (state) => ({ size: "md", radius: "md", outlined: false, ...ctx, ...state }),
         {
           style,
-          render: children,
+          render: (htmlProps, state) => (
+            <HoverCardTriggerContext value={state}>
+              <RenderElement
+                state={state}
+                render={children}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </HoverCardTriggerContext>
+          ),
           className: cn<HoverCardTriggerState>(
             className,
             "sui_hover_card_trigger",

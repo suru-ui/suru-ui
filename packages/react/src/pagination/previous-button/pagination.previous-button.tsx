@@ -2,11 +2,13 @@ import * as React from "react";
 
 import { ChevronLeftIcon } from "../../_icons.jsx";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type PaginationContext, usePaginationContext } from "../root/pagination.root.context.js";
+import { PaginationPreviousButtonContext } from "./pagination.previous-button.context.js";
 
 /**
  * {@link PaginationPreviousButton} が持つ状態です。
@@ -76,7 +78,16 @@ export const PaginationPreviousButton: IPaginationPreviousButton =
           (state) => ({ ...ctx, ...state }),
           {
             style,
-            render,
+            render: (htmlProps, state) => (
+              <PaginationPreviousButtonContext value={state}>
+                <RenderElement
+                  state={state}
+                  render={render}
+                  htmlProps={htmlProps}
+                  defaultTagName="button"
+                />
+              </PaginationPreviousButtonContext>
+            ),
             className: cn<PaginationPreviousButtonState>(
               className,
               "sui_pagination_previous",

@@ -2,6 +2,7 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -9,6 +10,7 @@ import {
   type AutocompleteContext,
   useAutocompleteContext,
 } from "../root/autocomplete.root.context.js";
+import { AutocompleteRowContext } from "./autocomplete.row.context.js";
 
 /**
  * {@link AutocompleteRow} の状態です。
@@ -62,7 +64,16 @@ export const AutocompleteRow: IAutocompleteRow = function SuiAutocompleteRow(pro
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <AutocompleteRowContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </AutocompleteRowContext>
+          ),
           className: cn<AutocompleteRowState>(
             className,
             "sui_autocomplete_row",

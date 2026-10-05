@@ -5,6 +5,7 @@ import { CheckIcon, ChevronRightIcon } from "../../_icons.jsx";
 import isLikelyVisibleNode from "../../_is-likely-visible-node.js";
 import { getItemKey } from "../../_item.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -37,6 +38,7 @@ import type {
 import { ContextMenuSeparator } from "../separator/context-menu.separator.jsx";
 import { ContextMenuSubmenuRoot } from "../submenu-root/context-menu.submenu-root.jsx";
 import { ContextMenuSubmenuTrigger } from "../submenu-trigger/context-menu.submenu-trigger.jsx";
+import { ContextMenuContentContext } from "./context-menu.content.context.js";
 
 /**
  * ポップアップの各項目をレンダリングする関数のインターフェイスです。
@@ -119,7 +121,16 @@ export const ContextMenuContent: IContextMenuContent = function SuiContextMenuCo
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ContextMenuContentContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ContextMenuContentContext>
+          ),
           className: cn<ContextMenuContentState>(
             className,
             "sui_context_menu_content",

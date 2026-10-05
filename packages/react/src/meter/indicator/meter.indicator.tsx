@@ -2,10 +2,12 @@ import { Meter } from "@base-ui/react/meter";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type MeterContext, useMeterContext } from "../root/meter.root.context.js";
+import { MeterIndicatorContext } from "./meter.indicator.context.js";
 
 /**
  * {@link MeterIndicator} が持つ状態です。
@@ -57,7 +59,16 @@ export const MeterIndicator: IMeterIndicator = function SuiMeterIndicator(props)
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <MeterIndicatorContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </MeterIndicatorContext>
+          ),
           className: cn<MeterIndicatorState>(
             className,
             "sui_meter_indicator",

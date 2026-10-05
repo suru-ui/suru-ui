@@ -4,11 +4,13 @@ import * as React from "react";
 
 import mergeProps from "../../_merge-props.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type SelectContext, useSelectContext } from "../root/select.root.context.js";
+import { SelectItemContext } from "./select.item.context.js";
 
 /**
  * {@link SelectItem} が持つ状態です。
@@ -119,7 +121,16 @@ export const SelectItem: ISelectItem = function SuiSelectItem(props) {
                 (state) => ({ ...ctx, ...state, ...itemState }),
                 {
                   style,
-                  render,
+                  render: (htmlProps, state) => (
+                    <SelectItemContext value={state}>
+                      <RenderElement
+                        state={state}
+                        render={render}
+                        htmlProps={htmlProps}
+                        defaultTagName="div"
+                      />
+                    </SelectItemContext>
+                  ),
                   className: cn<SelectItemState>(
                     className,
                     "sui_select_item",

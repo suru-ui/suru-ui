@@ -138,13 +138,6 @@ export namespace AutocompleteRootProps {
     items?: readonly TItem[] | undefined;
 
     /**
-     * 枠線を表示するかどうかを指定します。
-     *
-     * @default false
-     */
-    outlined?: boolean | undefined;
-
-    /**
      * 入力を含むグループ要素の角丸を指定します。
      *
      * 既定値は {@link AutocompleteRootProps.size|size} です。
@@ -277,15 +270,14 @@ export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
     radius = size,
     variant = "liquid",
     disabled = false,
-    outlined = false,
     readOnly = false,
     required = false,
     itemToStringValue = defaultItemToStringValue,
     ...otherProps
   } = props;
   const ctx = React.useMemo<AutocompleteContext>(
-    () => ({ size, color, items, radius, variant, outlined }),
-    [size, color, items, radius, variant, outlined],
+    () => ({ size, color, items, radius, variant, outlined: false }),
+    [size, color, items, radius, variant],
   );
 
   return (
@@ -295,7 +287,6 @@ export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
       radius={radius}
       variant={variant}
       disabled={disabled}
-      outlined={outlined}
       readOnly={readOnly}
       required={required}
     >

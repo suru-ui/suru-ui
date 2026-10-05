@@ -2,10 +2,12 @@ import { Switch } from "@base-ui/react/switch";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type SwitchContext, useSwitchContext } from "../root/switch.root.context.js";
+import { SwitchThumbContext } from "./switch.thumb.context.js";
 
 /**
  * {@link SwitchThumb} が持つ状態です。
@@ -59,7 +61,16 @@ export const SwitchThumb: ISwitchThumb = function SuiSwitchThumb(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <SwitchThumbContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="span"
+              />
+            </SwitchThumbContext>
+          ),
           className: cn<SwitchThumbState>(
             className,
             "sui_switch_thumb",

@@ -2,10 +2,12 @@ import { Slider } from "@base-ui/react/slider";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type SliderContext, useSliderContext } from "../root/slider.root.context.js";
+import { SliderThumbContext } from "./slider.thumb.context.js";
 
 /**
  * {@link SliderThumb} が持つ状態です。
@@ -68,7 +70,16 @@ export const SliderThumb: ISliderThumb = function SuiSliderThumb(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <SliderThumbContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </SliderThumbContext>
+          ),
           className: cn<SliderThumbState>(
             className,
             "sui_slider_thumb",

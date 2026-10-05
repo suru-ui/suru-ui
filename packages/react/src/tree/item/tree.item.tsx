@@ -2,12 +2,14 @@ import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { getSelectAction } from "../_tree.jsx";
 import { type TreeContextState, useTreeContext } from "../root/tree.root.context.js";
+import { TreeItemContext } from "./tree.item.context.js";
 
 /**
  * ツリーの項目の配色です。
@@ -252,7 +254,16 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
       {...otherProps}
       {...proxyRenderProps<Button.Root.State, TreeItemState>(state, {
         style: levelStyle,
-        render,
+        render: (htmlProps, state) => (
+          <TreeItemContext value={state}>
+            <RenderElement
+              state={state}
+              render={render}
+              htmlProps={htmlProps}
+              defaultTagName="div"
+            />
+          </TreeItemContext>
+        ),
         className: cn<TreeItemState>(
           className,
           "sui_tree_item",

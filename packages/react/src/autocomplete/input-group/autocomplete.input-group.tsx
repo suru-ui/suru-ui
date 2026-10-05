@@ -2,6 +2,7 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -13,6 +14,7 @@ import {
   AutocompleteContext,
   useAutocompleteContext,
 } from "../root/autocomplete.root.context.js";
+import { AutocompleteInputGroupContext } from "./autocomplete.input-group.context.js";
 
 /**
  * {@link AutocompleteInputGroup} の状態です。
@@ -65,6 +67,13 @@ export namespace AutocompleteInputGroupProps {
      * 省略時はオートコンプリートの色を使います。
      */
     color?: AutocompleteInputGroupColor | undefined;
+
+    /**
+     * 入力グループに枠線を表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    outlined?: boolean | undefined;
 
     /**
      * 入力グループの角丸を指定します。
@@ -130,14 +139,15 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
     radius = ctx.radius,
     render,
     variant = ctx.variant,
+    outlined = false,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const childCtx = React.useMemo<AutocompleteContext>(
-    () => ({ ...ctx, size, color, radius, variant }),
-    [ctx, size, color, radius, variant],
+    () => ({ ...ctx, size, color, radius, variant, outlined }),
+    [ctx, size, color, radius, variant, outlined],
   );
 
   return (
@@ -148,7 +158,16 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
           (state) => ({ ...childCtx, ...state }),
           {
             style,
-            render,
+            render: (htmlProps, state) => (
+              <AutocompleteInputGroupContext value={state}>
+                <RenderElement
+                  state={state}
+                  render={render}
+                  htmlProps={htmlProps}
+                  defaultTagName="div"
+                />
+              </AutocompleteInputGroupContext>
+            ),
             className: cn<AutocompleteInputGroupState>(
               className,
               "sui_autocomplete",

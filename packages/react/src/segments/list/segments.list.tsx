@@ -2,12 +2,14 @@ import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { createItemRenderer, getSegmentsItemLabel, getSegmentsItemProps } from "../_segments.jsx";
 import { type SegmentsContext, useSegmentsContext } from "../root/segments.root.context.js";
 import type { SegmentsRootItemObject, ISegmentsRootItemRenderer } from "../root/segments.root.jsx";
+import { SegmentsListContext } from "./segments.list.context.js";
 
 /**
  * {@link SegmentsList} が持つ状態です。
@@ -83,7 +85,16 @@ export const SegmentsList: ISegmentsList = function SuiSegmentsList(props: Segme
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <SegmentsListContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </SegmentsListContext>
+          ),
           className: cn<SegmentsListState>(
             className,
             "sui_segments_list",

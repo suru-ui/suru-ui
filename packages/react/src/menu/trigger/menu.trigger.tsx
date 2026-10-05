@@ -2,11 +2,13 @@ import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import { Menu } from "@base-ui/react/menu";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import type { MenuHandle } from "../handle/menu.handle.js";
 import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import { MenuTriggerContext } from "./menu.trigger.context.js";
 
 /**
  * {@link MenuTrigger} が持つ状態です。
@@ -97,7 +99,16 @@ export const MenuTrigger: IMenuTrigger = function SuiMenuTrigger(props: MenuTrig
         }),
         {
           style,
-          render: children,
+          render: (htmlProps, state) => (
+            <MenuTriggerContext value={state}>
+              <RenderElement
+                state={state}
+                render={children}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </MenuTriggerContext>
+          ),
           className: cn<MenuTriggerState>(
             className,
             "sui_menu_trigger",

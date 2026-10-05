@@ -8,6 +8,16 @@ import "./description/popover.description.css";
 import "./viewport/popover.viewport.css";
 
 export * from "./root/popover.root.context.js";
+export * from "./trigger/popover.trigger.context.js";
+export * from "./portal/popover.portal.context.js";
+export * from "./backdrop/popover.backdrop.context.js";
+export * from "./positioner/popover.positioner.context.js";
+export * from "./content/popover.content.context.js";
+export * from "./arrow/popover.arrow.context.js";
+export * from "./title/popover.title.context.js";
+export * from "./description/popover.description.context.js";
+export * from "./close/popover.close.context.js";
+export * from "./viewport/popover.viewport.context.js";
 export * from "./handle/popover.handle.js";
 export * from "./root/popover.root.jsx";
 export * from "./trigger/popover.trigger.jsx";

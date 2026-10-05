@@ -2,10 +2,12 @@ import { Popover } from "@base-ui/react/popover";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type PopoverContext, usePopoverContext } from "../root/popover.root.context.js";
+import { PopoverBackdropContext } from "./popover.backdrop.context.js";
 
 /**
  * {@link PopoverBackdrop} が持つ状態です。
@@ -57,7 +59,16 @@ export const PopoverBackdrop: IPopoverBackdrop = function SuiPopoverBackdrop(pro
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <PopoverBackdropContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </PopoverBackdropContext>
+          ),
           className: cn<PopoverBackdropState>(
             className,
             "sui_popover_backdrop",

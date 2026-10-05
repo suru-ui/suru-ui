@@ -1,4 +1,5 @@
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import {
   type TextFieldInputProps,
@@ -12,6 +13,7 @@ import {
   type PasswordFieldContextState,
   usePasswordFieldContext,
 } from "../root/password-field.root.context.js";
+import { PasswordFieldInputContext } from "./password-field.input.context.js";
 
 /**
  * {@link PasswordFieldInput} の値が変更されたイベントの詳細です。
@@ -76,7 +78,16 @@ export const PasswordFieldInput: IPasswordFieldInput = function SuiPasswordField
         (state) => ({ ...state, visible: ctx.visible }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <PasswordFieldInputContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="input"
+              />
+            </PasswordFieldInputContext>
+          ),
           className,
         },
       )}

@@ -4,6 +4,7 @@ import * as React from "react";
 import { CheckIcon } from "../../_icons.jsx";
 import { getItemKey } from "../../_item.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -14,6 +15,7 @@ import {
   type ContextMenuContext,
   useContextMenuContext,
 } from "../root/context-menu.root.context.js";
+import { ContextMenuRadioGroupContext } from "./context-menu.radio-group.context.js";
 
 /**
  * {@link ContextMenuRadioGroup} の選択状態を変更されるイベントの詳細です。
@@ -111,7 +113,16 @@ export const ContextMenuRadioGroup: IContextMenuRadioGroup = function SuiContext
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ContextMenuRadioGroupContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ContextMenuRadioGroupContext>
+          ),
           className: cn<ContextMenuRadioGroupState>(
             className,
             "sui_context_menu_radio_group",

@@ -4,6 +4,7 @@ import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import {
@@ -11,6 +12,7 @@ import {
   useRadioGroupContext,
 } from "../../radio-group/root/radio-group.root.context.js";
 import type { Override, IComponent } from "../../types.js";
+import { RadioRootContext } from "./radio.root.context.js";
 
 /**
  * ラジオボタンの配色です。
@@ -173,7 +175,16 @@ export const RadioRoot: IRadioRoot = function SuiRadioRoot(props) {
         (state) => ({ ...styleState, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <RadioRootContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="span"
+              />
+            </RadioRootContext>
+          ),
           className: cn<RadioRootState>(
             className,
             "sui_radio",

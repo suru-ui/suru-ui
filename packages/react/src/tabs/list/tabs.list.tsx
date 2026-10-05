@@ -2,12 +2,14 @@ import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { getTabsItemLabel, getTabsItemProps, createItemRenderer } from "../_tabs.jsx";
 import { type TabsContext, useTabsContext } from "../root/tabs.root.context.js";
 import type { TabsRootItemObject, ITabsRootItemRenderer } from "../root/tabs.root.jsx";
+import { TabsListContext } from "./tabs.list.context.js";
 
 /**
  * {@link TabsList} が持つ状態です。
@@ -80,7 +82,16 @@ export const TabsList: ITabsList = function SuiTabsList(props: TabsListProps) {
       {...otherProps}
       {...proxyRenderProps<BaseTabs.List.State, TabsListState>((state) => ({ ...ctx, ...state }), {
         style,
-        render,
+        render: (htmlProps, state) => (
+          <TabsListContext value={state}>
+            <RenderElement
+              state={state}
+              render={render}
+              htmlProps={htmlProps}
+              defaultTagName="div"
+            />
+          </TabsListContext>
+        ),
         className: cn<TabsListState>(
           className,
           "sui_tabs_list",

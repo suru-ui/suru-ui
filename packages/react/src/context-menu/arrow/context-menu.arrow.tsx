@@ -2,6 +2,7 @@ import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -9,6 +10,7 @@ import {
   type ContextMenuContext,
   useContextMenuContext,
 } from "../root/context-menu.root.context.js";
+import { ContextMenuArrowContext } from "./context-menu.arrow.context.js";
 
 /**
  * {@link ContextMenuArrow} が持つ状態です。
@@ -60,7 +62,16 @@ export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ContextMenuArrowContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ContextMenuArrowContext>
+          ),
           className: cn<ContextMenuArrowState>(
             className,
             "sui_context_menu_arrow",

@@ -2,6 +2,7 @@ import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -9,6 +10,7 @@ import {
   type ContextMenuContext,
   useContextMenuContext,
 } from "../root/context-menu.root.context.js";
+import { ContextMenuTriggerContext } from "./context-menu.trigger.context.js";
 
 /**
  * {@link ContextMenuTrigger} が持つ状態です。
@@ -69,7 +71,16 @@ export const ContextMenuTrigger: IContextMenuTrigger = function SuiContextMenuTr
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render: children,
+          render: (htmlProps, state) => (
+            <ContextMenuTriggerContext value={state}>
+              <RenderElement
+                state={state}
+                render={children}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </ContextMenuTriggerContext>
+          ),
           className: cn<ContextMenuTriggerState>(
             className,
             "sui_context_menu_trigger",

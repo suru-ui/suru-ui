@@ -2,10 +2,12 @@ import { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type TooltipContext, useTooltipContext } from "../root/tooltip.root.context.js";
+import { TooltipViewportContext } from "./tooltip.viewport.context.js";
 
 /**
  * {@link TooltipViewport} が持つ状態です。
@@ -59,7 +61,16 @@ export const TooltipViewport: ITooltipViewport = function SuiTooltipViewport(pro
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <TooltipViewportContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </TooltipViewportContext>
+          ),
           className: cn<TooltipViewportState>(
             className,
             "sui_tooltip_viewport",

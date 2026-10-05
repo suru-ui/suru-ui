@@ -2,10 +2,12 @@ import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import { MenuViewportContext } from "./menu.viewport.context.js";
 
 /**
  * {@link MenuViewport} が持つ状態です。
@@ -57,7 +59,16 @@ export const MenuViewport: IMenuViewport = function SuiMenuViewport(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <MenuViewportContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </MenuViewportContext>
+          ),
           className: cn<MenuViewportState>(
             className,
             "sui_menu_viewport",

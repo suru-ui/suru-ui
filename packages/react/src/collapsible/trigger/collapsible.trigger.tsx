@@ -3,6 +3,7 @@ import type { NativeButtonProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -10,6 +11,7 @@ import {
   type CollapsibleContext,
   useCollapsibleContext,
 } from "../root/collapsible.root.context.js";
+import { CollapsibleTriggerContext } from "./collapsible.trigger.context.js";
 
 /**
  * {@link CollapsibleTrigger} が持つ状態です。
@@ -72,7 +74,16 @@ export const CollapsibleTrigger: ICollapsibleTrigger = function SuiCollapsibleTr
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render: children,
+          render: (htmlProps, state) => (
+            <CollapsibleTriggerContext value={state}>
+              <RenderElement
+                state={state}
+                render={children}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </CollapsibleTriggerContext>
+          ),
           className: cn<CollapsibleTriggerState>(
             className,
             "sui_collapsible_trigger",

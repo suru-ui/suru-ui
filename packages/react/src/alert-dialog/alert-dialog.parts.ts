@@ -7,6 +7,12 @@ import "./content/alert-dialog.content.css";
 import "./footer/alert-dialog.footer.css";
 
 export * from "./popup/alert-dialog.popup.context.js";
+export * from "./header/alert-dialog.header.context.js";
+export * from "./title/alert-dialog.title.context.js";
+export * from "./description/alert-dialog.description.context.js";
+export * from "./action/alert-dialog.action.context.js";
+export * from "./content/alert-dialog.content.context.js";
+export * from "./footer/alert-dialog.footer.context.js";
 export * from "./handle/alert-dialog.handle.js";
 export * from "./root/alert-dialog.root.jsx";
 export * from "./toggle-trigger/alert-dialog.toggle-trigger.jsx";

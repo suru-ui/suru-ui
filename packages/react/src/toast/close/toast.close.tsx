@@ -3,9 +3,11 @@ import * as React from "react";
 
 import mergeProps from "../../_merge-props.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import type { Override, IComponent } from "../../types.js";
+import { ToastCloseContext } from "./toast.close.context.js";
 
 /**
  * 通知を閉じるボタンの配色です。
@@ -116,7 +118,16 @@ export const ToastClose: IToastClose = function SuiToastClose(props) {
               buttonRootProps,
               proxyRenderProps(toastState, {
                 style,
-                render,
+                render: (htmlProps, state) => (
+                  <ToastCloseContext value={state}>
+                    <RenderElement
+                      state={state}
+                      render={render}
+                      htmlProps={htmlProps}
+                      defaultTagName="button"
+                    />
+                  </ToastCloseContext>
+                ),
                 className,
               }),
             ])}

@@ -5,6 +5,7 @@ import { CheckIcon, ChevronRightIcon } from "../../_icons.jsx";
 import isLikelyVisibleNode from "../../_is-likely-visible-node.js";
 import { getItemKey } from "../../_item.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -34,6 +35,7 @@ import type {
 import { MenuSeparator } from "../separator/menu.separator.jsx";
 import { MenuSubmenuRoot } from "../submenu-root/menu.submenu-root.jsx";
 import { MenuSubmenuTrigger } from "../submenu-trigger/menu.submenu-trigger.jsx";
+import { MenuContentContext } from "./menu.content.context.js";
 
 /**
  * ポップアップの各項目をレンダリングする関数のインターフェイスです。
@@ -112,7 +114,16 @@ export const MenuContent: IMenuContent = function SuiMenuContent(props: MenuCont
       {...otherProps}
       {...proxyRenderProps<Menu.Popup.State, MenuContentState>((state) => ({ ...ctx, ...state }), {
         style,
-        render,
+        render: (htmlProps, state) => (
+          <MenuContentContext value={state}>
+            <RenderElement
+              state={state}
+              render={render}
+              htmlProps={htmlProps}
+              defaultTagName="div"
+            />
+          </MenuContentContext>
+        ),
         className: cn<MenuContentState>(
           className,
           "sui_menu_content",

@@ -4,6 +4,7 @@ import * as React from "react";
 
 import mergeProps from "../../_merge-props.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
@@ -13,6 +14,7 @@ import {
   type ContextMenuContext,
   useContextMenuContext,
 } from "../root/context-menu.root.context.js";
+import { ContextMenuRadioItemContext } from "./context-menu.radio-item.context.js";
 
 /**
  * ラジオ項目の配色です。
@@ -168,7 +170,16 @@ export const ContextMenuRadioItem: IContextMenuRadioItem = function SuiContextMe
                 (state) => ({ ...ctx, ...state, ...itemState }),
                 {
                   style,
-                  render: render ?? <div />,
+                  render: (htmlProps, state) => (
+                    <ContextMenuRadioItemContext value={state}>
+                      <RenderElement
+                        state={state}
+                        render={render ?? <div />}
+                        htmlProps={htmlProps}
+                        defaultTagName="div"
+                      />
+                    </ContextMenuRadioItemContext>
+                  ),
                   className: cn<ContextMenuRadioItemState>(
                     className,
                     "sui_context_menu_item",

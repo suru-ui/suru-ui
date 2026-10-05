@@ -3,11 +3,13 @@ import * as React from "react";
 
 import mergeProps from "../../_merge-props.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import { MenuLinkItemContext } from "./menu.link-item.context.js";
 
 /**
  * メニューのリンク項目の配色です。
@@ -163,7 +165,16 @@ export const MenuLinkItem: IMenuLinkItem = function SuiMenuLinkItem(props) {
                 {
                   style,
                   // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-                  render,
+                  render: (htmlProps, state) => (
+                    <MenuLinkItemContext value={state}>
+                      <RenderElement
+                        state={state}
+                        render={render}
+                        htmlProps={htmlProps}
+                        defaultTagName="a"
+                      />
+                    </MenuLinkItemContext>
+                  ),
                   className: cn<MenuLinkItemState>(
                     className,
                     "sui_menu_item",

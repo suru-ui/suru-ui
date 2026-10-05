@@ -5,6 +5,9 @@ import "./link/breadcrumb.link.css";
 import "./separator/breadcrumb.separator.css";
 
 export * from "./root/breadcrumb.root.context.js";
+export * from "./list/breadcrumb.list.context.js";
+export * from "./item/breadcrumb.item.context.js";
+export * from "./separator/breadcrumb.separator.context.js";
 export * from "./root/breadcrumb.root.jsx";
 export * from "./list/breadcrumb.list.jsx";
 export * from "./item/breadcrumb.item.jsx";

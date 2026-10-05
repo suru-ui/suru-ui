@@ -5,6 +5,7 @@ import { CheckIcon } from "../../_icons.jsx";
 import isLikelyVisibleNode from "../../_is-likely-visible-node.js";
 import { getItemKey } from "../../_item.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import toReactNode from "../../_to-react-node.js";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
@@ -22,6 +23,7 @@ import type {
   SelectRootLabeledItemObject,
 } from "../root/select.root.jsx";
 import { SelectSeparator } from "../separator/select.separator.jsx";
+import { SelectListContext } from "./select.list.context.js";
 
 /**
  * ラベルと値を持つ、リストの項目です。
@@ -137,7 +139,16 @@ export const SelectList: ISelectList = function SuiSelectList(props: SelectListP
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <SelectListContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </SelectListContext>
+          ),
           className: cn<SelectListState>(
             className,
             "sui_select_list",

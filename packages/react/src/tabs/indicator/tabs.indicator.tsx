@@ -2,10 +2,12 @@ import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type TabsContext, useTabsContext } from "../root/tabs.root.context.js";
+import { TabsIndicatorContext } from "./tabs.indicator.context.js";
 
 /**
  * {@link TabsIndicator} が持つ状態です。
@@ -59,7 +61,16 @@ export const TabsIndicator: ITabsIndicator = function SuiTabsIndicator(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <TabsIndicatorContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="span"
+              />
+            </TabsIndicatorContext>
+          ),
           className: cn<TabsIndicatorState>(
             className,
             "sui_tabs_indicator",

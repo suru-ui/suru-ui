@@ -6,6 +6,12 @@ import "./content/dialog.content.css";
 import "./footer/dialog.footer.css";
 
 export * from "./popup/dialog.popup.context.js";
+export * from "./header/dialog.header.context.js";
+export * from "./title/dialog.title.context.js";
+export * from "./description/dialog.description.context.js";
+export * from "./action/dialog.action.context.js";
+export * from "./content/dialog.content.context.js";
+export * from "./footer/dialog.footer.context.js";
 export * from "./handle/dialog.handle.js";
 export * from "./root/dialog.root.jsx";
 export * from "./toggle-trigger/dialog.toggle-trigger.jsx";

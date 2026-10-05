@@ -2,11 +2,13 @@ import { Tooltip } from "@base-ui/react/tooltip";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import type { TooltipHandle } from "../handle/tooltip.handle.js";
 import { type TooltipContext, useTooltipContext } from "../root/tooltip.root.context.js";
+import { TooltipTriggerContext } from "./tooltip.trigger.context.js";
 
 /**
  * {@link TooltipTrigger} が持つ状態です。
@@ -96,7 +98,16 @@ export const TooltipTrigger: ITooltipTrigger = function SuiTooltipTrigger<TPaylo
         (state) => ({ size: "md", radius: "md", outlined: false, ...ctx, ...state }),
         {
           style,
-          render: children,
+          render: (htmlProps, state) => (
+            <TooltipTriggerContext value={state}>
+              <RenderElement
+                state={state}
+                render={children}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </TooltipTriggerContext>
+          ),
           className: cn<TooltipTriggerState>(
             className,
             "sui_tooltip_trigger",

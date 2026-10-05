@@ -2,9 +2,11 @@ import { ScrollArea as BaseScrollArea } from "@base-ui/react/scroll-area";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
+import { ScrollAreaRootContext } from "./scroll-area.root.context.js";
 
 /**
  * {@link ScrollAreaRoot} が持つ状態です。
@@ -81,7 +83,16 @@ export const ScrollAreaRoot: IScrollAreaRoot = function SuiScrollAreaRoot(props)
         (state) => ({ ...styleState, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ScrollAreaRootContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ScrollAreaRootContext>
+          ),
           className: cn<ScrollAreaRootState>(
             className,
             "sui_scroll_area",

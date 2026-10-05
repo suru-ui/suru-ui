@@ -3,6 +3,7 @@ import * as React from "react";
 
 import mergeProps from "../../_merge-props.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Card from "../../card/card.parts.js";
 import cn from "../../cn.js";
@@ -11,6 +12,7 @@ import {
   type AlertDialogPopupContext,
   useAlertDialogPopupContext,
 } from "../popup/alert-dialog.popup.context.js";
+import { AlertDialogTitleContext } from "./alert-dialog.title.context.js";
 
 /**
  * {@link AlertDialogTitle} が持つ状態です。
@@ -80,7 +82,16 @@ export const AlertDialogTitle: IAlertDialogTitle = function SuiAlertDialogTitle(
               (state) => ({ ...ctx, ...state }),
               {
                 style,
-                render,
+                render: (htmlProps, state) => (
+                  <AlertDialogTitleContext value={state}>
+                    <RenderElement
+                      state={state}
+                      render={render}
+                      htmlProps={htmlProps}
+                      defaultTagName="h2"
+                    />
+                  </AlertDialogTitleContext>
+                ),
                 className: cn<AlertDialogTitleState>(
                   className,
                   "sui_alert_dialog_title",

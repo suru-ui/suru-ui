@@ -1,4 +1,5 @@
 import "./root/avatar.root.css";
+export * from "./root/avatar.root.context.js";
 import "./image/avatar.image.css";
 import "./fallback/avatar.fallback.css";
 

@@ -4,6 +4,7 @@ import * as React from "react";
 import { CheckIcon } from "../../_icons.jsx";
 import { getItemKey } from "../../_item.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -11,6 +12,7 @@ import { isRadioItemObject } from "../_menu.utils.jsx";
 import { MenuRadioItemIndicator } from "../radio-item-indicator/menu.radio-item-indicator.jsx";
 import { MenuRadioItem } from "../radio-item/menu.radio-item.jsx";
 import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import { MenuRadioGroupContext } from "./menu.radio-group.context.js";
 
 /**
  * {@link MenuRadioGroup} の選択状態を変更されるイベントの詳細です。
@@ -108,7 +110,16 @@ export const MenuRadioGroup: IMenuRadioGroup = function SuiMenuRadioGroup(
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <MenuRadioGroupContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </MenuRadioGroupContext>
+          ),
           className: cn<MenuRadioGroupState>(
             className,
             "sui_menu_radio_group",

@@ -5,6 +5,10 @@ import "./indicator/tabs.indicator.css";
 import "./panel/tabs.panel.css";
 
 export * from "./root/tabs.root.context.js";
+export * from "./list/tabs.list.context.js";
+export * from "./tab/tabs.tab.context.js";
+export * from "./indicator/tabs.indicator.context.js";
+export * from "./panel/tabs.panel.context.js";
 export * from "./root/tabs.root.jsx";
 export * from "./list/tabs.list.jsx";
 export * from "./tab/tabs.tab.jsx";

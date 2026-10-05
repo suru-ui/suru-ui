@@ -3,10 +3,12 @@ import * as React from "react";
 
 import mergeProps from "../../_merge-props.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Alert from "../../alert/alert.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
+import { ToastContentContext } from "./toast.content.context.js";
 
 /**
  * 通知の配色です。
@@ -108,7 +110,16 @@ export const ToastContent: IToastContent = function SuiToastContent(props) {
               alertRootProps,
               proxyRenderProps(toastState, {
                 style,
-                render,
+                render: (htmlProps, state) => (
+                  <ToastContentContext value={state}>
+                    <RenderElement
+                      state={state}
+                      render={render}
+                      htmlProps={htmlProps}
+                      defaultTagName="div"
+                    />
+                  </ToastContentContext>
+                ),
                 className: cn(
                   className,
                   "sui_toast_content",

@@ -2,6 +2,7 @@ import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
@@ -9,6 +10,7 @@ import {
   type ContextMenuContext,
   useContextMenuContext,
 } from "../root/context-menu.root.context.js";
+import { ContextMenuCheckboxItemIndicatorContext } from "./context-menu.checkbox-item-indicator.context.js";
 
 /**
  * {@link ContextMenuCheckboxItemIndicator} が持つ状態です。
@@ -65,7 +67,16 @@ export const ContextMenuCheckboxItemIndicator: IContextMenuCheckboxItemIndicator
           ContextMenuCheckboxItemIndicatorState
         >((state) => ({ ...ctx, ...state }), {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ContextMenuCheckboxItemIndicatorContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="span"
+              />
+            </ContextMenuCheckboxItemIndicatorContext>
+          ),
           className: cn<ContextMenuCheckboxItemIndicatorState>(
             className,
             "sui_context_menu_item_indicator",

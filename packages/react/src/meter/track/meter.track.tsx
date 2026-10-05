@@ -2,10 +2,12 @@ import { Meter } from "@base-ui/react/meter";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type MeterContext, useMeterContext } from "../root/meter.root.context.js";
+import { MeterTrackContext } from "./meter.track.context.js";
 
 /**
  * {@link MeterTrack} が持つ状態です。
@@ -55,7 +57,16 @@ export const MeterTrack: IMeterTrack = function SuiMeterTrack(props) {
       {...otherProps}
       {...proxyRenderProps<Meter.Track.State, MeterTrackState>((state) => ({ ...ctx, ...state }), {
         style,
-        render,
+        render: (htmlProps, state) => (
+          <MeterTrackContext value={state}>
+            <RenderElement
+              state={state}
+              render={render}
+              htmlProps={htmlProps}
+              defaultTagName="div"
+            />
+          </MeterTrackContext>
+        ),
         className: cn<MeterTrackState>(
           className,
           "sui_meter_track",

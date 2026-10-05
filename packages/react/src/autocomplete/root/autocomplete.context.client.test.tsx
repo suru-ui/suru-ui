@@ -51,21 +51,14 @@ describe("useAutocompleteContext", () => {
 
     // 実行
     const screen = await render(
-      <AutocompleteRoot
-        size="lg"
-        color="blue"
-        items={fruits}
-        radius="none"
-        variant="naked"
-        outlined
-      >
+      <AutocompleteRoot size="lg" color="blue" items={fruits} radius="none" variant="naked">
         <Probe />
       </AutocompleteRoot>,
     );
 
     // 検証
-    expect(screen.getByText("lg/blue/none/naked/true").query()?.textContent).toBe(
-      "lg/blue/none/naked/true",
+    expect(screen.getByText("lg/blue/none/naked/false").query()?.textContent).toBe(
+      "lg/blue/none/naked/false",
     );
   });
 

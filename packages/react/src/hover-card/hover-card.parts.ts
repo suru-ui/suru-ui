@@ -6,6 +6,13 @@ import "./arrow/hover-card.arrow.css";
 import "./viewport/hover-card.viewport.css";
 
 export * from "./root/hover-card.root.context.js";
+export * from "./trigger/hover-card.trigger.context.js";
+export * from "./portal/hover-card.portal.context.js";
+export * from "./backdrop/hover-card.backdrop.context.js";
+export * from "./positioner/hover-card.positioner.context.js";
+export * from "./content/hover-card.content.context.js";
+export * from "./arrow/hover-card.arrow.context.js";
+export * from "./viewport/hover-card.viewport.context.js";
 export * from "./handle/hover-card.handle.js";
 export * from "./root/hover-card.root.jsx";
 export * from "./trigger/hover-card.trigger.jsx";

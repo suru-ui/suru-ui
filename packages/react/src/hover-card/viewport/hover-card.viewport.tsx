@@ -2,10 +2,12 @@ import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type HoverCardContext, useHoverCardContext } from "../root/hover-card.root.context.js";
+import { HoverCardViewportContext } from "./hover-card.viewport.context.js";
 
 /**
  * {@link HoverCardViewport} が持つ状態です。
@@ -59,7 +61,16 @@ export const HoverCardViewport: IHoverCardViewport = function SuiHoverCardViewpo
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <HoverCardViewportContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </HoverCardViewportContext>
+          ),
           className: cn<HoverCardViewportState>(
             className,
             "sui_hover_card_viewport",

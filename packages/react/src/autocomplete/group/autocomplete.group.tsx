@@ -2,10 +2,12 @@ import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { AutocompleteContext, useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import { AutocompleteGroupContext } from "./autocomplete.group.context.js";
 
 /**
  * {@link AutocompleteGroup} の状態です。
@@ -68,7 +70,16 @@ export const AutocompleteGroup: IAutocompleteGroup = function SuiAutocompleteGro
           (state) => ({ ...groupCtx, ...state }),
           {
             style,
-            render,
+            render: (htmlProps, state) => (
+              <AutocompleteGroupContext value={state}>
+                <RenderElement
+                  state={state}
+                  render={render}
+                  htmlProps={htmlProps}
+                  defaultTagName="div"
+                />
+              </AutocompleteGroupContext>
+            ),
             className: cn<AutocompleteGroupState>(
               className,
               "sui_autocomplete_group",

@@ -3,6 +3,7 @@ import type { Size, Color } from "@suru-ui/theme";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import {
   type AvatarGroupContext,
@@ -10,6 +11,7 @@ import {
 } from "../../avatar-group/root/avatar-group.root.context.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
+import { AvatarRootContext } from "./avatar.root.context.js";
 
 /**
  * アバターの配色です。
@@ -127,7 +129,16 @@ export const AvatarRoot: IAvatarRoot = function SuiAvatarRoot(props) {
         (state) => ({ ...styleState, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <AvatarRootContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="span"
+              />
+            </AvatarRootContext>
+          ),
           className: cn<AvatarRootState>(
             className,
             "sui_avatar",

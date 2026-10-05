@@ -2,10 +2,12 @@ import { Input as BaseInput } from "@base-ui/react/input";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type TextFieldContext, useTextFieldContext } from "../root/text-field.root.context.js";
+import { TextFieldInputContext } from "./text-field.input.context.js";
 
 /**
  * {@link TextFieldInput} の値が変更されたイベントの詳細です。
@@ -85,7 +87,16 @@ export const TextFieldInput: ITextFieldInput = function SuiTextFieldInput(props)
         (inputState) => ({ ...renderState, ...inputState }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <TextFieldInputContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="input"
+              />
+            </TextFieldInputContext>
+          ),
           className: cn<TextFieldInputState>(
             className,
             "sui_text_field_input",

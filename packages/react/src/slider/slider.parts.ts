@@ -7,6 +7,12 @@ import "./indicator/slider.indicator.css";
 import "./thumb/slider.thumb.css";
 
 export * from "./root/slider.root.context.js";
+export * from "./label/slider.label.context.js";
+export * from "./value/slider.value.context.js";
+export * from "./control/slider.control.context.js";
+export * from "./track/slider.track.context.js";
+export * from "./indicator/slider.indicator.context.js";
+export * from "./thumb/slider.thumb.context.js";
 export * from "./root/slider.root.jsx";
 export * from "./label/slider.label.jsx";
 export * from "./value/slider.value.jsx";

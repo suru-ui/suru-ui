@@ -4,12 +4,14 @@ import * as React from "react";
 
 import mergeProps from "../../_merge-props.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { getItemVariant } from "../_menu.utils.jsx";
 import { type MenuContext, useMenuContext } from "../root/menu.root.context.js";
+import { MenuCheckboxItemContext } from "./menu.checkbox-item.context.js";
 
 /**
  * {@link MenuCheckboxItem} のチェック状態を変更されるイベントの詳細です。
@@ -184,7 +186,16 @@ export const MenuCheckboxItem: IMenuCheckboxItem = function SuiMenuCheckboxItem(
                 (state) => ({ ...ctx, ...state, ...itemState }),
                 {
                   style,
-                  render: render ?? <div />,
+                  render: (htmlProps, state) => (
+                    <MenuCheckboxItemContext value={state}>
+                      <RenderElement
+                        state={state}
+                        render={render ?? <div />}
+                        htmlProps={htmlProps}
+                        defaultTagName="div"
+                      />
+                    </MenuCheckboxItemContext>
+                  ),
                   className: cn<MenuCheckboxItemState>(
                     className,
                     "sui_menu_item",

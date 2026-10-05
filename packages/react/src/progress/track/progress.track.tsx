@@ -2,10 +2,12 @@ import { Progress } from "@base-ui/react/progress";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type ProgressContext, useProgressContext } from "../root/progress.root.context.js";
+import { ProgressTrackContext } from "./progress.track.context.js";
 
 /**
  * {@link ProgressTrack} が持つ状態です。
@@ -57,7 +59,16 @@ export const ProgressTrack: IProgressTrack = function SuiProgressTrack(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <ProgressTrackContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ProgressTrackContext>
+          ),
           className: cn<ProgressTrackState>(
             className,
             "sui_progress_track",

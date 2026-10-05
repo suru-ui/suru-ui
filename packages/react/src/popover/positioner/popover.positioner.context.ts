@@ -1,0 +1,39 @@
+import * as React from "react";
+
+import { ContextMissingError } from "../../errors.js";
+import type { IUseContext } from "../../types.js";
+import type { PopoverPositionerState } from "./popover.positioner.jsx";
+
+/**
+ * {@link PopoverPositioner} が子パーツへ提供する状態です。
+ */
+export type PopoverPositionerContext = Readonly<PopoverPositionerState>;
+
+/**
+ * {@link PopoverPositioner} が子パーツへ提供するコンテキストです。
+ */
+export const PopoverPositionerContext: React.Context<PopoverPositionerContext | null> =
+  React.createContext<PopoverPositionerContext | null>(null);
+
+export type IUsePopoverPositionerContext = IUseContext<PopoverPositionerContext>;
+
+/**
+ * {@link PopoverPositionerContext} を読み取るフックです。
+ */
+export const usePopoverPositionerContext: IUsePopoverPositionerContext =
+  function useSuiPopoverPositionerContext(optional): any {
+    const ctx = React.use(PopoverPositionerContext);
+    if (ctx === null && !optional) {
+      throw new ContextMissingError({
+        contextName: "PopoverPositionerContext",
+        providerName: "PopoverPositioner",
+      });
+    }
+
+    return ctx;
+  };
+
+export {
+  PopoverPositionerContext as PositionerContext,
+  usePopoverPositionerContext as usePositionerContext,
+};

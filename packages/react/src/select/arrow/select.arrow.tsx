@@ -2,10 +2,12 @@ import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type SelectContext, useSelectContext } from "../root/select.root.context.js";
+import { SelectArrowContext } from "./select.arrow.context.js";
 
 /**
  * {@link SelectArrow} が持つ状態です。
@@ -57,7 +59,16 @@ export const SelectArrow: ISelectArrow = function SuiSelectArrow(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <SelectArrowContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </SelectArrowContext>
+          ),
           className: cn<SelectArrowState>(
             className,
             "sui_select_arrow",

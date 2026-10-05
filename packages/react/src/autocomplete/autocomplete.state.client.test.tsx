@@ -16,15 +16,7 @@ describe("Autocomplete の状態", () => {
   test("入力グループの render へスタイル情報と入力グループの状態を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <AutocompleteRoot
-        open
-        size="lg"
-        color="blue"
-        items={fruits}
-        radius="none"
-        variant="naked"
-        outlined
-      >
+      <AutocompleteRoot open size="lg" color="blue" items={fruits} radius="none" variant="naked">
         <AutocompleteInputGroup
           render={(props, state) => (
             <div
@@ -32,6 +24,7 @@ describe("Autocomplete の状態", () => {
               data-probe={`${state.size}/${state.color}/${state.radius}/${state.variant}/${String(state.outlined)}/${String(state.open)}`}
             />
           )}
+          outlined
         />
       </AutocompleteRoot>,
     );
@@ -70,7 +63,7 @@ describe("Autocomplete の状態", () => {
   test("ポップアップの render へスタイル情報とポップアップの状態を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <AutocompleteRoot open size="lg" items={fruits} outlined>
+      <AutocompleteRoot open size="lg" items={fruits}>
         <AutocompletePortal>
           <AutocompletePositioner>
             <AutocompletePopup
@@ -80,6 +73,7 @@ describe("Autocomplete の状態", () => {
                   data-probe={`${state.size}/${String(state.outlined)}/${String(state.open)}`}
                 />
               )}
+              outlined
             />
           </AutocompletePositioner>
         </AutocompletePortal>

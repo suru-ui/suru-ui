@@ -2,11 +2,13 @@ import * as React from "react";
 
 import { MoreIcon } from "../../_icons.jsx";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type PaginationContext, usePaginationContext } from "../root/pagination.root.context.js";
+import { PaginationEllipsisContext } from "./pagination.ellipsis.context.js";
 
 /**
  * {@link PaginationEllipsis} が持つ状態です。
@@ -159,7 +161,16 @@ export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEll
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <PaginationEllipsisContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </PaginationEllipsisContext>
+          ),
           className: cn<PaginationEllipsisState>(
             className,
             "sui_pagination_ellipsis",

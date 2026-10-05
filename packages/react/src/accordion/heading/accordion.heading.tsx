@@ -2,11 +2,13 @@ import { Accordion } from "@base-ui/react/accordion";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import type { AccordionItemContext } from "../item/accordion.item.context.js";
 import { useAccordionContext } from "../root/accordion.root.context.js";
+import { AccordionHeadingContext } from "./accordion.heading.context.js";
 
 /**
  * {@link AccordionHeading} が持つ状態です。
@@ -58,7 +60,16 @@ export const AccordionHeading: IAccordionHeading = function SuiAccordionHeading(
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render,
+          render: (htmlProps, state) => (
+            <AccordionHeadingContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </AccordionHeadingContext>
+          ),
           className: cn<AccordionHeadingState>(
             className,
             "sui_accordion_heading",

@@ -2,10 +2,12 @@ import { Meter } from "@base-ui/react/meter";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { type MeterContext, useMeterContext } from "../root/meter.root.context.js";
+import { MeterValueContext } from "./meter.value.context.js";
 
 /**
  * 値をレンダリングする関数のインターフェイスです。
@@ -76,7 +78,16 @@ export const MeterValue: IMeterValue = function SuiMeterValue(props) {
       {...otherProps}
       {...proxyRenderProps<Meter.Value.State, MeterValueState>((state) => ({ ...ctx, ...state }), {
         style,
-        render,
+        render: (htmlProps, state) => (
+          <MeterValueContext value={state}>
+            <RenderElement
+              state={state}
+              render={render}
+              htmlProps={htmlProps}
+              defaultTagName="span"
+            />
+          </MeterValueContext>
+        ),
         className: cn<MeterValueState>(
           className,
           "sui_meter_value",
