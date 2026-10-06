@@ -178,8 +178,8 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
             (state) => state.readOnly && "sui_autocomplete-readonly",
             (state) =>
               state.popupSide !== null &&
-              `sui_autocomplete-popupside_${state.popupSide.replaceAll("-", "_")}`,
-            (state) => state.listEmpty && "sui_autocomplete-listempty",
+              `sui_autocomplete-popup_side_${state.popupSide.replaceAll("-", "_")}`,
+            (state) => state.listEmpty && "sui_autocomplete-list_empty",
           ),
         },
       )}

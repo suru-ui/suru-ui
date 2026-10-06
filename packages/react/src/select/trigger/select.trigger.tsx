@@ -102,7 +102,7 @@ export const SelectTrigger: ISelectTrigger = function SuiSelectTrigger(props) {
             (state) => state.focused && "sui_select-focused",
             (state) =>
               state.popupSide !== null &&
-              `sui_select-popupside_${state.popupSide.replaceAll("-", "_")}`,
+              `sui_select-popup_side_${state.popupSide.replaceAll("-", "_")}`,
           ),
         },
       )}

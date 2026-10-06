@@ -46,9 +46,9 @@ export const AlertDescription: IAlertDescription = function SuiAlertDescription(
       {
         className: cn<AlertDescriptionState>(
           "sui_alert_description",
-          (state) => `sui_alert_description-actionsposition_${state.actionsPosition}`,
+          (state) => `sui_alert_description-actions_position_${state.actionsPosition}`,
           (state) =>
-            `sui_alert_description-descriptionposition_${state.descriptionPosition.replaceAll("-", "_")}`,
+            `sui_alert_description-description_position_${state.descriptionPosition.replaceAll("-", "_")}`,
           (state) => `sui_alert_description-size_${state.size}`,
           (state) => `sui_alert_description-color_${state.color}`,
           (state) => `sui_alert_description-radius_${state.radius}`,

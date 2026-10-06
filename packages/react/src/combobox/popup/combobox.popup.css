@@ -135,28 +135,28 @@
 
 /* 代入 */
 :scope {
-  &.sui_combobox_popup-inputposition_top {
+  &.sui_combobox_popup-input_position_top {
     --_sui_combobox_popup-direction: column;
   }
 
-  &.sui_combobox_popup-inputposition_bottom {
+  &.sui_combobox_popup-input_position_bottom {
     --_sui_combobox_popup-direction: column-reverse;
   }
 
-  &.sui_combobox_popup-inputposition_start {
+  &.sui_combobox_popup-input_position_start {
     --_sui_combobox_popup-direction: column;
   }
 
-  &.sui_combobox_popup-inputposition_end {
+  &.sui_combobox_popup-input_position_end {
     --_sui_combobox_popup-direction: column-reverse;
   }
 
   &.sui_combobox_popup-side_top {
-    &.sui_combobox_popup-inputposition_start {
+    &.sui_combobox_popup-input_position_start {
       --_sui_combobox_popup-direction: column-reverse;
     }
 
-    &.sui_combobox_popup-inputposition_end {
+    &.sui_combobox_popup-input_position_end {
       --_sui_combobox_popup-direction: column;
     }
   }

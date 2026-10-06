@@ -46,9 +46,9 @@ export const AlertTitle: IAlertTitle = function SuiAlertTitle(props) {
       {
         className: cn<AlertTitleState>(
           "sui_alert_title",
-          (state) => `sui_alert_title-actionsposition_${state.actionsPosition}`,
+          (state) => `sui_alert_title-actions_position_${state.actionsPosition}`,
           (state) =>
-            `sui_alert_title-descriptionposition_${state.descriptionPosition.replaceAll("-", "_")}`,
+            `sui_alert_title-description_position_${state.descriptionPosition.replaceAll("-", "_")}`,
           (state) => `sui_alert_title-size_${state.size}`,
           (state) => `sui_alert_title-color_${state.color}`,
           (state) => `sui_alert_title-radius_${state.radius}`,

@@ -10,7 +10,7 @@
     grid-template-columns: auto 1fr;
   }
 
-  &.sui_alert-actionsposition_side:has(.sui_alert_actions) {
+  &.sui_alert-actions_position_side:has(.sui_alert_actions) {
     grid-template-columns: 1fr auto;
 
     &:has(.sui_alert_icon) {
@@ -20,47 +20,47 @@
 
   /* 説明文の横並びはタイトルと説明文の両方があるときだけ適用します。 */
   &:is(
-    .sui_alert-descriptionposition_side_start,
-    .sui_alert-descriptionposition_side_end
+    .sui_alert-description_position_side_start,
+    .sui_alert-description_position_side_end
   ):has(.sui_alert_title):has(.sui_alert_description):is(
-    :not(.sui_alert-actionsposition_side),
+    :not(.sui_alert-actions_position_side),
     :not(:has(.sui_alert_actions))
   ):not(:has(.sui_alert_icon)) {
     grid-template-columns: auto 1fr;
   }
 
   &:is(
-    .sui_alert-descriptionposition_side_start,
-    .sui_alert-descriptionposition_side_end
+    .sui_alert-description_position_side_start,
+    .sui_alert-description_position_side_end
   ):has(.sui_alert_title):has(.sui_alert_description):is(
-    :not(.sui_alert-actionsposition_side),
+    :not(.sui_alert-actions_position_side),
     :not(:has(.sui_alert_actions))
   ):has(.sui_alert_icon) {
     grid-template-columns: auto auto 1fr;
   }
 
   &:is(
-    .sui_alert-descriptionposition_side_start,
-    .sui_alert-descriptionposition_side_end
+    .sui_alert-description_position_side_start,
+    .sui_alert-description_position_side_end
   ):has(.sui_alert_title):has(.sui_alert_description):has(
     .sui_alert_actions
-  ).sui_alert-actionsposition_side:not(:has(.sui_alert_icon)) {
+  ).sui_alert-actions_position_side:not(:has(.sui_alert_icon)) {
     grid-template-columns: auto 1fr auto;
   }
 
   &:is(
-    .sui_alert-descriptionposition_side_start,
-    .sui_alert-descriptionposition_side_end
+    .sui_alert-description_position_side_start,
+    .sui_alert-description_position_side_end
   ):has(.sui_alert_title):has(.sui_alert_description):has(
     .sui_alert_actions
-  ).sui_alert-actionsposition_side:has(.sui_alert_icon) {
+  ).sui_alert-actions_position_side:has(.sui_alert_icon) {
     grid-template-columns: auto auto 1fr auto;
   }
 
   /* 説明文が1行になるときはアイコンをその行に置きます。 */
   &:is(
-    .sui_alert-descriptionposition_side_start,
-    .sui_alert-descriptionposition_side_end
+    .sui_alert-description_position_side_start,
+    .sui_alert-description_position_side_end
   ) .sui_alert_icon {
     grid-row: 1;
   }

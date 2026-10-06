@@ -46,9 +46,9 @@ export const AlertActions: IAlertActions = function SuiAlertActions(props) {
       {
         className: cn<AlertActionsState>(
           "sui_alert_actions",
-          (state) => `sui_alert_actions-actionsposition_${state.actionsPosition}`,
+          (state) => `sui_alert_actions-actions_position_${state.actionsPosition}`,
           (state) =>
-            `sui_alert_actions-descriptionposition_${state.descriptionPosition.replaceAll("-", "_")}`,
+            `sui_alert_actions-description_position_${state.descriptionPosition.replaceAll("-", "_")}`,
           (state) => `sui_alert_actions-size_${state.size}`,
           (state) => `sui_alert_actions-color_${state.color}`,
           (state) => `sui_alert_actions-radius_${state.radius}`,

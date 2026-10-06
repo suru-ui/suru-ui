@@ -280,27 +280,27 @@
 
 /* 変異 */
 :scope {
-  &.sui_combobox_popup-inputposition_top .sui_combobox {
+  &.sui_combobox_popup-input_position_top .sui_combobox {
     --_sui_combobox-margin_block_end: 0px;
   }
 
-  &.sui_combobox_popup-inputposition_bottom .sui_combobox {
+  &.sui_combobox_popup-input_position_bottom .sui_combobox {
     --_sui_combobox-margin_block_start: 0px;
   }
 
-  &.sui_combobox_popup-inputposition_start:not(.sui_combobox_popup-side_top) .sui_combobox {
+  &.sui_combobox_popup-input_position_start:not(.sui_combobox_popup-side_top) .sui_combobox {
     --_sui_combobox-margin_block_end: 0px;
   }
 
-  &.sui_combobox_popup-inputposition_start.sui_combobox_popup-side_top .sui_combobox {
+  &.sui_combobox_popup-input_position_start.sui_combobox_popup-side_top .sui_combobox {
     --_sui_combobox-margin_block_start: 0px;
   }
 
-  &.sui_combobox_popup-inputposition_end:not(.sui_combobox_popup-side_top) .sui_combobox {
+  &.sui_combobox_popup-input_position_end:not(.sui_combobox_popup-side_top) .sui_combobox {
     --_sui_combobox-margin_block_start: 0px;
   }
 
-  &.sui_combobox_popup-inputposition_end.sui_combobox_popup-side_top .sui_combobox {
+  &.sui_combobox_popup-input_position_end.sui_combobox_popup-side_top .sui_combobox {
     --_sui_combobox-margin_block_end: 0px;
   }
 }

@@ -27,11 +27,11 @@
 
 /* 固定 */
 :scope {
-  &.sui_alert-descriptionposition_side_start:has(.sui_alert_title):has(.sui_alert_description) .sui_alert_description {
+  &.sui_alert-description_position_side_start:has(.sui_alert_title):has(.sui_alert_description) .sui_alert_description {
     text-align: start;
   }
 
-  &.sui_alert-descriptionposition_side_end:has(.sui_alert_title):has(.sui_alert_description) .sui_alert_description {
+  &.sui_alert-description_position_side_end:has(.sui_alert_title):has(.sui_alert_description) .sui_alert_description {
     text-align: end;
   }
 }

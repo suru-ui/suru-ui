@@ -93,7 +93,7 @@ export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(pro
             (state) => state.disabled && "sui_combobox_trigger-disabled",
             (state) => state.open && "sui_combobox_trigger-open",
             (state) => state.placeholder && "sui_combobox_trigger-placeholder",
-            (state) => state.listEmpty && "sui_combobox_trigger-listempty",
+            (state) => state.listEmpty && "sui_combobox_trigger-list_empty",
             (state) => state.touched && "sui_combobox_trigger-touched",
             (state) => state.dirty && "sui_combobox_trigger-dirty",
             (state) => state.filled && "sui_combobox_trigger-filled",
@@ -103,7 +103,7 @@ export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(pro
             (state) => state.valid === null && "sui_combobox_trigger-unverified",
             (state) =>
               state.popupSide !== null &&
-              `sui_combobox_trigger-popupside_${state.popupSide.replaceAll("-", "_")}`,
+              `sui_combobox_trigger-popup_side_${state.popupSide.replaceAll("-", "_")}`,
           ),
         },
       )}

@@ -424,7 +424,7 @@ describe("AlertRoot の配置", () => {
 
       // 検証
       const root = screen.getByRole("alert", { name: "通知" }).element();
-      expect(root.classList.contains("sui_alert-actionsposition_side")).toBe(true);
+      expect(root.classList.contains("sui_alert-actions_position_side")).toBe(true);
       const rootRect = root.getBoundingClientRect();
       const titleRect = screen.getByText("更新完了").element().getBoundingClientRect();
       const descriptionRect = screen

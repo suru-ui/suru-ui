@@ -176,8 +176,8 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
             (state) => state.readOnly && "sui_combobox-readonly",
             (state) =>
               state.popupSide !== null &&
-              `sui_combobox-popupside_${state.popupSide.replaceAll("-", "_")}`,
-            (state) => state.listEmpty && "sui_combobox-listempty",
+              `sui_combobox-popup_side_${state.popupSide.replaceAll("-", "_")}`,
+            (state) => state.listEmpty && "sui_combobox-list_empty",
             (state) => state.placeholder && "sui_combobox-placeholder",
           ),
         },

@@ -176,9 +176,9 @@ export const AlertRoot: IAlertRoot = function SuiAlertRoot(props) {
         role,
         className: cn<AlertRootState>(
           "sui_alert",
-          (state) => `sui_alert-actionsposition_${state.actionsPosition}`,
+          (state) => `sui_alert-actions_position_${state.actionsPosition}`,
           (state) =>
-            `sui_alert-descriptionposition_${state.descriptionPosition.replaceAll("-", "_")}`,
+            `sui_alert-description_position_${state.descriptionPosition.replaceAll("-", "_")}`,
           (state) => `sui_alert-size_${state.size}`,
           (state) => `sui_alert-color_${state.color}`,
           (state) => `sui_alert-radius_${state.radius}`,

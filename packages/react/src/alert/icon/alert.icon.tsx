@@ -49,9 +49,9 @@ export const AlertIcon: IAlertIcon = function SuiAlertIcon(props) {
       {
         className: cn<AlertIconState>(
           "sui_alert_icon",
-          (state) => `sui_alert_icon-actionsposition_${state.actionsPosition}`,
+          (state) => `sui_alert_icon-actions_position_${state.actionsPosition}`,
           (state) =>
-            `sui_alert_icon-descriptionposition_${state.descriptionPosition.replaceAll("-", "_")}`,
+            `sui_alert_icon-description_position_${state.descriptionPosition.replaceAll("-", "_")}`,
           (state) => `sui_alert_icon-size_${state.size}`,
           (state) => `sui_alert_icon-color_${state.color}`,
           (state) => `sui_alert_icon-radius_${state.radius}`,
