@@ -26,14 +26,14 @@ export namespace AutocompletePopupProps {
     outlined?: boolean | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Autocomplete.Popup>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // AutocompletePopupProps:
-      "finalFocus" | "initialFocus",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Autocomplete.Popup>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // AutocompletePopupProps より:
+      "finalFocus" | "initialFocus"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

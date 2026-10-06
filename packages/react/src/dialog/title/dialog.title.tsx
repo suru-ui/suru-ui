@@ -23,14 +23,14 @@ export namespace DialogTitleProps {
 
   export type BaseUI = Override<
     Card.Title.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof Dialog.Title>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // DialogTitleProps:
-        never,
-        keyof Render | keyof SuruUI
-      >
+    Omit<
+      Pick<
+        React.ComponentProps<typeof Dialog.Title>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // DialogTitleProps より:
+        never
+      >,
+      keyof Render | keyof SuruUI
     >
   >;
 

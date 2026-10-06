@@ -19,14 +19,14 @@ export namespace MenuRadioItemIndicatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Menu.RadioItemIndicator>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // MenuRadioItemIndicatorProps:
-      "keepMounted",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Menu.RadioItemIndicator>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // MenuRadioItemIndicatorProps より:
+      "keepMounted"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

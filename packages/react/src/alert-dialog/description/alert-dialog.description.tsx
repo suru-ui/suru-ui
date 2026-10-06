@@ -23,14 +23,14 @@ export namespace AlertDialogDescriptionProps {
 
   export type BaseUI = Override<
     Card.Description.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof AlertDialog.Description>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // AlertDialogDescriptionProps:
-        never,
-        keyof Render | keyof SuruUI
-      >
+    Omit<
+      Pick<
+        React.ComponentProps<typeof AlertDialog.Description>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // AlertDialogDescriptionProps より:
+        never
+      >,
+      keyof Render | keyof SuruUI
     >
   >;
 

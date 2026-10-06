@@ -21,18 +21,18 @@ export namespace DialogToggleTriggerProps {
     children: NonNullable<RenderProps<DialogToggleTriggerState>["render"]>;
   };
 
-  export type BaseUI<TPayload = any> = Pick<
-    React.ComponentProps<typeof Dialog.Trigger<TPayload>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NativeButtonProps:
+  export type BaseUI<TPayload = any> = Omit<
+    Pick<
+      React.ComponentProps<typeof Dialog.Trigger<TPayload>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NativeButtonProps より:
       | keyof NativeButtonProps
-      // DialogTriggerProps:
+      // DialogTriggerProps より:
       | "handle"
       | "payload"
-      | "id",
-      keyof Render | keyof SuruUI
-    >
+      | "id"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TPayload = any> = Omit<

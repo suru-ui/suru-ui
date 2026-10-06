@@ -111,11 +111,11 @@ export namespace SliderRootProps {
     variant?: SliderRootVariant | undefined;
   };
 
-  export type BaseUI<TValue extends number | readonly number[] = number | readonly number[]> = Pick<
-    React.ComponentProps<typeof Slider.Root<TValue>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // SliderRootProps:
+  export type BaseUI<TValue extends number | readonly number[] = number | readonly number[]> = Omit<
+    Pick<
+      React.ComponentProps<typeof Slider.Root<TValue>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // SliderRootProps より:
       | "defaultValue"
       | "disabled"
       | "format"
@@ -132,9 +132,9 @@ export namespace SliderRootProps {
       | "thumbCollisionBehavior"
       | "value"
       | "onValueChange"
-      | "onValueCommitted",
-      keyof Render | keyof SuruUI
-    >
+      | "onValueCommitted"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TValue extends number | readonly number[] = number | readonly number[]> = Omit<

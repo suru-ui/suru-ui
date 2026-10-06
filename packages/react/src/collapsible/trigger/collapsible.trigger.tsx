@@ -27,16 +27,16 @@ export namespace CollapsibleTriggerProps {
     children: NonNullable<RenderProps<CollapsibleTriggerState>["render"]>;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Collapsible.Trigger>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NativeButtonProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Collapsible.Trigger>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NativeButtonProps より:
       | keyof NativeButtonProps
-      // CollapsibleTriggerProps:
-      | never,
-      keyof Render | keyof SuruUI
-    >
+      // CollapsibleTriggerProps より:
+      | never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

@@ -91,14 +91,14 @@ export namespace MeterRootProps {
     variant?: MeterRootVariant | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Meter.Root>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // MeterRootProps:
-      "aria-valuetext" | "format" | "getAriaValueText" | "locale" | "max" | "min" | "value",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Meter.Root>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // MeterRootProps より:
+      "aria-valuetext" | "format" | "getAriaValueText" | "locale" | "max" | "min" | "value"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

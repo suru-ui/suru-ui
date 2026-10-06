@@ -126,11 +126,11 @@ export namespace RadioGroupRootProps {
     variant?: RadioGroupRootVariant | undefined;
   };
 
-  export type BaseUI<TValue = any> = Pick<
-    React.ComponentProps<typeof RadioGroup<TValue>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // RadioGroupRootProps:
+  export type BaseUI<TValue = any> = Omit<
+    Pick<
+      React.ComponentProps<typeof RadioGroup<TValue>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // RadioGroupRootProps より:
       | "value"
       | "defaultValue"
       | "disabled"
@@ -139,9 +139,9 @@ export namespace RadioGroupRootProps {
       | "name"
       | "form"
       | "onValueChange"
-      | "inputRef",
-      keyof Render | keyof SuruUI
-    >
+      | "inputRef"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TValue = any> = Omit<

@@ -26,14 +26,14 @@ export namespace AutocompleteListProps {
   export type SuruUI = {};
 
   export type BaseUI<TItem = any> = Override<
-    Pick<
-      React.ComponentProps<typeof Autocomplete.List>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // AutocompleteListProps:
-        "children",
-        keyof Render | keyof SuruUI
-      >
+    Omit<
+      Pick<
+        React.ComponentProps<typeof Autocomplete.List>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // AutocompleteListProps より:
+        "children"
+      >,
+      keyof Render | keyof SuruUI
     >,
     // Base UI の型を強化します。
     {

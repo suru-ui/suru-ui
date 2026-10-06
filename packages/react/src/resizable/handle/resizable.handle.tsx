@@ -51,14 +51,14 @@ export namespace ResizableHandleProps {
     invisible?: boolean | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Separator>,
-    Exclude<
-      // react-resizable-panels の型を確認して取り出すプロパティーを決めます。
-      // SeparatorProps:
-      "disabled" | "disableDoubleClick" | "elementRef" | "id",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Separator>,
+      // [注意] 必ず react-resizable-panels の型を確認してから取り出すプロパティーを決めます。
+      // SeparatorProps より:
+      "disabled" | "disableDoubleClick" | "elementRef" | "id"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

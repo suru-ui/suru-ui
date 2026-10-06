@@ -27,20 +27,20 @@ export namespace ComboboxItemProps {
   export type BaseUI<TValue = any> = Override<
     Button.Root.Props.BaseUI,
     Override<
-      Pick<
-        React.ComponentProps<typeof Combobox.Item>,
-        Exclude<
-          // Base UI の型を確認して取り出すプロパティーを決めます。
-          // NonNativeButtonProps:
+      Omit<
+        Pick<
+          React.ComponentProps<typeof Combobox.Item>,
+          // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+          // NonNativeButtonProps より:
           | keyof NonNativeButtonProps
-          // ComboboxItemProps:
+          // ComboboxItemProps より:
           | "children"
           | "onClick"
           | "index"
           | "value"
-          | "disabled",
-          keyof Render | keyof SuruUI
-        >
+          | "disabled"
+        >,
+        keyof Render | keyof SuruUI
       >,
       {
         value?: TValue;

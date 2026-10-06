@@ -29,16 +29,16 @@ export namespace AccordionTriggerProps {
     unstyled?: boolean | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Accordion.Trigger>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NativeButtonProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Accordion.Trigger>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NativeButtonProps より:
       | keyof NativeButtonProps
-      // AccordionTriggerProps:
-      | never,
-      keyof Render | keyof SuruUI
-    >
+      // AccordionTriggerProps より:
+      | never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

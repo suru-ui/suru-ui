@@ -21,14 +21,14 @@ export namespace ToastDescriptionProps {
 
   export type BaseUI = Override<
     Alert.Description.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof Toast.Description>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // ToastDescriptionProps:
-        never,
-        keyof Render | keyof SuruUI
-      >
+    Omit<
+      Pick<
+        React.ComponentProps<typeof Toast.Description>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // ToastDescriptionProps より:
+        never
+      >,
+      keyof Render | keyof SuruUI
     >
   >;
 

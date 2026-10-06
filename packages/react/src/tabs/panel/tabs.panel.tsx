@@ -24,14 +24,14 @@ export namespace TabsPanelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof BaseTabs.Panel>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // TabsPanelProps:
-      "value" | "keepMounted",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof BaseTabs.Panel>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // TabsPanelProps より:
+      "value" | "keepMounted"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

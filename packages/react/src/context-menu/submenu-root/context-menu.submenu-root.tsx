@@ -34,12 +34,12 @@ export namespace ContextMenuSubmenuRootProps {
     items?: readonly TItem[] | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof ContextMenu.SubmenuRoot>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof ContextMenu.SubmenuRoot>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
 
-      // MenuSubmenuRootProps:
+      // MenuSubmenuRootProps より:
       | "defaultOpen"
       | "loopFocus"
       | "highlightItemOnHover"
@@ -56,12 +56,12 @@ export namespace ContextMenuSubmenuRootProps {
       // | "handle"
       // | "children"
 
-      // MenuSubmenuRootProps:
+      // MenuSubmenuRootProps より:
       | "onOpenChange"
       | "closeParentOnEsc"
-      | "children",
-      keyof Render | keyof SuruUI
-    >
+      | "children"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

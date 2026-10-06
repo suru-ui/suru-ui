@@ -36,14 +36,14 @@ export namespace PaginationEllipsisProps {
     start?: number | undefined;
   };
 
-  export type BaseUI = Pick<
-    Button.ButtonRootProps.BaseUI,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PaginationEllipsisProps:
-      keyof Button.ButtonRootProps.BaseUI,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      Button.ButtonRootProps.BaseUI,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // PaginationEllipsisProps より:
+      keyof Button.ButtonRootProps.BaseUI
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

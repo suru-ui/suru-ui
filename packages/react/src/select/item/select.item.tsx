@@ -24,20 +24,20 @@ export namespace SelectItemProps {
 
   export type BaseUI = Override<
     Button.Root.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof BaseSelect.Item>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // NonNativeButtonProps:
+    Omit<
+      Pick<
+        React.ComponentProps<typeof BaseSelect.Item>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // NonNativeButtonProps より:
         | keyof NonNativeButtonProps
-        // SelectItemProps:
+        // SelectItemProps より:
         | "children"
         | "label"
         | "onClick"
         | "value"
-        | "disabled",
-        keyof Render | keyof SuruUI
-      >
+        | "disabled"
+      >,
+      keyof Render | keyof SuruUI
     >
   >;
 

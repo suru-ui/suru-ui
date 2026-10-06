@@ -34,14 +34,14 @@ export namespace HoverCardTriggerProps {
     handle?: HoverCardHandle<TPayload> | undefined;
   };
 
-  export type BaseUI<TPayload = any> = Pick<
-    React.ComponentProps<typeof PreviewCard.Trigger<TPayload>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PreviewCardTriggerProps:
-      "payload" | "delay" | "closeDelay",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI<TPayload = any> = Omit<
+    Pick<
+      React.ComponentProps<typeof PreviewCard.Trigger<TPayload>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // PreviewCardTriggerProps より:
+      "payload" | "delay" | "closeDelay"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TPayload = any> = Omit<

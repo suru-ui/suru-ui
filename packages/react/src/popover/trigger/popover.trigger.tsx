@@ -35,20 +35,20 @@ export namespace PopoverTriggerProps {
     handle?: PopoverHandle<TPayload> | undefined;
   };
 
-  export type BaseUI<TPayload = any> = Pick<
-    React.ComponentProps<typeof Popover.Trigger<TPayload>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NativeButtonProps:
+  export type BaseUI<TPayload = any> = Omit<
+    Pick<
+      React.ComponentProps<typeof Popover.Trigger<TPayload>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NativeButtonProps より:
       | keyof NativeButtonProps
-      // PopoverTriggerProps:
+      // PopoverTriggerProps より:
       | "payload"
       | "id"
       | "openOnHover"
       | "delay"
-      | "closeDelay",
-      keyof Render | keyof SuruUI
-    >
+      | "closeDelay"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TPayload = any> = Omit<

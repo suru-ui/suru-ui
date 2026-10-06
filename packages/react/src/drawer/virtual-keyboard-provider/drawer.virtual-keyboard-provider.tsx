@@ -13,14 +13,14 @@ export namespace DrawerVirtualKeyboardProviderProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // DrawerVirtualKeyboardProviderProps:
-      "children",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // DrawerVirtualKeyboardProviderProps より:
+      "children"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

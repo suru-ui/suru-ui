@@ -172,11 +172,11 @@ export namespace SelectRootProps {
   export type BaseUI<
     TValue = any,
     TMultiple extends boolean | undefined = boolean | undefined,
-  > = Pick<
-    React.ComponentProps<typeof BaseSelect.Root<TValue, TMultiple>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // SelectRootProps:
+  > = Omit<
+    Pick<
+      React.ComponentProps<typeof BaseSelect.Root<TValue, TMultiple>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // SelectRootProps より:
       | "children"
       | "inputRef"
       | "name"
@@ -200,9 +200,9 @@ export namespace SelectRootProps {
       | "isItemEqualToValue"
       | "defaultValue"
       | "value"
-      | "onValueChange",
-      keyof Render | keyof SuruUI
-    >
+      | "onValueChange"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<

@@ -32,14 +32,14 @@ export namespace PasswordFieldInputProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    TextFieldInputProps.BaseUI,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PasswordFieldInputProps:
-      keyof TextFieldInputProps.BaseUI,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      TextFieldInputProps.BaseUI,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // PasswordFieldInputProps より:
+      keyof TextFieldInputProps.BaseUI
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<TextFieldInputProps.HTML, keyof Render | keyof SuruUI | keyof BaseUI>;

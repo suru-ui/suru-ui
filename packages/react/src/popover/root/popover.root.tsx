@@ -78,11 +78,11 @@ export namespace PopoverRootProps {
     size?: PopoverRootSize | undefined;
   };
 
-  export type BaseUI<TPayload = any> = Pick<
-    React.ComponentProps<typeof Popover.Root<TPayload>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PopoverRootProps:
+  export type BaseUI<TPayload = any> = Omit<
+    Pick<
+      React.ComponentProps<typeof Popover.Root<TPayload>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // PopoverRootProps より:
       | "defaultOpen"
       | "open"
       | "onOpenChange"
@@ -91,9 +91,9 @@ export namespace PopoverRootProps {
       | "modal"
       | "triggerId"
       | "defaultTriggerId"
-      | "children",
-      keyof Render | keyof SuruUI
-    >
+      | "children"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TPayload = any> = Omit<

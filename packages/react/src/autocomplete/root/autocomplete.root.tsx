@@ -159,12 +159,12 @@ export namespace AutocompleteRootProps {
     variant?: AutocompleteRootVariant | undefined;
   };
 
-  export type BaseUI<TItemValue = any> = Pick<
-    Autocomplete.Root.Props<TItemValue>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
+  export type BaseUI<TItemValue = any> = Omit<
+    Pick<
+      Autocomplete.Root.Props<TItemValue>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
 
-      // ComboboxRootProps:
+      // ComboboxRootProps より:
       | "children"
       | "name"
       // | "form"
@@ -204,13 +204,13 @@ export namespace AutocompleteRootProps {
       | "submitOnItemClick"
       // | "fillInputOnItemPress"
 
-      // AriaComboboxProps:
+      // AriaComboboxProps より:
       // | "selectionMode"
       // | "selectedValue"
       // | "defaultSelectedValue"
       // | "onSelectedValueChange"
 
-      // AutocompleteRootProps:
+      // AutocompleteRootProps より:
       | "items"
       | "form"
       | "mode"
@@ -226,9 +226,9 @@ export namespace AutocompleteRootProps {
       | "actionsRef"
       | "onOpenChange"
       | "onItemHighlighted"
-      | "openOnInputClick",
-      keyof Render | keyof SuruUI
-    >
+      | "openOnInputClick"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TItemValue = any> = Omit<

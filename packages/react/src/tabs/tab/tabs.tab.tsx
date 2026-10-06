@@ -51,17 +51,17 @@ export namespace TabsTabProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof BaseTabs.Tab>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NativeButtonProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof BaseTabs.Tab>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NativeButtonProps より:
       | keyof NativeButtonProps
-      // TabsTabProps:
+      // TabsTabProps より:
       | "value"
-      | "disabled",
-      keyof Render | keyof SuruUI
-    >
+      | "disabled"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

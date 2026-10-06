@@ -26,14 +26,14 @@ export namespace ContextMenuTriggerProps {
     children: NonNullable<RenderProps<ContextMenuTriggerState>["render"]>;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof ContextMenu.Trigger>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ContextMenuTriggerProps:
-      never,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof ContextMenu.Trigger>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // ContextMenuTriggerProps より:
+      never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

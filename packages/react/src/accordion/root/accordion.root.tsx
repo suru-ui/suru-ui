@@ -149,11 +149,11 @@ export namespace AccordionRootProps {
     size?: AccordionRootSize | undefined;
   };
 
-  export type BaseUI<TValue = any> = Pick<
-    React.ComponentProps<typeof Accordion.Root<TValue>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // AccordionRootProps:
+  export type BaseUI<TValue = any> = Omit<
+    Pick<
+      React.ComponentProps<typeof Accordion.Root<TValue>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // AccordionRootProps より:
       | "value"
       | "defaultValue"
       | "disabled"
@@ -162,9 +162,9 @@ export namespace AccordionRootProps {
       | "loopFocus"
       | "onValueChange"
       | "multiple"
-      | "orientation",
-      keyof Render | keyof SuruUI
-    >
+      | "orientation"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TValue = any> = Omit<

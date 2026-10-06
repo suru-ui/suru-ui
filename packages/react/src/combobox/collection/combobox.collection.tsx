@@ -50,14 +50,14 @@ export namespace ComboboxCollectionProps {
   };
 
   export type BaseUI<TItem = any> = Override<
-    Pick<
-      React.ComponentProps<typeof Combobox.Collection>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // ComboboxCollectionProps:
-        "children",
-        keyof Render | keyof SuruUI
-      >
+    Omit<
+      Pick<
+        React.ComponentProps<typeof Combobox.Collection>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // ComboboxCollectionProps より:
+        "children"
+      >,
+      keyof Render | keyof SuruUI
     >,
     // Base UI の型を強化します。
     {

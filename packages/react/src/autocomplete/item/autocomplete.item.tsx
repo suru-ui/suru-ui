@@ -30,20 +30,20 @@ export namespace AutocompleteItemProps {
   export type BaseUI<TValue = any> = Override<
     Button.Root.Props.BaseUI,
     Override<
-      Pick<
-        React.ComponentProps<typeof Autocomplete.Item>,
-        Exclude<
-          // Base UI の型を確認して取り出すプロパティーを決めます。
-          // NonNativeButtonProps:
+      Omit<
+        Pick<
+          React.ComponentProps<typeof Autocomplete.Item>,
+          // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+          // NonNativeButtonProps より:
           | keyof NonNativeButtonProps
-          // AutocompleteItemProps:
+          // AutocompleteItemProps より:
           | "children"
           | "onClick"
           | "index"
           | "value"
-          | "disabled",
-          keyof Render | keyof SuruUI
-        >
+          | "disabled"
+        >,
+        keyof Render | keyof SuruUI
       >,
       {
         value?: TValue;

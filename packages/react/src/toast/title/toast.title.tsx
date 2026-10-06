@@ -21,14 +21,14 @@ export namespace ToastTitleProps {
 
   export type BaseUI = Override<
     Alert.Title.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof Toast.Title>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // ToastTitleProps:
-        never,
-        keyof Render | keyof SuruUI
-      >
+    Omit<
+      Pick<
+        React.ComponentProps<typeof Toast.Title>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // ToastTitleProps より:
+        never
+      >,
+      keyof Render | keyof SuruUI
     >
   >;
 

@@ -19,11 +19,11 @@ export namespace SelectPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof BaseSelect.Positioner>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // UseAnchorPositioningSharedParameters:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof BaseSelect.Positioner>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // UseAnchorPositioningSharedParameters より:
       | "anchor"
       | "positionMethod"
       | "side"
@@ -36,10 +36,10 @@ export namespace SelectPositionerProps {
       | "arrowPadding"
       | "disableAnchorTracking"
       | "collisionAvoidance"
-      // SelectPositionerProps:
-      | "alignItemWithTrigger",
-      keyof Render | keyof SuruUI
-    >
+      // SelectPositionerProps より:
+      | "alignItemWithTrigger"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

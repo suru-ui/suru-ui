@@ -20,16 +20,16 @@ export namespace SelectTriggerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof BaseSelect.Trigger>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NativeButtonProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof BaseSelect.Trigger>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NativeButtonProps より:
       | keyof NativeButtonProps
-      // SelectTriggerProps:
-      | "disabled",
-      keyof Render | keyof SuruUI
-    >
+      // SelectTriggerProps より:
+      | "disabled"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

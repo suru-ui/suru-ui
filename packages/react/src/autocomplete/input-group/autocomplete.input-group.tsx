@@ -93,14 +93,14 @@ export namespace AutocompleteInputGroupProps {
     variant?: AutocompleteInputGroupVariant | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Autocomplete.InputGroup>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // AutocompleteInputGroupProps:
-      never,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Autocomplete.InputGroup>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // AutocompleteInputGroupProps より:
+      never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

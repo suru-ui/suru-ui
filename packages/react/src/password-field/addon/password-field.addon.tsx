@@ -28,14 +28,14 @@ export namespace PasswordFieldAddonProps {
     disableFocusOnClick?: boolean | undefined;
   };
 
-  export type BaseUI = Pick<
-    TextFieldAddonProps.BaseUI,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PasswordFieldAddonProps:
-      never,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      TextFieldAddonProps.BaseUI,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // PasswordFieldAddonProps より:
+      never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<TextFieldAddonProps.HTML, keyof Render | keyof SuruUI | keyof BaseUI>;

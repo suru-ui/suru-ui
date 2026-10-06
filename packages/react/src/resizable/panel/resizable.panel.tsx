@@ -66,20 +66,20 @@ export namespace ResizablePanelProps {
     size?: ResizablePanelSize | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof ExternalPanel>,
-    Exclude<
-      // react-resizable-panels の型を確認して取り出すプロパティーを決めます。
-      // PanelProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof ExternalPanel>,
+      // [注意] 必ず react-resizable-panels の型を確認してから取り出すプロパティーを決めます。
+      // PanelProps より:
       | "collapsedSize"
       | "collapsible"
       | "disabled"
       | "elementRef"
       | "groupResizeBehavior"
       | "id"
-      | "panelRef",
-      keyof Render | keyof SuruUI
-    >
+      | "panelRef"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

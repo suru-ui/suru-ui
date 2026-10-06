@@ -19,14 +19,14 @@ export namespace PopoverDescriptionProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Popover.Description>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PopoverDescriptionProps:
-      never,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Popover.Description>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // PopoverDescriptionProps より:
+      never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

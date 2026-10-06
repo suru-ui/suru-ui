@@ -41,14 +41,14 @@ export namespace ToastActionProps {
 
   export type BaseUI = Override<
     Button.Root.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof Toast.Action>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // ToastActionProps:
-        never,
-        keyof Render | keyof SuruUI
-      >
+    Omit<
+      Pick<
+        React.ComponentProps<typeof Toast.Action>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // ToastActionProps より:
+        never
+      >,
+      keyof Render | keyof SuruUI
     >
   >;
 

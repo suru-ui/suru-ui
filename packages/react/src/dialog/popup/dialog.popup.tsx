@@ -54,14 +54,14 @@ export namespace DialogPopupProps {
 
   export type BaseUI = Override<
     Card.Root.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof Dialog.Popup>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // DialogPopupProps:
-        "initialFocus" | "finalFocus",
-        keyof Render | keyof SuruUI
-      >
+    Omit<
+      Pick<
+        React.ComponentProps<typeof Dialog.Popup>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // DialogPopupProps より:
+        "initialFocus" | "finalFocus"
+      >,
+      keyof Render | keyof SuruUI
     >
   >;
 

@@ -129,14 +129,14 @@ export namespace TreeItemProps {
     variant?: TreeItemVariant | undefined;
   };
 
-  export type BaseUI = Pick<
-    Button.ButtonRootProps.BaseUI,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ButtonRootProps:
-      keyof Button.ButtonRootProps.BaseUI,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      Button.ButtonRootProps.BaseUI,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // ButtonRootProps より:
+      keyof Button.ButtonRootProps.BaseUI
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<Button.ButtonRootProps.HTML, keyof Render | keyof SuruUI | keyof BaseUI>;

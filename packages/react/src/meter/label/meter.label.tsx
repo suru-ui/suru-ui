@@ -19,14 +19,14 @@ export namespace MeterLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Meter.Label>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // MeterLabelProps:
-      never,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Meter.Label>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // MeterLabelProps より:
+      never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

@@ -28,11 +28,11 @@ export namespace DialogRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI<TPayload = any> = Pick<
-    React.ComponentProps<typeof Dialog.Root<TPayload>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // DialogRootProps:
+  export type BaseUI<TPayload = any> = Omit<
+    Pick<
+      React.ComponentProps<typeof Dialog.Root<TPayload>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // DialogRootProps より:
       | "open"
       | "defaultOpen"
       | "modal"
@@ -43,9 +43,9 @@ export namespace DialogRootProps {
       | "children"
       | "handle"
       | "triggerId"
-      | "defaultTriggerId",
-      keyof Render | keyof SuruUI
-    >
+      | "defaultTriggerId"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TPayload = any> = Omit<

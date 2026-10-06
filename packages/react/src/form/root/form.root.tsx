@@ -47,14 +47,14 @@ export namespace FormRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI<TValues extends FormRootValues = FormRootValues> = Pick<
-    React.ComponentProps<typeof Form<TValues>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // FormRootProps:
-      "validationMode" | "errors" | "onFormSubmit" | "actionsRef",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI<TValues extends FormRootValues = FormRootValues> = Omit<
+    Pick<
+      React.ComponentProps<typeof Form<TValues>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // FormRootProps より:
+      "validationMode" | "errors" | "onFormSubmit" | "actionsRef"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TValues extends FormRootValues = FormRootValues> = Omit<

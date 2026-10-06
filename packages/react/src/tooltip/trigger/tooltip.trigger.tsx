@@ -41,15 +41,15 @@ export namespace TooltipTriggerProps {
     keepOpenOnClick?: boolean | undefined;
   };
 
-  export type BaseUI<TPayload = any> = Pick<
-    React.ComponentProps<typeof Tooltip.Trigger<TPayload>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
+  export type BaseUI<TPayload = any> = Omit<
+    Pick<
+      React.ComponentProps<typeof Tooltip.Trigger<TPayload>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
       // `handle` は SuruUI、`closeOnClick` は `keepOpenOnClick` で制御するため除きます。
-      // TooltipTriggerProps:
-      "payload" | "delay" | "closeDelay" | "disabled",
-      keyof Render | keyof SuruUI
-    >
+      // TooltipTriggerProps より:
+      "payload" | "delay" | "closeDelay" | "disabled"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TPayload = any> = Omit<

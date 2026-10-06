@@ -42,14 +42,14 @@ export namespace ToastContentProps {
 
   export type BaseUI = Override<
     Alert.Root.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof Toast.Content>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // ToastContentProps:
-        never,
-        keyof Render | keyof SuruUI
-      >
+    Omit<
+      Pick<
+        React.ComponentProps<typeof Toast.Content>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // ToastContentProps より:
+        never
+      >,
+      keyof Render | keyof SuruUI
     >
   >;
 

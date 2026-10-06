@@ -102,13 +102,13 @@ export namespace SwitchRootProps {
     variant?: SwitchRootVariant | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Switch.Root>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NonNativeButtonProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Switch.Root>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NonNativeButtonProps より:
       | keyof NonNativeButtonProps
-      // SwitchRootProps:
+      // SwitchRootProps より:
       | "checked"
       | "defaultChecked"
       | "disabled"
@@ -120,9 +120,9 @@ export namespace SwitchRootProps {
       | "readOnly"
       | "required"
       | "uncheckedValue"
-      | "value",
-      keyof Render | keyof SuruUI
-    >
+      | "value"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

@@ -19,14 +19,14 @@ export namespace SliderLabelProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Slider.Label>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // SliderLabelProps:
-      never,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Slider.Label>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // SliderLabelProps より:
+      never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

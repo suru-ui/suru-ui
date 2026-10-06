@@ -21,16 +21,16 @@ export namespace NumberFieldIncrementProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof NumberField.Increment>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NativeButtonProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof NumberField.Increment>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NativeButtonProps より:
       | keyof NativeButtonProps
-      // NumberFieldIncrementProps:
-      | never,
-      keyof Render | keyof SuruUI
-    >
+      // NumberFieldIncrementProps より:
+      | never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

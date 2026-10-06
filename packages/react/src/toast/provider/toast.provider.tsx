@@ -13,14 +13,14 @@ export namespace ToastProviderProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Toast.Provider>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ToastProviderProps:
-      "children" | "timeout" | "limit" | "toastManager",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Toast.Provider>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // ToastProviderProps より:
+      "children" | "timeout" | "limit" | "toastManager"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

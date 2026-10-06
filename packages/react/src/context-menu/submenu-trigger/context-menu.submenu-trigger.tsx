@@ -64,22 +64,22 @@ export namespace ContextMenuSubmenuTriggerProps {
 
   export type BaseUI = Override<
     Button.Root.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // NonNativeButtonProps:
+    Omit<
+      Pick<
+        React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // NonNativeButtonProps より:
         | keyof NonNativeButtonProps
-        // MenuSubmenuTriggerProps:
+        // MenuSubmenuTriggerProps より:
         | "onClick"
         | "label"
         | "id"
         | "disabled"
         | "delay"
         | "closeDelay"
-        | "openOnHover",
-        keyof Render | keyof SuruUI
-      >
+        | "openOnHover"
+      >,
+      keyof Render | keyof SuruUI
     >
   >;
 

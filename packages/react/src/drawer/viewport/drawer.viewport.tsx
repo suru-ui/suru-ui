@@ -15,14 +15,14 @@ export namespace DrawerViewportProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Drawer.Viewport>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // DrawerViewportProps:
-      never,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Drawer.Viewport>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // DrawerViewportProps より:
+      never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

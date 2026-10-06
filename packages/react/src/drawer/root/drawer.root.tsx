@@ -43,11 +43,11 @@ export namespace DrawerRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI<TPayload = any> = Pick<
-    React.ComponentProps<typeof Drawer.Root<TPayload>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // DrawerRootProps:
+  export type BaseUI<TPayload = any> = Omit<
+    Pick<
+      React.ComponentProps<typeof Drawer.Root<TPayload>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // DrawerRootProps より:
       | "open"
       | "defaultOpen"
       | "modal"
@@ -64,9 +64,9 @@ export namespace DrawerRootProps {
       | "snapToSequentialPoints"
       | "snapPoint"
       | "defaultSnapPoint"
-      | "onSnapPointChange",
-      keyof Render | keyof SuruUI
-    >
+      | "onSnapPointChange"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TPayload = any> = Omit<

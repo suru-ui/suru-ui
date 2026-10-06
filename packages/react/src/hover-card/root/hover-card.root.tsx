@@ -100,11 +100,11 @@ export namespace HoverCardRootProps {
     size?: HoverCardRootSize | undefined;
   };
 
-  export type BaseUI<TPayload = any> = Pick<
-    React.ComponentProps<typeof PreviewCard.Root<TPayload>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PreviewCardRootProps:
+  export type BaseUI<TPayload = any> = Omit<
+    Pick<
+      React.ComponentProps<typeof PreviewCard.Root<TPayload>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // PreviewCardRootProps より:
       | "defaultOpen"
       | "open"
       | "onOpenChange"
@@ -113,9 +113,9 @@ export namespace HoverCardRootProps {
       | "handle"
       | "children"
       | "triggerId"
-      | "defaultTriggerId",
-      keyof Render | keyof SuruUI
-    >
+      | "defaultTriggerId"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TPayload = any> = Omit<

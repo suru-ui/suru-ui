@@ -19,11 +19,11 @@ export namespace SliderThumbProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Slider.Thumb>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // SliderThumbProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Slider.Thumb>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // SliderThumbProps より:
       | "disabled"
       | "aria-valuetext"
       | "getAriaLabel"
@@ -33,9 +33,9 @@ export namespace SliderThumbProps {
       | "onBlur"
       | "onFocus"
       | "onKeyDown"
-      | "tabIndex",
-      keyof Render | keyof SuruUI
-    >
+      | "tabIndex"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

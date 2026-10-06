@@ -164,11 +164,11 @@ export namespace ComboboxRootProps {
   export type BaseUI<
     TItem = any,
     TMultiple extends boolean | undefined = boolean | undefined,
-  > = Pick<
-    React.ComponentProps<typeof Combobox.Root<TItem, TMultiple>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // AriaCombobox.Props:
+  > = Omit<
+    Pick<
+      React.ComponentProps<typeof Combobox.Root<TItem, TMultiple>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // AriaCombobox.Props より:
       | "children"
       | "name"
       | "form"
@@ -193,7 +193,7 @@ export namespace ComboboxRootProps {
       | "modal"
       | "limit"
       | "locale"
-      // ComboboxRootProps:
+      // ComboboxRootProps より:
       | "multiple"
       | "autoComplete"
       | "autoHighlight"
@@ -207,9 +207,9 @@ export namespace ComboboxRootProps {
       | "onInputValueChange"
       | "onItemHighlighted"
       | "value"
-      | "onValueChange",
-      keyof Render | keyof SuruUI
-    >
+      | "onValueChange"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TItem = any, TMultiple extends boolean | undefined = boolean | undefined> = Omit<

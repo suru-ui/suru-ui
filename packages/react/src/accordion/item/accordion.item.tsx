@@ -29,17 +29,17 @@ export namespace AccordionItemProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Accordion.Item>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // Pick<UseCollapsibleRootParameters, 'disabled'>:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Accordion.Item>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // Pick<UseCollapsibleRootParameters, 'disabled'> より:
       | "disabled"
-      // AccordionItemProps:
+      // AccordionItemProps より:
       | "value"
-      | "onOpenChange",
-      keyof Render | keyof SuruUI
-    >
+      | "onOpenChange"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

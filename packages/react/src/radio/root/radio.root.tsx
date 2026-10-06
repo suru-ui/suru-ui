@@ -103,21 +103,21 @@ export namespace RadioRootProps {
     variant?: RadioRootVariant | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Radio.Root>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NonNativeButtonProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Radio.Root>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NonNativeButtonProps より:
       | keyof NonNativeButtonProps
-      // RadioRootProps:
+      // RadioRootProps より:
       | "id"
       | "value"
       | "disabled"
       | "required"
       | "readOnly"
-      | "inputRef",
-      keyof Render | keyof SuruUI
-    >
+      | "inputRef"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

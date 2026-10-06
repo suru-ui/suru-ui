@@ -41,16 +41,16 @@ export namespace ComboboxChipRemoveProps {
     radius?: ComboboxChipRemoveRadius | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Combobox.ChipRemove>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NativeButtonProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Combobox.ChipRemove>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NativeButtonProps より:
       | keyof NativeButtonProps
-      // ComboboxChipRemoveProps:
-      | never,
-      keyof Render | keyof SuruUI
-    >
+      // ComboboxChipRemoveProps より:
+      | never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

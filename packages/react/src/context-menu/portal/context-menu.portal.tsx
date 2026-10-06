@@ -19,14 +19,14 @@ export namespace ContextMenuPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof ContextMenu.Portal>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // MenuPortalProps:
-      "keepMounted" | "container",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof ContextMenu.Portal>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // MenuPortalProps より:
+      "keepMounted" | "container"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

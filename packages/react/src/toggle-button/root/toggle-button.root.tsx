@@ -136,20 +136,20 @@ export namespace ToggleButtonRootProps {
 
   export type BaseUI<TValue extends string = string> = Override<
     Button.Root.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof Toggle<TValue>>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // NativeButtonProps:
+    Omit<
+      Pick<
+        React.ComponentProps<typeof Toggle<TValue>>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // NativeButtonProps より:
         | keyof NativeButtonProps
-        // ToggleProps:
+        // ToggleProps より:
         | "pressed"
         | "defaultPressed"
         | "disabled"
         | "onPressedChange"
-        | "value",
-        keyof Render | keyof SuruUI
-      >
+        | "value"
+      >,
+      keyof Render | keyof SuruUI
     >
   >;
 

@@ -21,16 +21,16 @@ export namespace DrawerCloseProps {
     children: NonNullable<RenderProps<DrawerCloseState>["render"]>;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Drawer.Close>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NativeButtonProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Drawer.Close>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NativeButtonProps より:
       | keyof NativeButtonProps
-      // DrawerCloseProps:
-      | never,
-      keyof Render | keyof SuruUI
-    >
+      // DrawerCloseProps より:
+      | never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

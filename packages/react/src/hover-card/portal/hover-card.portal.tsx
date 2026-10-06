@@ -19,14 +19,14 @@ export namespace HoverCardPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof PreviewCard.Portal>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // PreviewCardPortalProps:
-      "keepMounted" | "container",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof PreviewCard.Portal>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // PreviewCardPortalProps より:
+      "keepMounted" | "container"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

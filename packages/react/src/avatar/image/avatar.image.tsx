@@ -15,14 +15,14 @@ export namespace AvatarImageProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Avatar.Image>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // AvatarImageProps:
-      "onLoadingStatusChange",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Avatar.Image>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // AvatarImageProps より:
+      "onLoadingStatusChange"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

@@ -113,13 +113,13 @@ export namespace CheckboxRootProps {
     variant?: CheckboxRootVariant | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Checkbox.Root>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NonNativeButtonProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Checkbox.Root>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NonNativeButtonProps より:
       | keyof NonNativeButtonProps
-      // CheckboxRootProps:
+      // CheckboxRootProps より:
       | "id"
       | "name"
       | "form"
@@ -133,9 +133,9 @@ export namespace CheckboxRootProps {
       | "inputRef"
       | "parent"
       | "uncheckedValue"
-      | "value",
-      keyof Render | keyof SuruUI
-    >
+      | "value"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

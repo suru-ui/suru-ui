@@ -34,20 +34,20 @@ export namespace MenuTriggerProps {
     handle?: MenuHandle<TPayload> | undefined;
   };
 
-  export type BaseUI<TPayload = any> = Pick<
-    Menu.Trigger.Props<TPayload>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // NativeButtonProps:
+  export type BaseUI<TPayload = any> = Omit<
+    Pick<
+      Menu.Trigger.Props<TPayload>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // NativeButtonProps より:
       | keyof NativeButtonProps
-      // MenuTriggerProps:
+      // MenuTriggerProps より:
       | "disabled"
       | "payload"
       | "delay"
       | "closeDelay"
-      | "openOnHover",
-      keyof Render | keyof SuruUI
-    >
+      | "openOnHover"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TPayload = any> = Omit<

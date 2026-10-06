@@ -21,14 +21,14 @@ export namespace ComboboxSeparatorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Combobox.Separator>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxSeparatorProps:
-      "orientation",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Combobox.Separator>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // ComboboxSeparatorProps より:
+      "orientation"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

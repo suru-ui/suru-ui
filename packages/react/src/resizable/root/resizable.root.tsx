@@ -31,11 +31,11 @@ export namespace ResizableRootProps {
     orientation?: ResizableRootOrientation | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof ExternalGroup>,
-    Exclude<
-      // react-resizable-panels の型を確認して取り出すプロパティーを決めます。
-      // GroupProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof ExternalGroup>,
+      // [注意] 必ず react-resizable-panels の型を確認してから取り出すプロパティーを決めます。
+      // GroupProps より:
       | "defaultLayout"
       | "disableCursor"
       | "disabled"
@@ -44,9 +44,9 @@ export namespace ResizableRootProps {
       | "id"
       | "onLayoutChange"
       | "onLayoutChanged"
-      | "resizeTargetMinimumSize",
-      keyof Render | keyof SuruUI
-    >
+      | "resizeTargetMinimumSize"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

@@ -15,14 +15,14 @@ export namespace FieldErrorProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Field.Error>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // FieldErrorProps:
-      "match",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Field.Error>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // FieldErrorProps より:
+      "match"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

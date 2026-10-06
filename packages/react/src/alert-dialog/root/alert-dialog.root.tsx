@@ -28,11 +28,11 @@ export namespace AlertDialogRootProps {
 
   export type SuruUI = {};
 
-  export type BaseUI<TPayload = any> = Pick<
-    React.ComponentProps<typeof AlertDialog.Root<TPayload>>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // AlertDialogRootProps:
+  export type BaseUI<TPayload = any> = Omit<
+    Pick<
+      React.ComponentProps<typeof AlertDialog.Root<TPayload>>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // AlertDialogRootProps より:
       | "open"
       | "defaultOpen"
       | "onOpenChange"
@@ -41,9 +41,9 @@ export namespace AlertDialogRootProps {
       | "children"
       | "handle"
       | "triggerId"
-      | "defaultTriggerId",
-      keyof Render | keyof SuruUI
-    >
+      | "defaultTriggerId"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML<TPayload = any> = Omit<

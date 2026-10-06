@@ -15,14 +15,14 @@ export namespace ScrollAreaCornerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof BaseScrollArea.Corner>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ScrollAreaCornerProps:
-      never,
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof BaseScrollArea.Corner>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // ScrollAreaCornerProps より:
+      never
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

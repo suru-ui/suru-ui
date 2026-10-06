@@ -15,14 +15,14 @@ export namespace ToastPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Toast.Portal>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ToastPortalProps:
-      "container",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Toast.Portal>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // ToastPortalProps より:
+      "container"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

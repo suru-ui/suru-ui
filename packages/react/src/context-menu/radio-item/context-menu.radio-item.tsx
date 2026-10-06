@@ -67,21 +67,21 @@ export namespace ContextMenuRadioItemProps {
 
   export type BaseUI = Override<
     Button.Root.Props.BaseUI,
-    Pick<
-      React.ComponentProps<typeof ContextMenu.RadioItem>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // NonNativeButtonProps:
+    Omit<
+      Pick<
+        React.ComponentProps<typeof ContextMenu.RadioItem>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // NonNativeButtonProps より:
         | keyof NonNativeButtonProps
-        // MenuRadioItemProps:
+        // MenuRadioItemProps より:
         | "value"
         | "onClick"
         | "disabled"
         | "label"
         | "id"
-        | "closeOnClick",
-        keyof Render | keyof SuruUI
-      >
+        | "closeOnClick"
+      >,
+      keyof Render | keyof SuruUI
     >
   >;
 

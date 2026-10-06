@@ -24,14 +24,14 @@ export namespace ComboboxGroupProps {
     items?: readonly TItem[] | undefined;
   };
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Combobox.Group>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxGroupProps:
-      "items",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Combobox.Group>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // ComboboxGroupProps より:
+      "items"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

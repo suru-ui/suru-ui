@@ -52,14 +52,14 @@ export namespace ComboboxValueProps {
     TItem = any,
     TMultiple extends boolean | undefined = boolean | undefined,
   > = Override<
-    Pick<
-      React.ComponentProps<typeof Combobox.Value>,
-      Exclude<
-        // Base UI の型を確認して取り出すプロパティーを決めます。
-        // ComboboxValueProps:
-        "children" | "placeholder",
-        keyof Render | keyof SuruUI
-      >
+    Omit<
+      Pick<
+        React.ComponentProps<typeof Combobox.Value>,
+        // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+        // ComboboxValueProps より:
+        "children" | "placeholder"
+      >,
+      keyof Render | keyof SuruUI
     >,
     {
       children?: React.ReactNode | IComboboxValueRenderer<TItem, TMultiple>;

@@ -19,11 +19,11 @@ export namespace ContextMenuPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof ContextMenu.Positioner>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // UseAnchorPositioningSharedParameters:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof ContextMenu.Positioner>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // UseAnchorPositioningSharedParameters より:
       | "anchor"
       | "positionMethod"
       | "side"
@@ -35,9 +35,9 @@ export namespace ContextMenuPositionerProps {
       | "sticky"
       | "arrowPadding"
       | "disableAnchorTracking"
-      | "collisionAvoidance",
-      keyof Render | keyof SuruUI
-    >
+      | "collisionAvoidance"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

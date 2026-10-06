@@ -19,14 +19,14 @@ export namespace ComboboxPortalProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Combobox.Portal>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // ComboboxPortalProps:
-      "keepMounted" | "container",
-      keyof Render | keyof SuruUI
-    >
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Combobox.Portal>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // ComboboxPortalProps より:
+      "keepMounted" | "container"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<

@@ -19,13 +19,13 @@ export namespace TooltipPositionerProps {
 
   export type SuruUI = {};
 
-  export type BaseUI = Pick<
-    React.ComponentProps<typeof Tooltip.Positioner>,
-    Exclude<
-      // Base UI の型を確認して取り出すプロパティーを決めます。
-      // TooltipPositionerProps:
+  export type BaseUI = Omit<
+    Pick<
+      React.ComponentProps<typeof Tooltip.Positioner>,
+      // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
+      // TooltipPositionerProps より:
       | "side"
-      // UseAnchorPositioningSharedParameters:
+      // UseAnchorPositioningSharedParameters より:
       | "align"
       | "anchor"
       | "sticky"
@@ -36,9 +36,9 @@ export namespace TooltipPositionerProps {
       | "collisionPadding"
       | "collisionBoundary"
       | "collisionAvoidance"
-      | "disableAnchorTracking",
-      keyof Render | keyof SuruUI
-    >
+      | "disableAnchorTracking"
+    >,
+    keyof Render | keyof SuruUI
   >;
 
   export type HTML = Omit<
