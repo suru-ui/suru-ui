@@ -10,7 +10,7 @@ import {
   type IAutocompleteCollectionItemRenderer,
   AutocompleteCollection,
 } from "../collection/autocomplete.collection.jsx";
-import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import { useAutocompletePopupContext } from "../popup/autocomplete.popup.context.js";
 import { AutocompleteListContext } from "./autocomplete.list.context.js";
 
 export type IAutocompleteListItemRenderer<TItem = any> = IAutocompleteCollectionItemRenderer<TItem>;
@@ -68,7 +68,7 @@ export interface IAutocompleteList extends IComponent<AutocompleteListProps> {
 export const AutocompleteList: IAutocompleteList = function SuiAutocompleteList(
   props: AutocompleteListProps,
 ) {
-  const ctx = useAutocompleteContext();
+  const ctx = useAutocompletePopupContext();
   const {
     style,
     render,

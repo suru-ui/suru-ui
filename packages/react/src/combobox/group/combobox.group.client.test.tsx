@@ -4,8 +4,8 @@ import { render } from "vitest-browser-react";
 
 import { ComboboxCollection } from "../collection/combobox.collection.jsx";
 import { Combobox } from "../combobox.jsx";
-import { useComboboxContext } from "../root/combobox.root.context.js";
 import { ComboboxRoot } from "../root/combobox.root.jsx";
+import { useComboboxGroupContext } from "./combobox.group.context.js";
 import { ComboboxGroup } from "./combobox.group.jsx";
 
 const fruits = ["りんご", "ばなな"];
@@ -42,7 +42,7 @@ describe("ComboboxGroup", () => {
   test("項目なしでは上位の項目を子孫コンテキストへ透過しない", async ({ expect }) => {
     // 準備
     function Probe() {
-      const ctx = useComboboxContext();
+      const ctx = useComboboxGroupContext();
       return <span>{ctx.items === undefined ? "なし" : "あり"}</span>;
     }
 
@@ -62,7 +62,7 @@ describe("ComboboxGroup", () => {
   test("項目ありではグループの項目を子孫コンテキストへ伝える", async ({ expect }) => {
     // 準備
     function Probe() {
-      const ctx = useComboboxContext();
+      const ctx = useComboboxGroupContext();
       return <span>{ctx.items?.join(",")}</span>;
     }
 

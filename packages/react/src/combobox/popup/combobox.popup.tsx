@@ -84,6 +84,7 @@ export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
     inputPosition = "start",
     ...otherProps
   } = props;
+
   return (
     <Combobox.Popup
       {...otherProps}

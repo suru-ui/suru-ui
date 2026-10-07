@@ -151,7 +151,17 @@ describe("ResizablePanel", () => {
       <div style={{ width: 400, height: 100 }}>
         <ResizableRoot orientation="vertical">
           <ResizablePanel
-            render={(props, state) => <section {...props} data-probe={state.orientation} />}
+            render={(props, state) => {
+              const {
+                maxSize: _maxSize,
+                minSize: _minSize,
+                onResize: _onResize,
+                panelRef: _panelRef,
+                defaultSize: _defaultSize,
+                ...rest
+              } = props as Record<string, unknown>;
+              return <section {...rest} data-probe={state.orientation} />;
+            }}
           />
         </ResizableRoot>
       </div>,

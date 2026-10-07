@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import { useAutocompletePopupContext } from "../popup/autocomplete.popup.context.js";
 import { AutocompleteEmptyContext } from "./autocomplete.empty.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type IAutocompleteEmpty = IComponent<AutocompleteEmptyProps>;
  * この要素自体は常に DOM に残します。表示内容の切り替えは children で行います。
  */
 export const AutocompleteEmpty: IAutocompleteEmpty = function SuiAutocompleteEmpty(props) {
-  const ctx = useAutocompleteContext();
+  const ctx = useAutocompletePopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

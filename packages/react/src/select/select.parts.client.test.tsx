@@ -85,7 +85,7 @@ function renderStateProbes() {
       </SelectLabel>
       <SelectTrigger
         render={(props, state) => (
-          <div
+          <button
             {...props}
             data-probe={`trigger/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
           />

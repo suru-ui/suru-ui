@@ -247,15 +247,17 @@ export class NumberFieldAPI {
    * 入力欄の末尾に表示する {@link NumberFieldAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
-   * @yields コールバックの返り値です。
+   * @returns コールバックの返り値の一覧です。
    */
-  public *mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): Iterable<T> {
+  public mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { endAddons: addons = [] } = this.numberFieldProps;
-
+    const result: T[] = [];
     let index = 0;
     for (const addon of addons) {
-      yield callback(addon, index++);
+      result.push(callback(addon, index++));
     }
+
+    return result;
   }
 
   /**
@@ -351,15 +353,17 @@ export class NumberFieldAPI {
    * 入力欄の先頭に表示する {@link NumberFieldAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
-   * @yields コールバックの返り値です。
+   * @returns コールバックの返り値の一覧です。
    */
-  public *mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): Iterable<T> {
+  public mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { startAddons: addons = [] } = this.numberFieldProps;
-
+    const result: T[] = [];
     let index = 0;
     for (const addon of addons) {
-      yield callback(addon, index++);
+      result.push(callback(addon, index++));
     }
+
+    return result;
   }
 }
 

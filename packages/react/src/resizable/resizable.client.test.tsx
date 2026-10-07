@@ -54,7 +54,14 @@ describe("Resizable", () => {
     // 準備と実行
     const screen = await render(
       <Resizable
-        render={(props, state) => <section {...props} data-probe={state.orientation} />}
+        render={(props, state) => {
+          const {
+            orientation: _orientation,
+            resizeTargetMinimumSize: _resizeTargetMinimumSize,
+            ...rest
+          } = props as Record<string, unknown>;
+          return <section {...rest} data-probe={state.orientation} />;
+        }}
         orientation="vertical"
       />,
     );

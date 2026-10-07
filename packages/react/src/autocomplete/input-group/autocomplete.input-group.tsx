@@ -141,6 +141,7 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+
   return (
     <Autocomplete.InputGroup
       {...otherProps}

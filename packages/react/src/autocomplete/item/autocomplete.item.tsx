@@ -8,10 +8,8 @@ import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import {
-  type AutocompleteContext,
-  useAutocompleteContext,
-} from "../root/autocomplete.root.context.js";
+import { useAutocompleteListContext } from "../list/autocomplete.list.context.js";
+import type { AutocompleteContext } from "../root/autocomplete.root.context.js";
 import { AutocompleteItemContext } from "./autocomplete.item.context.js";
 
 /**
@@ -78,7 +76,7 @@ export interface IAutocompleteItem extends IComponent<AutocompleteItemProps> {
 export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
   props: AutocompleteItemProps,
 ) {
-  const ctx = useAutocompleteContext();
+  const ctx = useAutocompleteListContext();
   const {
     index,
     style,

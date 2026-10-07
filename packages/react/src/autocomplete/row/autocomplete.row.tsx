@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import { useAutocompleteListContext } from "../list/autocomplete.list.context.js";
 import { AutocompleteRowContext } from "./autocomplete.row.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type IAutocompleteRow = IComponent<AutocompleteRowProps>;
  * {@link Root} の `grid` プロパティーと一緒に使います。
  */
 export const AutocompleteRow: IAutocompleteRow = function SuiAutocompleteRow(props) {
-  const ctx = useAutocompleteContext();
+  const ctx = useAutocompleteListContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

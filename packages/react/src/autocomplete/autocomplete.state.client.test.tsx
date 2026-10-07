@@ -89,23 +89,29 @@ describe("Autocomplete の状態", () => {
   test("項目の render へスタイル情報と項目の状態を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <AutocompleteRoot size="lg" color="blue" items={fruits} radius="none" variant="naked">
-        <AutocompleteList>
-          {fruits.map((fruit) => (
-            <AutocompleteItem
-              key={fruit}
-              value={fruit}
-              render={(props, state) => (
-                <div
-                  {...props}
-                  data-probe={`${state.size}/${state.color}/${String(state.highlighted)}`}
-                />
-              )}
-            >
-              {fruit}
-            </AutocompleteItem>
-          ))}
-        </AutocompleteList>
+      <AutocompleteRoot open size="lg" color="blue" items={fruits} radius="none" variant="naked">
+        <AutocompletePortal>
+          <AutocompletePositioner>
+            <AutocompletePopup>
+              <AutocompleteList>
+                {fruits.map((fruit) => (
+                  <AutocompleteItem
+                    key={fruit}
+                    value={fruit}
+                    render={(props, state) => (
+                      <div
+                        {...props}
+                        data-probe={`${state.size}/${state.color}/${String(state.highlighted)}`}
+                      />
+                    )}
+                  >
+                    {fruit}
+                  </AutocompleteItem>
+                ))}
+              </AutocompleteList>
+            </AutocompletePopup>
+          </AutocompletePositioner>
+        </AutocompletePortal>
       </AutocompleteRoot>,
     );
 

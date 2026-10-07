@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import { useAutocompleteInputGroupContext } from "../input-group/autocomplete.input-group.context.js";
 import { AutocompleteInputContext } from "./autocomplete.input.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IAutocompleteInput = IComponent<AutocompleteInputProps>;
  * 検索文字列を入力するテキスト入力欄です。
  */
 export const AutocompleteInput: IAutocompleteInput = function SuiAutocompleteInput(props) {
-  const ctx = useAutocompleteContext();
+  const ctx = useAutocompleteInputGroupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

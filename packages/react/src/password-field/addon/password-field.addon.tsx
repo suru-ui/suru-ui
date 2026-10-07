@@ -73,7 +73,7 @@ export const PasswordFieldAddon: IPasswordFieldAddon = function SuiPasswordField
                 state={state}
                 render={render}
                 htmlProps={htmlProps}
-                defaultTagName="div"
+                defaultTagName="span"
               />
             </PasswordFieldAddonContext>
           ),

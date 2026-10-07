@@ -8,7 +8,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import { useAutocompleteInputGroupContext } from "../input-group/autocomplete.input-group.context.js";
 import { AutocompleteClearContext } from "./autocomplete.clear.context.js";
 
 /**
@@ -56,7 +56,7 @@ export type IAutocompleteClear = IComponent<AutocompleteClearProps>;
  * 入力値があるときだけ表示されます。
  */
 export const AutocompleteClear: IAutocompleteClear = function SuiAutocompleteClear(props) {
-  const ctx = useAutocompleteContext();
+  const ctx = useAutocompleteInputGroupContext();
   const {
     style,
     render,

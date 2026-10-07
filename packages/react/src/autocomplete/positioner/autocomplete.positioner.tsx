@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import { useAutocompletePortalContext } from "../portal/autocomplete.portal.context.js";
 import { AutocompletePositionerContext } from "./autocomplete.positioner.context.js";
 
 /**
@@ -62,7 +62,7 @@ export type IAutocompletePositioner = IComponent<AutocompletePositionerProps>;
 export const AutocompletePositioner: IAutocompletePositioner = function SuiAutocompletePositioner(
   props,
 ) {
-  const ctx = useAutocompleteContext();
+  const ctx = useAutocompletePortalContext();
   const {
     side = "bottom",
     align = "start",

@@ -109,10 +109,10 @@ describe("NumberFieldAPI", () => {
     });
 
     // 検証
-    expect([...api.mapStartAddons((addon) => api.getAddonProps(addon))]).toStrictEqual([
+    expect(api.mapStartAddons((addon) => api.getAddonProps(addon))).toStrictEqual([
       { id: "addon", children: "¥" },
     ]);
-    expect([...api.mapEndAddons((addon) => api.getAddonProps(addon))]).toStrictEqual([
+    expect(api.mapEndAddons((addon) => api.getAddonProps(addon))).toStrictEqual([
       { id: "addon", children: "円" },
     ]);
   });

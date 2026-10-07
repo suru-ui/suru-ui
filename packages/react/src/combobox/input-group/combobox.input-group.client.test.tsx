@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../errors.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
 import { ComboboxRoot } from "../root/combobox.root.jsx";
 import { useComboboxInputGroupContext } from "./combobox.input-group.context.jsx";
 import { ComboboxInputGroup } from "./combobox.input-group.jsx";
@@ -14,7 +13,7 @@ describe("ComboboxInputGroup", () => {
   test("指定した値を子孫へ伝える", async ({ expect }) => {
     // 準備
     function Probe() {
-      const ctx = useComboboxContext();
+      const ctx = useComboboxInputGroupContext();
       return <span>{ctx.size}</span>;
     }
 

@@ -8,7 +8,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import { useAutocompletePortalContext } from "../portal/autocomplete.portal.context.js";
 import { AutocompleteBackdropContext } from "./autocomplete.backdrop.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type IAutocompleteBackdrop = IComponent<AutocompleteBackdropProps>;
  * ポップアップの背後に表示される要素です。
  */
 export const AutocompleteBackdrop: IAutocompleteBackdrop = function SuiAutocompleteBackdrop(props) {
-  const ctx = useAutocompleteContext();
+  const ctx = useAutocompletePortalContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

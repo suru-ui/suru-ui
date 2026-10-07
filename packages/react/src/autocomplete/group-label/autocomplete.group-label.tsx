@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import { useAutocompleteGroupContext } from "../group/autocomplete.group.context.js";
 import { AutocompleteGroupLabelContext } from "./autocomplete.group-label.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type IAutocompleteGroupLabel = IComponent<AutocompleteGroupLabelProps>;
 export const AutocompleteGroupLabel: IAutocompleteGroupLabel = function SuiAutocompleteGroupLabel(
   props,
 ) {
-  const ctx = useAutocompleteContext();
+  const ctx = useAutocompleteGroupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import { useAutocompletePopupContext } from "../popup/autocomplete.popup.context.js";
 import { AutocompleteStatusContext } from "./autocomplete.status.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type IAutocompleteStatus = IComponent<AutocompleteStatusProps>;
  * この要素は常に DOM にマウントされたままにしてください。内容を変更するときは、要素を出し入れするのではなく children を差し替えます。
  */
 export const AutocompleteStatus: IAutocompleteStatus = function SuiAutocompleteStatus(props) {
-  const ctx = useAutocompleteContext();
+  const ctx = useAutocompletePopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

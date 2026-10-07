@@ -56,6 +56,7 @@ export type IComboboxGroup = IComponent<ComboboxGroupProps>;
 export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
   const ctx = useComboboxContext();
   const { items, style, render, className, ...otherProps } = props;
+
   return (
     <Combobox.Group
       {...otherProps}

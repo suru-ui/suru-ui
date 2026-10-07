@@ -75,7 +75,10 @@ describe("Select", () => {
     const screen = await render(
       <Select items={fruits} label="果物" defaultOpen>
         {(item, index) => (
-          <div data-testid="custom-item">{`${index}:${"value" in item ? String(item.value) : "group"}`}</div>
+          <div
+            key={index}
+            data-testid="custom-item"
+          >{`${index}:${"value" in item ? String(item.value) : "group"}`}</div>
         )}
       </Select>,
     );

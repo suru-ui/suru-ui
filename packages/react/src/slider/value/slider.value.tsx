@@ -87,7 +87,7 @@ export const SliderValue: ISliderValue = function SuiSliderValue(props) {
                 state={state}
                 render={render}
                 htmlProps={htmlProps}
-                defaultTagName="span"
+                defaultTagName="output"
               />
             </SliderValueContext>
           ),

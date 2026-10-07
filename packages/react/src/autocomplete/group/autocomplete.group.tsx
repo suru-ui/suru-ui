@@ -6,6 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
+import { useAutocompleteListContext } from "../list/autocomplete.list.context.js";
 import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
 import { AutocompleteGroupContext } from "./autocomplete.group.context.js";
 
@@ -56,8 +57,11 @@ export type IAutocompleteGroup = IComponent<AutocompleteGroupProps>;
  * {@link Root} の `items` にグループの配列を渡したときに使います。
  */
 export const AutocompleteGroup: IAutocompleteGroup = function SuiAutocompleteGroup(props) {
-  const ctx = useAutocompleteContext();
+  const parentCtx = useAutocompleteListContext(true);
+  const rootCtx = useAutocompleteContext();
+  const ctx = parentCtx ?? rootCtx;
   const { items, style, render, className, ...otherProps } = props;
+
   return (
     <Autocomplete.Group
       {...otherProps}

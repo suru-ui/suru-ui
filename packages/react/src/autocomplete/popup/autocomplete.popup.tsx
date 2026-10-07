@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
+import { useAutocompletePositionerContext } from "../positioner/autocomplete.positioner.context.js";
 import { AutocompletePopupContext } from "./autocomplete.popup.context.js";
 
 /**
@@ -56,8 +56,9 @@ export type IAutocompletePopup = IComponent<AutocompletePopupProps>;
  * 検索結果リストを表示するポップアップ要素です。
  */
 export const AutocompletePopup: IAutocompletePopup = function SuiAutocompletePopup(props) {
-  const ctx = useAutocompleteContext();
+  const ctx = useAutocompletePositionerContext();
   const { style, render, outlined = ctx.outlined, className, ...otherProps } = props;
+
   return (
     <Autocomplete.Popup
       {...otherProps}

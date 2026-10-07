@@ -139,6 +139,7 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
+
   return (
     <Combobox.InputGroup
       {...otherProps}
