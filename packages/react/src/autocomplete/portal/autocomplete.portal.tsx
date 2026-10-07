@@ -4,14 +4,17 @@ import * as React from "react";
 import proxyRenderProps from "../../_proxy-render-props.js";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { IComponent } from "../../types.js";
+import type { Override, IComponent } from "../../types.js";
 import { useAutocompleteContext } from "../root/autocomplete.root.context.js";
 import type { AutocompletePortalContext } from "./autocomplete.portal.context.js";
 
 /**
  * {@link AutocompletePortal} の状態です。
  */
-export type AutocompletePortalState = AutocompletePortalContext;
+export type AutocompletePortalState = Override<
+  AutocompletePortalContext,
+  Autocomplete.Portal.State
+>;
 
 export namespace AutocompletePortalProps {
   export type Render = RenderProps<AutocompletePortalState>;

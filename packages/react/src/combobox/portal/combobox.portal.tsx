@@ -4,14 +4,14 @@ import * as React from "react";
 import proxyRenderProps from "../../_proxy-render-props.js";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { IComponent } from "../../types.js";
+import type { Override, IComponent } from "../../types.js";
 import { useComboboxContext } from "../root/combobox.root.context.js";
 import type { ComboboxPortalContext } from "./combobox.portal.context.js";
 
 /**
  * {@link ComboboxPortal} の状態です。
  */
-export type ComboboxPortalState = ComboboxPortalContext;
+export type ComboboxPortalState = Override<ComboboxPortalContext, Combobox.Portal.State>;
 
 export namespace ComboboxPortalProps {
   export type Render = RenderProps<ComboboxPortalState>;
