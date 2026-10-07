@@ -15,14 +15,10 @@ run = "npx vitest --config ./.config/vitest.server.ts"
 run = "npx vitest --config ./.config/vitest.client.ts"
 
 [tasks."test:format"]
-run = [
-  { task = "test:format:oxfmt" },
-  { task = "test:format:extra" },
-  { task = "test:format:style" },
-]
+run = [{ task = "test:format:oxc" }, { task = "test:format:extra" }, { task = "test:format:style" }]
 
-[tasks."test:format:oxfmt"]
-run = { task = "format:oxfmt", args = ["--check"] }
+[tasks."test:format:oxc"]
+run = { task = "format:oxc", args = ["--check"] }
 
 [tasks."test:format:extra"]
 run = [
@@ -34,13 +30,16 @@ run = [
 ]
 
 [tasks."test:format:style"]
-run = [
-  "node ./scripts/sort-css-variables.ts --check",
-  "npx stylelint --config ./.config/.stylelintrc.json './src/**/*.css'",
-]
+run = "node ./scripts/sort-css-variables.ts --check"
 
 [tasks."test:lint"]
-run = { task = "lint" }
+run = [{ task = "test:lint:oxc" }, { task = "test:lint:style" }]
+
+[tasks."test:lint:oxc"]
+run = "set -e; cp ./.config/.oxlintrc.json ./.tmp-oxlintrc.json; trap 'rm -f ./.tmp-oxlintrc.json' EXIT; npx oxlint --config ./.tmp-oxlintrc.json"
+
+[tasks."test:lint:style"]
+run = "npx stylelint './src/**/*.css' --config ./.config/.stylelintrc.json"
 
 [tasks."test:typecheck"]
 run = [
@@ -52,9 +51,9 @@ run = [
 ]
 
 [tasks.format]
-run = [{ task = "format:oxfmt" }, { task = "format:extra" }, { task = "format:style" }]
+run = [{ task = "format:oxc" }, { task = "format:extra" }, { task = "format:style" }]
 
-[tasks."format:oxfmt"]
+[tasks."format:oxc"]
 run = "set -e; cp ./.config/.oxfmtrc.json ./.tmp-oxfmtrc.json; trap 'rm -f ./.tmp-oxfmtrc.json' EXIT; npx oxfmt --config ./.tmp-oxfmtrc.json"
 
 [tasks."format:extra"]
@@ -67,13 +66,16 @@ run = [
 ]
 
 [tasks."format:style"]
-run = [
-  "node ./scripts/sort-css-variables.ts",
-  "npx stylelint --config ./.config/.stylelintrc.json './src/**/*.css' --fix",
-]
+run = "node ./scripts/sort-css-variables.ts"
 
 [tasks.lint]
-run = "set -e; cp ./.config/.oxlintrc.json ./.tmp-oxlintrc.json; trap 'rm -f ./.tmp-oxlintrc.json' EXIT; npx oxlint --config ./.tmp-oxlintrc.json"
+run = [{ task = "lint:oxc" }, { task = "lint:style" }]
+
+[tasks."lint:oxc"]
+run = { task = "test:lint:oxc", args = ["--fix"] }
+
+[tasks."lint:style"]
+run = { task = "test:lint:style", args = ["--fix"] }
 
 [tasks.update]
 run = [
