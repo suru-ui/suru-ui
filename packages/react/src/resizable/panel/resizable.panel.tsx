@@ -9,7 +9,8 @@ import {
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { type ResizableContext, useResizableContext } from "../root/resizable.root.context.js";
+import { useResizableContext } from "../root/resizable.root.context.js";
+import type { ResizablePanelContext } from "./resizable.panel.context.js";
 
 /**
  * リサイズ可能なパネルのサイズです。
@@ -21,7 +22,7 @@ export type ResizablePanelSize = number | string;
 /**
  * {@link ResizablePanel} が持つ状態です。
  */
-export type ResizablePanelState = ResizableContext;
+export type ResizablePanelState = ResizablePanelContext;
 
 export namespace ResizablePanelProps {
   export type Render = RenderProps<ResizablePanelState>;

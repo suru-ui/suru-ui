@@ -4,15 +4,13 @@ import { ChevronRightIcon } from "../../_icons.jsx";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import {
-  type CollapsibleContext,
-  useCollapsibleContext,
-} from "../root/collapsible.root.context.js";
+import { useCollapsibleContext } from "../root/collapsible.root.context.js";
+import type { CollapsibleIndicatorContext } from "./collapsible.indicator.context.js";
 
 /**
  * {@link CollapsibleIndicator} が持つ状態です。
  */
-export type CollapsibleIndicatorState = CollapsibleContext;
+export type CollapsibleIndicatorState = CollapsibleIndicatorContext;
 
 export namespace CollapsibleIndicatorProps {
   export type Render = RenderProps<CollapsibleIndicatorState>;

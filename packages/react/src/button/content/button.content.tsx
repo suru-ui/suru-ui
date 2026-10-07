@@ -3,12 +3,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { type ButtonContext, useButtonContext } from "../root/button.root.context.js";
+import { useButtonContext } from "../root/button.root.context.js";
+import type { ButtonContentContext } from "./button.content.context.js";
 
 /**
  * {@link ButtonContent} が持つ状態です。
  */
-export type ButtonContentState = ButtonContext;
+export type ButtonContentState = ButtonContentContext;
 
 export namespace ButtonContentProps {
   export type Render = RenderProps<ButtonContentState>;

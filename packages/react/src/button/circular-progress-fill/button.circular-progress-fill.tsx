@@ -3,15 +3,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import {
-  ButtonCircularProgressContext,
-  useButtonCircularProgressContext,
-} from "../circular-progress/button.circular-progress.context.js";
+import { useButtonCircularProgressContext } from "../circular-progress/button.circular-progress.context.js";
+import type { ButtonCircularProgressFillContext } from "./button.circular-progress-fill.context.js";
 
 /**
  * {@link ButtonCircularProgressFill} が持つ状態です。
  */
-export type ButtonCircularProgressFillState = ButtonCircularProgressContext;
+export type ButtonCircularProgressFillState = ButtonCircularProgressFillContext;
 
 export namespace ButtonCircularProgressFillProps {
   export type Render = RenderProps<ButtonCircularProgressFillState>;

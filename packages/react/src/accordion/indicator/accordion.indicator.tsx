@@ -4,15 +4,13 @@ import { ChevronIcon } from "../../_icons.jsx";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import {
-  type AccordionItemContext,
-  useAccordionItemContext,
-} from "../item/accordion.item.context.js";
+import { useAccordionItemContext } from "../item/accordion.item.context.js";
+import type { AccordionIndicatorContext } from "./accordion.indicator.context.js";
 
 /**
  * {@link AccordionIndicator} が持つ状態です。
  */
-export type AccordionIndicatorState = AccordionItemContext;
+export type AccordionIndicatorState = AccordionIndicatorContext;
 
 export namespace AccordionIndicatorProps {
   export type Render = RenderProps<AccordionIndicatorState>;

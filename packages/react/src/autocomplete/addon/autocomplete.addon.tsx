@@ -4,12 +4,12 @@ import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 import { useAutocompleteInputGroupContext } from "../input-group/autocomplete.input-group.context.js";
-import type { AutocompleteContext } from "../root/autocomplete.root.context.js";
+import type { AutocompleteAddonContext } from "./autocomplete.addon.context.js";
 
 /**
  * {@link AutocompleteAddon} の状態です。
  */
-export type AutocompleteAddonState = AutocompleteContext;
+export type AutocompleteAddonState = AutocompleteAddonContext;
 
 export namespace AutocompleteAddonProps {
   export type Render = RenderProps<AutocompleteAddonState>;

@@ -4,15 +4,13 @@ import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 import { DISABLE_FOCUS_ON_CLICK_DATA } from "../_number-field.jsx";
-import {
-  type NumberFieldContext,
-  useNumberFieldContext,
-} from "../root/number-field.root.context.js";
+import { useNumberFieldContext } from "../root/number-field.root.context.js";
+import type { NumberFieldAddonContext } from "./number-field.addon.context.js";
 
 /**
  * {@link NumberFieldAddon} が持つ状態です。
  */
-export type NumberFieldAddonState = NumberFieldContext;
+export type NumberFieldAddonState = NumberFieldAddonContext;
 
 export namespace NumberFieldAddonProps {
   export type Render = RenderProps<NumberFieldAddonState>;

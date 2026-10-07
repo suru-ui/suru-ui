@@ -4,12 +4,13 @@ import { ChevronRightIcon } from "../../_icons.jsx";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { type BreadcrumbContext, useBreadcrumbContext } from "../root/breadcrumb.root.context.js";
+import { useBreadcrumbContext } from "../root/breadcrumb.root.context.js";
+import type { BreadcrumbSeparatorContext } from "./breadcrumb.separator.context.js";
 
 /**
  * {@link BreadcrumbSeparator} が持つ状態です。
  */
-export type BreadcrumbSeparatorState = BreadcrumbContext;
+export type BreadcrumbSeparatorState = BreadcrumbSeparatorContext;
 
 export namespace BreadcrumbSeparatorProps {
   export type Render = RenderProps<BreadcrumbSeparatorState>;

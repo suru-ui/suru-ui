@@ -3,12 +3,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { type ButtonContext, useButtonContext } from "../root/button.root.context.js";
+import { useButtonContext } from "../root/button.root.context.js";
+import type { ButtonPendingContext } from "./button.pending.context.js";
 
 /**
  * {@link ButtonPending} が持つ状態です。
  */
-export type ButtonPendingState = ButtonContext;
+export type ButtonPendingState = ButtonPendingContext;
 
 export namespace ButtonPendingProps {
   export type Render = RenderProps<ButtonPendingState>;

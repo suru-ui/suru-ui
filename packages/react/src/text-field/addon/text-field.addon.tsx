@@ -4,12 +4,13 @@ import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 import { DISABLE_FOCUS_ON_CLICK_DATA } from "../_text-field.jsx";
-import { type TextFieldContext, useTextFieldContext } from "../root/text-field.root.context.js";
+import { useTextFieldContext } from "../root/text-field.root.context.js";
+import type { TextFieldAddonContext } from "./text-field.addon.context.js";
 
 /**
  * {@link TextFieldAddon} の状態です。
  */
-export type TextFieldAddonState = TextFieldContext;
+export type TextFieldAddonState = TextFieldAddonContext;
 
 export namespace TextFieldAddonProps {
   export type Render = RenderProps<TextFieldAddonState>;

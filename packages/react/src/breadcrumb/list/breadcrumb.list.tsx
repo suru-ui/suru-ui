@@ -8,10 +8,11 @@ import type { IComponent } from "../../types.js";
 import { isItemObject } from "../_breadcrumb.jsx";
 import { BreadcrumbItem } from "../item/breadcrumb.item.jsx";
 import { BreadcrumbLink } from "../link/breadcrumb.link.jsx";
-import { type BreadcrumbContext, useBreadcrumbContext } from "../root/breadcrumb.root.context.js";
+import { useBreadcrumbContext } from "../root/breadcrumb.root.context.js";
 import type { BreadcrumbRootItemObject } from "../root/breadcrumb.root.jsx";
 import { BreadcrumbSeparator } from "../separator/breadcrumb.separator.jsx";
 import { decomposeItemObject } from "../utils/breadcrumb.utils.js";
+import type { BreadcrumbListContext } from "./breadcrumb.list.context.js";
 
 /**
  * パンくずリストの各項目をレンダリングする関数のインターフェイスです。
@@ -33,7 +34,7 @@ export interface IBreadcrumbListItemRenderer<TItem = any> {
 /**
  * {@link BreadcrumbList} が持つ状態です。
  */
-export type BreadcrumbListState = BreadcrumbContext;
+export type BreadcrumbListState = BreadcrumbListContext;
 
 export namespace BreadcrumbListProps {
   export type Render = RenderProps<BreadcrumbListState>;

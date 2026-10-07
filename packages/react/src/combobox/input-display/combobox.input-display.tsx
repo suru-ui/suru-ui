@@ -4,12 +4,13 @@ import * as React from "react";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxContext } from "../root/combobox.root.context.js";
+import type { ComboboxInputDisplayContext } from "./combobox.input-display.context.js";
 
 /**
  * {@link ComboboxInputDisplay} の状態です。
  */
-export type ComboboxInputDisplayState = ComboboxContext;
+export type ComboboxInputDisplayState = ComboboxInputDisplayContext;
 
 export namespace ComboboxInputDisplayProps {
   export type Render = RenderProps<ComboboxInputDisplayState>;

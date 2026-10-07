@@ -3,12 +3,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { type ComboboxContext, useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxContext } from "../root/combobox.root.context.js";
+import type { ComboboxAddonContext } from "./combobox.addon.context.js";
 
 /**
  * {@link ComboboxAddon} の状態です。
  */
-export type ComboboxAddonState = ComboboxContext;
+export type ComboboxAddonState = ComboboxAddonContext;
 
 export namespace ComboboxAddonProps {
   export type Render = RenderProps<ComboboxAddonState>;

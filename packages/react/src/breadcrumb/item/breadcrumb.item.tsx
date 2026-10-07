@@ -3,12 +3,13 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { type BreadcrumbContext, useBreadcrumbContext } from "../root/breadcrumb.root.context.js";
+import { useBreadcrumbContext } from "../root/breadcrumb.root.context.js";
+import type { BreadcrumbItemContext } from "./breadcrumb.item.context.js";
 
 /**
  * {@link BreadcrumbItem} が持つ状態です。
  */
-export type BreadcrumbItemState = BreadcrumbContext;
+export type BreadcrumbItemState = BreadcrumbItemContext;
 
 export namespace BreadcrumbItemProps {
   export type Render = RenderProps<BreadcrumbItemState>;
