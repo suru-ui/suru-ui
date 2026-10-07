@@ -2,12 +2,11 @@ import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
-import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 import { useSelectContext } from "../root/select.root.context.js";
-import { SelectPortalContext } from "./select.portal.context.js";
+import type { SelectPortalContext } from "./select.portal.context.js";
 
 /**
  * {@link SelectPortal} が持つ状態です。
@@ -68,16 +67,7 @@ export const SelectPortal: ISelectPortal = function SuiSelectPortal(props) {
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render: (htmlProps, state) => (
-            <SelectPortalContext value={state}>
-              <RenderElement
-                state={state}
-                render={render}
-                htmlProps={htmlProps}
-                defaultTagName="div"
-              />
-            </SelectPortalContext>
-          ),
+          render,
           className: cn<SelectPortalState>(
             className,
             "sui_select_portal",

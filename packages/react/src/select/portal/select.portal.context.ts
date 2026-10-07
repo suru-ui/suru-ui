@@ -1,38 +1,14 @@
-import type { Select as BaseSelect } from "@base-ui/react/select";
-import * as React from "react";
+import { SelectContext, useSelectContext } from "../root/select.root.context.js";
 
-import { ContextMissingError } from "../../errors.js";
-import type { Override, IUseContext } from "../../types.js";
-import type { SelectContext } from "../root/select.root.context.js";
-
-/**
- * {@link SelectPortal} が子パーツへ提供する状態です。
- */
-export type SelectPortalContext = Readonly<Override<SelectContext, BaseSelect.Portal.State>>;
-
-/**
- * {@link SelectPortal} が子パーツへ提供するコンテキストです。
- */
-export const SelectPortalContext: React.Context<SelectPortalContext | null> =
-  React.createContext<SelectPortalContext | null>(null);
-
-export type IUseSelectPortalContext = IUseContext<SelectPortalContext>;
-
-/**
- * {@link SelectPortalContext} を読み取るフックです。
- */
-export const useSelectPortalContext: IUseSelectPortalContext = function useSuiSelectPortalContext(
-  optional,
-): any {
-  const ctx = React.use(SelectPortalContext);
-  if (ctx === null && !optional) {
-    throw new ContextMissingError({
-      contextName: "SelectPortalContext",
-      providerName: "SelectPortal",
-    });
-  }
-
-  return ctx;
+// SelectPortal は Context を変更・拡張しないため、親の SelectContext をそのまま使う。
+// Base UI の Select.Portal.State を合成しない理由は2つある。
+// 1つ目は、Base UI の Portal.State が空であり、合成しても新たな状態が増えないため。
+// 2つ目は、Base UI の Portal が `render` をラッパー要素の描画にだけ使い、
+// `children` を別の createPortal 口から配置するため、`render` 内側の Provider では子パーツに届かず、
+// Portal 固有の Context を子へ透過できないため。
+export {
+  SelectContext as PortalContext,
+  useSelectContext as usePortalContext,
+  SelectContext as SelectPortalContext,
+  useSelectContext as useSelectPortalContext,
 };
-
-export { SelectPortalContext as PortalContext, useSelectPortalContext as usePortalContext };

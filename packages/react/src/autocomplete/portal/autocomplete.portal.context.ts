@@ -1,42 +1,14 @@
-import type { Autocomplete } from "@base-ui/react/autocomplete";
-import * as React from "react";
+import { AutocompleteContext, useAutocompleteContext } from "../root/autocomplete.root.context.js";
 
-import { ContextMissingError } from "../../errors.js";
-import type { Override, IUseContext } from "../../types.js";
-import type { AutocompleteContext } from "../root/autocomplete.root.context.js";
-
-/**
- * {@link AutocompletePortal} が子パーツへ提供する状態です。
- */
-export type AutocompletePortalContext = Readonly<
-  Override<AutocompleteContext, Autocomplete.Portal.State>
->;
-
-/**
- * {@link AutocompletePortal} が子パーツへ提供するコンテキストです。
- */
-export const AutocompletePortalContext: React.Context<AutocompletePortalContext | null> =
-  React.createContext<AutocompletePortalContext | null>(null);
-
-export type IUseAutocompletePortalContext = IUseContext<AutocompletePortalContext>;
-
-/**
- * {@link AutocompletePortalContext} を読み取るフックです。
- */
-export const useAutocompletePortalContext: IUseAutocompletePortalContext =
-  function useSuiAutocompletePortalContext(optional): any {
-    const ctx = React.use(AutocompletePortalContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompletePortalContext",
-        providerName: "AutocompletePortal",
-      });
-    }
-
-    return ctx;
-  };
-
+// AutocompletePortal は Context を変更・拡張しないため、親の AutocompleteContext をそのまま使う。
+// Base UI の Autocomplete.Portal.State を合成しない理由は2つある。
+// 1つ目は、Base UI の Portal.State が空であり、合成しても新たな状態が増えないため。
+// 2つ目は、Base UI の Portal が `render` をラッパー要素の描画にだけ使い、
+// `children` を別の createPortal 口から配置するため、`render` 内側の Provider では子パーツに届かず、
+// Portal 固有の Context を子へ透過できないため。
 export {
-  AutocompletePortalContext as PortalContext,
-  useAutocompletePortalContext as usePortalContext,
+  AutocompleteContext as PortalContext,
+  useAutocompleteContext as usePortalContext,
+  AutocompleteContext as AutocompletePortalContext,
+  useAutocompleteContext as useAutocompletePortalContext,
 };
