@@ -79,7 +79,7 @@ export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
   const {
     style,
     render,
-    outlined = ctx.outlined,
+    outlined = true,
     className,
     inputPosition = "start",
     ...otherProps
