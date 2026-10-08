@@ -6,73 +6,13 @@
 :scope {
   --sui_combobox_popup-min_width: ;
   --sui_combobox_popup-max_width: ;
-  --sui_combobox_popup-virtual_padding_block: ;
-  --sui_combobox_popup-font_family: ;
-  --sui_combobox_popup-font_size: ;
-  --sui_combobox_popup-font_weight: ;
-  --sui_combobox_popup-line_height: ;
-  --sui_combobox_popup-color: ;
-  --sui_combobox_popup-letter_spacing: ;
-  --sui_combobox_popup-background_color: ;
-  --sui_combobox_popup-border_color: ;
-  --sui_combobox_popup-border_width: ;
-  --sui_combobox_popup-border_radius: ;
-  --sui_combobox_popup-corner_shape: ;
-  --sui_combobox_popup-drop_shadow: ;
 }
 
 /* 代入 */
 :scope {
-  --sui_combobox_popup-font_family: var(--sui-font-sans);
-  --sui_combobox_popup-font_size: var(--sui-text-oln-md-n-font_size);
-  --sui_combobox_popup-font_weight: var(--sui-text-oln-md-n-font_weight);
-  --sui_combobox_popup-line_height: var(--sui-text-oln-md-n-line_height);
-  --sui_combobox_popup-color: var(--sui-canvas_text-1);
-  --sui_combobox_popup-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
-  --sui_combobox_popup-background_color: --sui-light-dark(var(--sui-canvas-1), var(--sui-canvas-2));
-  --sui_combobox_popup-border_color: var(--sui-grey-naked-border-normal);
-  --sui_combobox_popup-border_width: --sui-border_width(1);
-  --sui_combobox_popup-drop_shadow: var(--sui-drop_shadow-md);
-
   .sui_combobox_popup {
     --sui_combobox_popup-min_width: var(--anchor-width);
     --sui_combobox_popup-max_width: var(--available-width);
-  }
-
-  &.sui_combobox_portal-size_sm {
-    --sui_combobox_popup-virtual_padding_block: --sui-space(calc(1.5 / 2));
-  }
-
-  &.sui_combobox_portal-size_md {
-    --sui_combobox_popup-virtual_padding_block: --sui-space(calc(2.5 / 2));
-  }
-
-  &.sui_combobox_portal-size_lg {
-    --sui_combobox_popup-virtual_padding_block: --sui-space(calc(3.5 / 2));
-  }
-
-  &.sui_combobox_portal-radius_none {
-    --sui_combobox_popup-border_radius: 0px;
-  }
-
-  &.sui_combobox_portal-radius_sm {
-    --sui_combobox_popup-border_radius: --sui-corner_radius(2);
-    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
-  }
-
-  &.sui_combobox_portal-radius_md {
-    --sui_combobox_popup-border_radius: --sui-corner_radius(3);
-    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
-  }
-
-  &.sui_combobox_portal-radius_lg {
-    --sui_combobox_popup-border_radius: --sui-corner_radius(4);
-    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
-  }
-
-  &.sui_combobox_portal-radius_full {
-    --sui_combobox_popup-border_radius: --sui-corner_radius(3);
-    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 }
 
@@ -85,6 +25,7 @@
 /* 固定 */
 :scope {
   position: relative;
+  display: flex;
   pointer-events: auto;
 
   &::after {
@@ -93,11 +34,6 @@
     pointer-events: none;
     content: "";
     border-style: solid;
-  }
-
-  /* 入力欄を内包するポップアップは Flexbox で配置します。 */
-  &:has(> .sui_combobox) {
-    display: flex;
   }
 
   > .sui_combobox {
@@ -133,8 +69,72 @@
   }
 }
 
+/* 変数 */
+:scope {
+  --sui_combobox_popup-virtual_padding_block: ;
+  --sui_combobox_popup-font_family: ;
+  --sui_combobox_popup-font_size: ;
+  --sui_combobox_popup-font_weight: ;
+  --sui_combobox_popup-line_height: ;
+  --sui_combobox_popup-color: ;
+  --sui_combobox_popup-letter_spacing: ;
+  --sui_combobox_popup-background_color: ;
+  --sui_combobox_popup-border_color: ;
+  --sui_combobox_popup-border_width: ;
+  --sui_combobox_popup-border_radius: ;
+  --sui_combobox_popup-corner_shape: ;
+  --sui_combobox_popup-drop_shadow: ;
+}
+
 /* 代入 */
 :scope {
+  --sui_combobox_popup-font_family: var(--sui-font-sans);
+  --sui_combobox_popup-font_size: var(--sui-text-oln-md-n-font_size);
+  --sui_combobox_popup-font_weight: var(--sui-text-oln-md-n-font_weight);
+  --sui_combobox_popup-line_height: var(--sui-text-oln-md-n-line_height);
+  --sui_combobox_popup-color: var(--sui-canvas_text-1);
+  --sui_combobox_popup-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+  --sui_combobox_popup-background_color: --sui-light-dark(var(--sui-canvas-1), var(--sui-canvas-2));
+  --sui_combobox_popup-border_color: var(--sui-border-1);
+  --sui_combobox_popup-border_width: --sui-border_width(1);
+  --sui_combobox_popup-drop_shadow: var(--sui-drop_shadow-md);
+
+  &.sui_combobox_popup-size_sm {
+    --sui_combobox_popup-virtual_padding_block: --sui-space(calc(1.5 / 2));
+  }
+
+  &.sui_combobox_popup-size_md {
+    --sui_combobox_popup-virtual_padding_block: --sui-space(calc(2.5 / 2));
+  }
+
+  &.sui_combobox_popup-size_lg {
+    --sui_combobox_popup-virtual_padding_block: --sui-space(calc(3.5 / 2));
+  }
+
+  &.sui_combobox_popup-radius_none {
+    --sui_combobox_popup-border_radius: 0px;
+  }
+
+  &.sui_combobox_popup-radius_sm {
+    --sui_combobox_popup-border_radius: --sui-corner_radius(2);
+    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_combobox_popup-radius_md {
+    --sui_combobox_popup-border_radius: --sui-corner_radius(3);
+    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_combobox_popup-radius_lg {
+    --sui_combobox_popup-border_radius: --sui-corner_radius(4);
+    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
+  &.sui_combobox_popup-radius_full {
+    --sui_combobox_popup-border_radius: --sui-corner_radius(3);
+    --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
+  }
+
   &.sui_combobox_popup-input_position_top {
     --_sui_combobox_popup-direction: column;
   }
