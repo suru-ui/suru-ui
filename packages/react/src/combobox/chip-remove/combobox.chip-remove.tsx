@@ -80,7 +80,7 @@ export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipR
     style,
     radius = ctx.radius,
     render,
-    children = <ClearIcon />,
+    children = <ClearIcon strokeWidth={1.5} />,
     className,
     "aria-label": ariaLabel = label ? `${label}を削除` : "選択値を削除",
     ...otherProps

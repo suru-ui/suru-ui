@@ -83,7 +83,7 @@
   }
 
   &.sui_combobox_chip-size_md {
-    --sui_combobox_chip-padding_inline_start: --sui-space(2.5);
+    --sui_combobox_chip-padding_inline_start: --sui-space(1.5);
     --sui_combobox_chip-font_size: var(--sui-text-oln-md-m-font_size);
     --sui_combobox_chip-font_weight: var(--sui-text-oln-md-m-font_weight);
     --sui_combobox_chip-line_height: var(--sui-text-oln-md-m-line_height);
@@ -91,7 +91,7 @@
   }
 
   &.sui_combobox_chip-size_lg {
-    --sui_combobox_chip-padding_inline_start: --sui-space(3.5);
+    --sui_combobox_chip-padding_inline_start: --sui-space(2);
     --sui_combobox_chip-font_size: var(--sui-text-oln-lg-m-font_size);
     --sui_combobox_chip-font_weight: var(--sui-text-oln-lg-m-font_weight);
     --sui_combobox_chip-line_height: var(--sui-text-oln-lg-m-line_height);
