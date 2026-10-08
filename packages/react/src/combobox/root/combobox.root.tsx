@@ -1,7 +1,6 @@
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
-import Config from "../../_config.jsx";
 import { defaultItemToStringLabel, defaultItemToStringValue } from "../../_item.js";
 import type { Override, IComponent } from "../../types.js";
 import type { ComboboxGroupProps } from "../group/combobox.group.jsx";
@@ -248,7 +247,6 @@ export interface IComboboxRoot extends IComponent<ComboboxRootProps> {
  * 選択状態とポップアップの開閉状態を管理し、スタイルを子パーツへ伝播します。これ自身は HTML 要素をレンダリングしません。
  */
 export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: ComboboxRootProps) {
-  const config = React.use(Config);
   const {
     size = "md",
     color = "grey",
@@ -278,28 +276,18 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
   );
 
   return (
-    <config.Context
-      size={size}
-      color={color}
-      radius={radius}
-      variant={variant}
-      disabled={disabled}
-      readOnly={readOnly}
-      required={required}
-    >
-      <ComboboxContext value={ctx}>
-        <Combobox.Root
-          {...otherProps}
-          items={items}
-          disabled={disabled}
-          multiple={multiple}
-          readOnly={readOnly}
-          required={required}
-          itemToStringLabel={itemToStringLabel}
-          itemToStringValue={itemToStringValue}
-        />
-      </ComboboxContext>
-    </config.Context>
+    <ComboboxContext value={ctx}>
+      <Combobox.Root
+        {...otherProps}
+        items={items}
+        disabled={disabled}
+        multiple={multiple}
+        readOnly={readOnly}
+        required={required}
+        itemToStringLabel={itemToStringLabel}
+        itemToStringValue={itemToStringValue}
+      />
+    </ComboboxContext>
   );
 };
 
