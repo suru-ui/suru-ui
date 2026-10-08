@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxPopupContext } from "../popup/combobox.popup.context.js";
 import { ComboboxArrowContext } from "./combobox.arrow.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IComboboxArrow = IComponent<ComboboxArrowProps>;
  * ポップアップと入力欄をつなぐ矢印要素です。
  */
 export const ComboboxArrow: IComboboxArrow = function SuiComboboxArrow(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxPopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
