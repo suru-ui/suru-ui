@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAccordionContext } from "../root/accordion.root.context.js";
+import { useAccordionItemContext } from "../item/accordion.item.context.js";
 import { AccordionContentContext } from "./accordion.content.context.js";
 
 /**
@@ -52,7 +52,7 @@ export type IAccordionContent = IComponent<AccordionContentProps>;
  * アコーディオンのパネルコンポーネントです。
  */
 export const AccordionContent: IAccordionContent = function SuiAccordionContent(props) {
-  const ctx = useAccordionContext();
+  const ctx = useAccordionItemContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -85,6 +85,7 @@ export const AccordionContent: IAccordionContent = function SuiAccordionContent(
             (state) => state.open && "sui_accordion_content-open",
             (state) => state.hidden && "sui_accordion_content-hidden",
             (state) => `sui_accordion_content-index_${state.index}`,
+            (state) => `sui_accordion_content-orientation_${state.orientation}`,
           ),
         },
       )}

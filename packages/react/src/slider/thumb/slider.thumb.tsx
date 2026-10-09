@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSliderContext } from "../root/slider.root.context.js";
+import { useSliderTrackContext } from "../track/slider.track.context.js";
 import { SliderThumbContext } from "./slider.thumb.context.js";
 
 /**
@@ -60,7 +60,7 @@ export type ISliderThumb = IComponent<SliderThumbProps>;
  * 矢印キーで操作でき、フォーカス時はフォーカスリングが表示されます。
  */
 export const SliderThumb: ISliderThumb = function SuiSliderThumb(props) {
-  const ctx = useSliderContext();
+  const ctx = useSliderTrackContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

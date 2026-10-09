@@ -44,10 +44,10 @@ export interface IContextMenuRadioGroupItemRenderer<TItem = any> {
 /**
  * {@link ContextMenuRadioGroup} が持つ状態です。
  */
-export type ContextMenuRadioGroupState = ContextMenuRadioGroupContext;
+export type ContextMenuRadioGroupState<TItem = any> = ContextMenuRadioGroupContext<TItem>;
 
 export namespace ContextMenuRadioGroupProps {
-  export type Render = RenderProps<ContextMenuRadioGroupState>;
+  export type Render<TItem = any> = RenderProps<ContextMenuRadioGroupState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -82,7 +82,7 @@ export namespace ContextMenuRadioGroupProps {
 /**
  * {@link ContextMenuRadioGroup} に渡す props です。
  */
-export type ContextMenuRadioGroupProps<TItem = any> = ContextMenuRadioGroupProps.Render &
+export type ContextMenuRadioGroupProps<TItem = any> = ContextMenuRadioGroupProps.Render<TItem> &
   ContextMenuRadioGroupProps.SuruUI<TItem> &
   ContextMenuRadioGroupProps.BaseUI &
   ContextMenuRadioGroupProps.HTML;
@@ -140,12 +140,15 @@ export const ContextMenuRadioGroup: IContextMenuRadioGroup = function SuiContext
 export { ContextMenuRadioGroup as RadioGroup };
 
 export namespace RadioGroup {
-  export type State = ContextMenuRadioGroupState;
+  export type State<TItem = any> = ContextMenuRadioGroupState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = ContextMenuRadioGroupProps.Render;
+    export type Render<TItem = any> = ContextMenuRadioGroupProps.Render<TItem>;
 
     export type SuruUI<TItem = any> = ContextMenuRadioGroupProps.SuruUI<TItem>;
 

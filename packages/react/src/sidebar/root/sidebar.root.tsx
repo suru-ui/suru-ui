@@ -147,6 +147,7 @@ export const SidebarRoot: ISidebarRoot = function SuiSidebarRoot(props) {
           (state) => `sui_sidebar-variant_${state.variant}`,
           (state) => `sui_sidebar-collapsible_${state.collapsible}`,
           (state) => `sui_sidebar-${state.state}`,
+          (state) => state.open && "sui_sidebar-open",
         ),
         "data-scope": dataScope,
       },

@@ -1,6 +1,7 @@
 import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
+import cn from "../../cn.js";
 import {
   type TextFieldInputProps,
   type TextFieldInputState,
@@ -85,7 +86,24 @@ export const PasswordFieldInput: IPasswordFieldInput = function SuiPasswordField
               />
             </PasswordFieldInputContext>
           ),
-          className,
+          className: cn<PasswordFieldInputState>(
+            className,
+            "sui_password_field_input",
+            (state) => `sui_password_field_input-size_${state.size}`,
+            (state) => `sui_password_field_input-color_${state.color}`,
+            (state) => `sui_password_field_input-radius_${state.radius}`,
+            (state) => `sui_password_field_input-variant_${state.variant}`,
+            (state) => state.outlined && "sui_password_field_input-outlined",
+            (state) => state.visible && "sui_password_field_input-visible",
+            (state) => state.valid === true && "sui_password_field_input-valid",
+            (state) => state.valid === false && "sui_password_field_input-invalid",
+            (state) => state.valid === null && "sui_password_field_input-unverified",
+            (state) => state.disabled && "sui_password_field_input-disabled",
+            (state) => state.touched && "sui_password_field_input-touched",
+            (state) => state.dirty && "sui_password_field_input-dirty",
+            (state) => state.filled && "sui_password_field_input-filled",
+            (state) => state.focused && "sui_password_field_input-focused",
+          ),
         },
       )}
     />

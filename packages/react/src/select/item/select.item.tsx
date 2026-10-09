@@ -9,16 +9,19 @@ import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectGroupContext } from "../group/select.group.context.js";
+import { useSelectListContext } from "../list/select.list.context.js";
 import { SelectItemContext } from "./select.item.context.js";
 
 /**
  * {@link SelectItem} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectItemState = SelectItemContext;
+export type SelectItemState<TValue = any> = SelectItemContext<TValue>;
 
 export namespace SelectItemProps {
-  export type Render = RenderProps<SelectItemState>;
+  export type Render<TValue = any> = RenderProps<SelectItemState<TValue>>;
 
   export type SuruUI = {};
 
@@ -61,7 +64,9 @@ export type ISelectItem = IComponent<SelectItemProps>;
  * 選択肢の個々の項目です。
  */
 export const SelectItem: ISelectItem = function SuiSelectItem(props) {
-  const ctx = useSelectContext();
+  const listCtx = useSelectListContext();
+  const groupCtx = useSelectGroupContext(true);
+  const ctx = groupCtx || listCtx;
   const {
     label,
     style,
@@ -138,6 +143,13 @@ export const SelectItem: ISelectItem = function SuiSelectItem(props) {
                     (state) => `sui_select_item-radius_${state.radius}`,
                     (state) => `sui_select_item-variant_${state.variant}`,
                     (state) => state.outlined && "sui_select_item-outlined",
+                    (state) => state.open && "sui_select_item-open",
+                    (state) => state.anchorHidden && "sui_select_item-anchor_hidden",
+                    (state) => `sui_select_item-side_${state.side.replaceAll("-", "_")}`,
+                    (state) => `sui_select_item-align_${state.align}`,
+                    (state) =>
+                      state.transitionStatus !== undefined &&
+                      `sui_select_item-transition_status_${state.transitionStatus}`,
                   ),
                 },
               ),
@@ -152,12 +164,12 @@ export const SelectItem: ISelectItem = function SuiSelectItem(props) {
 export { SelectItem as Item };
 
 export namespace Item {
-  export type State = SelectItemState;
+  export type State<TValue = any> = SelectItemState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectItemProps.Render;
+    export type Render<TValue = any> = SelectItemProps.Render<TValue>;
 
     export type SuruUI = SelectItemProps.SuruUI;
 

@@ -3,12 +3,12 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { SliderContext } from "../root/slider.root.context.js";
+import type { SliderTrackContext } from "../track/slider.track.context.js";
 
 /**
  * {@link SliderIndicator} が子パーツへ提供する状態です。
  */
-export type SliderIndicatorContext = Readonly<Override<SliderContext, Slider.Indicator.State>>;
+export type SliderIndicatorContext = Readonly<Override<SliderTrackContext, Slider.Indicator.State>>;
 
 /**
  * {@link SliderIndicator} が子パーツへ提供するコンテキストです。

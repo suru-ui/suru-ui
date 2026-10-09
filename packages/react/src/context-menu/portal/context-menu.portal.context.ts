@@ -1,42 +1,14 @@
-import type { ContextMenu } from "@base-ui/react/context-menu";
-import * as React from "react";
+import { ContextMenuContext, useContextMenuContext } from "../root/context-menu.root.context.js";
 
-import { ContextMissingError } from "../../errors.js";
-import type { Override, IUseContext } from "../../types.js";
-import type { ContextMenuContext } from "../root/context-menu.root.context.js";
-
-/**
- * {@link ContextMenuPortal} が子パーツへ提供する状態です。
- */
-export type ContextMenuPortalContext = Readonly<
-  Override<ContextMenuContext, ContextMenu.Portal.State>
->;
-
-/**
- * {@link ContextMenuPortal} が子パーツへ提供するコンテキストです。
- */
-export const ContextMenuPortalContext: React.Context<ContextMenuPortalContext | null> =
-  React.createContext<ContextMenuPortalContext | null>(null);
-
-export type IUseContextMenuPortalContext = IUseContext<ContextMenuPortalContext>;
-
-/**
- * {@link ContextMenuPortalContext} を読み取るフックです。
- */
-export const useContextMenuPortalContext: IUseContextMenuPortalContext =
-  function useSuiContextMenuPortalContext(optional): any {
-    const ctx = React.use(ContextMenuPortalContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ContextMenuPortalContext",
-        providerName: "ContextMenuPortal",
-      });
-    }
-
-    return ctx;
-  };
-
+// ContextMenuPortal は Context を変更・拡張しないため、親の ContextMenuContext をそのまま使う。
+// Base UI の ContextMenu.Portal.State を合成しない理由は2つある。
+// 1つ目は、Base UI の Portal.State が空であり、合成しても新たな状態が増えないため。
+// 2つ目は、Base UI の Portal が `render` をラッパー要素の描画にだけ使い、
+// `children` を別の createPortal 口から配置するため、`render` 内側の Provider では子パーツに届かず、
+// Portal 固有の Context を子へ透過できないため。
 export {
-  ContextMenuPortalContext as PortalContext,
-  useContextMenuPortalContext as usePortalContext,
+  ContextMenuContext as PortalContext,
+  useContextMenuContext as usePortalContext,
+  ContextMenuContext as ContextMenuPortalContext,
+  useContextMenuContext as useContextMenuPortalContext,
 };

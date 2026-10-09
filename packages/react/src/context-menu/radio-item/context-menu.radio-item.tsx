@@ -34,11 +34,13 @@ export type ContextMenuRadioItemVariant = Button.Root.Variant;
 
 /**
  * {@link ContextMenuRadioItem} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuRadioItemState = ContextMenuRadioItemContext;
+export type ContextMenuRadioItemState<TItem = any> = ContextMenuRadioItemContext<TItem>;
 
 export namespace ContextMenuRadioItemProps {
-  export type Render = RenderProps<ContextMenuRadioItemState>;
+  export type Render<TItem = any> = RenderProps<ContextMenuRadioItemState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -199,12 +201,12 @@ export const ContextMenuRadioItem: IContextMenuRadioItem = function SuiContextMe
 export { ContextMenuRadioItem as RadioItem };
 
 export namespace RadioItem {
-  export type State = ContextMenuRadioItemState;
+  export type State<TItem = any> = ContextMenuRadioItemState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ContextMenuRadioItemProps.Render;
+    export type Render<TItem = any> = ContextMenuRadioItemProps.Render<TItem>;
 
     export type SuruUI = ContextMenuRadioItemProps.SuruUI;
 

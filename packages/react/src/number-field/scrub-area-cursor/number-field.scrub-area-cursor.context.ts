@@ -3,13 +3,13 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { NumberFieldContext } from "../root/number-field.root.context.js";
+import type { NumberFieldScrubAreaContext } from "../scrub-area/number-field.scrub-area.context.js";
 
 /**
  * {@link NumberFieldScrubAreaCursor} が子パーツへ提供する状態です。
  */
 export type NumberFieldScrubAreaCursorContext = Readonly<
-  Override<NumberFieldContext, NumberField.ScrubAreaCursor.State>
+  Override<NumberFieldScrubAreaContext, NumberField.ScrubAreaCursor.State>
 >;
 
 /**

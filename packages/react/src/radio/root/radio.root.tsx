@@ -103,9 +103,9 @@ export namespace RadioRootProps {
     variant?: RadioRootVariant | undefined;
   };
 
-  export type BaseUI = Omit<
+  export type BaseUI<TValue = any> = Omit<
     Pick<
-      React.ComponentProps<typeof Radio.Root>,
+      React.ComponentProps<typeof Radio.Root<TValue>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
       // NonNativeButtonProps より:
       | keyof NonNativeButtonProps
@@ -120,26 +120,36 @@ export namespace RadioRootProps {
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Radio.Root>,
+  export type HTML<TValue = any> = Omit<
+    React.ComponentProps<typeof Radio.Root<TValue>>,
     keyof Render | keyof SuruUI | keyof BaseUI
   >;
 }
 
 /**
  * {@link RadioRoot} に渡す props です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type RadioRootProps = RadioRootProps.Render &
+export type RadioRootProps<TValue = any> = RadioRootProps.Render &
   RadioRootProps.SuruUI &
-  RadioRootProps.BaseUI &
-  RadioRootProps.HTML;
+  RadioRootProps.BaseUI<TValue> &
+  RadioRootProps.HTML<TValue>;
 
-export type IRadioRoot = IComponent<RadioRootProps>;
+/**
+ * {@link RadioRoot} のコンポーネント型です。
+ */
+export interface IRadioRoot extends IComponent<RadioRootProps> {
+  /**
+   * @template TValue 項目の値の型です。
+   */
+  <TValue = any>(props: RadioRootProps<TValue>): IComponent.Return;
+}
 
 /**
  * ラジオボタンのルートコンポーネントです。
  */
-export const RadioRoot: IRadioRoot = function SuiRadioRoot(props) {
+export const RadioRoot: IRadioRoot = function SuiRadioRoot(props: RadioRootProps) {
   const ctx = useRadioGroupContext(true);
   const {
     size: sizeProp = "md",
@@ -218,16 +228,19 @@ export { RadioRoot as Root };
 export namespace Root {
   export type State = RadioRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render &
+    Props.SuruUI &
+    Props.BaseUI<TValue> &
+    Props.HTML<TValue>;
 
   export namespace Props {
     export type Render = RadioRootProps.Render;
 
     export type SuruUI = RadioRootProps.SuruUI;
 
-    export type BaseUI = RadioRootProps.BaseUI;
+    export type BaseUI<TValue = any> = RadioRootProps.BaseUI<TValue>;
 
-    export type HTML = RadioRootProps.HTML;
+    export type HTML<TValue = any> = RadioRootProps.HTML<TValue>;
   }
 
   export type Color = RadioRootColor;

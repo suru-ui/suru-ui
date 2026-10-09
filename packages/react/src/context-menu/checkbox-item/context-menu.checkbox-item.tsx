@@ -44,11 +44,13 @@ export type ContextMenuCheckboxItemVariant = Button.Root.Variant;
 
 /**
  * {@link ContextMenuCheckboxItem} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuCheckboxItemState = ContextMenuCheckboxItemContext;
+export type ContextMenuCheckboxItemState<TItem = any> = ContextMenuCheckboxItemContext<TItem>;
 
 export namespace ContextMenuCheckboxItemProps {
-  export type Render = RenderProps<ContextMenuCheckboxItemState>;
+  export type Render<TItem = any> = RenderProps<ContextMenuCheckboxItemState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -216,12 +218,12 @@ export const ContextMenuCheckboxItem: IContextMenuCheckboxItem =
 export { ContextMenuCheckboxItem as CheckboxItem };
 
 export namespace CheckboxItem {
-  export type State = ContextMenuCheckboxItemState;
+  export type State<TItem = any> = ContextMenuCheckboxItemState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ContextMenuCheckboxItemProps.Render;
+    export type Render<TItem = any> = ContextMenuCheckboxItemProps.Render<TItem>;
 
     export type SuruUI = ContextMenuCheckboxItemProps.SuruUI;
 

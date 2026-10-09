@@ -20,6 +20,7 @@
 /* 変数 */
 :scope {
   --sui_combobox_item_indicator-min_width: ;
+  --sui_combobox_item_indicator-virtual_padding_block: ;
   --sui_combobox_item_indicator-font_family: ;
   --sui_combobox_item_indicator-font_size: ;
   --sui_combobox_item_indicator-font_weight: ;
@@ -27,7 +28,6 @@
   --sui_combobox_item_indicator-letter_spacing: ;
   --sui_combobox_item_indicator__svg-size: ;
   --sui_combobox_item_indicator__svg-color: ;
-  --sui_combobox_item_indicator-virtual_padding_block: ;
 }
 
 /* 可変 */
@@ -56,14 +56,14 @@
   --sui_combobox_item_indicator-virtual_padding_block: --sui-space(0.5);
   --sui_combobox_item_indicator-font_family: var(--sui-font-sans);
   --sui_combobox_item_indicator-color: var(--sui-canvas_text-2);
-  --sui_combobox_item_indicator__svg-color: --sui-icon_color(
-                                              var(--sui_combobox_item_indicator-color),
-                                              var(--sui_combobox-background_color)
-                                            );
   --sui_combobox_item_indicator__svg-size: calc(
                                              var(--sui_combobox_item_indicator-font_size)
                                              * var(--sui_combobox_item_indicator-line_height)
                                            );
+  --sui_combobox_item_indicator__svg-color: --sui-icon_color(
+                                              var(--sui_combobox_item_indicator-color),
+                                              var(--sui_combobox-background_color)
+                                            );
 
   &.sui_combobox_item_indicator-size_sm {
     --sui_combobox_item_indicator-font_size: var(--sui-text-oln-sm-n-font_size);

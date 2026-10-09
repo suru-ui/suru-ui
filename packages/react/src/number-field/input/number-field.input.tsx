@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useNumberFieldContext } from "../root/number-field.root.context.js";
+import { useNumberFieldGroupContext } from "../group/number-field.group.context.js";
 import { NumberFieldInputContext } from "./number-field.input.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type INumberFieldInput = IComponent<NumberFieldInputProps>;
  * 数値の入力欄です。
  */
 export const NumberFieldInput: INumberFieldInput = function SuiNumberFieldInput(props) {
-  const ctx = useNumberFieldContext();
+  const ctx = useNumberFieldGroupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

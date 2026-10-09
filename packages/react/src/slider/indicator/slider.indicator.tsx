@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSliderContext } from "../root/slider.root.context.js";
+import { useSliderTrackContext } from "../track/slider.track.context.js";
 import { SliderIndicatorContext } from "./slider.indicator.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type ISliderIndicator = IComponent<SliderIndicatorProps>;
  * スライダーの現在値を示すインジケーターコンポーネントです。
  */
 export const SliderIndicator: ISliderIndicator = function SuiSliderIndicator(props) {
-  const ctx = useSliderContext();
+  const ctx = useSliderTrackContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

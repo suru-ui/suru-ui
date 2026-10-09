@@ -16,9 +16,11 @@ export type ContextMenuSubmenuRootChangeEventReason = ContextMenu.SubmenuRoot.Ch
 
 /**
  * {@link ContextMenuSubmenuRoot} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuSubmenuRootState = Override<
-  ContextMenuContext,
+export type ContextMenuSubmenuRootState<TItem = any> = Override<
+  ContextMenuContext<TItem>,
   ContextMenu.SubmenuRoot.State
 >;
 
@@ -114,7 +116,7 @@ export const ContextMenuSubmenuRoot: IContextMenuSubmenuRoot = function SuiConte
 export { ContextMenuSubmenuRoot as SubmenuRoot };
 
 export namespace SubmenuRoot {
-  export type State = ContextMenuSubmenuRootState;
+  export type State<TItem = any> = ContextMenuSubmenuRootState<TItem>;
 
   export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 

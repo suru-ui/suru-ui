@@ -11,11 +11,13 @@ import { AutocompletePositionerContext } from "./autocomplete.positioner.context
 
 /**
  * {@link AutocompletePositioner} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompletePositionerState = AutocompletePositionerContext;
+export type AutocompletePositionerState<TItem = any> = AutocompletePositionerContext<TItem>;
 
 export namespace AutocompletePositionerProps {
-  export type Render = RenderProps<AutocompletePositionerState>;
+  export type Render<TItem = any> = RenderProps<AutocompletePositionerState<TItem>>;
 
   export type SuruUI = {};
 
@@ -116,12 +118,12 @@ export const AutocompletePositioner: IAutocompletePositioner = function SuiAutoc
 export { AutocompletePositioner as Positioner };
 
 export namespace Positioner {
-  export type State = AutocompletePositionerState;
+  export type State<TItem = any> = AutocompletePositionerState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompletePositionerProps.Render;
+    export type Render<TItem = any> = AutocompletePositionerProps.Render<TItem>;
 
     export type SuruUI = AutocompletePositionerProps.SuruUI;
 

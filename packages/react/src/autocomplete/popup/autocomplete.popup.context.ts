@@ -3,13 +3,15 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { AutocompleteContext } from "../root/autocomplete.root.context.js";
+import type { PositionerContext } from "../positioner/autocomplete.positioner.context.js";
 
 /**
  * {@link AutocompletePopup} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompletePopupContext = Readonly<
-  Override<AutocompleteContext, Autocomplete.Popup.State>
+export type AutocompletePopupContext<TItem = any> = Readonly<
+  Override<PositionerContext<TItem>, Autocomplete.Popup.State>
 >;
 
 /**

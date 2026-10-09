@@ -1,7 +1,6 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
-import Config from "../../_config.jsx";
 import { defaultItemToStringValue } from "../../_item.js";
 import type { Override, IComponent } from "../../types.js";
 import type { AutocompleteGroupProps } from "../group/autocomplete.group.jsx";
@@ -116,8 +115,13 @@ export type AutocompleteRootVariant = AutocompleteContextVariant;
 
 /**
  * {@link AutocompleteRoot} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteRootState = Override<AutocompleteContext, Autocomplete.Root.State>;
+export type AutocompleteRootState<TItem = any> = Override<
+  AutocompleteContext<TItem>,
+  Autocomplete.Root.State
+>;
 
 export namespace AutocompleteRootProps {
   export type Render = {};
@@ -262,7 +266,6 @@ export interface IAutocompleteRoot extends IComponent<AutocompleteRootProps> {
 export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
   props: AutocompleteRootProps,
 ) {
-  const config = React.use(Config);
   const {
     size = "md",
     color = "grey",
@@ -281,33 +284,23 @@ export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
   );
 
   return (
-    <config.Context
-      size={size}
-      color={color}
-      radius={radius}
-      variant={variant}
-      disabled={disabled}
-      readOnly={readOnly}
-      required={required}
-    >
-      <AutocompleteContext value={ctx}>
-        <Autocomplete.Root
-          {...otherProps}
-          items={items}
-          disabled={disabled}
-          readOnly={readOnly}
-          required={required}
-          itemToStringValue={itemToStringValue}
-        />
-      </AutocompleteContext>
-    </config.Context>
+    <AutocompleteContext value={ctx}>
+      <Autocomplete.Root
+        {...otherProps}
+        items={items}
+        disabled={disabled}
+        readOnly={readOnly}
+        required={required}
+        itemToStringValue={itemToStringValue}
+      />
+    </AutocompleteContext>
   );
 };
 
 export { AutocompleteRoot as Root };
 
 export namespace Root {
-  export type State = AutocompleteRootState;
+  export type State<TItem = any> = AutocompleteRootState<TItem>;
 
   export type Props<TItemValue = any> = Props.Render &
     Props.SuruUI<TItemValue> &

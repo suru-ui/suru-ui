@@ -7,9 +7,11 @@ import type { ContextMenuContext } from "../root/context-menu.root.context.js";
 
 /**
  * {@link ContextMenuSeparator} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuSeparatorContext = Readonly<
-  Override<ContextMenuContext, ContextMenu.Separator.State>
+export type ContextMenuSeparatorContext<TItem = any> = Readonly<
+  Override<ContextMenuContext<TItem>, ContextMenu.Separator.State>
 >;
 
 /**

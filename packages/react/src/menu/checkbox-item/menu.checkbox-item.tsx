@@ -44,11 +44,13 @@ export type MenuCheckboxItemVariant = Button.Root.Variant;
 
 /**
  * {@link MenuCheckboxItem} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuCheckboxItemState = MenuCheckboxItemContext;
+export type MenuCheckboxItemState<TItem = any> = MenuCheckboxItemContext<TItem>;
 
 export namespace MenuCheckboxItemProps {
-  export type Render = RenderProps<MenuCheckboxItemState>;
+  export type Render<TItem = any> = RenderProps<MenuCheckboxItemState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -218,12 +220,12 @@ export const MenuCheckboxItem: IMenuCheckboxItem = function SuiMenuCheckboxItem(
 export { MenuCheckboxItem as CheckboxItem };
 
 export namespace CheckboxItem {
-  export type State = MenuCheckboxItemState;
+  export type State<TItem = any> = MenuCheckboxItemState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = MenuCheckboxItemProps.Render;
+    export type Render<TItem = any> = MenuCheckboxItemProps.Render<TItem>;
 
     export type SuruUI = MenuCheckboxItemProps.SuruUI;
 

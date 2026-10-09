@@ -13,11 +13,13 @@ import { AutocompleteBackdropContext } from "./autocomplete.backdrop.context.js"
 
 /**
  * {@link AutocompleteBackdrop} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteBackdropState = AutocompleteBackdropContext;
+export type AutocompleteBackdropState<TItem = any> = AutocompleteBackdropContext<TItem>;
 
 export namespace AutocompleteBackdropProps {
-  export type Render = RenderProps<AutocompleteBackdropState>;
+  export type Render<TItem = any> = RenderProps<AutocompleteBackdropState<TItem>>;
 
   export type SuruUI = {};
 
@@ -79,6 +81,10 @@ export const AutocompleteBackdrop: IAutocompleteBackdrop = function SuiAutocompl
             (state) => `sui_autocomplete_backdrop-radius_${state.radius}`,
             (state) => `sui_autocomplete_backdrop-variant_${state.variant}`,
             (state) => state.outlined && "sui_autocomplete_backdrop-outlined",
+            (state) => state.open && "sui_autocomplete_backdrop-open",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_autocomplete_backdrop-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -89,12 +95,12 @@ export const AutocompleteBackdrop: IAutocompleteBackdrop = function SuiAutocompl
 export { AutocompleteBackdrop as Backdrop };
 
 export namespace Backdrop {
-  export type State = AutocompleteBackdropState;
+  export type State<TItem = any> = AutocompleteBackdropState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompleteBackdropProps.Render;
+    export type Render<TItem = any> = AutocompleteBackdropProps.Render<TItem>;
 
     export type SuruUI = AutocompleteBackdropProps.SuruUI;
 

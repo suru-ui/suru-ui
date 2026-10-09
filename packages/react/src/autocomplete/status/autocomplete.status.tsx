@@ -11,11 +11,13 @@ import { AutocompleteStatusContext } from "./autocomplete.status.context.js";
 
 /**
  * {@link AutocompleteStatus} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteStatusState = AutocompleteStatusContext;
+export type AutocompleteStatusState<TItem = any> = AutocompleteStatusContext<TItem>;
 
 export namespace AutocompleteStatusProps {
-  export type Render = RenderProps<AutocompleteStatusState>;
+  export type Render<TItem = any> = RenderProps<AutocompleteStatusState<TItem>>;
 
   export type SuruUI = {};
 
@@ -79,6 +81,14 @@ export const AutocompleteStatus: IAutocompleteStatus = function SuiAutocompleteS
             (state) => `sui_autocomplete_status-radius_${state.radius}`,
             (state) => `sui_autocomplete_status-variant_${state.variant}`,
             (state) => state.outlined && "sui_autocomplete_status-outlined",
+            (state) => state.open && "sui_autocomplete_status-open",
+            (state) => state.empty && "sui_autocomplete_status-empty",
+            (state) => state.anchorHidden && "sui_autocomplete_status-anchor_hidden",
+            (state) => `sui_autocomplete_status-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_autocomplete_status-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_autocomplete_status-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -89,12 +99,12 @@ export const AutocompleteStatus: IAutocompleteStatus = function SuiAutocompleteS
 export { AutocompleteStatus as Status };
 
 export namespace Status {
-  export type State = AutocompleteStatusState;
+  export type State<TItem = any> = AutocompleteStatusState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompleteStatusProps.Render;
+    export type Render<TItem = any> = AutocompleteStatusProps.Render<TItem>;
 
     export type SuruUI = AutocompleteStatusProps.SuruUI;
 

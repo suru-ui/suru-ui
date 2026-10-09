@@ -33,11 +33,13 @@ export type MenuItemVariant = Button.Root.Variant;
 
 /**
  * {@link MenuItem} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuItemState = MenuItemContext;
+export type MenuItemState<TItem = any> = MenuItemContext<TItem>;
 
 export namespace MenuItemProps {
-  export type Render = RenderProps<MenuItemState>;
+  export type Render<TItem = any> = RenderProps<MenuItemState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -194,12 +196,12 @@ export const MenuItem: IMenuItem = function SuiMenuItem(props) {
 export { MenuItem as Item };
 
 export namespace Item {
-  export type State = MenuItemState;
+  export type State<TItem = any> = MenuItemState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = MenuItemProps.Render;
+    export type Render<TItem = any> = MenuItemProps.Render<TItem>;
 
     export type SuruUI = MenuItemProps.SuruUI;
 

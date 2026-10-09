@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useTooltipContext } from "../root/tooltip.root.context.js";
+import { useTooltipPositionerContext } from "../positioner/tooltip.positioner.context.js";
 import { TooltipContentContext } from "./tooltip.content.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type ITooltipContent = IComponent<TooltipContentProps>;
  * ツールチップの内容を表示するポップアップ要素です。
  */
 export const TooltipContent: ITooltipContent = function SuiTooltipContent(props) {
-  const ctx = useTooltipContext();
+  const ctx = useTooltipPositionerContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -80,6 +80,7 @@ export const TooltipContent: ITooltipContent = function SuiTooltipContent(props)
             (state) => `sui_tooltip_content-radius_${state.radius}`,
             (state) => state.outlined && "sui_tooltip_content-outlined",
             (state) => state.open && "sui_tooltip_content-open",
+            (state) => state.anchorHidden && "sui_tooltip_content-anchor_hidden",
             (state) => state.instant && "sui_tooltip_content-instant",
             (state) => `sui_tooltip_content-side_${state.side.replaceAll("-", "_")}`,
             (state) => `sui_tooltip_content-align_${state.align}`,

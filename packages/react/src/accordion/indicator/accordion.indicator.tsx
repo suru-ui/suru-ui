@@ -56,6 +56,7 @@ export const AccordionIndicator: IAccordionIndicator = function SuiAccordionIndi
           (state) => state.open && "sui_accordion_indicator-open",
           (state) => state.hidden && "sui_accordion_indicator-hidden",
           (state) => `sui_accordion_indicator-index_${state.index}`,
+          (state) => `sui_accordion_indicator-orientation_${state.orientation}`,
         ),
       },
     ],

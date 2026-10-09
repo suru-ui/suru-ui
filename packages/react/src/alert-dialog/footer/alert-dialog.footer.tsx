@@ -65,6 +65,12 @@ export const AlertDialogFooter: IAlertDialogFooter = function SuiAlertDialogFoot
             (state) => `sui_alert_dialog_footer-radius_${state.radius}`,
             (state) => `sui_alert_dialog_footer-variant_${state.variant}`,
             (state) => state.outlined && "sui_alert_dialog_footer-outlined",
+            (state) => state.open && "sui_alert_dialog_footer-open",
+            (state) => state.nested && "sui_alert_dialog_footer-nested",
+            (state) => state.nestedDialogOpen && "sui_alert_dialog_footer-nested_dialog_open",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_alert_dialog_footer-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

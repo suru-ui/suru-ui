@@ -11,11 +11,13 @@ import { AutocompletePopupContext } from "./autocomplete.popup.context.js";
 
 /**
  * {@link AutocompletePopup} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompletePopupState = AutocompletePopupContext;
+export type AutocompletePopupState<TItem = any> = AutocompletePopupContext<TItem>;
 
 export namespace AutocompletePopupProps {
-  export type Render = RenderProps<AutocompletePopupState>;
+  export type Render<TItem = any> = RenderProps<AutocompletePopupState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -57,7 +59,7 @@ export type IAutocompletePopup = IComponent<AutocompletePopupProps>;
  */
 export const AutocompletePopup: IAutocompletePopup = function SuiAutocompletePopup(props) {
   const ctx = useAutocompletePositionerContext();
-  const { style, render, outlined = ctx.outlined, className, ...otherProps } = props;
+  const { style, render, outlined = true, className, ...otherProps } = props;
 
   return (
     <Autocomplete.Popup
@@ -84,6 +86,14 @@ export const AutocompletePopup: IAutocompletePopup = function SuiAutocompletePop
             (state) => `sui_autocomplete_popup-color_${state.color}`,
             (state) => `sui_autocomplete_popup-radius_${state.radius}`,
             (state) => `sui_autocomplete_popup-variant_${state.variant}`,
+            (state) => state.open && "sui_autocomplete_popup-open",
+            (state) => state.empty && "sui_autocomplete_popup-empty",
+            (state) => state.anchorHidden && "sui_autocomplete_popup-anchor_hidden",
+            (state) => `sui_autocomplete_popup-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_autocomplete_popup-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_autocomplete_popup-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -94,12 +104,12 @@ export const AutocompletePopup: IAutocompletePopup = function SuiAutocompletePop
 export { AutocompletePopup as Popup };
 
 export namespace Popup {
-  export type State = AutocompletePopupState;
+  export type State<TItem = any> = AutocompletePopupState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompletePopupProps.Render;
+    export type Render<TItem = any> = AutocompletePopupProps.Render<TItem>;
 
     export type SuruUI = AutocompletePopupProps.SuruUI;
 

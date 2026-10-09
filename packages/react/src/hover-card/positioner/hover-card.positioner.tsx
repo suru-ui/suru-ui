@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useHoverCardContext } from "../root/hover-card.root.context.js";
+import { useHoverCardPortalContext } from "../portal/hover-card.portal.context.js";
 import { HoverCardPositionerContext } from "./hover-card.positioner.context.js";
 
 /**
@@ -60,7 +60,7 @@ export type IHoverCardPositioner = IComponent<HoverCardPositionerProps>;
  * トリガーを基準にポップアップを配置する要素です。
  */
 export const HoverCardPositioner: IHoverCardPositioner = function SuiHoverCardPositioner(props) {
-  const ctx = useHoverCardContext();
+  const ctx = useHoverCardPortalContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

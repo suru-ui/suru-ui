@@ -3,7 +3,7 @@ import * as React from "react";
 
 import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext, Override } from "../../types.js";
+import type { Override, IUseContext } from "../../types.js";
 import type { GroupContext } from "../group/combobox.group.context.js";
 import type { ListContext } from "../list/combobox.list.context.js";
 

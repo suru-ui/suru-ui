@@ -8,7 +8,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxPositionerContext } from "../positioner/combobox.positioner.context.js";
+import { useComboboxPortalContext } from "../portal/combobox.portal.context.js";
 import { ComboboxBackdropContext } from "./combobox.backdrop.context.js";
 
 /**
@@ -53,7 +53,7 @@ export type IComboboxBackdrop = IComponent<ComboboxBackdropProps>;
  * ポップアップの背後に表示される要素です。
  */
 export const ComboboxBackdrop: IComboboxBackdrop = function SuiComboboxBackdrop(props) {
-  const ctx = useComboboxPositionerContext();
+  const ctx = useComboboxPortalContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -83,10 +83,6 @@ export const ComboboxBackdrop: IComboboxBackdrop = function SuiComboboxBackdrop(
             (state) => state.outlined && "sui_combobox_backdrop-outlined",
             (state) => state.multiple && "sui_combobox_backdrop-multiple",
             (state) => state.open && "sui_combobox_backdrop-open",
-            (state) => `sui_combobox_backdrop-side_${state.side.replaceAll("-", "_")}`,
-            (state) => `sui_combobox_backdrop-align_${state.align}`,
-            (state) => state.anchorHidden && "sui_combobox_backdrop-anchor_hidden",
-            (state) => state.empty && "sui_combobox_backdrop-empty",
             (state) =>
               state.transitionStatus !== undefined &&
               `sui_combobox_backdrop-transition_status_${state.transitionStatus}`,

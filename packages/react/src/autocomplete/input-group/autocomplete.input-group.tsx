@@ -17,8 +17,10 @@ import { AutocompleteInputGroupContext } from "./autocomplete.input-group.contex
 
 /**
  * {@link AutocompleteInputGroup} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteInputGroupState = AutocompleteInputGroupContext;
+export type AutocompleteInputGroupState<TItem = any> = AutocompleteInputGroupContext<TItem>;
 
 /**
  * 入力グループの配色です。
@@ -54,7 +56,7 @@ export type AutocompleteInputGroupSize = AutocompleteContextSize;
 export type AutocompleteInputGroupVariant = AutocompleteContextVariant;
 
 export namespace AutocompleteInputGroupProps {
-  export type Render = RenderProps<AutocompleteInputGroupState>;
+  export type Render<TItem = any> = RenderProps<AutocompleteInputGroupState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -192,12 +194,12 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
 export { AutocompleteInputGroup as InputGroup };
 
 export namespace InputGroup {
-  export type State = AutocompleteInputGroupState;
+  export type State<TItem = any> = AutocompleteInputGroupState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompleteInputGroupProps.Render;
+    export type Render<TItem = any> = AutocompleteInputGroupProps.Render<TItem>;
 
     export type SuruUI = AutocompleteInputGroupProps.SuruUI;
 

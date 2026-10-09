@@ -132,7 +132,7 @@ export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: Combo
     className,
     ...otherProps
   } = props;
-  const itemCtx = React.useMemo<ComboboxItemContext>(() => ({ value }), [value]);
+  const itemCtx = React.useMemo(() => ({ value }) as ComboboxItemContext, [value]);
 
   return (
     <ComboboxItemContext value={itemCtx}>

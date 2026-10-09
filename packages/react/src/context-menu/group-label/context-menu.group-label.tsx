@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useContextMenuContext } from "../root/context-menu.root.context.js";
+import { useGroupContext } from "../group/context-menu.group.context.js";
 import { ContextMenuGroupLabelContext } from "./context-menu.group-label.context.js";
 
 /**
  * {@link ContextMenuGroupLabel} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuGroupLabelState = ContextMenuGroupLabelContext;
+export type ContextMenuGroupLabelState<TItem = any> = ContextMenuGroupLabelContext<TItem>;
 
 export namespace ContextMenuGroupLabelProps {
-  export type Render = RenderProps<ContextMenuGroupLabelState>;
+  export type Render<TItem = any> = RenderProps<ContextMenuGroupLabelState<TItem>>;
 
   export type SuruUI = {};
 
@@ -51,7 +53,7 @@ export type IContextMenuGroupLabel = IComponent<ContextMenuGroupLabelProps>;
 export const ContextMenuGroupLabel: IContextMenuGroupLabel = function SuiContextMenuGroupLabel(
   props,
 ) {
-  const ctx = useContextMenuContext();
+  const ctx = useGroupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -78,6 +80,15 @@ export const ContextMenuGroupLabel: IContextMenuGroupLabel = function SuiContext
             (state) => `sui_context_menu_group_label-radius_${state.radius}`,
             (state) => `sui_context_menu_group_label-variant_${state.variant}`,
             (state) => state.outlined && "sui_context_menu_group_label-outlined",
+            (state) => state.open && "sui_context_menu_group_label-open",
+            (state) => state.anchorHidden && "sui_context_menu_group_label-anchor_hidden",
+            (state) => state.nested && "sui_context_menu_group_label-nested",
+            (state) => state.instant && "sui_context_menu_group_label-instant",
+            (state) => `sui_context_menu_group_label-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_context_menu_group_label-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_context_menu_group_label-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -88,12 +99,12 @@ export const ContextMenuGroupLabel: IContextMenuGroupLabel = function SuiContext
 export { ContextMenuGroupLabel as GroupLabel };
 
 export namespace GroupLabel {
-  export type State = ContextMenuGroupLabelState;
+  export type State<TItem = any> = ContextMenuGroupLabelState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ContextMenuGroupLabelProps.Render;
+    export type Render<TItem = any> = ContextMenuGroupLabelProps.Render<TItem>;
 
     export type SuruUI = ContextMenuGroupLabelProps.SuruUI;
 

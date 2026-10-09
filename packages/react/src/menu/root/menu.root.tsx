@@ -231,8 +231,10 @@ export type MenuRootVariant = MenuContextVariant;
 
 /**
  * {@link MenuRoot} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuRootState = Override<MenuContext, Menu.Root.State>;
+export type MenuRootState<TItem = any> = Override<MenuContext<TItem>, Menu.Root.State>;
 
 export namespace MenuRootProps {
   export type Render = {};
@@ -360,7 +362,7 @@ export const MenuRoot: IMenuRoot = function SuiMenuRoot(props: MenuRootProps) {
 export { MenuRoot as Root };
 
 export namespace Root {
-  export type State = MenuRootState;
+  export type State<TItem = any> = MenuRootState<TItem>;
 
   export type Props<TPayload = any, TItem = any> = Props.Render &
     Props.SuruUI<TPayload, TItem> &

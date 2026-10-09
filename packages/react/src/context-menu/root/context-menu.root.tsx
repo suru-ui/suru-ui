@@ -232,8 +232,13 @@ export type ContextMenuRootVariant = ContextMenuContextVariant;
 
 /**
  * {@link ContextMenuRoot} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuRootState = Override<ContextMenuContext, ContextMenu.Root.State>;
+export type ContextMenuRootState<TItem = any> = Override<
+  ContextMenuContext<TItem>,
+  ContextMenu.Root.State
+>;
 
 export namespace ContextMenuRootProps {
   export type Render = {};
@@ -350,7 +355,7 @@ export const ContextMenuRoot: IContextMenuRoot = function SuiContextMenuRoot(
 export { ContextMenuRoot as Root };
 
 export namespace Root {
-  export type State = ContextMenuRootState;
+  export type State<TItem = any> = ContextMenuRootState<TItem>;
 
   export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
 

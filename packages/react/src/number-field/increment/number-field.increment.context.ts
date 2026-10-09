@@ -3,13 +3,13 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { NumberFieldContext } from "../root/number-field.root.context.js";
+import type { NumberFieldAddonContext } from "../addon/number-field.addon.context.js";
 
 /**
  * {@link NumberFieldIncrement} が子パーツへ提供する状態です。
  */
 export type NumberFieldIncrementContext = Readonly<
-  Override<NumberFieldContext, NumberField.Increment.State>
+  Override<NumberFieldAddonContext, NumberField.Increment.State>
 >;
 
 /**

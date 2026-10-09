@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectPositionerContext } from "../positioner/select.positioner.context.js";
 import { SelectContentContext } from "./select.content.context.js";
 
 /**
  * {@link SelectContent} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectContentState = SelectContentContext;
+export type SelectContentState<TValue = any> = SelectContentContext<TValue>;
 
 export namespace SelectContentProps {
-  export type Render = RenderProps<SelectContentState>;
+  export type Render<TValue = any> = RenderProps<SelectContentState<TValue>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type ISelectContent = IComponent<SelectContentProps>;
  * 選択項目を表示するポップアップ要素です。
  */
 export const SelectContent: ISelectContent = function SuiSelectContent(props) {
-  const ctx = useSelectContext();
+  const ctx = useSelectPositionerContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -79,6 +81,7 @@ export const SelectContent: ISelectContent = function SuiSelectContent(props) {
             (state) => `sui_select_content-radius_${state.radius}`,
             (state) => `sui_select_content-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_content-outlined",
+            (state) => state.anchorHidden && "sui_select_content-anchor_hidden",
             (state) => state.open && "sui_select_content-open",
             (state) => `sui_select_content-side_${state.side.replaceAll("-", "_")}`,
             (state) => `sui_select_content-align_${state.align}`,
@@ -92,12 +95,12 @@ export const SelectContent: ISelectContent = function SuiSelectContent(props) {
 export { SelectContent as Content };
 
 export namespace Content {
-  export type State = SelectContentState;
+  export type State<TValue = any> = SelectContentState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectContentProps.Render;
+    export type Render<TValue = any> = SelectContentProps.Render<TValue>;
 
     export type SuruUI = SelectContentProps.SuruUI;
 

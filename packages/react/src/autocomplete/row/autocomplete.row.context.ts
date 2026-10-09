@@ -3,13 +3,15 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { AutocompleteContext } from "../root/autocomplete.root.context.js";
+import type { AutocompleteListContext } from "../list/autocomplete.list.context.js";
 
 /**
  * {@link AutocompleteRow} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteRowContext = Readonly<
-  Override<AutocompleteContext, Autocomplete.Row.State>
+export type AutocompleteRowContext<TItem = any> = Readonly<
+  Override<AutocompleteListContext<TItem>, Autocomplete.Row.State>
 >;
 
 /**

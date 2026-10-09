@@ -1,7 +1,6 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
 import * as React from "react";
 
-import Config from "../../_config.jsx";
 import type { Override, IComponent } from "../../types.js";
 import { isItemObjectGroup, isLabeledItemObject } from "../_select.jsx";
 import type { SelectGroupProps } from "../group/select.group.jsx";
@@ -126,8 +125,10 @@ export type SelectRootVariant = SelectContextVariant;
 
 /**
  * {@link SelectRoot} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectRootState = Override<SelectContext, BaseSelect.Root.State>;
+export type SelectRootState<TValue = any> = Override<SelectContext<TValue>, BaseSelect.Root.State>;
 
 export namespace SelectRootProps {
   export type Render = {};
@@ -244,7 +245,6 @@ export interface ISelectRoot extends IComponent<SelectRootProps> {
  * それ自身は HTML 要素をレンダリングせず、スタイルと項目を子パーツへ伝播します。
  */
 export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootProps) {
-  const config = React.use(Config);
   const {
     size = "md",
     items,
@@ -330,34 +330,24 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootP
   );
 
   return (
-    <config.Context
-      size={size}
-      radius={radius}
-      variant={variant}
-      disabled={disabled}
-      outlined={outlined}
-      readOnly={readOnly}
-      required={required}
-    >
-      <SelectContext value={ctx}>
-        <BaseSelect.Root
-          {...otherProps}
-          items={baseuiItems}
-          disabled={disabled}
-          readOnly={readOnly}
-          required={required}
-          onValueChange={handleValueChange}
-          isItemEqualToValue={isItemEqualToValue}
-        />
-      </SelectContext>
-    </config.Context>
+    <SelectContext value={ctx}>
+      <BaseSelect.Root
+        {...otherProps}
+        items={baseuiItems}
+        disabled={disabled}
+        readOnly={readOnly}
+        required={required}
+        onValueChange={handleValueChange}
+        isItemEqualToValue={isItemEqualToValue}
+      />
+    </SelectContext>
   );
 };
 
 export { SelectRoot as Root };
 
 export namespace Root {
-  export type State = SelectRootState;
+  export type State<TValue = any> = SelectRootState<TValue>;
 
   export type Props<
     TValue = any,

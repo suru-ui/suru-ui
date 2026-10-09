@@ -1,14 +1,17 @@
 import { Drawer } from "@base-ui/react/drawer";
 import * as React from "react";
 
+import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
+import { DrawerPopupContext } from "./drawer.popup.context.js";
 
 /**
  * {@link DrawerPopup} が持つ状態です。
  */
-export type DrawerPopupState = Drawer.Popup.State;
+export type DrawerPopupState = DrawerPopupContext;
 
 export namespace DrawerPopupProps {
   export type Render = RenderProps<DrawerPopupState>;
@@ -47,25 +50,38 @@ export type IDrawerPopup = IComponent<DrawerPopupProps>;
  * `initialFocus` と `finalFocus` を使うと、開閉時に移動するフォーカス先を指定できます。
  */
 export const DrawerPopup: IDrawerPopup = function SuiDrawerPopup(props) {
-  const { className, ...otherProps } = props;
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Drawer.Popup
       {...otherProps}
-      className={cn(
-        className,
-        "sui_drawer_popup",
-        (state) => `sui_drawer_popup-swipe_direction_${state.swipeDirection}`,
-        (state) => state.swiping && "sui_drawer_popup-swiping",
-        (state) => state.nestedDrawerSwiping && "sui_drawer_popup-nested_drawer_swiping",
-        (state) => state.nestedDrawerOpen && "sui_drawer_popup-nested_drawer_open",
-        (state) =>
-          state.transitionStatus !== undefined &&
-          `sui_drawer_popup-transition_status_${state.transitionStatus}`,
-        (state) => state.expanded && "sui_drawer_popup-expanded",
-        (state) => state.open && "sui_drawer_popup-open",
-        (state) => state.nested && "sui_drawer_popup-nested",
-      )}
+      {...proxyRenderProps<Drawer.Popup.State, DrawerPopupState>((state) => state, {
+        style,
+        render: (htmlProps, state) => (
+          <DrawerPopupContext value={state}>
+            <RenderElement
+              state={state}
+              render={render}
+              htmlProps={htmlProps}
+              defaultTagName="div"
+            />
+          </DrawerPopupContext>
+        ),
+        className: cn<DrawerPopupState>(
+          className,
+          "sui_drawer_popup",
+          (state) => `sui_drawer_popup-swipe_direction_${state.swipeDirection}`,
+          (state) => state.swiping && "sui_drawer_popup-swiping",
+          (state) => state.nestedDrawerSwiping && "sui_drawer_popup-nested_drawer_swiping",
+          (state) => state.nestedDrawerOpen && "sui_drawer_popup-nested_drawer_open",
+          (state) =>
+            state.transitionStatus !== undefined &&
+            `sui_drawer_popup-transition_status_${state.transitionStatus}`,
+          (state) => state.expanded && "sui_drawer_popup-expanded",
+          (state) => state.open && "sui_drawer_popup-open",
+          (state) => state.nested && "sui_drawer_popup-nested",
+        ),
+      })}
     />
   );
 };

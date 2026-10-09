@@ -42,11 +42,13 @@ export type BreadcrumbRootSize = BreadcrumbContextSize;
 
 /**
  * {@link BreadcrumbRoot} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type BreadcrumbRootState = BreadcrumbContext;
+export type BreadcrumbRootState<TItem = any> = BreadcrumbContext<TItem>;
 
 export namespace BreadcrumbRootProps {
-  export type Render = RenderProps<BreadcrumbRootState>;
+  export type Render<TItem = any> = RenderProps<BreadcrumbRootState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -86,7 +88,7 @@ export namespace BreadcrumbRootProps {
  *
  * @template TItem 項目の型です。
  */
-export type BreadcrumbRootProps<TItem = any> = BreadcrumbRootProps.Render &
+export type BreadcrumbRootProps<TItem = any> = BreadcrumbRootProps.Render<TItem> &
   BreadcrumbRootProps.SuruUI<TItem> &
   BreadcrumbRootProps.BaseUI &
   BreadcrumbRootProps.HTML;
@@ -142,12 +144,15 @@ export const BreadcrumbRoot: IBreadcrumbRoot = function SuiBreadcrumbRoot(
 export { BreadcrumbRoot as Root };
 
 export namespace Root {
-  export type State = BreadcrumbRootState;
+  export type State<TItem = any> = BreadcrumbRootState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = BreadcrumbRootProps.Render;
+    export type Render<TItem = any> = BreadcrumbRootProps.Render<TItem>;
 
     export type SuruUI<TItem = any> = BreadcrumbRootProps.SuruUI<TItem>;
 

@@ -8,15 +8,17 @@ import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
+import { useAutocompleteGroupContext } from "../group/autocomplete.group.context.js";
+import type { AutocompleteGroupContext } from "../group/autocomplete.group.context.js";
 import { useAutocompleteListContext } from "../list/autocomplete.list.context.js";
-import type { AutocompleteContext } from "../root/autocomplete.root.context.js";
+import type { AutocompleteListContext } from "../list/autocomplete.list.context.js";
 import { AutocompleteItemContext } from "./autocomplete.item.context.js";
 
 /**
  * {@link AutocompleteItem} の状態です。
  */
 export type AutocompleteItemState = Override<
-  AutocompleteContext,
+  AutocompleteListContext & AutocompleteGroupContext,
   Override<Button.Root.State, Autocomplete.Item.State>
 >;
 
@@ -57,6 +59,8 @@ export namespace AutocompleteItemProps {
 
 /**
  * {@link AutocompleteItem} に渡す props です。
+ *
+ * @template TValue 項目の値の型です。
  */
 export type AutocompleteItemProps<TValue = any> = AutocompleteItemProps.Render &
   AutocompleteItemProps.SuruUI &
@@ -76,7 +80,9 @@ export interface IAutocompleteItem extends IComponent<AutocompleteItemProps> {
 export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
   props: AutocompleteItemProps,
 ) {
-  const ctx = useAutocompleteListContext();
+  const listCtx = useAutocompleteListContext();
+  const groupCtx = useAutocompleteGroupContext(true);
+  const ctx = groupCtx || listCtx;
   const {
     index,
     style,
@@ -146,6 +152,14 @@ export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
                       (state) => `sui_autocomplete_item-radius_${state.radius}`,
                       (state) => `sui_autocomplete_item-variant_${state.variant}`,
                       (state) => state.outlined && "sui_autocomplete_item-outlined",
+                      (state) => state.open && "sui_autocomplete_item-open",
+                      (state) => state.empty && "sui_autocomplete_item-empty",
+                      (state) => state.anchorHidden && "sui_autocomplete_item-anchor_hidden",
+                      (state) => `sui_autocomplete_item-side_${state.side.replaceAll("-", "_")}`,
+                      (state) => `sui_autocomplete_item-align_${state.align}`,
+                      (state) =>
+                        state.transitionStatus !== undefined &&
+                        `sui_autocomplete_item-transition_status_${state.transitionStatus}`,
                     ),
                   },
                 ),

@@ -50,7 +50,7 @@ export const ToastViewport: IToastViewport = function SuiToastViewport(props) {
   return (
     <Toast.Viewport
       {...otherProps}
-      className={cn(
+      className={cn<ToastViewportState>(
         className,
         "sui_toast_viewport",
         (state) => state.expanded && "sui_toast_viewport-expanded",

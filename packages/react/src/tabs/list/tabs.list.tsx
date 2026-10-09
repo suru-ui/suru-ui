@@ -13,11 +13,13 @@ import { TabsListContext } from "./tabs.list.context.js";
 
 /**
  * {@link TabsList} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type TabsListState = TabsListContext;
+export type TabsListState<TItem = any> = TabsListContext<TItem>;
 
 export namespace TabsListProps {
-  export type Render = RenderProps<TabsListState>;
+  export type Render<TItem = any> = RenderProps<TabsListState<TItem>>;
 
   export type SuruUI = {};
 
@@ -48,7 +50,7 @@ export namespace TabsListProps {
  *
  * @template TItem 項目の型です。
  */
-export type TabsListProps<TItem = any> = TabsListProps.Render &
+export type TabsListProps<TItem = any> = TabsListProps.Render<TItem> &
   TabsListProps.SuruUI &
   TabsListProps.BaseUI<TItem> &
   TabsListProps.HTML;
@@ -119,12 +121,15 @@ const defaultListItemRenderer: ITabsRootItemRenderer = createItemRenderer(
 export { TabsList as List };
 
 export namespace List {
-  export type State = TabsListState;
+  export type State<TItem = any> = TabsListState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI & Props.BaseUI<TItem> & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI &
+    Props.BaseUI<TItem> &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = TabsListProps.Render;
+    export type Render<TItem = any> = TabsListProps.Render<TItem>;
 
     export type SuruUI = TabsListProps.SuruUI;
 

@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { usePopoverContext } from "../root/popover.root.context.js";
+import { usePopoverPositionerContext } from "../positioner/popover.positioner.context.js";
 import { PopoverContentContext } from "./popover.content.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IPopoverContent = IComponent<PopoverContentProps>;
  * ポップオーバーの内容を表示するポップアップ要素です。
  */
 export const PopoverContent: IPopoverContent = function SuiPopoverContent(props) {
-  const ctx = usePopoverContext();
+  const ctx = usePopoverPositionerContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -82,6 +82,7 @@ export const PopoverContent: IPopoverContent = function SuiPopoverContent(props)
             (state) => state.instant && "sui_popover_content-instant",
             (state) => `sui_popover_content-side_${state.side.replaceAll("-", "_")}`,
             (state) => `sui_popover_content-align_${state.align}`,
+            (state) => state.anchorHidden && "sui_popover_content-anchor_hidden",
           ),
         },
       )}

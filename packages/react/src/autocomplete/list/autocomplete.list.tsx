@@ -13,15 +13,22 @@ import {
 import { useAutocompletePopupContext } from "../popup/autocomplete.popup.context.js";
 import { AutocompleteListContext } from "./autocomplete.list.context.js";
 
+/**
+ * {@link AutocompleteList} の各項目をレンダリングする関数のインターフェイスです。
+ *
+ * @template TItem 項目の型です。
+ */
 export type IAutocompleteListItemRenderer<TItem = any> = IAutocompleteCollectionItemRenderer<TItem>;
 
 /**
  * {@link AutocompleteList} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteListState = AutocompleteListContext;
+export type AutocompleteListState<TItem = any> = AutocompleteListContext<TItem>;
 
 export namespace AutocompleteListProps {
-  export type Render = RenderProps<AutocompleteListState>;
+  export type Render<TItem = any> = RenderProps<AutocompleteListState<TItem>>;
 
   export type SuruUI = {};
 
@@ -49,8 +56,10 @@ export namespace AutocompleteListProps {
 
 /**
  * {@link AutocompleteList} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteListProps<TItem = any> = AutocompleteListProps.Render &
+export type AutocompleteListProps<TItem = any> = AutocompleteListProps.Render<TItem> &
   AutocompleteListProps.SuruUI &
   AutocompleteListProps.BaseUI<TItem> &
   AutocompleteListProps.HTML;
@@ -103,6 +112,14 @@ export const AutocompleteList: IAutocompleteList = function SuiAutocompleteList(
             (state) => `sui_autocomplete_list-radius_${state.radius}`,
             (state) => `sui_autocomplete_list-variant_${state.variant}`,
             (state) => state.outlined && "sui_autocomplete_list-outlined",
+            (state) => state.empty && "sui_autocomplete_list-empty",
+            (state) => state.open && "sui_autocomplete_list-open",
+            (state) => state.anchorHidden && "sui_autocomplete_list-anchor_hidden",
+            (state) => `sui_autocomplete_list-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_autocomplete_list-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_autocomplete_list-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -115,12 +132,15 @@ export const AutocompleteList: IAutocompleteList = function SuiAutocompleteList(
 export { AutocompleteList as List };
 
 export namespace List {
-  export type State = AutocompleteListState;
+  export type State<TItem = any> = AutocompleteListState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI & Props.BaseUI<TItem> & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI &
+    Props.BaseUI<TItem> &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompleteListProps.Render;
+    export type Render<TItem = any> = AutocompleteListProps.Render<TItem>;
 
     export type SuruUI = AutocompleteListProps.SuruUI;
 

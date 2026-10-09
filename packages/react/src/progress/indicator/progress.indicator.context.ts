@@ -3,13 +3,13 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { ProgressContext } from "../root/progress.root.context.js";
+import type { ProgressTrackContext } from "../track/progress.track.context.js";
 
 /**
  * {@link ProgressIndicator} が子パーツへ提供する状態です。
  */
 export type ProgressIndicatorContext = Readonly<
-  Override<ProgressContext, Progress.Indicator.State>
+  Override<ProgressTrackContext, Progress.Indicator.State>
 >;
 
 /**

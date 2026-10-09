@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { usePopoverContext } from "../root/popover.root.context.js";
+import { usePopoverPortalContext } from "../portal/popover.portal.context.js";
 import { PopoverPositionerContext } from "./popover.positioner.context.js";
 
 /**
@@ -60,7 +60,7 @@ export type IPopoverPositioner = IComponent<PopoverPositionerProps>;
  * トリガーを基準にポップアップを配置する要素です。
  */
 export const PopoverPositioner: IPopoverPositioner = function SuiPopoverPositioner(props) {
-  const ctx = usePopoverContext();
+  const ctx = usePopoverPortalContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

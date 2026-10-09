@@ -43,11 +43,13 @@ export type SegmentsItemValue = BaseTabs.Tab.Value;
 
 /**
  * {@link SegmentsItem} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type SegmentsItemState = SegmentsItemContext;
+export type SegmentsItemState<TItem = any> = SegmentsItemContext<TItem>;
 
 export namespace SegmentsItemProps {
-  export type Render = RenderProps<SegmentsItemState>;
+  export type Render<TItem = any> = RenderProps<SegmentsItemState<TItem>>;
 
   export type SuruUI = {};
 
@@ -125,12 +127,12 @@ export const SegmentsItem: ISegmentsItem = function SuiSegmentsItem(props) {
 export { SegmentsItem as Item };
 
 export namespace Item {
-  export type State = SegmentsItemState;
+  export type State<TItem = any> = SegmentsItemState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SegmentsItemProps.Render;
+    export type Render<TItem = any> = SegmentsItemProps.Render<TItem>;
 
     export type SuruUI = SegmentsItemProps.SuruUI;
 

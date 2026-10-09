@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSliderContext } from "../root/slider.root.context.js";
+import { useSliderControlContext } from "../control/slider.control.context.js";
 import { SliderTrackContext } from "./slider.track.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type ISliderTrack = IComponent<SliderTrackProps>;
  * スライダーの全範囲を表すトラックコンポーネントです。
  */
 export const SliderTrack: ISliderTrack = function SuiSliderTrack(props) {
-  const ctx = useSliderContext();
+  const ctx = useSliderControlContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

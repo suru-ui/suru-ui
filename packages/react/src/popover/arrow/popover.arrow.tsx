@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { usePopoverContext } from "../root/popover.root.context.js";
+import { usePopoverContentContext } from "../content/popover.content.context.js";
 import { PopoverArrowContext } from "./popover.arrow.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IPopoverArrow = IComponent<PopoverArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const PopoverArrow: IPopoverArrow = function SuiPopoverArrow(props) {
-  const ctx = usePopoverContext();
+  const ctx = usePopoverContentContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -79,6 +79,11 @@ export const PopoverArrow: IPopoverArrow = function SuiPopoverArrow(props) {
             (state) => state.open && "sui_popover_arrow-open",
             (state) => state.uncentered && "sui_popover_arrow-uncentered",
             (state) => `sui_popover_arrow-align_${state.align}`,
+            (state) => state.anchorHidden && "sui_popover_arrow-anchor_hidden",
+            (state) => state.instant && "sui_popover_arrow-instant",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_popover_arrow-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

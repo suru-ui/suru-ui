@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectListContext } from "../list/select.list.context.js";
 import { SelectGroupContext } from "./select.group.context.js";
 
 /**
  * {@link SelectGroup} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectGroupState = SelectGroupContext;
+export type SelectGroupState<TValue = any> = SelectGroupContext<TValue>;
 
 export namespace SelectGroupProps {
-  export type Render = RenderProps<SelectGroupState>;
+  export type Render<TValue = any> = RenderProps<SelectGroupState<TValue>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type ISelectGroup = IComponent<SelectGroupProps>;
  * 関連する選択肢をまとめるグループ要素です。
  */
 export const SelectGroup: ISelectGroup = function SuiSelectGroup(props) {
-  const ctx = useSelectContext();
+  const ctx = useSelectListContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -76,6 +78,13 @@ export const SelectGroup: ISelectGroup = function SuiSelectGroup(props) {
             (state) => `sui_select_group-radius_${state.radius}`,
             (state) => `sui_select_group-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_group-outlined",
+            (state) => state.open && "sui_select_group-open",
+            (state) => state.anchorHidden && "sui_select_group-anchor_hidden",
+            (state) => `sui_select_group-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_select_group-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_select_group-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -86,12 +95,12 @@ export const SelectGroup: ISelectGroup = function SuiSelectGroup(props) {
 export { SelectGroup as Group };
 
 export namespace Group {
-  export type State = SelectGroupState;
+  export type State<TValue = any> = SelectGroupState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectGroupProps.Render;
+    export type Render<TValue = any> = SelectGroupProps.Render<TValue>;
 
     export type SuruUI = SelectGroupProps.SuruUI;
 

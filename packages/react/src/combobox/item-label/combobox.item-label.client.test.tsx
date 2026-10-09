@@ -27,7 +27,7 @@ function Provider(props: {
   };
   return (
     <ComboboxContextValue value={ctx}>
-      <ComboboxItemContextValue value={{ value: props.value }}>
+      <ComboboxItemContextValue value={{ value: props.value } as ComboboxItemContextValue}>
         {props.children}
       </ComboboxItemContextValue>
     </ComboboxContextValue>

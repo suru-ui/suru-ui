@@ -7,7 +7,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAccordionContext } from "../root/accordion.root.context.js";
+import { useAccordionItemContext } from "../item/accordion.item.context.js";
 import { AccordionTriggerContext } from "./accordion.trigger.context.js";
 
 /**
@@ -61,7 +61,7 @@ export type IAccordionTrigger = IComponent<AccordionTriggerProps>;
  * アコーディオンの開閉ボタンコンポーネントです。
  */
 export const AccordionTrigger: IAccordionTrigger = function SuiAccordionTrigger(props) {
-  const ctx = useAccordionContext();
+  const ctx = useAccordionItemContext();
   const { style, render, unstyled = false, className, ...otherProps } = props;
 
   return (
@@ -92,6 +92,7 @@ export const AccordionTrigger: IAccordionTrigger = function SuiAccordionTrigger(
             (state) => state.open && "sui_accordion_trigger-open",
             (state) => state.hidden && "sui_accordion_trigger-hidden",
             (state) => `sui_accordion_trigger-index_${state.index}`,
+            (state) => `sui_accordion_trigger-orientation_${state.orientation}`,
           ),
         },
       )}

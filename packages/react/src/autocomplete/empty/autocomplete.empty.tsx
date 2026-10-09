@@ -11,11 +11,13 @@ import { AutocompleteEmptyContext } from "./autocomplete.empty.context.js";
 
 /**
  * {@link AutocompleteEmpty} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteEmptyState = AutocompleteEmptyContext;
+export type AutocompleteEmptyState<TItem = any> = AutocompleteEmptyContext<TItem>;
 
 export namespace AutocompleteEmptyProps {
-  export type Render = RenderProps<AutocompleteEmptyState>;
+  export type Render<TItem = any> = RenderProps<AutocompleteEmptyState<TItem>>;
 
   export type SuruUI = {};
 
@@ -79,6 +81,14 @@ export const AutocompleteEmpty: IAutocompleteEmpty = function SuiAutocompleteEmp
             (state) => `sui_autocomplete_empty-radius_${state.radius}`,
             (state) => `sui_autocomplete_empty-variant_${state.variant}`,
             (state) => state.outlined && "sui_autocomplete_empty-outlined",
+            (state) => state.open && "sui_autocomplete_empty-open",
+            (state) => state.empty && "sui_autocomplete_empty-empty",
+            (state) => state.anchorHidden && "sui_autocomplete_empty-anchor_hidden",
+            (state) => `sui_autocomplete_empty-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_autocomplete_empty-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_autocomplete_empty-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -89,12 +99,12 @@ export const AutocompleteEmpty: IAutocompleteEmpty = function SuiAutocompleteEmp
 export { AutocompleteEmpty as Empty };
 
 export namespace Empty {
-  export type State = AutocompleteEmptyState;
+  export type State<TItem = any> = AutocompleteEmptyState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompleteEmptyProps.Render;
+    export type Render<TItem = any> = AutocompleteEmptyProps.Render<TItem>;
 
     export type SuruUI = AutocompleteEmptyProps.SuruUI;
 

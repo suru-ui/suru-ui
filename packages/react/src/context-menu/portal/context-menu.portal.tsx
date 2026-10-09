@@ -2,20 +2,24 @@ import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
-import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { IComponent } from "../../types.js";
+import type { Override, IComponent } from "../../types.js";
 import { useContextMenuContext } from "../root/context-menu.root.context.js";
-import { ContextMenuPortalContext } from "./context-menu.portal.context.js";
+import type { ContextMenuPortalContext } from "./context-menu.portal.context.js";
 
 /**
  * {@link ContextMenuPortal} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuPortalState = ContextMenuPortalContext;
+export type ContextMenuPortalState<TItem = any> = Override<
+  ContextMenuPortalContext<TItem>,
+  ContextMenu.Portal.State
+>;
 
 export namespace ContextMenuPortalProps {
-  export type Render = RenderProps<ContextMenuPortalState>;
+  export type Render<TItem = any> = RenderProps<ContextMenuPortalState<TItem>>;
 
   export type SuruUI = {};
 
@@ -23,7 +27,7 @@ export namespace ContextMenuPortalProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.Portal>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuPortalProps より:
+      // ContextMenuPortalProps より:
       "keepMounted" | "container"
     >,
     keyof Render | keyof SuruUI
@@ -68,16 +72,7 @@ export const ContextMenuPortal: IContextMenuPortal = function SuiContextMenuPort
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render: (htmlProps, state) => (
-            <ContextMenuPortalContext value={state}>
-              <RenderElement
-                state={state}
-                render={render}
-                htmlProps={htmlProps}
-                defaultTagName="div"
-              />
-            </ContextMenuPortalContext>
-          ),
+          render,
           className: cn<ContextMenuPortalState>(
             className,
             "sui_context_menu_portal",
@@ -96,12 +91,12 @@ export const ContextMenuPortal: IContextMenuPortal = function SuiContextMenuPort
 export { ContextMenuPortal as Portal };
 
 export namespace Portal {
-  export type State = ContextMenuPortalState;
+  export type State<TItem = any> = ContextMenuPortalState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ContextMenuPortalProps.Render;
+    export type Render<TItem = any> = ContextMenuPortalProps.Render<TItem>;
 
     export type SuruUI = ContextMenuPortalProps.SuruUI;
 

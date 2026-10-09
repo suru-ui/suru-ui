@@ -87,6 +87,12 @@ export const DialogDescription: IDialogDescription = function SuiDialogDescripti
                   (state) => `sui_dialog_description-radius_${state.radius}`,
                   (state) => `sui_dialog_description-variant_${state.variant}`,
                   (state) => state.outlined && "sui_dialog_description-outlined",
+                  (state) => state.open && "sui_dialog_description-open",
+                  (state) => state.nested && "sui_dialog_description-nested",
+                  (state) => state.nestedDialogOpen && "sui_dialog_description-nested_dialog_open",
+                  (state) =>
+                    state.transitionStatus !== undefined &&
+                    `sui_dialog_description-transition_status_${state.transitionStatus}`,
                 ),
               },
             ),

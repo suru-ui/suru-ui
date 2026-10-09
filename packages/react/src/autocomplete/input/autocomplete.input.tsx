@@ -11,11 +11,13 @@ import { AutocompleteInputContext } from "./autocomplete.input.context.js";
 
 /**
  * {@link AutocompleteInput} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteInputState = AutocompleteInputContext;
+export type AutocompleteInputState<TItem = any> = AutocompleteInputContext<TItem>;
 
 export namespace AutocompleteInputProps {
-  export type Render = RenderProps<AutocompleteInputState>;
+  export type Render<TItem = any> = RenderProps<AutocompleteInputState<TItem>>;
 
   export type SuruUI = {};
 
@@ -77,6 +79,20 @@ export const AutocompleteInput: IAutocompleteInput = function SuiAutocompleteInp
             (state) => `sui_autocomplete_input-radius_${state.radius}`,
             (state) => `sui_autocomplete_input-variant_${state.variant}`,
             (state) => state.outlined && "sui_autocomplete_input-outlined",
+            (state) => state.disabled && "sui_autocomplete_input-disabled",
+            (state) => state.readOnly && "sui_autocomplete_input-readonly",
+            (state) => state.open && "sui_autocomplete_input-open",
+            (state) => state.listEmpty && "sui_autocomplete_input-list_empty",
+            (state) => state.touched && "sui_autocomplete_input-touched",
+            (state) => state.dirty && "sui_autocomplete_input-dirty",
+            (state) => state.filled && "sui_autocomplete_input-filled",
+            (state) => state.focused && "sui_autocomplete_input-focused",
+            (state) => state.valid === false && "sui_autocomplete_input-invalid",
+            (state) => state.valid === true && "sui_autocomplete_input-valid",
+            (state) => state.valid === null && "sui_autocomplete_input-unverified",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_autocomplete_input-popup_side_${state.popupSide.replaceAll("-", "_")}`,
           ),
         },
       )}
@@ -87,12 +103,12 @@ export const AutocompleteInput: IAutocompleteInput = function SuiAutocompleteInp
 export { AutocompleteInput as Input };
 
 export namespace Input {
-  export type State = AutocompleteInputState;
+  export type State<TItem = any> = AutocompleteInputState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompleteInputProps.Render;
+    export type Render<TItem = any> = AutocompleteInputProps.Render<TItem>;
 
     export type SuruUI = AutocompleteInputProps.SuruUI;
 

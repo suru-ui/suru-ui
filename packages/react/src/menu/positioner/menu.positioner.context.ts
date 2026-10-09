@@ -3,12 +3,16 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { MenuContext } from "../root/menu.root.context.js";
+import type { PortalContext } from "../portal/menu.portal.context.js";
 
 /**
  * {@link MenuPositioner} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuPositionerContext = Readonly<Override<MenuContext, Menu.Positioner.State>>;
+export type MenuPositionerContext<TItem = any> = Readonly<
+  Override<PortalContext<TItem>, Menu.Positioner.State>
+>;
 
 /**
  * {@link MenuPositioner} が子パーツへ提供するコンテキストです。

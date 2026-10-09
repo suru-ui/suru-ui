@@ -11,11 +11,13 @@ import { MenuViewportContext } from "./menu.viewport.context.js";
 
 /**
  * {@link MenuViewport} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuViewportState = MenuViewportContext;
+export type MenuViewportState<TItem = any> = MenuViewportContext<TItem>;
 
 export namespace MenuViewportProps {
-  export type Render = RenderProps<MenuViewportState>;
+  export type Render<TItem = any> = RenderProps<MenuViewportState<TItem>>;
 
   export type SuruUI = {};
 
@@ -91,12 +93,12 @@ export const MenuViewport: IMenuViewport = function SuiMenuViewport(props) {
 export { MenuViewport as Viewport };
 
 export namespace Viewport {
-  export type State = MenuViewportState;
+  export type State<TItem = any> = MenuViewportState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = MenuViewportProps.Render;
+    export type Render<TItem = any> = MenuViewportProps.Render<TItem>;
 
     export type SuruUI = MenuViewportProps.SuruUI;
 

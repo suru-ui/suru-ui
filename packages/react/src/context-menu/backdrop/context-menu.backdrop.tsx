@@ -11,11 +11,13 @@ import { ContextMenuBackdropContext } from "./context-menu.backdrop.context.js";
 
 /**
  * {@link ContextMenuBackdrop} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuBackdropState = ContextMenuBackdropContext;
+export type ContextMenuBackdropState<TItem = any> = ContextMenuBackdropContext<TItem>;
 
 export namespace ContextMenuBackdropProps {
-  export type Render = RenderProps<ContextMenuBackdropState>;
+  export type Render<TItem = any> = RenderProps<ContextMenuBackdropState<TItem>>;
 
   export type SuruUI = {};
 
@@ -90,12 +92,12 @@ export const ContextMenuBackdrop: IContextMenuBackdrop = function SuiContextMenu
 export { ContextMenuBackdrop as Backdrop };
 
 export namespace Backdrop {
-  export type State = ContextMenuBackdropState;
+  export type State<TItem = any> = ContextMenuBackdropState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ContextMenuBackdropProps.Render;
+    export type Render<TItem = any> = ContextMenuBackdropProps.Render<TItem>;
 
     export type SuruUI = ContextMenuBackdropProps.SuruUI;
 

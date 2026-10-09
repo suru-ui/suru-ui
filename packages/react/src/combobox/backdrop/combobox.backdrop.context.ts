@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { PositionerContext } from "../positioner/combobox.positioner.context.js";
+import type { PortalContext } from "../portal/combobox.portal.context.js";
 
 /**
  * {@link ComboboxBackdrop} が子パーツへ提供する状態です。
@@ -11,7 +11,7 @@ import type { PositionerContext } from "../positioner/combobox.positioner.contex
  * @template TItem 項目の型です。
  */
 export type ComboboxBackdropContext<TItem = any> = Readonly<
-  Override<PositionerContext<TItem>, Combobox.Backdrop.State>
+  Override<PortalContext<TItem>, Combobox.Backdrop.State>
 >;
 
 /**

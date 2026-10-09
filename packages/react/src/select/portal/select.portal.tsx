@@ -10,11 +10,16 @@ import type { SelectPortalContext } from "./select.portal.context.js";
 
 /**
  * {@link SelectPortal} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectPortalState = Override<SelectPortalContext, BaseSelect.Portal.State>;
+export type SelectPortalState<TValue = any> = Override<
+  SelectPortalContext<TValue>,
+  BaseSelect.Portal.State
+>;
 
 export namespace SelectPortalProps {
-  export type Render = RenderProps<SelectPortalState>;
+  export type Render<TValue = any> = RenderProps<SelectPortalState<TValue>>;
 
   export type SuruUI = {};
 
@@ -86,12 +91,12 @@ export const SelectPortal: ISelectPortal = function SuiSelectPortal(props) {
 export { SelectPortal as Portal };
 
 export namespace Portal {
-  export type State = SelectPortalState;
+  export type State<TValue = any> = SelectPortalState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectPortalProps.Render;
+    export type Render<TValue = any> = SelectPortalProps.Render<TValue>;
 
     export type SuruUI = SelectPortalProps.SuruUI;
 

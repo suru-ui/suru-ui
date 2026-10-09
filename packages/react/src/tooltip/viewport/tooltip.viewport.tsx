@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useTooltipContext } from "../root/tooltip.root.context.js";
+import { useTooltipContentContext } from "../content/tooltip.content.context.js";
 import { TooltipViewportContext } from "./tooltip.viewport.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type ITooltipViewport = IComponent<TooltipViewportProps>;
  * 1 つのツールチップを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
 export const TooltipViewport: ITooltipViewport = function SuiTooltipViewport(props) {
-  const ctx = useTooltipContext();
+  const ctx = useTooltipContentContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -77,7 +77,14 @@ export const TooltipViewport: ITooltipViewport = function SuiTooltipViewport(pro
             (state) => `sui_tooltip_viewport-size_${state.size}`,
             (state) => `sui_tooltip_viewport-radius_${state.radius}`,
             (state) => state.outlined && "sui_tooltip_viewport-outlined",
+            (state) => state.open && "sui_tooltip_viewport-open",
+            (state) => state.anchorHidden && "sui_tooltip_viewport-anchor_hidden",
             (state) => state.instant && "sui_tooltip_viewport-instant",
+            (state) => `sui_tooltip_viewport-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_tooltip_viewport-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_tooltip_viewport-transition_status_${state.transitionStatus}`,
             (state) => state.transitioning && "sui_tooltip_viewport-transitioning",
             (state) =>
               state.activationDirection !== undefined &&

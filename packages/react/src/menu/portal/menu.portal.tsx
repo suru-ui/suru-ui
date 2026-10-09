@@ -2,20 +2,21 @@ import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
-import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { IComponent } from "../../types.js";
+import type { Override, IComponent } from "../../types.js";
 import { useMenuContext } from "../root/menu.root.context.js";
-import { MenuPortalContext } from "./menu.portal.context.js";
+import type { MenuPortalContext } from "./menu.portal.context.js";
 
 /**
  * {@link MenuPortal} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuPortalState = MenuPortalContext;
+export type MenuPortalState<TItem = any> = Override<MenuPortalContext<TItem>, Menu.Portal.State>;
 
 export namespace MenuPortalProps {
-  export type Render = RenderProps<MenuPortalState>;
+  export type Render<TItem = any> = RenderProps<MenuPortalState<TItem>>;
 
   export type SuruUI = {};
 
@@ -66,16 +67,7 @@ export const MenuPortal: IMenuPortal = function SuiMenuPortal(props) {
       {...otherProps}
       {...proxyRenderProps<Menu.Portal.State, MenuPortalState>((state) => ({ ...ctx, ...state }), {
         style,
-        render: (htmlProps, state) => (
-          <MenuPortalContext value={state}>
-            <RenderElement
-              state={state}
-              render={render}
-              htmlProps={htmlProps}
-              defaultTagName="div"
-            />
-          </MenuPortalContext>
-        ),
+        render,
         className: cn<MenuPortalState>(
           className,
           "sui_menu_portal",
@@ -93,12 +85,12 @@ export const MenuPortal: IMenuPortal = function SuiMenuPortal(props) {
 export { MenuPortal as Portal };
 
 export namespace Portal {
-  export type State = MenuPortalState;
+  export type State<TItem = any> = MenuPortalState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = MenuPortalProps.Render;
+    export type Render<TItem = any> = MenuPortalProps.Render<TItem>;
 
     export type SuruUI = MenuPortalProps.SuruUI;
 

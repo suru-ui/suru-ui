@@ -1,12 +1,15 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
+import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
+import { useDrawerContentContext } from "../content/drawer.content.context.js";
+import { DrawerHeaderContext } from "./drawer.header.context.js";
 
 /**
  * {@link DrawerHeader} が持つ状態です。
  */
-export type DrawerHeaderState = {};
+export type DrawerHeaderState = DrawerHeaderContext;
 
 export namespace DrawerHeaderProps {
   export type Render = RenderProps<DrawerHeaderState>;
@@ -35,15 +38,31 @@ export type IDrawerHeader = IComponent<DrawerHeaderProps>;
  * ドロワーのヘッダーコンポーネントです。
  */
 export const DrawerHeader: IDrawerHeader = function SuiDrawerHeader(props) {
-  return useRender({
+  const ctx = useDrawerContentContext();
+  const element = useRender({
     props: [
       props,
       {
-        className: "sui_drawer_header",
+        className: cn<DrawerHeaderState>(
+          "sui_drawer_header",
+          (state) => `sui_drawer_header-swipe_direction_${state.swipeDirection}`,
+          (state) => state.swiping && "sui_drawer_header-swiping",
+          (state) => state.nestedDrawerSwiping && "sui_drawer_header-nested_drawer_swiping",
+          (state) => state.nestedDrawerOpen && "sui_drawer_header-nested_drawer_open",
+          (state) =>
+            state.transitionStatus !== undefined &&
+            `sui_drawer_header-transition_status_${state.transitionStatus}`,
+          (state) => state.expanded && "sui_drawer_header-expanded",
+          (state) => state.open && "sui_drawer_header-open",
+          (state) => state.nested && "sui_drawer_header-nested",
+        ),
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
+
+  return <DrawerHeaderContext value={ctx}>{element}</DrawerHeaderContext>;
 };
 
 export { DrawerHeader as Header };

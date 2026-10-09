@@ -4,7 +4,7 @@ import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 import { DISABLE_FOCUS_ON_CLICK_DATA } from "../_number-field.jsx";
-import { useNumberFieldContext } from "../root/number-field.root.context.js";
+import { useNumberFieldGroupContext } from "../group/number-field.group.context.js";
 import type { NumberFieldAddonContext } from "./number-field.addon.context.js";
 
 /**
@@ -48,7 +48,7 @@ export type INumberFieldAddon = IComponent<NumberFieldAddonProps>;
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
 export const NumberFieldAddon: INumberFieldAddon = function SuiNumberFieldAddon(props) {
-  const ctx = useNumberFieldContext();
+  const ctx = useNumberFieldGroupContext();
   const { disableFocusOnClick = false, ...otherSpanProps } = props;
 
   return useRender({
@@ -62,6 +62,17 @@ export const NumberFieldAddon: INumberFieldAddon = function SuiNumberFieldAddon(
           (state) => `sui_number_field_addon-radius_${state.radius}`,
           (state) => `sui_number_field_addon-variant_${state.variant}`,
           (state) => state.outlined && "sui_number_field_addon-outlined",
+          (state) => state.disabled && "sui_number_field_addon-disabled",
+          (state) => state.readOnly && "sui_number_field_addon-readonly",
+          (state) => state.required && "sui_number_field_addon-required",
+          (state) => state.scrubbing && "sui_number_field_addon-scrubbing",
+          (state) => state.touched && "sui_number_field_addon-touched",
+          (state) => state.dirty && "sui_number_field_addon-dirty",
+          (state) => state.filled && "sui_number_field_addon-filled",
+          (state) => state.focused && "sui_number_field_addon-focused",
+          (state) => state.valid === false && "sui_number_field_addon-invalid",
+          (state) => state.valid === true && "sui_number_field_addon-valid",
+          (state) => state.valid === null && "sui_number_field_addon-unverified",
         ),
         [DISABLE_FOCUS_ON_CLICK_DATA]: disableFocusOnClick ? "true" : undefined,
       },

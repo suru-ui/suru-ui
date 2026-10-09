@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useContextMenuContext } from "../root/context-menu.root.context.js";
+import { useContentContext } from "../content/context-menu.content.context.js";
 import { ContextMenuArrowContext } from "./context-menu.arrow.context.js";
 
 /**
  * {@link ContextMenuArrow} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuArrowState = ContextMenuArrowContext;
+export type ContextMenuArrowState<TItem = any> = ContextMenuArrowContext<TItem>;
 
 export namespace ContextMenuArrowProps {
-  export type Render = RenderProps<ContextMenuArrowState>;
+  export type Render<TItem = any> = RenderProps<ContextMenuArrowState<TItem>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type IContextMenuArrow = IComponent<ContextMenuArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(props) {
-  const ctx = useContextMenuContext();
+  const ctx = useContentContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -77,6 +79,12 @@ export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(
             (state) => `sui_context_menu_arrow-variant_${state.variant}`,
             (state) => state.outlined && "sui_context_menu_arrow-outlined",
             (state) => state.open && "sui_context_menu_arrow-open",
+            (state) => state.anchorHidden && "sui_context_menu_arrow-anchor_hidden",
+            (state) => state.nested && "sui_context_menu_arrow-nested",
+            (state) => state.instant && "sui_context_menu_arrow-instant",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_context_menu_arrow-transition_status_${state.transitionStatus}`,
             (state) => state.uncentered && "sui_context_menu_arrow-uncentered",
             (state) => `sui_context_menu_arrow-side_${state.side.replaceAll("-", "_")}`,
             (state) => `sui_context_menu_arrow-align_${state.align}`,
@@ -90,12 +98,12 @@ export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(
 export { ContextMenuArrow as Arrow };
 
 export namespace Arrow {
-  export type State = ContextMenuArrowState;
+  export type State<TItem = any> = ContextMenuArrowState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ContextMenuArrowProps.Render;
+    export type Render<TItem = any> = ContextMenuArrowProps.Render<TItem>;
 
     export type SuruUI = ContextMenuArrowProps.SuruUI;
 

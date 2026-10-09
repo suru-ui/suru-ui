@@ -108,25 +108,36 @@ export const ToastContent: IToastContent = function SuiToastContent(props) {
             {...mergeProps<typeof Alert.Root>([
               htmlProps,
               alertRootProps,
-              proxyRenderProps(toastState, {
-                style,
-                render: (htmlProps, state) => (
-                  <ToastContentContext value={state}>
-                    <RenderElement
-                      state={state}
-                      render={render}
-                      htmlProps={htmlProps}
-                      defaultTagName="div"
-                    />
-                  </ToastContentContext>
-                ),
-                className: cn(
-                  className,
-                  "sui_toast_content",
-                  (state) => state.behind && "sui_toast_content-behind",
-                  (state) => state.expanded && "sui_toast_content-expanded",
-                ),
-              }),
+              proxyRenderProps<Alert.Root.State, ToastContentState>(
+                (alertState) => ({ ...toastState, ...alertState }),
+                {
+                  style,
+                  render: (htmlProps, state) => (
+                    <ToastContentContext value={state}>
+                      <RenderElement
+                        state={state}
+                        render={render}
+                        htmlProps={htmlProps}
+                        defaultTagName="div"
+                      />
+                    </ToastContentContext>
+                  ),
+                  className: cn<ToastContentState>(
+                    className,
+                    "sui_toast_content",
+                    (state) => `sui_toast_content-actions_position_${state.actionsPosition}`,
+                    (state) =>
+                      `sui_toast_content-description_position_${state.descriptionPosition.replaceAll("-", "_")}`,
+                    (state) => `sui_toast_content-size_${state.size}`,
+                    (state) => `sui_toast_content-color_${state.color}`,
+                    (state) => `sui_toast_content-radius_${state.radius}`,
+                    (state) => `sui_toast_content-variant_${state.variant}`,
+                    (state) => state.outlined && "sui_toast_content-outlined",
+                    (state) => state.behind && "sui_toast_content-behind",
+                    (state) => state.expanded && "sui_toast_content-expanded",
+                  ),
+                },
+              ),
             ])}
           />
         );

@@ -63,6 +63,12 @@ export const AlertDialogContent: IAlertDialogContent = function SuiAlertDialogCo
             (state) => `sui_alert_dialog_content-radius_${state.radius}`,
             (state) => `sui_alert_dialog_content-variant_${state.variant}`,
             (state) => state.outlined && "sui_alert_dialog_content-outlined",
+            (state) => state.open && "sui_alert_dialog_content-open",
+            (state) => state.nested && "sui_alert_dialog_content-nested",
+            (state) => state.nestedDialogOpen && "sui_alert_dialog_content-nested_dialog_open",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_alert_dialog_content-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

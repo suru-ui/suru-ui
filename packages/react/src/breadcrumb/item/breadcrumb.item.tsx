@@ -8,11 +8,13 @@ import type { BreadcrumbItemContext } from "./breadcrumb.item.context.js";
 
 /**
  * {@link BreadcrumbItem} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type BreadcrumbItemState = BreadcrumbItemContext;
+export type BreadcrumbItemState<TItem = any> = BreadcrumbItemContext<TItem>;
 
 export namespace BreadcrumbItemProps {
-  export type Render = RenderProps<BreadcrumbItemState>;
+  export type Render<TItem = any> = RenderProps<BreadcrumbItemState<TItem>>;
 
   export type SuruUI = {};
 
@@ -59,12 +61,12 @@ export const BreadcrumbItem: IBreadcrumbItem = function SuiBreadcrumbItem(props)
 export { BreadcrumbItem as Item };
 
 export namespace Item {
-  export type State = BreadcrumbItemState;
+  export type State<TItem = any> = BreadcrumbItemState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = BreadcrumbItemProps.Render;
+    export type Render<TItem = any> = BreadcrumbItemProps.Render<TItem>;
 
     export type SuruUI = BreadcrumbItemProps.SuruUI;
 

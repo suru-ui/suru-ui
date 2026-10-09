@@ -3,12 +3,16 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { SelectContext } from "../root/select.root.context.js";
+import type { SelectTriggerContext } from "../trigger/select.trigger.context.js";
 
 /**
  * {@link SelectValue} が子パーツへ提供する状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectValueContext = Readonly<Override<SelectContext, BaseSelect.Value.State>>;
+export type SelectValueContext<TValue = any> = Readonly<
+  Override<SelectTriggerContext<TValue>, BaseSelect.Value.State>
+>;
 
 /**
  * {@link SelectValue} が子パーツへ提供するコンテキストです。

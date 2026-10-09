@@ -11,11 +11,13 @@ import { TabsIndicatorContext } from "./tabs.indicator.context.js";
 
 /**
  * {@link TabsIndicator} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type TabsIndicatorState = TabsIndicatorContext;
+export type TabsIndicatorState<TItem = any> = TabsIndicatorContext<TItem>;
 
 export namespace TabsIndicatorProps {
-  export type Render = RenderProps<TabsIndicatorState>;
+  export type Render<TItem = any> = RenderProps<TabsIndicatorState<TItem>>;
 
   export type SuruUI = {};
 
@@ -92,12 +94,12 @@ export const TabsIndicator: ITabsIndicator = function SuiTabsIndicator(props) {
 export { TabsIndicator as Indicator };
 
 export namespace Indicator {
-  export type State = TabsIndicatorState;
+  export type State<TItem = any> = TabsIndicatorState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = TabsIndicatorProps.Render;
+    export type Render<TItem = any> = TabsIndicatorProps.Render<TItem>;
 
     export type SuruUI = TabsIndicatorProps.SuruUI;
 

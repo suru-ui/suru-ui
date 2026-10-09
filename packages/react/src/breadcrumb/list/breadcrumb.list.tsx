@@ -34,10 +34,10 @@ export interface IBreadcrumbListItemRenderer<TItem = any> {
 /**
  * {@link BreadcrumbList} が持つ状態です。
  */
-export type BreadcrumbListState = BreadcrumbListContext;
+export type BreadcrumbListState<TItem = any> = BreadcrumbListContext<TItem>;
 
 export namespace BreadcrumbListProps {
-  export type Render = RenderProps<BreadcrumbListState>;
+  export type Render<TItem = any> = RenderProps<BreadcrumbListState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -61,7 +61,7 @@ export namespace BreadcrumbListProps {
  *
  * @template TItem 項目の型です。
  */
-export type BreadcrumbListProps<TItem = any> = BreadcrumbListProps.Render &
+export type BreadcrumbListProps<TItem = any> = BreadcrumbListProps.Render<TItem> &
   BreadcrumbListProps.SuruUI<TItem> &
   BreadcrumbListProps.BaseUI &
   BreadcrumbListProps.HTML;
@@ -127,12 +127,15 @@ const defaultListItemRenderer: IBreadcrumbListItemRenderer = (item, index, items
 export { BreadcrumbList as List };
 
 export namespace List {
-  export type State = BreadcrumbListState;
+  export type State<TItem = any> = BreadcrumbListState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = BreadcrumbListProps.Render;
+    export type Render<TItem = any> = BreadcrumbListProps.Render<TItem>;
 
     export type SuruUI<TItem = any> = BreadcrumbListProps.SuruUI<TItem>;
 

@@ -63,6 +63,12 @@ export const DialogContent: IDialogContent = function SuiDialogContent(props) {
             (state) => `sui_dialog_content-radius_${state.radius}`,
             (state) => `sui_dialog_content-variant_${state.variant}`,
             (state) => state.outlined && "sui_dialog_content-outlined",
+            (state) => state.open && "sui_dialog_content-open",
+            (state) => state.nested && "sui_dialog_content-nested",
+            (state) => state.nestedDialogOpen && "sui_dialog_content-nested_dialog_open",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_dialog_content-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

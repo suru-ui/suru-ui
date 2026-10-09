@@ -11,11 +11,13 @@ import { ContextMenuSeparatorContext } from "./context-menu.separator.context.js
 
 /**
  * {@link ContextMenuSeparator} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuSeparatorState = ContextMenuSeparatorContext;
+export type ContextMenuSeparatorState<TItem = any> = ContextMenuSeparatorContext<TItem>;
 
 export namespace ContextMenuSeparatorProps {
-  export type Render = RenderProps<ContextMenuSeparatorState>;
+  export type Render<TItem = any> = RenderProps<ContextMenuSeparatorState<TItem>>;
 
   export type SuruUI = {};
 
@@ -87,12 +89,12 @@ export const ContextMenuSeparator: IContextMenuSeparator = function SuiContextMe
 export { ContextMenuSeparator as Separator };
 
 export namespace Separator {
-  export type State = ContextMenuSeparatorState;
+  export type State<TItem = any> = ContextMenuSeparatorState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ContextMenuSeparatorProps.Render;
+    export type Render<TItem = any> = ContextMenuSeparatorProps.Render<TItem>;
 
     export type SuruUI = ContextMenuSeparatorProps.SuruUI;
 

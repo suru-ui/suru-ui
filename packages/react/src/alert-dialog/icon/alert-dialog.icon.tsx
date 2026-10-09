@@ -174,6 +174,12 @@ export const AlertDialogIcon: IAlertDialogIcon = function SuiAlertDialogIcon(pro
           (state) => `sui_alert_dialog_icon-variant_${state.variant}`,
           (state) => state.muted && "sui_alert_dialog_icon-muted",
           (state) => state.outlined && "sui_alert_dialog_icon-outlined",
+          (state) => state.open && "sui_alert_dialog_icon-open",
+          (state) => state.nested && "sui_alert_dialog_icon-nested",
+          (state) => state.nestedDialogOpen && "sui_alert_dialog_icon-nested_dialog_open",
+          (state) =>
+            state.transitionStatus !== undefined &&
+            `sui_alert_dialog_icon-transition_status_${state.transitionStatus}`,
         ),
         "aria-hidden": ariaHidden,
       },

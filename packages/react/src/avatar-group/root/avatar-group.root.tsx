@@ -162,6 +162,9 @@ export const AvatarGroupRoot: IAvatarGroupRoot = function SuiAvatarGroupRoot(pro
         className: cn<AvatarGroupRootState>(
           className,
           "sui_avatar_group",
+          (state) => `sui_avatar_group-size_${state.size}`,
+          (state) => `sui_avatar_group-color_${state.color}`,
+          (state) => `sui_avatar_group-radius_${state.radius}`,
           (state) => state.reverse && "sui_avatar_group-reverse",
           (state) => !state.reverse && "sui_avatar_group-forward",
         ),

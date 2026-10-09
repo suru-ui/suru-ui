@@ -7,9 +7,11 @@ import type { ContextMenuContext } from "../root/context-menu.root.context.js";
 
 /**
  * {@link ContextMenuTrigger} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuTriggerContext = Readonly<
-  Override<ContextMenuContext, ContextMenu.Trigger.State>
+export type ContextMenuTriggerContext<TItem = any> = Readonly<
+  Override<ContextMenuContext<TItem>, ContextMenu.Trigger.State>
 >;
 
 /**

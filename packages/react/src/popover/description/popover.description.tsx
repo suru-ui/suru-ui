@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { usePopoverContext } from "../root/popover.root.context.js";
+import { usePopoverContentContext } from "../content/popover.content.context.js";
 import { PopoverDescriptionContext } from "./popover.description.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IPopoverDescription = IComponent<PopoverDescriptionProps>;
  * ポップオーバーの説明文を表示する段落要素です。
  */
 export const PopoverDescription: IPopoverDescription = function SuiPopoverDescription(props) {
-  const ctx = usePopoverContext();
+  const ctx = usePopoverContentContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -75,6 +75,14 @@ export const PopoverDescription: IPopoverDescription = function SuiPopoverDescri
             (state) => `sui_popover_description-size_${state.size}`,
             (state) => `sui_popover_description-radius_${state.radius}`,
             (state) => state.outlined && "sui_popover_description-outlined",
+            (state) => state.open && "sui_popover_description-open",
+            (state) => state.anchorHidden && "sui_popover_description-anchor_hidden",
+            (state) => state.instant && "sui_popover_description-instant",
+            (state) => `sui_popover_description-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_popover_description-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_popover_description-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

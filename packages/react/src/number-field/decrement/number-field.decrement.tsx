@@ -8,7 +8,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useNumberFieldContext } from "../root/number-field.root.context.js";
+import { useNumberFieldAddonContext } from "../addon/number-field.addon.context.js";
 import { NumberFieldDecrementContext } from "./number-field.decrement.context.js";
 
 /**
@@ -53,7 +53,7 @@ export type INumberFieldDecrement = IComponent<NumberFieldDecrementProps>;
  * 値を減らすボタンです。
  */
 export const NumberFieldDecrement: INumberFieldDecrement = function SuiNumberFieldDecrement(props) {
-  const ctx = useNumberFieldContext();
+  const ctx = useNumberFieldAddonContext();
   const {
     style,
     render,

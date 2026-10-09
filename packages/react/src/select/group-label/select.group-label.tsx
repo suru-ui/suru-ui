@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectGroupContext } from "../group/select.group.context.js";
 import { SelectGroupLabelContext } from "./select.group-label.context.js";
 
 /**
  * {@link SelectGroupLabel} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectGroupLabelState = SelectGroupLabelContext;
+export type SelectGroupLabelState<TValue = any> = SelectGroupLabelContext<TValue>;
 
 export namespace SelectGroupLabelProps {
-  export type Render = RenderProps<SelectGroupLabelState>;
+  export type Render<TValue = any> = RenderProps<SelectGroupLabelState<TValue>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type ISelectGroupLabel = IComponent<SelectGroupLabelProps>;
  * 選択肢グループの見出し要素です。
  */
 export const SelectGroupLabel: ISelectGroupLabel = function SuiSelectGroupLabel(props) {
-  const ctx = useSelectContext();
+  const ctx = useSelectGroupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -76,6 +78,13 @@ export const SelectGroupLabel: ISelectGroupLabel = function SuiSelectGroupLabel(
             (state) => `sui_select_group_label-radius_${state.radius}`,
             (state) => `sui_select_group_label-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_group_label-outlined",
+            (state) => state.open && "sui_select_group_label-open",
+            (state) => state.anchorHidden && "sui_select_group_label-anchor_hidden",
+            (state) => `sui_select_group_label-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_select_group_label-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_select_group_label-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -86,12 +95,12 @@ export const SelectGroupLabel: ISelectGroupLabel = function SuiSelectGroupLabel(
 export { SelectGroupLabel as GroupLabel };
 
 export namespace GroupLabel {
-  export type State = SelectGroupLabelState;
+  export type State<TValue = any> = SelectGroupLabelState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectGroupLabelProps.Render;
+    export type Render<TValue = any> = SelectGroupLabelProps.Render<TValue>;
 
     export type SuruUI = SelectGroupLabelProps.SuruUI;
 

@@ -3,12 +3,16 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { MenuContext } from "../root/menu.root.context.js";
+import type { GroupContext } from "../group/menu.group.context.js";
 
 /**
  * {@link MenuGroupLabel} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuGroupLabelContext = Readonly<Override<MenuContext, Menu.GroupLabel.State>>;
+export type MenuGroupLabelContext<TItem = any> = Readonly<
+  Override<GroupContext<TItem>, Menu.GroupLabel.State>
+>;
 
 /**
  * {@link MenuGroupLabel} が子パーツへ提供するコンテキストです。

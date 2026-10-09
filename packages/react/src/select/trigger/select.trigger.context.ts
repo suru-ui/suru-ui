@@ -7,8 +7,12 @@ import type { SelectContext } from "../root/select.root.context.js";
 
 /**
  * {@link SelectTrigger} が子パーツへ提供する状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectTriggerContext = Readonly<Override<SelectContext, BaseSelect.Trigger.State>>;
+export type SelectTriggerContext<TValue = any> = Readonly<
+  Override<SelectContext<TValue>, BaseSelect.Trigger.State>
+>;
 
 /**
  * {@link SelectTrigger} が子パーツへ提供するコンテキストです。

@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectItemContext } from "../item/select.item.context.js";
 import { SelectItemTextContext } from "./select.item-text.context.js";
 
 /**
  * {@link SelectItemText} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectItemTextState = SelectItemTextContext;
+export type SelectItemTextState<TValue = any> = SelectItemTextContext<TValue>;
 
 export namespace SelectItemTextProps {
-  export type Render = RenderProps<SelectItemTextState>;
+  export type Render<TValue = any> = RenderProps<SelectItemTextState<TValue>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type ISelectItemText = IComponent<SelectItemTextProps>;
  * 選択肢の表示テキストを包む要素です。
  */
 export const SelectItemText: ISelectItemText = function SuiSelectItemText(props) {
-  const ctx = useSelectContext();
+  const ctx = useSelectItemContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -76,6 +78,16 @@ export const SelectItemText: ISelectItemText = function SuiSelectItemText(props)
             (state) => `sui_select_item_text-radius_${state.radius}`,
             (state) => `sui_select_item_text-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_item_text-outlined",
+            (state) => state.disabled && "sui_select_item_text-disabled",
+            (state) => state.selected && "sui_select_item_text-selected",
+            (state) => state.highlighted && "sui_select_item_text-highlighted",
+            (state) => state.open && "sui_select_item_text-open",
+            (state) => state.anchorHidden && "sui_select_item_text-anchor_hidden",
+            (state) => `sui_select_item_text-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_select_item_text-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_select_item_text-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -86,12 +98,12 @@ export const SelectItemText: ISelectItemText = function SuiSelectItemText(props)
 export { SelectItemText as ItemText };
 
 export namespace ItemText {
-  export type State = SelectItemTextState;
+  export type State<TValue = any> = SelectItemTextState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectItemTextProps.Render;
+    export type Render<TValue = any> = SelectItemTextProps.Render<TValue>;
 
     export type SuruUI = SelectItemTextProps.SuruUI;
 

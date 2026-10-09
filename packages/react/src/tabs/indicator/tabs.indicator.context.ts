@@ -7,8 +7,12 @@ import type { TabsContext } from "../root/tabs.root.context.js";
 
 /**
  * {@link TabsIndicator} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type TabsIndicatorContext = Readonly<Override<TabsContext, BaseTabs.Indicator.State>>;
+export type TabsIndicatorContext<TItem = any> = Readonly<
+  Override<TabsContext<TItem>, BaseTabs.Indicator.State>
+>;
 
 /**
  * {@link TabsIndicator} が子パーツへ提供するコンテキストです。

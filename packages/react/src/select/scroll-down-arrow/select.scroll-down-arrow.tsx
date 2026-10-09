@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectContentContext } from "../content/select.content.context.js";
 import { SelectScrollDownArrowContext } from "./select.scroll-down-arrow.context.js";
 
 /**
  * {@link SelectScrollDownArrow} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectScrollDownArrowState = SelectScrollDownArrowContext;
+export type SelectScrollDownArrowState<TValue = any> = SelectScrollDownArrowContext<TValue>;
 
 export namespace SelectScrollDownArrowProps {
-  export type Render = RenderProps<SelectScrollDownArrowState>;
+  export type Render<TValue = any> = RenderProps<SelectScrollDownArrowState<TValue>>;
 
   export type SuruUI = {};
 
@@ -51,7 +53,7 @@ export type ISelectScrollDownArrow = IComponent<SelectScrollDownArrowProps>;
 export const SelectScrollDownArrow: ISelectScrollDownArrow = function SuiSelectScrollDownArrow(
   props,
 ) {
-  const ctx = useSelectContext();
+  const ctx = useSelectContentContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -78,6 +80,13 @@ export const SelectScrollDownArrow: ISelectScrollDownArrow = function SuiSelectS
             (state) => `sui_select_scroll_down_arrow-radius_${state.radius}`,
             (state) => `sui_select_scroll_down_arrow-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_scroll_down_arrow-outlined",
+            (state) => state.open && "sui_select_scroll_down_arrow-open",
+            (state) => state.anchorHidden && "sui_select_scroll_down_arrow-anchor_hidden",
+            (state) => `sui_select_scroll_down_arrow-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_select_scroll_down_arrow-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_select_scroll_down_arrow-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -88,12 +97,12 @@ export const SelectScrollDownArrow: ISelectScrollDownArrow = function SuiSelectS
 export { SelectScrollDownArrow as ScrollDownArrow };
 
 export namespace ScrollDownArrow {
-  export type State = SelectScrollDownArrowState;
+  export type State<TValue = any> = SelectScrollDownArrowState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectScrollDownArrowProps.Render;
+    export type Render<TValue = any> = SelectScrollDownArrowProps.Render<TValue>;
 
     export type SuruUI = SelectScrollDownArrowProps.SuruUI;
 

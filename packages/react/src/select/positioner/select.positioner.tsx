@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectPortalContext } from "../portal/select.portal.context.js";
 import { SelectPositionerContext } from "./select.positioner.context.js";
 
 /**
  * {@link SelectPositioner} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectPositionerState = SelectPositionerContext;
+export type SelectPositionerState<TValue = any> = SelectPositionerContext<TValue>;
 
 export namespace SelectPositionerProps {
-  export type Render = RenderProps<SelectPositionerState>;
+  export type Render<TValue = any> = RenderProps<SelectPositionerState<TValue>>;
 
   export type SuruUI = {};
 
@@ -62,7 +64,7 @@ export type ISelectPositioner = IComponent<SelectPositionerProps>;
  * ポップアップをトリガーへ位置合わせする要素です。
  */
 export const SelectPositioner: ISelectPositioner = function SuiSelectPositioner(props) {
-  const ctx = useSelectContext();
+  const ctx = useSelectPortalContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -103,12 +105,12 @@ export const SelectPositioner: ISelectPositioner = function SuiSelectPositioner(
 export { SelectPositioner as Positioner };
 
 export namespace Positioner {
-  export type State = SelectPositionerState;
+  export type State<TValue = any> = SelectPositionerState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectPositionerProps.Render;
+    export type Render<TValue = any> = SelectPositionerProps.Render<TValue>;
 
     export type SuruUI = SelectPositionerProps.SuruUI;
 

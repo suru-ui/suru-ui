@@ -7,8 +7,12 @@ import type { SelectContext } from "../root/select.root.context.js";
 
 /**
  * {@link SelectLabel} が子パーツへ提供する状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectLabelContext = Readonly<Override<SelectContext, BaseSelect.Label.State>>;
+export type SelectLabelContext<TValue = any> = Readonly<
+  Override<SelectContext<TValue>, BaseSelect.Label.State>
+>;
 
 /**
  * {@link SelectLabel} が子パーツへ提供するコンテキストです。

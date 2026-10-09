@@ -11,11 +11,13 @@ import { SegmentsIndicatorContext } from "./segments.indicator.context.js";
 
 /**
  * {@link SegmentsIndicator} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type SegmentsIndicatorState = SegmentsIndicatorContext;
+export type SegmentsIndicatorState<TItem = any> = SegmentsIndicatorContext<TItem>;
 
 export namespace SegmentsIndicatorProps {
-  export type Render = RenderProps<SegmentsIndicatorState>;
+  export type Render<TItem = any> = RenderProps<SegmentsIndicatorState<TItem>>;
 
   export type SuruUI = {};
 
@@ -91,12 +93,12 @@ export const SegmentsIndicator: ISegmentsIndicator = function SuiSegmentsIndicat
 export { SegmentsIndicator as Indicator };
 
 export namespace Indicator {
-  export type State = SegmentsIndicatorState;
+  export type State<TItem = any> = SegmentsIndicatorState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SegmentsIndicatorProps.Render;
+    export type Render<TItem = any> = SegmentsIndicatorProps.Render<TItem>;
 
     export type SuruUI = SegmentsIndicatorProps.SuruUI;
 

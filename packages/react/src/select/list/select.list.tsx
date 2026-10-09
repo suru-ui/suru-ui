@@ -11,12 +11,12 @@ import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { isItemObjectGroup, isLabeledItemObject } from "../_select.jsx";
+import { useSelectContentContext } from "../content/select.content.context.js";
 import { SelectGroupLabel } from "../group-label/select.group-label.jsx";
 import { SelectGroup } from "../group/select.group.jsx";
 import { SelectItemIndicator } from "../item-indicator/select.item-indicator.jsx";
 import { SelectItemText } from "../item-text/select.item-text.jsx";
 import { SelectItem } from "../item/select.item.jsx";
-import { useSelectContext } from "../root/select.root.context.js";
 import type {
   SelectRootItems,
   SelectRootItemObjectGroup,
@@ -77,10 +77,10 @@ export interface ISelectListItemRenderer<TValue = any> {
 /**
  * {@link SelectList} が持つ状態です。
  */
-export type SelectListState = SelectListContext;
+export type SelectListState<TValue = any> = SelectListContext<TValue>;
 
 export namespace SelectListProps {
-  export type Render = RenderProps<SelectListState>;
+  export type Render<TValue = any> = RenderProps<SelectListState<TValue>>;
 
   export type SuruUI = {};
 
@@ -111,7 +111,7 @@ export namespace SelectListProps {
  *
  * @template TValue 項目の値の型です。
  */
-export type SelectListProps<TValue = any> = SelectListProps.Render &
+export type SelectListProps<TValue = any> = SelectListProps.Render<TValue> &
   SelectListProps.SuruUI &
   SelectListProps.BaseUI<TValue> &
   SelectListProps.HTML;
@@ -129,7 +129,7 @@ export interface ISelectList extends IComponent<SelectListProps> {
  * {@link SelectRoot} の `items` を読み取り、関数子を受け取った場合は各項目に適用します。
  */
 export const SelectList: ISelectList = function SuiSelectList(props: SelectListProps) {
-  const ctx = useSelectContext();
+  const ctx = useSelectContentContext();
   const { style, render, children = defaultListItemRenderer, className, ...otherProps } = props;
 
   return (
@@ -156,6 +156,13 @@ export const SelectList: ISelectList = function SuiSelectList(props: SelectListP
             (state) => `sui_select_list-radius_${state.radius}`,
             (state) => `sui_select_list-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_list-outlined",
+            (state) => state.open && "sui_select_list-open",
+            (state) => state.anchorHidden && "sui_select_list-anchor_hidden",
+            (state) => `sui_select_list-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_select_list-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_select_list-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -251,12 +258,15 @@ const defaultListItemRenderer: ISelectListItemRenderer = (item, index, items) =>
 export { SelectList as List };
 
 export namespace List {
-  export type State = SelectListState;
+  export type State<TValue = any> = SelectListState<TValue>;
 
-  export type Props<TValue = any> = Props.Render & Props.SuruUI & Props.BaseUI<TValue> & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> &
+    Props.SuruUI &
+    Props.BaseUI<TValue> &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = SelectListProps.Render;
+    export type Render<TValue = any> = SelectListProps.Render<TValue>;
 
     export type SuruUI = SelectListProps.SuruUI;
 

@@ -8,9 +8,11 @@ import type { MenuContext } from "../root/menu.root.context.js";
 
 /**
  * {@link MenuRadioItem} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuRadioItemContext = Readonly<
-  Override<MenuContext, Override<Button.Root.State, Menu.RadioItem.State>>
+export type MenuRadioItemContext<TItem = any> = Readonly<
+  Override<MenuContext<TItem>, Override<Button.Root.State, Menu.RadioItem.State>>
 >;
 
 /**

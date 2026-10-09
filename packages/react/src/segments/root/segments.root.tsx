@@ -101,10 +101,10 @@ export type SegmentsRootSize = SegmentsContextSize;
 /**
  * {@link SegmentsRoot} が持つ状態です。
  */
-export type SegmentsRootState = Override<SegmentsContext, BaseTabs.Root.State>;
+export type SegmentsRootState<TItem = any> = Override<SegmentsContext<TItem>, BaseTabs.Root.State>;
 
 export namespace SegmentsRootProps {
-  export type Render = RenderProps<SegmentsRootState>;
+  export type Render<TItem = any> = RenderProps<SegmentsRootState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -166,7 +166,7 @@ export namespace SegmentsRootProps {
  *
  * @template TItem 項目の型です。
  */
-export type SegmentsRootProps<TItem = any> = SegmentsRootProps.Render &
+export type SegmentsRootProps<TItem = any> = SegmentsRootProps.Render<TItem> &
   SegmentsRootProps.SuruUI<TItem> &
   SegmentsRootProps.BaseUI &
   SegmentsRootProps.HTML;
@@ -234,12 +234,15 @@ export const SegmentsRoot: ISegmentsRoot = function SuiSegmentsRoot(props: Segme
 export { SegmentsRoot as Root };
 
 export namespace Root {
-  export type State = SegmentsRootState;
+  export type State<TItem = any> = SegmentsRootState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = SegmentsRootProps.Render;
+    export type Render<TItem = any> = SegmentsRootProps.Render<TItem>;
 
     export type SuruUI<TItem = any> = SegmentsRootProps.SuruUI<TItem>;
 

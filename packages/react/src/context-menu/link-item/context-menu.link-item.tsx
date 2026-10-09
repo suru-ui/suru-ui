@@ -32,11 +32,13 @@ export type ContextMenuLinkItemVariant = Button.Root.Variant;
 
 /**
  * {@link ContextMenuLinkItem} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuLinkItemState = ContextMenuLinkItemContext;
+export type ContextMenuLinkItemState<TItem = any> = ContextMenuLinkItemContext<TItem>;
 
 export namespace ContextMenuLinkItemProps {
-  export type Render = RenderProps<ContextMenuLinkItemState>;
+  export type Render<TItem = any> = RenderProps<ContextMenuLinkItemState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -194,12 +196,12 @@ export const ContextMenuLinkItem: IContextMenuLinkItem = function SuiContextMenu
 export { ContextMenuLinkItem as LinkItem };
 
 export namespace LinkItem {
-  export type State = ContextMenuLinkItemState;
+  export type State<TItem = any> = ContextMenuLinkItemState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ContextMenuLinkItemProps.Render;
+    export type Render<TItem = any> = ContextMenuLinkItemProps.Render<TItem>;
 
     export type SuruUI = ContextMenuLinkItemProps.SuruUI;
 

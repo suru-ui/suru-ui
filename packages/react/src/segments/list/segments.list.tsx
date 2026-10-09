@@ -13,11 +13,13 @@ import { SegmentsListContext } from "./segments.list.context.js";
 
 /**
  * {@link SegmentsList} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type SegmentsListState = SegmentsListContext;
+export type SegmentsListState<TItem = any> = SegmentsListContext<TItem>;
 
 export namespace SegmentsListProps {
-  export type Render = RenderProps<SegmentsListState>;
+  export type Render<TItem = any> = RenderProps<SegmentsListState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -49,7 +51,7 @@ export namespace SegmentsListProps {
  *
  * @template TItem 項目の型です。
  */
-export type SegmentsListProps<TItem = any> = SegmentsListProps.Render &
+export type SegmentsListProps<TItem = any> = SegmentsListProps.Render<TItem> &
   SegmentsListProps.SuruUI<TItem> &
   SegmentsListProps.BaseUI &
   SegmentsListProps.HTML;
@@ -122,12 +124,15 @@ const defaultListItemRenderer: ISegmentsRootItemRenderer = createItemRenderer(
 export { SegmentsList as List };
 
 export namespace List {
-  export type State = SegmentsListState;
+  export type State<TItem = any> = SegmentsListState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = SegmentsListProps.Render;
+    export type Render<TItem = any> = SegmentsListProps.Render<TItem>;
 
     export type SuruUI<TItem = any> = SegmentsListProps.SuruUI<TItem>;
 

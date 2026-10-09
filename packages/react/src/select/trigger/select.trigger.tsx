@@ -12,11 +12,13 @@ import { SelectTriggerContext } from "./select.trigger.context.js";
 
 /**
  * {@link SelectTrigger} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectTriggerState = SelectTriggerContext;
+export type SelectTriggerState<TValue = any> = SelectTriggerContext<TValue>;
 
 export namespace SelectTriggerProps {
-  export type Render = RenderProps<SelectTriggerState>;
+  export type Render<TValue = any> = RenderProps<SelectTriggerState<TValue>>;
 
   export type SuruUI = {};
 
@@ -114,12 +116,12 @@ export const SelectTrigger: ISelectTrigger = function SuiSelectTrigger(props) {
 export { SelectTrigger as Trigger };
 
 export namespace Trigger {
-  export type State = SelectTriggerState;
+  export type State<TValue = any> = SelectTriggerState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectTriggerProps.Render;
+    export type Render<TValue = any> = SelectTriggerProps.Render<TValue>;
 
     export type SuruUI = SelectTriggerProps.SuruUI;
 

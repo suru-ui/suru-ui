@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectTriggerContext } from "../trigger/select.trigger.context.js";
 import { SelectValueContext } from "./select.value.context.js";
 
 /**
  * {@link SelectValue} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectValueState = SelectValueContext;
+export type SelectValueState<TValue = any> = SelectValueContext<TValue>;
 
 export namespace SelectValueProps {
-  export type Render = RenderProps<SelectValueState>;
+  export type Render<TValue = any> = RenderProps<SelectValueState<TValue>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type ISelectValue = IComponent<SelectValueProps>;
  * 現在の選択値またはプレースホルダーを表示する要素です。
  */
 export const SelectValue: ISelectValue = function SuiSelectValue(props) {
-  const ctx = useSelectContext();
+  const ctx = useSelectTriggerContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -77,6 +79,19 @@ export const SelectValue: ISelectValue = function SuiSelectValue(props) {
             (state) => `sui_select_value-radius_${state.radius}`,
             (state) => `sui_select_value-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_value-outlined",
+            (state) => state.disabled && "sui_select_value-disabled",
+            (state) => state.touched && "sui_select_value-touched",
+            (state) => state.dirty && "sui_select_value-dirty",
+            (state) => state.valid === false && "sui_select_value-invalid",
+            (state) => state.valid === true && "sui_select_value-valid",
+            (state) => state.valid === null && "sui_select_value-unverified",
+            (state) => state.filled && "sui_select_value-filled",
+            (state) => state.focused && "sui_select_value-focused",
+            (state) => state.open && "sui_select_value-open",
+            (state) => state.readOnly && "sui_select_value-readonly",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_select_value-popup_side_${state.popupSide.replaceAll("-", "_")}`,
           ),
         },
       )}
@@ -87,12 +102,12 @@ export const SelectValue: ISelectValue = function SuiSelectValue(props) {
 export { SelectValue as Value };
 
 export namespace Value {
-  export type State = SelectValueState;
+  export type State<TValue = any> = SelectValueState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectValueProps.Render;
+    export type Render<TValue = any> = SelectValueProps.Render<TValue>;
 
     export type SuruUI = SelectValueProps.SuruUI;
 

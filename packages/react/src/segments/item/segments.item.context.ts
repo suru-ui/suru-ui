@@ -7,8 +7,12 @@ import type { SegmentsContext } from "../root/segments.root.context.js";
 
 /**
  * {@link SegmentsItem} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type SegmentsItemContext = Readonly<Override<SegmentsContext, BaseTabs.Tab.State>>;
+export type SegmentsItemContext<TItem = any> = Readonly<
+  Override<SegmentsContext<TItem>, BaseTabs.Tab.State>
+>;
 
 /**
  * {@link SegmentsItem} が子パーツへ提供するコンテキストです。

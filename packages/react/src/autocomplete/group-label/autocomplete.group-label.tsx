@@ -11,11 +11,13 @@ import { AutocompleteGroupLabelContext } from "./autocomplete.group-label.contex
 
 /**
  * {@link AutocompleteGroupLabel} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteGroupLabelState = AutocompleteGroupLabelContext;
+export type AutocompleteGroupLabelState<TItem = any> = AutocompleteGroupLabelContext<TItem>;
 
 export namespace AutocompleteGroupLabelProps {
-  export type Render = RenderProps<AutocompleteGroupLabelState>;
+  export type Render<TItem = any> = RenderProps<AutocompleteGroupLabelState<TItem>>;
 
   export type SuruUI = {};
 
@@ -79,6 +81,14 @@ export const AutocompleteGroupLabel: IAutocompleteGroupLabel = function SuiAutoc
             (state) => `sui_autocomplete_group_label-radius_${state.radius}`,
             (state) => `sui_autocomplete_group_label-variant_${state.variant}`,
             (state) => state.outlined && "sui_autocomplete_group_label-outlined",
+            (state) => state.open && "sui_autocomplete_group_label-open",
+            (state) => state.empty && "sui_autocomplete_group_label-empty",
+            (state) => state.anchorHidden && "sui_autocomplete_group_label-anchor_hidden",
+            (state) => `sui_autocomplete_group_label-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_autocomplete_group_label-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_autocomplete_group_label-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -89,12 +99,12 @@ export const AutocompleteGroupLabel: IAutocompleteGroupLabel = function SuiAutoc
 export { AutocompleteGroupLabel as GroupLabel };
 
 export namespace GroupLabel {
-  export type State = AutocompleteGroupLabelState;
+  export type State<TItem = any> = AutocompleteGroupLabelState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompleteGroupLabelProps.Render;
+    export type Render<TItem = any> = AutocompleteGroupLabelProps.Render<TItem>;
 
     export type SuruUI = AutocompleteGroupLabelProps.SuruUI;
 

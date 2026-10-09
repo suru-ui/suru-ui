@@ -12,8 +12,10 @@ import { MenuTriggerContext } from "./menu.trigger.context.js";
 
 /**
  * {@link MenuTrigger} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuTriggerState = MenuTriggerContext;
+export type MenuTriggerState<TItem = any> = MenuTriggerContext<TItem>;
 
 export namespace MenuTriggerProps {
   export type Render = Omit<RenderProps<MenuTriggerState>, "render">;
@@ -128,7 +130,7 @@ export const MenuTrigger: IMenuTrigger = function SuiMenuTrigger(props: MenuTrig
 export { MenuTrigger as Trigger };
 
 export namespace Trigger {
-  export type State = MenuTriggerState;
+  export type State<TItem = any> = MenuTriggerState<TItem>;
 
   export type Props<TPayload = any> = Props.Render &
     Props.SuruUI<TPayload> &

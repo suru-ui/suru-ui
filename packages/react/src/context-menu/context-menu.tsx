@@ -96,20 +96,28 @@ export type ContextMenuVariant = ContextMenuRootVariant;
 
 /**
  * {@link ContextMenu} の各パーツに渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
 export type ContextMenuSlotProps = {
   /**
    * {@link ContextMenuBackdrop} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly backdrop?: Omit<ContextMenuBackdropProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuCheckboxItem} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly checkboxItem?: Omit<ContextMenuCheckboxItemProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuCheckboxItemIndicator} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly checkboxItemIndicator?:
     | Omit<ContextMenuCheckboxItemIndicatorProps, "children">
@@ -117,74 +125,102 @@ export type ContextMenuSlotProps = {
 
   /**
    * {@link ContextMenuGroup} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly group?: Omit<ContextMenuGroupProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuGroupLabel} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly groupLabel?: Omit<ContextMenuGroupLabelProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuItem} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly item?: Omit<ContextMenuItemProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuLinkItem} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly linkItem?: Omit<ContextMenuLinkItemProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuPortal} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly portal?: Omit<ContextMenuPortalProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuPositioner} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly positioner?: Omit<ContextMenuPositionerProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuRadioGroup} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly radioGroup?: Omit<ContextMenuRadioGroupProps, "children" | "items"> | undefined;
 
   /**
    * {@link ContextMenuRadioItem} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly radioItem?: Omit<ContextMenuRadioItemProps, "children" | "value"> | undefined;
 
   /**
    * {@link ContextMenuRadioItemIndicator} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly radioItemIndicator?: Omit<ContextMenuRadioItemIndicatorProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuSeparator} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly separator?: ContextMenuSeparatorProps | undefined;
 
   /**
    * {@link ContextMenuSubmenuRoot} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly submenuRoot?: Omit<ContextMenuSubmenuRootProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuSubmenuTrigger} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly submenuTrigger?: Omit<ContextMenuSubmenuTriggerProps, "children"> | undefined;
 
   /**
    * {@link ContextMenuTrigger} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly trigger?: Omit<ContextMenuTriggerProps, "children"> | undefined;
 };
 
 /**
  * {@link ContextMenu} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuState = ContextMenuRootState;
+export type ContextMenuState<TItem = any> = ContextMenuRootState<TItem>;
 
 namespace ContextMenuProps {
   export type Content = Omit<ContextMenuContentProps, keyof ContextMenu | keyof Root>;
@@ -767,13 +803,13 @@ export const ContextMenu: IContextMenu = Object.assign(
 );
 
 export namespace ContextMenu {
-  export type State = ContextMenuState;
+  export type State<TItem = any> = ContextMenuState<TItem>;
 
   export type Props<TItem = any> = ContextMenuProps<TItem>;
 
   export type SlotProps = ContextMenuSlotProps;
 
-  export type Context = ContextMenuContext;
+  export type Context<TItem = any> = ContextMenuContext<TItem>;
 
   export type Actions = ContextMenuActions;
 

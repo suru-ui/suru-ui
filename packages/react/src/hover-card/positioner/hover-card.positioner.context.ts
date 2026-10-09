@@ -3,13 +3,13 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { HoverCardContext } from "../root/hover-card.root.context.js";
+import type { PortalContext } from "../portal/hover-card.portal.context.js";
 
 /**
  * {@link HoverCardPositioner} が子パーツへ提供する状態です。
  */
 export type HoverCardPositionerContext = Readonly<
-  Override<HoverCardContext, PreviewCard.Positioner.State>
+  Override<PortalContext, PreviewCard.Positioner.State>
 >;
 
 /**

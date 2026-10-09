@@ -1,37 +1,14 @@
-import type { PreviewCard } from "@base-ui/react/preview-card";
-import * as React from "react";
+import { HoverCardContext, useHoverCardContext } from "../root/hover-card.root.context.js";
 
-import { ContextMissingError } from "../../errors.js";
-import type { Override, IUseContext } from "../../types.js";
-import type { HoverCardContext } from "../root/hover-card.root.context.js";
-
-/**
- * {@link HoverCardPortal} が子パーツへ提供する状態です。
- */
-export type HoverCardPortalContext = Readonly<Override<HoverCardContext, PreviewCard.Portal.State>>;
-
-/**
- * {@link HoverCardPortal} が子パーツへ提供するコンテキストです。
- */
-export const HoverCardPortalContext: React.Context<HoverCardPortalContext | null> =
-  React.createContext<HoverCardPortalContext | null>(null);
-
-export type IUseHoverCardPortalContext = IUseContext<HoverCardPortalContext>;
-
-/**
- * {@link HoverCardPortalContext} を読み取るフックです。
- */
-export const useHoverCardPortalContext: IUseHoverCardPortalContext =
-  function useSuiHoverCardPortalContext(optional): any {
-    const ctx = React.use(HoverCardPortalContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "HoverCardPortalContext",
-        providerName: "HoverCardPortal",
-      });
-    }
-
-    return ctx;
-  };
-
-export { HoverCardPortalContext as PortalContext, useHoverCardPortalContext as usePortalContext };
+// HoverCardPortal は Context を変更・拡張しないため、親の HoverCardContext をそのまま使う。
+// Base UI の PreviewCard.Portal.State を合成しない理由は2つある。
+// 1つ目は、Base UI の Portal.State が空であり、合成しても新たな状態が増えないため。
+// 2つ目は、Base UI の Portal が `render` をラッパー要素の描画にだけ使い、
+// `children` を別の createPortal 口から配置するため、`render` 内側の Provider では子パーツに届かず、
+// Portal 固有の Context を子へ透過できないため。
+export {
+  HoverCardContext as PortalContext,
+  useHoverCardContext as usePortalContext,
+  HoverCardContext as HoverCardPortalContext,
+  useHoverCardContext as useHoverCardPortalContext,
+};

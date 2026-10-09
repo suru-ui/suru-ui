@@ -7,8 +7,12 @@ import type { MenuContext } from "../root/menu.root.context.js";
 
 /**
  * {@link MenuSeparator} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuSeparatorContext = Readonly<Override<MenuContext, Menu.Separator.State>>;
+export type MenuSeparatorContext<TItem = any> = Readonly<
+  Override<MenuContext<TItem>, Menu.Separator.State>
+>;
 
 /**
  * {@link MenuSeparator} が子パーツへ提供するコンテキストです。

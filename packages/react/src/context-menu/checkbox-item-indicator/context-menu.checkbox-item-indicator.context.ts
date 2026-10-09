@@ -7,9 +7,11 @@ import type { ContextMenuContext } from "../root/context-menu.root.context.js";
 
 /**
  * {@link ContextMenuCheckboxItemIndicator} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuCheckboxItemIndicatorContext = Readonly<
-  Override<ContextMenuContext, ContextMenu.CheckboxItemIndicator.State>
+export type ContextMenuCheckboxItemIndicatorContext<TItem = any> = Readonly<
+  Override<ContextMenuContext<TItem>, ContextMenu.CheckboxItemIndicator.State>
 >;
 
 /**

@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAccordionContext } from "../root/accordion.root.context.js";
+import { useAccordionItemContext } from "../item/accordion.item.context.js";
 import { AccordionHeadingContext } from "./accordion.heading.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IAccordionHeading = IComponent<AccordionHeadingProps>;
  * アコーディオンの見出しコンポーネントです。
  */
 export const AccordionHeading: IAccordionHeading = function SuiAccordionHeading(props) {
-  const ctx = useAccordionContext();
+  const ctx = useAccordionItemContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -79,6 +79,7 @@ export const AccordionHeading: IAccordionHeading = function SuiAccordionHeading(
             (state) => state.open && "sui_accordion_heading-open",
             (state) => state.hidden && "sui_accordion_heading-hidden",
             (state) => `sui_accordion_heading-index_${state.index}`,
+            (state) => `sui_accordion_heading-orientation_${state.orientation}`,
           ),
         },
       )}

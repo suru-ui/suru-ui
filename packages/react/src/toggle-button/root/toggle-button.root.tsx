@@ -161,6 +161,8 @@ export namespace ToggleButtonRootProps {
 
 /**
  * {@link ToggleButtonRoot} に渡す props です。
+ *
+ * @template TValue トグルボタンの値の型です。
  */
 export type ToggleButtonRootProps<TValue extends string = string> = ToggleButtonRootProps.Render &
   ToggleButtonRootProps.SuruUI &
@@ -262,16 +264,19 @@ export { ToggleButtonRoot as Root };
 export namespace Root {
   export type State = ToggleButtonRootState;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue extends string = string> = Props.Render &
+    Props.SuruUI &
+    Props.BaseUI<TValue> &
+    Props.HTML<TValue>;
 
   export namespace Props {
     export type Render = ToggleButtonRootProps.Render;
 
     export type SuruUI = ToggleButtonRootProps.SuruUI;
 
-    export type BaseUI = ToggleButtonRootProps.BaseUI;
+    export type BaseUI<TValue extends string = string> = ToggleButtonRootProps.BaseUI<TValue>;
 
-    export type HTML = ToggleButtonRootProps.HTML;
+    export type HTML<TValue extends string = string> = ToggleButtonRootProps.HTML<TValue>;
   }
 
   export type ChangeEventDetails = ToggleButtonRootChangeEventDetails;

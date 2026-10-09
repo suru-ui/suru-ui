@@ -10,14 +10,16 @@ import type { AutocompletePortalContext } from "./autocomplete.portal.context.js
 
 /**
  * {@link AutocompletePortal} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompletePortalState = Override<
-  AutocompletePortalContext,
+export type AutocompletePortalState<TItem = any> = Override<
+  AutocompletePortalContext<TItem>,
   Autocomplete.Portal.State
 >;
 
 export namespace AutocompletePortalProps {
-  export type Render = RenderProps<AutocompletePortalState>;
+  export type Render<TItem = any> = RenderProps<AutocompletePortalState<TItem>>;
 
   export type SuruUI = {};
 
@@ -90,12 +92,12 @@ export const AutocompletePortal: IAutocompletePortal = function SuiAutocompleteP
 export { AutocompletePortal as Portal };
 
 export namespace Portal {
-  export type State = AutocompletePortalState;
+  export type State<TItem = any> = AutocompletePortalState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompletePortalProps.Render;
+    export type Render<TItem = any> = AutocompletePortalProps.Render<TItem>;
 
     export type SuruUI = AutocompletePortalProps.SuruUI;
 

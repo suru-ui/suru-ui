@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useHoverCardContext } from "../root/hover-card.root.context.js";
+import { usePositionerContext } from "../positioner/hover-card.positioner.context.js";
 import { HoverCardContentContext } from "./hover-card.content.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IHoverCardContent = IComponent<HoverCardContentProps>;
  * ホバーカードの内容を表示するポップアップ要素です。
  */
 export const HoverCardContent: IHoverCardContent = function SuiHoverCardContent(props) {
-  const ctx = useHoverCardContext();
+  const ctx = usePositionerContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

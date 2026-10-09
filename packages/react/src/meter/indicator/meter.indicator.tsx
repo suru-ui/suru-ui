@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useMeterContext } from "../root/meter.root.context.js";
+import { useMeterTrackContext } from "../track/meter.track.context.js";
 import { MeterIndicatorContext } from "./meter.indicator.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IMeterIndicator = IComponent<MeterIndicatorProps>;
  * メーターの現在値を示すインジケーターコンポーネントです。
  */
 export const MeterIndicator: IMeterIndicator = function SuiMeterIndicator(props) {
-  const ctx = useMeterContext();
+  const ctx = useMeterTrackContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

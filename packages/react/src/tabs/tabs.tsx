@@ -59,8 +59,10 @@ export type TabsVariant = TabsRootVariant;
 
 /**
  * {@link Tabs} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type TabsState = TabsRootState;
+export type TabsState<TItem = any> = TabsRootState<TItem>;
 
 /**
  * {@link Tabs} の各パーツに渡す props です。
@@ -275,7 +277,7 @@ export const Tabs: ITabs = function SuiTabs(props: TabsProps) {
 };
 
 export namespace Tabs {
-  export type State = TabsState;
+  export type State<TItem = any> = TabsState<TItem>;
 
   export type Props<TItem = any> = TabsProps<TItem>;
 

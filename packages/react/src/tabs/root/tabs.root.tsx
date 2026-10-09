@@ -110,10 +110,10 @@ export type TabsRootVariant = TabsContextVariant;
 /**
  * {@link TabsRoot} が持つ状態です。
  */
-export type TabsRootState = Override<TabsContext, BaseTabs.Root.State>;
+export type TabsRootState<TItem = any> = Override<TabsContext<TItem>, BaseTabs.Root.State>;
 
 export namespace TabsRootProps {
-  export type Render = RenderProps<TabsRootState>;
+  export type Render<TItem = any> = RenderProps<TabsRootState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -183,7 +183,7 @@ export namespace TabsRootProps {
  *
  * @template TItem 項目の型です。
  */
-export type TabsRootProps<TItem = any> = TabsRootProps.Render &
+export type TabsRootProps<TItem = any> = TabsRootProps.Render<TItem> &
   TabsRootProps.SuruUI<TItem> &
   TabsRootProps.BaseUI &
   TabsRootProps.HTML;
@@ -252,12 +252,15 @@ export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
 export { TabsRoot as Root };
 
 export namespace Root {
-  export type State = TabsRootState;
+  export type State<TItem = any> = TabsRootState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = TabsRootProps.Render;
+    export type Render<TItem = any> = TabsRootProps.Render<TItem>;
 
     export type SuruUI<TItem = any> = TabsRootProps.SuruUI<TItem>;
 

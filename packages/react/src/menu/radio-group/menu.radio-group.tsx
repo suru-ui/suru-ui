@@ -44,10 +44,10 @@ export interface IMenuRadioGroupItemRenderer<TItem = any> {
 /**
  * {@link MenuRadioGroup} が持つ状態です。
  */
-export type MenuRadioGroupState = MenuRadioGroupContext;
+export type MenuRadioGroupState<TItem = any> = MenuRadioGroupContext<TItem>;
 
 export namespace MenuRadioGroupProps {
-  export type Render = RenderProps<MenuRadioGroupState>;
+  export type Render<TItem = any> = RenderProps<MenuRadioGroupState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -82,7 +82,7 @@ export namespace MenuRadioGroupProps {
 /**
  * {@link MenuRadioGroup} に渡す props です。
  */
-export type MenuRadioGroupProps<TItem = any> = MenuRadioGroupProps.Render &
+export type MenuRadioGroupProps<TItem = any> = MenuRadioGroupProps.Render<TItem> &
   MenuRadioGroupProps.SuruUI<TItem> &
   MenuRadioGroupProps.BaseUI &
   MenuRadioGroupProps.HTML;
@@ -140,12 +140,15 @@ export const MenuRadioGroup: IMenuRadioGroup = function SuiMenuRadioGroup(
 export { MenuRadioGroup as RadioGroup };
 
 export namespace RadioGroup {
-  export type State = MenuRadioGroupState;
+  export type State<TItem = any> = MenuRadioGroupState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = MenuRadioGroupProps.Render;
+    export type Render<TItem = any> = MenuRadioGroupProps.Render<TItem>;
 
     export type SuruUI<TItem = any> = MenuRadioGroupProps.SuruUI<TItem>;
 

@@ -11,11 +11,13 @@ import { AutocompleteRowContext } from "./autocomplete.row.context.js";
 
 /**
  * {@link AutocompleteRow} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteRowState = AutocompleteRowContext;
+export type AutocompleteRowState<TItem = any> = AutocompleteRowContext<TItem>;
 
 export namespace AutocompleteRowProps {
-  export type Render = RenderProps<AutocompleteRowState>;
+  export type Render<TItem = any> = RenderProps<AutocompleteRowState<TItem>>;
 
   export type SuruUI = {};
 
@@ -79,6 +81,14 @@ export const AutocompleteRow: IAutocompleteRow = function SuiAutocompleteRow(pro
             (state) => `sui_autocomplete_row-radius_${state.radius}`,
             (state) => `sui_autocomplete_row-variant_${state.variant}`,
             (state) => state.outlined && "sui_autocomplete_row-outlined",
+            (state) => state.open && "sui_autocomplete_row-open",
+            (state) => state.empty && "sui_autocomplete_row-empty",
+            (state) => state.anchorHidden && "sui_autocomplete_row-anchor_hidden",
+            (state) => `sui_autocomplete_row-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_autocomplete_row-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_autocomplete_row-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -89,12 +99,12 @@ export const AutocompleteRow: IAutocompleteRow = function SuiAutocompleteRow(pro
 export { AutocompleteRow as Row };
 
 export namespace Row {
-  export type State = AutocompleteRowState;
+  export type State<TItem = any> = AutocompleteRowState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompleteRowProps.Render;
+    export type Render<TItem = any> = AutocompleteRowProps.Render<TItem>;
 
     export type SuruUI = AutocompleteRowProps.SuruUI;
 

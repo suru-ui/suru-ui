@@ -1,7 +1,6 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
-import Config from "../../_config.jsx";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
@@ -77,7 +76,6 @@ export type ICardRoot = IComponent<CardRootProps>;
  * カードの各パーツをまとめるルートコンポーネントです。
  */
 export const CardRoot: ICardRoot = function SuiCardRoot(props) {
-  const conf = React.use(Config);
   const {
     size = "md",
     radius = size,
@@ -107,11 +105,7 @@ export const CardRoot: ICardRoot = function SuiCardRoot(props) {
     defaultTagName: "div",
   });
 
-  return (
-    <conf.Context size={size} radius={radius}>
-      <CardContext value={ctx}>{element}</CardContext>
-    </conf.Context>
-  );
+  return <CardContext value={ctx}>{element}</CardContext>;
 };
 
 export { CardRoot as Root };

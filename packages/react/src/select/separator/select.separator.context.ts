@@ -3,12 +3,20 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { SelectContext } from "../root/select.root.context.js";
+import type { SelectGroupContext } from "../group/select.group.context.js";
+import type { SelectListContext } from "../list/select.list.context.js";
+
+type ItemContext<TParentContext> = Readonly<Override<TParentContext, BaseSelect.Separator.State>>;
 
 /**
  * {@link SelectSeparator} が子パーツへ提供する状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectSeparatorContext = Readonly<Override<SelectContext, BaseSelect.Separator.State>>;
+export type SelectSeparatorContext<TValue = any> =
+  // | ItemContext<SelectListContext>
+  // | ItemContext<SelectGroupContext>
+  ItemContext<SelectListContext<TValue> & SelectGroupContext<TValue>>;
 
 /**
  * {@link SelectSeparator} が子パーツへ提供するコンテキストです。

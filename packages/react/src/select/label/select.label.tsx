@@ -11,11 +11,13 @@ import { SelectLabelContext } from "./select.label.context.js";
 
 /**
  * {@link SelectLabel} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectLabelState = SelectLabelContext;
+export type SelectLabelState<TValue = any> = SelectLabelContext<TValue>;
 
 export namespace SelectLabelProps {
-  export type Render = RenderProps<SelectLabelState>;
+  export type Render<TValue = any> = RenderProps<SelectLabelState<TValue>>;
 
   export type SuruUI = {};
 
@@ -94,12 +96,12 @@ export const SelectLabel: ISelectLabel = function SuiSelectLabel(props) {
 export { SelectLabel as Label };
 
 export namespace Label {
-  export type State = SelectLabelState;
+  export type State<TValue = any> = SelectLabelState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectLabelProps.Render;
+    export type Render<TValue = any> = SelectLabelProps.Render<TValue>;
 
     export type SuruUI = SelectLabelProps.SuruUI;
 

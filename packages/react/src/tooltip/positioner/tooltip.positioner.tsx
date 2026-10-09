@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useTooltipContext } from "../root/tooltip.root.context.js";
+import { useTooltipPortalContext } from "../portal/tooltip.portal.context.js";
 import { TooltipPositionerContext } from "./tooltip.positioner.context.js";
 
 /**
@@ -61,7 +61,7 @@ export type ITooltipPositioner = IComponent<TooltipPositionerProps>;
  * トリガーを基準にポップアップを配置する要素です。
  */
 export const TooltipPositioner: ITooltipPositioner = function SuiTooltipPositioner(props) {
-  const ctx = useTooltipContext();
+  const ctx = useTooltipPortalContext();
   const { style, render, className, positionMethod = "fixed", ...otherProps } = props;
 
   return (

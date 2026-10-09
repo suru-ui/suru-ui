@@ -6,6 +6,7 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
+import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { ToastCloseContext } from "./toast.close.context.js";
 
@@ -116,20 +117,37 @@ export const ToastClose: IToastClose = function SuiToastClose(props) {
             {...mergeProps<typeof Button.Root>([
               htmlProps,
               buttonRootProps,
-              proxyRenderProps(toastState, {
-                style,
-                render: (htmlProps, state) => (
-                  <ToastCloseContext value={state}>
-                    <RenderElement
-                      state={state}
-                      render={render}
-                      htmlProps={htmlProps}
-                      defaultTagName="button"
-                    />
-                  </ToastCloseContext>
-                ),
-                className,
-              }),
+              proxyRenderProps<Button.Root.State, ToastCloseState>(
+                (buttonState) => ({ ...toastState, ...buttonState }),
+                {
+                  style,
+                  render: (htmlProps, state) => (
+                    <ToastCloseContext value={state}>
+                      <RenderElement
+                        state={state}
+                        render={render}
+                        htmlProps={htmlProps}
+                        defaultTagName="button"
+                      />
+                    </ToastCloseContext>
+                  ),
+                  className: cn<ToastCloseState>(
+                    className,
+                    "sui_toast_close",
+                    (state) => `sui_toast_close-size_${state.size}`,
+                    (state) => `sui_toast_close-color_${state.color}`,
+                    (state) => `sui_toast_close-radius_${state.radius}`,
+                    (state) => `sui_toast_close-variant_${state.variant}`,
+                    (state) => state.item && "sui_toast_close-item",
+                    (state) => state.muted && "sui_toast_close-muted",
+                    (state) => state.outlined && "sui_toast_close-outlined",
+                    (state) => state.pending && "sui_toast_close-pending",
+                    (state) => state.squared && "sui_toast_close-squared",
+                    (state) => state.disabled && !state.pending && "sui_toast_close-disabled",
+                    (state) => state.type !== undefined && `sui_toast_close-type_${state.type}`,
+                  ),
+                },
+              ),
             ])}
           />
         );

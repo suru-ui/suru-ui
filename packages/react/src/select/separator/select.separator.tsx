@@ -6,16 +6,19 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectGroupContext } from "../group/select.group.context.js";
+import { useSelectListContext } from "../list/select.list.context.js";
 import { SelectSeparatorContext } from "./select.separator.context.js";
 
 /**
  * {@link SelectSeparator} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectSeparatorState = SelectSeparatorContext;
+export type SelectSeparatorState<TValue = any> = SelectSeparatorContext<TValue>;
 
 export namespace SelectSeparatorProps {
-  export type Render = RenderProps<SelectSeparatorState>;
+  export type Render<TValue = any> = RenderProps<SelectSeparatorState<TValue>>;
 
   export type SuruUI = {};
 
@@ -49,7 +52,9 @@ export type ISelectSeparator = IComponent<SelectSeparatorProps>;
  * 項目やグループを区切る要素です。
  */
 export const SelectSeparator: ISelectSeparator = function SuiSelectSeparator(props) {
-  const ctx = useSelectContext();
+  const listCtx = useSelectListContext();
+  const groupCtx = useSelectGroupContext(true);
+  const ctx = groupCtx || listCtx;
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -76,6 +81,13 @@ export const SelectSeparator: ISelectSeparator = function SuiSelectSeparator(pro
             (state) => `sui_select_separator-radius_${state.radius}`,
             (state) => `sui_select_separator-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_separator-outlined",
+            (state) => state.open && "sui_select_separator-open",
+            (state) => state.anchorHidden && "sui_select_separator-anchor_hidden",
+            (state) => `sui_select_separator-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_select_separator-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_select_separator-transition_status_${state.transitionStatus}`,
             (state) => `sui_select_separator-orientation_${state.orientation}`,
           ),
         },
@@ -87,12 +99,12 @@ export const SelectSeparator: ISelectSeparator = function SuiSelectSeparator(pro
 export { SelectSeparator as Separator };
 
 export namespace Separator {
-  export type State = SelectSeparatorState;
+  export type State<TValue = any> = SelectSeparatorState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectSeparatorProps.Render;
+    export type Render<TValue = any> = SelectSeparatorProps.Render<TValue>;
 
     export type SuruUI = SelectSeparatorProps.SuruUI;
 

@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectPortalContext } from "../portal/select.portal.context.js";
 import { SelectBackdropContext } from "./select.backdrop.context.js";
 
 /**
  * {@link SelectBackdrop} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectBackdropState = SelectBackdropContext;
+export type SelectBackdropState<TValue = any> = SelectBackdropContext<TValue>;
 
 export namespace SelectBackdropProps {
-  export type Render = RenderProps<SelectBackdropState>;
+  export type Render<TValue = any> = RenderProps<SelectBackdropState<TValue>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type ISelectBackdrop = IComponent<SelectBackdropProps>;
  * ポップアップの背後に表示される要素です。
  */
 export const SelectBackdrop: ISelectBackdrop = function SuiSelectBackdrop(props) {
-  const ctx = useSelectContext();
+  const ctx = useSelectPortalContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -90,12 +92,12 @@ export const SelectBackdrop: ISelectBackdrop = function SuiSelectBackdrop(props)
 export { SelectBackdrop as Backdrop };
 
 export namespace Backdrop {
-  export type State = SelectBackdropState;
+  export type State<TValue = any> = SelectBackdropState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectBackdropProps.Render;
+    export type Render<TValue = any> = SelectBackdropProps.Render<TValue>;
 
     export type SuruUI = SelectBackdropProps.SuruUI;
 

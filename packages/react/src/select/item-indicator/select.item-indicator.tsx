@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectItemContext } from "../item/select.item.context.js";
 import { SelectItemIndicatorContext } from "./select.item-indicator.context.js";
 
 /**
  * {@link SelectItemIndicator} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectItemIndicatorState = SelectItemIndicatorContext;
+export type SelectItemIndicatorState<TValue = any> = SelectItemIndicatorContext<TValue>;
 
 export namespace SelectItemIndicatorProps {
-  export type Render = RenderProps<SelectItemIndicatorState>;
+  export type Render<TValue = any> = RenderProps<SelectItemIndicatorState<TValue>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type ISelectItemIndicator = IComponent<SelectItemIndicatorProps>;
  * 選択された項目を示す要素です。
  */
 export const SelectItemIndicator: ISelectItemIndicator = function SuiSelectItemIndicator(props) {
-  const ctx = useSelectContext();
+  const ctx = useSelectItemContext();
   const { style, render, className, keepMounted = true, ...otherProps } = props;
 
   return (
@@ -76,6 +78,12 @@ export const SelectItemIndicator: ISelectItemIndicator = function SuiSelectItemI
             (state) => `sui_select_item_indicator-radius_${state.radius}`,
             (state) => `sui_select_item_indicator-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_item_indicator-outlined",
+            (state) => state.disabled && "sui_select_item_indicator-disabled",
+            (state) => state.highlighted && "sui_select_item_indicator-highlighted",
+            (state) => state.open && "sui_select_item_indicator-open",
+            (state) => state.anchorHidden && "sui_select_item_indicator-anchor_hidden",
+            (state) => `sui_select_item_indicator-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_select_item_indicator-align_${state.align}`,
             (state) => state.selected && "sui_select_item_indicator-selected",
             (state) =>
               state.transitionStatus !== undefined &&
@@ -91,12 +99,12 @@ export const SelectItemIndicator: ISelectItemIndicator = function SuiSelectItemI
 export { SelectItemIndicator as ItemIndicator };
 
 export namespace ItemIndicator {
-  export type State = SelectItemIndicatorState;
+  export type State<TValue = any> = SelectItemIndicatorState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectItemIndicatorProps.Render;
+    export type Render<TValue = any> = SelectItemIndicatorProps.Render<TValue>;
 
     export type SuruUI = SelectItemIndicatorProps.SuruUI;
 

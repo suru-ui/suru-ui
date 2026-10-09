@@ -16,11 +16,13 @@ export type TabsPanelMetadata = BaseTabs.Panel.Metadata;
 
 /**
  * {@link TabsPanel} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type TabsPanelState = TabsPanelContext;
+export type TabsPanelState<TItem = any> = TabsPanelContext<TItem>;
 
 export namespace TabsPanelProps {
-  export type Render = RenderProps<TabsPanelState>;
+  export type Render<TItem = any> = RenderProps<TabsPanelState<TItem>>;
 
   export type SuruUI = {};
 
@@ -98,12 +100,12 @@ export const TabsPanel: ITabsPanel = function SuiTabsPanel(props) {
 export { TabsPanel as Panel };
 
 export namespace Panel {
-  export type State = TabsPanelState;
+  export type State<TItem = any> = TabsPanelState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = TabsPanelProps.Render;
+    export type Render<TItem = any> = TabsPanelProps.Render<TItem>;
 
     export type SuruUI = TabsPanelProps.SuruUI;
 

@@ -63,6 +63,12 @@ export const AlertDialogHeader: IAlertDialogHeader = function SuiAlertDialogHead
             (state) => `sui_alert_dialog_header-radius_${state.radius}`,
             (state) => `sui_alert_dialog_header-variant_${state.variant}`,
             (state) => state.outlined && "sui_alert_dialog_header-outlined",
+            (state) => state.open && "sui_alert_dialog_header-open",
+            (state) => state.nested && "sui_alert_dialog_header-nested",
+            (state) => state.nestedDialogOpen && "sui_alert_dialog_header-nested_dialog_open",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_alert_dialog_header-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

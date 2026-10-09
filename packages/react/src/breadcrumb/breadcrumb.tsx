@@ -39,8 +39,10 @@ export type IBreadcrumbItemRenderer<TItem = any> = IBreadcrumbListItemRenderer<T
 
 /**
  * {@link Breadcrumb} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type BreadcrumbState = BreadcrumbRootState;
+export type BreadcrumbState<TItem = any> = BreadcrumbRootState<TItem>;
 
 /**
  * {@link Breadcrumb} の各パーツに渡す props です。
@@ -265,7 +267,7 @@ export const Breadcrumb: IBreadcrumb = Object.assign(
 );
 
 export namespace Breadcrumb {
-  export type State = BreadcrumbState;
+  export type State<TItem = any> = BreadcrumbState<TItem>;
 
   export type Props<TItem = any> = BreadcrumbProps<TItem>;
 

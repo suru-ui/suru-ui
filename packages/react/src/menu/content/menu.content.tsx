@@ -24,9 +24,9 @@ import { MenuGroup } from "../group/menu.group.jsx";
 import { MenuItem } from "../item/menu.item.jsx";
 import { MenuLinkItem } from "../link-item/menu.link-item.jsx";
 import { MenuPortal } from "../portal/menu.portal.jsx";
+import { usePositionerContext } from "../positioner/menu.positioner.context.js";
 import { MenuPositioner } from "../positioner/menu.positioner.jsx";
 import { MenuRadioGroup } from "../radio-group/menu.radio-group.jsx";
-import { useMenuContext } from "../root/menu.root.context.js";
 import type {
   MenuRootItemObject,
   // oxlint-disable-next-line no-unused-vars JSDoc で使用
@@ -57,10 +57,10 @@ export interface IMenuContentItemRenderer<TItem = any> {
 /**
  * {@link MenuContent} が持つ状態です。
  */
-export type MenuContentState = MenuContentContext;
+export type MenuContentState<TItem = any> = MenuContentContext<TItem>;
 
 export namespace MenuContentProps {
-  export type Render = RenderProps<MenuContentState>;
+  export type Render<TItem = any> = RenderProps<MenuContentState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -90,7 +90,7 @@ export namespace MenuContentProps {
 /**
  * {@link MenuContent} に渡す props です。
  */
-export type MenuContentProps<TItem = any> = MenuContentProps.Render &
+export type MenuContentProps<TItem = any> = MenuContentProps.Render<TItem> &
   MenuContentProps.SuruUI<TItem> &
   MenuContentProps.BaseUI &
   MenuContentProps.HTML;
@@ -106,7 +106,7 @@ export interface IMenuContent extends IComponent<MenuContentProps> {
  * メニュー項目を表示するコンテンツ要素です。
  */
 export const MenuContent: IMenuContent = function SuiMenuContent(props: MenuContentProps) {
-  const ctx = useMenuContext();
+  const ctx = usePositionerContext();
   const { style, render, children = defaultItemRenderer, className, ...otherProps } = props;
 
   return (
@@ -135,6 +135,7 @@ export const MenuContent: IMenuContent = function SuiMenuContent(props: MenuCont
           (state) => `sui_menu_content-variant_${state.variant}`,
           (state) => state.outlined && "sui_menu_content-outlined",
           (state) => state.open && "sui_menu_content-open",
+          (state) => state.anchorHidden && "sui_menu_content-anchor_hidden",
           (state) => state.nested && "sui_menu_content-nested",
           (state) => state.instant && "sui_menu_content-instant",
           (state) => `sui_menu_content-side_${state.side.replaceAll("-", "_")}`,
@@ -150,12 +151,15 @@ export const MenuContent: IMenuContent = function SuiMenuContent(props: MenuCont
 export { MenuContent as Content };
 
 export namespace Content {
-  export type State = MenuContentState;
+  export type State<TItem = any> = MenuContentState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = MenuContentProps.Render;
+    export type Render<TItem = any> = MenuContentProps.Render<TItem>;
 
     export type SuruUI<TItem = any> = MenuContentProps.SuruUI<TItem>;
 

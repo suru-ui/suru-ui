@@ -380,6 +380,8 @@ export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props)
           (state) => `sui_file_upload-radius_${state.radius}`,
           (state) => `sui_file_upload-variant_${state.variant}`,
           (state) => state.disabled && "sui_file_upload-disabled",
+          (state) => state.multiple && "sui_file_upload-multiple",
+          (state) => state.required && "sui_file_upload-required",
         ),
         "data-scope": dataScope,
       },

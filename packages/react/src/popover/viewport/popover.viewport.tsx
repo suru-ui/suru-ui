@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { usePopoverContext } from "../root/popover.root.context.js";
+import { usePopoverContentContext } from "../content/popover.content.context.js";
 import { PopoverViewportContext } from "./popover.viewport.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type IPopoverViewport = IComponent<PopoverViewportProps>;
  * 1 つのポップオーバーを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
 export const PopoverViewport: IPopoverViewport = function SuiPopoverViewport(props) {
-  const ctx = usePopoverContext();
+  const ctx = usePopoverContentContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -77,6 +77,13 @@ export const PopoverViewport: IPopoverViewport = function SuiPopoverViewport(pro
             (state) => `sui_popover_viewport-size_${state.size}`,
             (state) => `sui_popover_viewport-radius_${state.radius}`,
             (state) => state.outlined && "sui_popover_viewport-outlined",
+            (state) => state.open && "sui_popover_viewport-open",
+            (state) => state.anchorHidden && "sui_popover_viewport-anchor_hidden",
+            (state) => `sui_popover_viewport-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_popover_viewport-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_popover_viewport-transition_status_${state.transitionStatus}`,
             (state) => state.instant && "sui_popover_viewport-instant",
             (state) => state.transitioning && "sui_popover_viewport-transitioning",
             (state) =>

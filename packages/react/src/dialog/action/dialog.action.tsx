@@ -66,6 +66,12 @@ export const DialogAction: IDialogAction = function SuiDialogAction(props) {
             (state) => `sui_dialog_action-variant_${state.variant}`,
             (state) => state.absolute && "sui_dialog_action-absolute",
             (state) => state.outlined && "sui_dialog_action-outlined",
+            (state) => state.open && "sui_dialog_action-open",
+            (state) => state.nested && "sui_dialog_action-nested",
+            (state) => state.nestedDialogOpen && "sui_dialog_action-nested_dialog_open",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_dialog_action-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useNumberFieldContext } from "../root/number-field.root.context.js";
+import { useNumberFieldScrubAreaContext } from "../scrub-area/number-field.scrub-area.context.js";
 import { NumberFieldScrubAreaCursorContext } from "./number-field.scrub-area-cursor.context.js";
 
 /**
@@ -50,7 +50,7 @@ export type INumberFieldScrubAreaCursor = IComponent<NumberFieldScrubAreaCursorP
  */
 export const NumberFieldScrubAreaCursor: INumberFieldScrubAreaCursor =
   function SuiNumberFieldScrubAreaCursor(props) {
-    const ctx = useNumberFieldContext();
+    const ctx = useNumberFieldScrubAreaContext();
     const { style, render, className, ...otherProps } = props;
 
     return (

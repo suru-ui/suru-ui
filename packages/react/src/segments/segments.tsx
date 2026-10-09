@@ -52,8 +52,10 @@ export type SegmentsValue = SegmentsItemValue;
 
 /**
  * {@link Segments} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type SegmentsState = SegmentsRootState;
+export type SegmentsState<TItem = any> = SegmentsRootState<TItem>;
 
 /**
  * {@link Segments} の各パーツに渡す props です。
@@ -245,7 +247,7 @@ export const Segments: ISegments = function SuiSegments(props: SegmentsProps) {
 };
 
 export namespace Segments {
-  export type State = SegmentsState;
+  export type State<TItem = any> = SegmentsState<TItem>;
 
   export type Props<TItem = any> = SegmentsProps<TItem>;
 

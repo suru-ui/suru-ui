@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectTriggerContext } from "../trigger/select.trigger.context.js";
 import { SelectIconContext } from "./select.icon.context.js";
 
 /**
  * {@link SelectIcon} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectIconState = SelectIconContext;
+export type SelectIconState<TValue = any> = SelectIconContext<TValue>;
 
 export namespace SelectIconProps {
-  export type Render = RenderProps<SelectIconState>;
+  export type Render<TValue = any> = RenderProps<SelectIconState<TValue>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type ISelectIcon = IComponent<SelectIconProps>;
  * ポップアップの開閉を示すアイコンのラッパー要素です。
  */
 export const SelectIcon: ISelectIcon = function SuiSelectIcon(props) {
-  const ctx = useSelectContext();
+  const ctx = useSelectTriggerContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -76,6 +78,19 @@ export const SelectIcon: ISelectIcon = function SuiSelectIcon(props) {
             (state) => `sui_select_icon-radius_${state.radius}`,
             (state) => `sui_select_icon-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_icon-outlined",
+            (state) => state.disabled && "sui_select_icon-disabled",
+            (state) => state.touched && "sui_select_icon-touched",
+            (state) => state.dirty && "sui_select_icon-dirty",
+            (state) => state.valid === false && "sui_select_icon-invalid",
+            (state) => state.valid === true && "sui_select_icon-valid",
+            (state) => state.valid === null && "sui_select_icon-unverified",
+            (state) => state.filled && "sui_select_icon-filled",
+            (state) => state.focused && "sui_select_icon-focused",
+            (state) => state.readOnly && "sui_select_icon-readonly",
+            (state) => state.placeholder && "sui_select_icon-placeholder",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_select_icon-popup_side_${state.popupSide.replaceAll("-", "_")}`,
             (state) => state.open && "sui_select_icon-open",
           ),
         },
@@ -87,12 +102,12 @@ export const SelectIcon: ISelectIcon = function SuiSelectIcon(props) {
 export { SelectIcon as Icon };
 
 export namespace Icon {
-  export type State = SelectIconState;
+  export type State<TValue = any> = SelectIconState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectIconProps.Render;
+    export type Render<TValue = any> = SelectIconProps.Render<TValue>;
 
     export type SuruUI = SelectIconProps.SuruUI;
 

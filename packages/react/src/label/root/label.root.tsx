@@ -1,9 +1,6 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
-import { isSize, isColor } from "@suru-ui/theme";
 import * as React from "react";
 
-import Config from "../../_config.jsx";
-import { isBool } from "../../_is-x.js";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
@@ -39,7 +36,7 @@ export namespace LabelRootProps {
     /**
      * ラベルの配色を指定します。
      *
-     * 既定値は設定コンテクストですが、それが有効な値でなければ `"grey"` です。
+     * @default "grey"
      */
     color?: LabelRootColor | undefined;
 
@@ -49,14 +46,14 @@ export namespace LabelRootProps {
      * ラベル自身の見た目だけを変え、関連するコントロールは無効化しません。
      * 関連するコントロールを無効にするときは、そのコントロール自身の `disabled` を指定してください。
      *
-     * 既定値は設定コンテクストですが、それが有効な値でなければ `false` です。
+     * @default false
      */
     disabled?: boolean | undefined;
 
     /**
      * ラベルのサイズを指定します。
      *
-     * 既定値は設定コンテクストですが、それが有効な値でなければ `"md"` です。
+     * @default "md"
      */
     size?: LabelRootSize | undefined;
   };
@@ -85,11 +82,10 @@ export type ILabelRoot = IComponent<LabelRootProps>;
  * 大きさと配色の外観を自身のスタイルに集約します。
  */
 export const LabelRoot: ILabelRoot = function SuiLabelRoot(props) {
-  const config = React.use(Config);
   const {
-    size = config.get("size", isSize, "md"),
-    color = config.get("color", isColor, "grey"),
-    disabled = config.get("disabled", isBool, false),
+    size = "md",
+    color = "grey",
+    disabled = false,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherLabelProps

@@ -8,16 +8,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useAutocompleteInputGroupContext } from "../input-group/autocomplete.input-group.context.js";
+import { useAutocompleteAddonContext } from "../addon/autocomplete.addon.context.js";
 import { AutocompleteClearContext } from "./autocomplete.clear.context.js";
 
 /**
  * {@link AutocompleteClear} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteClearState = AutocompleteClearContext;
+export type AutocompleteClearState<TItem = any> = AutocompleteClearContext<TItem>;
 
 export namespace AutocompleteClearProps {
-  export type Render = RenderProps<AutocompleteClearState>;
+  export type Render<TItem = any> = RenderProps<AutocompleteClearState<TItem>>;
 
   export type SuruUI = {};
 
@@ -56,7 +58,7 @@ export type IAutocompleteClear = IComponent<AutocompleteClearProps>;
  * 入力値があるときだけ表示されます。
  */
 export const AutocompleteClear: IAutocompleteClear = function SuiAutocompleteClear(props) {
-  const ctx = useAutocompleteInputGroupContext();
+  const ctx = useAutocompleteAddonContext();
   const {
     style,
     render,
@@ -91,6 +93,24 @@ export const AutocompleteClear: IAutocompleteClear = function SuiAutocompleteCle
             (state) => `sui_autocomplete_clear-radius_${state.radius}`,
             (state) => `sui_autocomplete_clear-variant_${state.variant}`,
             (state) => state.outlined && "sui_autocomplete_clear-outlined",
+            (state) => state.disabled && "sui_autocomplete_clear-disabled",
+            (state) => state.touched && "sui_autocomplete_clear-touched",
+            (state) => state.dirty && "sui_autocomplete_clear-dirty",
+            (state) => state.valid === false && "sui_autocomplete_clear-invalid",
+            (state) => state.valid === true && "sui_autocomplete_clear-valid",
+            (state) => state.valid === null && "sui_autocomplete_clear-unverified",
+            (state) => state.filled && "sui_autocomplete_clear-filled",
+            (state) => state.focused && "sui_autocomplete_clear-focused",
+            (state) => state.open && "sui_autocomplete_clear-open",
+            (state) => state.readOnly && "sui_autocomplete_clear-readonly",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_autocomplete_clear-popup_side_${state.popupSide.replaceAll("-", "_")}`,
+            (state) => state.listEmpty && "sui_autocomplete_clear-list_empty",
+            (state) => state.visible && "sui_autocomplete_clear-visible",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_autocomplete_clear-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -104,12 +124,12 @@ export const AutocompleteClear: IAutocompleteClear = function SuiAutocompleteCle
 export { AutocompleteClear as Clear };
 
 export namespace Clear {
-  export type State = AutocompleteClearState;
+  export type State<TItem = any> = AutocompleteClearState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompleteClearProps.Render;
+    export type Render<TItem = any> = AutocompleteClearProps.Render<TItem>;
 
     export type SuruUI = AutocompleteClearProps.SuruUI;
 

@@ -78,11 +78,11 @@ export const ToastRoot: IToastRoot = function SuiToastRoot<TData extends object 
   return (
     <Toast.Root
       {...otherProps}
-      className={cn(
+      className={cn<ToastRootState>(
         className,
         "sui_toast",
         (state) =>
-          (state.transitionStatus === "starting" || state.transitionStatus === "ending") &&
+          state.transitionStatus !== undefined &&
           `sui_toast-transition_status_${state.transitionStatus}`,
         (state) => state.limited && "sui_toast-limited",
         (state) => state.swiping && "sui_toast-swiping",

@@ -43,11 +43,13 @@ export type TabsTabValue = BaseTabs.Tab.Value;
 
 /**
  * {@link TabsTab} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type TabsTabState = TabsTabContext;
+export type TabsTabState<TItem = any> = TabsTabContext<TItem>;
 
 export namespace TabsTabProps {
-  export type Render = RenderProps<TabsTabState>;
+  export type Render<TItem = any> = RenderProps<TabsTabState<TItem>>;
 
   export type SuruUI = {};
 
@@ -123,12 +125,12 @@ export const TabsTab: ITabsTab = function SuiTabsTab(props) {
 export { TabsTab as Tab };
 
 export namespace Tab {
-  export type State = TabsTabState;
+  export type State<TItem = any> = TabsTabState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = TabsTabProps.Render;
+    export type Render<TItem = any> = TabsTabProps.Render<TItem>;
 
     export type SuruUI = TabsTabProps.SuruUI;
 

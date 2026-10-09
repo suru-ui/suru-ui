@@ -11,6 +11,9 @@ export type IAutocompleteFilteredItems<TItem = any> = ReadonlyArray<TItem>;
  * {@link useFilteredItems} の型です。
  */
 export interface IUseAutocompleteFilteredItems {
+  /**
+   * @template TItem 項目の型です。
+   */
   <TItem = any>(): IAutocompleteFilteredItems<TItem>;
 }
 

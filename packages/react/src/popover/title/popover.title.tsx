@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { usePopoverContext } from "../root/popover.root.context.js";
+import { usePopoverContentContext } from "../content/popover.content.context.js";
 import { PopoverTitleContext } from "./popover.title.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IPopoverTitle = IComponent<PopoverTitleProps>;
  * ポップオーバーのタイトルを表示する見出し要素です。
  */
 export const PopoverTitle: IPopoverTitle = function SuiPopoverTitle(props) {
-  const ctx = usePopoverContext();
+  const ctx = usePopoverContentContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -75,6 +75,14 @@ export const PopoverTitle: IPopoverTitle = function SuiPopoverTitle(props) {
             (state) => `sui_popover_title-size_${state.size}`,
             (state) => `sui_popover_title-radius_${state.radius}`,
             (state) => state.outlined && "sui_popover_title-outlined",
+            (state) => state.open && "sui_popover_title-open",
+            (state) => state.anchorHidden && "sui_popover_title-anchor_hidden",
+            (state) => state.instant && "sui_popover_title-instant",
+            (state) => `sui_popover_title-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_popover_title-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_popover_title-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

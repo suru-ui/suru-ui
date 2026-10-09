@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useMenuContext } from "../root/menu.root.context.js";
+import { useMenuPortalContext } from "../portal/menu.portal.context.js";
 import { MenuPositionerContext } from "./menu.positioner.context.js";
 
 /**
  * {@link MenuPositioner} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuPositionerState = MenuPositionerContext;
+export type MenuPositionerState<TItem = any> = MenuPositionerContext<TItem>;
 
 export namespace MenuPositionerProps {
-  export type Render = RenderProps<MenuPositionerState>;
+  export type Render<TItem = any> = RenderProps<MenuPositionerState<TItem>>;
 
   export type SuruUI = {};
 
@@ -60,7 +62,7 @@ export type IMenuPositioner = IComponent<MenuPositionerProps>;
  * ポップアップをトリガーに位置合わせする要素です。
  */
 export const MenuPositioner: IMenuPositioner = function SuiMenuPositioner(props) {
-  const ctx = useMenuContext();
+  const ctx = useMenuPortalContext();
   const {
     // ルートメニューは上下優先、サブメニューは左右優先にします。
     side = ctx.depth === 1 ? "bottom" : "right",
@@ -113,12 +115,12 @@ export const MenuPositioner: IMenuPositioner = function SuiMenuPositioner(props)
 export { MenuPositioner as Positioner };
 
 export namespace Positioner {
-  export type State = MenuPositionerState;
+  export type State<TItem = any> = MenuPositionerState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = MenuPositionerProps.Render;
+    export type Render<TItem = any> = MenuPositionerProps.Render<TItem>;
 
     export type SuruUI = MenuPositionerProps.SuruUI;
 

@@ -2,17 +2,16 @@ import { PreviewCard } from "@base-ui/react/preview-card";
 import * as React from "react";
 
 import proxyRenderProps from "../../_proxy-render-props.js";
-import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
-import type { IComponent } from "../../types.js";
+import type { Override, IComponent } from "../../types.js";
 import { useHoverCardContext } from "../root/hover-card.root.context.js";
-import { HoverCardPortalContext } from "./hover-card.portal.context.js";
+import type { HoverCardPortalContext } from "./hover-card.portal.context.js";
 
 /**
  * {@link HoverCardPortal} が持つ状態です。
  */
-export type HoverCardPortalState = HoverCardPortalContext;
+export type HoverCardPortalState = Override<HoverCardPortalContext, PreviewCard.Portal.State>;
 
 export namespace HoverCardPortalProps {
   export type Render = RenderProps<HoverCardPortalState>;
@@ -68,16 +67,7 @@ export const HoverCardPortal: IHoverCardPortal = function SuiHoverCardPortal(pro
         (state) => ({ ...ctx, ...state }),
         {
           style,
-          render: (htmlProps, state) => (
-            <HoverCardPortalContext value={state}>
-              <RenderElement
-                state={state}
-                render={render}
-                htmlProps={htmlProps}
-                defaultTagName="div"
-              />
-            </HoverCardPortalContext>
-          ),
+          render,
           className: cn<HoverCardPortalState>(
             className,
             "sui_hover_card_portal",

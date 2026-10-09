@@ -1,9 +1,31 @@
+/* size・radius 修飾はポータルが持ち、パーツ要素での空宣言が継承を遮蔽するため、変数と代入をまとめてポータル起点の別ブロックにします。Arrow・Item と共有します。 */
 @layer sui.component {
-@scope (.sui_autocomplete_popup) to ([data-scope]) {
+@scope (.sui_autocomplete_portal) to ([data-scope]:not(.sui_autocomplete)) {
+
+/* 変数 */
+:scope {
+  --sui_autocomplete_popup-min_width: ;
+  --sui_autocomplete_popup-max_width: ;
+}
+
+/* 代入 */
+:scope {
+  .sui_autocomplete_popup {
+    --sui_autocomplete_popup-min_width: var(--anchor-width);
+    --sui_autocomplete_popup-max_width: var(--available-width);
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+@layer sui.component {
+@scope (.sui_autocomplete_popup) to ([data-scope]:not(.sui_autocomplete)) {
 
 /* 固定 */
 :scope {
   position: relative;
+  display: flex;
   pointer-events: auto;
 
   &::after {
@@ -13,29 +35,19 @@
     content: "";
     border-style: solid;
   }
-}
 
-/* 変数 */
-:scope {
-  --sui_autocomplete_popup-min_width: ;
-  --sui_autocomplete_popup-max_width: ;
-  --sui_autocomplete_popup-virtual_padding_block: ;
-  --sui_autocomplete_popup-font_family: ;
-  --sui_autocomplete_popup-font_size: ;
-  --sui_autocomplete_popup-font_weight: ;
-  --sui_autocomplete_popup-line_height: ;
-  --sui_autocomplete_popup-color: ;
-  --sui_autocomplete_popup-letter_spacing: ;
-  --sui_autocomplete_popup-background_color: ;
-  --sui_autocomplete_popup-border_color: ;
-  --sui_autocomplete_popup-border_width: ;
-  --sui_autocomplete_popup-border_radius: ;
-  --sui_autocomplete_popup-corner_shape: ;
-  --sui_autocomplete_popup-drop_shadow: ;
+  > .sui_autocomplete {
+    min-width: 0px;
+  }
+
+  > .sui_scroll_area {
+    min-width: 0px;
+  }
 }
 
 /* 可変 */
 :scope {
+  flex-direction: var(--_sui_autocomplete_popup-direction, column);
   min-width: var(--sui_autocomplete_popup-min_width);
   max-width: var(--sui_autocomplete_popup-max_width);
   font-family: var(--sui_autocomplete_popup-font_family);
@@ -57,10 +69,25 @@
   }
 }
 
+/* 変数 */
+:scope {
+  --sui_autocomplete_popup-virtual_padding_block: ;
+  --sui_autocomplete_popup-font_family: ;
+  --sui_autocomplete_popup-font_size: ;
+  --sui_autocomplete_popup-font_weight: ;
+  --sui_autocomplete_popup-line_height: ;
+  --sui_autocomplete_popup-color: ;
+  --sui_autocomplete_popup-letter_spacing: ;
+  --sui_autocomplete_popup-background_color: ;
+  --sui_autocomplete_popup-border_color: ;
+  --sui_autocomplete_popup-border_width: ;
+  --sui_autocomplete_popup-border_radius: ;
+  --sui_autocomplete_popup-corner_shape: ;
+  --sui_autocomplete_popup-drop_shadow: ;
+}
+
 /* 代入 */
 :scope {
-  --sui_autocomplete_popup-min_width: var(--anchor-width);
-  --sui_autocomplete_popup-max_width: var(--available-width);
   --sui_autocomplete_popup-font_family: var(--sui-font-sans);
   --sui_autocomplete_popup-font_size: var(--sui-text-oln-md-n-font_size);
   --sui_autocomplete_popup-font_weight: var(--sui-text-oln-md-n-font_weight);
@@ -68,7 +95,7 @@
   --sui_autocomplete_popup-color: var(--sui-canvas_text-1);
   --sui_autocomplete_popup-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   --sui_autocomplete_popup-background_color: --sui-light-dark(var(--sui-canvas-1), var(--sui-canvas-2));
-  --sui_autocomplete_popup-border_color: var(--sui-grey-naked-border-normal);
+  --sui_autocomplete_popup-border_color: var(--sui-border-1);
   --sui_autocomplete_popup-border_width: --sui-border_width(1);
   --sui_autocomplete_popup-drop_shadow: var(--sui-drop_shadow-md);
 
@@ -107,6 +134,32 @@
     --sui_autocomplete_popup-border_radius: --sui-corner_radius(3);
     --sui_autocomplete_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
+
+  &.sui_autocomplete_popup-input_position_top {
+    --_sui_autocomplete_popup-direction: column;
+  }
+
+  &.sui_autocomplete_popup-input_position_bottom {
+    --_sui_autocomplete_popup-direction: column-reverse;
+  }
+
+  &.sui_autocomplete_popup-input_position_start {
+    --_sui_autocomplete_popup-direction: column;
+  }
+
+  &.sui_autocomplete_popup-input_position_end {
+    --_sui_autocomplete_popup-direction: column-reverse;
+  }
+
+  &.sui_autocomplete_popup-side_top {
+    &.sui_autocomplete_popup-input_position_start {
+      --_sui_autocomplete_popup-direction: column-reverse;
+    }
+
+    &.sui_autocomplete_popup-input_position_end {
+      --_sui_autocomplete_popup-direction: column;
+    }
+  }
 }
 
 /* 変異 */
@@ -114,6 +167,10 @@
   &.sui_autocomplete_popup-outlined {
     --_sui_autocomplete_popup-border_color: var(--sui_autocomplete_popup-border_color);
     --_sui_autocomplete_popup-border_width: var(--sui_autocomplete_popup-border_width);
+  }
+
+  .sui_autocomplete_input {
+    --_sui_autocomplete_input-padding_inline: 0px;
   }
 }
 

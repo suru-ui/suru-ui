@@ -102,6 +102,12 @@ export const SidebarProvider: ISidebarProvider = function SuiSidebarProvider(pro
           "sui_sidebar_provider",
           (state) => state.state === "expanded" && "sui_sidebar_provider-expanded",
           (state) => state.state === "collapsed" && "sui_sidebar_provider-collapsed",
+          (state) => state.open && "sui_sidebar_provider-open",
+          (state) =>
+            state.collapsible !== undefined &&
+            `sui_sidebar_provider-collapsible_${state.collapsible}`,
+          (state) => state.side !== undefined && `sui_sidebar_provider-side_${state.side}`,
+          (state) => state.variant !== undefined && `sui_sidebar_provider-variant_${state.variant}`,
         ),
         "data-scope": dataScope,
       },

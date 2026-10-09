@@ -1,37 +1,14 @@
-import type { Tooltip } from "@base-ui/react/tooltip";
-import * as React from "react";
+import { TooltipContext, useTooltipContext } from "../root/tooltip.root.context.js";
 
-import { ContextMissingError } from "../../errors.js";
-import type { Override, IUseContext } from "../../types.js";
-import type { TooltipContext } from "../root/tooltip.root.context.js";
-
-/**
- * {@link TooltipPortal} が子パーツへ提供する状態です。
- */
-export type TooltipPortalContext = Readonly<Override<TooltipContext, Tooltip.Portal.State>>;
-
-/**
- * {@link TooltipPortal} が子パーツへ提供するコンテキストです。
- */
-export const TooltipPortalContext: React.Context<TooltipPortalContext | null> =
-  React.createContext<TooltipPortalContext | null>(null);
-
-export type IUseTooltipPortalContext = IUseContext<TooltipPortalContext>;
-
-/**
- * {@link TooltipPortalContext} を読み取るフックです。
- */
-export const useTooltipPortalContext: IUseTooltipPortalContext =
-  function useSuiTooltipPortalContext(optional): any {
-    const ctx = React.use(TooltipPortalContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "TooltipPortalContext",
-        providerName: "TooltipPortal",
-      });
-    }
-
-    return ctx;
-  };
-
-export { TooltipPortalContext as PortalContext, useTooltipPortalContext as usePortalContext };
+// TooltipPortal は Context を変更・拡張しないため、親の TooltipContext をそのまま使う。
+// Base UI の Tooltip.Portal.State を合成しない理由は2つある。
+// 1つ目は、Base UI の Portal.State が空であり、合成しても新たな状態が増えないため。
+// 2つ目は、Base UI の Portal が `render` をラッパー要素の描画にだけ使い、
+// `children` を別の createPortal 口から配置するため、`render` 内側の Provider では子パーツに届かず、
+// Portal 固有の Context を子へ透過できないため。
+export {
+  TooltipContext as PortalContext,
+  useTooltipContext as usePortalContext,
+  TooltipContext as TooltipPortalContext,
+  useTooltipContext as useTooltipPortalContext,
+};

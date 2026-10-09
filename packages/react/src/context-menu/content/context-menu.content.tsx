@@ -24,9 +24,9 @@ import { ContextMenuGroup } from "../group/context-menu.group.jsx";
 import { ContextMenuItem } from "../item/context-menu.item.jsx";
 import { ContextMenuLinkItem } from "../link-item/context-menu.link-item.jsx";
 import { ContextMenuPortal } from "../portal/context-menu.portal.jsx";
+import { usePositionerContext } from "../positioner/context-menu.positioner.context.js";
 import { ContextMenuPositioner } from "../positioner/context-menu.positioner.jsx";
 import { ContextMenuRadioGroup } from "../radio-group/context-menu.radio-group.jsx";
-import { useContextMenuContext } from "../root/context-menu.root.context.js";
 import type {
   ContextMenuRootItemObject,
   // oxlint-disable-next-line no-unused-vars JSDoc で使用
@@ -57,10 +57,10 @@ export interface IContextMenuContentItemRenderer<TItem = any> {
 /**
  * {@link ContextMenuContent} が持つ状態です。
  */
-export type ContextMenuContentState = ContextMenuContentContext;
+export type ContextMenuContentState<TItem = any> = ContextMenuContentContext<TItem>;
 
 export namespace ContextMenuContentProps {
-  export type Render = RenderProps<ContextMenuContentState>;
+  export type Render<TItem = any> = RenderProps<ContextMenuContentState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -90,7 +90,7 @@ export namespace ContextMenuContentProps {
 /**
  * {@link ContextMenuContent} に渡す props です。
  */
-export type ContextMenuContentProps<TItem = any> = ContextMenuContentProps.Render &
+export type ContextMenuContentProps<TItem = any> = ContextMenuContentProps.Render<TItem> &
   ContextMenuContentProps.SuruUI<TItem> &
   ContextMenuContentProps.BaseUI &
   ContextMenuContentProps.HTML;
@@ -108,7 +108,7 @@ export interface IContextMenuContent extends IComponent<ContextMenuContentProps>
 export const ContextMenuContent: IContextMenuContent = function SuiContextMenuContent(
   props: ContextMenuContentProps,
 ) {
-  const ctx = useContextMenuContext();
+  const ctx = usePositionerContext();
   const { style, render, children = defaultItemRenderer, className, ...otherProps } = props;
 
   return (
@@ -139,6 +139,7 @@ export const ContextMenuContent: IContextMenuContent = function SuiContextMenuCo
             (state) => `sui_context_menu_content-variant_${state.variant}`,
             (state) => state.outlined && "sui_context_menu_content-outlined",
             (state) => state.open && "sui_context_menu_content-open",
+            (state) => state.anchorHidden && "sui_context_menu_content-anchor_hidden",
             (state) => state.nested && "sui_context_menu_content-nested",
             (state) => state.instant && "sui_context_menu_content-instant",
             (state) => `sui_context_menu_content-side_${state.side.replaceAll("-", "_")}`,
@@ -155,12 +156,15 @@ export const ContextMenuContent: IContextMenuContent = function SuiContextMenuCo
 export { ContextMenuContent as Content };
 
 export namespace Content {
-  export type State = ContextMenuContentState;
+  export type State<TItem = any> = ContextMenuContentState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = ContextMenuContentProps.Render;
+    export type Render<TItem = any> = ContextMenuContentProps.Render<TItem>;
 
     export type SuruUI<TItem = any> = ContextMenuContentProps.SuruUI<TItem>;
 

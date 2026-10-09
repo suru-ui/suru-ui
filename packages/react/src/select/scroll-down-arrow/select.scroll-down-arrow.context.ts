@@ -3,13 +3,15 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { SelectContext } from "../root/select.root.context.js";
+import type { SelectContentContext } from "../content/select.content.context.js";
 
 /**
  * {@link SelectScrollDownArrow} が子パーツへ提供する状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectScrollDownArrowContext = Readonly<
-  Override<SelectContext, BaseSelect.ScrollDownArrow.State>
+export type SelectScrollDownArrowContext<TValue = any> = Readonly<
+  Override<SelectContentContext<TValue>, BaseSelect.ScrollDownArrow.State>
 >;
 
 /**

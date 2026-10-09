@@ -6,6 +6,7 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Alert from "../../alert/alert.parts.js";
+import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { ToastTitleContext } from "./toast.title.context.js";
 
@@ -67,20 +68,35 @@ export const ToastTitle: IToastTitle = function SuiToastTitle(props) {
         <Alert.Title
           {...mergeProps<typeof Alert.Title>([
             htmlProps,
-            proxyRenderProps(toastState, {
-              style,
-              render: (htmlProps, state) => (
-                <ToastTitleContext value={state}>
-                  <RenderElement
-                    state={state}
-                    render={render}
-                    htmlProps={htmlProps}
-                    defaultTagName="h2"
-                  />
-                </ToastTitleContext>
-              ),
-              className,
-            }),
+            proxyRenderProps<Alert.Title.State, ToastTitleState>(
+              (alertState) => ({ ...toastState, ...alertState }),
+              {
+                style,
+                render: (htmlProps, state) => (
+                  <ToastTitleContext value={state}>
+                    <RenderElement
+                      state={state}
+                      render={render}
+                      htmlProps={htmlProps}
+                      defaultTagName="h2"
+                    />
+                  </ToastTitleContext>
+                ),
+                className: cn<ToastTitleState>(
+                  className,
+                  "sui_toast_title",
+                  (state) => `sui_toast_title-actions_position_${state.actionsPosition}`,
+                  (state) =>
+                    `sui_toast_title-description_position_${state.descriptionPosition.replaceAll("-", "_")}`,
+                  (state) => `sui_toast_title-size_${state.size}`,
+                  (state) => `sui_toast_title-color_${state.color}`,
+                  (state) => `sui_toast_title-radius_${state.radius}`,
+                  (state) => `sui_toast_title-variant_${state.variant}`,
+                  (state) => state.outlined && "sui_toast_title-outlined",
+                  (state) => state.type !== undefined && `sui_toast_title-type_${state.type}`,
+                ),
+              },
+            ),
           ])}
         />
       )}

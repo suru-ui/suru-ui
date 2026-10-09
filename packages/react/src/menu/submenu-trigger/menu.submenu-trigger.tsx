@@ -33,11 +33,13 @@ export type MenuSubmenuTriggerVariant = Button.Root.Variant;
 
 /**
  * {@link MenuSubmenuTrigger} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuSubmenuTriggerState = MenuSubmenuTriggerContext;
+export type MenuSubmenuTriggerState<TItem = any> = MenuSubmenuTriggerContext<TItem>;
 
 export namespace MenuSubmenuTriggerProps {
-  export type Render = RenderProps<MenuSubmenuTriggerState>;
+  export type Render<TItem = any> = RenderProps<MenuSubmenuTriggerState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -202,12 +204,12 @@ export const MenuSubmenuTrigger: IMenuSubmenuTrigger = function SuiMenuSubmenuTr
 export { MenuSubmenuTrigger as SubmenuTrigger };
 
 export namespace SubmenuTrigger {
-  export type State = MenuSubmenuTriggerState;
+  export type State<TItem = any> = MenuSubmenuTriggerState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = MenuSubmenuTriggerProps.Render;
+    export type Render<TItem = any> = MenuSubmenuTriggerProps.Render<TItem>;
 
     export type SuruUI = MenuSubmenuTriggerProps.SuruUI;
 

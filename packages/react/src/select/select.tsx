@@ -179,8 +179,10 @@ export type SelectSlotProps<TValue = any> = {
 
 /**
  * {@link Select} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectState = SelectRootState;
+export type SelectState<TValue = any> = SelectRootState<TValue>;
 
 namespace SelectProps {
   export type Root<
@@ -395,7 +397,7 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
    *
    * @param item グループです。
    */
-  public getGroupLabelProps(item: SelectListItemObjectGroup): SelectGroupLabelProps | null {
+  public getGroupLabelProps(item: SelectListItemObjectGroup<TValue>): SelectGroupLabelProps | null {
     const { groupLabel: baseProps = {} } = this.slotProps;
     const { label } = item;
     if (isLikelyVisibleNode(label)) {
@@ -413,7 +415,9 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
    *
    * @param item グループです。
    */
-  public getGroupProps(item: SelectListItemObjectGroup): Omit<SelectGroupProps, "children"> {
+  public getGroupProps(
+    item: SelectListItemObjectGroup<TValue>,
+  ): Omit<SelectGroupProps, "children"> {
     const { group: baseProps = {} } = this.slotProps;
     const { items: _, label: __, ...otherGroupProps } = item;
 
@@ -425,7 +429,9 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
    *
    * @param item グループです。
    */
-  public getGroupedItems(item: SelectListItemObjectGroup): SelectListItemObjectGroup["items"] {
+  public getGroupedItems(
+    item: SelectListItemObjectGroup<TValue>,
+  ): SelectListItemObjectGroup<TValue>["items"] {
     return item.items;
   }
 
@@ -676,7 +682,7 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Select {
-  export type State = SelectState;
+  export type State<TValue = any> = SelectState<TValue>;
 
   export type Props<
     TValue = any,

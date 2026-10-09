@@ -7,8 +7,12 @@ import type { MenuContext } from "../root/menu.root.context.js";
 
 /**
  * {@link MenuBackdrop} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuBackdropContext = Readonly<Override<MenuContext, Menu.Backdrop.State>>;
+export type MenuBackdropContext<TItem = any> = Readonly<
+  Override<MenuContext<TItem>, Menu.Backdrop.State>
+>;
 
 /**
  * {@link MenuBackdrop} が子パーツへ提供するコンテキストです。

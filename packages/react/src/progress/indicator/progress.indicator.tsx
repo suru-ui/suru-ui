@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useProgressContext } from "../root/progress.root.context.js";
+import { useProgressTrackContext } from "../track/progress.track.context.js";
 import { ProgressIndicatorContext } from "./progress.indicator.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IProgressIndicator = IComponent<ProgressIndicatorProps>;
  * 進捗の現在値を示すインジケーターコンポーネントです。
  */
 export const ProgressIndicator: IProgressIndicator = function SuiProgressIndicator(props) {
-  const ctx = useProgressContext();
+  const ctx = useProgressTrackContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

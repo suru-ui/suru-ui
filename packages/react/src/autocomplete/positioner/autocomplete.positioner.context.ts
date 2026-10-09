@@ -3,13 +3,15 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { AutocompleteContext } from "../root/autocomplete.root.context.js";
+import type { PortalContext } from "../portal/autocomplete.portal.context.js";
 
 /**
  * {@link AutocompletePositioner} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompletePositionerContext = Readonly<
-  Override<AutocompleteContext, Autocomplete.Positioner.State>
+export type AutocompletePositionerContext<TItem = any> = Readonly<
+  Override<PortalContext<TItem>, Autocomplete.Positioner.State>
 >;
 
 /**

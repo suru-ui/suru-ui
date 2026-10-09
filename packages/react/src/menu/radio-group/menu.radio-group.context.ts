@@ -7,8 +7,12 @@ import type { MenuContext } from "../root/menu.root.context.js";
 
 /**
  * {@link MenuRadioGroup} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuRadioGroupContext = Readonly<Override<MenuContext, Menu.RadioGroup.State>>;
+export type MenuRadioGroupContext<TItem = any> = Readonly<
+  Override<MenuContext<TItem>, Menu.RadioGroup.State>
+>;
 
 /**
  * {@link MenuRadioGroup} が子パーツへ提供するコンテキストです。

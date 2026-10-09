@@ -7,9 +7,11 @@ import type { AutocompleteContext } from "../root/autocomplete.root.context.js";
 
 /**
  * {@link AutocompleteInputGroup} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteInputGroupContext = Readonly<
-  Override<AutocompleteContext, Autocomplete.InputGroup.State>
+export type AutocompleteInputGroupContext<TItem = any> = Readonly<
+  Override<AutocompleteContext<TItem>, Autocomplete.InputGroup.State>
 >;
 
 /**

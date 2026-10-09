@@ -2,6 +2,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
+import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 import { ButtonCircularProgressContext } from "./button.circular-progress.context.js";
 
@@ -76,7 +77,10 @@ export const ButtonCircularProgress: IButtonCircularProgress = function SuiButto
         xmlns,
         height,
         viewBox,
-        className: "sui_button_circular_progress",
+        className: cn<ButtonCircularProgressState>(
+          "sui_button_circular_progress",
+          (state) => state.indeterminate && "sui_button_circular_progress-indeterminate",
+        ),
       },
     ],
     state: ctx,

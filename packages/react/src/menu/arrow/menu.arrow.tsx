@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useMenuContext } from "../root/menu.root.context.js";
+import { useContentContext } from "../content/menu.content.context.js";
 import { MenuArrowContext } from "./menu.arrow.context.js";
 
 /**
  * {@link MenuArrow} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuArrowState = MenuArrowContext;
+export type MenuArrowState<TItem = any> = MenuArrowContext<TItem>;
 
 export namespace MenuArrowProps {
-  export type Render = RenderProps<MenuArrowState>;
+  export type Render<TItem = any> = RenderProps<MenuArrowState<TItem>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type IMenuArrow = IComponent<MenuArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const MenuArrow: IMenuArrow = function SuiMenuArrow(props) {
-  const ctx = useMenuContext();
+  const ctx = useContentContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -75,6 +77,12 @@ export const MenuArrow: IMenuArrow = function SuiMenuArrow(props) {
           (state) => `sui_menu_arrow-variant_${state.variant}`,
           (state) => state.outlined && "sui_menu_arrow-outlined",
           (state) => state.open && "sui_menu_arrow-open",
+          (state) => state.anchorHidden && "sui_menu_arrow-anchor_hidden",
+          (state) => state.nested && "sui_menu_arrow-nested",
+          (state) => state.instant && "sui_menu_arrow-instant",
+          (state) =>
+            state.transitionStatus !== undefined &&
+            `sui_menu_arrow-transition_status_${state.transitionStatus}`,
           (state) => state.uncentered && "sui_menu_arrow-uncentered",
           (state) => `sui_menu_arrow-side_${state.side.replaceAll("-", "_")}`,
           (state) => `sui_menu_arrow-align_${state.align}`,
@@ -87,12 +95,12 @@ export const MenuArrow: IMenuArrow = function SuiMenuArrow(props) {
 export { MenuArrow as Arrow };
 
 export namespace Arrow {
-  export type State = MenuArrowState;
+  export type State<TItem = any> = MenuArrowState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = MenuArrowProps.Render;
+    export type Render<TItem = any> = MenuArrowProps.Render<TItem>;
 
     export type SuruUI = MenuArrowProps.SuruUI;
 

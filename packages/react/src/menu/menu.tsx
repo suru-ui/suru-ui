@@ -96,93 +96,129 @@ export type MenuVariant = MenuRootVariant;
 
 /**
  * {@link Menu} の各パーツに渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
 export type MenuSlotProps = {
   /**
    * {@link MenuBackdrop} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly backdrop?: Omit<MenuBackdropProps, "children"> | undefined;
 
   /**
    * {@link MenuCheckboxItem} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly checkboxItem?: Omit<MenuCheckboxItemProps, "children"> | undefined;
 
   /**
    * {@link MenuCheckboxItemIndicator} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly checkboxItemIndicator?: Omit<MenuCheckboxItemIndicatorProps, "children"> | undefined;
 
   /**
    * {@link MenuGroup} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly group?: Omit<MenuGroupProps, "children"> | undefined;
 
   /**
    * {@link MenuGroupLabel} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly groupLabel?: Omit<MenuGroupLabelProps, "children"> | undefined;
 
   /**
    * {@link MenuItem} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly item?: Omit<MenuItemProps, "children"> | undefined;
 
   /**
    * {@link MenuLinkItem} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly linkItem?: Omit<MenuLinkItemProps, "children"> | undefined;
 
   /**
    * {@link MenuPortal} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly portal?: Omit<MenuPortalProps, "children"> | undefined;
 
   /**
    * {@link MenuPositioner} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly positioner?: Omit<MenuPositionerProps, "children"> | undefined;
 
   /**
    * {@link MenuRadioGroup} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly radioGroup?: Omit<MenuRadioGroupProps, "children" | "items"> | undefined;
 
   /**
    * {@link MenuRadioItem} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly radioItem?: Omit<MenuRadioItemProps, "children" | "value"> | undefined;
 
   /**
    * {@link MenuRadioItemIndicator} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly radioItemIndicator?: Omit<MenuRadioItemIndicatorProps, "children"> | undefined;
 
   /**
    * {@link MenuSeparator} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly separator?: MenuSeparatorProps | undefined;
 
   /**
    * {@link MenuSubmenuRoot} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly submenuRoot?: Omit<MenuSubmenuRootProps, "children"> | undefined;
 
   /**
    * {@link MenuSubmenuTrigger} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly submenuTrigger?: Omit<MenuSubmenuTriggerProps, "children"> | undefined;
 
   /**
    * {@link MenuTrigger} に渡す props です。
+   *
+   * @template TItem 項目の型です。
    */
   readonly trigger?: Omit<MenuTriggerProps, "children"> | undefined;
 };
 
 /**
  * {@link Menu} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuState = MenuRootState;
+export type MenuState<TItem = any> = MenuRootState<TItem>;
 
 namespace MenuProps {
   export type Content = Omit<MenuContentProps, keyof Menu | keyof Root>;
@@ -754,13 +790,13 @@ export const Menu: IMenu = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Menu {
-  export type State = MenuState;
+  export type State<TItem = any> = MenuState<TItem>;
 
   export type Props<TItem = any> = MenuProps<TItem>;
 
   export type SlotProps = MenuSlotProps;
 
-  export type Context = MenuContext;
+  export type Context<TItem = any> = MenuContext<TItem>;
 
   export type Actions = MenuActions;
 

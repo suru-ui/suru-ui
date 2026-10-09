@@ -3,13 +3,15 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { SelectContext } from "../root/select.root.context.js";
+import type { SelectGroupContext } from "../group/select.group.context.js";
 
 /**
  * {@link SelectGroupLabel} が子パーツへ提供する状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectGroupLabelContext = Readonly<
-  Override<SelectContext, BaseSelect.GroupLabel.State>
+export type SelectGroupLabelContext<TValue = any> = Readonly<
+  Override<SelectGroupContext<TValue>, BaseSelect.GroupLabel.State>
 >;
 
 /**

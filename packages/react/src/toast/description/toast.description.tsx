@@ -6,6 +6,7 @@ import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Alert from "../../alert/alert.parts.js";
+import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { ToastDescriptionContext } from "./toast.description.context.js";
 
@@ -61,20 +62,35 @@ export const ToastDescription: IToastDescription = function SuiToastDescription(
         <Alert.Description
           {...mergeProps<typeof Alert.Description>([
             htmlProps,
-            proxyRenderProps(toastState, {
-              style,
-              render: (htmlProps, state) => (
-                <ToastDescriptionContext value={state}>
-                  <RenderElement
-                    state={state}
-                    render={render}
-                    htmlProps={htmlProps}
-                    defaultTagName="p"
-                  />
-                </ToastDescriptionContext>
-              ),
-              className,
-            }),
+            proxyRenderProps<Alert.Description.State, ToastDescriptionState>(
+              (alertState) => ({ ...toastState, ...alertState }),
+              {
+                style,
+                render: (htmlProps, state) => (
+                  <ToastDescriptionContext value={state}>
+                    <RenderElement
+                      state={state}
+                      render={render}
+                      htmlProps={htmlProps}
+                      defaultTagName="p"
+                    />
+                  </ToastDescriptionContext>
+                ),
+                className: cn<ToastDescriptionState>(
+                  className,
+                  "sui_toast_description",
+                  (state) => `sui_toast_description-actions_position_${state.actionsPosition}`,
+                  (state) =>
+                    `sui_toast_description-description_position_${state.descriptionPosition.replaceAll("-", "_")}`,
+                  (state) => `sui_toast_description-size_${state.size}`,
+                  (state) => `sui_toast_description-color_${state.color}`,
+                  (state) => `sui_toast_description-radius_${state.radius}`,
+                  (state) => `sui_toast_description-variant_${state.variant}`,
+                  (state) => state.outlined && "sui_toast_description-outlined",
+                  (state) => state.type !== undefined && `sui_toast_description-type_${state.type}`,
+                ),
+              },
+            ),
           ])}
         />
       )}

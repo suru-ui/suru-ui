@@ -7,8 +7,12 @@ import type { MenuContext } from "../root/menu.root.context.js";
 
 /**
  * {@link MenuTrigger} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuTriggerContext = Readonly<Override<MenuContext, Menu.Trigger.State>>;
+export type MenuTriggerContext<TItem = any> = Readonly<
+  Override<MenuContext<TItem>, Menu.Trigger.State>
+>;
 
 /**
  * {@link MenuTrigger} が子パーツへ提供するコンテキストです。

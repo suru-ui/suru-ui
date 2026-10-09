@@ -112,6 +112,8 @@ export type AutocompleteLabeledItemObject<TItem = any> = AutocompleteRootLabeled
 
 /**
  * {@link Autocomplete} の各パーツに渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
 export type AutocompleteSlotProps<TItem = any> = {
   /**
@@ -227,8 +229,10 @@ export type AutocompleteSlotProps<TItem = any> = {
 
 /**
  * {@link Autocomplete} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteState = AutocompleteRootState;
+export type AutocompleteState<TItem = any> = AutocompleteRootState<TItem>;
 
 namespace AutocompleteProps {
   export type Autocomplete<TItem = any> = Pick<AutocompleteListProps<TItem>, "children"> & {
@@ -460,7 +464,7 @@ export class AutocompleteAPI<TItem = any> {
         );
       }
 
-      case isLabeledItem(item):
+      case isLabeledItem<AutocompleteRootLabeledItemObject<TItem>>(item):
       case isPrimitiveItem(item):
       case !isReactNode(item):
         return (
@@ -910,15 +914,15 @@ export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Autocomplete {
-  export type State = AutocompleteState;
+  export type State<TItem = any> = AutocompleteState<TItem>;
 
   export type Props<TItem = any> = AutocompleteProps<TItem>;
 
   export type SlotProps<TItem = any> = AutocompleteSlotProps<TItem>;
 
-  export type Context = AutocompleteContext;
+  export type Context<TItem = any> = AutocompleteContext<TItem>;
 
-  export type ItemContext = AutocompleteItemContext;
+  export type ItemContext<TValue = any> = AutocompleteItemContext<TValue>;
 
   export type Actions = AutocompleteActions;
 

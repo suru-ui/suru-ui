@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useTooltipContext } from "../root/tooltip.root.context.js";
+import { useTooltipContentContext } from "../content/tooltip.content.context.js";
 import { TooltipArrowContext } from "./tooltip.arrow.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type ITooltipArrow = IComponent<TooltipArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const TooltipArrow: ITooltipArrow = function SuiTooltipArrow(props) {
-  const ctx = useTooltipContext();
+  const ctx = useTooltipContentContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -80,6 +80,10 @@ export const TooltipArrow: ITooltipArrow = function SuiTooltipArrow(props) {
             (state) => state.instant && "sui_tooltip_arrow-instant",
             (state) => state.uncentered && "sui_tooltip_arrow-uncentered",
             (state) => `sui_tooltip_arrow-align_${state.align}`,
+            (state) => state.anchorHidden && "sui_tooltip_arrow-anchor_hidden",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_tooltip_arrow-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

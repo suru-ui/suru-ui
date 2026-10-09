@@ -3,13 +3,15 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { ContextMenuContext } from "../root/context-menu.root.context.js";
+import type { PositionerContext } from "../positioner/context-menu.positioner.context.js";
 
 /**
  * {@link ContextMenuContent} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuContentContext = Readonly<
-  Override<ContextMenuContext, ContextMenu.Popup.State>
+export type ContextMenuContentContext<TItem = any> = Readonly<
+  Override<PositionerContext<TItem>, ContextMenu.Popup.State>
 >;
 
 /**

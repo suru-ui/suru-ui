@@ -4,13 +4,19 @@ import * as React from "react";
 import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { SelectContext } from "../root/select.root.context.js";
+import type { SelectGroupContext } from "../group/select.group.context.js";
+import type { SelectListContext } from "../list/select.list.context.js";
 
 /**
  * {@link SelectItem} が子パーツへ提供する状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectItemContext = Readonly<
-  Override<SelectContext, Override<Button.Root.State, BaseSelect.Item.State>>
+export type SelectItemContext<TValue = any> = Readonly<
+  Override<
+    SelectListContext<TValue> & SelectGroupContext<TValue>,
+    Override<Button.Root.State, BaseSelect.Item.State>
+  >
 >;
 
 /**

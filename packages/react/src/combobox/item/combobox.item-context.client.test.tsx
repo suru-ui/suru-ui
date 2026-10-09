@@ -15,7 +15,7 @@ describe("useComboboxItemContext", () => {
 
     // 実行
     const screen = await render(
-      <ComboboxItemContext value={{ value: "りんご" }}>
+      <ComboboxItemContext value={{ value: "りんご" } as ComboboxItemContext}>
         <Probe />
       </ComboboxItemContext>,
     );

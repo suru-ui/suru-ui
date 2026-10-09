@@ -34,7 +34,7 @@ export interface IAutocompleteCollectionItemRenderer<TItem = any> {
 /**
  * {@link AutocompleteCollection} の状態です。
  */
-export type AutocompleteCollectionState = {};
+export type AutocompleteCollectionState = Autocomplete.Collection.State;
 
 export namespace AutocompleteCollectionProps {
   export type Render = {};
@@ -69,6 +69,8 @@ export namespace AutocompleteCollectionProps {
 
 /**
  * {@link AutocompleteCollection} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
 export type AutocompleteCollectionProps<TItem = any> = AutocompleteCollectionProps.Render &
   AutocompleteCollectionProps.SuruUI &

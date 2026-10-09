@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContext } from "../root/select.root.context.js";
+import { useSelectContentContext } from "../content/select.content.context.js";
 import { SelectArrowContext } from "./select.arrow.context.js";
 
 /**
  * {@link SelectArrow} が持つ状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type SelectArrowState = SelectArrowContext;
+export type SelectArrowState<TValue = any> = SelectArrowContext<TValue>;
 
 export namespace SelectArrowProps {
-  export type Render = RenderProps<SelectArrowState>;
+  export type Render<TValue = any> = RenderProps<SelectArrowState<TValue>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type ISelectArrow = IComponent<SelectArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const SelectArrow: ISelectArrow = function SuiSelectArrow(props) {
-  const ctx = useSelectContext();
+  const ctx = useSelectContentContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -76,7 +78,11 @@ export const SelectArrow: ISelectArrow = function SuiSelectArrow(props) {
             (state) => `sui_select_arrow-radius_${state.radius}`,
             (state) => `sui_select_arrow-variant_${state.variant}`,
             (state) => state.outlined && "sui_select_arrow-outlined",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_select_arrow-transition_status_${state.transitionStatus}`,
             (state) => state.open && "sui_select_arrow-open",
+            (state) => state.anchorHidden && "sui_select_arrow-anchor_hidden",
             (state) => state.uncentered && "sui_select_arrow-uncentered",
             (state) => `sui_select_arrow-side_${state.side.replaceAll("-", "_")}`,
             (state) => `sui_select_arrow-align_${state.align}`,
@@ -90,12 +96,12 @@ export const SelectArrow: ISelectArrow = function SuiSelectArrow(props) {
 export { SelectArrow as Arrow };
 
 export namespace Arrow {
-  export type State = SelectArrowState;
+  export type State<TValue = any> = SelectArrowState<TValue>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = SelectArrowProps.Render;
+    export type Render<TValue = any> = SelectArrowProps.Render<TValue>;
 
     export type SuruUI = SelectArrowProps.SuruUI;
 

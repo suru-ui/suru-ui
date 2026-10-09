@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useMenuContext } from "../root/menu.root.context.js";
+import { useGroupContext } from "../group/menu.group.context.js";
 import { MenuGroupLabelContext } from "./menu.group-label.context.js";
 
 /**
  * {@link MenuGroupLabel} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuGroupLabelState = MenuGroupLabelContext;
+export type MenuGroupLabelState<TItem = any> = MenuGroupLabelContext<TItem>;
 
 export namespace MenuGroupLabelProps {
-  export type Render = RenderProps<MenuGroupLabelState>;
+  export type Render<TItem = any> = RenderProps<MenuGroupLabelState<TItem>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type IMenuGroupLabel = IComponent<MenuGroupLabelProps>;
  * グループに自動的に対応付けられるラベル要素です。
  */
 export const MenuGroupLabel: IMenuGroupLabel = function SuiMenuGroupLabel(props) {
-  const ctx = useMenuContext();
+  const ctx = useGroupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -76,6 +78,15 @@ export const MenuGroupLabel: IMenuGroupLabel = function SuiMenuGroupLabel(props)
             (state) => `sui_menu_group_label-radius_${state.radius}`,
             (state) => `sui_menu_group_label-variant_${state.variant}`,
             (state) => state.outlined && "sui_menu_group_label-outlined",
+            (state) => state.open && "sui_menu_group_label-open",
+            (state) => state.anchorHidden && "sui_menu_group_label-anchor_hidden",
+            (state) => state.nested && "sui_menu_group_label-nested",
+            (state) => state.instant && "sui_menu_group_label-instant",
+            (state) => `sui_menu_group_label-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_menu_group_label-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_menu_group_label-transition_status_${state.transitionStatus}`,
           ),
         },
       )}
@@ -86,12 +97,12 @@ export const MenuGroupLabel: IMenuGroupLabel = function SuiMenuGroupLabel(props)
 export { MenuGroupLabel as GroupLabel };
 
 export namespace GroupLabel {
-  export type State = MenuGroupLabelState;
+  export type State<TItem = any> = MenuGroupLabelState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = MenuGroupLabelProps.Render;
+    export type Render<TItem = any> = MenuGroupLabelProps.Render<TItem>;
 
     export type SuruUI = MenuGroupLabelProps.SuruUI;
 

@@ -8,7 +8,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useNumberFieldContext } from "../root/number-field.root.context.js";
+import { useNumberFieldAddonContext } from "../addon/number-field.addon.context.js";
 import { NumberFieldIncrementContext } from "./number-field.increment.context.js";
 
 /**
@@ -53,7 +53,7 @@ export type INumberFieldIncrement = IComponent<NumberFieldIncrementProps>;
  * 値を増やすボタンです。
  */
 export const NumberFieldIncrement: INumberFieldIncrement = function SuiNumberFieldIncrement(props) {
-  const ctx = useNumberFieldContext();
+  const ctx = useNumberFieldAddonContext();
   const {
     style,
     render,

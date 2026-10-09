@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useMenuContext } from "../root/menu.root.context.js";
+import { useContentContext } from "../content/menu.content.context.js";
 import { MenuGroupContext } from "./menu.group.context.js";
 
 /**
  * {@link MenuGroup} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuGroupState = MenuGroupContext;
+export type MenuGroupState<TItem = any> = MenuGroupContext<TItem>;
 
 export namespace MenuGroupProps {
-  export type Render = RenderProps<MenuGroupState>;
+  export type Render<TItem = any> = RenderProps<MenuGroupState<TItem>>;
 
   export type SuruUI = {};
 
@@ -49,7 +51,7 @@ export type IMenuGroup = IComponent<MenuGroupProps>;
  * 関連するメニュー項目をまとめるグループ要素です。
  */
 export const MenuGroup: IMenuGroup = function SuiMenuGroup(props) {
-  const ctx = useMenuContext();
+  const ctx = useContentContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -74,6 +76,15 @@ export const MenuGroup: IMenuGroup = function SuiMenuGroup(props) {
           (state) => `sui_menu_group-radius_${state.radius}`,
           (state) => `sui_menu_group-variant_${state.variant}`,
           (state) => state.outlined && "sui_menu_group-outlined",
+          (state) => state.open && "sui_menu_group-open",
+          (state) => state.anchorHidden && "sui_menu_group-anchor_hidden",
+          (state) => state.nested && "sui_menu_group-nested",
+          (state) => state.instant && "sui_menu_group-instant",
+          (state) => `sui_menu_group-side_${state.side.replaceAll("-", "_")}`,
+          (state) => `sui_menu_group-align_${state.align}`,
+          (state) =>
+            state.transitionStatus !== undefined &&
+            `sui_menu_group-transition_status_${state.transitionStatus}`,
         ),
       })}
     />
@@ -83,12 +94,12 @@ export const MenuGroup: IMenuGroup = function SuiMenuGroup(props) {
 export { MenuGroup as Group };
 
 export namespace Group {
-  export type State = MenuGroupState;
+  export type State<TItem = any> = MenuGroupState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = MenuGroupProps.Render;
+    export type Render<TItem = any> = MenuGroupProps.Render<TItem>;
 
     export type SuruUI = MenuGroupProps.SuruUI;
 

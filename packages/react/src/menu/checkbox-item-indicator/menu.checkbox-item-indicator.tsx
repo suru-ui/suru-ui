@@ -11,11 +11,13 @@ import { MenuCheckboxItemIndicatorContext } from "./menu.checkbox-item-indicator
 
 /**
  * {@link MenuCheckboxItemIndicator} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuCheckboxItemIndicatorState = MenuCheckboxItemIndicatorContext;
+export type MenuCheckboxItemIndicatorState<TItem = any> = MenuCheckboxItemIndicatorContext<TItem>;
 
 export namespace MenuCheckboxItemIndicatorProps {
-  export type Render = RenderProps<MenuCheckboxItemIndicatorState>;
+  export type Render<TItem = any> = RenderProps<MenuCheckboxItemIndicatorState<TItem>>;
 
   export type SuruUI = {};
 
@@ -94,12 +96,12 @@ export const MenuCheckboxItemIndicator: IMenuCheckboxItemIndicator =
 export { MenuCheckboxItemIndicator as CheckboxItemIndicator };
 
 export namespace CheckboxItemIndicator {
-  export type State = MenuCheckboxItemIndicatorState;
+  export type State<TItem = any> = MenuCheckboxItemIndicatorState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = MenuCheckboxItemIndicatorProps.Render;
+    export type Render<TItem = any> = MenuCheckboxItemIndicatorProps.Render<TItem>;
 
     export type SuruUI = MenuCheckboxItemIndicatorProps.SuruUI;
 

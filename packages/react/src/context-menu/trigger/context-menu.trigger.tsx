@@ -11,8 +11,10 @@ import { ContextMenuTriggerContext } from "./context-menu.trigger.context.js";
 
 /**
  * {@link ContextMenuTrigger} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuTriggerState = ContextMenuTriggerContext;
+export type ContextMenuTriggerState<TItem = any> = ContextMenuTriggerContext<TItem>;
 
 export namespace ContextMenuTriggerProps {
   export type Render = Omit<RenderProps<ContextMenuTriggerState>, "render">;
@@ -96,7 +98,7 @@ export const ContextMenuTrigger: IContextMenuTrigger = function SuiContextMenuTr
 export { ContextMenuTrigger as Trigger };
 
 export namespace Trigger {
-  export type State = ContextMenuTriggerState;
+  export type State<TItem = any> = ContextMenuTriggerState<TItem>;
 
   export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
 

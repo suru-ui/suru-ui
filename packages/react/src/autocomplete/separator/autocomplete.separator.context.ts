@@ -3,14 +3,20 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { AutocompleteContext } from "../root/autocomplete.root.context.js";
+import type { GroupContext } from "../group/autocomplete.group.context.js";
+import type { ListContext } from "../list/autocomplete.list.context.js";
+
+type ItemContext<TParentContext> = Readonly<Override<TParentContext, Autocomplete.Separator.State>>;
 
 /**
  * {@link AutocompleteSeparator} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteSeparatorContext = Readonly<
-  Override<AutocompleteContext, Autocomplete.Separator.State>
->;
+export type AutocompleteSeparatorContext<TItem = any> =
+  // | ItemContext<ListContext>
+  // | ItemContext<GroupContext>
+  ItemContext<ListContext<TItem> & GroupContext<TItem>>;
 
 /**
  * {@link AutocompleteSeparator} が子パーツへ提供するコンテキストです。

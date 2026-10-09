@@ -9,15 +9,18 @@ import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 import { useAutocompleteGroupContext } from "../group/autocomplete.group.context.js";
+import { useAutocompleteListContext } from "../list/autocomplete.list.context.js";
 import { AutocompleteSeparatorContext } from "./autocomplete.separator.context.js";
 
 /**
  * {@link AutocompleteSeparator} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type AutocompleteSeparatorState = AutocompleteSeparatorContext;
+export type AutocompleteSeparatorState<TItem = any> = AutocompleteSeparatorContext<TItem>;
 
 export namespace AutocompleteSeparatorProps {
-  export type Render = RenderProps<AutocompleteSeparatorState>;
+  export type Render<TItem = any> = RenderProps<AutocompleteSeparatorState<TItem>>;
 
   export type SuruUI = {};
 
@@ -53,7 +56,9 @@ export type IAutocompleteSeparator = IComponent<AutocompleteSeparatorProps>;
 export const AutocompleteSeparator: IAutocompleteSeparator = function SuiAutocompleteSeparator(
   props,
 ) {
-  const ctx = useAutocompleteGroupContext();
+  const listCtx = useAutocompleteListContext();
+  const groupCtx = useAutocompleteGroupContext(true);
+  const ctx = groupCtx || listCtx;
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -81,6 +86,14 @@ export const AutocompleteSeparator: IAutocompleteSeparator = function SuiAutocom
             (state) => `sui_autocomplete_separator-radius_${state.radius}`,
             (state) => `sui_autocomplete_separator-variant_${state.variant}`,
             (state) => state.outlined && "sui_autocomplete_separator-outlined",
+            (state) => state.open && "sui_autocomplete_separator-open",
+            (state) => state.empty && "sui_autocomplete_separator-empty",
+            (state) => state.anchorHidden && "sui_autocomplete_separator-anchor_hidden",
+            (state) => `sui_autocomplete_separator-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_autocomplete_separator-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_autocomplete_separator-transition_status_${state.transitionStatus}`,
             (state) => `sui_autocomplete_separator-orientation_${state.orientation}`,
           ),
         },
@@ -92,12 +105,12 @@ export const AutocompleteSeparator: IAutocompleteSeparator = function SuiAutocom
 export { AutocompleteSeparator as Separator };
 
 export namespace Separator {
-  export type State = AutocompleteSeparatorState;
+  export type State<TItem = any> = AutocompleteSeparatorState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompleteSeparatorProps.Render;
+    export type Render<TItem = any> = AutocompleteSeparatorProps.Render<TItem>;
 
     export type SuruUI = AutocompleteSeparatorProps.SuruUI;
 

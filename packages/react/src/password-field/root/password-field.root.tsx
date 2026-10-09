@@ -215,6 +215,7 @@ export const PasswordFieldRoot: IPasswordFieldRoot = function SuiPasswordFieldRo
               (state) => `sui_password_field-radius_${state.radius}`,
               (state) => `sui_password_field-variant_${state.variant}`,
               (state) => state.outlined && "sui_password_field-outlined",
+              (state) => state.visible && "sui_password_field-visible",
             ),
           },
         )}

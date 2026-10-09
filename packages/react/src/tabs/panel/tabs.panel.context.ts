@@ -7,8 +7,12 @@ import type { TabsContext } from "../root/tabs.root.context.js";
 
 /**
  * {@link TabsPanel} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type TabsPanelContext = Readonly<Override<TabsContext, BaseTabs.Panel.State>>;
+export type TabsPanelContext<TItem = any> = Readonly<
+  Override<TabsContext<TItem>, BaseTabs.Panel.State>
+>;
 
 /**
  * {@link TabsPanel} が子パーツへ提供するコンテキストです。

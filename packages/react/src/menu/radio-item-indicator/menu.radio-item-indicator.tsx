@@ -11,11 +11,13 @@ import { MenuRadioItemIndicatorContext } from "./menu.radio-item-indicator.conte
 
 /**
  * {@link MenuRadioItemIndicator} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type MenuRadioItemIndicatorState = MenuRadioItemIndicatorContext;
+export type MenuRadioItemIndicatorState<TItem = any> = MenuRadioItemIndicatorContext<TItem>;
 
 export namespace MenuRadioItemIndicatorProps {
-  export type Render = RenderProps<MenuRadioItemIndicatorState>;
+  export type Render<TItem = any> = RenderProps<MenuRadioItemIndicatorState<TItem>>;
 
   export type SuruUI = {};
 
@@ -96,12 +98,12 @@ export const MenuRadioItemIndicator: IMenuRadioItemIndicator = function SuiMenuR
 export { MenuRadioItemIndicator as RadioItemIndicator };
 
 export namespace RadioItemIndicator {
-  export type State = MenuRadioItemIndicatorState;
+  export type State<TItem = any> = MenuRadioItemIndicatorState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = MenuRadioItemIndicatorProps.Render;
+    export type Render<TItem = any> = MenuRadioItemIndicatorProps.Render<TItem>;
 
     export type SuruUI = MenuRadioItemIndicatorProps.SuruUI;
 

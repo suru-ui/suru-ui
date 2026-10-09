@@ -6,16 +6,18 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useContextMenuContext } from "../root/context-menu.root.context.js";
+import { useContextMenuPortalContext } from "../portal/context-menu.portal.context.js";
 import { ContextMenuPositionerContext } from "./context-menu.positioner.context.js";
 
 /**
  * {@link ContextMenuPositioner} が持つ状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ContextMenuPositionerState = ContextMenuPositionerContext;
+export type ContextMenuPositionerState<TItem = any> = ContextMenuPositionerContext<TItem>;
 
 export namespace ContextMenuPositionerProps {
-  export type Render = RenderProps<ContextMenuPositionerState>;
+  export type Render<TItem = any> = RenderProps<ContextMenuPositionerState<TItem>>;
 
   export type SuruUI = {};
 
@@ -62,7 +64,7 @@ export type IContextMenuPositioner = IComponent<ContextMenuPositionerProps>;
 export const ContextMenuPositioner: IContextMenuPositioner = function SuiContextMenuPositioner(
   props,
 ) {
-  const ctx = useContextMenuContext();
+  const ctx = useContextMenuPortalContext();
   const {
     // ルートメニューは上下優先、サブメニューは左右優先にします。
     side = ctx.depth === 1 ? "bottom" : "right",
@@ -115,12 +117,12 @@ export const ContextMenuPositioner: IContextMenuPositioner = function SuiContext
 export { ContextMenuPositioner as Positioner };
 
 export namespace Positioner {
-  export type State = ContextMenuPositionerState;
+  export type State<TItem = any> = ContextMenuPositionerState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ContextMenuPositionerProps.Render;
+    export type Render<TItem = any> = ContextMenuPositionerProps.Render<TItem>;
 
     export type SuruUI = ContextMenuPositionerProps.SuruUI;
 
