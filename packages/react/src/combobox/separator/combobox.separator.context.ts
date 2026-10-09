@@ -3,14 +3,18 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { ComboboxContext } from "../root/combobox.root.context.js";
+import type { GroupContext } from "../group/combobox.group.context.js";
+import type { ListContext } from "../list/combobox.list.context.js";
+
+type ItemContext<TParentContext> = Readonly<Override<TParentContext, Combobox.Separator.State>>;
 
 /**
  * {@link ComboboxSeparator} が子パーツへ提供する状態です。
  */
-export type ComboboxSeparatorContext = Readonly<
-  Override<ComboboxContext, Combobox.Separator.State>
->;
+export type ComboboxSeparatorContext =
+  // | ItemContext<ListContext>
+  // | ItemContext<GroupContext>
+  ItemContext<ListContext & GroupContext>;
 
 /**
  * {@link ComboboxSeparator} が子パーツへ提供するコンテキストです。

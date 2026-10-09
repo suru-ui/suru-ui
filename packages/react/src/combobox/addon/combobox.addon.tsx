@@ -3,7 +3,7 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useInputGroupContext } from "../input-group/combobox.input-group.context.js";
 import type { ComboboxAddonContext } from "./combobox.addon.context.js";
 
 /**
@@ -40,7 +40,7 @@ export type IComboboxAddon = IComponent<ComboboxAddonProps>;
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
 export const ComboboxAddon: IComboboxAddon = function SuiComboboxAddon(props) {
-  const ctx = useComboboxContext();
+  const ctx = useInputGroupContext();
 
   return useRender({
     props: [

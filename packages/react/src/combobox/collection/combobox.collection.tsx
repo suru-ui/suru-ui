@@ -35,7 +35,7 @@ export interface IComboboxCollectionItemRenderer<TItem = any> {
 /**
  * {@link ComboboxCollection} の状態です。
  */
-export type ComboboxCollectionState = {};
+export type ComboboxCollectionState = Combobox.Collection.State;
 
 export namespace ComboboxCollectionProps {
   export type Render = {};

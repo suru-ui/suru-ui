@@ -3,14 +3,12 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { ComboboxContext } from "../root/combobox.root.context.js";
+import type { ChipContext } from "../chip/combobox.chip.context.js";
 
 /**
  * {@link ComboboxChipRemove} が子パーツへ提供する状態です。
  */
-export type ComboboxChipRemoveContext = Readonly<
-  Override<ComboboxContext, Combobox.ChipRemove.State>
->;
+export type ComboboxChipRemoveContext = Readonly<Override<ChipContext, Combobox.ChipRemove.State>>;
 
 /**
  * {@link ComboboxChipRemove} が子パーツへ提供するコンテキストです。

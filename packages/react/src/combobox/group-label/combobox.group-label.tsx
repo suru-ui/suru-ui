@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxGroupContext } from "../group/combobox.group.context.js";
 import { ComboboxGroupLabelContext } from "./combobox.group-label.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IComboboxGroupLabel = IComponent<ComboboxGroupLabelProps>;
  * 候補グループの見出し要素です。
  */
 export const ComboboxGroupLabel: IComboboxGroupLabel = function SuiComboboxGroupLabel(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxGroupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

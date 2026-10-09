@@ -8,7 +8,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxPopupContext } from "../popup/combobox.popup.context.js";
 import { ComboboxStatusContext } from "./combobox.status.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type IComboboxStatus = IComponent<ComboboxStatusProps>;
  * 非同期検索などの状態を読み上げる要素です。
  */
 export const ComboboxStatus: IComboboxStatus = function SuiComboboxStatus(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxPopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { ComboboxContext } from "../root/combobox.root.context.js";
+import type { ChipsContext } from "../chips/combobox.chips.context.js";
 import type { ComboboxChipVariant } from "./combobox.chip.jsx";
 
 /**
@@ -11,7 +11,7 @@ import type { ComboboxChipVariant } from "./combobox.chip.jsx";
  */
 export type ComboboxChipContext = Readonly<
   Override<
-    Override<ComboboxContext, Combobox.Chip.State>,
+    Override<ChipsContext, Combobox.Chip.State>,
     {
       variant: ComboboxChipVariant;
     }

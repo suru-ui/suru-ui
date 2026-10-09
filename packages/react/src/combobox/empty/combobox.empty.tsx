@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxPopupContext } from "../popup/combobox.popup.context.js";
 import { ComboboxEmptyContext } from "./combobox.empty.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IComboboxEmpty = IComponent<ComboboxEmptyProps>;
  * 候補リストが空のときに内容を表示する要素です。
  */
 export const ComboboxEmpty: IComboboxEmpty = function SuiComboboxEmpty(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxPopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

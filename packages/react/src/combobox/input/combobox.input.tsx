@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxInputGroupContext } from "../input-group/combobox.input-group.context.js";
 import { ComboboxInputContext } from "./combobox.input.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IComboboxInput = IComponent<ComboboxInputProps>;
  * 候補を検索するテキスト入力欄です。
  */
 export const ComboboxInput: IComboboxInput = function SuiComboboxInput(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxInputGroupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

@@ -1,6 +1,5 @@
 import type { IComponent } from "../../types.js";
-import { useComboboxItemContext } from "../item/combobox.item.context.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { type ComboboxItemContext, useComboboxItemContext } from "../item/combobox.item.context.js";
 
 /**
  * 項目の表示ラベルをレンダリングする関数のインターフェイスです。
@@ -12,9 +11,10 @@ export interface IComboboxItemLabelRenderer<TItem = any> {
    * 表示ラベルをレンダリングします。
    *
    * @param item 表示する項目の値です。
+   * @param context コンテクストです。
    * @returns レンダリングする内容です。
    */
-  (item: TItem): IComponent.Return;
+  (item: TItem, context: ComboboxItemContext): IComponent.Return;
 }
 
 /**
@@ -64,11 +64,10 @@ export interface IComboboxItemLabel extends IComponent<ComboboxItemLabelProps> {
 export const ComboboxItemLabel: IComboboxItemLabel = function SuiComboboxItemLabel(
   props: ComboboxItemLabelProps,
 ) {
-  const ctx = useComboboxContext();
-  const itemCtx = useComboboxItemContext();
+  const ctx = useComboboxItemContext();
   const { children = ctx.itemToStringLabel } = props;
 
-  return children(itemCtx.value);
+  return children(ctx.value, ctx);
 };
 
 export { ComboboxItemLabel as ItemLabel };

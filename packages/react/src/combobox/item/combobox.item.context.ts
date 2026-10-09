@@ -1,19 +1,35 @@
+import type { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
 
+import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
-import type { IUseContext } from "../../types.js";
+import type { IUseContext, Override } from "../../types.js";
+import type { GroupContext } from "../group/combobox.group.context.js";
+import type { ListContext } from "../list/combobox.list.context.js";
+
+type ItemContextValue<TItem> = {
+  /**
+   * 項目の値です。
+   */
+  readonly value: TItem;
+};
+
+type ItemContext<TParentContext, TItem> = Readonly<
+  Override<
+    TParentContext,
+    Override<ItemContextValue<TItem>, Override<Button.Root.State, Combobox.Item.State>>
+  >
+>;
 
 /**
  * {@link ComboboxItem} が子パーツへ提供する状態です。
  *
  * @template TItem 項目の型です。
  */
-export type ComboboxItemContext<TItem = any> = {
-  /**
-   * 項目の値です。
-   */
-  readonly value: TItem;
-};
+export type ComboboxItemContext<TItem = any> =
+  // | ItemContext<ListContext, TItem>
+  // | ItemContext<GroupContext, TItem>
+  ItemContext<ListContext & GroupContext, TItem>;
 
 /**
  * 項目の値を子要素へ伝播するコンテキストです。

@@ -10,7 +10,7 @@ import {
   type IComboboxCollectionItemRenderer,
   ComboboxCollection,
 } from "../collection/combobox.collection.jsx";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxPopupContext } from "../popup/combobox.popup.context.js";
 import { ComboboxListContext } from "./combobox.list.context.js";
 
 export type IComboboxListItemRenderer<TItem = any> = IComboboxCollectionItemRenderer<TItem>;
@@ -66,12 +66,11 @@ export interface IComboboxList extends IComponent<ComboboxListProps> {
  * 候補項目のリストを表示するコンテナー要素です。
  */
 export const ComboboxList: IComboboxList = function SuiComboboxList(props: ComboboxListProps) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxPopupContext();
   const {
     style,
     render,
-    // children ComboboxCollection の defaultItemRenderer とします。
-    children = <ComboboxCollection />,
+    children = <ComboboxCollection />, // 既定値は ComboboxCollection の defaultItemRenderer になります。
     className,
     ...otherProps
   } = props;

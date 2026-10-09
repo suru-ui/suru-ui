@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxPositionerContext } from "../positioner/combobox.positioner.context.js";
 import { ComboboxPopupContext } from "./combobox.popup.context.js";
 
 /**
@@ -75,7 +75,7 @@ export type IComboboxPopup = IComponent<ComboboxPopupProps>;
  * 候補項目を表示するポップアップ要素です。
  */
 export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxPositionerContext();
   const {
     style,
     render,

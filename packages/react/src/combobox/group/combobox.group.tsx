@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxListContext } from "../list/combobox.list.context.js";
 import { ComboboxGroupContext } from "./combobox.group.context.js";
 
 /**
@@ -54,13 +54,12 @@ export type IComboboxGroup = IComponent<ComboboxGroupProps>;
  * 関連する候補項目をまとめるグループ要素です。
  */
 export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxListContext();
   const { items, style, render, className, ...otherProps } = props;
 
   return (
     <Combobox.Group
       {...otherProps}
-      items={items}
       {...proxyRenderProps<Combobox.Group.State, ComboboxGroupState>(
         (state) => ({ ...ctx, items, ...state }),
         {
@@ -87,6 +86,7 @@ export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
           ),
         },
       )}
+      items={items}
     />
   );
 };

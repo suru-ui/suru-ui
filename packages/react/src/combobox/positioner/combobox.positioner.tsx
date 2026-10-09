@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxPortalContext } from "../portal/combobox.portal.context.js";
 import { ComboboxPositionerContext } from "./combobox.positioner.context.js";
 
 /**
@@ -60,7 +60,7 @@ export type IComboboxPositioner = IComponent<ComboboxPositionerProps>;
  * ポップアップを入力欄へ位置合わせする要素です。
  */
 export const ComboboxPositioner: IComboboxPositioner = function SuiComboboxPositioner(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxPortalContext();
   const {
     side = "bottom",
     align = "start",

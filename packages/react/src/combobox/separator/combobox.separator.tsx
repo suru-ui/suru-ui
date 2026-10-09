@@ -8,7 +8,8 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxGroupContext } from "../group/combobox.group.context.js";
+import { useComboboxListContext } from "../list/combobox.list.context.js";
 import { ComboboxSeparatorContext } from "./combobox.separator.context.js";
 
 /**
@@ -51,7 +52,9 @@ export type IComboboxSeparator = IComponent<ComboboxSeparatorProps>;
  * 項目やグループを区切る要素です。
  */
 export const ComboboxSeparator: IComboboxSeparator = function SuiComboboxSeparator(props) {
-  const ctx = useComboboxContext();
+  const listCtx = useComboboxListContext();
+  const groupCtx = useComboboxGroupContext(true);
+  const ctx = groupCtx || listCtx;
   const { style, render, className, ...otherProps } = props;
 
   return (

@@ -3,12 +3,12 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { ComboboxContext } from "../root/combobox.root.context.js";
+import type { PositionerContext } from "../positioner/combobox.positioner.context.js";
 
 /**
  * {@link ComboboxPopup} が子パーツへ提供する状態です。
  */
-export type ComboboxPopupContext = Readonly<Override<ComboboxContext, Combobox.Popup.State>>;
+export type ComboboxPopupContext = Readonly<Override<PositionerContext, Combobox.Popup.State>>;
 
 /**
  * {@link ComboboxPopup} が子パーツへ提供するコンテキストです。

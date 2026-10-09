@@ -8,7 +8,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxPositionerContext } from "../positioner/combobox.positioner.context.js";
 import { ComboboxBackdropContext } from "./combobox.backdrop.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type IComboboxBackdrop = IComponent<ComboboxBackdropProps>;
  * ポップアップの背後に表示される要素です。
  */
 export const ComboboxBackdrop: IComboboxBackdrop = function SuiComboboxBackdrop(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxPositionerContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

@@ -3,14 +3,12 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { ComboboxContext } from "../root/combobox.root.context.js";
+import type { GroupContext } from "../group/combobox.group.context.js";
 
 /**
  * {@link ComboboxGroupLabel} が子パーツへ提供する状態です。
  */
-export type ComboboxGroupLabelContext = Readonly<
-  Override<ComboboxContext, Combobox.GroupLabel.State>
->;
+export type ComboboxGroupLabelContext = Readonly<Override<GroupContext, Combobox.GroupLabel.State>>;
 
 /**
  * {@link ComboboxGroupLabel} が子パーツへ提供するコンテキストです。

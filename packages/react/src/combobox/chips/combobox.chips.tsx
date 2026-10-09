@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxInputGroupContext } from "../input-group/combobox.input-group.context.js";
 import { ComboboxChipsContext } from "./combobox.chips.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IComboboxChips = IComponent<ComboboxChipsProps>;
  * 複数選択した値を表示するチップのコンテナーです。
  */
 export const ComboboxChips: IComboboxChips = function SuiComboboxChips(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxInputGroupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

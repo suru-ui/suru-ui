@@ -3,12 +3,12 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { ComboboxContext } from "../root/combobox.root.context.js";
+import type { AddonContext } from "../addon/combobox.addon.context.js";
 
 /**
  * {@link ComboboxClear} が子パーツへ提供する状態です。
  */
-export type ComboboxClearContext = Readonly<Override<ComboboxContext, Combobox.Clear.State>>;
+export type ComboboxClearContext = Readonly<Override<AddonContext, Combobox.Clear.State>>;
 
 /**
  * {@link ComboboxClear} が子パーツへ提供するコンテキストです。

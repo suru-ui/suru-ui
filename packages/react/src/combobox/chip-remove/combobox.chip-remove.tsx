@@ -9,8 +9,8 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
+import { useComboboxChipContext } from "../chip/combobox.chip.context.js";
 import { useComboboxItemContext } from "../item/combobox.item.context.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
 import { ComboboxChipRemoveContext } from "./combobox.chip-remove.context.js";
 
 /**
@@ -73,7 +73,7 @@ export type IComboboxChipRemove = IComponent<ComboboxChipRemoveProps>;
  * チップを選択値から削除するボタン要素です。
  */
 export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipRemove(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxChipContext();
   const itemCtx = useComboboxItemContext();
   const label = ctx.itemToStringLabel(itemCtx.value);
   const {

@@ -7,7 +7,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useComboboxContext } from "../root/combobox.root.context.js";
+import { useComboboxAddonContext } from "../addon/combobox.addon.context.js";
 import { ComboboxIconContext } from "./combobox.icon.context.js";
 
 /**
@@ -50,7 +50,7 @@ export type IComboboxIcon = IComponent<ComboboxIconProps>;
  * トリガーの操作を示すアイコンのラッパー要素です。
  */
 export const ComboboxIcon: IComboboxIcon = function SuiComboboxIcon(props) {
-  const ctx = useComboboxContext();
+  const ctx = useComboboxAddonContext();
   const { style, render, children = <ChevronIcon />, className, ...otherProps } = props;
 
   return (
