@@ -85,7 +85,7 @@ export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
     index,
     style,
     value,
-    render = <div />,
+    render,
     onClick,
     children,
     disabled,

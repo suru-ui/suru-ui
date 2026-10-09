@@ -166,7 +166,7 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
     muted = ctx.muted,
     style,
     radius = ctx.radius,
-    render = <div />,
+    render,
     onClick: onClickProp,
     setSize,
     variant = ctx.variant,

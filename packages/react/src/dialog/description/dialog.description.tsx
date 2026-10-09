@@ -57,7 +57,7 @@ export type IDialogDescription = IComponent<DialogDescriptionProps>;
  */
 export const DialogDescription: IDialogDescription = function SuiDialogDescription(props) {
   const ctx = useDialogPopupContext();
-  const { style, render = <p />, className, ...otherProps } = props;
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Dialog.Description

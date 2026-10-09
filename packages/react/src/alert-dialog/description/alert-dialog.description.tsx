@@ -59,7 +59,7 @@ export const AlertDialogDescription: IAlertDialogDescription = function SuiAlert
   props,
 ) {
   const ctx = useAlertDialogPopupContext();
-  const { style, render = <p />, className, ...otherProps } = props;
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <AlertDialog.Description

@@ -83,7 +83,7 @@ export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: Combo
     index,
     style,
     value,
-    render = <div />,
+    render,
     onClick,
     children,
     disabled,

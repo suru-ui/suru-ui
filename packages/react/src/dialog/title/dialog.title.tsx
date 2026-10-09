@@ -57,13 +57,7 @@ export type IDialogTitle = IComponent<DialogTitleProps>;
  */
 export const DialogTitle: IDialogTitle = function SuiDialogTitle(props) {
   const ctx = useDialogPopupContext();
-  const {
-    style,
-    // oxlint-disable-next-line jsx-a11y/heading-has-content
-    render = <h2 />,
-    className,
-    ...otherProps
-  } = props;
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <Dialog.Title

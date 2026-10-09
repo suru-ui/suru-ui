@@ -113,7 +113,7 @@ export const MenuSubmenuTrigger: IMenuSubmenuTrigger = function SuiMenuSubmenuTr
     label,
     style,
     radius = ctx.radius,
-    render = <div />,
+    render,
     onClick,
     variant = ctx.variant,
     disabled,

@@ -71,7 +71,7 @@ export const SelectItem: ISelectItem = function SuiSelectItem(props) {
     label,
     style,
     value,
-    render = <div />,
+    render,
     onClick,
     children,
     disabled,

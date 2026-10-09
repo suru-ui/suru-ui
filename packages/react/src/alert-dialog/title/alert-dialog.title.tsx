@@ -57,13 +57,7 @@ export type IAlertDialogTitle = IComponent<AlertDialogTitleProps>;
  */
 export const AlertDialogTitle: IAlertDialogTitle = function SuiAlertDialogTitle(props) {
   const ctx = useAlertDialogPopupContext();
-  const {
-    style,
-    // oxlint-disable-next-line jsx-a11y/heading-has-content
-    render = <h2 />,
-    className,
-    ...otherProps
-  } = props;
+  const { style, render, className, ...otherProps } = props;
 
   return (
     <AlertDialog.Title

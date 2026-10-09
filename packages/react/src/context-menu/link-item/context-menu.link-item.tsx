@@ -112,8 +112,7 @@ export const ContextMenuLinkItem: IContextMenuLinkItem = function SuiContextMenu
     label,
     style,
     radius = ctx.radius,
-    // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-    render = <a />,
+    render,
     variant = ctx.variant,
     disabled,
     className,
