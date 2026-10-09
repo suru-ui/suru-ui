@@ -83,7 +83,7 @@ export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: Combo
     index,
     style,
     value,
-    render,
+    render = <div />,
     onClick,
     children,
     disabled,
@@ -92,45 +92,47 @@ export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: Combo
     focusableWhenDisabled,
     ...otherProps
   } = props;
-  const buttonRootProps: Required<
-    Button.Root.Props.SuruUI & Button.Root.Props.BaseUI & Pick<Button.Root.Props.HTML, "disabled">
-  > = {
-    item: true,
-    size: ctx.size,
-    color: "grey",
-    muted: undefined,
-    radius: undefined,
-    pending: undefined,
-    squared: undefined,
-    variant: "naked",
+  const baseuiProps: Required<ComboboxItemProps.BaseUI> = {
+    index,
+    value,
+    onClick,
+    children,
     disabled,
-    outlined: undefined,
     nativeButton,
     focusableWhenDisabled,
   };
 
   return (
-    <Button.Root
-      {...buttonRootProps}
-      render={(htmlProps, buttonState) => {
-        const baseuiProps: Required<ComboboxItemProps.BaseUI> = {
-          index,
-          value,
-          onClick,
-          children,
-          disabled: buttonState.disabled,
+    <Combobox.Item
+      {...otherProps}
+      {...baseuiProps}
+      render={(htmlProps: {}, itemState) => {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
+          item: true,
+          size: ctx.size,
+          color: "grey",
+          muted: undefined,
+          radius: undefined,
+          pending: undefined,
+          squared: undefined,
+          variant: "naked",
+          disabled: itemState.disabled,
+          outlined: undefined,
           nativeButton,
           focusableWhenDisabled,
         };
 
         return (
-          <Combobox.Item
-            {...mergeProps<typeof Combobox.Item>([
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
               htmlProps,
-              otherProps,
-              baseuiProps,
-              proxyRenderProps<Combobox.Item.State, ComboboxItemState>(
-                (itemState) => ({ ...ctx, value, ...buttonState, ...itemState }),
+              buttonRootProps,
+              proxyRenderProps<Button.Root.State, ComboboxItemState>(
+                (buttonState) => ({ ...ctx, value, ...buttonState, ...itemState }),
                 {
                   style,
                   render: (htmlProps, state) => (

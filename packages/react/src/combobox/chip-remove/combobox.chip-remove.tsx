@@ -10,7 +10,6 @@ import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 import { useComboboxChipContext } from "../chip/combobox.chip.context.js";
-import { useComboboxItemContext } from "../item/combobox.item.context.js";
 import { ComboboxChipRemoveContext } from "./combobox.chip-remove.context.js";
 
 /**
@@ -76,8 +75,7 @@ export type IComboboxChipRemove = IComponent<ComboboxChipRemoveProps>;
  */
 export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipRemove(props) {
   const ctx = useComboboxChipContext();
-  const itemCtx = useComboboxItemContext();
-  const label = ctx.itemToStringLabel(itemCtx.value);
+  const label = ctx.itemToStringLabel(ctx.value);
   const {
     style,
     radius = ctx.radius,

@@ -8,7 +8,6 @@ import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 import { useComboboxChipsContext } from "../chips/combobox.chips.context.js";
-import { ComboboxItemContext } from "../item/combobox.item.context.js";
 import { ComboboxChipContext } from "./combobox.chip.context.js";
 
 /**
