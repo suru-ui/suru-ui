@@ -7,8 +7,12 @@ import type { InputGroupContext } from "../input-group/combobox.input-group.cont
 
 /**
  * {@link ComboboxChips} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxChipsContext = Readonly<Override<InputGroupContext, Combobox.Chips.State>>;
+export type ComboboxChipsContext<TItem = any> = Readonly<
+  Override<InputGroupContext<TItem>, Combobox.Chips.State>
+>;
 
 /**
  * {@link ComboboxChips} が子パーツへ提供するコンテキストです。

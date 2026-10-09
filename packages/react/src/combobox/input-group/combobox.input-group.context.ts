@@ -7,9 +7,11 @@ import type { ComboboxContext } from "../root/combobox.root.context.js";
 
 /**
  * {@link ComboboxInputGroup} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxInputGroupContext = Readonly<
-  Override<ComboboxContext, Combobox.InputGroup.State>
+export type ComboboxInputGroupContext<TItem = any> = Readonly<
+  Override<ComboboxContext<TItem>, Combobox.InputGroup.State>
 >;
 
 /**

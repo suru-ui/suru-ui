@@ -140,6 +140,9 @@ export type ComboboxLabeledItemObject<TItem = any> = ComboboxRootLabeledItemObje
 
 /**
  * {@link Combobox} の各パーツに渡す props です。
+ *
+ * @template TItem 項目の型です。
+ * @template TMultiple 複数選択を有効にするかどうかです。
  */
 export type ComboboxSlotProps<
   TItem = any,
@@ -434,6 +437,9 @@ export type ComboboxListPropsOptions<TItem = any> = {
 
 /**
  * {@link ComboboxAPI.getValueProps} に渡すオプションです。
+ *
+ * @template TItem 項目の型です。
+ * @template TMultiple 複数選択を有効にするかどうかです。
  */
 export type ComboboxValuePropsOptions<
   TItem = any,
@@ -747,6 +753,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
   /**
    * {@link ComboboxChip} に渡す props を取得します。
    *
+   * @template TItem 項目の型です。
    * @param item 項目です。
    */
   // `value` だとこのメソッドの使い方が分かりづらくなるので `item` という変数名にします。
@@ -792,6 +799,8 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
 
   /**
    * {@link ComboboxCollection} に渡す props を取得します。
+   *
+   * @template TItem 項目の型です。
    */
   public getCollectionProps<TItem = any>(): ComboboxCollectionProps<TItem> {
     const { children = this.defaultCollectionItemRenderer, ...otherProps } =
@@ -857,6 +866,8 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
   /**
    * {@link ComboboxGroup} に渡す props を取得します。
    *
+   * @template TItem 項目の型です。
+   * @template TValue 項目の値の型です。
    * @param item グループの項目です。
    */
   public getGroupProps<TItem = any>(): ComboboxGroupProps<TItem>;
@@ -936,6 +947,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
   /**
    * {@link ComboboxItem} に渡す props を取得します。
    *
+   * @template TItem 項目の型です。
    * @param item 項目です。
    */
   // `value` だとこのメソッドの使い方が分かりづらくなるので `item` という変数名にします。
@@ -967,6 +979,8 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
 
   /**
    * {@link ComboboxList} に渡す props を取得します。
+   *
+   * @template TItem 項目の型です。
    */
   public getListProps<TItem = any>(): ComboboxListProps<TItem> {
     const { children = this.defaultCollectionItemRenderer, ...otherProps } =

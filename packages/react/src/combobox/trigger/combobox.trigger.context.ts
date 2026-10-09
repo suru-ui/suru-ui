@@ -7,8 +7,12 @@ import type { ComboboxContext } from "../root/combobox.root.context.js";
 
 /**
  * {@link ComboboxTrigger} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxTriggerContext = Readonly<Override<ComboboxContext, Combobox.Trigger.State>>;
+export type ComboboxTriggerContext<TItem = any> = Readonly<
+  Override<ComboboxContext<TItem>, Combobox.Trigger.State>
+>;
 
 /**
  * {@link ComboboxTrigger} が子パーツへ提供するコンテキストです。

@@ -13,6 +13,11 @@ import {
 import { useComboboxPopupContext } from "../popup/combobox.popup.context.js";
 import { ComboboxListContext } from "./combobox.list.context.js";
 
+/**
+ * {@link ComboboxList} の各項目をレンダリングする関数のインターフェイスです。
+ *
+ * @template TItem 項目の型です。
+ */
 export type IComboboxListItemRenderer<TItem = any> = IComboboxCollectionItemRenderer<TItem>;
 
 /**
@@ -49,6 +54,8 @@ export namespace ComboboxListProps {
 
 /**
  * {@link ComboboxList} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
 export type ComboboxListProps<TItem = any> = ComboboxListProps.Render &
   ComboboxListProps.SuruUI &

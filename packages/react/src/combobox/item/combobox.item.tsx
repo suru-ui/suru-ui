@@ -54,6 +54,8 @@ export namespace ComboboxItemProps {
 
 /**
  * {@link ComboboxItem} に渡す props です。
+ *
+ * @template TValue 項目の値の型です。
  */
 export type ComboboxItemProps<TValue = any> = ComboboxItemProps.Render &
   ComboboxItemProps.SuruUI &

@@ -7,8 +7,12 @@ import type { ChipContext } from "../chip/combobox.chip.context.js";
 
 /**
  * {@link ComboboxChipRemove} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxChipRemoveContext = Readonly<Override<ChipContext, Combobox.ChipRemove.State>>;
+export type ComboboxChipRemoveContext<TItem = any> = Readonly<
+  Override<ChipContext<TItem>, Combobox.ChipRemove.State>
+>;
 
 /**
  * {@link ComboboxChipRemove} が子パーツへ提供するコンテキストです。

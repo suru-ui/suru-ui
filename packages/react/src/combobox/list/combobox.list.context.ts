@@ -7,8 +7,12 @@ import type { ComboboxPopupContext } from "../popup/combobox.popup.context.js";
 
 /**
  * {@link ComboboxList} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxListContext = Readonly<Override<ComboboxPopupContext, Combobox.List.State>>;
+export type ComboboxListContext<TItem = any> = Readonly<
+  Override<ComboboxPopupContext<TItem>, Combobox.List.State>
+>;
 
 /**
  * {@link ComboboxList} が子パーツへ提供するコンテキストです。

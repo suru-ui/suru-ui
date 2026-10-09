@@ -7,8 +7,12 @@ import type { AddonContext } from "../addon/combobox.addon.context.js";
 
 /**
  * {@link ComboboxIcon} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxIconContext = Readonly<Override<AddonContext, Combobox.Icon.State>>;
+export type ComboboxIconContext<TItem = any> = Readonly<
+  Override<AddonContext<TItem>, Combobox.Icon.State>
+>;
 
 /**
  * {@link ComboboxIcon} が子パーツへ提供するコンテキストです。

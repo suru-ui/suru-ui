@@ -7,9 +7,11 @@ import type { PortalContext } from "../portal/combobox.portal.context.js";
 
 /**
  * {@link ComboboxPositioner} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxPositionerContext = Readonly<
-  Override<PortalContext, Combobox.Positioner.State>
+export type ComboboxPositionerContext<TItem = any> = Readonly<
+  Override<PortalContext<TItem>, Combobox.Positioner.State>
 >;
 
 /**

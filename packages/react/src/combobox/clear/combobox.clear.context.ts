@@ -7,8 +7,12 @@ import type { AddonContext } from "../addon/combobox.addon.context.js";
 
 /**
  * {@link ComboboxClear} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxClearContext = Readonly<Override<AddonContext, Combobox.Clear.State>>;
+export type ComboboxClearContext<TItem = any> = Readonly<
+  Override<AddonContext<TItem>, Combobox.Clear.State>
+>;
 
 /**
  * {@link ComboboxClear} が子パーツへ提供するコンテキストです。

@@ -29,7 +29,7 @@ type ItemContext<TParentContext, TItem> = Readonly<
 export type ComboboxItemContext<TItem = any> =
   // | ItemContext<ListContext, TItem>
   // | ItemContext<GroupContext, TItem>
-  ItemContext<ListContext & GroupContext, TItem>;
+  ItemContext<ListContext<TItem> & GroupContext<TItem>, TItem>;
 
 /**
  * 項目の値を子要素へ伝播するコンテキストです。

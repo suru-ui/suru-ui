@@ -99,6 +99,8 @@ export namespace ComboboxChipProps {
 
 /**
  * {@link ComboboxChip} に渡す props です。
+ *
+ * @template TValue 項目の値の型です。
  */
 export type ComboboxChipProps<TValue = any> = ComboboxChipProps.Render &
   ComboboxChipProps.SuruUI<TValue> &

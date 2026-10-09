@@ -7,9 +7,11 @@ import type { PositionerContext } from "../positioner/combobox.positioner.contex
 
 /**
  * {@link ComboboxBackdrop} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxBackdropContext = Readonly<
-  Override<PositionerContext, Combobox.Backdrop.State>
+export type ComboboxBackdropContext<TItem = any> = Readonly<
+  Override<PositionerContext<TItem>, Combobox.Backdrop.State>
 >;
 
 /**

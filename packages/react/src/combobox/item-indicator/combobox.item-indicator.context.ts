@@ -7,9 +7,11 @@ import type { ComboboxItemContext } from "../item/combobox.item.context.js";
 
 /**
  * {@link ComboboxItemIndicator} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxItemIndicatorContext = Readonly<
-  Override<ComboboxItemContext, Combobox.ItemIndicator.State>
+export type ComboboxItemIndicatorContext<TItem = any> = Readonly<
+  Override<ComboboxItemContext<TItem>, Combobox.ItemIndicator.State>
 >;
 
 /**

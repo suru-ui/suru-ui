@@ -42,6 +42,8 @@ export namespace ComboboxGroupProps {
 
 /**
  * {@link ComboboxGroup} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
 export type ComboboxGroupProps<TItem = any> = ComboboxGroupProps.Render &
   ComboboxGroupProps.SuruUI<TItem> &

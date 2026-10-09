@@ -11,6 +11,9 @@ export type IComboboxFilteredItems<TItem = any> = ReadonlyArray<TItem>;
  * {@link useFilteredItems} の型です。
  */
 export interface IUseComboboxFilteredItems {
+  /**
+   * @template TItem 項目の型です。
+   */
   <TItem = any>(): IComboboxFilteredItems<TItem>;
 }
 

@@ -7,8 +7,12 @@ import type { GroupContext } from "../group/combobox.group.context.js";
 
 /**
  * {@link ComboboxGroupLabel} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxGroupLabelContext = Readonly<Override<GroupContext, Combobox.GroupLabel.State>>;
+export type ComboboxGroupLabelContext<TItem = any> = Readonly<
+  Override<GroupContext<TItem>, Combobox.GroupLabel.State>
+>;
 
 /**
  * {@link ComboboxGroupLabel} が子パーツへ提供するコンテキストです。

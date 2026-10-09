@@ -74,6 +74,9 @@ export namespace ComboboxValueProps {
 
 /**
  * {@link ComboboxValue} に渡す props です。
+ *
+ * @template TItem 項目の型です。
+ * @template TMultiple 複数選択を有効にするかどうかです。
  */
 export type ComboboxValueProps<
   TItem = any,

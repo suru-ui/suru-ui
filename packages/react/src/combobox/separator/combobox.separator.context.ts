@@ -10,11 +10,13 @@ type ItemContext<TParentContext> = Readonly<Override<TParentContext, Combobox.Se
 
 /**
  * {@link ComboboxSeparator} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxSeparatorContext =
+export type ComboboxSeparatorContext<TItem = any> =
   // | ItemContext<ListContext>
   // | ItemContext<GroupContext>
-  ItemContext<ListContext & GroupContext>;
+  ItemContext<ListContext<TItem> & GroupContext<TItem>>;
 
 /**
  * {@link ComboboxSeparator} が子パーツへ提供するコンテキストです。

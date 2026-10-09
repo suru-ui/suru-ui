@@ -7,8 +7,12 @@ import type { PositionerContext } from "../positioner/combobox.positioner.contex
 
 /**
  * {@link ComboboxPopup} が子パーツへ提供する状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxPopupContext = Readonly<Override<PositionerContext, Combobox.Popup.State>>;
+export type ComboboxPopupContext<TItem = any> = Readonly<
+  Override<PositionerContext<TItem>, Combobox.Popup.State>
+>;
 
 /**
  * {@link ComboboxPopup} が子パーツへ提供するコンテキストです。

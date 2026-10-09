@@ -70,6 +70,8 @@ export namespace ComboboxCollectionProps {
 
 /**
  * {@link ComboboxCollection} に渡す props です。
+ *
+ * @template TItem 項目の型です。
  */
 export type ComboboxCollectionProps<TItem = any> = ComboboxCollectionProps.Render &
   ComboboxCollectionProps.SuruUI &
