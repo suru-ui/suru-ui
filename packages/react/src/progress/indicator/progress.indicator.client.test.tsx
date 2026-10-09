@@ -3,6 +3,7 @@ import { render } from "vitest-browser-react";
 
 import "../progress.parts.js";
 import { ProgressRoot } from "../root/progress.root.jsx";
+import { ProgressTrack } from "../track/progress.track.jsx";
 import { ProgressIndicator } from "./progress.indicator.jsx";
 import "../../../tests/src/_locators.js";
 
@@ -11,7 +12,9 @@ describe("ProgressIndicator", () => {
     // 準備と実行
     const screen = await render(
       <ProgressRoot value={25}>
-        <ProgressIndicator />
+        <ProgressTrack>
+          <ProgressIndicator />
+        </ProgressTrack>
       </ProgressRoot>,
     );
 
@@ -25,7 +28,9 @@ describe("ProgressIndicator", () => {
     // 準備と実行
     const screen = await render(
       <ProgressRoot value={null}>
-        <ProgressIndicator />
+        <ProgressTrack>
+          <ProgressIndicator />
+        </ProgressTrack>
       </ProgressRoot>,
     );
 
@@ -38,7 +43,9 @@ describe("ProgressIndicator", () => {
     // 準備と実行
     const screen = await render(
       <ProgressRoot value={25}>
-        <ProgressIndicator className="custom" />
+        <ProgressTrack>
+          <ProgressIndicator className="custom" />
+        </ProgressTrack>
       </ProgressRoot>,
     );
 

@@ -2,7 +2,9 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../slider.parts.js";
+import { SliderControl } from "../control/slider.control.jsx";
 import { SliderRoot } from "../root/slider.root.jsx";
+import { SliderTrack } from "../track/slider.track.jsx";
 import { SliderIndicator } from "./slider.indicator.jsx";
 import "../../../tests/src/_locators.js";
 
@@ -11,7 +13,11 @@ describe("SliderIndicator", () => {
     // 準備と実行
     const screen = await render(
       <SliderRoot defaultValue={25}>
-        <SliderIndicator />
+        <SliderControl>
+          <SliderTrack>
+            <SliderIndicator />
+          </SliderTrack>
+        </SliderControl>
       </SliderRoot>,
     );
 
@@ -25,7 +31,11 @@ describe("SliderIndicator", () => {
     // 準備と実行
     const screen = await render(
       <SliderRoot defaultValue={25}>
-        <SliderIndicator className="custom" />
+        <SliderControl>
+          <SliderTrack>
+            <SliderIndicator className="custom" />
+          </SliderTrack>
+        </SliderControl>
       </SliderRoot>,
     );
 
@@ -39,7 +49,11 @@ describe("SliderIndicator", () => {
     // 準備と実行
     const screen = await render(
       <SliderRoot defaultValue={25}>
-        <SliderIndicator render={<section />} />
+        <SliderControl>
+          <SliderTrack>
+            <SliderIndicator render={<section />} />
+          </SliderTrack>
+        </SliderControl>
       </SliderRoot>,
     );
 
