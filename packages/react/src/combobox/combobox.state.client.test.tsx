@@ -138,23 +138,29 @@ describe("Combobox の状態", () => {
   test("項目の render へスタイル情報と項目の状態を渡す", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <ComboboxRoot size="lg" items={fruits} defaultValue="りんご">
-        <ComboboxList>
-          {fruits.map((fruit) => (
-            <ComboboxItem
-              key={fruit}
-              value={fruit}
-              render={(props, state) => (
-                <div
-                  {...props}
-                  data-probe={`${state.size}/${state.color}/${String(state.selected)}/${String(state.highlighted)}`}
-                />
-              )}
-            >
-              {fruit}
-            </ComboboxItem>
-          ))}
-        </ComboboxList>
+      <ComboboxRoot size="lg" items={fruits} defaultOpen defaultValue="りんご">
+        <ComboboxPortal>
+          <ComboboxPositioner>
+            <ComboboxPopup>
+              <ComboboxList>
+                {fruits.map((fruit) => (
+                  <ComboboxItem
+                    key={fruit}
+                    value={fruit}
+                    render={(props, state) => (
+                      <div
+                        {...props}
+                        data-probe={`${state.size}/${state.color}/${String(state.selected)}/${String(state.highlighted)}`}
+                      />
+                    )}
+                  >
+                    {fruit}
+                  </ComboboxItem>
+                ))}
+              </ComboboxList>
+            </ComboboxPopup>
+          </ComboboxPositioner>
+        </ComboboxPortal>
       </ComboboxRoot>,
     );
 
@@ -168,20 +174,22 @@ describe("Combobox の状態", () => {
     // 準備と実行
     const screen = await render(
       <ComboboxRoot size="lg" color="blue" items={fruits} multiple defaultValue={["りんご"]}>
-        <ComboboxChips>
-          <ComboboxChip
-            value="りんご"
-            radius="full"
-            render={(props, state) => (
-              <div
-                {...props}
-                data-probe={`${state.size}/${state.color}/${state.radius}/${state.variant}/${String(state.outlined)}/${String(state.disabled)}`}
-              />
-            )}
-            variant="naked"
-            outlined
-          />
-        </ComboboxChips>
+        <ComboboxInputGroup>
+          <ComboboxChips>
+            <ComboboxChip
+              value="りんご"
+              radius="full"
+              render={(props, state) => (
+                <div
+                  {...props}
+                  data-probe={`${state.size}/${state.color}/${state.radius}/${state.variant}/${String(state.outlined)}/${String(state.disabled)}`}
+                />
+              )}
+              variant="naked"
+              outlined
+            />
+          </ComboboxChips>
+        </ComboboxInputGroup>
       </ComboboxRoot>,
     );
 

@@ -15,6 +15,7 @@ function Provider(props: {
   value: string;
   itemToStringLabel?: (item: string) => string;
 }) {
+  const itemToStringLabel = props.itemToStringLabel ?? defaultItemToStringLabel;
   const ctx: ComboboxContext<string> = {
     size: "md",
     color: "grey",
@@ -23,11 +24,13 @@ function Provider(props: {
     variant: "liquid",
     multiple: false,
     outlined: false,
-    itemToStringLabel: props.itemToStringLabel ?? defaultItemToStringLabel,
+    itemToStringLabel,
   };
   return (
     <ComboboxContextValue value={ctx}>
-      <ComboboxItemContextValue value={{ value: props.value } as ComboboxItemContextValue}>
+      <ComboboxItemContextValue
+        value={{ value: props.value, itemToStringLabel } as ComboboxItemContextValue}
+      >
         {props.children}
       </ComboboxItemContextValue>
     </ComboboxContextValue>

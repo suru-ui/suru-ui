@@ -100,9 +100,11 @@ describe("Combobox のパーツコンテキスト", () => {
     // 実行
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
-        <ComboboxChips>
-          <ComboboxChip value="りんご" render={() => <Probe />} />
-        </ComboboxChips>
+        <ComboboxInputGroup>
+          <ComboboxChips>
+            <ComboboxChip value="りんご" render={() => <Probe />} />
+          </ComboboxChips>
+        </ComboboxInputGroup>
       </ComboboxRoot>,
     );
 
@@ -120,11 +122,13 @@ describe("Combobox のパーツコンテキスト", () => {
     // 実行
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
-        <ComboboxChips>
-          <ComboboxChip value="りんご">
-            <ComboboxChipRemove render={() => <Probe />} />
-          </ComboboxChip>
-        </ComboboxChips>
+        <ComboboxInputGroup>
+          <ComboboxChips>
+            <ComboboxChip value="りんご">
+              <ComboboxChipRemove render={() => <Probe />} />
+            </ComboboxChip>
+          </ComboboxChips>
+        </ComboboxInputGroup>
       </ComboboxRoot>,
     );
 

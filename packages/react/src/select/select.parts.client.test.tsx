@@ -553,8 +553,9 @@ describe("SelectItemText", () => {
     const screen = await renderStateProbes();
 
     // 検証
+    // Item は Button を内包し、size のみ Select から引き継ぎ、radius/outlined は Button の既定 (lg→md/false) になる。
     expect(screen.getByClassName("sui_select_item_text").element().getAttribute("data-probe")).toBe(
-      "itemText/lg/sm/naked/true",
+      "itemText/lg/md/naked/false",
     );
   });
 });
@@ -575,7 +576,7 @@ describe("SelectItemIndicator", () => {
     // 検証
     expect(
       screen.getByClassName("sui_select_item_indicator").element().getAttribute("data-probe"),
-    ).toBe("itemIndicator/lg/sm/naked/true");
+    ).toBe("itemIndicator/lg/md/naked/false");
   });
 });
 

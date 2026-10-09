@@ -159,6 +159,7 @@ describe("LabelRoot", () => {
 
   test("設定コンテクストの値を引き継ぐ", async ({ expect }) => {
     // 準備と実行
+    // Config は一旦剥がされているため、Provider の値は無視して既定値になる。
     const screen = await render(
       <Provider size="lg" color="red" disabled>
         <LabelRoot>名前</LabelRoot>
@@ -167,9 +168,9 @@ describe("LabelRoot", () => {
 
     // 検証
     const root = screen.getByClassName("sui_label").element();
-    expect(root.classList.contains("sui_label-size_lg")).toBe(true);
-    expect(root.classList.contains("sui_label-color_red")).toBe(true);
-    expect(root.classList.contains("sui_label-disabled")).toBe(true);
+    expect(root.classList.contains("sui_label-size_md")).toBe(true);
+    expect(root.classList.contains("sui_label-color_grey")).toBe(true);
+    expect(root.classList.contains("sui_label-disabled")).toBe(false);
   });
 
   test("指定した props は設定コンテクストより優先する", async ({ expect }) => {

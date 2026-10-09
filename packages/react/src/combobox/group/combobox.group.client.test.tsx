@@ -4,6 +4,10 @@ import { render } from "vitest-browser-react";
 
 import { ComboboxCollection } from "../collection/combobox.collection.jsx";
 import { Combobox } from "../combobox.jsx";
+import { ComboboxList } from "../list/combobox.list.jsx";
+import { ComboboxPopup } from "../popup/combobox.popup.jsx";
+import { ComboboxPortal } from "../portal/combobox.portal.jsx";
+import { ComboboxPositioner } from "../positioner/combobox.positioner.jsx";
 import { ComboboxRoot } from "../root/combobox.root.jsx";
 import { useComboboxGroupContext } from "./combobox.group.context.js";
 import { ComboboxGroup } from "./combobox.group.jsx";
@@ -27,10 +31,18 @@ describe("ComboboxGroup", () => {
   test("グループの項目だけを表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
-      <ComboboxRoot items={fruits}>
-        <ComboboxGroup items={["みかん"]}>
-          <ComboboxCollection />
-        </ComboboxGroup>
+      <ComboboxRoot items={fruits} defaultOpen>
+        <ComboboxPortal>
+          <ComboboxPositioner>
+            <ComboboxPopup>
+              <ComboboxList>
+                <ComboboxGroup items={["みかん"]}>
+                  <ComboboxCollection />
+                </ComboboxGroup>
+              </ComboboxList>
+            </ComboboxPopup>
+          </ComboboxPositioner>
+        </ComboboxPortal>
       </ComboboxRoot>,
     );
 
@@ -48,10 +60,18 @@ describe("ComboboxGroup", () => {
 
     // 実行
     const screen = await render(
-      <ComboboxRoot items={fruits}>
-        <ComboboxGroup>
-          <Probe />
-        </ComboboxGroup>
+      <ComboboxRoot items={fruits} defaultOpen>
+        <ComboboxPortal>
+          <ComboboxPositioner>
+            <ComboboxPopup>
+              <ComboboxList>
+                <ComboboxGroup>
+                  <Probe />
+                </ComboboxGroup>
+              </ComboboxList>
+            </ComboboxPopup>
+          </ComboboxPositioner>
+        </ComboboxPortal>
       </ComboboxRoot>,
     );
 
@@ -68,10 +88,18 @@ describe("ComboboxGroup", () => {
 
     // 実行
     const screen = await render(
-      <ComboboxRoot items={fruits}>
-        <ComboboxGroup items={["みかん"]}>
-          <Probe />
-        </ComboboxGroup>
+      <ComboboxRoot items={fruits} defaultOpen>
+        <ComboboxPortal>
+          <ComboboxPositioner>
+            <ComboboxPopup>
+              <ComboboxList>
+                <ComboboxGroup items={["みかん"]}>
+                  <Probe />
+                </ComboboxGroup>
+              </ComboboxList>
+            </ComboboxPopup>
+          </ComboboxPositioner>
+        </ComboboxPortal>
       </ComboboxRoot>,
     );
 
