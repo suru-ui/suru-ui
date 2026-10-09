@@ -1,6 +1,7 @@
 import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
+import { NumberFieldGroup } from "../group/number-field.group.jsx";
 import { NumberFieldRoot } from "../root/number-field.root.jsx";
 import { NumberFieldAddon } from "./number-field.addon.jsx";
 import "../../../tests/src/_locators.js";
@@ -10,7 +11,9 @@ describe("NumberFieldAddon", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot>
-        <NumberFieldAddon>¥</NumberFieldAddon>
+        <NumberFieldGroup>
+          <NumberFieldAddon>¥</NumberFieldAddon>
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 
@@ -24,7 +27,9 @@ describe("NumberFieldAddon", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot>
-        <NumberFieldAddon className="custom">¥</NumberFieldAddon>
+        <NumberFieldGroup>
+          <NumberFieldAddon className="custom">¥</NumberFieldAddon>
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 
@@ -38,7 +43,9 @@ describe("NumberFieldAddon", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot>
-        <NumberFieldAddon render={<b />}>¥</NumberFieldAddon>
+        <NumberFieldGroup>
+          <NumberFieldAddon render={<b />}>¥</NumberFieldAddon>
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 
@@ -52,11 +59,15 @@ describe("NumberFieldAddon", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot size="lg" color="blue">
-        <NumberFieldAddon
-          render={(props, state) => <span {...props} data-probe={`${state.size}/${state.color}`} />}
-        >
-          ¥
-        </NumberFieldAddon>
+        <NumberFieldGroup>
+          <NumberFieldAddon
+            render={(props, state) => (
+              <span {...props} data-probe={`${state.size}/${state.color}`} />
+            )}
+          >
+            ¥
+          </NumberFieldAddon>
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 

@@ -2,6 +2,7 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { FieldRoot } from "../../field/root/field.root.jsx";
+import { NumberFieldGroup } from "../group/number-field.group.jsx";
 import { NumberFieldRoot } from "../root/number-field.root.jsx";
 import { NumberFieldInput } from "./number-field.input.jsx";
 import "../../../tests/src/_locators.js";
@@ -11,7 +12,9 @@ describe("NumberFieldInput", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot defaultValue={1}>
-        <NumberFieldInput />
+        <NumberFieldGroup>
+          <NumberFieldInput />
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 
@@ -26,7 +29,9 @@ describe("NumberFieldInput", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot>
-        <NumberFieldInput name="quantity" required placeholder="数量" autoComplete="off" />
+        <NumberFieldGroup>
+          <NumberFieldInput name="quantity" required placeholder="数量" autoComplete="off" />
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 
@@ -42,7 +47,9 @@ describe("NumberFieldInput", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot>
-        <NumberFieldInput className="custom" />
+        <NumberFieldGroup>
+          <NumberFieldInput className="custom" />
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 
@@ -58,12 +65,16 @@ describe("NumberFieldInput", () => {
       <>
         <FieldRoot invalid>
           <NumberFieldRoot>
-            <NumberFieldInput />
+            <NumberFieldGroup>
+              <NumberFieldInput />
+            </NumberFieldGroup>
           </NumberFieldRoot>
         </FieldRoot>
         <FieldRoot>
           <NumberFieldRoot>
-            <NumberFieldInput />
+            <NumberFieldGroup>
+              <NumberFieldInput />
+            </NumberFieldGroup>
           </NumberFieldRoot>
         </FieldRoot>
       </>,
@@ -79,7 +90,9 @@ describe("NumberFieldInput", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot>
-        <NumberFieldInput render={<textarea />} />
+        <NumberFieldGroup>
+          <NumberFieldInput render={<textarea />} />
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 
@@ -93,14 +106,16 @@ describe("NumberFieldInput", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot size="lg" color="blue" outlined>
-        <NumberFieldInput
-          render={(props, state) => (
-            <input
-              {...props}
-              data-probe={`${state.size}/${state.color}/${String(state.outlined)}/${String(state.valid === null)}`}
-            />
-          )}
-        />
+        <NumberFieldGroup>
+          <NumberFieldInput
+            render={(props, state) => (
+              <input
+                {...props}
+                data-probe={`${state.size}/${state.color}/${String(state.outlined)}/${String(state.valid === null)}`}
+              />
+            )}
+          />
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 

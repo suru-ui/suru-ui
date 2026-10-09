@@ -2,6 +2,7 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { FieldRoot } from "../../field/root/field.root.jsx";
+import { NumberFieldGroup } from "../group/number-field.group.jsx";
 import { NumberFieldInput } from "../input/number-field.input.jsx";
 import "../number-field.parts.js";
 import { NumberFieldRoot } from "./number-field.root.jsx";
@@ -95,7 +96,9 @@ describe("NumberFieldRoot", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot id="field" defaultValue={3}>
-        <NumberFieldInput />
+        <NumberFieldGroup>
+          <NumberFieldInput />
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 
@@ -109,7 +112,9 @@ describe("NumberFieldRoot", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot disabled>
-        <NumberFieldInput />
+        <NumberFieldGroup>
+          <NumberFieldInput />
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 
@@ -124,12 +129,16 @@ describe("NumberFieldRoot", () => {
       <>
         <FieldRoot invalid>
           <NumberFieldRoot>
-            <NumberFieldInput />
+            <NumberFieldGroup>
+              <NumberFieldInput />
+            </NumberFieldGroup>
           </NumberFieldRoot>
         </FieldRoot>
         <FieldRoot>
           <NumberFieldRoot>
-            <NumberFieldInput />
+            <NumberFieldGroup>
+              <NumberFieldInput />
+            </NumberFieldGroup>
           </NumberFieldRoot>
         </FieldRoot>
       </>,

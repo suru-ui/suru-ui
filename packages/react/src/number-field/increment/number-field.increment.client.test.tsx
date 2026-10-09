@@ -31,7 +31,10 @@ describe("NumberFieldIncrement", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot>
-        <NumberFieldIncrement>増</NumberFieldIncrement>
+        <NumberFieldGroup>
+          <NumberFieldInput />
+          <NumberFieldIncrement>増</NumberFieldIncrement>
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 
@@ -43,7 +46,10 @@ describe("NumberFieldIncrement", () => {
     // 準備と実行
     const screen = await render(
       <NumberFieldRoot>
-        <NumberFieldIncrement aria-label="数量を増やす" />
+        <NumberFieldGroup>
+          <NumberFieldInput />
+          <NumberFieldIncrement aria-label="数量を増やす" />
+        </NumberFieldGroup>
       </NumberFieldRoot>,
     );
 

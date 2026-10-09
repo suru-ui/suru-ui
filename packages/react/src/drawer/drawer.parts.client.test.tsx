@@ -42,7 +42,11 @@ function renderDrawer(children: React.ReactNode) {
 describe("DrawerPortal", () => {
   test("ポップアップを別の場所へ配置する", async ({ expect }) => {
     // 準備と実行
-    const screen = await renderDrawer(<DrawerTitle>見出し</DrawerTitle>);
+    const screen = await renderDrawer(
+      <DrawerHeader>
+        <DrawerTitle>見出し</DrawerTitle>
+      </DrawerHeader>,
+    );
 
     // 検証
     const portal = screen.getByClassName("sui_drawer_portal").element();
@@ -54,7 +58,11 @@ describe("DrawerPortal", () => {
 describe("DrawerBackdrop", () => {
   test("オーバーレイを描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await renderDrawer(<DrawerTitle>見出し</DrawerTitle>);
+    const screen = await renderDrawer(
+      <DrawerHeader>
+        <DrawerTitle>見出し</DrawerTitle>
+      </DrawerHeader>,
+    );
 
     // 検証
     const backdrop = screen.getByClassName("sui_drawer_backdrop").element();
@@ -65,7 +73,11 @@ describe("DrawerBackdrop", () => {
 describe("DrawerViewport", () => {
   test("配置コンテナーを描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await renderDrawer(<DrawerTitle>見出し</DrawerTitle>);
+    const screen = await renderDrawer(
+      <DrawerHeader>
+        <DrawerTitle>見出し</DrawerTitle>
+      </DrawerHeader>,
+    );
 
     // 検証
     const viewport = screen.getByClassName("sui_drawer_viewport").element();
@@ -76,7 +88,11 @@ describe("DrawerViewport", () => {
 describe("DrawerPopup", () => {
   test("スワイプ方向のクラスを付ける", async ({ expect }) => {
     // 準備と実行
-    const screen = await renderDrawer(<DrawerTitle>見出し</DrawerTitle>);
+    const screen = await renderDrawer(
+      <DrawerHeader>
+        <DrawerTitle>見出し</DrawerTitle>
+      </DrawerHeader>,
+    );
 
     // 検証
     const popup = screen.getByClassName("sui_drawer_popup").element();
@@ -115,7 +131,11 @@ describe("DrawerHeader", () => {
 describe("DrawerTitle", () => {
   test("見出しとして描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await renderDrawer(<DrawerTitle>見出し</DrawerTitle>);
+    const screen = await renderDrawer(
+      <DrawerHeader>
+        <DrawerTitle>見出し</DrawerTitle>
+      </DrawerHeader>,
+    );
 
     // 検証
     const title = screen.getByRole("heading", { name: "見出し" }).element();
@@ -127,7 +147,11 @@ describe("DrawerTitle", () => {
 describe("DrawerDescription", () => {
   test("説明文として描画する", async ({ expect }) => {
     // 準備と実行
-    const screen = await renderDrawer(<DrawerDescription>説明</DrawerDescription>);
+    const screen = await renderDrawer(
+      <DrawerHeader>
+        <DrawerDescription>説明</DrawerDescription>
+      </DrawerHeader>,
+    );
 
     // 検証
     const description = screen.getByText("説明").element();
@@ -167,7 +191,11 @@ describe("DrawerFooter", () => {
 describe("DrawerControls", () => {
   test("既定では絶対配置にする", async ({ expect }) => {
     // 準備と実行
-    const screen = await renderDrawer(<DrawerControls>操作</DrawerControls>);
+    const screen = await renderDrawer(
+      <DrawerHeader>
+        <DrawerControls>操作</DrawerControls>
+      </DrawerHeader>,
+    );
 
     // 検証
     const controls = screen.getByClassName("sui_drawer_controls").element();
@@ -177,7 +205,11 @@ describe("DrawerControls", () => {
 
   test("指定すると相対配置にする", async ({ expect }) => {
     // 準備と実行
-    const screen = await renderDrawer(<DrawerControls absolute={false}>操作</DrawerControls>);
+    const screen = await renderDrawer(
+      <DrawerHeader>
+        <DrawerControls absolute={false}>操作</DrawerControls>
+      </DrawerHeader>,
+    );
 
     // 検証
     const controls = screen.getByClassName("sui_drawer_controls").element();
