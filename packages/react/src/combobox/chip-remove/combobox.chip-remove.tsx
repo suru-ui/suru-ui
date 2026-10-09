@@ -115,6 +115,20 @@ export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipR
             (state) => state.outlined && "sui_combobox_chip_remove-outlined",
             (state) => state.multiple && "sui_combobox_chip_remove-multiple",
             (state) => state.disabled && "sui_combobox_chip_remove-disabled",
+            (state) => state.touched && "sui_combobox_chip_remove-touched",
+            (state) => state.dirty && "sui_combobox_chip_remove-dirty",
+            (state) => state.valid === false && "sui_combobox_chip_remove-invalid",
+            (state) => state.valid === true && "sui_combobox_chip_remove-valid",
+            (state) => state.valid === null && "sui_combobox_chip_remove-unverified",
+            (state) => state.filled && "sui_combobox_chip_remove-filled",
+            (state) => state.focused && "sui_combobox_chip_remove-focused",
+            (state) => state.open && "sui_combobox_chip_remove-open",
+            (state) => state.readOnly && "sui_combobox_chip_remove-readonly",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_combobox_chip_remove-popup_side_${state.popupSide.replaceAll("-", "_")}`,
+            (state) => state.listEmpty && "sui_combobox_chip_remove-list_empty",
+            (state) => state.placeholder && "sui_combobox_chip_remove-placeholder",
           ),
         },
       )}

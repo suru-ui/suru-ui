@@ -145,6 +145,14 @@ export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: Combo
                     (state) => `sui_combobox_item-variant_${state.variant}`,
                     (state) => state.outlined && "sui_combobox_item-outlined",
                     (state) => state.multiple && "sui_combobox_item-multiple",
+                    (state) => state.open && "sui_combobox_item-open",
+                    (state) => state.empty && "sui_combobox_item-empty",
+                    (state) => state.anchorHidden && "sui_combobox_item-anchor_hidden",
+                    (state) => `sui_combobox_item-side_${state.side.replaceAll("-", "_")}`,
+                    (state) => `sui_combobox_item-align_${state.align}`,
+                    (state) =>
+                      state.transitionStatus !== undefined &&
+                      `sui_combobox_item-transition_status_${state.transitionStatus}`,
                   ),
                 },
               ),

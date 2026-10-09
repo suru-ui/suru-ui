@@ -81,6 +81,21 @@ export const ComboboxIcon: IComboboxIcon = function SuiComboboxIcon(props) {
             (state) => `sui_combobox_icon-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_icon-outlined",
             (state) => state.multiple && "sui_combobox_icon-multiple",
+            (state) => state.disabled && "sui_combobox_icon-disabled",
+            (state) => state.touched && "sui_combobox_icon-touched",
+            (state) => state.dirty && "sui_combobox_icon-dirty",
+            (state) => state.valid === false && "sui_combobox_icon-invalid",
+            (state) => state.valid === true && "sui_combobox_icon-valid",
+            (state) => state.valid === null && "sui_combobox_icon-unverified",
+            (state) => state.filled && "sui_combobox_icon-filled",
+            (state) => state.focused && "sui_combobox_icon-focused",
+            (state) => state.open && "sui_combobox_icon-open",
+            (state) => state.readOnly && "sui_combobox_icon-readonly",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_combobox_icon-popup_side_${state.popupSide.replaceAll("-", "_")}`,
+            (state) => state.listEmpty && "sui_combobox_icon-list_empty",
+            (state) => state.placeholder && "sui_combobox_icon-placeholder",
           ),
         },
       )}

@@ -85,6 +85,14 @@ export const ComboboxSeparator: IComboboxSeparator = function SuiComboboxSeparat
             (state) => `sui_combobox_separator-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_separator-outlined",
             (state) => state.multiple && "sui_combobox_separator-multiple",
+            (state) => state.open && "sui_combobox_separator-open",
+            (state) => state.empty && "sui_combobox_separator-empty",
+            (state) => state.anchorHidden && "sui_combobox_separator-anchor_hidden",
+            (state) => `sui_combobox_separator-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_combobox_separator-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_combobox_separator-transition_status_${state.transitionStatus}`,
             (state) => `sui_combobox_separator-orientation_${state.orientation}`,
           ),
         },

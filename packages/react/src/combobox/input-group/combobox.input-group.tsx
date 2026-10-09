@@ -167,6 +167,7 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
             (state) => `sui_combobox-radius_${state.radius}`,
             (state) => `sui_combobox-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox-outlined",
+            (state) => state.multiple && "sui_combobox-multiple",
             (state) => state.disabled && "sui_combobox-disabled",
             (state) => state.touched && "sui_combobox-touched",
             (state) => state.dirty && "sui_combobox-dirty",

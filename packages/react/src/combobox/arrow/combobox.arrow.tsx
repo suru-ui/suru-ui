@@ -84,6 +84,11 @@ export const ComboboxArrow: IComboboxArrow = function SuiComboboxArrow(props) {
             (state) => state.open && "sui_combobox_arrow-open",
             (state) => state.uncentered && "sui_combobox_arrow-uncentered",
             (state) => `sui_combobox_arrow-align_${state.align}`,
+            (state) => state.anchorHidden && "sui_combobox_arrow-anchor_hidden",
+            (state) => state.empty && "sui_combobox_arrow-empty",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_combobox_arrow-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

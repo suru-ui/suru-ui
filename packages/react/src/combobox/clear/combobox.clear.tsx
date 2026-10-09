@@ -93,7 +93,20 @@ export const ComboboxClear: IComboboxClear = function SuiComboboxClear(props) {
             (state) => state.outlined && "sui_combobox_clear-outlined",
             (state) => state.multiple && "sui_combobox_clear-multiple",
             (state) => state.disabled && "sui_combobox_clear-disabled",
+            (state) => state.touched && "sui_combobox_clear-touched",
+            (state) => state.dirty && "sui_combobox_clear-dirty",
+            (state) => state.valid === false && "sui_combobox_clear-invalid",
+            (state) => state.valid === true && "sui_combobox_clear-valid",
+            (state) => state.valid === null && "sui_combobox_clear-unverified",
+            (state) => state.filled && "sui_combobox_clear-filled",
+            (state) => state.focused && "sui_combobox_clear-focused",
             (state) => state.open && "sui_combobox_clear-open",
+            (state) => state.readOnly && "sui_combobox_clear-readonly",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_combobox_clear-popup_side_${state.popupSide.replaceAll("-", "_")}`,
+            (state) => state.listEmpty && "sui_combobox_clear-list_empty",
+            (state) => state.placeholder && "sui_combobox_clear-placeholder",
             (state) => state.visible && "sui_combobox_clear-visible",
             (state) =>
               state.transitionStatus !== undefined &&

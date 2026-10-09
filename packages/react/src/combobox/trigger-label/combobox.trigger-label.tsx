@@ -81,6 +81,13 @@ export const ComboboxTriggerLabel: IComboboxTriggerLabel = function SuiComboboxT
             (state) => `sui_combobox_trigger_label-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_trigger_label-outlined",
             (state) => state.multiple && "sui_combobox_trigger_label-multiple",
+            (state) => state.touched && "sui_combobox_trigger_label-touched",
+            (state) => state.dirty && "sui_combobox_trigger_label-dirty",
+            (state) => state.valid === false && "sui_combobox_trigger_label-invalid",
+            (state) => state.valid === true && "sui_combobox_trigger_label-valid",
+            (state) => state.valid === null && "sui_combobox_trigger_label-unverified",
+            (state) => state.filled && "sui_combobox_trigger_label-filled",
+            (state) => state.focused && "sui_combobox_trigger_label-focused",
           ),
         },
       )}

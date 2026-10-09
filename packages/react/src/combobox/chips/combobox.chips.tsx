@@ -80,6 +80,21 @@ export const ComboboxChips: IComboboxChips = function SuiComboboxChips(props) {
             (state) => `sui_combobox_chips-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_chips-outlined",
             (state) => state.multiple && "sui_combobox_chips-multiple",
+            (state) => state.disabled && "sui_combobox_chips-disabled",
+            (state) => state.touched && "sui_combobox_chips-touched",
+            (state) => state.dirty && "sui_combobox_chips-dirty",
+            (state) => state.valid === false && "sui_combobox_chips-invalid",
+            (state) => state.valid === true && "sui_combobox_chips-valid",
+            (state) => state.valid === null && "sui_combobox_chips-unverified",
+            (state) => state.filled && "sui_combobox_chips-filled",
+            (state) => state.focused && "sui_combobox_chips-focused",
+            (state) => state.open && "sui_combobox_chips-open",
+            (state) => state.readOnly && "sui_combobox_chips-readonly",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_combobox_chips-popup_side_${state.popupSide.replaceAll("-", "_")}`,
+            (state) => state.listEmpty && "sui_combobox_chips-list_empty",
+            (state) => state.placeholder && "sui_combobox_chips-placeholder",
           ),
         },
       )}

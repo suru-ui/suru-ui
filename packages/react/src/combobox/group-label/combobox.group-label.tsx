@@ -80,6 +80,14 @@ export const ComboboxGroupLabel: IComboboxGroupLabel = function SuiComboboxGroup
             (state) => `sui_combobox_group_label-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_group_label-outlined",
             (state) => state.multiple && "sui_combobox_group_label-multiple",
+            (state) => state.open && "sui_combobox_group_label-open",
+            (state) => state.empty && "sui_combobox_group_label-empty",
+            (state) => state.anchorHidden && "sui_combobox_group_label-anchor_hidden",
+            (state) => `sui_combobox_group_label-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_combobox_group_label-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_combobox_group_label-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

@@ -87,6 +87,14 @@ export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
             (state) => `sui_combobox_group-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_group-outlined",
             (state) => state.multiple && "sui_combobox_group-multiple",
+            (state) => state.open && "sui_combobox_group-open",
+            (state) => state.empty && "sui_combobox_group-empty",
+            (state) => state.anchorHidden && "sui_combobox_group-anchor_hidden",
+            (state) => `sui_combobox_group-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_combobox_group-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_combobox_group-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

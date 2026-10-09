@@ -80,6 +80,14 @@ export const ComboboxEmpty: IComboboxEmpty = function SuiComboboxEmpty(props) {
             (state) => `sui_combobox_empty-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_empty-outlined",
             (state) => state.multiple && "sui_combobox_empty-multiple",
+            (state) => state.open && "sui_combobox_empty-open",
+            (state) => state.empty && "sui_combobox_empty-empty",
+            (state) => state.anchorHidden && "sui_combobox_empty-anchor_hidden",
+            (state) => `sui_combobox_empty-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_combobox_empty-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_combobox_empty-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

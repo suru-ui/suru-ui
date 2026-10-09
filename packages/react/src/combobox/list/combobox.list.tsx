@@ -111,6 +111,13 @@ export const ComboboxList: IComboboxList = function SuiComboboxList(props: Combo
             (state) => state.outlined && "sui_combobox_list-outlined",
             (state) => state.multiple && "sui_combobox_list-multiple",
             (state) => state.empty && "sui_combobox_list-empty",
+            (state) => state.open && "sui_combobox_list-open",
+            (state) => state.anchorHidden && "sui_combobox_list-anchor_hidden",
+            (state) => `sui_combobox_list-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_combobox_list-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_combobox_list-transition_status_${state.transitionStatus}`,
           ),
         },
       )}

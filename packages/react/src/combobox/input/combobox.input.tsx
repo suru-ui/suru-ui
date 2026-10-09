@@ -94,6 +94,7 @@ export const ComboboxInput: IComboboxInput = function SuiComboboxInput(props) {
             (state) =>
               state.popupSide !== null &&
               `sui_combobox_input-popup_side_${state.popupSide.replaceAll("-", "_")}`,
+            (state) => state.placeholder && "sui_combobox_input-placeholder",
           ),
         },
       )}

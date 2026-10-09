@@ -83,7 +83,14 @@ export const ComboboxItemIndicator: IComboboxItemIndicator = function SuiCombobo
             (state) => `sui_combobox_item_indicator-variant_${state.variant}`,
             (state) => state.outlined && "sui_combobox_item_indicator-outlined",
             (state) => state.multiple && "sui_combobox_item_indicator-multiple",
+            (state) => state.disabled && "sui_combobox_item_indicator-disabled",
+            (state) => state.highlighted && "sui_combobox_item_indicator-highlighted",
             (state) => state.selected && "sui_combobox_item_indicator-selected",
+            (state) => state.open && "sui_combobox_item_indicator-open",
+            (state) => state.empty && "sui_combobox_item_indicator-empty",
+            (state) => state.anchorHidden && "sui_combobox_item_indicator-anchor_hidden",
+            (state) => `sui_combobox_item_indicator-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_combobox_item_indicator-align_${state.align}`,
             (state) =>
               state.transitionStatus !== undefined &&
               `sui_combobox_item_indicator-transition_status_${state.transitionStatus}`,

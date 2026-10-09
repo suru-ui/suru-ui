@@ -83,6 +83,10 @@ export const ComboboxBackdrop: IComboboxBackdrop = function SuiComboboxBackdrop(
             (state) => state.outlined && "sui_combobox_backdrop-outlined",
             (state) => state.multiple && "sui_combobox_backdrop-multiple",
             (state) => state.open && "sui_combobox_backdrop-open",
+            (state) => `sui_combobox_backdrop-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_combobox_backdrop-align_${state.align}`,
+            (state) => state.anchorHidden && "sui_combobox_backdrop-anchor_hidden",
+            (state) => state.empty && "sui_combobox_backdrop-empty",
             (state) =>
               state.transitionStatus !== undefined &&
               `sui_combobox_backdrop-transition_status_${state.transitionStatus}`,
