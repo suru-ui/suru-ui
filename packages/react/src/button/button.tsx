@@ -1,3 +1,6 @@
+import * as React from "react";
+
+import { getItemKey } from "../_item.js";
 import type { IComponent } from "../types.js";
 import {
   type ButtonContext,
@@ -5,6 +8,7 @@ import {
   type ButtonRootColor,
   type ButtonRootProps,
   type ButtonRootState,
+  type ButtonAddonProps,
   type ButtonRootRadius,
   type ButtonRootVariant,
   type IUseButtonContext,
@@ -15,6 +19,7 @@ import {
   type ButtonCircularProgressTrackProps,
   type ButtonCircularProgressFillRotationProps,
   ButtonRoot,
+  ButtonAddon,
   ButtonContent,
   ButtonPending,
   useButtonContext,
@@ -39,6 +44,11 @@ export type ButtonVariant = ButtonRootVariant;
  * {@link Button} の各パーツに渡す props です。
  */
 export type ButtonSlotProps = {
+  /**
+   * {@link ButtonAddon} に渡す props です。
+   */
+  readonly addon?: Omit<ButtonAddonProps, "children"> | undefined;
+
   /**
    * {@link ButtonCircularProgress} に渡す props です。
    */
@@ -80,9 +90,19 @@ export type ButtonState = ButtonRootState;
 namespace ButtonProps {
   export type Button = {
     /**
+     * ボタンの末尾に表示する内容です。
+     */
+    endAddons?: Iterable<React.ReactNode> | undefined;
+
+    /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
     slotProps?: ButtonSlotProps | undefined;
+
+    /**
+     * ボタンの先頭に表示する内容です。
+     */
+    startAddons?: Iterable<React.ReactNode> | undefined;
   };
 
   export type CircularProgress = Pick<ButtonCircularProgressProps, "indeterminate" | "percentage">;
@@ -113,10 +133,14 @@ export interface IUseButtonAPI {
 // API
 // ---
 
+const NONE = {} as never;
+
 /**
  * {@link Button} を構成する各パーツの props などを作成するための API です。
  */
 export class ButtonAPI {
+  private readonly buttonProps: Required<Omit<ButtonProps.Button, "slotProps">>;
+
   private readonly contentProps: Required<ButtonProps.Content>;
 
   private readonly circularProgressProps: Required<ButtonProps.CircularProgress>;
@@ -130,11 +154,38 @@ export class ButtonAPI {
    * @internal
    */
   public constructor(props: ButtonProps) {
-    const { children, slotProps = {}, percentage, indeterminate, ...rootProps } = props;
+    const {
+      children,
+      endAddons = [],
+      slotProps = {},
+      percentage,
+      startAddons = [],
+      indeterminate,
+      ...rootProps
+    } = props;
+    this.buttonProps = { endAddons, startAddons };
     this.contentProps = { children };
     this.circularProgressProps = { percentage, indeterminate };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
+  }
+
+  /**
+   * {@link ButtonAddon} に渡す props を取得します。
+   */
+  public getAddonProps(addon?: undefined): Omit<ButtonAddonProps, "children">;
+  public getAddonProps(addon?: React.ReactNode): ButtonAddonProps;
+  public getAddonProps(addon: React.ReactNode = NONE): ButtonAddonProps {
+    const { addon: props = {} } = this.slotProps;
+
+    if (addon === NONE) {
+      return props;
+    }
+
+    return {
+      ...props,
+      children: addon,
+    };
   }
 
   /**
@@ -206,6 +257,40 @@ export class ButtonAPI {
   public getRootProps(): Omit<ButtonRootProps, "children"> {
     return this.rootProps;
   }
+
+  /**
+   * ボタンの末尾に表示する {@link ButtonAddon} の一覧を取得します。
+   *
+   * @template T コールバックの返り値の型です。
+   * @returns コールバックの返り値の一覧です。
+   */
+  public mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
+    const { endAddons: addons = [] } = this.buttonProps;
+    const result: T[] = [];
+    let index = 0;
+    for (const addon of addons) {
+      result.push(callback(addon, index++));
+    }
+
+    return result;
+  }
+
+  /**
+   * ボタンの先頭に表示する {@link ButtonAddon} の一覧を取得します。
+   *
+   * @template T コールバックの返り値の型です。
+   * @returns コールバックの返り値の一覧です。
+   */
+  public mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
+    const { startAddons: addons = [] } = this.buttonProps;
+    const result: T[] = [];
+    let index = 0;
+    for (const addon of addons) {
+      result.push(callback(addon, index++));
+    }
+
+    return result;
+  }
 }
 
 /**
@@ -233,7 +318,13 @@ export const Button: IButton = /*#__PURE__*/ Object.assign(
 
     return (
       <ButtonRoot {...api.getRootProps()}>
+        {api.mapStartAddons((addon, index) => (
+          <ButtonAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
+        ))}
         <ButtonContent {...api.getContentProps()} />
+        {api.mapEndAddons((addon, index) => (
+          <ButtonAddon {...api.getAddonProps(addon)} key={getItemKey(addon) ?? index} />
+        ))}
         <ButtonPending {...api.getPendingProps()}>
           <ButtonCircularProgress {...api.getCircularProgressProps()}>
             <ButtonCircularProgressTrack {...api.getCircularProgressTrackProps()} />

@@ -1,0 +1,152 @@
+/* ルートの hover / active 状態に依存し、公開変数の代入をルート側に保持する必要があるため、ルート起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_button) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  .sui_button_addon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-feature-settings: "palt";
+    vertical-align: middle;
+    white-space: nowrap;
+    text-box: trim-both cap alphabetic;
+
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+/* 変数 */
+:scope {
+  --sui_button_addon-gap: ;
+  --sui_button_addon-font_family: ;
+  --sui_button_addon-font_size: ;
+  --sui_button_addon-font_weight: ;
+  --sui_button_addon-line_height: ;
+  --sui_button_addon-color-idle: ;
+  --sui_button_addon-color-hover: ;
+  --sui_button_addon-color-active: ;
+  --sui_button_addon-letter_spacing: ;
+  --sui_button_addon__svg-size: ;
+  --sui_button_addon__svg-color: ;
+}
+
+/* 可変 */
+:scope {
+  .sui_button_addon {
+    gap: var(--sui_button_addon-gap);
+    font-family: var(--sui_button_addon-font_family);
+    font-size: var(--sui_button_addon-font_size);
+    font-weight: var(--sui_button_addon-font_weight);
+    line-height: var(--sui_button_addon-line_height);
+    color: var(--_sui_button_addon-color, var(--sui_button_addon-color-idle));
+    letter-spacing: var(--sui_button_addon-letter_spacing);
+
+    svg:not(.sui-ignore) {
+      width: var(--sui_button_addon__svg-size);
+      height: var(--sui_button_addon__svg-size);
+      color: var(--sui_button_addon__svg-color);
+    }
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_button_addon-gap: var(--sui_button-gap);
+  --sui_button_addon-font_family: var(--sui_button-font_family);
+  --sui_button_addon-font_size: var(--sui_button-font_size);
+  --sui_button_addon-font_weight: var(--sui_button-font_weight);
+  --sui_button_addon-line_height: var(--sui_button-line_height);
+  --sui_button_addon-color-idle: var(--sui_button-color-idle);
+  --sui_button_addon-color-hover: var(--sui_button-color-hover);
+  --sui_button_addon-color-active: var(--sui_button-color-active);
+  --sui_button_addon-letter_spacing: var(--sui_button-letter_spacing);
+  --sui_button_addon__svg-size: var(--sui_button__svg-size);
+  --sui_button_addon__svg-color: var(--sui_button__svg-color);
+}
+
+/* 変異 */
+:scope {
+  &:not(.sui_button-disabled) {
+    @media (any-hover: hover) {
+      &:hover {
+        --_sui_button_addon-color: var(--sui_button_addon-color-hover);
+      }
+    }
+
+    &:active {
+      --_sui_button_addon-color: var(--sui_button_addon-color-active);
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* pending */
+/* ルートの pending 状態とオーバーレイの兄弟関係に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_button) to ([data-scope]) {
+
+:scope {
+  &.sui_button-pending:has(.sui_button_pending-enabled.sui_button_pending-overlay)
+    .sui_button_addon {
+    visibility: hidden;
+  }
+}
+
+} /* @scope */
+} /* @layer */
+
+/* disabled */
+/* アドオン自身に disabled 相当のクラスが無く、ルートの disabled / variant 状態に依存するため、ルート起点の別ブロックにします。 */
+@layer sui.important {
+@scope (.sui_button) to ([data-scope]) {
+
+:scope {
+  &.sui_button-disabled {
+    &.sui_button-variant_solid .sui_button_addon {
+      color: var(--sui-disabled-solid-canvas_text);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-solid-canvas_text),
+                 var(--sui-disabled-solid-canvas)
+               );
+      }
+    }
+
+    &.sui_button-variant_naked .sui_button_addon {
+      color: var(--sui-disabled-naked-canvas_text);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-naked-canvas_text),
+                 var(--sui-disabled-naked-canvas)
+               );
+      }
+    }
+
+    &.sui_button-variant_liquid .sui_button_addon {
+      color: var(--sui-disabled-liquid-canvas_text);
+
+      svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+                 var(--sui-disabled-liquid-canvas_text),
+                 var(--sui-disabled-liquid-canvas)
+               );
+      }
+    }
+  }
+}
+
+} /* @scope */
+} /* @layer */
