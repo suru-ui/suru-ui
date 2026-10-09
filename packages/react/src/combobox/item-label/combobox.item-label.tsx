@@ -1,4 +1,6 @@
+import { ContextMissingError } from "../../errors.js";
 import type { IComponent } from "../../types.js";
+import { type ComboboxChipContext, useComboboxChipContext } from "../chip/combobox.chip.context.js";
 import { type ComboboxItemContext, useComboboxItemContext } from "../item/combobox.item.context.js";
 
 /**
@@ -14,7 +16,10 @@ export interface IComboboxItemLabelRenderer<TItem = any> {
    * @param context コンテクストです。
    * @returns レンダリングする内容です。
    */
-  (item: TItem, context: ComboboxItemContext<TItem>): IComponent.Return;
+  (
+    item: TItem,
+    context: ComboboxChipContext<TItem> | ComboboxItemContext<TItem>,
+  ): IComponent.Return;
 }
 
 /**
@@ -64,7 +69,16 @@ export interface IComboboxItemLabel extends IComponent<ComboboxItemLabelProps> {
 export const ComboboxItemLabel: IComboboxItemLabel = function SuiComboboxItemLabel(
   props: ComboboxItemLabelProps,
 ) {
-  const ctx = useComboboxItemContext();
+  const chipCtx = useComboboxChipContext(true);
+  const itemCtx = useComboboxItemContext(true);
+  const ctx = chipCtx || itemCtx;
+  if (!ctx) {
+    throw new ContextMissingError({
+      contextName: "(ComboboxChipContext | ComboboxItemContext)",
+      providerName: "(ComboboxChip | ComboboxItem)",
+    });
+  }
+
   const { children = ctx.itemToStringLabel } = props;
 
   return children(ctx.value, ctx);

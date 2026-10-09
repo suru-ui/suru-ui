@@ -13,10 +13,21 @@ import type { ComboboxChipVariant } from "./combobox.chip.jsx";
  */
 export type ComboboxChipContext<TItem = any> = Readonly<
   Override<
-    Override<ChipsContext<TItem>, Combobox.Chip.State>,
-    {
-      variant: ComboboxChipVariant;
-    }
+    ChipsContext<TItem>,
+    Override<
+      {
+        /**
+         * 項目の値です。
+         */
+        value: TItem | undefined;
+
+        /**
+         * チップの主な外観です。
+         */
+        variant: ComboboxChipVariant;
+      },
+      Combobox.Chip.State
+    >
   >
 >;
 

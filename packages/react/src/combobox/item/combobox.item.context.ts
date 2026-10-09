@@ -11,7 +11,7 @@ type ItemContextValue<TItem> = {
   /**
    * 項目の値です。
    */
-  readonly value: TItem;
+  value: TItem | undefined;
 };
 
 type ItemContext<TParentContext, TItem> = Readonly<

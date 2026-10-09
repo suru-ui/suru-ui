@@ -132,55 +132,52 @@ export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: Combo
     className,
     ...otherProps
   } = props;
-  const itemCtx = React.useMemo(() => ({ value }) as ComboboxItemContext, [value]);
 
   return (
-    <ComboboxItemContext value={itemCtx}>
-      <Combobox.Chip
-        {...otherProps}
-        {...proxyRenderProps<Combobox.Chip.State, ComboboxChipState>(
-          (state) => ({ ...ctx, color, radius, variant, outlined, ...state }),
-          {
-            style,
-            render: (htmlProps, state) => (
-              <ComboboxChipContext value={state}>
-                <RenderElement
-                  state={state}
-                  render={render}
-                  htmlProps={htmlProps}
-                  defaultTagName="div"
-                />
-              </ComboboxChipContext>
-            ),
-            className: cn<ComboboxChipState>(
-              className,
-              "sui_combobox_chip",
-              (state) => `sui_combobox_chip-color_${state.color}`,
-              (state) => `sui_combobox_chip-radius_${state.radius}`,
-              (state) => `sui_combobox_chip-variant_${state.variant}`,
-              (state) => state.outlined && "sui_combobox_chip-outlined",
-              (state) => `sui_combobox_chip-size_${state.size}`,
-              (state) => state.multiple && "sui_combobox_chip-multiple",
-              (state) => state.disabled && "sui_combobox_chip-disabled",
-              (state) => state.touched && "sui_combobox_chip-touched",
-              (state) => state.dirty && "sui_combobox_chip-dirty",
-              (state) => state.valid === false && "sui_combobox_chip-invalid",
-              (state) => state.valid === true && "sui_combobox_chip-valid",
-              (state) => state.valid === null && "sui_combobox_chip-unverified",
-              (state) => state.filled && "sui_combobox_chip-filled",
-              (state) => state.focused && "sui_combobox_chip-focused",
-              (state) => state.open && "sui_combobox_chip-open",
-              (state) => state.readOnly && "sui_combobox_chip-readonly",
-              (state) =>
-                state.popupSide !== null &&
-                `sui_combobox_chip-popup_side_${state.popupSide.replaceAll("-", "_")}`,
-              (state) => state.listEmpty && "sui_combobox_chip-list_empty",
-              (state) => state.placeholder && "sui_combobox_chip-placeholder",
-            ),
-          },
-        )}
-      />
-    </ComboboxItemContext>
+    <Combobox.Chip
+      {...otherProps}
+      {...proxyRenderProps<Combobox.Chip.State, ComboboxChipState>(
+        (state) => ({ ...ctx, color, value, radius, variant, outlined, ...state }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <ComboboxChipContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </ComboboxChipContext>
+          ),
+          className: cn<ComboboxChipState>(
+            className,
+            "sui_combobox_chip",
+            (state) => `sui_combobox_chip-color_${state.color}`,
+            (state) => `sui_combobox_chip-radius_${state.radius}`,
+            (state) => `sui_combobox_chip-variant_${state.variant}`,
+            (state) => state.outlined && "sui_combobox_chip-outlined",
+            (state) => `sui_combobox_chip-size_${state.size}`,
+            (state) => state.multiple && "sui_combobox_chip-multiple",
+            (state) => state.disabled && "sui_combobox_chip-disabled",
+            (state) => state.touched && "sui_combobox_chip-touched",
+            (state) => state.dirty && "sui_combobox_chip-dirty",
+            (state) => state.valid === false && "sui_combobox_chip-invalid",
+            (state) => state.valid === true && "sui_combobox_chip-valid",
+            (state) => state.valid === null && "sui_combobox_chip-unverified",
+            (state) => state.filled && "sui_combobox_chip-filled",
+            (state) => state.focused && "sui_combobox_chip-focused",
+            (state) => state.open && "sui_combobox_chip-open",
+            (state) => state.readOnly && "sui_combobox_chip-readonly",
+            (state) =>
+              state.popupSide !== null &&
+              `sui_combobox_chip-popup_side_${state.popupSide.replaceAll("-", "_")}`,
+            (state) => state.listEmpty && "sui_combobox_chip-list_empty",
+            (state) => state.placeholder && "sui_combobox_chip-placeholder",
+          ),
+        },
+      )}
+    />
   );
 };
 
