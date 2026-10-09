@@ -4,26 +4,24 @@ import * as React from "react";
 
 import mergeProps from "../../_merge-props.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
+import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { useAutocompleteGroupContext } from "../group/autocomplete.group.context.js";
-import type { AutocompleteGroupContext } from "../group/autocomplete.group.context.js";
 import { useAutocompleteListContext } from "../list/autocomplete.list.context.js";
-import type { AutocompleteListContext } from "../list/autocomplete.list.context.js";
 import { AutocompleteItemContext } from "./autocomplete.item.context.js";
 
 /**
  * {@link AutocompleteItem} の状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type AutocompleteItemState = Override<
-  AutocompleteListContext & AutocompleteGroupContext,
-  Override<Button.Root.State, Autocomplete.Item.State>
->;
+export type AutocompleteItemState<TValue = any> = AutocompleteItemContext<TValue>;
 
 export namespace AutocompleteItemProps {
-  export type Render = RenderProps<AutocompleteItemState>;
+  export type Render<TValue = any> = RenderProps<AutocompleteItemState<TValue>>;
 
   export type SuruUI = {};
 
@@ -62,7 +60,7 @@ export namespace AutocompleteItemProps {
  *
  * @template TValue 項目の値の型です。
  */
-export type AutocompleteItemProps<TValue = any> = AutocompleteItemProps.Render &
+export type AutocompleteItemProps<TValue = any> = AutocompleteItemProps.Render<TValue> &
   AutocompleteItemProps.SuruUI &
   AutocompleteItemProps.BaseUI<TValue> &
   AutocompleteItemProps.HTML;
@@ -105,82 +103,91 @@ export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
     nativeButton,
     focusableWhenDisabled,
   };
-  const itemCtx = React.useMemo<AutocompleteItemContext>(() => ({ value }), [value]);
 
   return (
-    <AutocompleteItemContext value={itemCtx}>
-      <Autocomplete.Item
-        {...otherProps}
-        {...baseuiProps}
-        render={(htmlProps: {}, itemState) => {
-          const buttonRootProps: Required<
-            Button.Root.Props.SuruUI &
-              Button.Root.Props.BaseUI &
-              Pick<Button.Root.Props.HTML, "disabled">
-          > = {
-            item: true,
-            size: ctx.size,
-            color: "grey",
-            muted: undefined,
-            radius: undefined,
-            pending: undefined,
-            squared: undefined,
-            variant: "naked",
-            disabled: itemState.disabled,
-            outlined: undefined,
-            nativeButton,
-            focusableWhenDisabled,
-          };
+    <Autocomplete.Item
+      {...otherProps}
+      {...baseuiProps}
+      render={(htmlProps: {}, itemState) => {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
+          item: true,
+          size: ctx.size,
+          color: "grey",
+          muted: undefined,
+          radius: undefined,
+          pending: undefined,
+          squared: undefined,
+          variant: "naked",
+          disabled: itemState.disabled,
+          outlined: undefined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
 
-          return (
-            <Button.Root
-              {...mergeProps<typeof Button.Root>([
-                htmlProps,
-                buttonRootProps,
-                proxyRenderProps<Button.Root.State, AutocompleteItemState>(
-                  (state) => ({ ...ctx, ...state, ...itemState }),
-                  {
-                    style,
-                    render,
-                    className: cn<AutocompleteItemState>(
-                      className,
-                      "sui_autocomplete_item",
-                      (state) => state.disabled && "sui_autocomplete_item-disabled",
-                      (state) => state.highlighted && "sui_autocomplete_item-highlighted",
-                      (state) => `sui_autocomplete_item-size_${state.size}`,
-                      (state) => `sui_autocomplete_item-color_${state.color}`,
-                      (state) => `sui_autocomplete_item-radius_${state.radius}`,
-                      (state) => `sui_autocomplete_item-variant_${state.variant}`,
-                      (state) => state.outlined && "sui_autocomplete_item-outlined",
-                      (state) => state.open && "sui_autocomplete_item-open",
-                      (state) => state.empty && "sui_autocomplete_item-empty",
-                      (state) => state.anchorHidden && "sui_autocomplete_item-anchor_hidden",
-                      (state) => `sui_autocomplete_item-side_${state.side.replaceAll("-", "_")}`,
-                      (state) => `sui_autocomplete_item-align_${state.align}`,
-                      (state) =>
-                        state.transitionStatus !== undefined &&
-                        `sui_autocomplete_item-transition_status_${state.transitionStatus}`,
-                    ),
-                  },
-                ),
-              ])}
-            />
-          );
-        }}
-      />
-    </AutocompleteItemContext>
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps<Button.Root.State, AutocompleteItemState>(
+                (buttonState) => ({ ...ctx, value, ...buttonState, ...itemState }),
+                {
+                  style,
+                  render: (htmlProps, state) => (
+                    <AutocompleteItemContext value={state}>
+                      <RenderElement
+                        state={state}
+                        render={render}
+                        htmlProps={htmlProps}
+                        defaultTagName="div"
+                      />
+                    </AutocompleteItemContext>
+                  ),
+                  className: cn<AutocompleteItemState>(
+                    className,
+                    "sui_autocomplete_item",
+                    (state) => state.disabled && "sui_autocomplete_item-disabled",
+                    (state) => state.highlighted && "sui_autocomplete_item-highlighted",
+                    (state) => `sui_autocomplete_item-size_${state.size}`,
+                    (state) => `sui_autocomplete_item-color_${state.color}`,
+                    (state) => `sui_autocomplete_item-radius_${state.radius}`,
+                    (state) => `sui_autocomplete_item-variant_${state.variant}`,
+                    (state) => state.outlined && "sui_autocomplete_item-outlined",
+                    (state) => state.open && "sui_autocomplete_item-open",
+                    (state) => state.empty && "sui_autocomplete_item-empty",
+                    (state) => state.anchorHidden && "sui_autocomplete_item-anchor_hidden",
+                    (state) => `sui_autocomplete_item-side_${state.side.replaceAll("-", "_")}`,
+                    (state) => `sui_autocomplete_item-align_${state.align}`,
+                    (state) =>
+                      state.transitionStatus !== undefined &&
+                      `sui_autocomplete_item-transition_status_${state.transitionStatus}`,
+                  ),
+                },
+              ),
+            ])}
+          />
+        );
+      }}
+    />
   );
 };
 
 export { AutocompleteItem as Item };
 
 export namespace Item {
-  export type State = AutocompleteItemState;
+  export type State<TValue = any> = AutocompleteItemState<TValue>;
 
-  export type Props<TValue = any> = Props.Render & Props.SuruUI & Props.BaseUI<TValue> & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> &
+    Props.SuruUI &
+    Props.BaseUI<TValue> &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = AutocompleteItemProps.Render;
+    export type Render<TValue = any> = AutocompleteItemProps.Render<TValue>;
 
     export type SuruUI = AutocompleteItemProps.SuruUI;
 
