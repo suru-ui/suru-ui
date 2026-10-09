@@ -13,11 +13,13 @@ import { ComboboxBackdropContext } from "./combobox.backdrop.context.js";
 
 /**
  * {@link ComboboxBackdrop} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxBackdropState = ComboboxBackdropContext;
+export type ComboboxBackdropState<TItem = any> = ComboboxBackdropContext<TItem>;
 
 export namespace ComboboxBackdropProps {
-  export type Render = RenderProps<ComboboxBackdropState>;
+  export type Render<TItem = any> = RenderProps<ComboboxBackdropState<TItem>>;
 
   export type SuruUI = {};
 
@@ -94,12 +96,12 @@ export const ComboboxBackdrop: IComboboxBackdrop = function SuiComboboxBackdrop(
 export { ComboboxBackdrop as Backdrop };
 
 export namespace Backdrop {
-  export type State = ComboboxBackdropState;
+  export type State<TItem = any> = ComboboxBackdropState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxBackdropProps.Render;
+    export type Render<TItem = any> = ComboboxBackdropProps.Render<TItem>;
 
     export type SuruUI = ComboboxBackdropProps.SuruUI;
 

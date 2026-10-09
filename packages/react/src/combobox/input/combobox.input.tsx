@@ -11,11 +11,13 @@ import { ComboboxInputContext } from "./combobox.input.context.js";
 
 /**
  * {@link ComboboxInput} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxInputState = ComboboxInputContext;
+export type ComboboxInputState<TItem = any> = ComboboxInputContext<TItem>;
 
 export namespace ComboboxInputProps {
-  export type Render = RenderProps<ComboboxInputState>;
+  export type Render<TItem = any> = RenderProps<ComboboxInputState<TItem>>;
 
   export type SuruUI = {};
 
@@ -102,12 +104,12 @@ export const ComboboxInput: IComboboxInput = function SuiComboboxInput(props) {
 export { ComboboxInput as Input };
 
 export namespace Input {
-  export type State = ComboboxInputState;
+  export type State<TItem = any> = ComboboxInputState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxInputProps.Render;
+    export type Render<TItem = any> = ComboboxInputProps.Render<TItem>;
 
     export type SuruUI = ComboboxInputProps.SuruUI;
 

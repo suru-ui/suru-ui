@@ -11,8 +11,10 @@ import { ComboboxPopupContext } from "./combobox.popup.context.js";
 
 /**
  * {@link ComboboxPopup} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxPopupState = ComboboxPopupContext;
+export type ComboboxPopupState<TItem = any> = ComboboxPopupContext<TItem>;
 
 /**
  * ポップアップ内の入力欄の配置です。
@@ -25,7 +27,7 @@ export type ComboboxPopupState = ComboboxPopupContext;
 export type ComboboxPopupInputPosition = "top" | "bottom" | "start" | "end";
 
 export namespace ComboboxPopupProps {
-  export type Render = RenderProps<ComboboxPopupState>;
+  export type Render<TItem = any> = RenderProps<ComboboxPopupState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -130,12 +132,12 @@ export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
 export { ComboboxPopup as Popup };
 
 export namespace Popup {
-  export type State = ComboboxPopupState;
+  export type State<TItem = any> = ComboboxPopupState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxPopupProps.Render;
+    export type Render<TItem = any> = ComboboxPopupProps.Render<TItem>;
 
     export type SuruUI = ComboboxPopupProps.SuruUI;
 

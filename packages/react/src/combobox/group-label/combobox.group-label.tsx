@@ -11,11 +11,13 @@ import { ComboboxGroupLabelContext } from "./combobox.group-label.context.js";
 
 /**
  * {@link ComboboxGroupLabel} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxGroupLabelState = ComboboxGroupLabelContext;
+export type ComboboxGroupLabelState<TItem = any> = ComboboxGroupLabelContext<TItem>;
 
 export namespace ComboboxGroupLabelProps {
-  export type Render = RenderProps<ComboboxGroupLabelState>;
+  export type Render<TItem = any> = RenderProps<ComboboxGroupLabelState<TItem>>;
 
   export type SuruUI = {};
 
@@ -88,12 +90,12 @@ export const ComboboxGroupLabel: IComboboxGroupLabel = function SuiComboboxGroup
 export { ComboboxGroupLabel as GroupLabel };
 
 export namespace GroupLabel {
-  export type State = ComboboxGroupLabelState;
+  export type State<TItem = any> = ComboboxGroupLabelState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxGroupLabelProps.Render;
+    export type Render<TItem = any> = ComboboxGroupLabelProps.Render<TItem>;
 
     export type SuruUI = ComboboxGroupLabelProps.SuruUI;
 

@@ -11,11 +11,13 @@ import { ComboboxGroupContext } from "./combobox.group.context.js";
 
 /**
  * {@link ComboboxGroup} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxGroupState = ComboboxGroupContext;
+export type ComboboxGroupState<TItem = any> = ComboboxGroupContext<TItem>;
 
 export namespace ComboboxGroupProps {
-  export type Render = RenderProps<ComboboxGroupState>;
+  export type Render<TItem = any> = RenderProps<ComboboxGroupState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -45,7 +47,7 @@ export namespace ComboboxGroupProps {
  *
  * @template TItem 項目の型です。
  */
-export type ComboboxGroupProps<TItem = any> = ComboboxGroupProps.Render &
+export type ComboboxGroupProps<TItem = any> = ComboboxGroupProps.Render<TItem> &
   ComboboxGroupProps.SuruUI<TItem> &
   ComboboxGroupProps.BaseUI &
   ComboboxGroupProps.HTML;
@@ -96,12 +98,15 @@ export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
 export { ComboboxGroup as Group };
 
 export namespace Group {
-  export type State = ComboboxGroupState;
+  export type State<TItem = any> = ComboboxGroupState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI<TItem> & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxGroupProps.Render;
+    export type Render<TItem = any> = ComboboxGroupProps.Render<TItem>;
 
     export type SuruUI<TItem = any> = ComboboxGroupProps.SuruUI<TItem>;
 

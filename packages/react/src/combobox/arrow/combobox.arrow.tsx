@@ -11,11 +11,13 @@ import { ComboboxArrowContext } from "./combobox.arrow.context.js";
 
 /**
  * {@link ComboboxArrow} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxArrowState = ComboboxArrowContext;
+export type ComboboxArrowState<TItem = any> = ComboboxArrowContext<TItem>;
 
 export namespace ComboboxArrowProps {
-  export type Render = RenderProps<ComboboxArrowState>;
+  export type Render<TItem = any> = RenderProps<ComboboxArrowState<TItem>>;
 
   export type SuruUI = {};
 
@@ -92,12 +94,12 @@ export const ComboboxArrow: IComboboxArrow = function SuiComboboxArrow(props) {
 export { ComboboxArrow as Arrow };
 
 export namespace Arrow {
-  export type State = ComboboxArrowState;
+  export type State<TItem = any> = ComboboxArrowState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxArrowProps.Render;
+    export type Render<TItem = any> = ComboboxArrowProps.Render<TItem>;
 
     export type SuruUI = ComboboxArrowProps.SuruUI;
 

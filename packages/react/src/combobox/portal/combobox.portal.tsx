@@ -10,11 +10,16 @@ import type { ComboboxPortalContext } from "./combobox.portal.context.js";
 
 /**
  * {@link ComboboxPortal} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxPortalState = Override<ComboboxPortalContext, Combobox.Portal.State>;
+export type ComboboxPortalState<TItem = any> = Override<
+  ComboboxPortalContext<TItem>,
+  Combobox.Portal.State
+>;
 
 export namespace ComboboxPortalProps {
-  export type Render = RenderProps<ComboboxPortalState>;
+  export type Render<TItem = any> = RenderProps<ComboboxPortalState<TItem>>;
 
   export type SuruUI = {};
 
@@ -88,12 +93,12 @@ export const ComboboxPortal: IComboboxPortal = function SuiComboboxPortal(props)
 export { ComboboxPortal as Portal };
 
 export namespace Portal {
-  export type State = ComboboxPortalState;
+  export type State<TItem = any> = ComboboxPortalState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxPortalProps.Render;
+    export type Render<TItem = any> = ComboboxPortalProps.Render<TItem>;
 
     export type SuruUI = ComboboxPortalProps.SuruUI;
 

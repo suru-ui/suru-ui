@@ -22,11 +22,13 @@ export type IComboboxListItemRenderer<TItem = any> = IComboboxCollectionItemRend
 
 /**
  * {@link ComboboxList} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxListState = ComboboxListContext;
+export type ComboboxListState<TItem = any> = ComboboxListContext<TItem>;
 
 export namespace ComboboxListProps {
-  export type Render = RenderProps<ComboboxListState>;
+  export type Render<TItem = any> = RenderProps<ComboboxListState<TItem>>;
 
   export type SuruUI = {};
 
@@ -57,7 +59,7 @@ export namespace ComboboxListProps {
  *
  * @template TItem 項目の型です。
  */
-export type ComboboxListProps<TItem = any> = ComboboxListProps.Render &
+export type ComboboxListProps<TItem = any> = ComboboxListProps.Render<TItem> &
   ComboboxListProps.SuruUI &
   ComboboxListProps.BaseUI<TItem> &
   ComboboxListProps.HTML;
@@ -121,12 +123,15 @@ export const ComboboxList: IComboboxList = function SuiComboboxList(props: Combo
 export { ComboboxList as List };
 
 export namespace List {
-  export type State = ComboboxListState;
+  export type State<TItem = any> = ComboboxListState<TItem>;
 
-  export type Props<TItem = any> = Props.Render & Props.SuruUI & Props.BaseUI<TItem> & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI &
+    Props.BaseUI<TItem> &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxListProps.Render;
+    export type Render<TItem = any> = ComboboxListProps.Render<TItem>;
 
     export type SuruUI = ComboboxListProps.SuruUI;
 

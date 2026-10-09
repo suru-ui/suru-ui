@@ -11,11 +11,13 @@ import { ComboboxTriggerLabelContext } from "./combobox.trigger-label.context.js
 
 /**
  * {@link ComboboxTriggerLabel} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxTriggerLabelState = ComboboxTriggerLabelContext;
+export type ComboboxTriggerLabelState<TItem = any> = ComboboxTriggerLabelContext<TItem>;
 
 export namespace ComboboxTriggerLabelProps {
-  export type Render = RenderProps<ComboboxTriggerLabelState>;
+  export type Render<TItem = any> = RenderProps<ComboboxTriggerLabelState<TItem>>;
 
   export type SuruUI = {};
 
@@ -89,12 +91,12 @@ export const ComboboxTriggerLabel: IComboboxTriggerLabel = function SuiComboboxT
 export { ComboboxTriggerLabel as TriggerLabel };
 
 export namespace TriggerLabel {
-  export type State = ComboboxTriggerLabelState;
+  export type State<TItem = any> = ComboboxTriggerLabelState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxTriggerLabelProps.Render;
+    export type Render<TItem = any> = ComboboxTriggerLabelProps.Render<TItem>;
 
     export type SuruUI = ComboboxTriggerLabelProps.SuruUI;
 

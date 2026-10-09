@@ -14,11 +14,13 @@ import { ComboboxSeparatorContext } from "./combobox.separator.context.js";
 
 /**
  * {@link ComboboxSeparator} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxSeparatorState = ComboboxSeparatorContext;
+export type ComboboxSeparatorState<TItem = any> = ComboboxSeparatorContext<TItem>;
 
 export namespace ComboboxSeparatorProps {
-  export type Render = RenderProps<ComboboxSeparatorState>;
+  export type Render<TItem = any> = RenderProps<ComboboxSeparatorState<TItem>>;
 
   export type SuruUI = {};
 
@@ -94,12 +96,12 @@ export const ComboboxSeparator: IComboboxSeparator = function SuiComboboxSeparat
 export { ComboboxSeparator as Separator };
 
 export namespace Separator {
-  export type State = ComboboxSeparatorState;
+  export type State<TItem = any> = ComboboxSeparatorState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxSeparatorProps.Render;
+    export type Render<TItem = any> = ComboboxSeparatorProps.Render<TItem>;
 
     export type SuruUI = ComboboxSeparatorProps.SuruUI;
 

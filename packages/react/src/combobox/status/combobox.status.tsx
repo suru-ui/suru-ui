@@ -13,11 +13,13 @@ import { ComboboxStatusContext } from "./combobox.status.context.js";
 
 /**
  * {@link ComboboxStatus} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxStatusState = ComboboxStatusContext;
+export type ComboboxStatusState<TItem = any> = ComboboxStatusContext<TItem>;
 
 export namespace ComboboxStatusProps {
-  export type Render = RenderProps<ComboboxStatusState>;
+  export type Render<TItem = any> = RenderProps<ComboboxStatusState<TItem>>;
 
   export type SuruUI = {};
 
@@ -90,12 +92,12 @@ export const ComboboxStatus: IComboboxStatus = function SuiComboboxStatus(props)
 export { ComboboxStatus as Status };
 
 export namespace Status {
-  export type State = ComboboxStatusState;
+  export type State<TItem = any> = ComboboxStatusState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxStatusProps.Render;
+    export type Render<TItem = any> = ComboboxStatusProps.Render<TItem>;
 
     export type SuruUI = ComboboxStatusProps.SuruUI;
 

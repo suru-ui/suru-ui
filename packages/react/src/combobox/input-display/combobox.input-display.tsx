@@ -9,11 +9,13 @@ import type { ComboboxInputDisplayContext } from "./combobox.input-display.conte
 
 /**
  * {@link ComboboxInputDisplay} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxInputDisplayState = ComboboxInputDisplayContext;
+export type ComboboxInputDisplayState<TItem = any> = ComboboxInputDisplayContext<TItem>;
 
 export namespace ComboboxInputDisplayProps {
-  export type Render = RenderProps<ComboboxInputDisplayState>;
+  export type Render<TItem = any> = RenderProps<ComboboxInputDisplayState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -82,12 +84,12 @@ export const ComboboxInputDisplay: IComboboxInputDisplay = function SuiComboboxI
 export { ComboboxInputDisplay as InputDisplay };
 
 export namespace InputDisplay {
-  export type State = ComboboxInputDisplayState;
+  export type State<TItem = any> = ComboboxInputDisplayState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxInputDisplayProps.Render;
+    export type Render<TItem = any> = ComboboxInputDisplayProps.Render<TItem>;
 
     export type SuruUI = ComboboxInputDisplayProps.SuruUI;
 

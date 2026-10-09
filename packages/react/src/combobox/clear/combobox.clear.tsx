@@ -13,11 +13,13 @@ import { ComboboxClearContext } from "./combobox.clear.context.js";
 
 /**
  * {@link ComboboxClear} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxClearState = ComboboxClearContext;
+export type ComboboxClearState<TItem = any> = ComboboxClearContext<TItem>;
 
 export namespace ComboboxClearProps {
-  export type Render = RenderProps<ComboboxClearState>;
+  export type Render<TItem = any> = RenderProps<ComboboxClearState<TItem>>;
 
   export type SuruUI = {};
 
@@ -109,12 +111,12 @@ export const ComboboxClear: IComboboxClear = function SuiComboboxClear(props) {
 export { ComboboxClear as Clear };
 
 export namespace Clear {
-  export type State = ComboboxClearState;
+  export type State<TItem = any> = ComboboxClearState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxClearProps.Render;
+    export type Render<TItem = any> = ComboboxClearProps.Render<TItem>;
 
     export type SuruUI = ComboboxClearProps.SuruUI;
 

@@ -8,11 +8,13 @@ import type { ComboboxAddonContext } from "./combobox.addon.context.js";
 
 /**
  * {@link ComboboxAddon} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxAddonState = ComboboxAddonContext;
+export type ComboboxAddonState<TItem = any> = ComboboxAddonContext<TItem>;
 
 export namespace ComboboxAddonProps {
-  export type Render = RenderProps<ComboboxAddonState>;
+  export type Render<TItem = any> = RenderProps<ComboboxAddonState<TItem>>;
 
   export type SuruUI = {};
 
@@ -65,12 +67,12 @@ export const ComboboxAddon: IComboboxAddon = function SuiComboboxAddon(props) {
 export { ComboboxAddon as Addon };
 
 export namespace Addon {
-  export type State = ComboboxAddonState;
+  export type State<TItem = any> = ComboboxAddonState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxAddonProps.Render;
+    export type Render<TItem = any> = ComboboxAddonProps.Render<TItem>;
 
     export type SuruUI = ComboboxAddonProps.SuruUI;
 

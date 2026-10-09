@@ -51,7 +51,7 @@ export type ComboboxRootColor = ComboboxContextColor;
  * @template TValue 項目の値の型です。
  */
 export type ComboboxRootLabeledItemObject<TValue = any> = Override<
-  Omit<ComboboxItemProps, "children">,
+  Omit<ComboboxItemProps<TValue>, "children">,
   {
     /**
      * 表示ラベルです。
@@ -294,7 +294,7 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
 export { ComboboxRoot as Root };
 
 export namespace Root {
-  export type State = ComboboxRootState;
+  export type State<TItem = any> = ComboboxRootState<TItem>;
 
   export type Props<
     TItem = any,

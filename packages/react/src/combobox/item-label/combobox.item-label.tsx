@@ -14,7 +14,7 @@ export interface IComboboxItemLabelRenderer<TItem = any> {
    * @param context コンテクストです。
    * @returns レンダリングする内容です。
    */
-  (item: TItem, context: ComboboxItemContext): IComponent.Return;
+  (item: TItem, context: ComboboxItemContext<TItem>): IComponent.Return;
 }
 
 /**

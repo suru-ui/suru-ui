@@ -17,8 +17,10 @@ import { ComboboxInputGroupContext } from "./combobox.input-group.context.js";
 
 /**
  * {@link ComboboxInputGroup} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxInputGroupState = ComboboxInputGroupContext;
+export type ComboboxInputGroupState<TItem = any> = ComboboxInputGroupContext<TItem>;
 
 /**
  * 入力グループの配色です。
@@ -54,7 +56,7 @@ export type ComboboxInputGroupSize = ComboboxContextSize;
 export type ComboboxInputGroupVariant = ComboboxContextVariant;
 
 export namespace ComboboxInputGroupProps {
-  export type Render = RenderProps<ComboboxInputGroupState>;
+  export type Render<TItem = any> = RenderProps<ComboboxInputGroupState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -191,12 +193,12 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
 export { ComboboxInputGroup as InputGroup };
 
 export namespace InputGroup {
-  export type State = ComboboxInputGroupState;
+  export type State<TItem = any> = ComboboxInputGroupState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxInputGroupProps.Render;
+    export type Render<TItem = any> = ComboboxInputGroupProps.Render<TItem>;
 
     export type SuruUI = ComboboxInputGroupProps.SuruUI;
 

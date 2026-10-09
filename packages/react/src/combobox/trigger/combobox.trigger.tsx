@@ -12,14 +12,16 @@ import { ComboboxTriggerContext } from "./combobox.trigger.context.js";
 
 /**
  * {@link ComboboxTrigger} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxTriggerState = ComboboxTriggerContext;
+export type ComboboxTriggerState<TItem = any> = ComboboxTriggerContext<TItem>;
 
 export namespace ComboboxTriggerProps {
-  export type Render = Omit<RenderProps<ComboboxTriggerState>, "render">;
+  export type Render<TItem = any> = Omit<RenderProps<ComboboxTriggerState<TItem>>, "render">;
 
-  export type SuruUI = {
-    children: NonNullable<RenderProps<ComboboxTriggerState>["render"]>;
+  export type SuruUI<TItem = any> = {
+    children: NonNullable<RenderProps<ComboboxTriggerState<TItem>>["render"]>;
   };
 
   export type BaseUI = Omit<
@@ -116,14 +118,17 @@ export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(pro
 export { ComboboxTrigger as Trigger };
 
 export namespace Trigger {
-  export type State = ComboboxTriggerState;
+  export type State<TItem = any> = ComboboxTriggerState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> &
+    Props.SuruUI<TItem> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxTriggerProps.Render;
+    export type Render<TItem = any> = ComboboxTriggerProps.Render<TItem>;
 
-    export type SuruUI = ComboboxTriggerProps.SuruUI;
+    export type SuruUI<TItem = any> = ComboboxTriggerProps.SuruUI<TItem>;
 
     export type BaseUI = ComboboxTriggerProps.BaseUI;
 

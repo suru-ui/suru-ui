@@ -26,11 +26,13 @@ export type ComboboxChipRemoveRadius = "none" | Size | "full";
 
 /**
  * {@link ComboboxChipRemove} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxChipRemoveState = ComboboxChipRemoveContext;
+export type ComboboxChipRemoveState<TItem = any> = ComboboxChipRemoveContext<TItem>;
 
 export namespace ComboboxChipRemoveProps {
-  export type Render = RenderProps<ComboboxChipRemoveState>;
+  export type Render<TItem = any> = RenderProps<ComboboxChipRemoveState<TItem>>;
 
   export type SuruUI = {
     /**
@@ -126,12 +128,12 @@ export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipR
 export { ComboboxChipRemove as ChipRemove };
 
 export namespace ChipRemove {
-  export type State = ComboboxChipRemoveState;
+  export type State<TItem = any> = ComboboxChipRemoveState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxChipRemoveProps.Render;
+    export type Render<TItem = any> = ComboboxChipRemoveProps.Render<TItem>;
 
     export type SuruUI = ComboboxChipRemoveProps.SuruUI;
 

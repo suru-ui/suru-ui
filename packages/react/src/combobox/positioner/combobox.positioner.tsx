@@ -11,11 +11,13 @@ import { ComboboxPositionerContext } from "./combobox.positioner.context.js";
 
 /**
  * {@link ComboboxPositioner} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxPositionerState = ComboboxPositionerContext;
+export type ComboboxPositionerState<TItem = any> = ComboboxPositionerContext<TItem>;
 
 export namespace ComboboxPositionerProps {
-  export type Render = RenderProps<ComboboxPositionerState>;
+  export type Render<TItem = any> = RenderProps<ComboboxPositionerState<TItem>>;
 
   export type SuruUI = {};
 
@@ -115,12 +117,12 @@ export const ComboboxPositioner: IComboboxPositioner = function SuiComboboxPosit
 export { ComboboxPositioner as Positioner };
 
 export namespace Positioner {
-  export type State = ComboboxPositionerState;
+  export type State<TItem = any> = ComboboxPositionerState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxPositionerProps.Render;
+    export type Render<TItem = any> = ComboboxPositionerProps.Render<TItem>;
 
     export type SuruUI = ComboboxPositionerProps.SuruUI;
 

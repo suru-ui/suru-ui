@@ -12,11 +12,13 @@ import { ComboboxIconContext } from "./combobox.icon.context.js";
 
 /**
  * {@link ComboboxIcon} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxIconState = ComboboxIconContext;
+export type ComboboxIconState<TItem = any> = ComboboxIconContext<TItem>;
 
 export namespace ComboboxIconProps {
-  export type Render = RenderProps<ComboboxIconState>;
+  export type Render<TItem = any> = RenderProps<ComboboxIconState<TItem>>;
 
   export type SuruUI = {};
 
@@ -91,12 +93,12 @@ export const ComboboxIcon: IComboboxIcon = function SuiComboboxIcon(props) {
 export { ComboboxIcon as Icon };
 
 export namespace Icon {
-  export type State = ComboboxIconState;
+  export type State<TItem = any> = ComboboxIconState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxIconProps.Render;
+    export type Render<TItem = any> = ComboboxIconProps.Render<TItem>;
 
     export type SuruUI = ComboboxIconProps.SuruUI;
 

@@ -38,11 +38,13 @@ export type ComboboxChipVariant = ColorTemplate;
 
 /**
  * {@link ComboboxChip} の状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type ComboboxChipState = ComboboxChipContext;
+export type ComboboxChipState<TValue = any> = ComboboxChipContext<TValue>;
 
 export namespace ComboboxChipProps {
-  export type Render = RenderProps<ComboboxChipState>;
+  export type Render<TValue = any> = RenderProps<ComboboxChipState<TValue>>;
 
   export type SuruUI<TValue = any> = {
     /**
@@ -102,7 +104,7 @@ export namespace ComboboxChipProps {
  *
  * @template TValue 項目の値の型です。
  */
-export type ComboboxChipProps<TValue = any> = ComboboxChipProps.Render &
+export type ComboboxChipProps<TValue = any> = ComboboxChipProps.Render<TValue> &
   ComboboxChipProps.SuruUI<TValue> &
   ComboboxChipProps.BaseUI &
   ComboboxChipProps.HTML;
@@ -171,12 +173,15 @@ export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: Combo
 export { ComboboxChip as Chip };
 
 export namespace Chip {
-  export type State = ComboboxChipState;
+  export type State<TValue = any> = ComboboxChipState<TValue>;
 
-  export type Props<TValue = any> = Props.Render & Props.SuruUI<TValue> & Props.BaseUI & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> &
+    Props.SuruUI<TValue> &
+    Props.BaseUI &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxChipProps.Render;
+    export type Render<TValue = any> = ComboboxChipProps.Render<TValue>;
 
     export type SuruUI<TValue = any> = ComboboxChipProps.SuruUI<TValue>;
 

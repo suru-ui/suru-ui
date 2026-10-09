@@ -11,11 +11,13 @@ import { ComboboxChipsContext } from "./combobox.chips.context.js";
 
 /**
  * {@link ComboboxChips} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxChipsState = ComboboxChipsContext;
+export type ComboboxChipsState<TItem = any> = ComboboxChipsContext<TItem>;
 
 export namespace ComboboxChipsProps {
-  export type Render = RenderProps<ComboboxChipsState>;
+  export type Render<TItem = any> = RenderProps<ComboboxChipsState<TItem>>;
 
   export type SuruUI = {};
 
@@ -88,12 +90,12 @@ export const ComboboxChips: IComboboxChips = function SuiComboboxChips(props) {
 export { ComboboxChips as Chips };
 
 export namespace Chips {
-  export type State = ComboboxChipsState;
+  export type State<TItem = any> = ComboboxChipsState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxChipsProps.Render;
+    export type Render<TItem = any> = ComboboxChipsProps.Render<TItem>;
 
     export type SuruUI = ComboboxChipsProps.SuruUI;
 

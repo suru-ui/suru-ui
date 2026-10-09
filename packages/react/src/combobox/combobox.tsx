@@ -306,8 +306,10 @@ export type ComboboxSlotProps<
 
 /**
  * {@link Combobox} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxState = ComboboxRootState;
+export type ComboboxState<TItem = any> = ComboboxRootState<TItem>;
 
 namespace ComboboxProps {
   export type Combobox<TItem = any, TMultiple extends boolean | undefined = boolean | undefined> = {
@@ -657,7 +659,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
 
   private defaultCollectionItemRenderer: IComboboxCollectionItemRenderer = (item, index) => {
     switch (true) {
-      case isItemGroup<ComboboxItemGroupObject>(item): {
+      case isItemGroup<ComboboxItemGroupObject<TItem>>(item): {
         const groupLabelProps = this.getGroupLabelProps(item);
         const separatorProps = this.getSeparatorProps();
 
@@ -848,7 +850,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    *
    * @param item グループの項目です。
    */
-  public getGroupLabelProps(item?: ComboboxItemGroupObject): ComboboxGroupLabelProps | null {
+  public getGroupLabelProps(item?: ComboboxItemGroupObject<TItem>): ComboboxGroupLabelProps | null {
     const { groupLabel: baseProps = {} } = this.slotProps;
 
     if (item) {
@@ -955,7 +957,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
     const { item: baseProps = {} } = this.slotProps;
 
     switch (true) {
-      case isLabeledItem<ComboboxRootLabeledItemObject>(item): {
+      case isLabeledItem<ComboboxRootLabeledItemObject<TItem>>(item): {
         const { label: _label, ...otherProps } = item;
         return mergeProps([baseProps, otherProps, { value: item }]);
       }
@@ -1356,18 +1358,21 @@ export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
 );
 
 export namespace Combobox {
-  export type State = ComboboxState;
+  export type State<TItem = any> = ComboboxState<TItem>;
 
   export type Props<
     TValue = any,
     TMultiple extends boolean | undefined = boolean | undefined,
   > = ComboboxProps<TValue, TMultiple>;
 
-  export type SlotProps = ComboboxSlotProps;
+  export type SlotProps<
+    TItem = any,
+    TMultiple extends boolean | undefined = boolean | undefined,
+  > = ComboboxSlotProps<TItem, TMultiple>;
 
-  export type Context = ComboboxContext;
+  export type Context<TItem = any> = ComboboxContext<TItem>;
 
-  export type ItemContext = ComboboxItemContext;
+  export type ItemContext<TItem = any> = ComboboxItemContext<TItem>;
 
   export type Actions = ComboboxActions;
 

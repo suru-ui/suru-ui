@@ -11,11 +11,13 @@ import { ComboboxEmptyContext } from "./combobox.empty.context.js";
 
 /**
  * {@link ComboboxEmpty} の状態です。
+ *
+ * @template TItem 項目の型です。
  */
-export type ComboboxEmptyState = ComboboxEmptyContext;
+export type ComboboxEmptyState<TItem = any> = ComboboxEmptyContext<TItem>;
 
 export namespace ComboboxEmptyProps {
-  export type Render = RenderProps<ComboboxEmptyState>;
+  export type Render<TItem = any> = RenderProps<ComboboxEmptyState<TItem>>;
 
   export type SuruUI = {};
 
@@ -88,12 +90,12 @@ export const ComboboxEmpty: IComboboxEmpty = function SuiComboboxEmpty(props) {
 export { ComboboxEmpty as Empty };
 
 export namespace Empty {
-  export type State = ComboboxEmptyState;
+  export type State<TItem = any> = ComboboxEmptyState<TItem>;
 
-  export type Props = Props.Render & Props.SuruUI & Props.BaseUI & Props.HTML;
+  export type Props<TItem = any> = Props.Render<TItem> & Props.SuruUI & Props.BaseUI & Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxEmptyProps.Render;
+    export type Render<TItem = any> = ComboboxEmptyProps.Render<TItem>;
 
     export type SuruUI = ComboboxEmptyProps.SuruUI;
 

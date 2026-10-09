@@ -14,11 +14,13 @@ import { ComboboxItemContext } from "./combobox.item.context.js";
 
 /**
  * {@link ComboboxItem} の状態です。
+ *
+ * @template TValue 項目の値の型です。
  */
-export type ComboboxItemState = ComboboxItemContext;
+export type ComboboxItemState<TValue = any> = ComboboxItemContext<TValue>;
 
 export namespace ComboboxItemProps {
-  export type Render = RenderProps<ComboboxItemState>;
+  export type Render<TValue = any> = RenderProps<ComboboxItemState<TValue>>;
 
   export type SuruUI = {};
 
@@ -57,7 +59,7 @@ export namespace ComboboxItemProps {
  *
  * @template TValue 項目の値の型です。
  */
-export type ComboboxItemProps<TValue = any> = ComboboxItemProps.Render &
+export type ComboboxItemProps<TValue = any> = ComboboxItemProps.Render<TValue> &
   ComboboxItemProps.SuruUI &
   ComboboxItemProps.BaseUI<TValue> &
   ComboboxItemProps.HTML;
@@ -157,12 +159,15 @@ export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: Combo
 export { ComboboxItem as Item };
 
 export namespace Item {
-  export type State = ComboboxItemState;
+  export type State<TValue = any> = ComboboxItemState<TValue>;
 
-  export type Props<TValue = any> = Props.Render & Props.SuruUI & Props.BaseUI<TValue> & Props.HTML;
+  export type Props<TValue = any> = Props.Render<TValue> &
+    Props.SuruUI &
+    Props.BaseUI<TValue> &
+    Props.HTML;
 
   export namespace Props {
-    export type Render = ComboboxItemProps.Render;
+    export type Render<TValue = any> = ComboboxItemProps.Render<TValue>;
 
     export type SuruUI = ComboboxItemProps.SuruUI;
 
