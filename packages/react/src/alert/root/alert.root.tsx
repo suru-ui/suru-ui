@@ -103,7 +103,7 @@ export namespace AlertRootProps {
     /**
      * 枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -157,7 +157,7 @@ export const AlertRoot: IAlertRoot = function SuiAlertRoot(props) {
     color = "grey",
     radius = size,
     variant = "muted",
-    outlined = false,
+    outlined = true,
     actionsPosition = "side",
     descriptionPosition = "bottom",
     // @ts-expect-error
