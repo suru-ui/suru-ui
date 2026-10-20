@@ -204,15 +204,14 @@ export const Outlined = meta.story({
   name: "枠線",
   ...ctrl({
     size: "md",
-    title: "枠線付き",
     radius: undefined,
     children: "枠線なしのカードは背景色だけで境界を表現しません。",
-    description: "既定では枠線を表示しません。",
+    description: "既定で枠線を表示します。",
   }),
   render(props) {
     return (
       <div className="flex w-[420px] flex-col gap-4">
-        <Card {...props} outlined />
+        <Card {...props} title="枠線付き" />
         <Card {...props} title="枠線なし" outlined={false} />
       </div>
     );

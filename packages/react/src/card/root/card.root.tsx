@@ -36,6 +36,8 @@ export namespace CardRootProps {
   export type SuruUI = {
     /**
      * カードに枠線を表示するかどうかを指定します。
+     *
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -79,7 +81,7 @@ export const CardRoot: ICardRoot = function SuiCardRoot(props) {
   const {
     size = "md",
     radius = size,
-    outlined = false,
+    outlined = true,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherDivProps
