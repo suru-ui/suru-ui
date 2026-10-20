@@ -93,7 +93,7 @@ export const AlertDialogPopup: IAlertDialogPopup = function SuiAlertDialogPopup(
     radius,
     render,
     variant = "default",
-    outlined = true,
+    outlined,
     className,
     ...otherProps
   } = props;

@@ -8,6 +8,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 100%;
 }
 
 /* 変数 */
@@ -28,7 +29,6 @@
 
 /* 代入 */
 :scope {
-  --sui_alert_dialog_popup-max_width-desktop: var(--sui-container-md);
   --sui_alert_dialog_popup-max_width-mobile: calc(
                                                100vw
                                                - var(--sui_alert_dialog_popup-virtual_margin_inline)
@@ -44,6 +44,18 @@
                                        );
   --sui_alert_dialog_popup-virtual_margin_block: --sui-space(2);
   --sui_alert_dialog_popup-virtual_margin_inline: --sui-space(2);
+
+  &.sui_alert_dialog_popup-size_sm {
+    --sui_alert_dialog_popup-max_width-desktop: var(--sui-container-sm);
+  }
+
+  &.sui_alert_dialog_popup-size_md {
+    --sui_alert_dialog_popup-max_width-desktop: var(--sui-container-md);
+  }
+
+  &.sui_alert_dialog_popup-size_lg {
+    --sui_alert_dialog_popup-max_width-desktop: var(--sui-container-lg);
+  }
 }
 
 } /* @scope */
