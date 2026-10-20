@@ -137,7 +137,7 @@ export namespace AccordionRootProps {
     /**
      * アコーディオンの項目が隣接する項目の区切り線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     separator?: boolean | undefined;
 
@@ -229,7 +229,7 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
     render,
     children = defaultItemRenderer,
     className,
-    separator = false,
+    separator = true,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherProps

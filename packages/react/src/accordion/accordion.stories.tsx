@@ -45,9 +45,9 @@ const SIZES: readonly Accordion.Size[] = theme.SIZES;
 
 function minH(size: Accordion.Size = "md"): string {
   return {
-    lg: "min-h-[450px]",
-    md: "min-h-[350px]",
-    sm: "min-h-[250px]",
+    lg: "min-h-[500px]",
+    md: "min-h-[400px]",
+    sm: "min-h-[300px]",
   }[size];
 }
 
@@ -111,7 +111,7 @@ export const Controlled = meta.story({
     separator: true,
   }),
   render(props) {
-    const [value, setValue] = React.useState<string[]>(["1"]);
+    const [value, setValue] = React.useState(["1"]);
 
     return (
       <div className={`w-md ${minH(props.size)}`}>
