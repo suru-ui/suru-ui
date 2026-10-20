@@ -29,8 +29,12 @@ function getName(attr: JSXAttribute): string {
  * 一般 → `aria-*` → `data-*` の順に並べる。グループ番号がそのまま並び順になる。
  */
 function getGroup(name: string): number {
-  if (name.startsWith("aria-")) return 1;
-  if (name.startsWith("data-")) return 2;
+  if (name.startsWith("aria-")) {
+    return 1;
+  }
+  if (name.startsWith("data-")) {
+    return 2;
+  }
   return 0;
 }
 
@@ -45,8 +49,12 @@ function compareProps(a: JSXAttribute, b: JSXAttribute): number {
   const nameB = getName(b);
   const groupA = getGroup(nameA);
   const groupB = getGroup(nameB);
-  if (groupA !== groupB) return groupA - groupB;
-  if (nameA.length !== nameB.length) return nameA.length - nameB.length;
+  if (groupA !== groupB) {
+    return groupA - groupB;
+  }
+  if (nameA.length !== nameB.length) {
+    return nameA.length - nameB.length;
+  }
   return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
 }
 
@@ -56,7 +64,9 @@ function compareProps(a: JSXAttribute, b: JSXAttribute): number {
  * コメントのような並べ替えに影響しない節点は走査対象から除く。
  */
 function isNode(value: unknown): value is Node {
-  if (typeof value !== "object" || value === null || !("type" in value)) return false;
+  if (typeof value !== "object" || value === null || !("type" in value)) {
+    return false;
+  }
   const type = (value as { type?: unknown }).type;
   return typeof type === "string" && type !== "CommentLine" && type !== "CommentBlock";
 }
@@ -107,8 +117,12 @@ function planReplacement(element: JSXOpeningElement): {
 } | null {
   const attrs = element.attributes;
 
-  if (attrs.length < 2) return null;
-  if (attrs.some((attr) => attr.type === "JSXAttribute" && hasComment(attr))) return null;
+  if (attrs.length < 2) {
+    return null;
+  }
+  if (attrs.some((attr) => attr.type === "JSXAttribute" && hasComment(attr))) {
+    return null;
+  }
 
   const normalAttrs: JSXAttribute[] = [];
   const spreadIndexes: number[] = [];
@@ -121,11 +135,15 @@ function planReplacement(element: JSXOpeningElement): {
     }
   }
 
-  if (normalAttrs.length < 2) return null;
+  if (normalAttrs.length < 2) {
+    return null;
+  }
 
   const sorted = normalAttrs.toSorted(compareProps);
   const isSameOrder = sorted.every((attr, i) => attr === normalAttrs[i]);
-  if (isSameOrder) return null;
+  if (isSameOrder) {
+    return null;
+  }
 
   // スプレッド属性を元の位置に残し、それ以外の属性にソート結果を割り当てる。
   const newOrder: number[] = attrs.map(() => 0);
@@ -168,7 +186,9 @@ function buildTree(plans: NonNullable<ReturnType<typeof planReplacement>>[]): Re
     // 自身を包含する直近のノードを親にする。
     while (stack.length > 0) {
       const parent = stack[stack.length - 1]!;
-      if (parent.start <= node.start && node.end <= parent.end) break;
+      if (parent.start <= node.start && node.end <= parent.end) {
+        break;
+      }
       stack.pop();
     }
     if (stack.length > 0) {
@@ -197,7 +217,9 @@ function renderRange(
   let text = "";
   let cursor = start;
   for (const node of nodes) {
-    if (node.end <= start || node.start >= end) continue;
+    if (node.end <= start || node.start >= end) {
+      continue;
+    }
     text += source.slice(cursor, node.start);
     text += rendered.get(node)!;
     cursor = node.end;
@@ -250,7 +272,9 @@ export function sortJsxProps(source: string): string {
   const plans = elements
     .map(planReplacement)
     .filter((plan): plan is NonNullable<typeof plan> => plan !== null);
-  if (plans.length === 0) return source;
+  if (plans.length === 0) {
+    return source;
+  }
 
   const roots = buildTree(plans);
   const rendered = new Map<ReplacementNode, string>();
@@ -294,7 +318,9 @@ async function main(): Promise<void> {
   for (const filePath of files) {
     const source = fs.readFileSync(filePath, "utf-8");
     const formatted = sortJsxProps(source);
-    if (formatted === source) continue;
+    if (formatted === source) {
+      continue;
+    }
     changedFiles.push(filePath);
     if (!isCheck) {
       fs.writeFileSync(filePath, formatted, "utf-8");

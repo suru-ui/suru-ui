@@ -17,7 +17,9 @@ const TARGET_EXTENSIONS = [
 ];
 
 const isTargetFile = (fullpath: string): boolean => {
-  if (fullpath.endsWith(".map")) return false;
+  if (fullpath.endsWith(".map")) {
+    return false;
+  }
   return TARGET_EXTENSIONS.includes(path.extname(fullpath));
 };
 
@@ -36,7 +38,9 @@ function commentOutCssImports(source: string): string {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]!;
-    if (line.trimStart().startsWith("//")) continue;
+    if (line.trimStart().startsWith("//")) {
+      continue;
+    }
     if (CSS_IMPORT_RE.test(line)) {
       lines[i] = `// ${line}`;
       changed = true;

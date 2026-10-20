@@ -20,7 +20,6 @@ export default defineConfig({
   test: {
     include: ["src/**/*.test.{ts,tsx}", "tests/**/*.test.{ts,tsx}"],
     exclude: ["src/**/*.server.test.{ts,tsx}", "tests/**/*.server.test.{ts,tsx}"],
-    setupFiles: ["./tests/setup.client.ts"],
     browser: {
       provider: playwright(),
       enabled: true,
@@ -32,5 +31,12 @@ export default defineConfig({
         // { browser: "webkit" },
       ],
     },
+    coverage: {
+      provider: "istanbul",
+      reporter: ["text", "json-summary", "html"],
+      include: ["src/**/*.ts"],
+      reportsDirectory: "./coverage/client",
+    },
+    setupFiles: [".config/_debugging.ts"],
   },
 });

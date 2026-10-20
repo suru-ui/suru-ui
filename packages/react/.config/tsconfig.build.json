@@ -6,7 +6,6 @@
     "../src/**/*.test.tsx",
     "../tests/**/*"
   ],
-  "include": ["./global.d.ts", "../src/**/*"],
   "compilerOptions": {
     "types": ["node"],
     "lib": ["DOM", "ESNext"],

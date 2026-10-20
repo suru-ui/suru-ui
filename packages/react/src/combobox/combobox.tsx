@@ -1064,7 +1064,6 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
         };
       } else {
         handleInputValueChange = (value, eventDetails) => {
-          // @ts-expect-error .isItemPress はおそらく v1.8 以降の機能
           if (eventDetails.isItemPress) {
             eventDetails.cancel();
           }

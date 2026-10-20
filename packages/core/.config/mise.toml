@@ -14,11 +14,21 @@ run = "npx vitest --config ./.config/vitest.server.ts"
 [tasks."test:client"]
 run = "npx vitest --config ./.config/vitest.client.ts"
 
+[tasks."test:coverage"]
+run = [{ task = "test:coverage:server" }, { task = "test:coverage:client" }]
+env = { CI = 1 }
+
+[tasks."test:coverage:server"]
+run = "npx vitest run --coverage --config ./.config/vitest.server.ts"
+
+[tasks."test:coverage:client"]
+run = "npx vitest run --coverage --config ./.config/vitest.client.ts"
+
 [tasks."test:format"]
 run = { task = "format", args = ["--check"] }
 
 [tasks."test:lint"]
-run = "set -e; cp .config/.oxlintrc.json .tmp-oxlintrc.json; trap 'rm -f .tmp-oxlintrc.json' EXIT; npx oxlint --config .tmp-oxlintrc.json"
+run = { task = "lint" }
 
 [tasks."test:typecheck"]
 run = [
@@ -30,14 +40,10 @@ run = [
 ]
 
 [tasks.format]
-run = "set -e; cp .config/.oxfmtrc.json .tmp-oxfmtrc.json; trap 'rm -f .tmp-oxfmtrc.json' EXIT; npx oxfmt --config .tmp-oxfmtrc.json"
+run = "set -e; cp ./.config/.oxfmtrc.json ./.tmp-oxfmtrc.json; trap 'rm -f ./.tmp-oxfmtrc.json' EXIT; npx oxfmt --config ./.tmp-oxfmtrc.json"
 
 [tasks.lint]
-run = { task = "test:lint", args = ["--fix"] }
+run = "set -e; cp ./.config/.oxlintrc.json ./.tmp-oxlintrc.json; trap 'rm -f ./.tmp-oxlintrc.json' EXIT; npx oxlint --config ./.tmp-oxlintrc.json"
 
 [tasks.update]
-run = [
-  "npx npm-check-updates --target minor -u --cooldown 7",
-  "pnpm install",
-  "npx playwright install --with-deps",
-]
+run = ["npx npm-check-updates --target minor -u --cooldown 7", "npx playwright install --with-deps"]

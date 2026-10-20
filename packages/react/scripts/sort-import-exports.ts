@@ -22,8 +22,12 @@ type Decl = ImportDeclaration | ExportNamedDeclaration;
  */
 function getName(spec: ImportSpecifier | ExportSpecifier): string {
   const name = spec.type === "ImportSpecifier" ? spec.imported : spec.exported;
-  if (name.type === "Identifier") return name.name;
-  if (name.type === "StringLiteral") return name.value;
+  if (name.type === "Identifier") {
+    return name.name;
+  }
+  if (name.type === "StringLiteral") {
+    return name.value;
+  }
   return "";
 }
 
@@ -48,8 +52,12 @@ function compareSpecs(
   a: { name: string; isType: boolean },
   b: { name: string; isType: boolean },
 ): number {
-  if (a.isType !== b.isType) return a.isType ? -1 : 1;
-  if (a.name.length !== b.name.length) return a.name.length - b.name.length;
+  if (a.isType !== b.isType) {
+    return a.isType ? -1 : 1;
+  }
+  if (a.name.length !== b.name.length) {
+    return a.name.length - b.name.length;
+  }
   return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
 }
 
@@ -59,7 +67,9 @@ function compareSpecs(
  * コメントのような並べ替えに影響しない節点は走査対象から除く。
  */
 function isNode(value: unknown): value is Node {
-  if (typeof value !== "object" || value === null || !("type" in value)) return false;
+  if (typeof value !== "object" || value === null || !("type" in value)) {
+    return false;
+  }
   const type = (value as { type?: unknown }).type;
   return typeof type === "string" && type !== "CommentLine" && type !== "CommentBlock";
 }
@@ -120,8 +130,12 @@ function planReplacement(decl: Decl): {
     );
   }
 
-  if (specs.length < 2) return null;
-  if (specs.some(hasComment)) return null;
+  if (specs.length < 2) {
+    return null;
+  }
+  if (specs.some(hasComment)) {
+    return null;
+  }
 
   const statementIsType =
     decl.type === "ImportDeclaration" ? decl.importKind === "type" : decl.exportKind === "type";
@@ -134,7 +148,9 @@ function planReplacement(decl: Decl): {
 
   const sorted = items.toSorted(compareSpecs);
   const isSameOrder = sorted.every((item, i) => item === items[i]);
-  if (isSameOrder) return null;
+  if (isSameOrder) {
+    return null;
+  }
 
   const first = specs[0]!;
   const last = specs[specs.length - 1]!;
@@ -180,7 +196,9 @@ export function sortImportExports(source: string): string {
   const plans = decls
     .map(planReplacement)
     .filter((plan): plan is NonNullable<typeof plan> => plan !== null);
-  if (plans.length === 0) return source;
+  if (plans.length === 0) {
+    return source;
+  }
 
   // 置換は重ならないため、後ろの位置から適用してよい。並べ替えは同じ
   // トークンの並べ替えなので長さが変わらず、位置は元のまま使える。
@@ -205,7 +223,9 @@ async function main(): Promise<void> {
   for (const filePath of files) {
     const source = fs.readFileSync(filePath, "utf-8");
     const formatted = sortImportExports(source);
-    if (formatted === source) continue;
+    if (formatted === source) {
+      continue;
+    }
     changedFiles.push(filePath);
     if (!isCheck) {
       fs.writeFileSync(filePath, formatted, "utf-8");

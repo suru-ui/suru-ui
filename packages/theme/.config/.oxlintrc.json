@@ -7,7 +7,6 @@
     "oxc",
     "import",
     "jsdoc",
-    "jsx-a11y",
     "node",
     "promise",
     "vitest"
@@ -16,8 +15,8 @@
     "correctness": "error"
   },
   "rules": {
+    "curly": "error", // if は必ずブロックにします。
     "no-unused-expressions": "off", // logtape で使用します。
-    "no-unused-vars": "warn", // TypeScript に委譲します。
     "vitest/no-focused-tests": "off" // デバッグ作業を容易にします。
   },
   "env": {

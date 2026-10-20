@@ -2,252 +2,26 @@
   "name": "@suru-ui/react",
   "version": "0.0.0",
   "description": "",
-  "homepage": "https://github.com/suru-ui/suru-ui",
+  "homepage": "https://suru-ui.github.io/suru-ui/",
   "license": "MIT",
-  "author": "tai-kun",
   "repository": {
-    "url": "https://github.com/suru-ui/suru-ui"
+    "url": "https://github.com/suru-ui/suru-ui",
+    "directory": "packages/react"
   },
   "files": [
     "dist",
     "src",
     "package.json",
-    "LICENSE"
+    "LICENSE",
+    "README.md"
   ],
   "type": "module",
   "sideEffects": false,
-  "main": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/src/index.d.ts",
       "default": "./dist/src/index.js"
-    },
-    "./alert": {
-      "types": "./dist/src/alert/index.d.ts",
-      "default": "./dist/src/alert/index.js"
-    },
-    "./accordion": {
-      "types": "./dist/src/accordion/index.d.ts",
-      "default": "./dist/src/accordion/index.js"
-    },
-    "./breadcrumb": {
-      "types": "./dist/src/breadcrumb/index.d.ts",
-      "default": "./dist/src/breadcrumb/index.js"
-    },
-    "./card": {
-      "types": "./dist/src/card/index.d.ts",
-      "default": "./dist/src/card/index.js"
-    },
-    "./collapsible": {
-      "types": "./dist/src/collapsible/index.d.ts",
-      "default": "./dist/src/collapsible/index.js"
-    },
-    "./pagination": {
-      "types": "./dist/src/pagination/index.d.ts",
-      "default": "./dist/src/pagination/index.js"
-    },
-    "./scroll-area": {
-      "types": "./dist/src/scroll-area/index.d.ts",
-      "default": "./dist/src/scroll-area/index.js"
-    },
-    "./sidebar": {
-      "types": "./dist/src/sidebar/index.d.ts",
-      "default": "./dist/src/sidebar/index.js"
-    },
-    "./segments": {
-      "types": "./dist/src/segments/index.d.ts",
-      "default": "./dist/src/segments/index.js"
-    },
-    "./tabs": {
-      "types": "./dist/src/tabs/index.d.ts",
-      "default": "./dist/src/tabs/index.js"
-    },
-    "./tree": {
-      "types": "./dist/src/tree/index.d.ts",
-      "default": "./dist/src/tree/index.js"
-    },
-    "./avatar": {
-      "types": "./dist/src/avatar/index.d.ts",
-      "default": "./dist/src/avatar/index.js"
-    },
-    "./avatar-group": {
-      "types": "./dist/src/avatar-group/index.d.ts",
-      "default": "./dist/src/avatar-group/index.js"
-    },
-    "./alert-dialog": {
-      "types": "./dist/src/alert-dialog/index.d.ts",
-      "default": "./dist/src/alert-dialog/index.js"
-    },
-    "./context-menu": {
-      "types": "./dist/src/context-menu/index.d.ts",
-      "default": "./dist/src/context-menu/index.js"
-    },
-    "./dialog": {
-      "types": "./dist/src/dialog/index.d.ts",
-      "default": "./dist/src/dialog/index.js"
-    },
-    "./drawer": {
-      "types": "./dist/src/drawer/index.d.ts",
-      "default": "./dist/src/drawer/index.js"
-    },
-    "./hover-card": {
-      "types": "./dist/src/hover-card/index.d.ts",
-      "default": "./dist/src/hover-card/index.js"
-    },
-    "./menu": {
-      "types": "./dist/src/menu/index.d.ts",
-      "default": "./dist/src/menu/index.js"
-    },
-    "./menubar": {
-      "types": "./dist/src/menubar/index.d.ts",
-      "default": "./dist/src/menubar/index.js"
-    },
-    "./popover": {
-      "types": "./dist/src/popover/index.d.ts",
-      "default": "./dist/src/popover/index.js"
-    },
-    "./toast": {
-      "types": "./dist/src/toast/index.d.ts",
-      "default": "./dist/src/toast/index.js"
-    },
-    "./tooltip": {
-      "types": "./dist/src/tooltip/index.d.ts",
-      "default": "./dist/src/tooltip/index.js"
-    },
-    "./tooltip-group": {
-      "types": "./dist/src/tooltip-group/index.d.ts",
-      "default": "./dist/src/tooltip-group/index.js"
-    },
-    "./button": {
-      "types": "./dist/src/button/index.d.ts",
-      "default": "./dist/src/button/index.js"
-    },
-    "./toggle-button": {
-      "types": "./dist/src/toggle-button/index.d.ts",
-      "default": "./dist/src/toggle-button/index.js"
-    },
-    "./badge": {
-      "types": "./dist/src/badge/index.d.ts",
-      "default": "./dist/src/badge/index.js"
-    },
-    "./chip": {
-      "types": "./dist/src/chip/index.d.ts",
-      "default": "./dist/src/chip/index.js"
-    },
-    "./image": {
-      "types": "./dist/src/image/index.d.ts",
-      "default": "./dist/src/image/index.js"
-    },
-    "./checkbox": {
-      "types": "./dist/src/checkbox/index.d.ts",
-      "default": "./dist/src/checkbox/index.js"
-    },
-    "./checkbox-group": {
-      "types": "./dist/src/checkbox-group/index.d.ts",
-      "default": "./dist/src/checkbox-group/index.js"
-    },
-    "./combobox": {
-      "types": "./dist/src/combobox/index.d.ts",
-      "default": "./dist/src/combobox/index.js"
-    },
-    "./field": {
-      "types": "./dist/src/field/index.d.ts",
-      "default": "./dist/src/field/index.js"
-    },
-    "./file-upload": {
-      "types": "./dist/src/file-upload/index.d.ts",
-      "default": "./dist/src/file-upload/index.js"
-    },
-    "./fieldset": {
-      "types": "./dist/src/fieldset/index.d.ts",
-      "default": "./dist/src/fieldset/index.js"
-    },
-    "./format-number": {
-      "types": "./dist/src/format-number/index.d.ts",
-      "default": "./dist/src/format-number/index.js"
-    },
-    "./form": {
-      "types": "./dist/src/form/index.d.ts",
-      "default": "./dist/src/form/index.js"
-    },
-    "./input": {
-      "types": "./dist/src/input/index.d.ts",
-      "default": "./dist/src/input/index.js"
-    },
-    "./label": {
-      "types": "./dist/src/label/index.d.ts",
-      "default": "./dist/src/label/index.js"
-    },
-    "./meter": {
-      "types": "./dist/src/meter/index.d.ts",
-      "default": "./dist/src/meter/index.js"
-    },
-    "./progress": {
-      "types": "./dist/src/progress/index.d.ts",
-      "default": "./dist/src/progress/index.js"
-    },
-    "./skeleton": {
-      "types": "./dist/src/skeleton/index.d.ts",
-      "default": "./dist/src/skeleton/index.js"
-    },
-    "./stat": {
-      "types": "./dist/src/stat/index.d.ts",
-      "default": "./dist/src/stat/index.js"
-    },
-    "./status": {
-      "types": "./dist/src/status/index.d.ts",
-      "default": "./dist/src/status/index.js"
-    },
-    "./aspect-ratio": {
-      "types": "./dist/src/aspect-ratio/index.d.ts",
-      "default": "./dist/src/aspect-ratio/index.js"
-    },
-    "./resizable": {
-      "types": "./dist/src/resizable/index.d.ts",
-      "default": "./dist/src/resizable/index.js"
-    },
-    "./autocomplete": {
-      "types": "./dist/src/autocomplete/index.d.ts",
-      "default": "./dist/src/autocomplete/index.js"
-    },
-    "./number-field": {
-      "types": "./dist/src/number-field/index.d.ts",
-      "default": "./dist/src/number-field/index.js"
-    },
-    "./password-field": {
-      "types": "./dist/src/password-field/index.d.ts",
-      "default": "./dist/src/password-field/index.js"
-    },
-    "./radio": {
-      "types": "./dist/src/radio/index.d.ts",
-      "default": "./dist/src/radio/index.js"
-    },
-    "./radio-group": {
-      "types": "./dist/src/radio-group/index.d.ts",
-      "default": "./dist/src/radio-group/index.js"
-    },
-    "./select": {
-      "types": "./dist/src/select/index.d.ts",
-      "default": "./dist/src/select/index.js"
-    },
-    "./slider": {
-      "types": "./dist/src/slider/index.d.ts",
-      "default": "./dist/src/slider/index.js"
-    },
-    "./switch": {
-      "types": "./dist/src/switch/index.d.ts",
-      "default": "./dist/src/switch/index.js"
-    },
-    "./text-field": {
-      "types": "./dist/src/text-field/index.d.ts",
-      "default": "./dist/src/text-field/index.js"
-    },
-    "./textarea": {
-      "types": "./dist/src/textarea/index.d.ts",
-      "default": "./dist/src/textarea/index.js"
-    },
-    "./suru.css": "./dist/suru.css"
+    }
   },
   "scripts": {
     "build": "run-s build:*",
@@ -256,51 +30,49 @@
     "build:dst": "node ./scripts/comment-out-css-imports.ts"
   },
   "dependencies": {
-    "@base-ui/react": "^1.7.0",
-    "@base-ui/utils": "^0.3.2",
+    "@base-ui/react": "~1.9.0",
+    "@base-ui/utils": "~0.5.0",
     "@suru-ui/core": "workspace:*",
     "@suru-ui/theme": "workspace:*",
-    "call-fn-once": "^0.0.6",
-    "react-resizable-panels": "^4.12.3"
+    "call-fn-once": "^0.0.12",
+    "react-resizable-panels": "~4.14.5"
   },
   "devDependencies": {
-    "@babel/parser": "^8.0.4",
-    "@babel/types": "^8.0.4",
-    "@storybook/addon-docs": "^10.5.10",
-    "@storybook/addon-themes": "^10.5.10",
-    "@storybook/addon-vitest": "^10.5.10",
-    "@storybook/react-vite": "^10.5.10",
+    "@babel/parser": "8.0.7",
+    "@babel/types": "8.0.6",
+    "@storybook/addon-docs": "10.6.2",
+    "@storybook/addon-themes": "10.6.2",
+    "@storybook/addon-vitest": "10.6.2",
+    "@storybook/react-vite": "10.6.2",
     "@suru-ui/unocss": "workspace:*",
-    "@tanstack/react-virtual": "^3.14.10",
-    "@tsconfig/node24": "^24.0.5",
-    "@tsconfig/strictest": "^2.0.8",
-    "@types/node": "^24.13.3",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.5",
+    "@tanstack/react-virtual": "3.14.17",
+    "@tsconfig/node24": "24.0.5",
+    "@tsconfig/strictest": "2.0.8",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
-    "@vitest/browser": "^4.1.11",
-    "@vitest/browser-playwright": "^4.1.11",
-    "dependency-tree": "^12.0.1",
-    "lucide-react": "^1.37.0",
-    "match-sorter": "^8.3.0",
-    "npm-check-updates": "^22.2.9",
-    "npm-run-all2": "^9.0.3",
-    "playwright": "^1.62.1",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "storybook": "^10.5.10",
-    "unocss": "^66.8.1",
-    "valibot": "^1.4.2",
-    "vite": "^8.2.2",
-    "vitest": "^4.1.11",
-    "vitest-browser-react": "^2.2.0"
+    "@vitest/browser": "4.1.11",
+    "@vitest/browser-playwright": "4.1.11",
+    "@vitest/coverage-istanbul": "4.1.11",
+    "@vitest/coverage-v8": "4.1.11",
+    "dependency-tree": "12.0.1",
+    "lucide-react": "1.55.0",
+    "match-sorter": "8.3.0",
+    "npm-run-all2": "9.0.3",
+    "playwright": "1.64.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "storybook": "10.6.2",
+    "unocss": "66.11.0",
+    "valibot": "1.5.0",
+    "vite": "8.3.4",
+    "vitest": "4.1.11",
+    "vitest-browser-react": "2.3.0"
   },
   "peerDependencies": {
+    "@logtape/logtape": "^2.0.0",
     "react": "^19.0.0"
   },
-  "peerDependenciesMeta": {
-    "@types/react": {
-      "optional": true
-    }
-  }
+  "readme": "README.md"
 }

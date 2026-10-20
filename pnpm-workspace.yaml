@@ -1,18 +1,26 @@
+packages: ["packages/core", "packages/theme", "packages/react", "packages/unocss", "website"]
+
 minimumReleaseAge: 10080 # 7 日
-minimumReleaseAgeExclude: []
-onlyBuiltDependencies: []
-strictDepBuilds: false
+minimumReleaseAgeExclude:
+  - call-fn-once
+
 blockExoticSubdeps: true
+
 trustPolicy: no-downgrade
 trustPolicyExclude:
-  - semver
-  # blume
-  - "@hono/node-server"
   - "@pierre/theme"
+  - "@vercel/*"
   - "chokidar"
+  - "semver"
+  - "undici-types"
+
+strictDepBuilds: true
+onlyBuiltDependencies: []
 allowBuilds:
   esbuild: true
+
 update:
   ignoreDeps:
-    - "*" # パッケージの更新は ncu に任せる
-packages: ["packages/core", "packages/theme", "packages/unocss", "packages/react", "website"]
+    - "*" # パッケージの更新は ncu に任せます。
+
+overrides: {}

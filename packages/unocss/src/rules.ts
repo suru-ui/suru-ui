@@ -121,7 +121,9 @@ function createColorRule(separator: string): Rule {
     separator,
     COLOR_VALUE,
     (properties, token, opacity) => {
-      if (token === undefined || !isColorToken(token)) return;
+      if (token === undefined || !isColorToken(token)) {
+        return;
+      }
 
       const color = colorTokenVar(token);
 
@@ -129,7 +131,9 @@ function createColorRule(separator: string): Rule {
         return toEntries(properties, color);
       }
 
-      if (Number(opacity) > MAX_OPACITY) return;
+      if (Number(opacity) > MAX_OPACITY) {
+        return;
+      }
 
       return toEntries(properties, `color-mix(in oklab, ${color} ${opacity}%, transparent)`);
     },
@@ -152,7 +156,9 @@ function createGapRule(separator: string): Rule {
 
 function createSizeRule(separator: string): Rule {
   return createPropertyRule(SIZE_PROPERTIES, separator, ANY_VALUE, (properties, value) => {
-    if (value === undefined) return;
+    if (value === undefined) {
+      return;
+    }
 
     if (isSize(value)) {
       return toEntries(properties, `var(--sui-size-${value})`);
@@ -168,7 +174,9 @@ function createSizeRule(separator: string): Rule {
 
 function createContainerRule(separator: string): Rule {
   return createPropertyRule(CONTAINER_PROPERTIES, separator, ANY_VALUE, (properties, value) => {
-    if (value === undefined) return;
+    if (value === undefined) {
+      return;
+    }
 
     if (isContainerSize(value)) {
       return toEntries(properties, `var(--sui-container-${value})`);
@@ -233,9 +241,13 @@ function createDropShadowRule(separator: string): Rule {
     separator,
     DROP_SHADOW_VALUE,
     (properties, color, size) => {
-      if (size === undefined || !isDropShadowSize(size)) return;
+      if (size === undefined || !isDropShadowSize(size)) {
+        return;
+      }
 
-      if (color !== undefined && !isDropShadowColor(color)) return;
+      if (color !== undefined && !isDropShadowColor(color)) {
+        return;
+      }
 
       return toEntries(properties, `drop-shadow(${dropShadowVar(color, size)})`);
     },
@@ -244,7 +256,9 @@ function createDropShadowRule(separator: string): Rule {
 
 function createFontFamilyRule(separator: string): Rule {
   return createPropertyRule(FONT_PROPERTIES, separator, ANY_VALUE, (properties, family) => {
-    if (family === undefined || !isFontFamily(family)) return;
+    if (family === undefined || !isFontFamily(family)) {
+      return;
+    }
 
     return toEntries(properties, `var(--sui-font-${family})`);
   });
@@ -256,7 +270,9 @@ function createTextStyleRule(separator: string): Rule {
     (match) => {
       const style = match[1];
 
-      if (style === undefined || !isTextStyle(style)) return;
+      if (style === undefined || !isTextStyle(style)) {
+        return;
+      }
 
       return textStyleEntries(style);
     },
@@ -299,13 +315,19 @@ function createPropertyRule(
       const sign = signed ? (match[1] ?? "") : undefined;
       const name = match[1 + offset];
 
-      if (name === undefined) return;
+      if (name === undefined) {
+        return;
+      }
 
-      if (sign === "-" && !canBeNegative(name)) return;
+      if (sign === "-" && !canBeNegative(name)) {
+        return;
+      }
 
       const cssProperties = properties[name];
 
-      if (cssProperties === undefined) return;
+      if (cssProperties === undefined) {
+        return;
+      }
 
       const values = signed ? [sign, ...match.slice(2 + offset)] : match.slice(2 + offset);
 
@@ -322,7 +344,9 @@ function createPropertyRule(
  */
 function scale(reference: string): Resolver {
   return (properties, level) => {
-    if (level === undefined) return;
+    if (level === undefined) {
+      return;
+    }
 
     return toEntries(properties, `${reference}(${level})`);
   };
@@ -336,7 +360,9 @@ function scale(reference: string): Resolver {
  */
 function signedScale(reference: string): Resolver {
   return (properties, sign, level) => {
-    if (level === undefined) return;
+    if (level === undefined) {
+      return;
+    }
 
     return toEntries(properties, `${reference}(${sign ?? ""}${level})`);
   };

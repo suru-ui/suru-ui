@@ -1,21 +1,11 @@
 [tasks.format]
-run = "npx oxfmt --config ./.config/.oxfmtrc.json"
+run = "set -e; cp ./.config/.oxfmtrc.json ./.tmp-oxfmtrc.json; trap 'rm -f ./.tmp-oxfmtrc.json' EXIT; npx oxfmt --config ./.tmp-oxfmtrc.json"
 
 [tasks.lint]
-run = "npx oxlint --config ./.config/.oxlintrc.json"
-
-[tasks.prepare]
-run = [
-  "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/theme/suru.css\"))')\" >  examples/.style.css",
-  "cat \"$(node -e 'console.log(require.resolve(\"@suru-ui/react/suru.css\"))')\" >> examples/.style.css",
-  "cat examples/style.css >> examples/.style.css",
-]
+run = "set -e; cp ./.config/.oxlintrc.json ./.tmp-oxlintrc.json; trap 'rm -f ./.tmp-oxlintrc.json' EXIT; npx oxlint --config ./.tmp-oxlintrc.json"
 
 [tasks.dev]
-run = [
-  { task = "prepare" },
-  "sh -c 'node ./scripts/watch-astro-config.mjs & WATCHER=$!; trap \"kill $WATCHER\" EXIT; npx blume dev'",
-]
+run = "npx blume dev"
 
-[tasks.build]
-run = [{ task = "prepare" }, "npx blume build"]
+[tasks.update]
+run = ["npx npm-check-updates --target minor -u --cooldown 7"]

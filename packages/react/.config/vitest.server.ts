@@ -1,8 +1,10 @@
+import react from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
 
 import isDebugMode from "./_is-debug-mode.js";
 
 export default defineConfig({
+  plugins: [react()],
   oxc: {
     target: "es2020",
   },
@@ -14,5 +16,12 @@ export default defineConfig({
   test: {
     include: ["src/**/*.test.{ts,tsx}", "tests/**/*.test.{ts,tsx}"],
     exclude: ["src/**/*.client.test.{ts,tsx}", "tests/**/*.client.test.{ts,tsx}"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json-summary", "html"],
+      include: ["src/**/*.ts"],
+      reportsDirectory: "./coverage/server",
+    },
+    setupFiles: [".config/_debugging.ts"],
   },
 });

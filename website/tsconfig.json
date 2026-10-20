@@ -1,10 +1,14 @@
 {
-  "extends": "@tsconfig/strictest",
-  "include": [".blume/.astro/types.d.ts", "pages/**/*.astro", ".settings.d.ts"],
-  "exclude": ["dist"],
+  "extends": ["@tsconfig/node24", "@tsconfig/strictest"],
+  "include": ["./pages/**/*"],
   "compilerOptions": {
+    "types": ["node"],
     "lib": ["DOM", "ESNext"],
-    "jsx": "preserve",
-    "noEmit": true
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "target": "es2020",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "erasableSyntaxOnly": true
   }
 }

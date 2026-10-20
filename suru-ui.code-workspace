@@ -5,23 +5,23 @@
       "path": ".",
     },
     {
-      "name": "@suru-ui/core",
+      "name": "core",
       "path": "packages/core",
     },
     {
-      "name": "@suru-ui/theme",
+      "name": "theme",
       "path": "packages/theme",
     },
     {
-      "name": "@suru-ui/unocss",
+      "name": "unocss",
       "path": "packages/unocss",
     },
     {
-      "name": "@suru-ui/react",
+      "name": "react",
       "path": "packages/react",
     },
     {
-      "name": "@suru-ui/website",
+      "name": "website",
       "path": "website",
     },
   ],
@@ -37,8 +37,6 @@
     "js/ts.tsdk.path": "./node_modules/typescript/lib",
 
     // Oxc
-
-    "oxc.path.node": "/home/taikun/.local/share/mise/installs/node/24/bin/node",
 
     "oxc.path.oxfmt": "./node_modules/.bin/oxfmt",
     "oxc.path.oxlint": "./node_modules/.bin/oxlint",
@@ -56,20 +54,6 @@
       "editor.tabSize": 2,
     },
     "[astro][mdx]": {
-      "editor.tabSize": 2,
-    },
-
-    // stylelint
-
-    "stylelint.enable": true,
-    "stylelint.validate": ["css"],
-
-    "[css]": {
-      "editor.defaultFormatter": "stylelint.vscode-stylelint",
-      "editor.formatOnSave": true,
-      "editor.codeActionsOnSave": {
-        "source.fixAll.stylelint": "always",
-      },
       "editor.tabSize": 2,
     },
   },

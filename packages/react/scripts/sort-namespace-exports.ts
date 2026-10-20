@@ -83,7 +83,9 @@ type SortOrder = {
  * `g` フラグ付き正規表現の `lastIndex` の影響を受けないようにする。
  */
 function matchesName(pattern: string | RegExp, name: string): boolean {
-  if (typeof pattern === "string") return pattern === name;
+  if (typeof pattern === "string") {
+    return pattern === name;
+  }
   pattern.lastIndex = 0;
   return pattern.test(name);
 }
@@ -123,7 +125,9 @@ function getGroup(fixedNames: readonly (string | RegExp)[], name: string): numbe
  * コメントのような並べ替えに影響しない節点は走査対象から除く。
  */
 function isNode(value: unknown): value is Node {
-  if (typeof value !== "object" || value === null || !("type" in value)) return false;
+  if (typeof value !== "object" || value === null || !("type" in value)) {
+    return false;
+  }
   const type = (value as { type?: unknown }).type;
   return typeof type === "string" && type !== "CommentLine" && type !== "CommentBlock";
 }
@@ -228,9 +232,15 @@ function compareItems(
   a: { name: string; group: number; isNamespace: boolean },
   b: { name: string; group: number; isNamespace: boolean },
 ): number {
-  if (a.group !== b.group) return a.group - b.group;
-  if (a.name !== b.name) return a.name < b.name ? -1 : 1;
-  if (a.isNamespace !== b.isNamespace) return a.isNamespace ? 1 : -1;
+  if (a.group !== b.group) {
+    return a.group - b.group;
+  }
+  if (a.name !== b.name) {
+    return a.name < b.name ? -1 : 1;
+  }
+  if (a.isNamespace !== b.isNamespace) {
+    return a.isNamespace ? 1 : -1;
+  }
   return 0;
 }
 
@@ -284,13 +294,17 @@ function planReplacement(
     (item): item is { member: Statement; name: string; group: number; isNamespace: boolean } =>
       item.name !== null,
   );
-  if (sortable.length < 2) return null;
+  if (sortable.length < 2) {
+    return null;
+  }
 
   // 固定名で同名の型と名前空間がある名前を集める。
   const names = new Set(sortable.map((item) => item.name));
   const pairedFixedNames = new Set(
     [...names].filter((name) => {
-      if (getGroup(sort.fixedNames, name) === sort.namedGroup) return false;
+      if (getGroup(sort.fixedNames, name) === sort.namedGroup) {
+        return false;
+      }
       const kinds = sortable.filter((item) => item.name === name);
       return kinds.some((item) => item.isNamespace) && kinds.some((item) => !item.isNamespace);
     }),
@@ -308,7 +322,9 @@ function planReplacement(
 
   // 名前を持たない文が元の位置に残るように、並べ替えの要否を判定する。
   const isSameOrder = sorted.every((item, i) => item.member === sortable[i]!.member);
-  if (isSameOrder) return null;
+  if (isSameOrder) {
+    return null;
+  }
 
   const newOrder: number[] = members.map(() => 0);
   let cursor = 0;
@@ -353,7 +369,9 @@ function buildTree(plans: NonNullable<ReturnType<typeof planReplacement>>[]): Re
     // 自身を包含する直近のノードを親にする。
     while (stack.length > 0) {
       const parent = stack[stack.length - 1]!;
-      if (parent.start <= node.start && node.end <= parent.end) break;
+      if (parent.start <= node.start && node.end <= parent.end) {
+        break;
+      }
       stack.pop();
     }
     if (stack.length > 0) {
@@ -382,7 +400,9 @@ function renderRange(
   let text = "";
   let cursor = start;
   for (const node of nodes) {
-    if (node.end <= start || node.start >= end) continue;
+    if (node.end <= start || node.start >= end) {
+      continue;
+    }
     text += source.slice(cursor, node.start);
     text += rendered.get(node)!;
     cursor = node.end;
@@ -444,7 +464,9 @@ export function sortNamespaceExports(source: string, options?: SortOptions): str
   const plans = blocks
     .map(({ name, body }) => planReplacement(body, name, namespaceFixedOrders))
     .filter((plan): plan is NonNullable<typeof plan> => plan !== null);
-  if (plans.length === 0) return source;
+  if (plans.length === 0) {
+    return source;
+  }
 
   const roots = buildTree(plans);
   const rendered = new Map<ReplacementNode, string>();
@@ -488,7 +510,9 @@ async function main(): Promise<void> {
   for (const filePath of files) {
     const source = fs.readFileSync(filePath, "utf-8");
     const formatted = sortNamespaceExports(source);
-    if (formatted === source) continue;
+    if (formatted === source) {
+      continue;
+    }
     changedFiles.push(filePath);
     if (!isCheck) {
       fs.writeFileSync(filePath, formatted, "utf-8");

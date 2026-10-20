@@ -21,5 +21,12 @@ export default defineConfig({
       headless: true,
       instances: [{ browser: "chromium" }, { browser: "firefox" }, { browser: "webkit" }],
     },
+    coverage: {
+      provider: "istanbul",
+      reporter: ["text", "json-summary", "html"],
+      include: ["src/**/*.ts"],
+      reportsDirectory: "./coverage/client",
+    },
+    setupFiles: [".config/_debugging.ts"],
   },
 });

@@ -16,7 +16,9 @@ type TypeBody = TSTypeLiteral | TSInterfaceBody;
  * コメントのような並べ替えに影響しない節点は走査対象から除く。
  */
 function isNode(value: unknown): value is Node {
-  if (typeof value !== "object" || value === null || !("type" in value)) return false;
+  if (typeof value !== "object" || value === null || !("type" in value)) {
+    return false;
+  }
   const type = (value as { type?: unknown }).type;
   return typeof type === "string" && type !== "CommentLine" && type !== "CommentBlock";
 }
@@ -58,9 +60,15 @@ function getMemberName(member: TSTypeElement): string | null {
   if (member.type === "TSPropertySignature" || member.type === "TSMethodSignature") {
     key = member.key;
   }
-  if (key === null) return null;
-  if (key.type === "Identifier") return key.name;
-  if (key.type === "StringLiteral" || key.type === "NumericLiteral") return String(key.value);
+  if (key === null) {
+    return null;
+  }
+  if (key.type === "Identifier") {
+    return key.name;
+  }
+  if (key.type === "StringLiteral" || key.type === "NumericLiteral") {
+    return String(key.value);
+  }
   return null;
 }
 
@@ -84,7 +92,9 @@ function compareItems(
   a: { name: string; optional: boolean },
   b: { name: string; optional: boolean },
 ): number {
-  if (a.optional !== b.optional) return a.optional ? 1 : -1;
+  if (a.optional !== b.optional) {
+    return a.optional ? 1 : -1;
+  }
   return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
 }
 
@@ -135,13 +145,17 @@ function planReplacement(body: TypeBody): {
     (item): item is { member: TSTypeElement; name: string; optional: boolean } =>
       item.name !== null,
   );
-  if (sortable.length < 2) return null;
+  if (sortable.length < 2) {
+    return null;
+  }
 
   const sorted = sortable.toSorted(compareItems);
 
   // 名前を持たないメンバーが元の位置に残るように、並べ替えの要否を判定する。
   const isSameOrder = sorted.every((item, i) => item === sortable[i]);
-  if (isSameOrder) return null;
+  if (isSameOrder) {
+    return null;
+  }
 
   const newOrder: number[] = members.map(() => 0);
   let cursor = 0;
@@ -186,7 +200,9 @@ function buildTree(plans: NonNullable<ReturnType<typeof planReplacement>>[]): Re
     // 自身を包含する直近のノードを親にする。
     while (stack.length > 0) {
       const parent = stack[stack.length - 1]!;
-      if (parent.start <= node.start && node.end <= parent.end) break;
+      if (parent.start <= node.start && node.end <= parent.end) {
+        break;
+      }
       stack.pop();
     }
     if (stack.length > 0) {
@@ -215,7 +231,9 @@ function renderRange(
   let text = "";
   let cursor = start;
   for (const node of nodes) {
-    if (node.end <= start || node.start >= end) continue;
+    if (node.end <= start || node.start >= end) {
+      continue;
+    }
     text += source.slice(cursor, node.start);
     text += rendered.get(node)!;
     cursor = node.end;
@@ -294,7 +312,9 @@ export function sortTypeProps(source: string): string {
   const plans = bodies
     .map(planReplacement)
     .filter((plan): plan is NonNullable<typeof plan> => plan !== null);
-  if (plans.length === 0) return source;
+  if (plans.length === 0) {
+    return source;
+  }
 
   const roots = buildTree(plans);
   const rendered = new Map<ReplacementNode, string>();
@@ -338,7 +358,9 @@ async function main(): Promise<void> {
   for (const filePath of files) {
     const source = fs.readFileSync(filePath, "utf-8");
     const formatted = sortTypeProps(source);
-    if (formatted === source) continue;
+    if (formatted === source) {
+      continue;
+    }
     changedFiles.push(filePath);
     if (!isCheck) {
       fs.writeFileSync(filePath, formatted, "utf-8");

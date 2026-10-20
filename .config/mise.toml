@@ -10,10 +10,22 @@ run = [{ task = "test:format" }]
 env = { CI = 1 }
 
 [tasks."test:format"]
-run = { task = "format", args = ["--check"] }
+run = [{ task = "test:format:oxc" }, { task = "test:format:sort-workspaces" }]
+
+[tasks."test:format:oxc"]
+run = { task = "format:oxc", args = ["--check"] }
+
+[tasks."test:format:sort-workspaces"]
+run = { task = "format:sort-workspaces", args = ["--check"] }
 
 [tasks.format]
+run = [{ task = "format:oxc" }, { task = "format:sort-workspaces" }]
+
+[tasks."format:oxc"]
 run = "set -e; cp .config/.oxfmtrc.json .tmp-oxfmtrc.json; trap 'rm -f .tmp-oxfmtrc.json' EXIT; npx oxfmt --config .tmp-oxfmtrc.json"
+
+[tasks."format:sort-workspaces"]
+run = "node scripts/sort-workspaces.mjs"
 
 [tasks.update]
 run = [
@@ -21,5 +33,6 @@ run = [
   "pnpm update --include-github-actions",
   "pnpm install",
   "for d in $(jq -r '.workspaces[]' package.json | xargs ls -d); do (cd \"$d\" && mise run update); done",
-  "pnpm audit",
+  "pnpm audit --audit-level critical",
+  "npx skills update -y",
 ]
