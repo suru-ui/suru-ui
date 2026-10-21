@@ -158,7 +158,7 @@ export namespace AutocompleteRootProps {
     /**
      * 入力欄の主な外観を指定します。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: AutocompleteRootVariant | undefined;
   };
@@ -271,7 +271,7 @@ export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
     color = "grey",
     items,
     radius = size,
-    variant = "liquid",
+    variant = "naked",
     disabled = false,
     readOnly = false,
     required = false,

@@ -69,7 +69,7 @@ export namespace AutocompleteInputGroupProps {
     /**
      * 入力グループに枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -137,7 +137,7 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
     radius = ctx.radius,
     render,
     variant = ctx.variant,
-    outlined = false,
+    outlined = true,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",

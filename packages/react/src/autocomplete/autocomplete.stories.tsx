@@ -175,10 +175,10 @@ export const Usage = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "フルーツを検索",
   }),
@@ -196,7 +196,7 @@ export const Variants = meta.story({
     radius: undefined,
     backdrop: false,
     disabled: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "検索",
   }),
@@ -221,7 +221,7 @@ export const Colors = meta.story({
     empty: "該当なし",
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
     outlined: true,
@@ -255,10 +255,10 @@ export const Sizes = meta.story({
     empty: "該当なし",
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "検索",
   }),
@@ -283,10 +283,10 @@ export const Radii = meta.story({
     color: "grey",
     empty: "該当なし",
     items: fruits,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "検索",
   }),
@@ -296,7 +296,7 @@ export const Radii = meta.story({
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col gap-3">
             <span>{radius}</span>
-            <Autocomplete {...props} radius={radius} outlined className="w-[200px]" />
+            <Autocomplete {...props} radius={radius} className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -304,8 +304,8 @@ export const Radii = meta.story({
   },
 });
 
-export const WithOutline = meta.story({
-  name: "枠線付き",
+export const WithoutOutline = meta.story({
+  name: "枠線なし",
   ...ctrl({
     size: "md",
     color: "grey",
@@ -323,7 +323,7 @@ export const WithOutline = meta.story({
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-3">
             <span>{variant}</span>
-            <Autocomplete {...props} variant={variant} outlined className="w-[200px]" />
+            <Autocomplete {...props} variant={variant} outlined={false} className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -338,7 +338,7 @@ export const Disabled = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    outlined: false,
+    outlined: true,
     readOnly: false,
   }),
   render(props) {
@@ -382,7 +382,7 @@ export const ReadOnly = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -425,10 +425,10 @@ export const Addons = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "検索",
   }),
@@ -453,10 +453,10 @@ export const Filled = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "検索",
   }),
@@ -476,10 +476,10 @@ export const Labeled = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "フルーツを検索",
   }),
@@ -510,10 +510,10 @@ export const Grouped = meta.story({
       },
     ],
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     separator: false,
     placeholder: "食材を選択",
@@ -529,10 +529,10 @@ export const Objects = meta.story({
     size: "md",
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "都道府県を検索",
   }),
@@ -559,9 +559,9 @@ export const Virtualized = meta.story({
     size: "md",
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     const Autocomplete = Autocomplete_;
@@ -599,7 +599,7 @@ export const Virtualized = meta.story({
             }
           }}
         >
-          <Autocomplete.InputGroup>
+          <Autocomplete.InputGroup className="w-[200px]">
             <Autocomplete.Input id={id} placeholder="項目を検索" />
           </Autocomplete.InputGroup>
           <Autocomplete.Portal>
