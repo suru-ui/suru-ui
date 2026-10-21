@@ -1,7 +1,7 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
 
-import { defaultItemToStringValue } from "../../_item.js";
+import { defaultItemToStringLabel } from "../../_item.js";
 import type { Override, IComponent } from "../../types.js";
 import type { AutocompleteGroupProps } from "../group/autocomplete.group.jsx";
 import type { AutocompleteItemProps } from "../item/autocomplete.item.jsx";
@@ -275,7 +275,9 @@ export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
     disabled = false,
     readOnly = false,
     required = false,
-    itemToStringValue = defaultItemToStringValue,
+    // Autocomplete の `itemToStringValue` は入力欄に表示する文字列 (ラベル) として使われるため、
+    // Combobox の `itemToStringValue` ではなく `itemToStringLabel` と同じ規則で解決します。
+    itemToStringValue = defaultItemToStringLabel,
     ...otherProps
   } = props;
   const ctx = React.useMemo<AutocompleteContext>(

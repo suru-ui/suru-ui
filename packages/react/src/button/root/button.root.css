@@ -608,6 +608,12 @@
 /* 変異 */
 :scope {
   &:not(.sui_button-disabled) {
+    &.sui_button-item[data-highlighted] {
+      --_sui_button-z_index: 1;
+      --_sui_button-color: var(--sui_button-color-hover);
+      --_sui_button-background_color: var(--sui_button-background_color-hover);
+    }
+
     @media (any-hover: hover) {
       &:hover {
         --_sui_button-z_index: 1;
