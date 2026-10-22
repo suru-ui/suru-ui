@@ -142,7 +142,7 @@ describe("Radio の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <RadioRoot value="a" data-testid="plain" />
+        <RadioRoot value="a" outlined={false} data-testid="plain" />
         <RadioRoot value="b" outlined data-testid="outlined" />
       </>,
     );
@@ -220,7 +220,7 @@ describe("Radio の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span style={{ backgroundColor: "var(--sui-disabled-liquid-canvas)" }}>無効な未選択</span>
+        <span style={{ backgroundColor: "var(--sui-disabled-naked-canvas)" }}>無効な未選択</span>
         <span style={{ backgroundColor: "var(--sui-disabled-solid-canvas)" }}>無効な選択済み</span>
         <RadioGroupRoot defaultValue="a">
           <RadioRoot value="a" disabled data-testid="disabled" />

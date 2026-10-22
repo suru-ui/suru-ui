@@ -52,14 +52,16 @@ describe("Checkbox の配置", () => {
     const screen = await render(<Checkbox defaultChecked />);
 
     // 検証
-    const root = screen.getByClassName("sui_checkbox").element().getBoundingClientRect();
+    const rootElement = screen.getByClassName("sui_checkbox").element();
+    const root = rootElement.getBoundingClientRect();
+    const borderWidth = Number.parseFloat(getComputedStyle(rootElement).borderTopWidth);
     const indicator = screen
       .getByClassName("sui_checkbox_indicator")
       .element()
       .getBoundingClientRect();
     expect(indicator.left + indicator.width / 2).toBeCloseTo(root.left + root.width / 2, 1);
     expect(indicator.top + indicator.height / 2).toBeCloseTo(root.top + root.height / 2, 1);
-    expect(indicator.width).toBeCloseTo(root.width, 1);
+    expect(indicator.width).toBeCloseTo(root.width - borderWidth * 2, 1);
   });
 
   test("角丸 full は高さの半分にする", async ({ expect }) => {
@@ -79,7 +81,7 @@ describe("Checkbox の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <CheckboxRoot data-testid="plain" />
+        <CheckboxRoot outlined={false} data-testid="plain" />
         <CheckboxRoot outlined data-testid="outlined" />
       </>,
     );
@@ -179,7 +181,7 @@ describe("Checkbox の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <span style={{ backgroundColor: "var(--sui-disabled-liquid-canvas)" }}>無効な未選択</span>
+        <span style={{ backgroundColor: "var(--sui-disabled-naked-canvas)" }}>無効な未選択</span>
         <span style={{ backgroundColor: "var(--sui-disabled-solid-canvas)" }}>無効な選択済み</span>
         <CheckboxRoot disabled data-testid="disabled" />
         <CheckboxRoot disabled defaultChecked data-testid="disabled-checked" />

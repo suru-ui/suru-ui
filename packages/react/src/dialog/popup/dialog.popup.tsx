@@ -93,7 +93,7 @@ export const DialogPopup: IDialogPopup = function SuiDialogPopup(props) {
     radius,
     render,
     variant = "default",
-    outlined = true,
+    outlined,
     className,
     ...otherProps
   } = props;

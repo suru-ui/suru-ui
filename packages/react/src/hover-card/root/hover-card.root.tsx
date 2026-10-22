@@ -81,7 +81,7 @@ export namespace HoverCardRootProps {
     /**
      * ホバーカードに枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -152,7 +152,7 @@ export interface IHoverCardRoot extends IComponent<HoverCardRootProps> {
 export const HoverCardRoot: IHoverCardRoot = function SuiHoverCardRoot<TPayload>(
   props: HoverCardRootProps<TPayload>,
 ) {
-  const { size = "md", radius = size, outlined = false, ...otherProps } = props;
+  const { size = "md", radius = size, outlined = true, ...otherProps } = props;
   const ctx = React.useMemo<HoverCardContext>(
     () => ({ size, radius, outlined }),
     [size, radius, outlined],

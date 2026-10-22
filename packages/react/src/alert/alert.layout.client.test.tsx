@@ -157,13 +157,13 @@ describe("AlertRoot の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <AlertRoot size="sm" aria-label="小">
+        <AlertRoot size="sm" outlined={false} aria-label="小">
           <AlertDescription>小の説明文</AlertDescription>
         </AlertRoot>
-        <AlertRoot size="md" aria-label="中">
+        <AlertRoot size="md" outlined={false} aria-label="中">
           <AlertDescription>中の説明文</AlertDescription>
         </AlertRoot>
-        <AlertRoot size="lg" aria-label="大">
+        <AlertRoot size="lg" outlined={false} aria-label="大">
           <AlertDescription>大の説明文</AlertDescription>
         </AlertRoot>
       </>,
@@ -191,7 +191,7 @@ describe("AlertRoot の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <AlertRoot aria-label="枠線なし">
+        <AlertRoot outlined={false} aria-label="枠線なし">
           <AlertDescription>枠線なしの説明文</AlertDescription>
         </AlertRoot>
         <AlertRoot outlined aria-label="枠線あり">

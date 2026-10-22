@@ -39,7 +39,7 @@ export const Usage = meta.story({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -62,7 +62,7 @@ export const Arrow = meta.story({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -85,7 +85,7 @@ export const Sizes = meta.story({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -106,24 +106,24 @@ export const Sizes = meta.story({
   },
 });
 
-export const Outlined = meta.story({
+export const WithoutOutline = meta.story({
   name: "枠線と角丸",
   ...ctrl({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
       <div className="flex flex-wrap items-start gap-4">
-        <Popover {...props} trigger={<Button variant="liquid">標準</Button>}>
-          <PopoverParts.Title>枠線なし</PopoverParts.Title>
-          <PopoverParts.Description>背景色だけで内容を区切ります。</PopoverParts.Description>
-        </Popover>
-        <Popover {...props} trigger={<Button variant="liquid">枠線あり</Button>} outlined>
+        <Popover {...props} trigger={<Button variant="liquid">既定</Button>}>
           <PopoverParts.Title>枠線あり</PopoverParts.Title>
           <PopoverParts.Description>背景との境界を明確にします。</PopoverParts.Description>
+        </Popover>
+        <Popover {...props} trigger={<Button variant="liquid">枠線なし</Button>} outlined={false}>
+          <PopoverParts.Title>枠線なし</PopoverParts.Title>
+          <PopoverParts.Description>背景色だけで内容を区切ります。</PopoverParts.Description>
         </Popover>
         {RADII.map((radius) => (
           <Popover
@@ -131,7 +131,6 @@ export const Outlined = meta.story({
             {...props}
             radius={radius}
             trigger={<Button variant="liquid">{radius}</Button>}
-            outlined
           >
             <PopoverParts.Description>
               角丸 {radius} のポップオーバーです。
@@ -149,7 +148,7 @@ export const Positions = meta.story({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     const sides = ["top", "bottom", "left", "right"] as const;
@@ -199,7 +198,7 @@ export const DisabledTrigger = meta.story({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -221,7 +220,7 @@ export const Empty = meta.story({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -238,7 +237,7 @@ export const LongContent = meta.story({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -262,7 +261,7 @@ export const Edge = meta.story({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -300,7 +299,7 @@ export const UserMenu = meta.story({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -337,7 +336,7 @@ export const Accessible = meta.story({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -360,7 +359,7 @@ export const Keyboard = meta.story({
     size: "md",
     modal: false,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (

@@ -17,7 +17,7 @@ describe("AlertRoot", () => {
     expect(root.classList.contains("sui_alert-color_grey")).toBe(true);
     expect(root.classList.contains("sui_alert-radius_md")).toBe(true);
     expect(root.classList.contains("sui_alert-variant_muted")).toBe(true);
-    expect(root.classList.contains("sui_alert-outlined")).toBe(false);
+    expect(root.classList.contains("sui_alert-outlined")).toBe(true);
   });
 
   test("指定した修飾クラスを付ける", async ({ expect }) => {

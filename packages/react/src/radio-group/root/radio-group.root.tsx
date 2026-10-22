@@ -95,6 +95,8 @@ export namespace RadioGroupRootProps {
      * ラジオボタンに枠線を表示するかどうかを指定します。
      *
      * グループ内のラジオボタンより優先されます。
+     *
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -121,7 +123,7 @@ export namespace RadioGroupRootProps {
      *
      * グループ内のラジオボタンより優先されます。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: RadioGroupRootVariant | undefined;
   };
@@ -179,9 +181,9 @@ export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
     style,
     radius = "full",
     render,
-    variant = "liquid",
+    variant = "naked",
     disabled,
-    outlined = false,
+    outlined = true,
     className,
     orientation = "vertical",
     // @ts-expect-error

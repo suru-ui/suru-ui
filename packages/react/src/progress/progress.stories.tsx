@@ -61,7 +61,7 @@ export const Usage = meta.story({
     value: null,
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     const [value, setValue] = React.useState(0);
@@ -93,7 +93,7 @@ export const Variants = meta.story({
     color: "grey",
     value: 24,
     radius: "full",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -115,7 +115,7 @@ export const Labelless = meta.story({
     color: "grey",
     value: 24,
     radius: "full",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -136,7 +136,7 @@ export const Colors = meta.story({
     size: "md",
     value: 24,
     radius: "full",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -159,7 +159,7 @@ export const Radii = meta.story({
     value: 24,
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -174,8 +174,8 @@ export const Radii = meta.story({
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const WithoutOutline = meta.story({
+  name: "枠線なし",
   ...ctrl({
     max: 100,
     min: 0,
@@ -186,8 +186,8 @@ export const Outlined = meta.story({
   render(props) {
     return (
       <div className="flex w-[300px] flex-col gap-6">
-        <Progress {...props} label="naked" variant="naked" outlined />
-        <Progress {...props} label="liquid" variant="liquid" outlined />
+        <Progress {...props} label="naked" variant="naked" outlined={false} />
+        <Progress {...props} label="liquid" variant="liquid" outlined={false} />
       </div>
     );
   },
@@ -202,7 +202,7 @@ export const Sizes = meta.story({
     value: 24,
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -223,7 +223,7 @@ export const Indeterminate = meta.story({
     value: null,
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -243,7 +243,7 @@ export const Status = meta.story({
     color: "grey",
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -265,7 +265,7 @@ export const Edge = meta.story({
     color: "grey",
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -289,7 +289,7 @@ export const Format = meta.story({
     value: 42,
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -319,7 +319,7 @@ export const RealWorld = meta.story({
     label: "ファイルをアップロードしています",
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     const [value, setValue] = React.useState(0);
@@ -363,7 +363,7 @@ export const Accessibility = meta.story({
     value: 60,
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (

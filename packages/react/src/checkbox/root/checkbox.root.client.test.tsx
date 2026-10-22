@@ -19,8 +19,8 @@ describe("CheckboxRoot", () => {
     expect(root.classList.contains("sui_checkbox-size_md")).toBe(true);
     expect(root.classList.contains("sui_checkbox-color_grey")).toBe(true);
     expect(root.classList.contains("sui_checkbox-radius_md")).toBe(true);
-    expect(root.classList.contains("sui_checkbox-variant_liquid")).toBe(true);
-    expect(root.classList.contains("sui_checkbox-outlined")).toBe(false);
+    expect(root.classList.contains("sui_checkbox-variant_naked")).toBe(true);
+    expect(root.classList.contains("sui_checkbox-outlined")).toBe(true);
   });
 
   test("指定した修飾クラスを付ける", async ({ expect }) => {

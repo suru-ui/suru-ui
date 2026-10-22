@@ -85,7 +85,7 @@ export namespace NumberFieldRootProps {
     /**
      * 枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -106,7 +106,7 @@ export namespace NumberFieldRootProps {
     /**
      * 数値入力欄の主な外観を指定します。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: NumberFieldRootVariant | undefined;
   };
@@ -167,8 +167,8 @@ export const NumberFieldRoot: INumberFieldRoot = function SuiNumberFieldRoot(pro
     style,
     radius = size,
     render,
-    variant = "liquid",
-    outlined = false,
+    variant = "naked",
+    outlined = true,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",

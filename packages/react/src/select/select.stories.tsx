@@ -54,9 +54,9 @@ export const Usage = meta.story({
     items: fruits,
     label: "果物",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "果物を選択",
   }),
   render(props) {
@@ -72,7 +72,7 @@ export const Variants = meta.story({
     label: undefined,
     radius: undefined,
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "選択",
   }),
   render(props) {
@@ -97,9 +97,9 @@ export const Sizes = meta.story({
   ...ctrl({
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "選択",
   }),
   render(props) {
@@ -118,9 +118,9 @@ export const Radii = meta.story({
   ...ctrl({
     size: "md",
     items: fruits,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "選択",
   }),
   render(props) {
@@ -145,9 +145,9 @@ export const ObjectItems = meta.story({
     },
     label: "言語",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "言語を選択",
   }),
   render(props: {}) {
@@ -169,9 +169,9 @@ export const Multiple = meta.story({
     items: ["TypeScript", "Rust", "Go", "Python"],
     label: "言語",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "言語を選択",
   }),
   render(props: {}) {
@@ -197,10 +197,10 @@ export const Grouped = meta.story({
     ],
     label: "食材",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
     multiple: false,
-    outlined: false,
+    outlined: true,
     placeholder: "食材を選択",
   }),
   render(props) {
@@ -214,10 +214,10 @@ export const ManyItems = meta.story({
     size: "md",
     label: "食材",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
     multiple: false,
-    outlined: false,
+    outlined: true,
     placeholder: "候補を選択",
   }),
   render(props) {
@@ -237,9 +237,9 @@ export const Disabled = meta.story({
     size: "md",
     label: "食材",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     multiple: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (

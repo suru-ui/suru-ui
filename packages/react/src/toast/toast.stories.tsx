@@ -122,7 +122,7 @@ export const Styled = meta.story({
     radius: undefined,
     timeout: 5000,
     variant: "muted",
-    outlined: false,
+    outlined: true,
     description: "通知メセージです。",
   }),
   render(props) {

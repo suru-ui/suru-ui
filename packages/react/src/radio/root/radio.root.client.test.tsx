@@ -23,8 +23,8 @@ describe("RadioRoot", () => {
     expect(root.classList.contains("sui_radio-size_md")).toBe(true);
     expect(root.classList.contains("sui_radio-color_grey")).toBe(true);
     expect(root.classList.contains("sui_radio-radius_full")).toBe(true);
-    expect(root.classList.contains("sui_radio-variant_liquid")).toBe(true);
-    expect(root.classList.contains("sui_radio-outlined")).toBe(false);
+    expect(root.classList.contains("sui_radio-variant_naked")).toBe(true);
+    expect(root.classList.contains("sui_radio-outlined")).toBe(true);
   });
 
   test("指定した修飾クラスを付ける", async ({ expect }) => {

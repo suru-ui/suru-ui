@@ -71,7 +71,7 @@ describe("Select の配置", () => {
         <span style={{ borderColor: "var(--sui-grey-naked-border-normal)", borderStyle: "solid" }}>
           枠線の基準
         </span>
-        <Select items={["りんご"]} aria-label="なし" />
+        <Select items={["りんご"]} outlined={false} aria-label="なし" />
         <Select items={["りんご"]} outlined aria-label="あり" />
       </>,
     );

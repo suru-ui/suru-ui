@@ -18,7 +18,7 @@ describe("SwitchRoot", () => {
     expect(root.classList.contains("sui_switch-color_grey")).toBe(true);
     expect(root.classList.contains("sui_switch-radius_full")).toBe(true);
     expect(root.classList.contains("sui_switch-variant_liquid")).toBe(true);
-    expect(root.classList.contains("sui_switch-outlined")).toBe(false);
+    expect(root.classList.contains("sui_switch-outlined")).toBe(true);
   });
 
   test("指定した修飾クラスを付ける", async ({ expect }) => {

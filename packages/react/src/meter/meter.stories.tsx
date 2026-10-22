@@ -60,7 +60,7 @@ export const Usage = meta.story({
     value: 24,
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <Meter {...props} className="w-[300px]" />;
@@ -76,7 +76,7 @@ export const Variants = meta.story({
     color: "grey",
     value: 24,
     radius: "full",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -98,7 +98,7 @@ export const Labelless = meta.story({
     color: "grey",
     value: 24,
     radius: "full",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -119,7 +119,7 @@ export const Colors = meta.story({
     size: "md",
     value: 24,
     radius: "full",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -142,7 +142,7 @@ export const Radii = meta.story({
     value: 24,
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -157,8 +157,8 @@ export const Radii = meta.story({
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const WithoutOutline = meta.story({
+  name: "枠線なし",
   ...ctrl({
     max: 100,
     min: 0,
@@ -169,8 +169,8 @@ export const Outlined = meta.story({
   render(props) {
     return (
       <div className="flex w-[300px] flex-col gap-6">
-        <Meter {...props} label="naked" variant="naked" outlined />
-        <Meter {...props} label="liquid" variant="liquid" outlined />
+        <Meter {...props} label="naked" variant="naked" outlined={false} />
+        <Meter {...props} label="liquid" variant="liquid" outlined={false} />
       </div>
     );
   },
@@ -185,7 +185,7 @@ export const Sizes = meta.story({
     value: 24,
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -207,7 +207,7 @@ export const Values = meta.story({
     color: "grey",
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     const items = [
@@ -233,7 +233,7 @@ export const CustomRange = meta.story({
     color: "grey",
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     const items = [
@@ -265,7 +265,7 @@ export const Formatting = meta.story({
     color: "grey",
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -303,7 +303,7 @@ export const LongLabel = meta.story({
     value: 24,
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -328,7 +328,7 @@ export const Accessibility = meta.story({
     value: 24,
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -351,7 +351,7 @@ export const Storage = meta.story({
     color: "blue",
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -379,7 +379,7 @@ export const Dashboard = meta.story({
     size: "md",
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     const items = [

@@ -54,7 +54,7 @@ describe("useSelectContext", () => {
     );
 
     // 検証
-    expect(screen.getByText("lg,lg,liquid,false").query()?.textContent).toBe("lg,lg,liquid,false");
+    expect(screen.getByText("lg,lg,naked,true").query()?.textContent).toBe("lg,lg,naked,true");
   });
 
   test("角丸の指定を優先する", async ({ expect }) => {

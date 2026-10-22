@@ -47,7 +47,7 @@ describe("useContextMenuContext", () => {
     );
 
     // 検証
-    expect(screen.getByText("md,md,naked,false").query()?.textContent).toBe("md,md,naked,false");
+    expect(screen.getByText("md,md,naked,true").query()?.textContent).toBe("md,md,naked,true");
   });
 
   test("サブメニューでは深さを増やす", async ({ expect }) => {

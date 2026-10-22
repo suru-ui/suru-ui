@@ -53,9 +53,9 @@ describe("TextareaRoot の配置", () => {
         <span id="expected-sm" style={{ display: "block", paddingInline: "--sui-space(1.5)" }} />
         <span id="expected-md" style={{ display: "block", paddingInline: "--sui-space(2.5)" }} />
         <span id="expected-lg" style={{ display: "block", paddingInline: "--sui-space(3.5)" }} />
-        <TextareaRoot size="sm" aria-label="小" />
-        <TextareaRoot size="md" aria-label="中" />
-        <TextareaRoot size="lg" aria-label="大" />
+        <TextareaRoot size="sm" outlined={false} aria-label="小" />
+        <TextareaRoot size="md" outlined={false} aria-label="中" />
+        <TextareaRoot size="lg" outlined={false} aria-label="大" />
       </>,
     );
 
@@ -189,7 +189,13 @@ describe("TextareaRoot の配置", () => {
 
   test("公開変数で outline の枠線色を上書きできる", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<TextareaRoot id="custom" outlined aria-label="問い合わせ内容" />);
+    const screen = await render(
+      <>
+        <TextareaRoot id="custom" outlined aria-label="問い合わせ内容" />
+        <span>待避</span>
+      </>,
+    );
+    await screen.getByText("待避").hover();
     const root = screen.container.querySelector<HTMLElement>("#custom")!;
     const idle = getComputedStyle(root).borderTopColor;
     root.style.setProperty("--sui_textarea-border_color-idle", "rgb(1, 2, 3)");
@@ -328,7 +334,9 @@ describe("TextareaRoot の配置", () => {
 
   test("公開変数で最小高さと水平余白を上書きできる", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<TextareaRoot id="custom" aria-label="問い合わせ内容" />);
+    const screen = await render(
+      <TextareaRoot id="custom" outlined={false} aria-label="問い合わせ内容" />,
+    );
     const root = screen.container.querySelector<HTMLElement>("#custom")!;
     root.style.setProperty("--sui_textarea-min_height", "48px");
     root.style.setProperty("--sui_textarea-padding_inline", "20px");

@@ -49,7 +49,7 @@ export const Usage = meta.story({
     title: "通知",
     radius: "md",
     variant: "default",
-    outlined: false,
+    outlined: true,
     description: "新しい通知はありません。",
     showCloseIconButton: true,
   }),
@@ -73,7 +73,7 @@ export const Stacked = meta.story({
   ...ctrl({
     title: "通知",
     radius: "md",
-    outlined: false,
+    outlined: true,
     description: "新しい通知はありません。",
     showCloseIconButton: true,
   }),
@@ -94,7 +94,7 @@ export const Stacked = meta.story({
 export const Radii = meta.story({
   name: "角丸",
   ...ctrl({
-    outlined: false,
+    outlined: true,
     description: "角丸の大きさを切り替えられます。",
     showCloseIconButton: true,
   }),
@@ -116,13 +116,13 @@ export const Radii = meta.story({
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const WithoutOutline = meta.story({
+  name: "枠線なし",
   ...ctrl({
     title: "通知",
     radius: "md",
     variant: "default",
-    description: "枠線を表示したダイアログです。",
+    description: "枠線を表示しないダイアログです。",
     showCloseIconButton: true,
   }),
   render(props) {
@@ -131,7 +131,7 @@ export const Outlined = meta.story({
         {...props}
         close={<Button variant="naked">閉じる</Button>}
         trigger={<Button>通知を見る</Button>}
-        outlined
+        outlined={false}
       />
     );
   },
@@ -143,7 +143,7 @@ export const WithoutCloseIconButton = meta.story({
     title: "通知",
     radius: "md",
     variant: "default",
-    outlined: false,
+    outlined: true,
     description: "右上の閉じるアイコンを非表示にします。",
   }),
   render(props) {
@@ -164,7 +164,7 @@ export const CustomAction = meta.story({
     title: "下書きの編集",
     radius: "md",
     variant: "default",
-    outlined: false,
+    outlined: true,
     description: "閉じるアイコンの手前に独自の内容を追加できます。",
     showCloseIconButton: true,
   }),

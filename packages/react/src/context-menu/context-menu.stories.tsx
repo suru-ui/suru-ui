@@ -71,7 +71,7 @@ export const Usage = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;
@@ -102,7 +102,7 @@ export const Nested = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;
@@ -116,7 +116,7 @@ export const CheckboxItems = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     const [showSidebar, setShowSidebar] = React.useState(true);
@@ -152,7 +152,7 @@ export const RadioItems = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     const [value, setValue] = React.useState("name");
@@ -223,7 +223,7 @@ export const Groups = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;
@@ -263,7 +263,7 @@ export const Shortcuts = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;
@@ -312,7 +312,7 @@ export const Icons = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;
@@ -341,7 +341,7 @@ export const Destructive = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;
@@ -372,7 +372,7 @@ export const LinkItems = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;
@@ -396,7 +396,7 @@ export const Sizes = meta.story({
     ],
     radius: undefined,
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -412,8 +412,8 @@ export const Sizes = meta.story({
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const WithoutOutline = meta.story({
+  name: "枠線なし",
   ...ctrl({
     size: "md",
     items: [
@@ -432,12 +432,12 @@ export const Outlined = meta.story({
     return (
       <div className="flex flex-col gap-4">
         <div>
-          <p className="mb-2 text-sm">なし</p>
+          <p className="mb-2 text-sm">既定</p>
           <ContextMenu {...props} trigger={<TriggerArea />} />
         </div>
         <div>
-          <p className="mb-2 text-sm">あり</p>
-          <ContextMenu {...props} trigger={<TriggerArea />} outlined />
+          <p className="mb-2 text-sm">なし</p>
+          <ContextMenu {...props} trigger={<TriggerArea />} outlined={false} />
         </div>
       </div>
     );
@@ -471,7 +471,7 @@ export const DisabledItems = meta.story({
     ],
     radius: undefined,
     variant: "naked",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;
@@ -502,7 +502,7 @@ export const Sides = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -619,7 +619,7 @@ export const FileActions = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;
@@ -677,7 +677,7 @@ export const TextEdit = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <ContextMenu {...props} trigger={<TriggerArea />} />;

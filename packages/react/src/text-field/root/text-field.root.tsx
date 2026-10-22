@@ -65,7 +65,7 @@ export namespace TextFieldRootProps {
     /**
      * 枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -86,7 +86,7 @@ export namespace TextFieldRootProps {
     /**
      * 文字入力欄の主な外観を指定します。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: TextFieldRootVariant | undefined;
   };
@@ -120,8 +120,8 @@ export const TextFieldRoot: ITextFieldRoot = function SuiTextFieldRoot(props) {
     color = "grey",
     radius = size,
     onClick,
-    variant = "liquid",
-    outlined = false,
+    variant = "naked",
+    outlined = true,
     // @ts-expect-error
     "data-scope": dataScope = "",
     ...otherDivProps

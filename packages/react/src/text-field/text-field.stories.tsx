@@ -73,9 +73,9 @@ export const Usage = meta.story({
     type: "text",
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "田中 太郎",
   }),
   render(props) {
@@ -90,9 +90,9 @@ export const WidhAddons = meta.story({
     type: "text",
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "example.com",
   }),
   render(props) {
@@ -114,7 +114,7 @@ export const Variants = meta.story({
     color: "grey",
     radius: undefined,
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "example.com",
   }),
   render(props) {
@@ -142,7 +142,7 @@ export const Colors = meta.story({
   ...ctrl({
     size: "md",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
     outlined: true,
     placeholder: "色",
@@ -182,9 +182,9 @@ export const Radii = meta.story({
   ...ctrl({
     size: "md",
     color: "grey",
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "田中 太郎",
   }),
   render(props) {
@@ -201,8 +201,8 @@ export const Radii = meta.story({
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const WithoutOutline = meta.story({
+  name: "枠線なし",
   ...ctrl({
     size: "md",
     color: "grey",
@@ -216,7 +216,7 @@ export const Outlined = meta.story({
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-2">
             <span>{variant}</span>
-            <TextField {...props} variant={variant} outlined className="w-[320px]" />
+            <TextField {...props} variant={variant} outlined={false} className="w-[320px]" />
           </div>
         ))}
       </div>
@@ -229,9 +229,9 @@ export const Sizes = meta.story({
   ...ctrl({
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "example.com",
   }),
   render(props) {
@@ -260,9 +260,9 @@ export const Invalid = meta.story({
     size: "md",
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "田中 太郎",
   }),
   render(props) {
@@ -288,7 +288,7 @@ export const Disabled = meta.story({
     size: "md",
     color: "grey",
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -328,9 +328,9 @@ export const Controlled = meta.story({
     type: "text",
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "田中 太郎",
   }),
   render(props) {
@@ -359,9 +359,9 @@ export const ReadOnly = meta.story({
     type: "text",
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
     placeholder: "田中 太郎",
   }),
   render(props) {
@@ -381,9 +381,9 @@ export const EmptyAndLong = meta.story({
     type: "text",
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -406,9 +406,9 @@ export const WithField = meta.story({
     type: "text",
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -436,7 +436,7 @@ export const Required = meta.story({
     type: "text",
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
     outlined: true,
     placeholder: "田中 太郎",
@@ -467,9 +467,9 @@ export const Keyboard = meta.story({
     type: "text",
     color: "grey",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (

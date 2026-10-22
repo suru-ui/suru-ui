@@ -46,7 +46,7 @@ describe("useCheckboxGroupContext", () => {
     );
 
     // 検証
-    expect(screen.getByText("md,grey,md,liquid").query()?.textContent).toBe("md,grey,md,liquid");
+    expect(screen.getByText("md,grey,md,naked").query()?.textContent).toBe("md,grey,md,naked");
   });
 
   test("角丸の指定を優先する", async ({ expect }) => {

@@ -136,7 +136,7 @@ export namespace TabsRootProps {
     /**
      * Tabs の枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -209,7 +209,7 @@ export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
     radius = size,
     render,
     variant = "line",
-    outlined = false,
+    outlined = true,
     className,
     activeVariant = "liquid",
     // @ts-expect-error

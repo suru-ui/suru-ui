@@ -42,9 +42,9 @@ describe("InputRoot の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <InputRoot size="sm" aria-label="小" />
-        <InputRoot size="md" aria-label="中" />
-        <InputRoot size="lg" aria-label="大" />
+        <InputRoot size="sm" outlined={false} aria-label="小" />
+        <InputRoot size="md" outlined={false} aria-label="中" />
+        <InputRoot size="lg" outlined={false} aria-label="大" />
       </>,
     );
 
@@ -89,7 +89,7 @@ describe("InputRoot の配置", () => {
         <span style={{ borderColor: "var(--sui-grey-naked-border-normal)", borderStyle: "solid" }}>
           枠線の基準
         </span>
-        <InputRoot aria-label="なし" />
+        <InputRoot outlined={false} aria-label="なし" />
         <InputRoot outlined aria-label="あり" />
       </>,
     );
@@ -227,7 +227,7 @@ describe("InputRoot の配置", () => {
 
   test("公開変数で大きさと水平余白を上書きできる", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<InputRoot id="custom" aria-label="名前" />);
+    const screen = await render(<InputRoot id="custom" outlined={false} aria-label="名前" />);
     const root = screen.container.querySelector<HTMLElement>("#custom")!;
     root.style.setProperty("--sui_input-min_height", "48px");
     root.style.setProperty("--sui_input-padding_inline", "20px");

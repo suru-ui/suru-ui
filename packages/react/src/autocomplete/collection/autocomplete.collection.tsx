@@ -44,6 +44,8 @@ export namespace AutocompleteCollectionProps {
      * グループの末尾に区切り線を表示するかどうかを指定します。
      *
      * 既定レンダラーを使うときにだけ適用されます。
+     *
+     * @default true
      */
     separator?: boolean | undefined;
   };
@@ -129,7 +131,7 @@ export const AutocompleteCollection: IAutocompleteCollection = function SuiAutoc
     }
   };
 
-  const { children = defaultItemRenderer, separator = false } = props;
+  const { children = defaultItemRenderer, separator = true } = props;
 
   return <Autocomplete.Collection>{children}</Autocomplete.Collection>;
 };

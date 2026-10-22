@@ -25,8 +25,8 @@ describe("PasswordFieldRoot", () => {
     expect(root.classList.contains("sui_password_field-size_md")).toBe(true);
     expect(root.classList.contains("sui_password_field-color_grey")).toBe(true);
     expect(root.classList.contains("sui_password_field-radius_md")).toBe(true);
-    expect(root.classList.contains("sui_password_field-variant_liquid")).toBe(true);
-    expect(root.classList.contains("sui_password_field-outlined")).toBe(false);
+    expect(root.classList.contains("sui_password_field-variant_naked")).toBe(true);
+    expect(root.classList.contains("sui_password_field-outlined")).toBe(true);
   });
 
   test("指定した大きさと配色と角丸と外観のクラスを付ける", async ({ expect }) => {

@@ -46,9 +46,7 @@ describe("useRadioGroupContext", () => {
     );
 
     // 検証
-    expect(screen.getByText("md,grey,full,liquid").query()?.textContent).toBe(
-      "md,grey,full,liquid",
-    );
+    expect(screen.getByText("md,grey,full,naked").query()?.textContent).toBe("md,grey,full,naked");
   });
 
   test("角丸の指定を優先する", async ({ expect }) => {

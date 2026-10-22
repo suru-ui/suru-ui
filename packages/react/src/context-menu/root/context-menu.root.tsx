@@ -254,7 +254,7 @@ export namespace ContextMenuRootProps {
     /**
      * ポップアップに枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -337,7 +337,7 @@ export const ContextMenuRoot: IContextMenuRoot = function SuiContextMenuRoot(
     items = [],
     radius = size,
     variant = "naked",
-    outlined = false,
+    outlined = true,
     ...otherProps
   } = props;
   const ctx = React.useMemo<ContextMenuContext>(

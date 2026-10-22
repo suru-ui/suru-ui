@@ -17,7 +17,7 @@ describe("ProgressRoot", () => {
     expect(root.classList.contains("sui_progress-color_grey")).toBe(true);
     expect(root.classList.contains("sui_progress-radius_full")).toBe(true);
     expect(root.classList.contains("sui_progress-variant_liquid")).toBe(true);
-    expect(root.classList.contains("sui_progress-outlined")).toBe(false);
+    expect(root.classList.contains("sui_progress-outlined")).toBe(true);
   });
 
   test("指定した大きさの修飾クラスを付ける", async ({ expect }) => {

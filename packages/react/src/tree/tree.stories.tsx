@@ -104,7 +104,7 @@ export const Usage = meta.story({
     muted: false,
     radius: undefined,
     variant: "liquid",
-    outlined: false,
+    outlined: true,
     className: "w-[240px]",
     defaultExpandedValue: ["src"],
   }),
@@ -118,7 +118,7 @@ export const Sizes = meta.story({
     muted: false,
     radius: undefined,
     variant: "liquid",
-    outlined: false,
+    outlined: true,
     defaultExpandedValue: ["src"],
   }),
   render(props) {

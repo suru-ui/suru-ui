@@ -226,7 +226,7 @@ export namespace FileUploadRootProps {
     /**
      * ファイルアップロードの主な外観を指定します。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: FileUploadRootVariant | undefined;
   };
@@ -262,7 +262,7 @@ export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props)
     value,
     accept,
     radius = size,
-    variant = "liquid",
+    variant = "naked",
     children,
     disabled = false,
     maxFiles = Number.POSITIVE_INFINITY,

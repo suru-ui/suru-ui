@@ -74,7 +74,7 @@ export namespace TextareaRootProps {
     /**
      * 枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -102,7 +102,7 @@ export namespace TextareaRootProps {
     /**
      * テキストエリアの主な外観を指定します。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: TextareaRootVariant | undefined;
   };
@@ -144,8 +144,8 @@ export const TextareaRoot: ITextareaRoot = function SuiTextareaRoot(props) {
     style,
     radius = size,
     render = <textarea />,
-    variant = "liquid",
-    outlined = false,
+    variant = "naked",
+    outlined = true,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",

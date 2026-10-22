@@ -267,6 +267,8 @@ namespace AutocompleteProps {
      * グループの末尾に区切り線を表示するかどうかを指定します。
      *
      * 既定レンダラーを使うときにだけ適用されます。
+     *
+     * @default true
      */
     separator?: boolean | undefined;
 
@@ -770,7 +772,7 @@ export class AutocompleteAPI<TItem = any> {
    * `separator` が無効なときは `null` を返します。
    */
   public getSeparatorProps(): AutocompleteSeparatorProps | null {
-    const { separator = false } = this.autocompleteProps;
+    const { separator = true } = this.autocompleteProps;
     const { separator: props } = this.slotProps;
 
     if (separator || props) {

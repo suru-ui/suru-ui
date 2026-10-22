@@ -59,7 +59,7 @@ export namespace PopoverRootProps {
     /**
      * ポップオーバーの周囲に枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -130,7 +130,7 @@ export interface IPopoverRoot extends IComponent<PopoverRootProps> {
 export const PopoverRoot: IPopoverRoot = function SuiPopoverRoot<TPayload>(
   props: PopoverRootProps<TPayload>,
 ) {
-  const { size = "md", handle, radius = size, outlined = false, ...otherProps } = props;
+  const { size = "md", handle, radius = size, outlined = true, ...otherProps } = props;
   const ctx = React.useMemo<PopoverContext>(
     () => ({ size, radius, outlined }),
     [size, radius, outlined],

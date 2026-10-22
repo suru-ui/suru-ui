@@ -64,8 +64,8 @@ describe("useComboboxContext", () => {
     );
 
     // 検証
-    expect(screen.getByText("lg,grey,lg,liquid,false,false,既定").query()?.textContent).toBe(
-      "lg,grey,lg,liquid,false,false,既定",
+    expect(screen.getByText("lg,grey,lg,naked,false,false,既定").query()?.textContent).toBe(
+      "lg,grey,lg,naked,false,false,既定",
     );
   });
 

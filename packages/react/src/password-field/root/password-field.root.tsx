@@ -87,7 +87,7 @@ export namespace PasswordFieldRootProps {
     /**
      * 枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -108,7 +108,7 @@ export namespace PasswordFieldRootProps {
     /**
      * パスワード入力欄の主な外観を指定します。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: PasswordFieldRootVariant | undefined;
 
@@ -155,9 +155,9 @@ export const PasswordFieldRoot: IPasswordFieldRoot = function SuiPasswordFieldRo
     style,
     radius = size,
     render,
-    variant = "liquid",
+    variant = "naked",
     visible: visibleProp,
-    outlined = false,
+    outlined = true,
     className,
     defaultVisible = false,
     onVisibleChange,

@@ -194,7 +194,7 @@ export namespace TreeRootProps {
     /**
      * 選択されている項目に枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -269,7 +269,7 @@ export const TreeRoot: ITreeRoot = function SuiTreeRoot(props) {
     onFocus: onFocusProp,
     variant = "liquid",
     children = defaultRootItemRenderer,
-    outlined = false,
+    outlined = true,
     onKeyDown: onKeyDownProp,
     defaultValue = EMPTY,
     expandedValue: expandedValueProp,

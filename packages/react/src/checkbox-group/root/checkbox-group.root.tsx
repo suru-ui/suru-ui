@@ -95,6 +95,8 @@ export namespace CheckboxGroupRootProps {
      * チェックボックスに枠線を表示するかどうかを指定します。
      *
      * グループ内のチェックボックスより優先されます。
+     *
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -121,7 +123,7 @@ export namespace CheckboxGroupRootProps {
      *
      * グループ内のチェックボックスより優先されます。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: CheckboxGroupRootVariant | undefined;
   };
@@ -162,9 +164,9 @@ export const CheckboxGroupRoot: ICheckboxGroupRoot = function SuiCheckboxGroupRo
     style,
     radius = size,
     render,
-    variant = "liquid",
+    variant = "naked",
     disabled,
-    outlined = false,
+    outlined = true,
     className,
     orientation = "vertical",
     // @ts-expect-error

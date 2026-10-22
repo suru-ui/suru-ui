@@ -69,9 +69,9 @@ describe("ComboboxCollection", () => {
     expect(screen.getByClassName("sui_combobox_separator").elements().length).toBe(2);
   });
 
-  test("区切りなしでは表示しない", async ({ expect }) => {
+  test("区切りを無効にすると表示しない", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<Combobox items={grouped} defaultOpen />);
+    const screen = await render(<Combobox items={grouped} separator={false} defaultOpen />);
 
     // 検証
     expect(screen.getByClassName("sui_combobox_separator").query()).toBe(null);

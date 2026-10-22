@@ -144,7 +144,7 @@ export namespace SelectRootProps {
     /**
      * 枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -165,7 +165,7 @@ export namespace SelectRootProps {
     /**
      * 選択欄の主な外観を指定します。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: SelectRootVariant | undefined;
   };
@@ -249,9 +249,9 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootP
     size = "md",
     items,
     radius = size,
-    variant = "liquid",
+    variant = "naked",
     disabled = false,
-    outlined = false,
+    outlined = true,
     readOnly = false,
     required = false,
     onValueChange,

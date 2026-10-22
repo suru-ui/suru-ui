@@ -78,20 +78,20 @@ describe("getBackdropProps", () => {
 });
 
 describe("getSeparatorProps", () => {
-  test("指定しないときは表示しない", ({ expect }) => {
+  test("既定で表示する", ({ expect }) => {
     // 準備と実行
     const api = new ComboboxAPI({});
 
     // 検証
-    expect(api.getSeparatorProps()).toBe(null);
+    expect(api.getSeparatorProps()).toStrictEqual({});
   });
 
-  test("有効にすると props を返す", ({ expect }) => {
+  test("無効にすると表示しない", ({ expect }) => {
     // 準備と実行
-    const api = new ComboboxAPI({ separator: true });
+    const api = new ComboboxAPI({ separator: false });
 
     // 検証
-    expect(api.getSeparatorProps()).toStrictEqual({});
+    expect(api.getSeparatorProps()).toBe(null);
   });
 
   test("slotProps だけでも表示する", ({ expect }) => {

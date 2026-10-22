@@ -85,7 +85,7 @@ export namespace SliderRootProps {
     /**
      * 枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -178,7 +178,7 @@ export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootP
     radius = "full",
     render,
     variant = "liquid",
-    outlined = false,
+    outlined = true,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",

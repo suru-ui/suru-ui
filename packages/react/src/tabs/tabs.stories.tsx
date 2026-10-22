@@ -67,7 +67,7 @@ export const Usage = meta.story({
     size: "md",
     radius: undefined,
     variant: "line",
-    outlined: false,
+    outlined: true,
     orientation: "horizontal",
     activeVariant: "liquid",
   }),
@@ -89,7 +89,7 @@ export const Variant = meta.story({
   ...ctrl({
     size: "md",
     radius: undefined,
-    outlined: false,
+    outlined: true,
     orientation: "horizontal",
     activeVariant: "liquid",
   }),
@@ -120,7 +120,7 @@ export const ActiveVariants = meta.story({
     size: "md",
     radius: undefined,
     variant: "segments",
-    outlined: false,
+    outlined: true,
     orientation: "horizontal",
   }),
   render(props) {
@@ -149,7 +149,7 @@ export const Radii = meta.story({
   ...ctrl({
     size: "md",
     variant: "line",
-    outlined: false,
+    outlined: true,
     orientation: "horizontal",
     activeVariant: "liquid",
   }),
@@ -179,7 +179,7 @@ export const Sizes = meta.story({
   ...ctrl({
     radius: undefined,
     variant: "line",
-    outlined: false,
+    outlined: true,
     orientation: "horizontal",
     activeVariant: "liquid",
   }),
@@ -270,7 +270,7 @@ export const Disabled = meta.story({
     size: "md",
     radius: undefined,
     variant: "line",
-    outlined: false,
+    outlined: true,
     orientation: "horizontal",
     activeVariant: "liquid",
   }),

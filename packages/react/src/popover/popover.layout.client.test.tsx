@@ -98,7 +98,7 @@ describe("Popover の余白と配置", () => {
     // 準備と実行
     await render(
       <>
-        <Popover trigger={<button>枠なし</button>} defaultOpen data-testid="plain">
+        <Popover trigger={<button>枠なし</button>} outlined={false} defaultOpen data-testid="plain">
           枠なし
         </Popover>
         <Popover trigger={<button>枠あり</button>} outlined defaultOpen data-testid="outlined">

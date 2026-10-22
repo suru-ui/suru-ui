@@ -18,7 +18,7 @@ describe("MeterRoot", () => {
     expect(root.classList.contains("sui_meter-color_grey")).toBe(true);
     expect(root.classList.contains("sui_meter-radius_full")).toBe(true);
     expect(root.classList.contains("sui_meter-variant_liquid")).toBe(true);
-    expect(root.classList.contains("sui_meter-outlined")).toBe(false);
+    expect(root.classList.contains("sui_meter-outlined")).toBe(true);
   });
 
   test("指定した大きさの修飾クラスを付ける", async ({ expect }) => {

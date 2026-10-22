@@ -301,7 +301,7 @@ describe("Tabs の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <Tabs id="plain" items={[...items]} defaultValue="overview" />
+        <Tabs id="plain" items={[...items]} outlined={false} defaultValue="overview" />
         <Tabs id="outlined" items={[...items]} outlined defaultValue="overview" />
       </>,
     );

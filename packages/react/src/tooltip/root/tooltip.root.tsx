@@ -59,7 +59,7 @@ export namespace TooltipRootProps {
     /**
      * ツールチップに枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -133,7 +133,7 @@ export interface ITooltipRoot extends IComponent<TooltipRootProps> {
 export const TooltipRoot: ITooltipRoot = function SuiTooltipRoot<TPayload>(
   props: TooltipRootProps<TPayload>,
 ) {
-  const { size = "md", handle, radius = size, outlined = false, ...otherProps } = props;
+  const { size = "md", handle, radius = size, outlined = true, ...otherProps } = props;
   const ctx = React.useMemo<TooltipContext>(
     () => ({ size, radius, outlined }),
     [size, radius, outlined],

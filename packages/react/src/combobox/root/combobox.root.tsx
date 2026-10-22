@@ -155,7 +155,7 @@ export namespace ComboboxRootProps {
     /**
      * 入力欄の主な外観を指定します。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: ComboboxRootVariant | undefined;
   };
@@ -252,7 +252,7 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
     color = "grey",
     items,
     radius = size,
-    variant = "liquid",
+    variant = "naked",
     disabled = false,
     multiple = false,
     readOnly = false,

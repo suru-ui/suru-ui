@@ -515,7 +515,7 @@ export const Grouped = meta.story({
     disabled: false,
     outlined: true,
     readOnly: false,
-    separator: false,
+    separator: true,
     placeholder: "食材を選択",
   }),
   render(props) {

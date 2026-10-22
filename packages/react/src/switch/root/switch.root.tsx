@@ -76,7 +76,7 @@ export namespace SwitchRootProps {
     /**
      * スイッチに枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -152,7 +152,7 @@ export const SwitchRoot: ISwitchRoot = function SuiSwitchRoot(props) {
     radius = "full",
     render,
     variant = "liquid",
-    outlined = false,
+    outlined = true,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",

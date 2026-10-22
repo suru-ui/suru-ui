@@ -49,9 +49,9 @@ export const Usage = meta.story({
     color: "grey",
     value: "",
     radius: "full",
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: undefined,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -77,7 +77,7 @@ export const Variants = meta.story({
     value: "",
     radius: "full",
     disabled: false,
-    outlined: undefined,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -95,8 +95,8 @@ export const Variants = meta.story({
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const WithoutOutline = meta.story({
+  name: "枠線なし",
   ...ctrl({
     size: "md",
     color: "grey",
@@ -108,12 +108,12 @@ export const Outlined = meta.story({
     return (
       <RadioGroup className="flex flex-col gap-3" defaultValue="naked-outlined">
         <label className="flex items-center gap-2">
-          <Radio {...props} value="naked-outlined" variant="naked" outlined />
-          naked + outlined
+          <Radio {...props} value="naked-outlined" variant="naked" outlined={false} />
+          naked + 枠線なし
         </label>
         <label className="flex items-center gap-2">
-          <Radio {...props} value="liquid-outlined" variant="liquid" outlined />
-          liquid + outlined
+          <Radio {...props} value="liquid-outlined" variant="liquid" outlined={false} />
+          liquid + 枠線なし
         </label>
       </RadioGroup>
     );
@@ -126,9 +126,9 @@ export const Colors = meta.story({
     size: "md",
     value: "",
     radius: "full",
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: undefined,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -150,9 +150,9 @@ export const Sizes = meta.story({
     color: "grey",
     value: "",
     radius: "full",
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: undefined,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -180,9 +180,9 @@ export const Radii = meta.story({
     size: "md",
     color: "grey",
     value: "",
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: undefined,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -205,9 +205,9 @@ export const Controlled = meta.story({
     color: "grey",
     value: "",
     radius: "full",
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
-    outlined: undefined,
+    outlined: true,
   }),
   render(props) {
     const [value, setValue] = React.useState("option-a");
@@ -238,8 +238,8 @@ export const Disabled = meta.story({
     color: "grey",
     value: "",
     radius: "full",
-    variant: "liquid",
-    outlined: undefined,
+    variant: "naked",
+    outlined: true,
   }),
   render(props) {
     return (
@@ -264,8 +264,8 @@ export const GroupDisabled = meta.story({
     color: "grey",
     value: "",
     radius: "full",
-    variant: "liquid",
-    outlined: undefined,
+    variant: "naked",
+    outlined: true,
   }),
   render(props) {
     return (

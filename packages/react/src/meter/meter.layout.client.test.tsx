@@ -151,7 +151,7 @@ describe("Meter の配置", () => {
     const screen = await render(
       <>
         <span style={{ borderColor: "var(--sui-border-1)", borderStyle: "solid" }}>線の基準</span>
-        <Meter id="plain" label="使用量" value={25} />
+        <Meter id="plain" label="使用量" value={25} outlined={false} />
         <Meter id="outlined" label="使用量" value={25} outlined />
       </>,
     );

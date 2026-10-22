@@ -46,9 +46,8 @@ describe("useFileUploadContext", () => {
 
     // 検証
     expect(
-      screen.getByText("image/*,true,true,true,attachments,,md,grey,md,liquid").query()
-        ?.textContent,
-    ).toBe("image/*,true,true,true,attachments,,md,grey,md,liquid");
+      screen.getByText("image/*,true,true,true,attachments,,md,grey,md,naked").query()?.textContent,
+    ).toBe("image/*,true,true,true,attachments,,md,grey,md,naked");
   });
 
   test("既定値を補完する", async ({ expect }) => {
@@ -60,8 +59,8 @@ describe("useFileUploadContext", () => {
     );
 
     // 検証
-    expect(screen.getByText(",false,false,false,,,md,grey,md,liquid").query()?.textContent).toBe(
-      ",false,false,false,,,md,grey,md,liquid",
+    expect(screen.getByText(",false,false,false,,,md,grey,md,naked").query()?.textContent).toBe(
+      ",false,false,false,,,md,grey,md,naked",
     );
   });
 
@@ -75,8 +74,8 @@ describe("useFileUploadContext", () => {
 
     // 検証
     expect(
-      screen.getByText("image/png,.pdf,false,false,false,,,md,grey,md,liquid").query()?.textContent,
-    ).toBe("image/png,.pdf,false,false,false,,,md,grey,md,liquid");
+      screen.getByText("image/png,.pdf,false,false,false,,,md,grey,md,naked").query()?.textContent,
+    ).toBe("image/png,.pdf,false,false,false,,,md,grey,md,naked");
   });
 
   test("スタイル情報を提供する", async ({ expect }) => {

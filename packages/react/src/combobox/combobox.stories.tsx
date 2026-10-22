@@ -210,11 +210,11 @@ export const Usage = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
     multiple: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "選択",
     inputInPopup: false,
@@ -236,7 +236,7 @@ export const Variants = meta.story({
     backdrop: false,
     disabled: false,
     multiple: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "選択",
     inputInPopup: false,
@@ -263,7 +263,7 @@ export const Colors = meta.story({
     arrow: false,
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
     multiple: true,
@@ -300,11 +300,11 @@ export const Sizes = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
     multiple: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "選択",
     inputInPopup: false,
@@ -331,7 +331,7 @@ export const Radii = meta.story({
     arrow: false,
     color: "grey",
     items: fruits,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
     multiple: false,
@@ -346,7 +346,7 @@ export const Radii = meta.story({
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col gap-3">
             <span>{radius}</span>
-            <Combobox {...props} radius={radius} outlined className="w-[200px]" />
+            <Combobox {...props} radius={radius} className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -354,8 +354,8 @@ export const Radii = meta.story({
   },
 });
 
-export const WithOutline = meta.story({
-  name: "枠線付き",
+export const WithoutOutline = meta.story({
+  name: "枠線なし",
   ...ctrl({
     size: "md",
     arrow: false,
@@ -376,7 +376,7 @@ export const WithOutline = meta.story({
         {VARIANTS.map((variant) => (
           <div key={variant} className="flex flex-col gap-3">
             <span>{variant}</span>
-            <Combobox {...props} variant={variant} outlined className="w-[200px]" />
+            <Combobox {...props} variant={variant} outlined={false} className="w-[200px]" />
           </div>
         ))}
       </div>
@@ -392,11 +392,11 @@ export const Multiple = meta.story({
     color: "grey",
     items: ["TypeScript", "Rust", "Go", "Python"],
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
     multiple: true,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "言語を追加",
     inputInPopup: false,
@@ -414,11 +414,11 @@ export const WithArrow = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
     multiple: true,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "選択",
     inputInPopup: false,
@@ -437,10 +437,10 @@ export const WithBackdrop = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     disabled: false,
     multiple: true,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "選択",
     inputInPopup: false,
@@ -458,7 +458,7 @@ export const Disabled = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    outlined: false,
+    outlined: true,
     readOnly: false,
   }),
   render(props) {
@@ -513,7 +513,7 @@ export const ReadOnly = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -568,11 +568,11 @@ export const Addons = meta.story({
     color: "grey",
     items: fruits,
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
     multiple: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "選択",
     inputInPopup: false,
@@ -608,11 +608,11 @@ export const Labeled = meta.story({
     items: fruits,
     label: "果物",
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
     multiple: true,
-    outlined: false,
+    outlined: true,
     readOnly: false,
     placeholder: "選択",
     inputInPopup: false,
@@ -658,13 +658,13 @@ export const Grouped = meta.story({
       },
     ],
     radius: undefined,
-    variant: "liquid",
+    variant: "naked",
     backdrop: false,
     disabled: false,
     multiple: false,
-    outlined: false,
+    outlined: true,
     readOnly: false,
-    separator: false,
+    separator: true,
     placeholder: "食材を選択",
     inputInPopup: false,
     keepFilterOnSelect: false,

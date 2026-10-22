@@ -85,7 +85,7 @@ export namespace InputRootProps {
     /**
      * 枠線を表示するかどうかを指定します。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -113,7 +113,7 @@ export namespace InputRootProps {
     /**
      * テキスト入力欄の主な外観を指定します。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: InputRootVariant | undefined;
   };
@@ -155,8 +155,8 @@ export const InputRoot: IInputRoot = function SuiInputRoot(props) {
     style,
     radius = size,
     render,
-    variant = "liquid",
-    outlined = false,
+    variant = "naked",
+    outlined = true,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",

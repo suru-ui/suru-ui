@@ -21,8 +21,8 @@ describe("TextFieldRoot", () => {
     expect(root.classList.contains("sui_text_field-size_md")).toBe(true);
     expect(root.classList.contains("sui_text_field-color_grey")).toBe(true);
     expect(root.classList.contains("sui_text_field-radius_md")).toBe(true);
-    expect(root.classList.contains("sui_text_field-variant_liquid")).toBe(true);
-    expect(root.classList.contains("sui_text_field-outlined")).toBe(false);
+    expect(root.classList.contains("sui_text_field-variant_naked")).toBe(true);
+    expect(root.classList.contains("sui_text_field-outlined")).toBe(true);
   });
 
   test("指定した大きさと配色と角丸と外観のクラスを付ける", async ({ expect }) => {

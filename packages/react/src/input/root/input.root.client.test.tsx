@@ -19,8 +19,8 @@ describe("InputRoot", () => {
     expect(root.classList.contains("sui_input-size_md")).toBe(true);
     expect(root.classList.contains("sui_input-color_grey")).toBe(true);
     expect(root.classList.contains("sui_input-radius_md")).toBe(true);
-    expect(root.classList.contains("sui_input-variant_liquid")).toBe(true);
-    expect(root.classList.contains("sui_input-outlined")).toBe(false);
+    expect(root.classList.contains("sui_input-variant_naked")).toBe(true);
+    expect(root.classList.contains("sui_input-outlined")).toBe(true);
   });
 
   test("指定した大きさと配色と角丸と外観のクラスを付ける", async ({ expect }) => {

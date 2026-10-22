@@ -93,7 +93,7 @@ describe("HoverCard の余白と配置", () => {
     // 準備と実行
     await render(
       <>
-        <HoverCard trigger={trigger} defaultOpen data-testid="plain">
+        <HoverCard trigger={trigger} outlined={false} defaultOpen data-testid="plain">
           枠なし
         </HoverCard>
         <HoverCard trigger={trigger} outlined defaultOpen data-testid="outlined">

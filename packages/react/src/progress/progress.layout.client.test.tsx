@@ -136,9 +136,9 @@ describe("Progress の配置", () => {
     );
 
     // 検証
-    const trackRect = getTrack(screen.container, "progress").getBoundingClientRect();
+    const trackRect = getTrack(screen.container, "progress").clientWidth;
     const indicatorRect = getIndicator(screen.container, "progress").getBoundingClientRect();
-    expect(indicatorRect.width).toBeCloseTo(trackRect.width * 0.4, 0);
+    expect(indicatorRect.width).toBeCloseTo(trackRect * 0.4, 0);
   });
 
   test("配色をインジケーターへ適用する", async ({ expect }) => {
@@ -170,7 +170,7 @@ describe("Progress の配置", () => {
     const screen = await render(
       <>
         <span style={{ borderColor: "var(--sui-border-1)", borderStyle: "solid" }}>線の基準</span>
-        <Progress id="plain" label="読み込み中" value={25} />
+        <Progress id="plain" label="読み込み中" value={25} outlined={false} />
         <Progress id="outlined" label="読み込み中" value={25} outlined />
       </>,
     );

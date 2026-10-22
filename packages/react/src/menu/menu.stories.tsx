@@ -69,7 +69,7 @@ export const Usage = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <Menu {...props} trigger={<Button>ファイル</Button>} />;
@@ -100,7 +100,7 @@ export const Submenu = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <Menu {...props} trigger={<Button>操作</Button>} />;
@@ -114,7 +114,7 @@ export const Checkbox = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     const [showSidebar, setShowSidebar] = React.useState(true);
@@ -150,7 +150,7 @@ export const Radio = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     const [value, setValue] = React.useState("name");
@@ -221,7 +221,7 @@ export const Groups = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <Menu {...props} trigger={<Button>メニュー</Button>} />;
@@ -261,7 +261,7 @@ export const Shortcuts = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <Menu {...props} trigger={<Button>編集</Button>} />;
@@ -295,7 +295,7 @@ export const Link = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <Menu {...props} trigger={<Button>ヘルプ</Button>} />;
@@ -321,7 +321,7 @@ export const Sizes = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -337,8 +337,8 @@ export const Sizes = meta.story({
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const WithoutOutline = meta.story({
+  name: "枠線なし",
   ...ctrl({
     size: "md",
     items: [
@@ -352,18 +352,18 @@ export const Outlined = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
       <div className="flex flex-col gap-4">
         <div>
-          <p className="mb-2">なし</p>
+          <p className="mb-2">既定</p>
           <Menu {...props} trigger={<Button>操作</Button>} />
         </div>
         <div>
-          <p className="mb-2">あり</p>
-          <Menu {...props} trigger={<Button>操作</Button>} outlined />
+          <p className="mb-2">なし</p>
+          <Menu {...props} trigger={<Button>操作</Button>} outlined={false} />
         </div>
       </div>
     );
@@ -397,7 +397,7 @@ export const Disabled = meta.story({
     ],
     radius: undefined,
     variant: "naked",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <Menu {...props} trigger={<Button>操作</Button>} />;
@@ -511,7 +511,7 @@ export const FileActions = meta.story({
     radius: undefined,
     variant: "naked",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return <Menu {...props} trigger={<Button>ファイル</Button>} />;

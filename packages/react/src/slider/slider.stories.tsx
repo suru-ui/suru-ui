@@ -52,7 +52,7 @@ export const Usage = meta.story({
     radius: "full",
     variant: "liquid",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -70,7 +70,7 @@ export const Variants = meta.story({
     color: "blue",
     radius: "full",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -86,8 +86,8 @@ export const Variants = meta.story({
   },
 });
 
-export const Outlined = meta.story({
-  name: "枠線",
+export const WithoutOutline = meta.story({
+  name: "枠線なし",
   ...ctrl({
     size: "md",
     color: "blue",
@@ -100,7 +100,7 @@ export const Outlined = meta.story({
         {VARIANTS.map((variant) => (
           <div key={variant}>
             <div>{variant}</div>
-            <Slider {...props} variant={variant} outlined defaultValue={25} />
+            <Slider {...props} variant={variant} outlined={false} defaultValue={25} />
           </div>
         ))}
       </div>
@@ -115,7 +115,7 @@ export const Colors = meta.story({
     radius: "full",
     variant: "liquid",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -138,7 +138,7 @@ export const Sizes = meta.story({
     radius: "full",
     variant: "liquid",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -161,7 +161,7 @@ export const Radii = meta.story({
     color: "blue",
     variant: "liquid",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -185,7 +185,7 @@ export const LabelAndValue = meta.story({
     radius: "full",
     variant: "liquid",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -211,7 +211,7 @@ export const Range = meta.story({
     radius: "full",
     variant: "liquid",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -230,7 +230,7 @@ export const Step = meta.story({
     radius: "full",
     variant: "liquid",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -250,7 +250,7 @@ export const Vertical = meta.story({
     radius: "full",
     variant: "liquid",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (
@@ -292,7 +292,7 @@ export const Controlled = meta.story({
     radius: "full",
     variant: "liquid",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props: {}) {
     const [value, setValue] = React.useState(25);
@@ -314,7 +314,7 @@ export const RangeControlled = meta.story({
     radius: "full",
     variant: "liquid",
     disabled: false,
-    outlined: false,
+    outlined: true,
   }),
   render(props: {}) {
     const [value, setValue] = React.useState<readonly number[]>([25, 75]);
@@ -337,7 +337,7 @@ export const Disabled = meta.story({
     color: "blue",
     radius: "full",
     variant: "liquid",
-    outlined: false,
+    outlined: true,
   }),
   render(props) {
     return (

@@ -45,6 +45,8 @@ export namespace ComboboxCollectionProps {
      * グループの末尾に区切り線を表示するかどうかを指定します。
      *
      * 既定レンダラーを使うときにだけ適用されます。
+     *
+     * @default true
      */
     separator?: boolean | undefined;
   };
@@ -134,7 +136,7 @@ export const ComboboxCollection: IComboboxCollection = function SuiComboboxColle
     }
   };
 
-  const { children = defaultItemRenderer, separator = false } = props;
+  const { children = defaultItemRenderer, separator = true } = props;
 
   return <Combobox.Collection>{children}</Combobox.Collection>;
 };

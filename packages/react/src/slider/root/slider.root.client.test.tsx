@@ -18,7 +18,7 @@ describe("SliderRoot", () => {
     expect(root.classList.contains("sui_slider-radius_full")).toBe(true);
     expect(root.classList.contains("sui_slider-variant_liquid")).toBe(true);
     expect(root.classList.contains("sui_slider-orientation_horizontal")).toBe(true);
-    expect(root.classList.contains("sui_slider-outlined")).toBe(false);
+    expect(root.classList.contains("sui_slider-outlined")).toBe(true);
     expect(root.classList.contains("sui_slider-disabled")).toBe(false);
   });
 

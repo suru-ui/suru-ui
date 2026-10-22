@@ -203,9 +203,9 @@ describe("Slider の配置", () => {
     );
 
     // 検証
-    const trackRect = getTrack(screen.container, "slider").getBoundingClientRect();
+    const trackRect = getTrack(screen.container, "slider").clientWidth;
     const indicatorRect = getIndicator(screen.container, "slider").getBoundingClientRect();
-    expect(indicatorRect.width).toBeCloseTo(trackRect.width / 4, 0);
+    expect(indicatorRect.width).toBeCloseTo(trackRect / 4, 0);
   });
 
   test("配色をインジケーターへ適用する", async ({ expect }) => {
@@ -239,7 +239,7 @@ describe("Slider の配置", () => {
         <span style={{ borderColor: "var(--sui-grey-liquid-border-normal)", borderStyle: "solid" }}>
           線の基準
         </span>
-        <Slider id="plain" label="音量" defaultValue={25} />
+        <Slider id="plain" label="音量" outlined={false} defaultValue={25} />
         <Slider id="outlined" label="音量" outlined defaultValue={25} />
       </>,
     );

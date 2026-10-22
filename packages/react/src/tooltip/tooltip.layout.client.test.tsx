@@ -24,35 +24,28 @@ function renderPlaced(tooltip: React.ReactNode) {
 describe("Tooltip の余白と配置", () => {
   test.skipIf(!supportsCustomFunctions())("大きさに応じて幅と余白を変える", async ({ expect }) => {
     // 準備と実行
-    await render(
-      <>
-        <Tooltip size="sm" trigger={<button>sm</button>} defaultOpen data-testid="sm">
-          小さい
-        </Tooltip>
-        <Tooltip size="md" trigger={<button>md</button>} defaultOpen data-testid="md">
-          中くらい
-        </Tooltip>
-        <Tooltip size="lg" trigger={<button>lg</button>} defaultOpen data-testid="lg">
-          大きい
-        </Tooltip>
-      </>,
+    const renderTooltip = (size: "sm" | "md" | "lg") => (
+      <Tooltip size={size} trigger={<button>{size}</button>} defaultOpen data-testid="tooltip">
+        内容
+      </Tooltip>
     );
+    const screen = await render(renderTooltip("sm"));
+    const smMaxWidth = Number.parseFloat(computedStyle("tooltip").maxWidth);
+    const smPaddingBlockStart = Number.parseFloat(computedStyle("tooltip").paddingBlockStart);
+    await screen.rerender(renderTooltip("md"));
+    const mdMaxWidth = Number.parseFloat(computedStyle("tooltip").maxWidth);
+    const mdPaddingBlockStart = Number.parseFloat(computedStyle("tooltip").paddingBlockStart);
+    const mdPaddingInlineStart = Number.parseFloat(computedStyle("tooltip").paddingInlineStart);
+    await screen.rerender(renderTooltip("lg"));
+    const lgMaxWidth = Number.parseFloat(computedStyle("tooltip").maxWidth);
+    const lgPaddingBlockStart = Number.parseFloat(computedStyle("tooltip").paddingBlockStart);
 
     // 検証
-    const sm = computedStyle("sm");
-    const md = computedStyle("md");
-    const lg = computedStyle("lg");
-    expect(Number.parseFloat(sm.maxWidth)).toBeLessThan(Number.parseFloat(md.maxWidth));
-    expect(Number.parseFloat(md.maxWidth)).toBeLessThan(Number.parseFloat(lg.maxWidth));
-    expect(Number.parseFloat(sm.paddingBlockStart)).toBeLessThan(
-      Number.parseFloat(md.paddingBlockStart),
-    );
-    expect(Number.parseFloat(md.paddingBlockStart)).toBeLessThan(
-      Number.parseFloat(lg.paddingBlockStart),
-    );
-    expect(Number.parseFloat(md.paddingInlineStart)).toBeGreaterThan(
-      Number.parseFloat(md.paddingBlockStart),
-    );
+    expect(smMaxWidth).toBeLessThan(mdMaxWidth);
+    expect(mdMaxWidth).toBeLessThan(lgMaxWidth);
+    expect(smPaddingBlockStart).toBeLessThan(mdPaddingBlockStart);
+    expect(mdPaddingBlockStart).toBeLessThan(lgPaddingBlockStart);
+    expect(mdPaddingInlineStart).toBeGreaterThan(mdPaddingBlockStart);
   });
 
   test.skipIf(!supportsCustomFunctions())(
@@ -80,38 +73,46 @@ describe("Tooltip の余白と配置", () => {
 
   test("角丸を指定どおりにする", async ({ expect }) => {
     // 準備と実行
-    await render(
-      <>
-        <Tooltip radius="none" trigger={<button>none</button>} defaultOpen data-testid="none">
-          直角
-        </Tooltip>
-        <Tooltip radius="lg" trigger={<button>lg</button>} defaultOpen data-testid="lg">
-          大きい
-        </Tooltip>
-      </>,
+    const renderTooltip = (radius: "none" | "lg") => (
+      <Tooltip
+        radius={radius}
+        trigger={<button>{radius}</button>}
+        defaultOpen
+        data-testid="tooltip"
+      >
+        内容
+      </Tooltip>
     );
+    const screen = await render(renderTooltip("none"));
+    const noneRadius = computedStyle("tooltip").borderRadius;
+    await screen.rerender(renderTooltip("lg"));
+    const lgRadius = computedStyle("tooltip").borderRadius;
 
     // 検証
-    expect(computedStyle("none").borderRadius).toBe("0px");
-    expect(Number.parseFloat(computedStyle("lg").borderRadius)).toBeGreaterThan(0);
+    expect(noneRadius).toBe("0px");
+    expect(Number.parseFloat(lgRadius)).toBeGreaterThan(0);
   });
 
   test.skipIf(!supportsCustomFunctions())("枠線を内側に引く", async ({ expect }) => {
     // 準備と実行
-    await render(
-      <>
-        <Tooltip trigger={<button>枠なし</button>} defaultOpen data-testid="plain">
-          枠なし
-        </Tooltip>
-        <Tooltip trigger={<button>枠あり</button>} outlined defaultOpen data-testid="outlined">
-          枠あり
-        </Tooltip>
-      </>,
+    const renderTooltip = (outlined: boolean) => (
+      <Tooltip
+        trigger={<button>{outlined ? "枠あり" : "枠なし"}</button>}
+        outlined={outlined}
+        defaultOpen
+        data-testid="tooltip"
+      >
+        内容
+      </Tooltip>
     );
+    const screen = await render(renderTooltip(false));
+    const plainWidth = Number.parseFloat(computedStyle("tooltip").borderTopWidth);
+    await screen.rerender(renderTooltip(true));
+    const outlinedWidth = Number.parseFloat(computedStyle("tooltip").borderTopWidth);
 
     // 検証
-    expect(Number.parseFloat(computedStyle("plain").borderTopWidth)).toBe(0);
-    expect(Number.parseFloat(computedStyle("outlined").borderTopWidth)).toBeGreaterThan(0.5);
+    expect(plainWidth).toBe(0);
+    expect(outlinedWidth).toBeGreaterThan(0.5);
   });
 
   test("矢印を内容の縁へ付ける", async ({ expect }) => {

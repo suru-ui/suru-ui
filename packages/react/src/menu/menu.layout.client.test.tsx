@@ -105,8 +105,12 @@ describe("Menu の配置", () => {
       expect(Number.parseFloat(style.minHeight)).toBeCloseTo(32, 0);
       // 項目ボタンは一覧向けに狭い余白 (`--sui-space(2.5 / 2)` = 5px) を持ちます。
       expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(5, 1);
+      const contentStyle = getComputedStyle(content);
+      const borderInline =
+        Number.parseFloat(contentStyle.borderInlineStartWidth) +
+        Number.parseFloat(contentStyle.borderInlineEndWidth);
       expect(item.getBoundingClientRect().width).toBeCloseTo(
-        content.getBoundingClientRect().width - 12 * 2,
+        content.getBoundingClientRect().width - 12 * 2 - borderInline,
         0,
       );
     },

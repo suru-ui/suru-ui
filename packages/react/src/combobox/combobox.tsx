@@ -385,6 +385,8 @@ namespace ComboboxProps {
      * グループの末尾に区切り線を表示するかどうかを指定します。
      *
      * 既定レンダラーを使うときにだけ適用されます。
+     *
+     * @default true
      */
     separator?: boolean | undefined;
 
@@ -1117,7 +1119,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    * `separator` が無効なときは `null` を返します。
    */
   public getSeparatorProps(): ComboboxSeparatorProps | null {
-    const { separator = false } = this.comboboxProps;
+    const { separator = true } = this.comboboxProps;
     const { separator: props } = this.slotProps;
 
     if (separator || props) {

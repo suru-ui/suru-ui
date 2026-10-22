@@ -272,8 +272,8 @@ describe("PasswordField の配置", () => {
         <span
           id="expected"
           style={{
-            color: "var(--sui-disabled-liquid-canvas_text)",
-            backgroundColor: "var(--sui-disabled-liquid-canvas)",
+            color: "var(--sui-disabled-naked-canvas_text)",
+            backgroundColor: "var(--sui-disabled-naked-canvas)",
           }}
         >
           無効の基準

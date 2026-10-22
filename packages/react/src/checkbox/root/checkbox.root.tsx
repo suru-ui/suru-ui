@@ -81,7 +81,7 @@ export namespace CheckboxRootProps {
      *
      * CheckboxGroup 内では、グループの値が優先されます。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -108,7 +108,7 @@ export namespace CheckboxRootProps {
      *
      * CheckboxGroup 内では、グループの値が優先されます。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: CheckboxRootVariant | undefined;
   };
@@ -165,9 +165,9 @@ export const CheckboxRoot: ICheckboxRoot = function SuiCheckboxRoot(props) {
     style,
     radius: radiusProp = sizeProp,
     render,
-    variant: variantProp = "liquid",
+    variant: variantProp = "naked",
     disabled: disabledProp,
-    outlined: outlinedProp = false,
+    outlined: outlinedProp = true,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",

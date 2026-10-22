@@ -71,7 +71,7 @@ export namespace RadioRootProps {
      *
      * RadioGroup 内では、グループの値が優先されます。
      *
-     * @default false
+     * @default true
      */
     outlined?: boolean | undefined;
 
@@ -98,7 +98,7 @@ export namespace RadioRootProps {
      *
      * RadioGroup 内では、グループの値が優先されます。
      *
-     * @default "liquid"
+     * @default "naked"
      */
     variant?: RadioRootVariant | undefined;
   };
@@ -157,9 +157,9 @@ export const RadioRoot: IRadioRoot = function SuiRadioRoot(props: RadioRootProps
     style,
     radius: radiusProp = "full",
     render,
-    variant: variantProp = "liquid",
+    variant: variantProp = "naked",
     disabled: disabledProp,
-    outlined: outlinedProp = false,
+    outlined: outlinedProp = true,
     className,
     // @ts-expect-error
     "data-scope": dataScope = "",

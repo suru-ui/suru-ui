@@ -20,8 +20,8 @@ describe("TextareaRoot", () => {
     expect(root.classList.contains("sui_textarea-size_md")).toBe(true);
     expect(root.classList.contains("sui_textarea-color_grey")).toBe(true);
     expect(root.classList.contains("sui_textarea-radius_md")).toBe(true);
-    expect(root.classList.contains("sui_textarea-variant_liquid")).toBe(true);
-    expect(root.classList.contains("sui_textarea-outlined")).toBe(false);
+    expect(root.classList.contains("sui_textarea-variant_naked")).toBe(true);
+    expect(root.classList.contains("sui_textarea-outlined")).toBe(true);
   });
 
   test("指定した大きさと配色と角丸と外観のクラスを付ける", async ({ expect }) => {

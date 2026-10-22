@@ -149,7 +149,7 @@ describe("CardRoot の配置", () => {
     // 準備と実行
     const screen = await render(
       <>
-        <CardRoot id="plain" />
+        <CardRoot id="plain" outlined={false} />
         <CardRoot id="outlined" outlined />
       </>,
     );

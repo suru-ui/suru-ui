@@ -132,7 +132,7 @@ describe("Switch の配置", () => {
     const screen = await render(
       <>
         <span style={{ outline: "1px solid transparent" }} data-testid="reference" />
-        <Switch data-testid="plain" />
+        <Switch outlined={false} data-testid="plain" />
         <Switch outlined data-testid="outlined" />
       </>,
     );
@@ -340,7 +340,9 @@ describe("Switch の配置", () => {
 
   test("無効かつ outlined でないチェック済みは枠線を表示しない", async ({ expect }) => {
     // 準備と実行
-    const screen = await render(<Switch disabled defaultChecked data-testid="checked" />);
+    const screen = await render(
+      <Switch disabled outlined={false} defaultChecked data-testid="checked" />,
+    );
 
     // 検証
     expect(getComputedStyle(screen.getByTestId("checked").element(), "::after").outlineWidth).toBe(
