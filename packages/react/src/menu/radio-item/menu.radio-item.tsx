@@ -148,6 +148,7 @@ export const MenuRadioItem: IMenuRadioItem = function SuiMenuRadioItem(props) {
         > = {
           item: true,
           size: ctx.size,
+          thin: undefined,
           color,
           muted: undefined,
           radius,

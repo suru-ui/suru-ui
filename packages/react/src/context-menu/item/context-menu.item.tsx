@@ -142,6 +142,7 @@ export const ContextMenuItem: IContextMenuItem = function SuiContextMenuItem(pro
         > = {
           item: true,
           size: ctx.size,
+          thin: undefined,
           color,
           muted: undefined,
           radius,

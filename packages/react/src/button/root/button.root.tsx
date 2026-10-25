@@ -130,6 +130,15 @@ export namespace ButtonRootProps {
     squared?: boolean | undefined;
 
     /**
+     * ボタンを上下に薄くするかどうかを指定します。
+     *
+     * `true` の場合、上下の余白が半分になります。
+     *
+     * @default false
+     */
+    thin?: boolean | undefined;
+
+    /**
      * ボタンの主な外観を指定します。
      *
      * @default "solid"
@@ -172,6 +181,7 @@ export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
   const {
     item = false,
     size = "md",
+    thin = false,
     type = "button",
     color = "grey",
     muted = false,
@@ -198,6 +208,7 @@ export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
           ...state,
           item,
           size,
+          thin,
           color,
           muted,
           radius,
@@ -230,6 +241,7 @@ export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
             (state) => state.outlined && "sui_button-outlined",
             (state) => state.pending && "sui_button-pending",
             (state) => state.squared && "sui_button-squared",
+            (state) => state.thin && "sui_button-thin",
             (state) => state.disabled && !state.pending && "sui_button-disabled",
           ),
         },

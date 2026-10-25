@@ -60,6 +60,7 @@ describe("useButtonContext", () => {
     const provided: ButtonContext = {
       item: false,
       size: "lg",
+      thin: false,
       color: "blue",
       muted: false,
       radius: "full",

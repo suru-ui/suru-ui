@@ -102,6 +102,7 @@ export const SelectItem: ISelectItem = function SuiSelectItem(props) {
         > = {
           item: true,
           size: ctx.size,
+          thin: undefined,
           color: "grey",
           muted: undefined,
           radius: undefined,

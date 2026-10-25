@@ -149,6 +149,7 @@ export const ContextMenuSubmenuTrigger: IContextMenuSubmenuTrigger =
           > = {
             item: true,
             size: ctx.size,
+            thin: undefined,
             color,
             muted: undefined,
             radius,

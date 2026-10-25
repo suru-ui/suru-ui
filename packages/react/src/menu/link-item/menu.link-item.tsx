@@ -141,6 +141,7 @@ export const MenuLinkItem: IMenuLinkItem = function SuiMenuLinkItem(props) {
         > = {
           item: true,
           size: ctx.size,
+          thin: undefined,
           color,
           muted: undefined,
           radius,

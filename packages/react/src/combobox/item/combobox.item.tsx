@@ -114,6 +114,7 @@ export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: Combo
         > = {
           item: true,
           size: ctx.size,
+          thin: undefined,
           color: "grey",
           muted: undefined,
           radius: undefined,

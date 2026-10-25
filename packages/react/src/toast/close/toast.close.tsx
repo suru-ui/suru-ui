@@ -75,6 +75,7 @@ export type IToastClose = IComponent<ToastCloseProps>;
 export const ToastClose: IToastClose = function SuiToastClose(props) {
   const {
     size,
+    thin,
     color = "grey",
     muted,
     style,
@@ -101,6 +102,7 @@ export const ToastClose: IToastClose = function SuiToastClose(props) {
         const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> = {
           item: false,
           size,
+          thin,
           color,
           muted,
           radius,

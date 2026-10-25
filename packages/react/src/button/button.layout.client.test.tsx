@@ -74,6 +74,27 @@ describe("ButtonRoot の配置", () => {
     expect(height).toBeCloseTo(32, 1);
   });
 
+  test("thin では上下の余白が小さくなる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <ButtonRoot id="plain">送信</ButtonRoot>
+        <ButtonRoot id="thin" thin>
+          送信
+        </ButtonRoot>
+      </>,
+    );
+
+    // 検証
+    const plain = screen.container.querySelector("#plain")!;
+    const thin = screen.container.querySelector("#thin")!;
+    expect(thin.classList.contains("sui_button-thin")).toBe(true);
+    expect(Number.parseFloat(getComputedStyle(thin).paddingBlockStart)).toBeLessThan(
+      Number.parseFloat(getComputedStyle(plain).paddingBlockStart),
+    );
+    expect(thin.getBoundingClientRect().height).toBeLessThan(plain.getBoundingClientRect().height);
+  });
+
   test("角丸 full は高さの半分にする", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<ButtonRoot radius="full" />);

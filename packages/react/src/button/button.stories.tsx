@@ -23,6 +23,9 @@ const ctrl = controls(Button, {
     control: "select",
     options: SIZES,
   },
+  thin: {
+    control: "boolean",
+  },
   color: {
     control: "select",
     options: COLORS,
@@ -56,6 +59,7 @@ export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
     size: "md",
+    thin: false,
     color: "grey",
     muted: false,
     radius: undefined,
@@ -138,6 +142,40 @@ export const Squared = meta.story({
               <Trash2Icon />
             </Button>
           </div>
+        ))}
+      </div>
+    );
+  },
+});
+
+export const Thin = meta.story({
+  name: "薄型",
+  ...ctrl({
+    color: "grey",
+    muted: false,
+    radius: undefined,
+    pending: false,
+    variant: "solid",
+    children: "ボタン",
+    disabled: false,
+    outlined: false,
+  }),
+  render(props) {
+    return (
+      <div className="grid grid-cols-5 items-center justify-items-start gap-3">
+        <span />
+        {SIZES.map((size) => (
+          <span key={size} className="justify-self-center">
+            {size}
+          </span>
+        ))}
+        <span>通常</span>
+        {SIZES.map((size) => (
+          <Button key={size} {...props} size={size} />
+        ))}
+        <span>thin</span>
+        {SIZES.map((size) => (
+          <Button key={size} {...props} size={size} thin />
         ))}
       </div>
     );

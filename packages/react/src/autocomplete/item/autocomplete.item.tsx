@@ -116,6 +116,7 @@ export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
         > = {
           item: true,
           size: ctx.size,
+          thin: undefined,
           color: "grey",
           muted: undefined,
           radius: undefined,

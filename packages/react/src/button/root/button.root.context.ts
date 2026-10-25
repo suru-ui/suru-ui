@@ -90,6 +90,11 @@ export type ButtonContext = Readonly<
       readonly squared: boolean;
 
       /**
+       * ボタンを上下に薄くするかどうかです。
+       */
+      readonly thin: boolean;
+
+      /**
        * ボタンの主な外観です。
        */
       readonly variant: ButtonContextVariant;

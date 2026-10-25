@@ -227,6 +227,7 @@ export const ToggleButtonRoot: IToggleButtonRoot = function SuiToggleButtonRoot(
         > = {
           item: false,
           size: state.size,
+          thin: undefined,
           color: state.pressed ? state.color : "grey",
           muted: undefined,
           radius: state.radius,

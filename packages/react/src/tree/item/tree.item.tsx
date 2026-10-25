@@ -259,6 +259,7 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
       item
       role={role}
       size={size}
+      thin
       color={selected ? color : "grey"}
       muted={muted}
       radius={radius}

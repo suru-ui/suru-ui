@@ -142,6 +142,7 @@ export const MenuItem: IMenuItem = function SuiMenuItem(props) {
         > = {
           item: true,
           size: ctx.size,
+          thin: undefined,
           color,
           muted: undefined,
           radius,

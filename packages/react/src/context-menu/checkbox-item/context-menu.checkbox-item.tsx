@@ -162,6 +162,7 @@ export const ContextMenuCheckboxItem: IContextMenuCheckboxItem =
             Pick<Button.Root.Props.HTML, "disabled"> = {
             item: true,
             size: ctx.size,
+            thin: undefined,
             color,
             muted: undefined,
             radius,

@@ -148,6 +148,7 @@ export const MenuSubmenuTrigger: IMenuSubmenuTrigger = function SuiMenuSubmenuTr
         > = {
           item: true,
           size: ctx.size,
+          thin: undefined,
           color,
           muted: undefined,
           radius,

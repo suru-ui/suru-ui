@@ -164,6 +164,7 @@ export const MenuCheckboxItem: IMenuCheckboxItem = function SuiMenuCheckboxItem(
         > = {
           item: true,
           size: ctx.size,
+          thin: undefined,
           color,
           muted: undefined,
           radius,
