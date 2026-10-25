@@ -7,7 +7,7 @@ import { Field } from "../field/index.js";
 import { NumberField } from "./index.js";
 
 const COLORS: readonly NumberField.Color[] = theme.COLORS;
-const RADII: readonly NumberField.Radius[] = ["none", ...theme.SIZES, "full"];
+const RADII: readonly NumberField.Radius[] = ["none", ...theme.SIZES, "full", "circle"];
 const SIZES: readonly NumberField.Size[] = theme.SIZES;
 const VARIANTS: readonly NumberField.Variant[] = ["naked", "liquid"];
 

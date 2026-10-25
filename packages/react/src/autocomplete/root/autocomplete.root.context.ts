@@ -17,8 +17,9 @@ export type AutocompleteContextColor = Color;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
+ * - `"circle"`: 完全な丸形
  */
-export type AutocompleteContextRadius = "none" | Size | "full";
+export type AutocompleteContextRadius = "none" | Size | "full" | "circle";
 
 /**
  * 入力欄とリスト項目の大きさです。

@@ -35,8 +35,9 @@ export type BadgeContextPosition = "top-left" | "top-right" | "bottom-left" | "b
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
+ * - `"circle"`: 完全な円形
  */
-export type BadgeContextRadius = "none" | Size | "full";
+export type BadgeContextRadius = "none" | Size | "full" | "circle";
 
 /**
  * バッジの大きさです。

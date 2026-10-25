@@ -130,6 +130,11 @@
     --sui_select-corner_shape: superellipse(var(--sui-superellipse));
   }
 
+  &.sui_select-radius_circle {
+    --sui_select-border_radius: calc(var(--sui_select-min_height) / 2);
+    --sui_select-corner_shape: none;
+  }
+
   &.sui_select-variant_naked {
     --sui_select-color-idle: var(--sui-grey-naked-canvas_text-normal);
     --sui_select-color-hover: var(--sui-grey-naked-canvas_text-subtle);

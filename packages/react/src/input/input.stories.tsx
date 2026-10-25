@@ -7,7 +7,7 @@ import { Input } from "./index.js";
 
 const COLORS: readonly Input.Color[] = theme.COLORS;
 const SIZES: readonly Input.Size[] = theme.SIZES;
-const RADII: readonly Input.Radius[] = ["none", ...theme.SIZES, "full"];
+const RADII: readonly Input.Radius[] = ["none", ...theme.SIZES, "full", "circle"];
 const TYPES: readonly Input.Type[] = [
   "date",
   "datetime-local",

@@ -4,7 +4,7 @@ import * as React from "react";
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Select } from "./index.js";
 
-const RADII: readonly Select.Radius[] = ["none", ...theme.SIZES, "full"];
+const RADII: readonly Select.Radius[] = ["none", ...theme.SIZES, "full", "circle"];
 const SIZES: readonly Select.Size[] = theme.SIZES;
 const VARIANTS: readonly Select.Variant[] = ["naked", "liquid"];
 

@@ -26,6 +26,7 @@ export type TextFieldRootColor = TextFieldContextColor;
  * - `"md"`: 標準的な角丸
  * - `"lg"`: 大きい角丸
  * - `"full"`: 完全な丸形
+ * - `"circle"`: 完全な円形
  */
 export type TextFieldRootRadius = TextFieldContextRadius;
 

@@ -12,7 +12,7 @@ export type TextFieldContextColor = Color;
 /**
  * 文字入力欄の角丸です。
  */
-export type TextFieldContextRadius = "none" | Size | "full";
+export type TextFieldContextRadius = "none" | Size | "full" | "circle";
 
 /**
  * 文字入力欄のサイズです。

@@ -121,6 +121,11 @@
     --sui_select_content-border_radius: --sui-corner_radius(4);
     --sui_select_content-corner_shape: superellipse(var(--sui-superellipse));
   }
+
+  &.sui_select_content-radius_circle {
+    --sui_select_content-border_radius: --sui-corner_radius(4);
+    --sui_select_content-corner_shape: none;
+  }
 }
 
 /* 変異 */

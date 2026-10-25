@@ -160,6 +160,11 @@
     --sui_textarea-corner_shape: superellipse(var(--sui-superellipse));
   }
 
+  &.sui_textarea-radius_circle {
+    --sui_textarea-border_radius: calc(var(--sui_textarea-min_height) / 2);
+    --sui_textarea-corner_shape: none;
+  }
+
   &.sui_textarea-variant_naked {
     --sui_textarea-color: var(--sui-grey-naked-canvas_text-normal);
     --sui_textarea-background_color: var(--sui-grey-naked-canvas-normal);

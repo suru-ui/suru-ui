@@ -135,6 +135,11 @@
     --sui_combobox_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 
+  &.sui_combobox_popup-radius_circle {
+    --sui_combobox_popup-border_radius: --sui-corner_radius(3);
+    --sui_combobox_popup-corner_shape: none;
+  }
+
   &.sui_combobox_popup-input_position_top {
     --_sui_combobox_popup-direction: column;
   }

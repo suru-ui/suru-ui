@@ -12,7 +12,7 @@ export type TextareaContextColor = Color;
 /**
  * テキストエリアの角丸です。
  */
-export type TextareaContextRadius = "none" | Size;
+export type TextareaContextRadius = "none" | Size | "circle";
 
 /**
  * テキストエリアの大きさです。

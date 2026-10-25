@@ -159,6 +159,11 @@
     --sui_chip-corner_shape: superellipse(var(--sui-superellipse));
   }
 
+  &.sui_chip-radius_circle {
+    --sui_chip-border_radius: calc(var(--sui_chip-min_height) / 2);
+    --sui_chip-corner_shape: none;
+  }
+
   &.sui_chip-color_grey {
     &.sui_chip-variant_solid {
       --sui_chip-color-idle: var(--sui-grey-solid-canvas_text-normal);

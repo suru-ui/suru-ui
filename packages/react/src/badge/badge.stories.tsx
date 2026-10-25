@@ -6,7 +6,7 @@ import { Badge } from "./index.js";
 
 const COLORS: readonly Badge.Color[] = theme.COLORS;
 const SIZES: readonly Badge.Size[] = theme.SIZES;
-const RADII: readonly Badge.Radius[] = ["none", ...SIZES, "full"];
+const RADII: readonly Badge.Radius[] = ["none", ...SIZES, "full", "circle"];
 const OVERLAPS: readonly Badge.Overlap[] = ["rectangular", "circular"];
 const VARIANTS: readonly Badge.Variant[] = ["standard", "dot"];
 

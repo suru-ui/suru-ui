@@ -120,6 +120,11 @@
     --sui_text_field-corner_shape: superellipse(var(--sui-superellipse));
   }
 
+  &.sui_text_field-radius_circle {
+    --sui_text_field-border_radius: calc(var(--sui_text_field-min_height) / 2);
+    --sui_text_field-corner_shape: none;
+  }
+
   &.sui_text_field-variant_naked {
     --sui_text_field-background_color: var(--sui-grey-naked-canvas-normal);
   }

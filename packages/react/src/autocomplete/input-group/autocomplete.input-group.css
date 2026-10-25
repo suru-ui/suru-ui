@@ -170,6 +170,11 @@
     --sui_autocomplete-corner_shape: superellipse(var(--sui-superellipse));
   }
 
+  &.sui_autocomplete-radius_circle {
+    --sui_autocomplete-border_radius: calc(var(--sui_autocomplete-min_height) / 2);
+    --sui_autocomplete-corner_shape: none;
+  }
+
   &.sui_autocomplete-variant_naked {
     --sui_autocomplete-color: var(--sui-grey-naked-canvas_text-normal);
     --sui_autocomplete-background_color: var(--sui-grey-naked-canvas-normal);

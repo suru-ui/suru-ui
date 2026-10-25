@@ -13,8 +13,9 @@ import type { SelectRootItems } from "./select.root.jsx";
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
+ * - `"circle"`: 完全な丸形
  */
-export type SelectContextRadius = "none" | Size | "full";
+export type SelectContextRadius = "none" | Size | "full" | "circle";
 
 /**
  * 選択欄とリスト項目のサイズです。

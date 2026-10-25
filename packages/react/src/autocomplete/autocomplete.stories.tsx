@@ -10,7 +10,7 @@ import { Autocomplete } from "./index.js";
 
 const COLORS: readonly Autocomplete.Color[] = theme.COLORS;
 const SIZES: readonly Autocomplete.Size[] = theme.SIZES;
-const RADII: readonly Autocomplete.Radius[] = ["none", ...SIZES, "full"];
+const RADII: readonly Autocomplete.Radius[] = ["none", ...SIZES, "full", "circle"];
 const VARIANTS: readonly Autocomplete.Variant[] = ["naked", "liquid"];
 
 const fruits = ["りんご", "バナナ", "ぶどう", "みかん", "いちご", "もも"];

@@ -12,7 +12,7 @@ export type InputContextColor = Color;
 /**
  * テキスト入力欄の角丸です。
  */
-export type InputContextRadius = "none" | Size | "full";
+export type InputContextRadius = "none" | Size | "full" | "circle";
 
 /**
  * テキスト入力欄の大きさです。

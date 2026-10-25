@@ -17,8 +17,9 @@ export type ChipContextColor = Color;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
+ * - `"circle"`: 完全な円形
  */
-export type ChipContextRadius = "none" | Size | "full";
+export type ChipContextRadius = "none" | Size | "full" | "circle";
 
 /**
  * チップの大きさです。

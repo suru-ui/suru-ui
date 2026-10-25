@@ -7,7 +7,7 @@ import { Textarea } from "./index.js";
 
 const COLORS: readonly Textarea.Color[] = theme.COLORS;
 const SIZES: readonly Textarea.Size[] = theme.SIZES;
-const RADII: readonly Textarea.Radius[] = ["none", ...SIZES];
+const RADII: readonly Textarea.Radius[] = ["none", ...SIZES, "circle"];
 const VARIANTS: readonly Textarea.Variant[] = ["naked", "liquid"];
 
 const meta = preview.meta({

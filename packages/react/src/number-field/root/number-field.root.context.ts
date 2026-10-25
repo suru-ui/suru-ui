@@ -12,7 +12,7 @@ export type NumberFieldContextColor = Color;
 /**
  * 数値入力欄の角丸です。
  */
-export type NumberFieldContextRadius = "none" | Size | "full";
+export type NumberFieldContextRadius = "none" | Size | "full" | "circle";
 
 /**
  * 数値入力欄のサイズです。

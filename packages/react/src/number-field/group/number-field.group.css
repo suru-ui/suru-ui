@@ -116,6 +116,11 @@
     --sui_number_field_group-corner_shape: superellipse(var(--sui-superellipse));
   }
 
+  &.sui_number_field_group-radius_circle {
+    --sui_number_field_group-border_radius: calc(var(--sui_number_field_group-min_height) / 2);
+    --sui_number_field_group-corner_shape: none;
+  }
+
   &.sui_number_field_group-variant_naked {
     --sui_number_field_group-background_color: var(--sui-grey-naked-canvas-normal);
   }

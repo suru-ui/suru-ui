@@ -8,7 +8,7 @@ import { Combobox } from "./index.js";
 
 const COLORS: readonly Combobox.Color[] = theme.COLORS;
 const SIZES: readonly Combobox.Size[] = theme.SIZES;
-const RADII: readonly Combobox.Radius[] = ["none", ...SIZES, "full"];
+const RADII: readonly Combobox.Radius[] = ["none", ...SIZES, "full", "circle"];
 const VARIANTS: readonly Combobox.Variant[] = ["naked", "liquid"];
 
 const fruits = ["りんご", "ばなな", "ぶどう", "みかん", "いちご", "もも"];

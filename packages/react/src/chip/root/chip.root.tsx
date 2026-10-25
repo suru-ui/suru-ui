@@ -25,6 +25,7 @@ export type ChipRootColor = ChipContextColor;
  * - `"md"`: 標準的
  * - `"lg"`: 大きめ
  * - `"full"`: 丸形
+ * - `"circle"`: 完全な円形
  */
 export type ChipRootRadius = ChipContextRadius;
 

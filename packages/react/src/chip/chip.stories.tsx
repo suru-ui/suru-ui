@@ -7,7 +7,7 @@ import { Chip } from "./index.js";
 
 const COLORS: readonly Chip.Color[] = theme.COLORS;
 const SIZES: readonly Chip.Size[] = theme.SIZES;
-const RADII: readonly Chip.Radius[] = ["none", ...SIZES, "full"];
+const RADII: readonly Chip.Radius[] = ["none", ...SIZES, "full", "circle"];
 const VARIANTS: readonly Chip.Variant[] = theme.COLOR_TEMPLATES;
 
 const meta = preview.meta({

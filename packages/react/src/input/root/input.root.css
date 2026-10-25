@@ -161,6 +161,11 @@
     --sui_input-corner_shape: superellipse(var(--sui-superellipse));
   }
 
+  &.sui_input-radius_circle {
+    --sui_input-border_radius: calc(var(--sui_input-min_height) / 2);
+    --sui_input-corner_shape: none;
+  }
+
   &.sui_input-variant_naked {
     --sui_input-color: var(--sui-grey-naked-canvas_text-normal);
     --sui_input-background_color: var(--sui-grey-naked-canvas-normal);

@@ -35,6 +35,7 @@ export type TextareaRootColor = TextareaContextColor;
  * - `"sm"`: 小さい角丸
  * - `"md"`: 標準的な角丸
  * - `"lg"`: 大きい角丸
+ * - `"circle"`: 完全な円形
  */
 export type TextareaRootRadius = TextareaContextRadius;
 

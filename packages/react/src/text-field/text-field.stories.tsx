@@ -8,7 +8,7 @@ import { TextField } from "./index.js";
 
 const COLORS: readonly TextField.Color[] = theme.COLORS;
 const SIZES: readonly TextField.Size[] = theme.SIZES;
-const RADII: readonly TextField.Radius[] = ["none", ...SIZES, "full"];
+const RADII: readonly TextField.Radius[] = ["none", ...SIZES, "full", "circle"];
 const TYPES = [
   "date",
   "datetime-local",

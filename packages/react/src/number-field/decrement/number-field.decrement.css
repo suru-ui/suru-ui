@@ -148,6 +148,11 @@
     --sui_number_field_stepper-corner_shape: superellipse(var(--sui-superellipse));
   }
 
+  &.sui_number_field-radius_circle {
+    --sui_number_field_stepper-border_radius: calc(var(--sui_number_field_stepper-size) / 2);
+    --sui_number_field_stepper-corner_shape: none;
+  }
+
   &.sui_number_field-variant_naked {
     --sui_number_field_stepper-color-idle: var(--sui-grey-naked-canvas_text-normal);
     --sui_number_field_stepper-color-hover: var(--sui-grey-naked-canvas_text-subtle);

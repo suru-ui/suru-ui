@@ -135,6 +135,11 @@
     --sui_autocomplete_popup-corner_shape: superellipse(var(--sui-superellipse));
   }
 
+  &.sui_autocomplete_popup-radius_circle {
+    --sui_autocomplete_popup-border_radius: --sui-corner_radius(3);
+    --sui_autocomplete_popup-corner_shape: none;
+  }
+
   &.sui_autocomplete_popup-input_position_top {
     --_sui_autocomplete_popup-direction: column;
   }

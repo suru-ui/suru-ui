@@ -6,7 +6,7 @@ import { Field } from "../field/index.js";
 import { PasswordField } from "./index.js";
 
 const COLORS: readonly PasswordField.Color[] = theme.COLORS;
-const RADII: readonly PasswordField.Radius[] = ["none", ...theme.SIZES, "full"];
+const RADII: readonly PasswordField.Radius[] = ["none", ...theme.SIZES, "full", "circle"];
 const SIZES: readonly PasswordField.Size[] = theme.SIZES;
 const VARIANTS: readonly PasswordField.Variant[] = ["naked", "liquid"];
 
