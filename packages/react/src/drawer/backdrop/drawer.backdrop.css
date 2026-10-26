@@ -15,13 +15,17 @@
   --sui_drawer_backdrop-opacity: ;
   --sui_drawer_backdrop-filter-blur: ;
   --sui_drawer_backdrop-transition_duration: ;
+  --sui_drawer_backdrop-min_opacity: ;
 }
 
 /* 可変 */
 :scope {
   background-color: var(--sui_drawer_backdrop-background_color);
   opacity: var(--_sui_drawer_backdrop-opacity,
-              calc(var(--sui_drawer_backdrop-opacity) * (1 - var(--drawer-swipe-progress, 0)))
+              max(
+                var(--sui_drawer_backdrop-min_opacity),
+                calc(var(--sui_drawer_backdrop-opacity) * (1 - var(--drawer-swipe-progress, 0)))
+              )
             );
   backdrop-filter: var(--sui_drawer_backdrop-filter-blur);
   transition-duration: var(--_sui_drawer_backdrop-transition_duration,
@@ -35,6 +39,7 @@
   --sui_drawer_backdrop-opacity: 1;
   --sui_drawer_backdrop-filter-blur: blur(var(--sui-backdrop-blur));
   --sui_drawer_backdrop-transition_duration: 450ms;
+  --sui_drawer_backdrop-min_opacity: 0;
 }
 
 /* 変異 */

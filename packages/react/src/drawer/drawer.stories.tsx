@@ -25,7 +25,7 @@ export const Usage = meta.story({
           description="新しい通知はありません。"
         />
         <p className="text-sm text-neutral-500">
-          トリガーをクリックすると、画面左端からドロワーが表示されます。
+          トリガーをクリックすると、画面下端からドロワーが表示されます。
         </p>
       </div>
     );

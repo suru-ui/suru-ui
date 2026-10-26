@@ -246,4 +246,23 @@ describe("Drawer の配置", () => {
       expect(body.getBoundingClientRect().top).toBeCloseTo(content.getBoundingClientRect().top, 1);
     },
   );
+
+  test("insetで画面端から浮かせる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Drawer
+        title="見出し"
+        slotProps={{
+          popup: { style: { "--sui_drawer_popup-inset": "16px" } as React.CSSProperties },
+        }}
+        defaultOpen
+      >
+        本文
+      </Drawer>,
+    );
+
+    // 検証
+    const popup = screen.getByClassName("sui_drawer_popup").element();
+    expect(getComputedStyle(popup).marginBottom).toBe("16px");
+  });
 });
