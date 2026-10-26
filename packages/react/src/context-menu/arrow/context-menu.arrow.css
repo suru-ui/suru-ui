@@ -27,9 +27,9 @@
 /* 代入 */
 :scope {
   --sui_context_menu_arrow-size: --sui-space(1.5);
-  --sui_context_menu_arrow-background_color: var(--sui_context_menu_content-background_color);
-  --sui_context_menu_arrow-border_color: var(--sui_context_menu_content-border_color);
-  --sui_context_menu_arrow-border_width: var(--sui_context_menu_content-border_width);
+  --sui_context_menu_arrow-background_color: var(--sui_context_menu_popup-background_color);
+  --sui_context_menu_arrow-border_color: var(--sui_context_menu_popup-border_color);
+  --sui_context_menu_arrow-border_width: var(--sui_context_menu_popup-border_width);
 }
 
 /* 変異 */

@@ -35,14 +35,14 @@ import type {
 import { ContextMenuSeparator } from "../separator/context-menu.separator.jsx";
 import { ContextMenuSubmenuRoot } from "../submenu-root/context-menu.submenu-root.jsx";
 import { ContextMenuSubmenuTrigger } from "../submenu-trigger/context-menu.submenu-trigger.jsx";
-import { ContextMenuContentContext } from "./context-menu.content.context.js";
+import { ContextMenuPopupContext } from "./context-menu.popup.context.js";
 
 /**
  * ポップアップの各項目をレンダリングする関数のインターフェイスです。
  *
  * @template TItem 項目の型です。
  */
-export interface IContextMenuContentItemRenderer<TItem = any> {
+export interface IContextMenuPopupItemRenderer<TItem = any> {
   /**
    * 項目をレンダリングします。
    *
@@ -55,12 +55,12 @@ export interface IContextMenuContentItemRenderer<TItem = any> {
 }
 
 /**
- * {@link ContextMenuContent} が持つ状態です。
+ * {@link ContextMenuPopup} が持つ状態です。
  */
-export type ContextMenuContentState<TItem = any> = ContextMenuContentContext<TItem>;
+export type ContextMenuPopupState<TItem = any> = ContextMenuPopupContext<TItem>;
 
-export namespace ContextMenuContentProps {
-  export type Render<TItem = any> = RenderProps<ContextMenuContentState<TItem>>;
+export namespace ContextMenuPopupProps {
+  export type Render<TItem = any> = RenderProps<ContextMenuPopupState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -68,7 +68,7 @@ export namespace ContextMenuContentProps {
      *
      * 関数を指定した場合は {@link ContextMenuRootProps.items|items} の各項目が引数として渡されます。
      */
-    children?: React.ReactNode | IContextMenuContentItemRenderer<TItem>;
+    children?: React.ReactNode | IContextMenuPopupItemRenderer<TItem>;
   };
 
   export type BaseUI = Omit<
@@ -88,25 +88,25 @@ export namespace ContextMenuContentProps {
 }
 
 /**
- * {@link ContextMenuContent} に渡す props です。
+ * {@link ContextMenuPopup} に渡す props です。
  */
-export type ContextMenuContentProps<TItem = any> = ContextMenuContentProps.Render<TItem> &
-  ContextMenuContentProps.SuruUI<TItem> &
-  ContextMenuContentProps.BaseUI &
-  ContextMenuContentProps.HTML;
+export type ContextMenuPopupProps<TItem = any> = ContextMenuPopupProps.Render<TItem> &
+  ContextMenuPopupProps.SuruUI<TItem> &
+  ContextMenuPopupProps.BaseUI &
+  ContextMenuPopupProps.HTML;
 
-export interface IContextMenuContent extends IComponent<ContextMenuContentProps> {
+export interface IContextMenuPopup extends IComponent<ContextMenuPopupProps> {
   /**
    * @template TItem 項目の型です。
    */
-  <TItem = any>(props: ContextMenuContentProps<TItem>): IComponent.Return;
+  <TItem = any>(props: ContextMenuPopupProps<TItem>): IComponent.Return;
 }
 
 /**
  * コンテキストメニュー項目を表示するコンテンツ要素です。
  */
-export const ContextMenuContent: IContextMenuContent = function SuiContextMenuContent(
-  props: ContextMenuContentProps,
+export const ContextMenuPopup: IContextMenuPopup = function SuiContextMenuPopup(
+  props: ContextMenuPopupProps,
 ) {
   const ctx = usePositionerContext();
   const { style, render, children = defaultItemRenderer, className, ...otherProps } = props;
@@ -114,36 +114,36 @@ export const ContextMenuContent: IContextMenuContent = function SuiContextMenuCo
   return (
     <ContextMenu.Popup
       {...otherProps}
-      {...proxyRenderProps<ContextMenu.Popup.State, ContextMenuContentState>(
+      {...proxyRenderProps<ContextMenu.Popup.State, ContextMenuPopupState>(
         (state) => ({ ...ctx, ...state }),
         {
           style,
           render: (htmlProps, state) => (
-            <ContextMenuContentContext value={state}>
+            <ContextMenuPopupContext value={state}>
               <RenderElement
                 state={state}
                 render={render}
                 htmlProps={htmlProps}
                 defaultTagName="div"
               />
-            </ContextMenuContentContext>
+            </ContextMenuPopupContext>
           ),
-          className: cn<ContextMenuContentState>(
+          className: cn<ContextMenuPopupState>(
             className,
-            "sui_context_menu_content",
+            "sui_context_menu_popup",
             (state) =>
               state.transitionStatus !== undefined &&
-              `sui_context_menu_content-transition_status_${state.transitionStatus}`,
-            (state) => `sui_context_menu_content-size_${state.size}`,
-            (state) => `sui_context_menu_content-radius_${state.radius}`,
-            (state) => `sui_context_menu_content-variant_${state.variant}`,
-            (state) => state.outlined && "sui_context_menu_content-outlined",
-            (state) => state.open && "sui_context_menu_content-open",
-            (state) => state.anchorHidden && "sui_context_menu_content-anchor_hidden",
-            (state) => state.nested && "sui_context_menu_content-nested",
-            (state) => state.instant && "sui_context_menu_content-instant",
-            (state) => `sui_context_menu_content-side_${state.side.replaceAll("-", "_")}`,
-            (state) => `sui_context_menu_content-align_${state.align}`,
+              `sui_context_menu_popup-transition_status_${state.transitionStatus}`,
+            (state) => `sui_context_menu_popup-size_${state.size}`,
+            (state) => `sui_context_menu_popup-radius_${state.radius}`,
+            (state) => `sui_context_menu_popup-variant_${state.variant}`,
+            (state) => state.outlined && "sui_context_menu_popup-outlined",
+            (state) => state.open && "sui_context_menu_popup-open",
+            (state) => state.anchorHidden && "sui_context_menu_popup-anchor_hidden",
+            (state) => state.nested && "sui_context_menu_popup-nested",
+            (state) => state.instant && "sui_context_menu_popup-instant",
+            (state) => `sui_context_menu_popup-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_context_menu_popup-align_${state.align}`,
           ),
         },
       )}
@@ -153,10 +153,10 @@ export const ContextMenuContent: IContextMenuContent = function SuiContextMenuCo
   );
 };
 
-export { ContextMenuContent as Content };
+export { ContextMenuPopup as Popup };
 
-export namespace Content {
-  export type State<TItem = any> = ContextMenuContentState<TItem>;
+export namespace Popup {
+  export type State<TItem = any> = ContextMenuPopupState<TItem>;
 
   export type Props<TItem = any> = Props.Render<TItem> &
     Props.SuruUI<TItem> &
@@ -164,21 +164,21 @@ export namespace Content {
     Props.HTML;
 
   export namespace Props {
-    export type Render<TItem = any> = ContextMenuContentProps.Render<TItem>;
+    export type Render<TItem = any> = ContextMenuPopupProps.Render<TItem>;
 
-    export type SuruUI<TItem = any> = ContextMenuContentProps.SuruUI<TItem>;
+    export type SuruUI<TItem = any> = ContextMenuPopupProps.SuruUI<TItem>;
 
-    export type BaseUI = ContextMenuContentProps.BaseUI;
+    export type BaseUI = ContextMenuPopupProps.BaseUI;
 
-    export type HTML = ContextMenuContentProps.HTML;
+    export type HTML = ContextMenuPopupProps.HTML;
   }
 
-  export type IItemRenderer<TItem = any> = IContextMenuContentItemRenderer<TItem>;
+  export type IItemRenderer<TItem = any> = IContextMenuPopupItemRenderer<TItem>;
 
   export type ItemObject = ContextMenuRootItemObject;
 }
 
-const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items) => {
+const defaultItemRenderer: IContextMenuPopupItemRenderer = (item, index, items) => {
   switch (true) {
     case isLabeledItemObject(item): {
       const { type: _, label, ...props } = item;
@@ -232,7 +232,7 @@ const defaultItemRenderer: IContextMenuContentItemRenderer = (item, index, items
           </ContextMenuSubmenuTrigger>
           <ContextMenuPortal>
             <ContextMenuPositioner>
-              <ContextMenuContent>{defaultItemRenderer}</ContextMenuContent>
+              <ContextMenuPopup>{defaultItemRenderer}</ContextMenuPopup>
             </ContextMenuPositioner>
           </ContextMenuPortal>
         </ContextMenuSubmenuRoot>

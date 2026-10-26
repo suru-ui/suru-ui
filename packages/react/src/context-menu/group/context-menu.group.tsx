@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useContentContext } from "../content/context-menu.content.context.js";
+import { usePopupContext } from "../popup/context-menu.popup.context.js";
 import { ContextMenuGroupContext } from "./context-menu.group.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type IContextMenuGroup = IComponent<ContextMenuGroupProps>;
  * 関連するコンテキストメニュー項目をまとめるグループ要素です。
  */
 export const ContextMenuGroup: IContextMenuGroup = function SuiContextMenuGroup(props) {
-  const ctx = useContentContext();
+  const ctx = usePopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

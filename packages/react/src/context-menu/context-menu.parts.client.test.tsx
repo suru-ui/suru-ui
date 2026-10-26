@@ -6,12 +6,12 @@ import { ContextMenuArrow } from "./arrow/context-menu.arrow.jsx";
 import { ContextMenuBackdrop } from "./backdrop/context-menu.backdrop.jsx";
 import { ContextMenuCheckboxItemIndicator } from "./checkbox-item-indicator/context-menu.checkbox-item-indicator.jsx";
 import { ContextMenuCheckboxItem } from "./checkbox-item/context-menu.checkbox-item.jsx";
-import { ContextMenuContent } from "./content/context-menu.content.jsx";
 import { ContextMenu } from "./context-menu.jsx";
 import { ContextMenuGroupLabel } from "./group-label/context-menu.group-label.jsx";
 import { ContextMenuGroup } from "./group/context-menu.group.jsx";
 import { ContextMenuItem } from "./item/context-menu.item.jsx";
 import { ContextMenuLinkItem } from "./link-item/context-menu.link-item.jsx";
+import { ContextMenuPopup } from "./popup/context-menu.popup.jsx";
 import { ContextMenuPortal } from "./portal/context-menu.portal.jsx";
 import { ContextMenuPositioner } from "./positioner/context-menu.positioner.jsx";
 import { ContextMenuRadioGroup } from "./radio-group/context-menu.radio-group.jsx";
@@ -35,7 +35,7 @@ function renderMenu(children: React.ReactNode) {
       <ContextMenuPortal>
         <ContextMenuBackdrop />
         <ContextMenuPositioner>
-          <ContextMenuContent>{children}</ContextMenuContent>
+          <ContextMenuPopup>{children}</ContextMenuPopup>
         </ContextMenuPositioner>
       </ContextMenuPortal>
     </ContextMenuRoot>,
@@ -59,9 +59,9 @@ describe("ContextMenuPortal", () => {
       <ContextMenuRoot size="lg" radius="sm" outlined defaultOpen>
         <ContextMenuPortal>
           <ContextMenuPositioner>
-            <ContextMenuContent>
+            <ContextMenuPopup>
               <ContextMenuItem>項目</ContextMenuItem>
-            </ContextMenuContent>
+            </ContextMenuPopup>
           </ContextMenuPositioner>
         </ContextMenuPortal>
       </ContextMenuRoot>,
@@ -113,14 +113,14 @@ describe("ContextMenuPositioner", () => {
   });
 });
 
-describe("ContextMenuContent", () => {
+describe("ContextMenuPopup", () => {
   test("内容を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await renderMenu(<ContextMenuItem>編集</ContextMenuItem>);
 
     // 検証
     const content = screen.getByRole("menu").element();
-    expect(content.classList.contains("sui_context_menu_content")).toBe(true);
+    expect(content.classList.contains("sui_context_menu_popup")).toBe(true);
     expect(content.textContent).toBe("編集");
   });
 });
@@ -292,9 +292,9 @@ describe("ContextMenuSubmenu", () => {
         <ContextMenuSubmenuTrigger>共有</ContextMenuSubmenuTrigger>
         <ContextMenuPortal>
           <ContextMenuPositioner>
-            <ContextMenuContent>
+            <ContextMenuPopup>
               <ContextMenuItem>リンクをコピー</ContextMenuItem>
-            </ContextMenuContent>
+            </ContextMenuPopup>
           </ContextMenuPositioner>
         </ContextMenuPortal>
       </ContextMenuSubmenuRoot>,
@@ -311,18 +311,18 @@ describe("ContextMenuSubmenu", () => {
       <ContextMenuRoot defaultOpen>
         <ContextMenuPortal>
           <ContextMenuPositioner>
-            <ContextMenuContent>
+            <ContextMenuPopup>
               <ContextMenuSubmenuRoot defaultOpen>
                 <ContextMenuSubmenuTrigger>共有</ContextMenuSubmenuTrigger>
                 <ContextMenuPortal>
                   <ContextMenuPositioner>
-                    <ContextMenuContent>
+                    <ContextMenuPopup>
                       <ContextMenuItem>リンクをコピー</ContextMenuItem>
-                    </ContextMenuContent>
+                    </ContextMenuPopup>
                   </ContextMenuPositioner>
                 </ContextMenuPortal>
               </ContextMenuSubmenuRoot>
-            </ContextMenuContent>
+            </ContextMenuPopup>
           </ContextMenuPositioner>
         </ContextMenuPortal>
       </ContextMenuRoot>,
@@ -347,10 +347,10 @@ describe("ContextMenuArrow", () => {
       <ContextMenuRoot defaultOpen>
         <ContextMenuPortal>
           <ContextMenuPositioner>
-            <ContextMenuContent>
+            <ContextMenuPopup>
               <ContextMenuItem>項目</ContextMenuItem>
               <ContextMenuArrow />
-            </ContextMenuContent>
+            </ContextMenuPopup>
           </ContextMenuPositioner>
         </ContextMenuPortal>
       </ContextMenuRoot>,
@@ -391,9 +391,9 @@ describe("ContextMenu の状態伝播", () => {
           )}
         >
           <ContextMenuPositioner>
-            <ContextMenuContent>
+            <ContextMenuPopup>
               <ContextMenuItem>項目</ContextMenuItem>
-            </ContextMenuContent>
+            </ContextMenuPopup>
           </ContextMenuPositioner>
         </ContextMenuPortal>
       </ContextMenuRoot>,
@@ -411,13 +411,13 @@ describe("ContextMenu の状態伝播", () => {
       <ContextMenuRoot size="lg" radius="sm" variant="liquid" defaultOpen>
         <ContextMenuPortal>
           <ContextMenuPositioner>
-            <ContextMenuContent
+            <ContextMenuPopup
               render={(props, state) => (
                 <div {...props} data-probe={`${state.size}/${state.radius}/${state.variant}`} />
               )}
             >
               <ContextMenuItem>項目</ContextMenuItem>
-            </ContextMenuContent>
+            </ContextMenuPopup>
           </ContextMenuPositioner>
         </ContextMenuPortal>
       </ContextMenuRoot>,
@@ -433,7 +433,7 @@ describe("ContextMenu の状態伝播", () => {
       <ContextMenuRoot size="lg" radius="sm" defaultOpen>
         <ContextMenuPortal>
           <ContextMenuPositioner>
-            <ContextMenuContent>
+            <ContextMenuPopup>
               <ContextMenuItem
                 render={(props, state) => (
                   <div
@@ -445,7 +445,7 @@ describe("ContextMenu の状態伝播", () => {
               >
                 項目
               </ContextMenuItem>
-            </ContextMenuContent>
+            </ContextMenuPopup>
           </ContextMenuPositioner>
         </ContextMenuPortal>
       </ContextMenuRoot>,

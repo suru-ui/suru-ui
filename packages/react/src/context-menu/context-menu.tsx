@@ -22,12 +22,12 @@ import {
   type ContextMenuRootProps,
   type ContextMenuRootState,
   type ContextMenuGroupProps,
+  type ContextMenuPopupProps,
   type ContextMenuRootRadius,
   type ContextMenuPortalProps,
   type ContextMenuRootActions,
   type ContextMenuRootVariant,
   type IUseContextMenuContext,
-  type ContextMenuContentProps,
   type ContextMenuTriggerProps,
   type ContextMenuBackdropProps,
   type ContextMenuLinkItemProps,
@@ -41,10 +41,10 @@ import {
   type ContextMenuSubmenuRootProps,
   type ContextMenuCheckboxItemProps,
   type ContextMenuRootLinkItemObject,
+  type IContextMenuPopupItemRenderer,
   type ContextMenuRootItemObjectGroup,
   type ContextMenuRootRadioItemObject,
   type ContextMenuSubmenuTriggerProps,
-  type IContextMenuContentItemRenderer,
   type ContextMenuRootChangeEventReason,
   type ContextMenuRootGroupedItemObject,
   type ContextMenuRootLabeledItemObject,
@@ -57,8 +57,8 @@ import {
   ContextMenuItem,
   ContextMenuRoot,
   ContextMenuGroup,
+  ContextMenuPopup,
   ContextMenuPortal,
-  ContextMenuContent,
   ContextMenuTrigger,
   ContextMenuBackdrop,
   ContextMenuLinkItem,
@@ -86,7 +86,7 @@ export type ContextMenuChangeEventReason = ContextMenuRootChangeEventReason;
 
 export type ContextMenuOrientation = ContextMenuRootOrientation;
 
-export type IContextMenuItemRenderer<TItem = any> = IContextMenuContentItemRenderer<TItem>;
+export type IContextMenuItemRenderer<TItem = any> = IContextMenuPopupItemRenderer<TItem>;
 
 export type ContextMenuRadius = ContextMenuRootRadius;
 
@@ -223,8 +223,6 @@ export type ContextMenuSlotProps = {
 export type ContextMenuState<TItem = any> = ContextMenuRootState<TItem>;
 
 namespace ContextMenuProps {
-  export type Content = Omit<ContextMenuContentProps, keyof ContextMenu | keyof Root>;
-
   export type ContextMenu = {
     /**
      * チェックボックス項目の選択状態を示す内容です。
@@ -253,6 +251,8 @@ namespace ContextMenuProps {
     trigger?: ContextMenuTriggerProps["children"] | undefined;
   };
 
+  export type Popup = Omit<ContextMenuPopupProps, keyof ContextMenu | keyof Root>;
+
   export type Root<TItem = any> = Omit<ContextMenuRootProps<TItem>, "children" | keyof ContextMenu>;
 }
 
@@ -263,7 +263,7 @@ namespace ContextMenuProps {
  */
 export type ContextMenuProps<TItem = any> = ContextMenuProps.ContextMenu &
   ContextMenuProps.Root<TItem> &
-  ContextMenuProps.Content;
+  ContextMenuProps.Popup;
 
 export interface IUseContextMenuAPI {
   /**
@@ -287,7 +287,7 @@ export interface IUseContextMenuAPI {
 export class ContextMenuAPI<TItem = any> {
   private readonly checkboxIndicator: React.ReactNode;
 
-  private readonly contentProps: ContextMenuProps.Content;
+  private readonly popupProps: ContextMenuProps.Popup;
 
   private readonly radioIndicator: React.ReactNode;
 
@@ -322,11 +322,11 @@ export class ContextMenuAPI<TItem = any> {
       checkboxIndicator = <CheckIcon />,
       highlightItemOnHover,
       onOpenChangeComplete,
-      ...contentProps
+      ...popupProps
     } = props;
 
     this.checkboxIndicator = checkboxIndicator;
-    this.contentProps = contentProps;
+    this.popupProps = popupProps;
     this.radioIndicator = radioIndicator;
     this.rootProps = {
       open,
@@ -349,7 +349,7 @@ export class ContextMenuAPI<TItem = any> {
     this.trigger = trigger;
   }
 
-  private readonly defaultContentItemRenderer: IContextMenuContentItemRenderer = (
+  private readonly defaultPopupItemRenderer: IContextMenuPopupItemRenderer = (
     item,
     index,
     items,
@@ -382,8 +382,8 @@ export class ContextMenuAPI<TItem = any> {
         );
 
       case isSubmenuItemObject(item): {
-        const { children: content = this.defaultContentItemRenderer, ...otherContentProps } =
-          this.getContentProps();
+        const { children: popup = this.defaultPopupItemRenderer, ...otherPopupProps } =
+          this.getPopupProps();
         const { children: submenuTrigger, ...otherSubmenuTriggerProps } =
           this.getSubmenuTriggerProps(item);
 
@@ -398,7 +398,7 @@ export class ContextMenuAPI<TItem = any> {
             </ContextMenuSubmenuTrigger>
             <ContextMenuPortal {...this.getPortalProps()}>
               <ContextMenuPositioner {...this.getPositionerProps()}>
-                <ContextMenuContent {...otherContentProps}>{content}</ContextMenuContent>
+                <ContextMenuPopup {...otherPopupProps}>{popup}</ContextMenuPopup>
               </ContextMenuPositioner>
             </ContextMenuPortal>
           </ContextMenuSubmenuRoot>
@@ -412,7 +412,7 @@ export class ContextMenuAPI<TItem = any> {
           <React.Fragment key={getItemKey(item) ?? index}>
             <ContextMenuGroup {...this.getGroupProps(item)}>
               {labelProps && <ContextMenuGroupLabel {...labelProps} />}
-              {item.items.map(this.defaultContentItemRenderer)}
+              {item.items.map(this.defaultPopupItemRenderer)}
             </ContextMenuGroup>
             {index < items.length - 1 && <ContextMenuSeparator {...this.getSeparatorProps()} />}
           </React.Fragment>
@@ -424,7 +424,7 @@ export class ContextMenuAPI<TItem = any> {
     }
   };
 
-  private readonly defaultRadioItemRenderer: IContextMenuContentItemRenderer = (item, index) => {
+  private readonly defaultRadioItemRenderer: IContextMenuPopupItemRenderer = (item, index) => {
     switch (true) {
       case isRadioItemObject(item): {
         const { children: label, ...otherProps } = this.getRadioItemProps(item);
@@ -486,17 +486,17 @@ export class ContextMenuAPI<TItem = any> {
   }
 
   /**
-   * {@link ContextMenuContent} に渡す props を取得します。
+   * {@link ContextMenuPopup} に渡す props を取得します。
    *
-   * @template TContentItem 項目の型です。
+   * @template TPopupItem 項目の型です。
    */
-  public getContentProps<TContentItem = TItem>(): Override<
-    ContextMenuContentProps<TContentItem>,
+  public getPopupProps<TPopupItem = TItem>(): Override<
+    ContextMenuPopupProps<TPopupItem>,
     {
-      children: LikelyVisibleNode | IContextMenuContentItemRenderer | undefined;
+      children: LikelyVisibleNode | IContextMenuPopupItemRenderer | undefined;
     }
   > {
-    const { children = this.defaultContentItemRenderer, ...otherProps } = this.contentProps;
+    const { children = this.defaultPopupItemRenderer, ...otherProps } = this.popupProps;
 
     return {
       ...otherProps,
@@ -791,7 +791,7 @@ export const ContextMenu: IContextMenu = Object.assign(
         <ContextMenuPortal {...api.getPortalProps()}>
           <ContextMenuBackdrop {...api.getBackdropProps()} />
           <ContextMenuPositioner {...api.getPositionerProps()}>
-            <ContextMenuContent {...api.getContentProps()} />
+            <ContextMenuPopup {...api.getPopupProps()} />
           </ContextMenuPositioner>
         </ContextMenuPortal>
       </ContextMenuRoot>

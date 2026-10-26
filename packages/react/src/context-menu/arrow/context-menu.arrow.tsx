@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useContentContext } from "../content/context-menu.content.context.js";
+import { usePopupContext } from "../popup/context-menu.popup.context.js";
 import { ContextMenuArrowContext } from "./context-menu.arrow.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type IContextMenuArrow = IComponent<ContextMenuArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(props) {
-  const ctx = useContentContext();
+  const ctx = usePopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
