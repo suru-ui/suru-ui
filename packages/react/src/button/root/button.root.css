@@ -227,6 +227,14 @@
     --sui_button__svg-stroke_width: 2.5;
   }
 
+  &.sui_button-thin {
+    --sui_button__svg-stroke_width: 2.5;
+  }
+
+  &.sui_button-variant_solid.sui_button-thin {
+    --sui_button__svg-stroke_width: 3;
+  }
+
   &.sui_button-color_grey {
     &.sui_button-variant_solid {
       --sui_button-color-idle: var(--sui-grey-solid-canvas_text-normal);
