@@ -75,11 +75,11 @@
   --sui_hover_card_content-max_width: var(--available-width);
   --sui_hover_card_content-max_height: var(--available-height);
   --sui_hover_card_content-font_family: var(--sui-font-sans);
-  --sui_hover_card_content-font_size: var(--sui-text-std-sm-n-font_size);
-  --sui_hover_card_content-font_weight: var(--sui-text-std-sm-n-font_weight);
-  --sui_hover_card_content-line_height: var(--sui-text-std-sm-n-line_height);
+  --sui_hover_card_content-font_size: var(--sui-text-std-md-n-font_size);
+  --sui_hover_card_content-font_weight: var(--sui-text-std-md-n-font_weight);
+  --sui_hover_card_content-line_height: var(--sui-text-std-md-n-line_height);
   --sui_hover_card_content-color: var(--sui-canvas_text-1);
-  --sui_hover_card_content-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  --sui_hover_card_content-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
   --sui_hover_card_content-focusring_width: var(--sui-focusring_width);
   --sui_hover_card_content-outline_color: var(--sui-focusring_color);
   --sui_hover_card_content-outline_offset: var(--sui-focusring_offset);
@@ -98,17 +98,17 @@
 
   &.sui_hover_card_content-size_sm {
     --sui_hover_card_content-width: calc(var(--sui_hover_card_content-font_size) * 16);
-    --sui_hover_card_content-padding: --sui-space(3);
+    --sui_hover_card_content-padding: --sui-space(2);
   }
 
   &.sui_hover_card_content-size_md {
     --sui_hover_card_content-width: calc(var(--sui_hover_card_content-font_size) * 20);
-    --sui_hover_card_content-padding: --sui-space(4);
+    --sui_hover_card_content-padding: --sui-space(3);
   }
 
   &.sui_hover_card_content-size_lg {
     --sui_hover_card_content-width: calc(var(--sui_hover_card_content-font_size) * 24);
-    --sui_hover_card_content-padding: --sui-space(5);
+    --sui_hover_card_content-padding: --sui-space(4);
   }
 
   &.sui_hover_card_content-radius_none {
