@@ -50,7 +50,7 @@ describe("ContextMenu の配置", () => {
     const screen = await render(<ContextMenu items={items} outlined defaultOpen />);
 
     // 検証
-    const style = getComputedStyle(screen.getByRole("menu").element());
+    const style = getComputedStyle(screen.getByRole("menu").element(), "::after");
     expect(style.borderTopStyle).toBe("solid");
     expect(Number.parseFloat(style.borderTopWidth)).toBeCloseTo(1, 0);
   });

@@ -3,14 +3,22 @@
 
 /* 固定 */
 :scope {
+  position: relative;
   display: flex;
   flex-direction: column;
   overflow: auto;
   pointer-events: auto;
-  border-style: solid;
   transition:
     opacity 150ms ease-out,
     scale 150ms ease-out;
+
+  &::after {
+    position: absolute;
+    inset: 0px;
+    pointer-events: none;
+    content: "";
+    border-style: solid;
+  }
 }
 
 /* 変数 */
@@ -47,14 +55,19 @@
   color: var(--sui_context_menu_popup-color);
   letter-spacing: var(--sui_context_menu_popup-letter_spacing);
   background-color: var(--sui_context_menu_popup-background_color);
-  border-color: var(--sui_context_menu_popup-border_color);
-  border-width: var(--_sui_context_menu_popup-border_width, 0px);
   border-radius: var(--sui_context_menu_popup-border_radius);
   corner-shape: var(--sui_context_menu_popup-corner_shape);
   opacity: var(--_sui_context_menu_popup-opacity, var(--sui_context_menu_popup-opacity));
   filter: drop-shadow(var(--sui_context_menu_popup-drop_shadow));
   transform-origin: var(--sui_context_menu_popup-transform_origin);
   scale: var(--_sui_context_menu_popup-scale, var(--sui_context_menu_popup-scale));
+
+  &::after {
+    border-color: var(--_sui_context_menu_popup-border_color, transparent);
+    border-width: var(--_sui_context_menu_popup-border_width, 0px);
+    border-radius: var(--sui_context_menu_popup-border_radius);
+    corner-shape: var(--sui_context_menu_popup-corner_shape);
+  }
 }
 
 /* 代入 */
@@ -123,6 +136,7 @@
 /* 変異 */
 :scope {
   &.sui_context_menu_popup-outlined {
+    --_sui_context_menu_popup-border_color: var(--sui_context_menu_popup-border_color);
     --_sui_context_menu_popup-border_width: var(--sui_context_menu_popup-border_width);
   }
 
