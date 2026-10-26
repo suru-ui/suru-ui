@@ -1,3 +1,33 @@
+/* 幅の変数は配置変数を参照し、背景色と枠線の変数は矢印（別パーツ）からも参照されるため、ポータル起点の別ブロックにします。 */
+@layer sui.component {
+@scope (.sui_context_menu_portal) to ([data-scope]) {
+
+/* 変数 */
+:scope {
+  --sui_context_menu_popup-min_width: ;
+  --sui_context_menu_popup-max_width: ;
+  --sui_context_menu_popup-background_color: ;
+  --sui_context_menu_popup-border_color: ;
+  --sui_context_menu_popup-border_width: ;
+  --sui_context_menu_popup-drop_shadow: ;
+}
+
+/* 代入 */
+:scope {
+  .sui_context_menu_popup {
+    --sui_context_menu_popup-min_width: 192px;
+    --sui_context_menu_popup-max_width: var(--available-width);
+  }
+
+  --sui_context_menu_popup-background_color: var(--sui-canvas-2);
+  --sui_context_menu_popup-border_color: var(--sui-border-1);
+  --sui_context_menu_popup-border_width: --sui-border_width(1);
+  --sui_context_menu_popup-drop_shadow: var(--sui-drop_shadow-md);
+}
+
+} /* @scope */
+} /* @layer */
+
 @layer sui.component {
 @scope (.sui_context_menu_popup) to ([data-scope]) {
 
@@ -24,8 +54,6 @@
 /* 変数 */
 :scope {
   --sui_context_menu_popup-gap: ;
-  --sui_context_menu_popup-min_width: ;
-  --sui_context_menu_popup-max_width: ;
   --sui_context_menu_popup-max_height: ;
   --sui_context_menu_popup-padding: ;
   --sui_context_menu_popup-font_family: ;
@@ -73,8 +101,6 @@
 /* 代入 */
 :scope {
   --sui_context_menu_popup-gap: --sui-gap(1);
-  --sui_context_menu_popup-min_width: 192px;
-  --sui_context_menu_popup-max_width: var(--available-width);
   --sui_context_menu_popup-max_height: var(--available-height);
   --sui_context_menu_popup-padding: --sui-space(3);
   --sui_context_menu_popup-font_family: var(--sui-font-sans);
@@ -145,29 +171,6 @@
     --_sui_context_menu_popup-opacity: 0;
     --_sui_context_menu_popup-scale: 0.98;
   }
-}
-
-} /* @scope */
-} /* @layer */
-
-/* 背景色と枠線の変数は矢印（別パーツ）からも参照されるため、ポータル起点の別ブロックに残します。影はポップアップ表示のため併せて持ちます。 */
-@layer sui.component {
-@scope (.sui_context_menu_portal) to ([data-scope]) {
-
-/* 変数 */
-:scope {
-  --sui_context_menu_popup-background_color: ;
-  --sui_context_menu_popup-border_color: ;
-  --sui_context_menu_popup-border_width: ;
-  --sui_context_menu_popup-drop_shadow: ;
-}
-
-/* 代入 */
-:scope {
-  --sui_context_menu_popup-background_color: var(--sui-canvas-2);
-  --sui_context_menu_popup-border_color: var(--sui-border-1);
-  --sui_context_menu_popup-border_width: --sui-border_width(1);
-  --sui_context_menu_popup-drop_shadow: var(--sui-drop_shadow-md);
 }
 
 } /* @scope */
