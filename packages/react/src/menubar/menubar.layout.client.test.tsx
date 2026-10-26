@@ -1,6 +1,6 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { test, describe } from "vitest";
+import { vi, test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import supportsCustomFunctions from "./_supports-custom-functions.js";
@@ -67,4 +67,28 @@ describe("MenubarRoot の配置", () => {
     const style = getComputedStyle(screen.getByRole("menubar").element());
     expect(Number.parseFloat(style.rowGap)).toBeCloseTo(4, 1);
   });
+
+  test.skipIf(!supportsCustomFunctions())(
+    "メニューのポップアップに Menu のスタイルを適用する",
+    async ({ expect }) => {
+      // 準備と実行
+      const screen = await render(<MenubarRoot items={items} />);
+      await screen.getByText("ファイル").click();
+      await vi.waitFor(() => {
+        expect(screen.getByRole("menu").elements().length).toBe(1);
+      });
+
+      // 検証
+      const popup = screen.getByRole("menu").element();
+      const popupStyle = getComputedStyle(popup);
+      expect(Number.parseFloat(popupStyle.paddingBlockStart)).toBeCloseTo(0, 1);
+      expect(Number.parseFloat(popupStyle.paddingInlineStart)).toBeCloseTo(0, 1);
+      expect(popupStyle.backgroundColor).toBe("rgb(255, 252, 240)");
+
+      const item = screen.getByRole("menuitem", { name: "新規作成" }).element();
+      const itemStyle = getComputedStyle(item);
+      expect(Number.parseFloat(itemStyle.marginBlockStart)).toBeCloseTo(5, 1);
+      expect(Number.parseFloat(itemStyle.marginInlineStart)).toBeCloseTo(5, 1);
+    },
+  );
 });

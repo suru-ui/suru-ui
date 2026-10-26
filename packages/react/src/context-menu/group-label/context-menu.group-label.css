@@ -9,8 +9,7 @@
 
 /* 変数 */
 :scope {
-  --sui_context_menu_group_label-padding_block_start: ;
-  --sui_context_menu_group_label-padding_block_end: ;
+  --sui_context_menu_group_label-padding_block: ;
   --sui_context_menu_group_label-padding_inline: ;
   --sui_context_menu_group_label-font_family: ;
   --sui_context_menu_group_label-font_size: ;
@@ -22,8 +21,7 @@
 
 /* 可変 */
 :scope {
-  padding-block-start: var(--sui_context_menu_group_label-padding_block_start);
-  padding-block-end: var(--sui_context_menu_group_label-padding_block_end);
+  padding-block: var(--sui_context_menu_group_label-padding_block);
   padding-inline: var(--sui_context_menu_group_label-padding_inline);
   font-family: var(--sui_context_menu_group_label-font_family);
   font-size: var(--sui_context_menu_group_label-font_size);
@@ -35,15 +33,35 @@
 
 /* 代入 */
 :scope {
-  --sui_context_menu_group_label-padding_block_start: --sui-space(1);
-  --sui_context_menu_group_label-padding_block_end: --sui-space(1);
-  --sui_context_menu_group_label-padding_inline: --sui-space(2);
   --sui_context_menu_group_label-font_family: var(--sui-font-sans);
-  --sui_context_menu_group_label-font_size: var(--sui-text-std-sm-n-font_size);
-  --sui_context_menu_group_label-font_weight: var(--sui-text-std-sm-n-font_weight);
-  --sui_context_menu_group_label-line_height: var(--sui-text-std-sm-n-line_height);
   --sui_context_menu_group_label-color: var(--sui-canvas_text-2);
-  --sui_context_menu_group_label-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+
+  &.sui_context_menu_group_label-size_sm {
+    --sui_context_menu_group_label-padding_block: --sui-space(1);
+    --sui_context_menu_group_label-padding_inline: --sui-space(2);
+    --sui_context_menu_group_label-font_size: var(--sui-text-dns-sm-n-font_size);
+    --sui_context_menu_group_label-font_weight: var(--sui-text-dns-sm-n-font_weight);
+    --sui_context_menu_group_label-line_height: var(--sui-text-dns-sm-n-line_height);
+    --sui_context_menu_group_label-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
+  }
+
+  &.sui_context_menu_group_label-size_md {
+    --sui_context_menu_group_label-padding_block: --sui-space(1);
+    --sui_context_menu_group_label-padding_inline: --sui-space(2);
+    --sui_context_menu_group_label-font_size: var(--sui-text-dns-sm-n-font_size);
+    --sui_context_menu_group_label-font_weight: var(--sui-text-dns-sm-n-font_weight);
+    --sui_context_menu_group_label-line_height: var(--sui-text-dns-sm-n-line_height);
+    --sui_context_menu_group_label-letter_spacing: var(--sui-text-dns-sm-n-letter_spacing);
+  }
+
+  &.sui_context_menu_group_label-size_lg {
+    --sui_context_menu_group_label-padding_block: --sui-space(1);
+    --sui_context_menu_group_label-padding_inline: --sui-space(2);
+    --sui_context_menu_group_label-font_size: var(--sui-text-dns-md-n-font_size);
+    --sui_context_menu_group_label-font_weight: var(--sui-text-dns-md-n-font_weight);
+    --sui_context_menu_group_label-line_height: var(--sui-text-dns-md-n-line_height);
+    --sui_context_menu_group_label-letter_spacing: var(--sui-text-dns-md-n-letter_spacing);
+  }
 }
 
 } /* @scope */
