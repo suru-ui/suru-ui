@@ -32,6 +32,7 @@
 /* 変数 */
 :scope {
   --sui_number_field_stepper-size: ;
+  --sui_number_field_stepper-virtual_padding_block: ;
   --sui_number_field_stepper-font_family: ;
   --sui_number_field_stepper-font_size: ;
   --sui_number_field_stepper-font_weight: ;
@@ -76,6 +77,15 @@
 
 /* 代入 */
 :scope {
+  --sui_number_field_stepper-size: calc(
+                                    var(--sui_number_field_stepper-font_size)
+                                    * var(--sui_number_field_stepper-line_height)
+                                    + (
+                                      var(--sui_number_field_stepper-virtual_padding_block)
+                                      * 2
+                                    )
+                                  );
+  --sui_number_field_stepper-virtual_padding_block: --sui-space(0.5);
   --sui_number_field_stepper-font_family: var(--sui-font-sans);
   --sui_number_field_stepper__svg-color: --sui-icon_color(
                                            var(
@@ -89,7 +99,6 @@
                                          );
 
   &.sui_number_field-size_sm {
-    --sui_number_field_stepper-size: calc(var(--sui-size-sm) - --sui-space(0.5));
     --sui_number_field_stepper-font_size: var(--sui-text-oln-sm-n-font_size);
     --sui_number_field_stepper-font_weight: var(--sui-text-oln-sm-n-font_weight);
     --sui_number_field_stepper-line_height: var(--sui-text-oln-sm-n-line_height);
@@ -101,7 +110,6 @@
   }
 
   &.sui_number_field-size_md {
-    --sui_number_field_stepper-size: calc(var(--sui-size-md) - --sui-space(2));
     --sui_number_field_stepper-font_size: var(--sui-text-oln-md-n-font_size);
     --sui_number_field_stepper-font_weight: var(--sui-text-oln-md-n-font_weight);
     --sui_number_field_stepper-line_height: var(--sui-text-oln-md-n-line_height);
@@ -113,7 +121,6 @@
   }
 
   &.sui_number_field-size_lg {
-    --sui_number_field_stepper-size: calc(var(--sui-size-lg) - --sui-space(3));
     --sui_number_field_stepper-font_size: var(--sui-text-oln-lg-n-font_size);
     --sui_number_field_stepper-font_weight: var(--sui-text-oln-lg-n-font_weight);
     --sui_number_field_stepper-line_height: var(--sui-text-oln-lg-n-line_height);
