@@ -49,6 +49,7 @@
   --sui_button-corner_shape: ;
   --sui_button__svg-size: ;
   --sui_button__svg-color: ;
+  --sui_button__svg-stroke_width: ;
 }
 
 /* 可変 */
@@ -80,6 +81,7 @@
     width: var(--sui_button__svg-size);
     height: var(--sui_button__svg-size);
     color: var(--sui_button__svg-color);
+    stroke-width: var(--sui_button__svg-stroke_width);
   }
 }
 
@@ -111,6 +113,7 @@
                                var(--sui_button-background_color-idle)
                              )
                            );
+  --sui_button__svg-stroke_width: 2;
 
   &.sui_button-size_xs {
     --sui_button-gap: --sui-gap(0.5);
@@ -218,6 +221,10 @@
   &.sui_button-radius_circle {
     --sui_button-border_radius: calc(var(--sui_button-min_height) / 2);
     --sui_button-corner_shape: none;
+  }
+
+  &.sui_button-variant_solid {
+    --sui_button__svg-stroke_width: 2.5;
   }
 
   &.sui_button-color_grey {
