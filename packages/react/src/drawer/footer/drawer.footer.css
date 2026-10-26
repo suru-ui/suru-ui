@@ -6,28 +6,35 @@
   position: relative;
   display: flex;
   flex-shrink: 0;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
+  flex-direction: column;
   margin-top: auto;
 }
 
 /* 変数 */
 :scope {
   --sui_drawer_footer-gap: ;
-  --sui_drawer_footer-padding: ;
+  --sui_drawer_footer-padding_block_start: ;
+  --sui_drawer_footer-padding_block_end: ;
+  --sui_drawer_footer-padding_inline: ;
 }
 
 /* 可変 */
 :scope {
   gap: var(--sui_drawer_footer-gap);
-  padding: var(--sui_drawer_footer-padding);
+  padding-block-start: var(--sui_drawer_footer-padding_block_start);
+  padding-block-end: var(--sui_drawer_footer-padding_block_end);
+  padding-inline: var(--sui_drawer_footer-padding_inline);
 }
 
 /* 代入 */
 :scope {
   --sui_drawer_footer-gap: --sui-gap(2);
-  --sui_drawer_footer-padding: --sui-space(4);
+  --sui_drawer_footer-padding_block_start: 0px;
+  --sui_drawer_footer-padding_block_end: max(
+                                            --sui-space(4),
+                                            env(safe-area-inset-bottom, 0px)
+                                          );
+  --sui_drawer_footer-padding_inline: --sui-space(4);
 }
 
 } /* @scope */

@@ -14,6 +14,7 @@ import { DrawerPopup } from "./popup/drawer.popup.jsx";
 import { DrawerPortal } from "./portal/drawer.portal.jsx";
 import { DrawerRoot } from "./root/drawer.root.jsx";
 import { DrawerSwipeArea } from "./swipe-area/drawer.swipe-area.jsx";
+import { DrawerSwipeHandle } from "./swipe-handle/drawer.swipe-handle.jsx";
 import { DrawerTitle } from "./title/drawer.title.jsx";
 import { DrawerTrigger } from "./trigger/drawer.trigger.jsx";
 import { DrawerViewport } from "./viewport/drawer.viewport.jsx";
@@ -254,6 +255,36 @@ describe("DrawerClose", () => {
     // 検証
     const close = screen.getByRole("button", { name: "閉じる" }).element();
     expect(close.classList.contains("sui_drawer_close")).toBe(true);
+  });
+});
+
+describe("DrawerSwipeHandle", () => {
+  test("スワイプ方向のクラスを付けて描画する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <DrawerRoot defaultOpen>
+        <DrawerPortal>
+          <DrawerViewport>
+            <DrawerPopup>
+              <DrawerSwipeHandle />
+              <DrawerContent>
+                <DrawerHeader>
+                  <DrawerTitle>見出し</DrawerTitle>
+                </DrawerHeader>
+              </DrawerContent>
+            </DrawerPopup>
+          </DrawerViewport>
+        </DrawerPortal>
+      </DrawerRoot>,
+    );
+
+    // 検証
+    const swipeHandle = screen.getByClassName("sui_drawer_swipe_handle").element();
+    expect(swipeHandle.tagName).toBe("DIV");
+    expect(swipeHandle.classList.contains("sui_drawer_swipe_handle-swipe_direction_down")).toBe(
+      true,
+    );
+    expect(swipeHandle.getAttribute("aria-hidden")).toBe("true");
   });
 });
 

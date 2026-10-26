@@ -7,26 +7,47 @@
   flex: 1 1 auto;
   flex-direction: column;
   min-height: 0px;
-  margin-inline: auto;
-  overflow: visible;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  border-radius: inherit;
+  transition-timing-function: cubic-bezier(0.45, 1.005, 0, 1.005);
+  transition-property: opacity;
 }
 
 /* 変数 */
 :scope {
-  --sui_drawer_content-width: ;
-  --sui_drawer_content-max_width: ;
+  --sui_drawer_content-user_select: ;
+  --sui_drawer_content-opacity: ;
+  --sui_drawer_content-transition_duration: ;
 }
 
 /* 可変 */
 :scope {
-  width: var(--sui_drawer_content-width);
-  max-width: var(--sui_drawer_content-max_width);
+  user-select: var(--_sui_drawer_content-user_select, var(--sui_drawer_content-user_select));
+  opacity: var(--_sui_drawer_content-opacity, var(--sui_drawer_content-opacity));
+  transition-duration: var(--sui_drawer_content-transition_duration);
 }
 
 /* 代入 */
 :scope {
-  --sui_drawer_content-width: 100%;
-  --sui_drawer_content-max_width: 512px;
+  --sui_drawer_content-user_select: text;
+  --sui_drawer_content-opacity: 1;
+  --sui_drawer_content-transition_duration: 300ms;
+}
+
+/* 変異 */
+:scope {
+  &.sui_drawer_content-nested_drawer_open {
+    --_sui_drawer_content-opacity: 0;
+  }
+
+  &.sui_drawer_content-nested_drawer_swiping {
+    --_sui_drawer_content-opacity: 1;
+  }
+
+  &.sui_drawer_content-swiping {
+    --_sui_drawer_content-user_select: none;
+  }
 }
 
 } /* @scope */

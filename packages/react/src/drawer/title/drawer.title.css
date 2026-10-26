@@ -4,8 +4,6 @@
 /* 固定 */
 :scope {
   display: block;
-  grid-area: title;
-  align-self: center;
   line-break: strict;
   word-break: normal;
   overflow-wrap: anywhere;
@@ -34,11 +32,11 @@
 /* 代入 */
 :scope {
   --sui_drawer_title-font_family: var(--sui-font-sans);
-  --sui_drawer_title-font_size: var(--sui-text-std-md-b-font_size);
-  --sui_drawer_title-font_weight: var(--sui-text-std-md-b-font_weight);
-  --sui_drawer_title-line_height: var(--sui-text-std-md-b-line_height);
+  --sui_drawer_title-font_size: var(--sui-text-std-md-m-font_size);
+  --sui_drawer_title-font_weight: var(--sui-text-std-md-m-font_weight);
+  --sui_drawer_title-line_height: var(--sui-text-std-md-m-line_height);
   --sui_drawer_title-color: var(--sui-canvas_text-1);
-  --sui_drawer_title-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
+  --sui_drawer_title-letter_spacing: var(--sui-text-std-md-m-letter_spacing);
 }
 
 } /* @scope */

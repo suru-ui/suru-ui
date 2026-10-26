@@ -15,7 +15,8 @@
 
 /* 変数 */
 :scope {
-  --sui_drawer_body-padding: ;
+  --sui_drawer_body-padding_block: ;
+  --sui_drawer_body-padding_inline: ;
   --sui_drawer_body-font_family: ;
   --sui_drawer_body-font_size: ;
   --sui_drawer_body-font_weight: ;
@@ -26,7 +27,8 @@
 
 /* 可変 */
 :scope {
-  padding: var(--sui_drawer_body-padding);
+  padding-block: var(--sui_drawer_body-padding_block);
+  padding-inline: var(--sui_drawer_body-padding_inline);
   font-family: var(--sui_drawer_body-font_family);
   font-size: var(--sui_drawer_body-font_size);
   font-weight: var(--sui_drawer_body-font_weight);
@@ -37,7 +39,8 @@
 
 /* 代入 */
 :scope {
-  --sui_drawer_body-padding: --sui-space(4);
+  --sui_drawer_body-padding_block: --sui-space(4);
+  --sui_drawer_body-padding_inline: --sui-space(4);
   --sui_drawer_body-font_family: var(--sui-font-sans);
   --sui_drawer_body-font_size: var(--sui-text-std-md-n-font_size);
   --sui_drawer_body-font_weight: var(--sui-text-std-md-n-font_weight);

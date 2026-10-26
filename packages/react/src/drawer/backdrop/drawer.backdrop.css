@@ -3,10 +3,16 @@
 
 /* 固定 */
 :scope {
-  position: absolute;
+  position: fixed;
   inset: 0px;
+  min-height: 100dvh;
   transition-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
   transition-property: opacity;
+
+  /* iOS 26以降: 背景が画面全体を覆うようにします。 */
+  @supports (-webkit-touch-callout: none) {
+    position: absolute;
+  }
 }
 
 /* 変数 */
@@ -20,15 +26,18 @@
 
 /* 可変 */
 :scope {
+  pointer-events: var(--_sui_drawer_backdrop-pointer_events, auto);
   background-color: var(--sui_drawer_backdrop-background_color);
-  opacity: var(--_sui_drawer_backdrop-opacity,
-              max(
-                var(--sui_drawer_backdrop-min_opacity),
-                calc(var(--sui_drawer_backdrop-opacity) * (1 - var(--drawer-swipe-progress, 0)))
-              )
-            );
+  opacity: max(
+             var(--sui_drawer_backdrop-min_opacity),
+             calc(
+               var(--_sui_drawer_backdrop-opacity, var(--sui_drawer_backdrop-opacity))
+               * (1 - var(--drawer-swipe-progress, 0))
+             )
+           );
   backdrop-filter: var(--sui_drawer_backdrop-filter-blur);
-  transition-duration: var(--_sui_drawer_backdrop-transition_duration,
+  transition-duration: var(
+                         --_sui_drawer_backdrop-transition_duration,
                          var(--sui_drawer_backdrop-transition_duration)
                        );
 }
@@ -39,7 +48,7 @@
   --sui_drawer_backdrop-opacity: 1;
   --sui_drawer_backdrop-filter-blur: blur(var(--sui-backdrop-blur));
   --sui_drawer_backdrop-transition_duration: 450ms;
-  --sui_drawer_backdrop-min_opacity: 0;
+  --sui_drawer_backdrop-min_opacity: var(--drawer-overlay-min-opacity, 0);
 }
 
 /* 変異 */
@@ -50,7 +59,10 @@
   }
 
   &.sui_drawer_backdrop-transition_status_ending {
-    --_sui_drawer_backdrop-transition_duration: calc(var(--drawer-swipe-strength, 1) * 400ms);
+    --_sui_drawer_backdrop-pointer_events: none;
+    --_sui_drawer_backdrop-transition_duration: calc(
+                                                   var(--drawer-swipe-strength, 1) * 400ms
+                                                 );
   }
 }
 

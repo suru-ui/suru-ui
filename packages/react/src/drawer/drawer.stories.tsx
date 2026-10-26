@@ -20,10 +20,20 @@ export const Usage = meta.story({
     return (
       <div className="flex flex-col items-center gap-4">
         <Drawer
-          title="通知"
-          trigger={<Button>通知を見る</Button>}
-          description="新しい通知はありません。"
-        />
+          title="本当に削除しますか？"
+          footer={
+            <>
+              <Button>削除する</Button>
+              <Button variant="naked">キャンセル</Button>
+            </>
+          }
+          trigger={<Button>ドロワーを開く</Button>}
+          description="この操作は取り消せません。"
+          swipeDirection="down"
+          showSwipeHandle
+        >
+          削除すると、このアイテムは完全に失われます。
+        </Drawer>
         <p className="text-sm text-neutral-500">
           トリガーをクリックすると、画面下端からドロワーが表示されます。
         </p>
@@ -52,6 +62,7 @@ export const Directions = meta.story({
             trigger={<Button>{label}から表示</Button>}
             description={`${label}端から表示されるドロワーです。`}
             swipeDirection={direction}
+            showSwipeHandle
           />
         ))}
       </div>

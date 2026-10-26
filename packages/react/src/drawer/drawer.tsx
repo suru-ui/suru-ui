@@ -25,6 +25,7 @@ import {
   type ICreateDrawerHandle,
   type DrawerSwipeAreaProps,
   type DrawerDescriptionProps,
+  type DrawerSwipeHandleProps,
   type DrawerRootChangeEventReason,
   type DrawerRootChangeEventDetails,
   type DrawerVirtualKeyboardProviderProps,
@@ -45,6 +46,7 @@ import {
   DrawerViewport,
   DrawerSwipeArea,
   DrawerDescription,
+  DrawerSwipeHandle,
   createDrawerHandle,
   DrawerVirtualKeyboardProvider,
 } from "./drawer.parts.js";
@@ -126,6 +128,11 @@ export type DrawerSlotProps<TPayload = any> = {
   readonly swipeArea?: DrawerSwipeAreaProps | undefined;
 
   /**
+   * {@link DrawerSwipeHandle} に渡す props です。
+   */
+  readonly swipeHandle?: DrawerSwipeHandleProps | undefined;
+
+  /**
    * {@link DrawerTitle} に渡す props です。
    */
   readonly title?: Omit<DrawerTitleProps, "children"> | undefined;
@@ -196,6 +203,13 @@ namespace DrawerProps {
      * @default true
      */
     showCloseIconButton?: boolean | undefined;
+
+    /**
+     * ドロワー上部にスワイプ用のハンドルを表示するかどうかを指定します。
+     *
+     * @default false
+     */
+    showSwipeHandle?: boolean | undefined;
 
     /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
@@ -274,6 +288,7 @@ export class DrawerAPI<TPayload = any> {
       controls,
       slotProps = {},
       description,
+      showSwipeHandle = false,
       showCloseIconButton = true,
       ...otherProps
     } = props;
@@ -302,6 +317,7 @@ export class DrawerAPI<TPayload = any> {
       children,
       controls,
       description,
+      showSwipeHandle,
       showCloseIconButton,
     };
     this.slotProps = slotProps;
@@ -531,6 +547,22 @@ export class DrawerAPI<TPayload = any> {
   }
 
   /**
+   * {@link DrawerSwipeHandle} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
+   */
+  public getSwipeHandleProps(): DrawerSwipeHandleProps | null {
+    const { swipeHandle: props } = this.slotProps;
+    const { showSwipeHandle } = this.drawerProps;
+
+    if (showSwipeHandle || props !== undefined) {
+      return props ?? {};
+    }
+
+    return null;
+  }
+
+  /**
    * {@link DrawerTitle} に渡す props を取得します。
    *
    * それを表示しないときは `null` を返します。
@@ -634,6 +666,7 @@ export const Drawer: IDrawer = /*#__PURE__*/ Object.assign(
     const api = useDrawerAPI(props);
     const triggerProps = api.getTriggerProps();
     const swipeAreaProps = api.getSwipeAreaProps();
+    const swipeHandleProps = api.getSwipeHandleProps();
     const headerProps = api.getHeaderProps();
     const titleProps = api.getTitleProps();
     const descriptionProps = api.getDescriptionProps();
@@ -647,6 +680,7 @@ export const Drawer: IDrawer = /*#__PURE__*/ Object.assign(
         <DrawerBackdrop {...api.getBackdropProps()} />
         <DrawerViewport {...api.getViewportProps()}>
           <DrawerPopup {...api.getPopupProps()}>
+            {swipeHandleProps && <DrawerSwipeHandle {...swipeHandleProps} />}
             <DrawerContent {...api.getContentProps()}>
               {headerProps && (
                 <DrawerHeader {...headerProps}>

@@ -48,12 +48,12 @@
 /* 代入 */
 :scope {
   --sui_drawer_swipe_area-width: auto;
-  --sui_drawer_swipe_area-height: --sui-space(2);
+  --sui_drawer_swipe_area-height: --sui-space(4);
 }
 
 :scope.sui_drawer_swipe_area-swipe_direction_left,
 :scope.sui_drawer_swipe_area-swipe_direction_right {
-  --sui_drawer_swipe_area-width: --sui-space(2);
+  --sui_drawer_swipe_area-width: --sui-space(4);
   --sui_drawer_swipe_area-height: auto;
 }
 

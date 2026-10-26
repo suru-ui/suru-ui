@@ -297,6 +297,30 @@ describe("DrawerAPI", () => {
     expect(api.getSwipeAreaProps()).toStrictEqual({ id: "swipe-area" });
   });
 
+  test("getSwipeHandleProps は未指定のとき null を返す", ({ expect }) => {
+    // 準備と実行
+    const api = new DrawerAPI({});
+
+    // 検証
+    expect(api.getSwipeHandleProps()).toBe(null);
+  });
+
+  test("getSwipeHandleProps は指定すると表示する", ({ expect }) => {
+    // 準備と実行
+    const api = new DrawerAPI({ showSwipeHandle: true });
+
+    // 検証
+    expect(api.getSwipeHandleProps()).toStrictEqual({});
+  });
+
+  test("getSwipeHandleProps は slotProps の指定を返す", ({ expect }) => {
+    // 準備と実行
+    const api = new DrawerAPI({ slotProps: { swipeHandle: { id: "swipe-handle" } } });
+
+    // 検証
+    expect(api.getSwipeHandleProps()).toStrictEqual({ id: "swipe-handle" });
+  });
+
   test("getTitleProps は未指定のとき null を返す", ({ expect }) => {
     // 準備と実行
     const api = new DrawerAPI({});

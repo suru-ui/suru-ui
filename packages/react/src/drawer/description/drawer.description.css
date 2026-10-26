@@ -4,9 +4,9 @@
 /* 固定 */
 :scope {
   display: block;
-  grid-area: description;
   line-break: strict;
   word-break: normal;
+  text-wrap: balance;
   overflow-wrap: anywhere;
 }
 
@@ -33,11 +33,11 @@
 /* 代入 */
 :scope {
   --sui_drawer_description-font_family: var(--sui-font-sans);
-  --sui_drawer_description-font_size: var(--sui-text-std-sm-n-font_size);
-  --sui_drawer_description-font_weight: var(--sui-text-std-sm-n-font_weight);
-  --sui_drawer_description-line_height: var(--sui-text-std-sm-n-line_height);
+  --sui_drawer_description-font_size: var(--sui-text-std-md-n-font_size);
+  --sui_drawer_description-font_weight: var(--sui-text-std-md-n-font_weight);
+  --sui_drawer_description-line_height: var(--sui-text-std-md-n-line_height);
   --sui_drawer_description-color: var(--sui-canvas_text-2);
-  --sui_drawer_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+  --sui_drawer_description-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
 }
 
 } /* @scope */

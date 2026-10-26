@@ -103,6 +103,24 @@ describe("Drawer", () => {
     expect(screen.getByClassName("sui_drawer_swipe_area").element().id).toBe("swipe-area");
   });
 
+  test("showSwipeHandle でスワイプハンドルを表示する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<Drawer title="見出し" defaultOpen showSwipeHandle />);
+
+    // 検証
+    expect(screen.getByClassName("sui_drawer_swipe_handle").query()).not.toBe(null);
+  });
+
+  test("slotProps.swipeHandle でスワイプハンドルを表示する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Drawer title="見出し" slotProps={{ swipeHandle: { id: "swipe-handle" } }} defaultOpen />,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_drawer_swipe_handle").element().id).toBe("swipe-handle");
+  });
+
   test("slotProps.virtualKeyboardProvider でキーボード対応を有効にする", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

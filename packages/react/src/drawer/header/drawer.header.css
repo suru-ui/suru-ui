@@ -4,64 +4,45 @@
 /* 固定 */
 :scope {
   position: relative;
-  display: grid;
+  display: flex;
   flex-shrink: 0;
+  flex-direction: column;
+  text-align: start;
 
-  &:has(.sui_drawer_title) {
-    grid-template: "title" auto
-                   /auto ;
-  }
-
-  &:has(.sui_drawer_description) {
-    grid-template: "description" auto
-                   /auto       ;
-  }
-
-  &:has(.sui_drawer_controls) {
-    grid-template: "controls" auto
-                   /auto    ;
-  }
-
-  &:has(.sui_drawer_title):has(.sui_drawer_description) {
-    grid-template: "title      " auto
-                   "description" auto
-                   /auto       ;
-  }
-
-  &:has(.sui_drawer_title):has(.sui_drawer_controls) {
-    grid-template: "title controls" auto
-                   /1fr   auto    ;
-  }
-
-  &:has(.sui_drawer_controls):has(.sui_drawer_description) {
-    grid-template: ".           controls   " auto
-                   "description description" auto
-                   /1fr         auto       ;
-  }
-
-  &:has(.sui_drawer_title):has(.sui_drawer_controls):has(.sui_drawer_description) {
-    grid-template: "title       controls   " auto
-                   "description description" auto
-                   /1fr         auto       ;
+  &.sui_drawer_header-swipe_direction_down,
+  &.sui_drawer_header-swipe_direction_up {
+    @media (width < 768px) {
+      text-align: center;
+    }
   }
 }
 
 /* 変数 */
 :scope {
-  --sui_drawer_header-row_gap: ;
-  --sui_drawer_header-padding: ;
+  --sui_drawer_header-gap: ;
+  --sui_drawer_header-padding_block_start: ;
+  --sui_drawer_header-padding_block_end: ;
+  --sui_drawer_header-padding_inline: ;
 }
 
 /* 可変 */
 :scope {
-  row-gap: var(--sui_drawer_header-row_gap);
-  padding: var(--sui_drawer_header-padding);
+  gap: var(--sui_drawer_header-gap);
+  padding-block-start: var(--sui_drawer_header-padding_block_start);
+  padding-block-end: var(--sui_drawer_header-padding_block_end);
+  padding-inline: var(--sui_drawer_header-padding_inline);
 }
 
 /* 代入 */
 :scope {
-  --sui_drawer_header-row_gap: --sui-gap(1);
-  --sui_drawer_header-padding: --sui-space(4);
+  --sui_drawer_header-gap: --sui-gap(0.5);
+  --sui_drawer_header-padding_block_start: --sui-space(4);
+  --sui_drawer_header-padding_block_end: 0px;
+  --sui_drawer_header-padding_inline: --sui-space(4);
+
+  @media (min-width: 768px) {
+    --sui_drawer_header-gap: --sui-gap(1.5);
+  }
 }
 
 } /* @scope */
