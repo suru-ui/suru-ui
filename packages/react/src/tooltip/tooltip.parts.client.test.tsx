@@ -4,7 +4,7 @@ import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../errors.js";
 import { TooltipArrow } from "./arrow/tooltip.arrow.jsx";
-import { TooltipContent } from "./content/tooltip.content.jsx";
+import { TooltipPopup } from "./popup/tooltip.popup.jsx";
 import { TooltipPortal } from "./portal/tooltip.portal.jsx";
 import { TooltipPositioner } from "./positioner/tooltip.positioner.jsx";
 import { TooltipRoot } from "./root/tooltip.root.jsx";
@@ -23,7 +23,7 @@ function renderTooltip(children: React.ReactNode) {
     <TooltipRoot defaultOpen>
       <TooltipPortal>
         <TooltipPositioner>
-          <TooltipContent>{children}</TooltipContent>
+          <TooltipPopup>{children}</TooltipPopup>
         </TooltipPositioner>
       </TooltipPortal>
     </TooltipRoot>,
@@ -81,7 +81,7 @@ describe("TooltipPortal", () => {
       <TooltipRoot size="lg" radius="sm" outlined defaultOpen>
         <TooltipPortal>
           <TooltipPositioner>
-            <TooltipContent>内容</TooltipContent>
+            <TooltipPopup>内容</TooltipPopup>
           </TooltipPositioner>
         </TooltipPortal>
       </TooltipRoot>,
@@ -104,7 +104,7 @@ describe("TooltipPortal", () => {
           )}
         >
           <TooltipPositioner>
-            <TooltipContent>内容</TooltipContent>
+            <TooltipPopup>内容</TooltipPopup>
           </TooltipPositioner>
         </TooltipPortal>
       </TooltipRoot>,
@@ -142,7 +142,7 @@ describe("TooltipPositioner", () => {
               <div {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`} />
             )}
           >
-            <TooltipContent>内容</TooltipContent>
+            <TooltipPopup>内容</TooltipPopup>
           </TooltipPositioner>
         </TooltipPortal>
       </TooltipRoot>,
@@ -154,7 +154,7 @@ describe("TooltipPositioner", () => {
   });
 });
 
-describe("TooltipContent", () => {
+describe("TooltipPopup", () => {
   test("内容をツールチップとして表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
@@ -164,7 +164,7 @@ describe("TooltipContent", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_tooltip_content").element();
+    const content = screen.getByClassName("sui_tooltip_popup").element();
     expect(content.tagName).toBe("DIV");
     expect(content.textContent).toBe("保存します");
   });
@@ -178,7 +178,7 @@ describe("TooltipContent", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_tooltip_content").element();
+    const content = screen.getByClassName("sui_tooltip_popup").element();
     expect(content.classList.contains("custom-content")).toBe(true);
   });
 
@@ -195,7 +195,7 @@ describe("TooltipContent", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_tooltip_content").element();
+    const content = screen.getByClassName("sui_tooltip_popup").element();
     expect(content.tagName).toBe("SECTION");
     expect(content.textContent).toBe("内容");
   });
@@ -204,7 +204,7 @@ describe("TooltipContent", () => {
     // 準備と実行と検証
     const screen = await renderTooltip("内容");
 
-    expect(screen.getByClassName("sui_tooltip_content").element().textContent).toBe("内容");
+    expect(screen.getByClassName("sui_tooltip_popup").element().textContent).toBe("内容");
   });
 
   test("render の関数へルートと内容の状態を渡す", async ({ expect }) => {
@@ -213,7 +213,7 @@ describe("TooltipContent", () => {
       <TooltipRoot size="lg" radius="sm" outlined defaultOpen>
         <TooltipPortal>
           <TooltipPositioner>
-            <TooltipContent
+            <TooltipPopup
               render={(props, state) => (
                 <div
                   {...props}
@@ -222,14 +222,14 @@ describe("TooltipContent", () => {
               )}
             >
               内容
-            </TooltipContent>
+            </TooltipPopup>
           </TooltipPositioner>
         </TooltipPortal>
       </TooltipRoot>,
     );
 
     // 検証
-    const content = screen.getByClassName("sui_tooltip_content").element();
+    const content = screen.getByClassName("sui_tooltip_popup").element();
     expect(content.getAttribute("data-probe")).toBe("lg/sm/true/true");
   });
 });

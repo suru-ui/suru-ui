@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useTooltipContentContext } from "../content/tooltip.content.context.js";
+import { useTooltipPopupContext } from "../popup/tooltip.popup.context.js";
 import { TooltipArrowContext } from "./tooltip.arrow.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type ITooltipArrow = IComponent<TooltipArrowProps>;
  * ポップアップとトリガーをつなぐ矢印要素です。
  */
 export const TooltipArrow: ITooltipArrow = function SuiTooltipArrow(props) {
-  const ctx = useTooltipContentContext();
+  const ctx = useTooltipPopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

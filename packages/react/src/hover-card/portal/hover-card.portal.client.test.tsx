@@ -3,8 +3,8 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../../errors.js";
-import { HoverCardContent } from "../content/hover-card.content.jsx";
 import { HoverCard } from "../hover-card.jsx";
+import { HoverCardPopup } from "../popup/hover-card.popup.jsx";
 import { HoverCardPositioner } from "../positioner/hover-card.positioner.jsx";
 import { HoverCardRoot } from "../root/hover-card.root.jsx";
 import { HoverCardPortal } from "./hover-card.portal.jsx";
@@ -50,7 +50,7 @@ describe("HoverCardPortal", () => {
           )}
         >
           <HoverCardPositioner>
-            <HoverCardContent>内容</HoverCardContent>
+            <HoverCardPopup>内容</HoverCardPopup>
           </HoverCardPositioner>
         </HoverCardPortal>
       </HoverCardRoot>,

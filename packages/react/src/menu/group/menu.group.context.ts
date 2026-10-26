@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { ContentContext } from "../content/menu.content.context.js";
+import type { PopupContext } from "../popup/menu.popup.context.js";
 
 /**
  * {@link MenuGroup} が子パーツへ提供する状態です。
@@ -11,7 +11,7 @@ import type { ContentContext } from "../content/menu.content.context.js";
  * @template TItem 項目の型です。
  */
 export type MenuGroupContext<TItem = any> = Readonly<
-  Override<ContentContext<TItem>, Menu.Group.State>
+  Override<PopupContext<TItem>, Menu.Group.State>
 >;
 
 /**

@@ -11,11 +11,11 @@
   margin-inline: var(--sui_select_item-margin_inline);
 
   &:first-child {
-    margin-block-start: var(--sui_select_content-virtual_padding_block);
+    margin-block-start: var(--sui_select_popup-virtual_padding_block);
   }
 
   &:last-child {
-    margin-block-end: var(--sui_select_content-virtual_padding_block);
+    margin-block-end: var(--sui_select_popup-virtual_padding_block);
   }
 }
 

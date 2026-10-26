@@ -22,12 +22,12 @@ import {
   type MenuRootProps,
   type MenuRootState,
   type MenuGroupProps,
+  type MenuPopupProps,
   type MenuRootRadius,
   type IUseMenuContext,
   type MenuPortalProps,
   type MenuRootActions,
   type MenuRootVariant,
-  type MenuContentProps,
   type MenuTriggerProps,
   type MenuBackdropProps,
   type MenuLinkItemProps,
@@ -40,11 +40,11 @@ import {
   type MenuRootOrientation,
   type MenuSubmenuRootProps,
   type MenuCheckboxItemProps,
+  type IMenuPopupItemRenderer,
   type MenuRootLinkItemObject,
   type MenuRootItemObjectGroup,
   type MenuRootRadioItemObject,
   type MenuSubmenuTriggerProps,
-  type IMenuContentItemRenderer,
   type MenuRootChangeEventReason,
   type MenuRootGroupedItemObject,
   type MenuRootLabeledItemObject,
@@ -57,8 +57,8 @@ import {
   MenuItem,
   MenuRoot,
   MenuGroup,
+  MenuPopup,
   MenuPortal,
-  MenuContent,
   MenuTrigger,
   MenuBackdrop,
   MenuLinkItem,
@@ -86,7 +86,7 @@ export type MenuChangeEventReason = MenuRootChangeEventReason;
 
 export type MenuOrientation = MenuRootOrientation;
 
-export type IMenuItemRenderer<TItem = any> = IMenuContentItemRenderer<TItem>;
+export type IMenuItemRenderer<TItem = any> = IMenuPopupItemRenderer<TItem>;
 
 export type MenuRadius = MenuRootRadius;
 
@@ -221,8 +221,6 @@ export type MenuSlotProps = {
 export type MenuState<TItem = any> = MenuRootState<TItem>;
 
 namespace MenuProps {
-  export type Content = Omit<MenuContentProps, keyof Menu | keyof Root>;
-
   export type Menu = {
     /**
      * チェックボックス項目の選択状態を示す内容です。
@@ -251,6 +249,8 @@ namespace MenuProps {
     trigger?: MenuTriggerProps["children"] | undefined;
   };
 
+  export type Popup = Omit<MenuPopupProps, keyof Menu | keyof Root>;
+
   export type Root<TItem = any> = Omit<MenuRootProps<any, TItem>, "children" | keyof Menu>;
 }
 
@@ -259,7 +259,7 @@ namespace MenuProps {
  *
  * @template TItem 項目の型です。
  */
-export type MenuProps<TItem = any> = MenuProps.Menu & MenuProps.Root<TItem> & MenuProps.Content;
+export type MenuProps<TItem = any> = MenuProps.Menu & MenuProps.Root<TItem> & MenuProps.Popup;
 
 export interface IUseMenuAPI {
   /**
@@ -283,7 +283,7 @@ export interface IUseMenuAPI {
 export class MenuAPI<TItem = any> {
   private readonly checkboxIndicator: React.ReactNode;
 
-  private readonly contentProps: MenuProps.Content;
+  private readonly popupProps: MenuProps.Popup;
 
   private readonly radioIndicator: React.ReactNode;
 
@@ -322,11 +322,11 @@ export class MenuAPI<TItem = any> {
       checkboxIndicator = <CheckIcon />,
       highlightItemOnHover,
       onOpenChangeComplete,
-      ...contentProps
+      ...popupProps
     } = props;
 
     this.checkboxIndicator = checkboxIndicator;
-    this.contentProps = contentProps;
+    this.popupProps = popupProps;
     this.radioIndicator = radioIndicator;
     this.rootProps = {
       open,
@@ -353,7 +353,7 @@ export class MenuAPI<TItem = any> {
     this.trigger = trigger;
   }
 
-  private readonly defaultContentItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
+  private readonly defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) => {
     switch (true) {
       case isLabeledItemObject(item):
         return <MenuItem {...this.getItemProps(item)} key={getItemKey(item) ?? index} />;
@@ -380,8 +380,8 @@ export class MenuAPI<TItem = any> {
         );
 
       case isSubmenuItemObject(item): {
-        const { children: content = this.defaultContentItemRenderer, ...otherContentProps } =
-          this.getContentProps();
+        const { children: popup = this.defaultPopupItemRenderer, ...otherPopupProps } =
+          this.getPopupProps();
         const { children: submenuTrigger, ...otherSubmenuTriggerProps } =
           this.getSubmenuTriggerProps(item);
 
@@ -393,7 +393,7 @@ export class MenuAPI<TItem = any> {
             </MenuSubmenuTrigger>
             <MenuPortal {...this.getPortalProps()}>
               <MenuPositioner {...this.getPositionerProps()}>
-                <MenuContent {...otherContentProps}>{content}</MenuContent>
+                <MenuPopup {...otherPopupProps}>{popup}</MenuPopup>
               </MenuPositioner>
             </MenuPortal>
           </MenuSubmenuRoot>
@@ -407,7 +407,7 @@ export class MenuAPI<TItem = any> {
           <React.Fragment key={getItemKey(item) ?? index}>
             <MenuGroup {...this.getGroupProps(item)}>
               {labelProps && <MenuGroupLabel {...labelProps} />}
-              {item.items.map(this.defaultContentItemRenderer)}
+              {item.items.map(this.defaultPopupItemRenderer)}
             </MenuGroup>
             {index < items.length - 1 && <MenuSeparator {...this.getSeparatorProps()} />}
           </React.Fragment>
@@ -419,7 +419,7 @@ export class MenuAPI<TItem = any> {
     }
   };
 
-  private readonly defaultRadioItemRenderer: IMenuContentItemRenderer = (item, index) => {
+  private readonly defaultRadioItemRenderer: IMenuPopupItemRenderer = (item, index) => {
     switch (true) {
       case isRadioItemObject(item): {
         const { children: label, ...otherProps } = this.getRadioItemProps(item);
@@ -479,17 +479,17 @@ export class MenuAPI<TItem = any> {
   }
 
   /**
-   * {@link MenuContent} に渡す props を取得します。
+   * {@link MenuPopup} に渡す props を取得します。
    *
-   * @template TContentItem 項目の型です。
+   * @template TPopupItem 項目の型です。
    */
-  public getContentProps<TContentItem = TItem>(): Override<
-    MenuContentProps<TContentItem>,
+  public getPopupProps<TPopupItem = TItem>(): Override<
+    MenuPopupProps<TPopupItem>,
     {
-      children: LikelyVisibleNode | IMenuContentItemRenderer | undefined;
+      children: LikelyVisibleNode | IMenuPopupItemRenderer | undefined;
     }
   > {
-    const { children = this.defaultContentItemRenderer, ...otherProps } = this.contentProps;
+    const { children = this.defaultPopupItemRenderer, ...otherProps } = this.popupProps;
 
     return {
       ...otherProps,
@@ -778,7 +778,7 @@ export const Menu: IMenu = /*#__PURE__*/ Object.assign(
         <MenuPortal {...api.getPortalProps()}>
           <MenuBackdrop {...api.getBackdropProps()} />
           <MenuPositioner {...api.getPositionerProps()}>
-            <MenuContent {...api.getContentProps()} />
+            <MenuPopup {...api.getPopupProps()} />
           </MenuPositioner>
         </MenuPortal>
       </MenuRoot>

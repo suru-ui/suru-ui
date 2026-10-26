@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { usePopoverContentContext } from "../content/popover.content.context.js";
+import { usePopoverPopupContext } from "../popup/popover.popup.context.js";
 import { PopoverViewportContext } from "./popover.viewport.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type IPopoverViewport = IComponent<PopoverViewportProps>;
  * 1 つのポップオーバーを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
 export const PopoverViewport: IPopoverViewport = function SuiPopoverViewport(props) {
-  const ctx = usePopoverContentContext();
+  const ctx = usePopoverPopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

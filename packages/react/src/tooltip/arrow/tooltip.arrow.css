@@ -72,9 +72,9 @@
 /* 代入 */
 :scope {
   --sui_tooltip_arrow-size: 6px;
-  --sui_tooltip_arrow-background_color: var(--sui_tooltip_content-background_color);
-  --sui_tooltip_arrow-border_color: var(--sui_tooltip_content-border_color);
-  --sui_tooltip_arrow-border_width: var(--sui_tooltip_content-border_width);
+  --sui_tooltip_arrow-background_color: var(--sui_tooltip_popup-background_color);
+  --sui_tooltip_arrow-border_color: var(--sui_tooltip_popup-border_color);
+  --sui_tooltip_arrow-border_width: var(--sui_tooltip_popup-border_width);
 }
 
 /* 変異 */

@@ -7,7 +7,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { usePopoverContentContext } from "../content/popover.content.context.js";
+import { usePopoverPopupContext } from "../popup/popover.popup.context.js";
 import { PopoverCloseContext } from "./popover.close.context.js";
 
 /**
@@ -61,7 +61,7 @@ export type IPopoverClose = IComponent<PopoverCloseProps>;
  * 子要素は何にもラップされず、そのまま Base UI の `render` プロパティーに渡されます。
  */
 export const PopoverClose: IPopoverClose = function SuiPopoverClose(props) {
-  const ctx = usePopoverContentContext();
+  const ctx = usePopoverPopupContext();
   const { style, children, className, ...otherProps } = props;
 
   return (

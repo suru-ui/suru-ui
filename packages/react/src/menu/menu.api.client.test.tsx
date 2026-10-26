@@ -37,24 +37,24 @@ describe("getRootProps", () => {
   });
 });
 
-describe("getContentProps", () => {
+describe("getPopupProps", () => {
   test("内容を指定しないときは既定のレンダラーを返す", ({ expect }) => {
     // 準備と実行
     const api = new MenuAPI({ items: [{ label: "編集" }] });
-    const contentProps = api.getContentProps();
+    const popupProps = api.getPopupProps();
 
     // 検証
-    expect(typeof contentProps.children).toBe("function");
+    expect(typeof popupProps.children).toBe("function");
   });
 
   test("内容を指定したときはその内容を返す", ({ expect }) => {
     // 準備と実行
     const api = new MenuAPI({ children: <span>内容</span> });
-    const contentProps = api.getContentProps();
+    const popupProps = api.getPopupProps();
 
     // 検証
-    expect(contentProps.children).not.toBe(undefined);
-    expect(typeof contentProps.children).not.toBe("function");
+    expect(popupProps.children).not.toBe(undefined);
+    expect(typeof popupProps.children).not.toBe("function");
   });
 });
 

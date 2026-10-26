@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { SelectContentContext } from "../content/select.content.context.js";
+import type { SelectPopupContext } from "../popup/select.popup.context.js";
 
 /**
  * {@link SelectList} が子パーツへ提供する状態です。
@@ -11,7 +11,7 @@ import type { SelectContentContext } from "../content/select.content.context.js"
  * @template TValue 項目の値の型です。
  */
 export type SelectListContext<TValue = any> = Readonly<
-  Override<SelectContentContext<TValue>, BaseSelect.List.State>
+  Override<SelectPopupContext<TValue>, BaseSelect.List.State>
 >;
 
 /**

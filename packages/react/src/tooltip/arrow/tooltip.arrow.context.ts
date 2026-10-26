@@ -3,12 +3,12 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { TooltipContentContext } from "../content/tooltip.content.context.js";
+import type { TooltipPopupContext } from "../popup/tooltip.popup.context.js";
 
 /**
  * {@link TooltipArrow} が子パーツへ提供する状態です。
  */
-export type TooltipArrowContext = Readonly<Override<TooltipContentContext, Tooltip.Arrow.State>>;
+export type TooltipArrowContext = Readonly<Override<TooltipPopupContext, Tooltip.Arrow.State>>;
 
 /**
  * {@link TooltipArrow} が子パーツへ提供するコンテキストです。

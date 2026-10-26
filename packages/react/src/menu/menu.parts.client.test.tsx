@@ -6,12 +6,12 @@ import { MenuArrow } from "./arrow/menu.arrow.jsx";
 import { MenuBackdrop } from "./backdrop/menu.backdrop.jsx";
 import { MenuCheckboxItemIndicator } from "./checkbox-item-indicator/menu.checkbox-item-indicator.jsx";
 import { MenuCheckboxItem } from "./checkbox-item/menu.checkbox-item.jsx";
-import { MenuContent } from "./content/menu.content.jsx";
 import { MenuGroupLabel } from "./group-label/menu.group-label.jsx";
 import { MenuGroup } from "./group/menu.group.jsx";
 import { MenuItem } from "./item/menu.item.jsx";
 import { MenuLinkItem } from "./link-item/menu.link-item.jsx";
 import { Menu } from "./menu.jsx";
+import { MenuPopup } from "./popup/menu.popup.jsx";
 import { MenuPortal } from "./portal/menu.portal.jsx";
 import { MenuPositioner } from "./positioner/menu.positioner.jsx";
 import { MenuRadioGroup } from "./radio-group/menu.radio-group.jsx";
@@ -36,7 +36,7 @@ function renderMenu(children: React.ReactNode) {
       <MenuPortal>
         <MenuBackdrop />
         <MenuPositioner>
-          <MenuContent>{children}</MenuContent>
+          <MenuPopup>{children}</MenuPopup>
         </MenuPositioner>
       </MenuPortal>
     </MenuRoot>,
@@ -60,9 +60,9 @@ describe("MenuPortal", () => {
       <MenuRoot size="lg" radius="sm" outlined defaultOpen>
         <MenuPortal>
           <MenuPositioner>
-            <MenuContent>
+            <MenuPopup>
               <MenuItem>項目</MenuItem>
-            </MenuContent>
+            </MenuPopup>
           </MenuPositioner>
         </MenuPortal>
       </MenuRoot>,
@@ -111,14 +111,14 @@ describe("MenuPositioner", () => {
   });
 });
 
-describe("MenuContent", () => {
+describe("MenuPopup", () => {
   test("内容を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await renderMenu(<MenuItem>編集</MenuItem>);
 
     // 検証
     const content = screen.getByRole("menu").element();
-    expect(content.classList.contains("sui_menu_content")).toBe(true);
+    expect(content.classList.contains("sui_menu_popup")).toBe(true);
     expect(content.textContent).toBe("編集");
   });
 });
@@ -285,9 +285,9 @@ describe("MenuSubmenu", () => {
         <MenuSubmenuTrigger>共有</MenuSubmenuTrigger>
         <MenuPortal>
           <MenuPositioner>
-            <MenuContent>
+            <MenuPopup>
               <MenuItem>リンクをコピー</MenuItem>
-            </MenuContent>
+            </MenuPopup>
           </MenuPositioner>
         </MenuPortal>
       </MenuSubmenuRoot>,
@@ -306,10 +306,10 @@ describe("MenuArrow", () => {
       <MenuRoot defaultOpen>
         <MenuPortal>
           <MenuPositioner>
-            <MenuContent>
+            <MenuPopup>
               <MenuItem>項目</MenuItem>
               <MenuArrow />
-            </MenuContent>
+            </MenuPopup>
           </MenuPositioner>
         </MenuPortal>
       </MenuRoot>,
@@ -365,9 +365,9 @@ describe("Menu の状態伝播", () => {
           )}
         >
           <MenuPositioner>
-            <MenuContent>
+            <MenuPopup>
               <MenuItem>項目</MenuItem>
-            </MenuContent>
+            </MenuPopup>
           </MenuPositioner>
         </MenuPortal>
       </MenuRoot>,
@@ -385,13 +385,13 @@ describe("Menu の状態伝播", () => {
       <MenuRoot size="lg" radius="sm" variant="liquid" defaultOpen>
         <MenuPortal>
           <MenuPositioner>
-            <MenuContent
+            <MenuPopup
               render={(props, state) => (
                 <div {...props} data-probe={`${state.size}/${state.radius}/${state.variant}`} />
               )}
             >
               <MenuItem>項目</MenuItem>
-            </MenuContent>
+            </MenuPopup>
           </MenuPositioner>
         </MenuPortal>
       </MenuRoot>,
@@ -407,7 +407,7 @@ describe("Menu の状態伝播", () => {
       <MenuRoot size="lg" radius="sm" defaultOpen>
         <MenuPortal>
           <MenuPositioner>
-            <MenuContent>
+            <MenuPopup>
               <MenuItem
                 render={(props, state) => (
                   <div
@@ -419,7 +419,7 @@ describe("Menu の状態伝播", () => {
               >
                 項目
               </MenuItem>
-            </MenuContent>
+            </MenuPopup>
           </MenuPositioner>
         </MenuPortal>
       </MenuRoot>,

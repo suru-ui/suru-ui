@@ -11,12 +11,12 @@ import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { isItemObjectGroup, isLabeledItemObject } from "../_select.jsx";
-import { useSelectContentContext } from "../content/select.content.context.js";
 import { SelectGroupLabel } from "../group-label/select.group-label.jsx";
 import { SelectGroup } from "../group/select.group.jsx";
 import { SelectItemIndicator } from "../item-indicator/select.item-indicator.jsx";
 import { SelectItemText } from "../item-text/select.item-text.jsx";
 import { SelectItem } from "../item/select.item.jsx";
+import { useSelectPopupContext } from "../popup/select.popup.context.js";
 import type {
   SelectRootItems,
   SelectRootItemObjectGroup,
@@ -129,7 +129,7 @@ export interface ISelectList extends IComponent<SelectListProps> {
  * {@link SelectRoot} の `items` を読み取り、関数子を受け取った場合は各項目に適用します。
  */
 export const SelectList: ISelectList = function SuiSelectList(props: SelectListProps) {
-  const ctx = useSelectContentContext();
+  const ctx = useSelectPopupContext();
   const { style, render, children = defaultListItemRenderer, className, ...otherProps } = props;
 
   return (

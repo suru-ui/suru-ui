@@ -42,13 +42,13 @@ describe("getRootProps", () => {
     // 準備と実行
     const api = new TooltipAPI({ id: "tooltip", className: "custom" });
     const rootProps = api.getRootProps();
-    const contentProps = api.getContentProps();
+    const popupProps = api.getPopupProps();
 
     // 検証
     expect(rootProps).not.toHaveProperty("className");
     expect(rootProps).not.toHaveProperty("id");
-    expect(contentProps.className).toBe("custom");
-    expect(contentProps.id).toBe("tooltip");
+    expect(popupProps.className).toBe("custom");
+    expect(popupProps.id).toBe("tooltip");
   });
 });
 
@@ -158,12 +158,12 @@ describe("getPositionerProps", () => {
   });
 });
 
-describe("getContentChildren", () => {
+describe("getPopupChildren", () => {
   test("指定した内容を返す", ({ expect }) => {
     // 準備と実行
     const api = new TooltipAPI({ children: "内容" });
 
     // 検証
-    expect(api.getContentChildren()).toBe("内容");
+    expect(api.getPopupChildren()).toBe("内容");
   });
 });

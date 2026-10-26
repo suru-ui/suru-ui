@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useSelectContentContext } from "../content/select.content.context.js";
+import { useSelectPopupContext } from "../popup/select.popup.context.js";
 import { SelectScrollDownArrowContext } from "./select.scroll-down-arrow.context.js";
 
 /**
@@ -53,7 +53,7 @@ export type ISelectScrollDownArrow = IComponent<SelectScrollDownArrowProps>;
 export const SelectScrollDownArrow: ISelectScrollDownArrow = function SuiSelectScrollDownArrow(
   props,
 ) {
-  const ctx = useSelectContentContext();
+  const ctx = useSelectPopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

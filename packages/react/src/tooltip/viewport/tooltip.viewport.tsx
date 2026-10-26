@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { useTooltipContentContext } from "../content/tooltip.content.context.js";
+import { useTooltipPopupContext } from "../popup/tooltip.popup.context.js";
 import { TooltipViewportContext } from "./tooltip.viewport.context.js";
 
 /**
@@ -51,7 +51,7 @@ export type ITooltipViewport = IComponent<TooltipViewportProps>;
  * 1 つのツールチップを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
 export const TooltipViewport: ITooltipViewport = function SuiTooltipViewport(props) {
-  const ctx = useTooltipContentContext();
+  const ctx = useTooltipPopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

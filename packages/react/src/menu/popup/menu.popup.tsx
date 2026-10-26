@@ -35,14 +35,14 @@ import type {
 import { MenuSeparator } from "../separator/menu.separator.jsx";
 import { MenuSubmenuRoot } from "../submenu-root/menu.submenu-root.jsx";
 import { MenuSubmenuTrigger } from "../submenu-trigger/menu.submenu-trigger.jsx";
-import { MenuContentContext } from "./menu.content.context.js";
+import { MenuPopupContext } from "./menu.popup.context.js";
 
 /**
  * ポップアップの各項目をレンダリングする関数のインターフェイスです。
  *
  * @template TItem 項目の型です。
  */
-export interface IMenuContentItemRenderer<TItem = any> {
+export interface IMenuPopupItemRenderer<TItem = any> {
   /**
    * 項目をレンダリングします。
    *
@@ -55,12 +55,12 @@ export interface IMenuContentItemRenderer<TItem = any> {
 }
 
 /**
- * {@link MenuContent} が持つ状態です。
+ * {@link MenuPopup} が持つ状態です。
  */
-export type MenuContentState<TItem = any> = MenuContentContext<TItem>;
+export type MenuPopupState<TItem = any> = MenuPopupContext<TItem>;
 
-export namespace MenuContentProps {
-  export type Render<TItem = any> = RenderProps<MenuContentState<TItem>>;
+export namespace MenuPopupProps {
+  export type Render<TItem = any> = RenderProps<MenuPopupState<TItem>>;
 
   export type SuruUI<TItem = any> = {
     /**
@@ -68,7 +68,7 @@ export namespace MenuContentProps {
      *
      * 関数を指定した場合は {@link MenuRootProps.items|items} の各項目が引数として渡されます。
      */
-    children?: React.ReactNode | IMenuContentItemRenderer<TItem>;
+    children?: React.ReactNode | IMenuPopupItemRenderer<TItem>;
   };
 
   export type BaseUI = Omit<
@@ -88,58 +88,58 @@ export namespace MenuContentProps {
 }
 
 /**
- * {@link MenuContent} に渡す props です。
+ * {@link MenuPopup} に渡す props です。
  */
-export type MenuContentProps<TItem = any> = MenuContentProps.Render<TItem> &
-  MenuContentProps.SuruUI<TItem> &
-  MenuContentProps.BaseUI &
-  MenuContentProps.HTML;
+export type MenuPopupProps<TItem = any> = MenuPopupProps.Render<TItem> &
+  MenuPopupProps.SuruUI<TItem> &
+  MenuPopupProps.BaseUI &
+  MenuPopupProps.HTML;
 
-export interface IMenuContent extends IComponent<MenuContentProps> {
+export interface IMenuPopup extends IComponent<MenuPopupProps> {
   /**
    * @template TItem 項目の型です。
    */
-  <TItem = any>(props: MenuContentProps<TItem>): IComponent.Return;
+  <TItem = any>(props: MenuPopupProps<TItem>): IComponent.Return;
 }
 
 /**
  * メニュー項目を表示するコンテンツ要素です。
  */
-export const MenuContent: IMenuContent = function SuiMenuContent(props: MenuContentProps) {
+export const MenuPopup: IMenuPopup = function SuiMenuPopup(props: MenuPopupProps) {
   const ctx = usePositionerContext();
   const { style, render, children = defaultItemRenderer, className, ...otherProps } = props;
 
   return (
     <Menu.Popup
       {...otherProps}
-      {...proxyRenderProps<Menu.Popup.State, MenuContentState>((state) => ({ ...ctx, ...state }), {
+      {...proxyRenderProps<Menu.Popup.State, MenuPopupState>((state) => ({ ...ctx, ...state }), {
         style,
         render: (htmlProps, state) => (
-          <MenuContentContext value={state}>
+          <MenuPopupContext value={state}>
             <RenderElement
               state={state}
               render={render}
               htmlProps={htmlProps}
               defaultTagName="div"
             />
-          </MenuContentContext>
+          </MenuPopupContext>
         ),
-        className: cn<MenuContentState>(
+        className: cn<MenuPopupState>(
           className,
-          "sui_menu_content",
+          "sui_menu_popup",
           (state) =>
             state.transitionStatus !== undefined &&
-            `sui_menu_content-transition_status_${state.transitionStatus}`,
-          (state) => `sui_menu_content-size_${state.size}`,
-          (state) => `sui_menu_content-radius_${state.radius}`,
-          (state) => `sui_menu_content-variant_${state.variant}`,
-          (state) => state.outlined && "sui_menu_content-outlined",
-          (state) => state.open && "sui_menu_content-open",
-          (state) => state.anchorHidden && "sui_menu_content-anchor_hidden",
-          (state) => state.nested && "sui_menu_content-nested",
-          (state) => state.instant && "sui_menu_content-instant",
-          (state) => `sui_menu_content-side_${state.side.replaceAll("-", "_")}`,
-          (state) => `sui_menu_content-align_${state.align}`,
+            `sui_menu_popup-transition_status_${state.transitionStatus}`,
+          (state) => `sui_menu_popup-size_${state.size}`,
+          (state) => `sui_menu_popup-radius_${state.radius}`,
+          (state) => `sui_menu_popup-variant_${state.variant}`,
+          (state) => state.outlined && "sui_menu_popup-outlined",
+          (state) => state.open && "sui_menu_popup-open",
+          (state) => state.anchorHidden && "sui_menu_popup-anchor_hidden",
+          (state) => state.nested && "sui_menu_popup-nested",
+          (state) => state.instant && "sui_menu_popup-instant",
+          (state) => `sui_menu_popup-side_${state.side.replaceAll("-", "_")}`,
+          (state) => `sui_menu_popup-align_${state.align}`,
         ),
       })}
     >
@@ -148,10 +148,10 @@ export const MenuContent: IMenuContent = function SuiMenuContent(props: MenuCont
   );
 };
 
-export { MenuContent as Content };
+export { MenuPopup as Popup };
 
-export namespace Content {
-  export type State<TItem = any> = MenuContentState<TItem>;
+export namespace Popup {
+  export type State<TItem = any> = MenuPopupState<TItem>;
 
   export type Props<TItem = any> = Props.Render<TItem> &
     Props.SuruUI<TItem> &
@@ -159,21 +159,21 @@ export namespace Content {
     Props.HTML;
 
   export namespace Props {
-    export type Render<TItem = any> = MenuContentProps.Render<TItem>;
+    export type Render<TItem = any> = MenuPopupProps.Render<TItem>;
 
-    export type SuruUI<TItem = any> = MenuContentProps.SuruUI<TItem>;
+    export type SuruUI<TItem = any> = MenuPopupProps.SuruUI<TItem>;
 
-    export type BaseUI = MenuContentProps.BaseUI;
+    export type BaseUI = MenuPopupProps.BaseUI;
 
-    export type HTML = MenuContentProps.HTML;
+    export type HTML = MenuPopupProps.HTML;
   }
 
-  export type IItemRenderer<TItem = any> = IMenuContentItemRenderer<TItem>;
+  export type IItemRenderer<TItem = any> = IMenuPopupItemRenderer<TItem>;
 
   export type ItemObject = MenuRootItemObject;
 }
 
-const defaultItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
+const defaultItemRenderer: IMenuPopupItemRenderer = (item, index, items) => {
   switch (true) {
     case isLabeledItemObject(item): {
       const { type: _, label, ...props } = item;
@@ -225,7 +225,7 @@ const defaultItemRenderer: IMenuContentItemRenderer = (item, index, items) => {
           </MenuSubmenuTrigger>
           <MenuPortal>
             <MenuPositioner>
-              <MenuContent>{defaultItemRenderer}</MenuContent>
+              <MenuPopup>{defaultItemRenderer}</MenuPopup>
             </MenuPositioner>
           </MenuPortal>
         </MenuSubmenuRoot>

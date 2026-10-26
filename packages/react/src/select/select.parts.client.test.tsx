@@ -5,7 +5,6 @@ import { render } from "vitest-browser-react";
 import { ContextMissingError } from "../errors.js";
 import { SelectArrow } from "./arrow/select.arrow.jsx";
 import { SelectBackdrop } from "./backdrop/select.backdrop.jsx";
-import { SelectContent } from "./content/select.content.jsx";
 import { SelectGroupLabel } from "./group-label/select.group-label.jsx";
 import { SelectGroup } from "./group/select.group.jsx";
 import { SelectIcon } from "./icon/select.icon.jsx";
@@ -14,6 +13,7 @@ import { SelectItemText } from "./item-text/select.item-text.jsx";
 import { SelectItem } from "./item/select.item.jsx";
 import { SelectLabel } from "./label/select.label.jsx";
 import { SelectList } from "./list/select.list.jsx";
+import { SelectPopup } from "./popup/select.popup.jsx";
 import { SelectPortal } from "./portal/select.portal.jsx";
 import { SelectPositioner } from "./positioner/select.positioner.jsx";
 import { SelectRoot } from "./root/select.root.jsx";
@@ -42,7 +42,7 @@ function renderParts(children?: React.ReactNode) {
       <SelectPortal>
         <SelectBackdrop />
         <SelectPositioner>
-          <SelectContent>
+          <SelectPopup>
             <SelectScrollUpArrow keepMounted />
             <SelectArrow />
             <SelectList>
@@ -60,7 +60,7 @@ function renderParts(children?: React.ReactNode) {
               )}
             </SelectList>
             <SelectScrollDownArrow keepMounted />
-          </SelectContent>
+          </SelectPopup>
         </SelectPositioner>
       </SelectPortal>
     </SelectRoot>,
@@ -134,11 +134,11 @@ function renderStateProbes() {
             />
           )}
         >
-          <SelectContent
+          <SelectPopup
             render={(props, state) => (
               <div
                 {...props}
-                data-probe={`content/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
+                data-probe={`popup/${state.size}/${state.radius}/${state.variant}/${state.outlined}`}
               />
             )}
           >
@@ -232,7 +232,7 @@ function renderStateProbes() {
               )}
               keepMounted
             />
-          </SelectContent>
+          </SelectPopup>
         </SelectPositioner>
       </SelectPortal>
     </SelectRoot>,
@@ -415,13 +415,13 @@ describe("SelectPositioner", () => {
   });
 });
 
-describe("SelectContent", () => {
+describe("SelectPopup", () => {
   test("ポップアップの内容を描画する", async ({ expect }) => {
     // 準備と実行
     const screen = await renderParts();
 
     // 検証
-    expect(screen.getByClassName("sui_select_content").element().tagName).toBe("DIV");
+    expect(screen.getByClassName("sui_select_popup").element().tagName).toBe("DIV");
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
@@ -429,8 +429,8 @@ describe("SelectContent", () => {
     const screen = await renderStateProbes();
 
     // 検証
-    expect(screen.getByClassName("sui_select_content").element().getAttribute("data-probe")).toBe(
-      "content/lg/sm/naked/true",
+    expect(screen.getByClassName("sui_select_popup").element().getAttribute("data-probe")).toBe(
+      "popup/lg/sm/naked/true",
     );
   });
 });
@@ -453,9 +453,9 @@ describe("SelectList", () => {
         </SelectTrigger>
         <SelectPortal>
           <SelectPositioner>
-            <SelectContent>
+            <SelectPopup>
               <SelectList />
-            </SelectContent>
+            </SelectPopup>
           </SelectPositioner>
         </SelectPortal>
       </SelectRoot>,

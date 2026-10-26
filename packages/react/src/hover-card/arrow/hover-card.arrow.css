@@ -72,9 +72,9 @@
 /* 代入 */
 :scope {
   --sui_hover_card_arrow-size: 6px;
-  --sui_hover_card_arrow-background_color: var(--sui_hover_card_content-background_color);
-  --sui_hover_card_arrow-border_color: var(--sui_hover_card_content-border_color);
-  --sui_hover_card_arrow-border_width: var(--sui_hover_card_content-border_width);
+  --sui_hover_card_arrow-background_color: var(--sui_hover_card_popup-background_color);
+  --sui_hover_card_arrow-border_color: var(--sui_hover_card_popup-border_color);
+  --sui_hover_card_arrow-border_width: var(--sui_hover_card_popup-border_width);
 }
 
 /* 変異 */

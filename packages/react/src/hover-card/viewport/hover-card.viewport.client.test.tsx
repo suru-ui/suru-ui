@@ -2,7 +2,7 @@ import * as React from "react";
 import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
-import { HoverCardContent } from "../content/hover-card.content.jsx";
+import { HoverCardPopup } from "../popup/hover-card.popup.jsx";
 import { HoverCardPortal } from "../portal/hover-card.portal.jsx";
 import { HoverCardPositioner } from "../positioner/hover-card.positioner.jsx";
 import { HoverCardRoot } from "../root/hover-card.root.jsx";
@@ -18,9 +18,9 @@ function renderCard() {
     <HoverCardRoot defaultOpen>
       <HoverCardPortal>
         <HoverCardPositioner>
-          <HoverCardContent>
+          <HoverCardPopup>
             <HoverCardViewport>内容</HoverCardViewport>
-          </HoverCardContent>
+          </HoverCardPopup>
         </HoverCardPositioner>
       </HoverCardPortal>
     </HoverCardRoot>,

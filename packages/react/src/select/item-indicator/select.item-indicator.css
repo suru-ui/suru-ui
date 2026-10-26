@@ -42,8 +42,8 @@
 
   /* ButtonRoot が持つ文字サイズを参照するため、ItemIndicator 自身で代入します。 */
   --sui_select_item_indicator__svg-color: --sui-icon_color(
-                                            var(--sui_select_content-color),
-                                            var(--sui_select_content-background_color)
+                                            var(--sui_select_popup-color),
+                                            var(--sui_select_popup-background_color)
                                           );
 }
 

@@ -6,7 +6,7 @@ import RenderElement from "../../_render-element.jsx";
 import type { RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import { usePopoverContentContext } from "../content/popover.content.context.js";
+import { usePopoverPopupContext } from "../popup/popover.popup.context.js";
 import { PopoverTitleContext } from "./popover.title.context.js";
 
 /**
@@ -49,7 +49,7 @@ export type IPopoverTitle = IComponent<PopoverTitleProps>;
  * ポップオーバーのタイトルを表示する見出し要素です。
  */
 export const PopoverTitle: IPopoverTitle = function SuiPopoverTitle(props) {
-  const ctx = usePopoverContentContext();
+  const ctx = usePopoverPopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (

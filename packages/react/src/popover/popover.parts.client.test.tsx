@@ -5,9 +5,9 @@ import { render } from "vitest-browser-react";
 import { ContextMissingError } from "../errors.js";
 import { PopoverArrow } from "./arrow/popover.arrow.jsx";
 import { PopoverBackdrop } from "./backdrop/popover.backdrop.jsx";
-import { PopoverContent } from "./content/popover.content.jsx";
 import { PopoverDescription } from "./description/popover.description.jsx";
 import { Popover } from "./popover.jsx";
+import { PopoverPopup } from "./popup/popover.popup.jsx";
 import { PopoverPortal } from "./portal/popover.portal.jsx";
 import { PopoverPositioner } from "./positioner/popover.positioner.jsx";
 import { PopoverRoot } from "./root/popover.root.jsx";
@@ -26,7 +26,7 @@ function renderPopover(children: React.ReactNode) {
     <PopoverRoot defaultOpen>
       <PopoverPortal>
         <PopoverPositioner>
-          <PopoverContent>{children}</PopoverContent>
+          <PopoverPopup>{children}</PopoverPopup>
         </PopoverPositioner>
       </PopoverPortal>
     </PopoverRoot>,
@@ -84,7 +84,7 @@ describe("PopoverPortal", () => {
       <PopoverRoot size="lg" radius="sm" outlined defaultOpen>
         <PopoverPortal>
           <PopoverPositioner>
-            <PopoverContent>内容</PopoverContent>
+            <PopoverPopup>内容</PopoverPopup>
           </PopoverPositioner>
         </PopoverPortal>
       </PopoverRoot>,
@@ -107,7 +107,7 @@ describe("PopoverPortal", () => {
           )}
         >
           <PopoverPositioner>
-            <PopoverContent>内容</PopoverContent>
+            <PopoverPopup>内容</PopoverPopup>
           </PopoverPositioner>
         </PopoverPortal>
       </PopoverRoot>,
@@ -158,7 +158,7 @@ describe("PopoverBackdrop", () => {
         <PopoverPortal>
           <PopoverBackdrop id="backdrop" />
           <PopoverPositioner>
-            <PopoverContent>内容</PopoverContent>
+            <PopoverPopup>内容</PopoverPopup>
           </PopoverPositioner>
         </PopoverPortal>
       </PopoverRoot>,
@@ -190,7 +190,7 @@ describe("PopoverPositioner", () => {
               <div {...props} data-probe={`${state.size}/${state.radius}/${state.outlined}`} />
             )}
           >
-            <PopoverContent>内容</PopoverContent>
+            <PopoverPopup>内容</PopoverPopup>
           </PopoverPositioner>
         </PopoverPortal>
       </PopoverRoot>,
@@ -202,7 +202,7 @@ describe("PopoverPositioner", () => {
   });
 });
 
-describe("PopoverContent", () => {
+describe("PopoverPopup", () => {
   test("内容を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
@@ -212,7 +212,7 @@ describe("PopoverContent", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_popover_content").element();
+    const content = screen.getByClassName("sui_popover_popup").element();
     expect(content.tagName).toBe("DIV");
     expect(content.textContent).toBe("ポップオーバーの内容");
   });
@@ -226,7 +226,7 @@ describe("PopoverContent", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_popover_content").element();
+    const content = screen.getByClassName("sui_popover_popup").element();
     expect(content.classList.contains("custom-content")).toBe(true);
   });
 
@@ -243,7 +243,7 @@ describe("PopoverContent", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_popover_content").element();
+    const content = screen.getByClassName("sui_popover_popup").element();
     expect(content.tagName).toBe("SECTION");
     expect(content.textContent).toBe("内容");
   });
@@ -253,7 +253,7 @@ describe("PopoverContent", () => {
     const screen = await renderPopover("内容");
 
     // 検証
-    expect(screen.getByClassName("sui_popover_content").element().textContent).toBe("内容");
+    expect(screen.getByClassName("sui_popover_popup").element().textContent).toBe("内容");
   });
 
   test("render の関数へルートと内容の状態を渡す", async ({ expect }) => {
@@ -262,7 +262,7 @@ describe("PopoverContent", () => {
       <PopoverRoot size="lg" radius="sm" outlined defaultOpen>
         <PopoverPortal>
           <PopoverPositioner>
-            <PopoverContent
+            <PopoverPopup
               render={(props, state) => (
                 <div
                   {...props}
@@ -271,14 +271,14 @@ describe("PopoverContent", () => {
               )}
             >
               内容
-            </PopoverContent>
+            </PopoverPopup>
           </PopoverPositioner>
         </PopoverPortal>
       </PopoverRoot>,
     );
 
     // 検証
-    const content = screen.getByClassName("sui_popover_content").element();
+    const content = screen.getByClassName("sui_popover_popup").element();
     expect(content.getAttribute("data-probe")).toBe("lg/sm/true/true");
   });
 });

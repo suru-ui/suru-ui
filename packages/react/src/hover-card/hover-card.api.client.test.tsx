@@ -38,13 +38,13 @@ describe("getRootProps", () => {
     // 準備と実行
     const api = new HoverCardAPI({ id: "card", className: "custom" });
     const rootProps = api.getRootProps();
-    const contentProps = api.getContentProps();
+    const popupProps = api.getPopupProps();
 
     // 検証
     expect(rootProps).not.toHaveProperty("className");
     expect(rootProps).not.toHaveProperty("id");
-    expect(contentProps.className).toBe("custom");
-    expect(contentProps.id).toBe("card");
+    expect(popupProps.className).toBe("custom");
+    expect(popupProps.id).toBe("card");
   });
 });
 
@@ -155,13 +155,13 @@ describe("getPositionerProps", () => {
   });
 });
 
-describe("getContentChildren", () => {
+describe("getPopupChildren", () => {
   test("指定した内容を返す", ({ expect }) => {
     // 準備と実行
     const api = new HoverCardAPI({ children: "内容" });
 
     // 検証
-    expect(api.getContentChildren()).toBe("内容");
+    expect(api.getPopupChildren()).toBe("内容");
   });
 
   test("関数をそのまま返す", ({ expect }) => {
@@ -170,6 +170,6 @@ describe("getContentChildren", () => {
     const api = new HoverCardAPI({ children: renderer });
 
     // 検証
-    expect(api.getContentChildren()).toBe(renderer);
+    expect(api.getPopupChildren()).toBe(renderer);
   });
 });

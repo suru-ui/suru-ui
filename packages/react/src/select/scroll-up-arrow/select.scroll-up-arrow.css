@@ -42,21 +42,21 @@
 :scope {
   /* 内容の大きさと角丸に追従させるため、要素起点で代入します。 */
   --sui_select_scroll_up_arrow-size: calc(
-                                       var(--sui_select_content-font_size)
-                                       * var(--sui_select_content-line_height)
+                                       var(--sui_select_popup-font_size)
+                                       * var(--sui_select_popup-line_height)
                                      );
-  --sui_select_scroll_up_arrow-background_color: var(--sui_select_content-background_color);
+  --sui_select_scroll_up_arrow-background_color: var(--sui_select_popup-background_color);
   --sui_select_scroll_up_arrow-background_image: linear-gradient(
                                                     to bottom,
                                                     var(--sui_select_scroll_up_arrow-background_color) 60%,
                                                     transparent
                                                   );
-  --sui_select_scroll_up_arrow-border_radius: var(--sui_select_content-border_radius);
-  --sui_select_scroll_up_arrow-corner_shape: var(--sui_select_content-corner_shape);
+  --sui_select_scroll_up_arrow-border_radius: var(--sui_select_popup-border_radius);
+  --sui_select_scroll_up_arrow-corner_shape: var(--sui_select_popup-corner_shape);
   --sui_select_scroll_up_arrow__svg-size: var(--sui_select_scroll_up_arrow-size);
   --sui_select_scroll_up_arrow__svg-color: --sui-icon_color(
-                                             var(--sui_select_content-color),
-                                             var(--sui_select_content-background_color)
+                                             var(--sui_select_popup-color),
+                                             var(--sui_select_popup-background_color)
                                            );
 }
 

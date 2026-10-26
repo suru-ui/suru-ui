@@ -125,7 +125,7 @@ describe("Tooltip の余白と配置", () => {
 
     // 検証
     const arrow = screen.getByClassName("sui_tooltip_arrow").element().getBoundingClientRect();
-    const content = screen.getByClassName("sui_tooltip_content").element().getBoundingClientRect();
+    const content = screen.getByClassName("sui_tooltip_popup").element().getBoundingClientRect();
     expect(arrow.width).toBeCloseTo(12, 0);
     expect(arrow.height).toBeCloseTo(6, 0);
     expect(Math.abs(arrow.top - content.bottom)).toBeLessThanOrEqual(7);
@@ -141,10 +141,7 @@ describe("Tooltip の余白と配置", () => {
 
     // 検証
     await vi.waitFor(() => {
-      const content = screen
-        .getByClassName("sui_tooltip_content")
-        .element()
-        .getBoundingClientRect();
+      const content = screen.getByClassName("sui_tooltip_popup").element().getBoundingClientRect();
       const anchor = screen.getByRole("button", { name: "開く" }).element().getBoundingClientRect();
       expect(Math.abs(anchor.top - content.bottom - 8)).toBeLessThanOrEqual(1);
     });

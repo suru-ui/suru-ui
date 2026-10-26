@@ -81,7 +81,7 @@ describe("HoverCard", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_hover_card_content").element();
+    const content = screen.getByClassName("sui_hover_card_popup").element();
     expect(content.textContent).toBe("利用規約の概要");
   });
 
@@ -99,7 +99,7 @@ describe("HoverCard", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_hover_card_content").element();
+    const content = screen.getByClassName("sui_hover_card_popup").element();
     expect(content.classList.contains("custom-content")).toBe(true);
     expect(content.dataset["testid"]).toBe("card");
   });

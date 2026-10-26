@@ -81,7 +81,7 @@ describe("Popover", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_popover_content").element();
+    const content = screen.getByClassName("sui_popover_popup").element();
     expect(content.textContent).toBe("ポップオーバーの内容");
   });
 
@@ -99,7 +99,7 @@ describe("Popover", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_popover_content").element();
+    const content = screen.getByClassName("sui_popover_popup").element();
     expect(content.classList.contains("custom-content")).toBe(true);
     expect(content.dataset["testid"]).toBe("popover");
   });

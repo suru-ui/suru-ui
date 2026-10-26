@@ -46,13 +46,13 @@ describe("getRootProps", () => {
     // 準備と実行
     const api = new PopoverAPI({ id: "popover", className: "custom" });
     const rootProps = api.getRootProps();
-    const contentProps = api.getContentProps();
+    const popupProps = api.getPopupProps();
 
     // 検証
     expect(rootProps).not.toHaveProperty("className");
     expect(rootProps).not.toHaveProperty("id");
-    expect(contentProps.className).toBe("custom");
-    expect(contentProps.id).toBe("popover");
+    expect(popupProps.className).toBe("custom");
+    expect(popupProps.id).toBe("popover");
   });
 });
 
@@ -180,36 +180,36 @@ describe("getPositionerProps", () => {
   });
 });
 
-describe("getContentProps", () => {
+describe("getPopupProps", () => {
   test("slotProps と指定内容を結合する", ({ expect }) => {
     // 準備と実行
     const api = new PopoverAPI({
       className: "custom",
-      slotProps: { content: { id: "content" } },
+      slotProps: { popup: { id: "content" } },
     });
 
     // 検証
-    expect(api.getContentProps()).toStrictEqual({ id: "content", className: "custom" });
+    expect(api.getPopupProps()).toStrictEqual({ id: "content", className: "custom" });
   });
 
   test("指定内容で slotProps を上書きする", ({ expect }) => {
     // 準備と実行
     const api = new PopoverAPI({
       className: "custom",
-      slotProps: { content: { className: "slot" } },
+      slotProps: { popup: { className: "slot" } },
     });
 
     // 検証
-    expect(api.getContentProps().className).toBe("custom");
+    expect(api.getPopupProps().className).toBe("custom");
   });
 });
 
-describe("getContentChildren", () => {
+describe("getPopupChildren", () => {
   test("指定した内容を返す", ({ expect }) => {
     // 準備と実行
     const api = new PopoverAPI({ children: "内容" });
 
     // 検証
-    expect(api.getContentChildren()).toBe("内容");
+    expect(api.getPopupChildren()).toBe("内容");
   });
 });

@@ -19,13 +19,13 @@ import {
   type SelectArrowProps,
   type SelectGroupProps,
   type SelectLabelProps,
+  type SelectPopupProps,
   type SelectRootRadius,
   type SelectValueProps,
   type IUseSelectContext,
   type SelectPortalProps,
   type SelectRootActions,
   type SelectRootVariant,
-  type SelectContentProps,
   type SelectTriggerProps,
   type SelectBackdropProps,
   type SelectItemTextProps,
@@ -49,9 +49,9 @@ import {
   SelectArrow,
   SelectGroup,
   SelectLabel,
+  SelectPopup,
   SelectValue,
   SelectPortal,
-  SelectContent,
   SelectTrigger,
   SelectBackdrop,
   SelectItemText,
@@ -102,11 +102,6 @@ export type SelectSlotProps<TValue = any> = {
   readonly backdrop?: Omit<SelectBackdropProps, "children"> | undefined;
 
   /**
-   * {@link SelectContent} に渡す props です。
-   */
-  readonly content?: Omit<SelectContentProps, "children"> | undefined;
-
-  /**
    * {@link SelectGroup} に渡す props です。
    */
   readonly group?: Omit<SelectGroupProps, "children"> | undefined;
@@ -145,6 +140,11 @@ export type SelectSlotProps<TValue = any> = {
    * {@link SelectList} に渡す props です。
    */
   readonly list?: SelectListProps<TValue> | undefined;
+
+  /**
+   * {@link SelectPopup} に渡す props です。
+   */
+  readonly popup?: Omit<SelectPopupProps, "children"> | undefined;
 
   /**
    * {@link SelectPortal} に渡す props です。
@@ -382,10 +382,10 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
   }
 
   /**
-   * {@link SelectContent} に渡す props を取得します。
+   * {@link SelectPopup} に渡す props を取得します。
    */
-  public getContentProps(): Omit<SelectContentProps, "children"> {
-    const { content: props = {} } = this.slotProps;
+  public getPopupProps(): Omit<SelectPopupProps, "children"> {
+    const { popup: props = {} } = this.slotProps;
 
     return props;
   }
@@ -665,12 +665,12 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
         <SelectPortal {...api.getPortalProps()}>
           <SelectBackdrop {...api.getBackdropProps()} />
           <SelectPositioner {...api.getPositionerProps()}>
-            <SelectContent {...api.getContentProps()}>
+            <SelectPopup {...api.getPopupProps()}>
               <SelectScrollUpArrow {...api.getScrollUpArrowProps()} />
               <SelectArrow {...api.getArrowProps()} />
               <SelectList {...api.getListProps()} />
               <SelectScrollDownArrow {...api.getScrollDownArrowProps()} />
-            </SelectContent>
+            </SelectPopup>
           </SelectPositioner>
         </SelectPortal>
       </SelectRoot>

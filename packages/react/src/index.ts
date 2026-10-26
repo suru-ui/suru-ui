@@ -383,7 +383,7 @@ export {
   type HoverCardRadius,
   type HoverCardActions,
   type HoverCardSlotProps,
-  type IHoverCardContentRenderer,
+  type IHoverCardPopupRenderer,
   type HoverCardChangeEventReason,
   type HoverCardChangeEventDetails,
   HoverCard,

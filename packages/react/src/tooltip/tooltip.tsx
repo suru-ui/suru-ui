@@ -9,11 +9,11 @@ import {
   type TooltipRootProps,
   type TooltipRootState,
   type TooltipArrowProps,
+  type TooltipPopupProps,
   type TooltipRootRadius,
   type IUseTooltipContext,
   type TooltipPortalProps,
   type TooltipRootActions,
-  type TooltipContentProps,
   type TooltipTriggerProps,
   type ICreateTooltipHandle,
   type TooltipPositionerProps,
@@ -21,8 +21,8 @@ import {
   type TooltipRootChangeEventDetails,
   TooltipRoot,
   TooltipArrow,
+  TooltipPopup,
   TooltipPortal,
-  TooltipContent,
   TooltipContext,
   TooltipTrigger,
   TooltipPositioner,
@@ -80,8 +80,8 @@ export type TooltipSlotProps<TPayload = any> = {
 export type TooltipState = TooltipRootState;
 
 namespace TooltipProps {
-  export type Content = Omit<
-    TooltipContentProps,
+  export type Popup = Omit<
+    TooltipPopupProps,
     keyof TooltipProps.Tooltip | keyof TooltipProps.Root | keyof TooltipProps.Trigger
   >;
 
@@ -135,7 +135,7 @@ export type TooltipProps<TPayload = any> = TooltipProps.Tooltip<TPayload> &
   TooltipProps.Root<TPayload> &
   TooltipProps.Trigger<TPayload> &
   UseAnchorPositioningSharedParameters &
-  TooltipProps.Content;
+  TooltipProps.Popup;
 
 export interface IUseTooltipAPI {
   /**
@@ -167,7 +167,7 @@ export class TooltipAPI<TPayload = any> {
 
   private readonly positionerProps: Required<UseAnchorPositioningSharedParameters>;
 
-  private readonly contentProps: TooltipProps.Content;
+  private readonly popupProps: TooltipProps.Popup;
 
   /**
    * @param props {@link Tooltip} の props です。
@@ -183,7 +183,7 @@ export class TooltipAPI<TPayload = any> {
       slotProps = {},
       closeDelay,
       keepOpenOnClick,
-      ...rootAndPositionerAndContentProps
+      ...rootAndPositionerAndPopupProps
     } = props;
     const {
       open,
@@ -211,8 +211,8 @@ export class TooltipAPI<TPayload = any> {
       onOpenChangeComplete,
       disableAnchorTracking,
       disableHoverablePopup,
-      ...contentProps
-    } = rootAndPositionerAndContentProps;
+      ...popupProps
+    } = rootAndPositionerAndPopupProps;
     this.tooltipProps = {
       delay,
       handle,
@@ -252,7 +252,7 @@ export class TooltipAPI<TPayload = any> {
       collisionAvoidance,
       disableAnchorTracking,
     };
-    this.contentProps = contentProps;
+    this.popupProps = popupProps;
   }
 
   /**
@@ -272,19 +272,19 @@ export class TooltipAPI<TPayload = any> {
   }
 
   /**
-   * {@link TooltipContent} に表示する子要素を取得します。
+   * {@link TooltipPopup} に表示する子要素を取得します。
    */
-  public getContentChildren(): TooltipProps.Tooltip<TPayload>["children"] {
+  public getPopupChildren(): TooltipProps.Tooltip<TPayload>["children"] {
     const { children } = this.tooltipProps;
 
     return children;
   }
 
   /**
-   * {@link TooltipContent} に渡す props を取得します。
+   * {@link TooltipPopup} に渡す props を取得します。
    */
-  public getContentProps(): Omit<TooltipContentProps, "children"> {
-    return this.contentProps;
+  public getPopupProps(): Omit<TooltipPopupProps, "children"> {
+    return this.popupProps;
   }
 
   /**
@@ -386,17 +386,17 @@ export const Tooltip: ITooltip = /*#__PURE__*/ Object.assign(
     const api = useTooltipAPI(props);
     const triggerProps = api.getTriggerProps();
     const arrowProps = api.getArrowProps();
-    const children = api.getContentChildren();
+    const children = api.getPopupChildren();
 
     return (
       <TooltipRoot {...api.getRootProps()}>
         {triggerProps && <TooltipTrigger {...triggerProps} />}
         <TooltipPortal {...api.getPortalProps()}>
           <TooltipPositioner {...api.getPositionerProps()}>
-            <TooltipContent {...api.getContentProps()}>
+            <TooltipPopup {...api.getPopupProps()}>
               {arrowProps && <TooltipArrow {...arrowProps} />}
               {children}
-            </TooltipContent>
+            </TooltipPopup>
           </TooltipPositioner>
         </TooltipPortal>
       </TooltipRoot>

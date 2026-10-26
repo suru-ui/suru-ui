@@ -79,7 +79,7 @@ describe("Tooltip", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_tooltip_content").element();
+    const content = screen.getByClassName("sui_tooltip_popup").element();
     expect(content.textContent).toBe("保存します");
   });
 
@@ -97,7 +97,7 @@ describe("Tooltip", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_tooltip_content").element();
+    const content = screen.getByClassName("sui_tooltip_popup").element();
     expect(content.classList.contains("custom-content")).toBe(true);
     expect(content.dataset["testid"]).toBe("tooltip");
   });

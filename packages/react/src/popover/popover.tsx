@@ -7,11 +7,11 @@ import {
   type PopoverRootProps,
   type PopoverRootState,
   type PopoverArrowProps,
+  type PopoverPopupProps,
   type PopoverRootRadius,
   type IUsePopoverContext,
   type PopoverPortalProps,
   type PopoverRootActions,
-  type PopoverContentProps,
   type PopoverTriggerProps,
   type ICreatePopoverHandle,
   type PopoverBackdropProps,
@@ -20,8 +20,8 @@ import {
   type PopoverRootChangeEventDetails,
   PopoverRoot,
   PopoverArrow,
+  PopoverPopup,
   PopoverPortal,
-  PopoverContent,
   PopoverContext,
   PopoverTrigger,
   PopoverBackdrop,
@@ -60,9 +60,9 @@ export type PopoverSlotProps<TPayload = any> = {
   readonly backdrop?: Omit<PopoverBackdropProps, "children"> | undefined;
 
   /**
-   * {@link PopoverContent} に渡す props です。
+   * {@link PopoverPopup} に渡す props です。
    */
-  readonly content?: Omit<PopoverContentProps, "children"> | undefined;
+  readonly popup?: Omit<PopoverPopupProps, "children"> | undefined;
 
   /**
    * {@link PopoverPortal} に渡す props です。
@@ -86,8 +86,6 @@ export type PopoverSlotProps<TPayload = any> = {
 export type PopoverState = PopoverRootState;
 
 namespace PopoverProps {
-  export type Content = Omit<PopoverContentProps, keyof Popover | keyof Root>;
-
   export type Popover<TPayload = any> = {
     /**
      * 矢印を表示するかどうかを指定します。
@@ -108,7 +106,7 @@ namespace PopoverProps {
     /**
      * ポップオーバーの内容です。
      */
-    children?: PopoverContentProps["children"] | undefined;
+    children?: PopoverPopupProps["children"] | undefined;
 
     /**
      * トリガーとポップオーバーに関連付けるためのハンドルです。
@@ -130,6 +128,8 @@ namespace PopoverProps {
     trigger?: PopoverTriggerProps["children"] | undefined;
   };
 
+  export type Popup = Omit<PopoverPopupProps, keyof Popover | keyof Root>;
+
   export type Root<TPayload = any> = Omit<PopoverRootProps<TPayload>, keyof Popover>;
 }
 
@@ -140,7 +140,7 @@ namespace PopoverProps {
  */
 export type PopoverProps<TPayload = any> = PopoverProps.Popover<TPayload> &
   PopoverProps.Root<TPayload> &
-  PopoverProps.Content;
+  PopoverProps.Popup;
 
 export interface IUsePopoverAPI {
   /**
@@ -168,7 +168,7 @@ export class PopoverAPI<TPayload = any> {
 
   private readonly rootProps: Required<PopoverProps.Root<TPayload>>;
 
-  private readonly contentProps: PopoverProps.Content;
+  private readonly popupProps: PopoverProps.Popup;
 
   /**
    * @param props {@link Popover} の props です。
@@ -182,7 +182,7 @@ export class PopoverAPI<TPayload = any> {
       backdrop,
       children,
       slotProps = {},
-      ...rootAndContentProps
+      ...rootAndPopupProps
     } = props;
     const {
       open,
@@ -196,8 +196,8 @@ export class PopoverAPI<TPayload = any> {
       onOpenChange,
       defaultTriggerId,
       onOpenChangeComplete,
-      ...contentProps
-    } = rootAndContentProps;
+      ...popupProps
+    } = rootAndPopupProps;
     this.popoverProps = {
       arrow,
       handle,
@@ -219,7 +219,7 @@ export class PopoverAPI<TPayload = any> {
       defaultTriggerId,
       onOpenChangeComplete,
     };
-    this.contentProps = contentProps;
+    this.popupProps = popupProps;
   }
 
   /**
@@ -255,23 +255,23 @@ export class PopoverAPI<TPayload = any> {
   }
 
   /**
-   * {@link PopoverContent} に表示する子要素を取得します。
+   * {@link PopoverPopup} に表示する子要素を取得します。
    */
-  public getContentChildren(): PopoverContentProps["children"] {
+  public getPopupChildren(): PopoverPopupProps["children"] {
     const { children } = this.popoverProps;
 
     return children;
   }
 
   /**
-   * {@link PopoverContent} に渡す props を取得します。
+   * {@link PopoverPopup} に渡す props を取得します。
    */
-  public getContentProps(): Omit<PopoverContentProps, "children"> {
-    const { content: props = {} } = this.slotProps;
+  public getPopupProps(): Omit<PopoverPopupProps, "children"> {
+    const { popup: props = {} } = this.slotProps;
 
     return {
       ...props,
-      ...this.contentProps,
+      ...this.popupProps,
     };
   }
 
@@ -371,7 +371,7 @@ export const Popover: IPopover = /*#__PURE__*/ Object.assign(
     const triggerProps = api.getTriggerProps();
     const arrowProps = api.getArrowProps();
     const backdropProps = api.getBackdropProps();
-    const children = api.getContentChildren();
+    const children = api.getPopupChildren();
 
     return (
       <PopoverRoot {...api.getRootProps()}>
@@ -379,10 +379,10 @@ export const Popover: IPopover = /*#__PURE__*/ Object.assign(
         <PopoverPortal {...api.getPortalProps()}>
           {backdropProps && <PopoverBackdrop {...backdropProps} />}
           <PopoverPositioner {...api.getPositionerProps()}>
-            <PopoverContent {...api.getContentProps()}>
+            <PopoverPopup {...api.getPopupProps()}>
               {arrowProps && <PopoverArrow {...arrowProps} />}
               {children}
-            </PopoverContent>
+            </PopoverPopup>
           </PopoverPositioner>
         </PopoverPortal>
       </PopoverRoot>

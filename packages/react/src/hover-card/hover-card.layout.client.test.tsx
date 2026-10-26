@@ -119,10 +119,7 @@ describe("HoverCard の余白と配置", () => {
 
     // 検証
     const arrow = screen.getByClassName("sui_hover_card_arrow").element().getBoundingClientRect();
-    const content = screen
-      .getByClassName("sui_hover_card_content")
-      .element()
-      .getBoundingClientRect();
+    const content = screen.getByClassName("sui_hover_card_popup").element().getBoundingClientRect();
     expect(arrow.width).toBeCloseTo(12, 0);
     expect(arrow.height).toBeCloseTo(6, 0);
     expect(Math.abs(arrow.bottom - content.top)).toBeLessThanOrEqual(7);

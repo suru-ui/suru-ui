@@ -1,7 +1,7 @@
 import "./portal/hover-card.portal.css";
 import "./backdrop/hover-card.backdrop.css";
 import "./positioner/hover-card.positioner.css";
-import "./content/hover-card.content.css";
+import "./popup/hover-card.popup.css";
 import "./arrow/hover-card.arrow.css";
 import "./viewport/hover-card.viewport.css";
 
@@ -10,7 +10,7 @@ export * from "./trigger/hover-card.trigger.context.js";
 export * from "./portal/hover-card.portal.context.js";
 export * from "./backdrop/hover-card.backdrop.context.js";
 export * from "./positioner/hover-card.positioner.context.js";
-export * from "./content/hover-card.content.context.js";
+export * from "./popup/hover-card.popup.context.js";
 export * from "./arrow/hover-card.arrow.context.js";
 export * from "./viewport/hover-card.viewport.context.js";
 export * from "./handle/hover-card.handle.js";
@@ -19,6 +19,6 @@ export * from "./trigger/hover-card.trigger.jsx";
 export * from "./portal/hover-card.portal.jsx";
 export * from "./backdrop/hover-card.backdrop.jsx";
 export * from "./positioner/hover-card.positioner.jsx";
-export * from "./content/hover-card.content.jsx";
+export * from "./popup/hover-card.popup.jsx";
 export * from "./arrow/hover-card.arrow.jsx";
 export * from "./viewport/hover-card.viewport.jsx";

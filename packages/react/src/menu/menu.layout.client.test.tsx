@@ -4,9 +4,9 @@ import { vi, test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import supportsCustomFunctions from "./_supports-custom-functions.js";
-import { MenuContent } from "./content/menu.content.jsx";
 import { MenuItem } from "./item/menu.item.jsx";
 import { Menu } from "./menu.jsx";
+import { MenuPopup } from "./popup/menu.popup.jsx";
 import { MenuPortal } from "./portal/menu.portal.jsx";
 import { MenuPositioner } from "./positioner/menu.positioner.jsx";
 import { MenuRoot } from "./root/menu.root.jsx";
@@ -158,18 +158,18 @@ describe("Menu の配置", () => {
       <MenuRoot defaultOpen>
         <MenuPortal>
           <MenuPositioner>
-            <MenuContent>
+            <MenuPopup>
               <MenuSubmenuRoot>
                 <MenuSubmenuTrigger>共有</MenuSubmenuTrigger>
                 <MenuPortal>
                   <MenuPositioner>
-                    <MenuContent>
+                    <MenuPopup>
                       <MenuItem>リンクをコピー</MenuItem>
-                    </MenuContent>
+                    </MenuPopup>
                   </MenuPositioner>
                 </MenuPortal>
               </MenuSubmenuRoot>
-            </MenuContent>
+            </MenuPopup>
           </MenuPositioner>
         </MenuPortal>
       </MenuRoot>,

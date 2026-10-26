@@ -6,10 +6,10 @@ import { HoverCard } from "../hover-card.jsx";
 import { HoverCardPortal } from "../portal/hover-card.portal.jsx";
 import { HoverCardPositioner } from "../positioner/hover-card.positioner.jsx";
 import { HoverCardRoot } from "../root/hover-card.root.jsx";
-import { HoverCardContent } from "./hover-card.content.jsx";
+import { HoverCardPopup } from "./hover-card.popup.jsx";
 import "../../../tests/src/_locators.js";
 
-describe("HoverCardContent", () => {
+describe("HoverCardPopup", () => {
   test("内容を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
@@ -19,7 +19,7 @@ describe("HoverCardContent", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_hover_card_content").element();
+    const content = screen.getByClassName("sui_hover_card_popup").element();
     expect(content.tagName).toBe("DIV");
     expect(content.textContent).toBe("利用規約の概要");
   });
@@ -33,7 +33,7 @@ describe("HoverCardContent", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_hover_card_content").element();
+    const content = screen.getByClassName("sui_hover_card_popup").element();
     expect(content.classList.contains("custom-content")).toBe(true);
   });
 
@@ -50,7 +50,7 @@ describe("HoverCardContent", () => {
     );
 
     // 検証
-    const content = screen.getByClassName("sui_hover_card_content").element();
+    const content = screen.getByClassName("sui_hover_card_popup").element();
     expect(content.tagName).toBe("SECTION");
     expect(content.textContent).toBe("内容");
   });
@@ -61,14 +61,14 @@ describe("HoverCardContent", () => {
       <HoverCardRoot defaultOpen>
         <HoverCardPortal>
           <HoverCardPositioner>
-            <HoverCardContent id="content">内容</HoverCardContent>
+            <HoverCardPopup id="content">内容</HoverCardPopup>
           </HoverCardPositioner>
         </HoverCardPortal>
       </HoverCardRoot>,
     );
 
     // 検証
-    expect(screen.getByClassName("sui_hover_card_content").element().id).toBe("content");
+    expect(screen.getByClassName("sui_hover_card_popup").element().id).toBe("content");
   });
 
   test("render の関数へルートと内容の状態を渡す", async ({ expect }) => {
@@ -77,7 +77,7 @@ describe("HoverCardContent", () => {
       <HoverCardRoot size="lg" radius="sm" outlined defaultOpen>
         <HoverCardPortal>
           <HoverCardPositioner>
-            <HoverCardContent
+            <HoverCardPopup
               render={(props, state) => (
                 <div
                   {...props}
@@ -86,14 +86,14 @@ describe("HoverCardContent", () => {
               )}
             >
               内容
-            </HoverCardContent>
+            </HoverCardPopup>
           </HoverCardPositioner>
         </HoverCardPortal>
       </HoverCardRoot>,
     );
 
     // 検証
-    const content = screen.getByClassName("sui_hover_card_content").element();
+    const content = screen.getByClassName("sui_hover_card_popup").element();
     expect(content.getAttribute("data-probe")).toBe("lg/sm/true/true");
   });
 });

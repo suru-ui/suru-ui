@@ -3,12 +3,12 @@ import * as React from "react";
 
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
-import type { ContentContext } from "../content/popover.content.context.js";
+import type { PopupContext } from "../popup/popover.popup.context.js";
 
 /**
  * {@link PopoverArrow} が子パーツへ提供する状態です。
  */
-export type PopoverArrowContext = Readonly<Override<ContentContext, Popover.Arrow.State>>;
+export type PopoverArrowContext = Readonly<Override<PopupContext, Popover.Arrow.State>>;
 
 /**
  * {@link PopoverArrow} が子パーツへ提供するコンテキストです。
