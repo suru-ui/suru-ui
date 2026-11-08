@@ -3,6 +3,7 @@ import "./list/breadcrumb.list.css";
 import "./item/breadcrumb.item.css";
 import "./link/breadcrumb.link.css";
 import "./separator/breadcrumb.separator.css";
+import "./ellipsis/breadcrumb.ellipsis.css";
 
 export * from "./root/breadcrumb.root.context.js";
 export * from "./list/breadcrumb.list.context.js";

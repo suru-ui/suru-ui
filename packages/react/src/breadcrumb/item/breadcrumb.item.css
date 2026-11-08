@@ -65,7 +65,8 @@
 
 /* 変異 */
 :scope {
-  &:has(.sui_breadcrumb_link:focus-visible) {
+  &:has(.sui_breadcrumb_link:focus-visible),
+  &:has(.sui_breadcrumb_ellipsis:focus-visible) {
     --_sui_breadcrumb_item-outline_width: var(--sui_breadcrumb_item-focusring_width);
     --_sui_breadcrumb_item-outline_color: var(--sui_breadcrumb_item-focusring_color);
     --_sui_breadcrumb_item-outline_offset: var(--sui_breadcrumb_item-focusring_offset);

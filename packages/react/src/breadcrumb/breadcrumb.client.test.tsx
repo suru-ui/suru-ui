@@ -1,6 +1,8 @@
+import "@suru-ui/theme/suru.css";
 import * as React from "react";
 import { vi, test, describe } from "vitest";
 import { render } from "vitest-browser-react";
+import { userEvent } from "vitest/browser";
 
 import { ContextMissingError } from "../errors.js";
 import { Breadcrumb, BreadcrumbAPI, useBreadcrumbAPI } from "./breadcrumb.jsx";
@@ -415,6 +417,111 @@ describe("Breadcrumb", () => {
 
     // 検証
     expect(screen.container.querySelectorAll(".sui_breadcrumb_link").length).toBe(0);
+  });
+});
+
+describe("Breadcrumb の省略", () => {
+  const manyItems = [
+    { href: "#", label: "ホーム" },
+    { href: "#", label: "製品" },
+    { href: "#", label: "ライブラリ" },
+    { href: "#", label: "コンポーネント" },
+    { label: "Suru UI" },
+  ] as const;
+
+  test("maxItems 以下では省略しない", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<Breadcrumb items={manyItems} maxItems={5} />);
+
+    // 検証
+    expect(screen.getByRole("link", { name: "製品" }).query()).not.toBe(null);
+    expect(screen.getByClassName("sui_breadcrumb_ellipsis").query()).toBe(null);
+  });
+
+  test("maxItems を超えると先頭と末尾以外を省略記号のボタンにまとめる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<Breadcrumb items={manyItems} maxItems={3} />);
+
+    // 検証
+    const trigger = screen.getByClassName("sui_breadcrumb_ellipsis").element();
+    expect(trigger.tagName).toBe("BUTTON");
+    expect(trigger.getAttribute("aria-label")).toBe("省略された項目を表示");
+    expect(trigger.querySelector("svg")).not.toBe(null);
+    expect(screen.getByRole("link", { name: "ホーム" }).query()).not.toBe(null);
+    expect(screen.container.querySelector('[aria-current="page"]')?.textContent).toBe("Suru UI");
+    expect(screen.getByRole("link", { name: "製品" }).query()).toBe(null);
+  });
+
+  test("省略記号を押すとポップアップ内の入力欄で省略された項目を選べる", async ({ expect }) => {
+    // 準備
+    const onClick = vi.fn<() => void>();
+    const screen = await render(
+      <Breadcrumb
+        items={[
+          { href: "#", label: "ホーム" },
+          {
+            href: "#products",
+            label: "製品",
+            onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
+              event.preventDefault();
+              onClick();
+            },
+          },
+          { href: "#", label: "ライブラリ" },
+          { href: "#", label: "コンポーネント" },
+          { label: "Suru UI" },
+        ]}
+        maxItems={3}
+      />,
+    );
+
+    // 実行
+    await screen.getByClassName("sui_breadcrumb_ellipsis").click();
+
+    // 検証
+    const popup = screen.getByClassName("sui_combobox_popup").element();
+    expect(popup.querySelector("input")?.getAttribute("placeholder")).toBe("項目を検索");
+    expect(
+      screen
+        .getByRole("option")
+        .elements()
+        .map((option) => option.textContent),
+    ).toStrictEqual(["製品", "ライブラリ", "コンポーネント"]);
+
+    // 実行と検証
+    await screen.getByRole("option", { name: "製品" }).click();
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  test("省略された項目をキーボードで選択できる", async ({ expect }) => {
+    // 準備
+    const onClick = vi.fn<() => void>();
+    const screen = await render(
+      <Breadcrumb
+        items={[
+          { href: "#", label: "ホーム" },
+          {
+            href: "#products",
+            label: "製品",
+            onClick: (event: React.MouseEvent<HTMLAnchorElement>) => {
+              event.preventDefault();
+              onClick();
+            },
+          },
+          { href: "#", label: "ライブラリ" },
+          { href: "#", label: "コンポーネント" },
+          { label: "Suru UI" },
+        ]}
+        maxItems={3}
+      />,
+    );
+    await screen.getByClassName("sui_breadcrumb_ellipsis").click();
+
+    // 実行
+    await userEvent.keyboard("{ArrowDown}{Enter}");
+
+    // 検証
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -21,6 +21,15 @@ const items = [
   { label: "パンくずリスト" },
 ];
 
+const collapsedItems = [
+  { href: "#", label: "ホーム" },
+  { href: "#", label: "製品" },
+  { href: "#", label: "ライブラリ" },
+  { href: "#", label: "コンポーネント" },
+  { href: "#", label: "Breadcrumb" },
+  { label: "省略表示" },
+];
+
 const meta = preview.meta({
   title: "Breadcrumb",
   component: Breadcrumb,
@@ -36,6 +45,9 @@ const ctrl = controls(Breadcrumb, {
   color: {
     control: "select",
     options: COLORS,
+  },
+  maxItems: {
+    control: "number",
   },
 });
 
@@ -111,6 +123,19 @@ export const Disabled = meta.story({
         ]}
       />
     );
+  },
+});
+
+export const Collapsed = meta.story({
+  name: "省略表示",
+  ...ctrl({
+    size: "md",
+    color: "grey",
+    items: collapsedItems,
+    maxItems: 4,
+  }),
+  render(props) {
+    return <Breadcrumb {...props} />;
   },
 });
 

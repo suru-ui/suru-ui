@@ -23,6 +23,7 @@ import {
   BreadcrumbSeparator,
   useBreadcrumbContext,
 } from "./breadcrumb.parts.js";
+import { BreadcrumbEllipsis } from "./ellipsis/breadcrumb.ellipsis.jsx";
 import type { BreadcrumbContext } from "./root/breadcrumb.root.context.js";
 import { decomposeItemObject } from "./utils/breadcrumb.utils.js";
 
@@ -83,6 +84,20 @@ namespace BreadcrumbProps {
     items: readonly TItem[];
 
     /**
+     * 省略記号を含めて表示する項目の最大数です。
+     *
+     * 項目数がこの数を超える場合、先頭の項目と末尾側の項目を残し、それ以外を省略記号にまとめます。
+     * 省略記号を押すと、省略された項目を選択するための候補リストが開きます。
+     *
+     * `children` を指定した場合は適用されません。
+     *
+     * 3 未満の値は 3 として扱います。
+     *
+     * @default undefined
+     */
+    maxItems?: number | undefined;
+
+    /**
      * 各パーツに個別の props を渡すためのオブジェクトです。
      */
     slotProps?: BreadcrumbSlotProps | undefined;
@@ -135,14 +150,45 @@ export class BreadcrumbAPI<TItem = any> {
    * @internal
    */
   public constructor(props: BreadcrumbProps<TItem>) {
-    const { items, children, slotProps = {}, ...rootProps } = props;
-    this.breadcrumbProps = { items };
+    const { items, children, maxItems, slotProps = {}, ...rootProps } = props;
+    this.breadcrumbProps = { items, maxItems };
     this.listProps = { children };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
 
-  private defaultItemRenderer: IBreadcrumbItemRenderer = (item, index) => {
+  private defaultItemRenderer: IBreadcrumbItemRenderer = (item, index, items) => {
+    const layout = this.getCollapsedLayout(items.length);
+    if (layout && index >= layout.hiddenStart && index < layout.hiddenEnd) {
+      if (index !== layout.hiddenStart) {
+        return null;
+      }
+
+      const hiddenItems = items
+        .slice(layout.hiddenStart, layout.hiddenEnd)
+        .map((hiddenItem, offset) => ({
+          item: hiddenItem,
+          index: layout.hiddenStart + offset,
+        }));
+
+      return (
+        <React.Fragment key="sui_breadcrumb_ellipsis">
+          {layout.hiddenStart > 0 && <BreadcrumbSeparator {...this.getSeparatorProps()} />}
+          <BreadcrumbItem {...this.getItemProps()}>
+            <BreadcrumbEllipsis
+              items={hiddenItems}
+              getItemLabel={(hiddenItem) =>
+                isItemObject(hiddenItem) ? this.getLabel(hiddenItem) : hiddenItem
+              }
+              getItemLinkProps={(hiddenItem, hiddenIndex) =>
+                isItemObject(hiddenItem) ? this.getLinkProps(hiddenItem, hiddenIndex) : null
+              }
+            />
+          </BreadcrumbItem>
+        </React.Fragment>
+      );
+    }
+
     switch (true) {
       case isItemObject(item): {
         return (
@@ -159,6 +205,29 @@ export class BreadcrumbAPI<TItem = any> {
         return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
     }
   };
+
+  /**
+   * 項目を省略する範囲を取得します。
+   *
+   * @param itemCount 項目数です。
+   * @returns 省略する範囲です。省略しない場合は `null` を返します。
+   */
+  private getCollapsedLayout(itemCount: number): { hiddenEnd: number; hiddenStart: number } | null {
+    const { maxItems } = this.breadcrumbProps;
+    if (maxItems === undefined) {
+      return null;
+    }
+
+    const limit = Math.max(3, Math.trunc(maxItems));
+    if (itemCount <= limit) {
+      return null;
+    }
+
+    const hiddenStart = 1;
+    const hiddenEnd = itemCount - (limit - 2);
+
+    return hiddenStart < hiddenEnd ? { hiddenEnd, hiddenStart } : null;
+  }
 
   /**
    * {@link BreadcrumbItem} に渡す props を取得します。
@@ -250,6 +319,7 @@ export interface IBreadcrumb extends IComponent<BreadcrumbProps> {
  * パンくずリストを表示するコンポーネントです。
  *
  * {@link BreadcrumbRootProps.items|items} を順に並べ、最後の項目を現在のページとして表示します。
+ * {@link BreadcrumbProps.maxItems|maxItems} を指定すると、超過分を省略記号にまとめ、省略記号から項目を選択できます。
  */
 export const Breadcrumb: IBreadcrumb = Object.assign(
   function SuiBreadcrumb(props: BreadcrumbProps) {

@@ -1,0 +1,104 @@
+@layer sui.component {
+@scope (.sui_breadcrumb_ellipsis) to ([data-scope]) {
+
+/* 固定 */
+:scope {
+  display: flex;
+  align-items: center;
+  padding-block: 0px;
+  font-feature-settings: "palt";
+  white-space: nowrap;
+  text-decoration: none;
+  touch-action: manipulation;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  background-color: transparent;
+  border-style: none;
+}
+
+/* 変数 */
+:scope {
+  --sui_breadcrumb_ellipsis-padding_inline: ;
+  --sui_breadcrumb_ellipsis-font_family: ;
+  --sui_breadcrumb_ellipsis-font_size: ;
+  --sui_breadcrumb_ellipsis-font_weight: ;
+  --sui_breadcrumb_ellipsis-line_height: ;
+  --sui_breadcrumb_ellipsis-color-idle: ;
+  --sui_breadcrumb_ellipsis-color-hover: ;
+  --sui_breadcrumb_ellipsis-color-active: ;
+  --sui_breadcrumb_ellipsis-letter_spacing: ;
+  --sui_breadcrumb_ellipsis__svg-size: ;
+  --sui_breadcrumb_ellipsis__svg-color: ;
+}
+
+/* 可変 */
+:scope {
+  padding-inline: var(--sui_breadcrumb_ellipsis-padding_inline);
+  font-family: var(--sui_breadcrumb_ellipsis-font_family);
+  font-size: var(--sui_breadcrumb_ellipsis-font_size);
+  font-weight: var(--sui_breadcrumb_ellipsis-font_weight);
+  line-height: var(--sui_breadcrumb_ellipsis-line_height);
+  color: var(--_sui_breadcrumb_ellipsis-color, var(--sui_breadcrumb_ellipsis-color-idle));
+  letter-spacing: var(--sui_breadcrumb_ellipsis-letter_spacing);
+
+  svg:not(.sui-ignore) {
+    width: var(--sui_breadcrumb_ellipsis__svg-size);
+    height: var(--sui_breadcrumb_ellipsis__svg-size);
+    color: var(--sui_breadcrumb_ellipsis__svg-color);
+  }
+}
+
+/* 代入 */
+:scope {
+  --sui_breadcrumb_ellipsis-padding_inline: var(--sui_breadcrumb-gap);
+  --sui_breadcrumb_ellipsis-font_family: var(--sui-font-sans);
+  --sui_breadcrumb_ellipsis-color-idle: var(--sui-canvas_text-2);
+  --sui_breadcrumb_ellipsis-color-hover: var(--sui-grey-naked-canvas_text-normal);
+  --sui_breadcrumb_ellipsis-color-active: var(--sui-grey-naked-canvas_text-strong);
+  --sui_breadcrumb_ellipsis__svg-size: calc(
+                                          var(--sui_breadcrumb_ellipsis-font_size)
+                                          * var(--sui_breadcrumb_ellipsis-line_height)
+                                        );
+  --sui_breadcrumb_ellipsis__svg-color: var(
+                                            --_sui_breadcrumb_ellipsis-color,
+                                            var(--sui_breadcrumb_ellipsis-color-idle)
+                                          );
+
+  &.sui_breadcrumb_ellipsis-size_sm {
+    --sui_breadcrumb_ellipsis-font_size: var(--sui-text-oln-sm-m-font_size);
+    --sui_breadcrumb_ellipsis-font_weight: var(--sui-text-oln-sm-m-font_weight);
+    --sui_breadcrumb_ellipsis-line_height: var(--sui-text-oln-sm-m-line_height);
+    --sui_breadcrumb_ellipsis-letter_spacing: var(--sui-text-oln-sm-m-letter_spacing);
+  }
+
+  &.sui_breadcrumb_ellipsis-size_md {
+    --sui_breadcrumb_ellipsis-font_size: var(--sui-text-oln-md-m-font_size);
+    --sui_breadcrumb_ellipsis-font_weight: var(--sui-text-oln-md-m-font_weight);
+    --sui_breadcrumb_ellipsis-line_height: var(--sui-text-oln-md-m-line_height);
+    --sui_breadcrumb_ellipsis-letter_spacing: var(--sui-text-oln-md-m-letter_spacing);
+  }
+
+  &.sui_breadcrumb_ellipsis-size_lg {
+    --sui_breadcrumb_ellipsis-font_size: var(--sui-text-oln-lg-m-font_size);
+    --sui_breadcrumb_ellipsis-font_weight: var(--sui-text-oln-lg-m-font_weight);
+    --sui_breadcrumb_ellipsis-line_height: var(--sui-text-oln-lg-m-line_height);
+    --sui_breadcrumb_ellipsis-letter_spacing: var(--sui-text-oln-lg-m-letter_spacing);
+  }
+}
+
+/* 変異 */
+:scope {
+  @media (any-hover: hover) {
+    &:hover {
+      --_sui_breadcrumb_ellipsis-color: var(--sui_breadcrumb_ellipsis-color-hover);
+    }
+  }
+
+  &:active {
+    --_sui_breadcrumb_ellipsis-color: var(--sui_breadcrumb_ellipsis-color-active);
+  }
+}
+
+} /* @scope */
+} /* @layer */
