@@ -2,11 +2,12 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import type { IComponent } from "../../types.js";
+import { type SidebarContextState, useSidebarContext } from "../root/sidebar.root.context.js";
 
 /**
  * {@link SidebarContent} の状態です。
  */
-export type SidebarContentState = {};
+export type SidebarContentState = SidebarContextState;
 
 export namespace SidebarContentProps {
   export type Render = RenderProps<SidebarContentState>;
@@ -37,6 +38,8 @@ export type ISidebarContent = IComponent<SidebarContentProps>;
  * {@link SidebarGroup} などの内容を配置します。
  */
 export const SidebarContent: ISidebarContent = function SuiSidebarContent(props) {
+  const ctx = useSidebarContext();
+
   return useRender({
     props: [
       props,
@@ -44,6 +47,7 @@ export const SidebarContent: ISidebarContent = function SuiSidebarContent(props)
         className: "sui_sidebar_content",
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

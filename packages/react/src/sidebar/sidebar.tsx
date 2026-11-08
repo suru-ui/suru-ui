@@ -99,9 +99,9 @@ export interface IUseSidebarAPI {
  * {@link Sidebar} を構成する各パーツの props を作成するための API です。
  */
 export class SidebarAPI {
-  private readonly slotProps: SidebarSlotProps;
-
   private readonly providerProps: SidebarProviderProps;
+
+  private readonly slotProps: SidebarSlotProps;
 
   /**
    * @param props {@link Sidebar} の props です。

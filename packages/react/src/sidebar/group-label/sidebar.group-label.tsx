@@ -2,11 +2,12 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import type { IComponent } from "../../types.js";
+import { type SidebarContextState, useSidebarContext } from "../root/sidebar.root.context.js";
 
 /**
  * {@link SidebarGroupLabel} の状態です。
  */
-export type SidebarGroupLabelState = {};
+export type SidebarGroupLabelState = SidebarContextState;
 
 export namespace SidebarGroupLabelProps {
   export type Render = RenderProps<SidebarGroupLabelState>;
@@ -35,6 +36,8 @@ export type ISidebarGroupLabel = IComponent<SidebarGroupLabelProps>;
  * グループのラベルです。
  */
 export const SidebarGroupLabel: ISidebarGroupLabel = function SuiSidebarGroupLabel(props) {
+  const ctx = useSidebarContext();
+
   return useRender({
     props: [
       props,
@@ -42,6 +45,7 @@ export const SidebarGroupLabel: ISidebarGroupLabel = function SuiSidebarGroupLab
         className: "sui_sidebar_group_label",
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

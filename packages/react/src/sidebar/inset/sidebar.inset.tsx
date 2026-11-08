@@ -2,11 +2,12 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import type { IComponent } from "../../types.js";
+import { type SidebarContextState, useSidebarContext } from "../root/sidebar.root.context.js";
 
 /**
  * {@link SidebarInset} の状態です。
  */
-export type SidebarInsetState = {};
+export type SidebarInsetState = SidebarContextState;
 
 export namespace SidebarInsetProps {
   export type Render = RenderProps<SidebarInsetState>;
@@ -37,6 +38,8 @@ export type ISidebarInset = IComponent<SidebarInsetProps>;
  * {@link SidebarRoot} に `variant="inset"` を指定すると、押し込まれた外観になります。
  */
 export const SidebarInset: ISidebarInset = function SuiSidebarInset(props) {
+  const ctx = useSidebarContext();
+
   return useRender({
     props: [
       props,
@@ -44,6 +47,7 @@ export const SidebarInset: ISidebarInset = function SuiSidebarInset(props) {
         className: "sui_sidebar_inset",
       },
     ],
+    state: ctx,
     defaultTagName: "main",
   });
 };

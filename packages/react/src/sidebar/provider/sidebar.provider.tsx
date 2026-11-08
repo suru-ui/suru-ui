@@ -1,14 +1,11 @@
 import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
+import { useControlled } from "@base-ui/utils/useControlled";
 import * as React from "react";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
-import {
-  type SidebarOpenState,
-  type SidebarContextState,
-  SidebarContext,
-} from "../root/sidebar.root.context.js";
+import { type SidebarContextState, SidebarContext } from "../root/sidebar.root.context.js";
 
 /**
  * {@link SidebarProvider} の状態です。
@@ -20,14 +17,16 @@ export namespace SidebarProviderProps {
 
   export type SuruUI = {
     /**
-     * 初期の開閉状態を指定します。`open` を指定すると無視されます。
+     * 初期の開閉状態を指定します。
+     *
+     * `open` を指定した場合は無視されます。
      *
      * @default true
      */
     defaultOpen?: boolean | undefined;
 
     /**
-     * サイドバーの開閉状態が変化したときに呼び出されます。
+     * サイドバーの開閉状態が変化したときに呼ばれます。
      */
     onOpenChange?: ((open: boolean) => void) | undefined;
 
@@ -69,25 +68,26 @@ export const SidebarProvider: ISidebarProvider = function SuiSidebarProvider(pro
     "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
-  const [openState, setOpenState] = React.useState(defaultOpen);
-  const open = openProp ?? openState;
+  const [open, setOpenState] = useControlled<boolean>({
+    name: "Sidebar",
+    state: "open",
+    default: defaultOpen,
+    controlled: openProp,
+  });
+  const state = open ? "expanded" : "collapsed";
   const openRef = React.useRef(open);
-  React.useEffect(() => {
-    openRef.current = open;
-  }, [open]);
+  openRef.current = open;
   const setOpen = React.useCallback(
     (nextOpen: boolean) => {
-      if (openProp === undefined) {
-        setOpenState(nextOpen);
-      }
+      openRef.current = nextOpen;
+      setOpenState(nextOpen);
       onOpenChange?.(nextOpen);
     },
-    [openProp, onOpenChange],
+    [onOpenChange, setOpenState],
   );
   const toggle = React.useCallback(() => {
-    setOpen(!openRef.current);
-  }, [setOpen]);
-  const state: SidebarOpenState = open ? "expanded" : "collapsed";
+    setOpen(openProp === undefined ? !openRef.current : !openProp);
+  }, [openProp, setOpen]);
   const renderState = React.useMemo<SidebarProviderState>(() => ({ open, state }), [open, state]);
   const ctx = React.useMemo<SidebarContext>(
     () => ({ open, state, toggle, setOpen }),
@@ -100,14 +100,8 @@ export const SidebarProvider: ISidebarProvider = function SuiSidebarProvider(pro
       {
         className: cn<SidebarProviderState>(
           "sui_sidebar_provider",
-          (state) => state.state === "expanded" && "sui_sidebar_provider-expanded",
-          (state) => state.state === "collapsed" && "sui_sidebar_provider-collapsed",
+          (state) => `sui_sidebar_provider-${state.state}`,
           (state) => state.open && "sui_sidebar_provider-open",
-          (state) =>
-            state.collapsible !== undefined &&
-            `sui_sidebar_provider-collapsible_${state.collapsible}`,
-          (state) => state.side !== undefined && `sui_sidebar_provider-side_${state.side}`,
-          (state) => state.variant !== undefined && `sui_sidebar_provider-variant_${state.variant}`,
         ),
         "data-scope": dataScope,
       },

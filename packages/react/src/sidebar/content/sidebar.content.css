@@ -1,35 +1,37 @@
 @layer sui.component {
-  @scope (.sui_sidebar_content) to ([data-scope]) {
-    /* 固定 */
-    :scope {
-      display: flex;
-      flex: 1 1 auto;
-      flex-direction: column;
-      min-height: 0px;
-      overflow-x: hidden;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-    }
+@scope (.sui_sidebar_content) to ([data-scope]) {
 
-    /* 変数 */
-    :scope {
-      --sui_sidebar_content-gap: ;
-      --sui_sidebar_content-padding_block: ;
-      --sui_sidebar_content-padding_inline: ;
-    }
+/* 固定 */
+:scope {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
 
-    /* 可変 */
-    :scope {
-      gap: var(--sui_sidebar_content-gap);
-      padding-block: var(--sui_sidebar_content-padding_block);
-      padding-inline: var(--sui_sidebar_content-padding_inline);
-    }
+/* 変数 */
+:scope {
+  --sui_sidebar_content-gap: ;
+  --sui_sidebar_content-padding_block: ;
+  --sui_sidebar_content-padding_inline: ;
+}
 
-    /* 代入 */
-    :scope {
-      --sui_sidebar_content-gap: --sui-gap(2);
-      --sui_sidebar_content-padding_block: --sui-space(1);
-      --sui_sidebar_content-padding_inline: --sui-space(2);
-    }
-  } /* @scope */
+/* 可変 */
+:scope {
+  gap: var(--sui_sidebar_content-gap);
+  padding-block: var(--sui_sidebar_content-padding_block);
+  padding-inline: var(--sui_sidebar_content-padding_inline);
+}
+
+/* 代入 */
+:scope {
+  --sui_sidebar_content-gap: --sui-gap(2);
+  --sui_sidebar_content-padding_block: --sui-space(1);
+  --sui_sidebar_content-padding_inline: --sui-space(2);
+}
+
+} /* @scope */
 } /* @layer */

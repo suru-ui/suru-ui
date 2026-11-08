@@ -2,11 +2,12 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import type { IComponent } from "../../types.js";
+import { type SidebarContextState, useSidebarContext } from "../root/sidebar.root.context.js";
 
 /**
  * {@link SidebarGroupContent} の状態です。
  */
-export type SidebarGroupContentState = {};
+export type SidebarGroupContentState = SidebarContextState;
 
 export namespace SidebarGroupContentProps {
   export type Render = RenderProps<SidebarGroupContentState>;
@@ -37,6 +38,8 @@ export type ISidebarGroupContent = IComponent<SidebarGroupContentProps>;
  * ナビゲーションの項目などを配置します。
  */
 export const SidebarGroupContent: ISidebarGroupContent = function SuiSidebarGroupContent(props) {
+  const ctx = useSidebarContext();
+
   return useRender({
     props: [
       props,
@@ -44,6 +47,7 @@ export const SidebarGroupContent: ISidebarGroupContent = function SuiSidebarGrou
         className: "sui_sidebar_group_content",
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

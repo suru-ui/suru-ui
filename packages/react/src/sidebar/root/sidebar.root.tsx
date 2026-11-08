@@ -5,9 +5,10 @@ import useRender, { type RenderProps } from "../../_use-render.js";
 import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import {
+  type SidebarContext,
   type SidebarOpenState,
   type SidebarContextState,
-  SidebarContext,
+  SidebarContext as SidebarContextProvider,
   useSidebarContext,
 } from "./sidebar.root.context.js";
 
@@ -120,20 +121,14 @@ export const SidebarRoot: ISidebarRoot = function SuiSidebarRoot(props) {
     "data-scope": dataScope = "",
     ...otherAsideProps
   } = props;
-  const open = ctx.open;
-  const state: SidebarOpenState = open ? "expanded" : "collapsed";
+  const state: SidebarOpenState = ctx.open ? "expanded" : "collapsed";
   const renderState = React.useMemo<SidebarRootState>(
-    () => ({ open, side, state, variant, collapsible }),
-    [collapsible, open, side, state, variant],
+    () => ({ open: ctx.open, side, state, variant, collapsible }),
+    [collapsible, ctx.open, side, state, variant],
   );
   // collapsible・side・variant は Root の内側でだけ確定するため、子孫へ伝えます。
   const childCtx = React.useMemo<SidebarContext>(
-    () => ({
-      ...ctx,
-      side,
-      variant,
-      collapsible,
-    }),
+    () => ({ ...ctx, side, variant, collapsible }),
     [collapsible, ctx, side, variant],
   );
 
@@ -156,7 +151,7 @@ export const SidebarRoot: ISidebarRoot = function SuiSidebarRoot(props) {
     defaultTagName: "aside",
   });
 
-  return <SidebarContext value={childCtx}>{element}</SidebarContext>;
+  return <SidebarContextProvider value={childCtx}>{element}</SidebarContextProvider>;
 };
 
 export { SidebarRoot as Root };

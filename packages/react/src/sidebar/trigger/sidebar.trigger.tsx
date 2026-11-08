@@ -78,7 +78,7 @@ export const SidebarTrigger: ISidebarTrigger = function SuiSidebarTrigger(props)
       disabled: triggerDisabled,
       collapsible: ctx.collapsible,
     }),
-    [ctx, triggerDisabled],
+    [ctx.collapsible, ctx.open, ctx.side, ctx.state, ctx.variant, triggerDisabled],
   );
 
   return useRender({

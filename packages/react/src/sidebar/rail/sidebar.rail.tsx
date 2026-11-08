@@ -55,6 +55,8 @@ export const SidebarRail: ISidebarRail = function SuiSidebarRail(props) {
     children,
     disabled = false,
     "aria-label": ariaLabel = "サイドバーを切り替える",
+    // @ts-expect-error
+    "data-scope": dataScope = "",
     ...otherButtonProps
   } = props;
   const handleOnClick: NonNullable<SidebarRailProps["onClick"]> = (event) => {
@@ -72,7 +74,7 @@ export const SidebarRail: ISidebarRail = function SuiSidebarRail(props) {
       disabled,
       collapsible: ctx.collapsible,
     }),
-    [ctx, disabled],
+    [ctx.collapsible, ctx.open, ctx.side, ctx.state, ctx.variant, disabled],
   );
 
   if (ctx.collapsible === "none") {
@@ -89,8 +91,7 @@ export const SidebarRail: ISidebarRail = function SuiSidebarRail(props) {
         disabled,
         className: cn<SidebarRailState>(
           "sui_sidebar_rail",
-          (state) => state.state === "expanded" && "sui_sidebar_rail-expanded",
-          (state) => state.state === "collapsed" && "sui_sidebar_rail-collapsed",
+          (state) => `sui_sidebar_rail-${state.state}`,
           (state) => state.disabled && "sui_sidebar_rail-disabled",
           (state) => state.open && "sui_sidebar_rail-open",
           (state) =>
@@ -100,6 +101,7 @@ export const SidebarRail: ISidebarRail = function SuiSidebarRail(props) {
         ),
         "aria-label": ariaLabel,
         "aria-expanded": ctx.open,
+        "data-scope": dataScope,
       },
     ],
     state: renderState,

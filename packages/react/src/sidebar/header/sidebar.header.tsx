@@ -2,11 +2,12 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import type { IComponent } from "../../types.js";
+import { type SidebarContextState, useSidebarContext } from "../root/sidebar.root.context.js";
 
 /**
  * {@link SidebarHeader} の状態です。
  */
-export type SidebarHeaderState = {};
+export type SidebarHeaderState = SidebarContextState;
 
 export namespace SidebarHeaderProps {
   export type Render = RenderProps<SidebarHeaderState>;
@@ -37,6 +38,8 @@ export type ISidebarHeader = IComponent<SidebarHeaderProps>;
  * ブランドやワークスペースの切り替えなどを配置します。
  */
 export const SidebarHeader: ISidebarHeader = function SuiSidebarHeader(props) {
+  const ctx = useSidebarContext();
+
   return useRender({
     props: [
       props,
@@ -44,6 +47,7 @@ export const SidebarHeader: ISidebarHeader = function SuiSidebarHeader(props) {
         className: "sui_sidebar_header",
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };

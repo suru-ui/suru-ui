@@ -2,11 +2,12 @@ import type { BaseUIComponentProps } from "@base-ui/react/internals/types";
 
 import useRender, { type RenderProps } from "../../_use-render.js";
 import type { IComponent } from "../../types.js";
+import { type SidebarContextState, useSidebarContext } from "../root/sidebar.root.context.js";
 
 /**
  * {@link SidebarFooter} の状態です。
  */
-export type SidebarFooterState = {};
+export type SidebarFooterState = SidebarContextState;
 
 export namespace SidebarFooterProps {
   export type Render = RenderProps<SidebarFooterState>;
@@ -37,6 +38,8 @@ export type ISidebarFooter = IComponent<SidebarFooterProps>;
  * ユーザーメニューなどを配置します。
  */
 export const SidebarFooter: ISidebarFooter = function SuiSidebarFooter(props) {
+  const ctx = useSidebarContext();
+
   return useRender({
     props: [
       props,
@@ -44,6 +47,7 @@ export const SidebarFooter: ISidebarFooter = function SuiSidebarFooter(props) {
         className: "sui_sidebar_footer",
       },
     ],
+    state: ctx,
     defaultTagName: "div",
   });
 };
