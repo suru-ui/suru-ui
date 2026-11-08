@@ -590,44 +590,6 @@ export const RootOnly = meta.story({
   },
 });
 
-export const Item = meta.story({
-  name: "リストアイテム",
-  ...ctrl({
-    color: "grey",
-    muted: false,
-    radius: undefined,
-    pending: false,
-    variant: "solid",
-    disabled: false,
-    outlined: false,
-  }),
-  render(props) {
-    return (
-      <div className="grid grid-cols-4 items-center justify-items-start gap-3">
-        <span />
-        {SIZES.map((size) => (
-          <span key={size} className="justify-self-center">
-            {size}
-          </span>
-        ))}
-        <span>通常</span>
-        {SIZES.map((size) => (
-          <ButtonParts.Root key={size} {...props} size={size} className="w-64">
-            <GlobeIcon />
-            {size.toUpperCase()} ボタン
-          </ButtonParts.Root>
-        ))}
-        <span>item</span>
-        {SIZES.map((size) => (
-          <ButtonParts.Root key={size} {...props} item size={size} className="w-64">
-            <GlobeIcon />
-            {size.toUpperCase()} ボタン
-          </ButtonParts.Root>
-        ))}
-      </div>
-    );
-  },
-});
 export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
