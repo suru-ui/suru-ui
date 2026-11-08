@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./button.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import { ButtonCircularProgressFillRotation } from "./circular-progress-fill-rotation/button.circular-progress-fill-rotation.jsx";
 import { ButtonCircularProgressFill } from "./circular-progress-fill/button.circular-progress-fill.jsx";
 import { ButtonCircularProgressTrack } from "./circular-progress-track/button.circular-progress-track.jsx";
@@ -210,7 +209,7 @@ describe("ButtonRoot の配置", () => {
     );
   });
 
-  test.skipIf(!supportsCustomFunctions())("outlined では枠線を表示する", async ({ expect }) => {
+  test("outlined では枠線を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<ButtonRoot outlined />);
 

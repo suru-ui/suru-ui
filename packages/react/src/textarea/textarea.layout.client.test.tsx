@@ -4,7 +4,6 @@ import { render } from "vitest-browser-react";
 
 import { FieldRoot } from "../field/root/field.root.jsx";
 import "./textarea.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { TextareaRoot } from "./root/textarea.root.jsx";
 
@@ -46,7 +45,7 @@ describe("TextareaRoot の配置", () => {
     expect(lg.minHeight).toBe("36px");
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさに応じた水平余白を持つ", async ({ expect }) => {
+  test("大きさに応じた水平余白を持つ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -161,7 +160,7 @@ describe("TextareaRoot の配置", () => {
     expect(naked.backgroundColor).not.toBe(liquid.backgroundColor);
   });
 
-  test.skipIf(!supportsCustomFunctions())("outlined で枠線を描く", async ({ expect }) => {
+  test("outlined で枠線を描く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>

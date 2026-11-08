@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./slider.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { Slider } from "./slider.jsx";
 
@@ -232,7 +231,7 @@ describe("Slider の配置", () => {
     );
   });
 
-  test.skipIf(!supportsCustomFunctions())("枠線をトラックへ描く", async ({ expect }) => {
+  test("枠線をトラックへ描く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>

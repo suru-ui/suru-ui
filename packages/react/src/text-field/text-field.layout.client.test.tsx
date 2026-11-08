@@ -4,7 +4,6 @@ import { render } from "vitest-browser-react";
 
 import { FieldRoot } from "../field/root/field.root.jsx";
 import "./text-field.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { TextField } from "./text-field.jsx";
 
@@ -40,7 +39,7 @@ describe("TextField の配置", () => {
     expect(getComputedStyle(roots[2]!).minHeight).toBe("36px");
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさに応じた水平余白を持つ", async ({ expect }) => {
+  test("大きさに応じた水平余白を持つ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -63,33 +62,28 @@ describe("TextField の配置", () => {
     }
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "大きさに応じた間隔で入力欄と Addon を離す",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <span id="expected-sm" style={{ display: "flex", columnGap: "--sui-gap(0.5)" }} />
-          <span id="expected-md" style={{ display: "flex", columnGap: "--sui-gap(1)" }} />
-          <span id="expected-lg" style={{ display: "flex", columnGap: "--sui-gap(1.5)" }} />
-          <TextField size="sm" endAddons={["🔒"]} />
-          <TextField size="md" endAddons={["🔒"]} />
-          <TextField size="lg" endAddons={["🔒"]} />
-        </>,
-      );
+  test("大きさに応じた間隔で入力欄と Addon を離す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <span id="expected-sm" style={{ display: "flex", columnGap: "--sui-gap(0.5)" }} />
+        <span id="expected-md" style={{ display: "flex", columnGap: "--sui-gap(1)" }} />
+        <span id="expected-lg" style={{ display: "flex", columnGap: "--sui-gap(1.5)" }} />
+        <TextField size="sm" endAddons={["🔒"]} />
+        <TextField size="md" endAddons={["🔒"]} />
+        <TextField size="lg" endAddons={["🔒"]} />
+      </>,
+    );
 
-      // 検証
-      const roots = screen.container.querySelectorAll<HTMLElement>(".sui_text_field");
-      for (const [index, id] of (
-        ["expected-sm", "expected-md", "expected-lg"] as const
-      ).entries()) {
-        const expected = getComputedStyle(
-          screen.container.querySelector<HTMLElement>(`#${id}`)!,
-        ).columnGap;
-        expect(getComputedStyle(roots[index]!).columnGap).toBe(expected);
-      }
-    },
-  );
+    // 検証
+    const roots = screen.container.querySelectorAll<HTMLElement>(".sui_text_field");
+    for (const [index, id] of (["expected-sm", "expected-md", "expected-lg"] as const).entries()) {
+      const expected = getComputedStyle(
+        screen.container.querySelector<HTMLElement>(`#${id}`)!,
+      ).columnGap;
+      expect(getComputedStyle(roots[index]!).columnGap).toBe(expected);
+    }
+  });
 
   test("大きさに応じた活字を持つ", async ({ expect }) => {
     // 準備と実行
@@ -135,26 +129,23 @@ describe("TextField の配置", () => {
     }
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "入力欄を残りの幅いっぱいに広げる",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(<TextField style={{ width: "320px" }} endAddons={["🔒"]} />);
-      const root = screen.getByClassName("sui_text_field").element();
-      const rootStyle = getComputedStyle(root);
-      const addonRect = screen.getByText("🔒").element().getBoundingClientRect();
+  test("入力欄を残りの幅いっぱいに広げる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<TextField style={{ width: "320px" }} endAddons={["🔒"]} />);
+    const root = screen.getByClassName("sui_text_field").element();
+    const rootStyle = getComputedStyle(root);
+    const addonRect = screen.getByText("🔒").element().getBoundingClientRect();
 
-      // 検証
-      const remainingWidth =
-        root.getBoundingClientRect().width -
-        Number.parseFloat(rootStyle.paddingInlineStart) -
-        Number.parseFloat(rootStyle.paddingInlineEnd) -
-        addonRect.width -
-        Number.parseFloat(rootStyle.columnGap);
-      const input = screen.getByClassName("sui_text_field_input").element().getBoundingClientRect();
-      expect(input.width).toBeCloseTo(remainingWidth, 0);
-    },
-  );
+    // 検証
+    const remainingWidth =
+      root.getBoundingClientRect().width -
+      Number.parseFloat(rootStyle.paddingInlineStart) -
+      Number.parseFloat(rootStyle.paddingInlineEnd) -
+      addonRect.width -
+      Number.parseFloat(rootStyle.columnGap);
+    const input = screen.getByClassName("sui_text_field_input").element().getBoundingClientRect();
+    expect(input.width).toBeCloseTo(remainingWidth, 0);
+  });
 
   test("指定した角丸でルートを切り抜く", async ({ expect }) => {
     // 準備と実行
@@ -219,7 +210,7 @@ describe("TextField の配置", () => {
     );
   });
 
-  test.skipIf(!supportsCustomFunctions())("outlined でルートに枠線を描く", async ({ expect }) => {
+  test("outlined でルートに枠線を描く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>

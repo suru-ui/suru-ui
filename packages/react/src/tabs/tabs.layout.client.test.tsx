@@ -4,7 +4,6 @@ import { vi, test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./tabs.parts.js";
-import supportsCustomFunctions from "../button/_supports-custom-functions.js";
 import { TabsIndicator } from "./indicator/tabs.indicator.jsx";
 import { TabsList } from "./list/tabs.list.jsx";
 import { TabsPanel } from "./panel/tabs.panel.jsx";
@@ -122,7 +121,7 @@ describe("Tabs の配置", () => {
     expect(list.borderInlineEndStyle).toBe("solid");
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさごとの間隔と余白を付ける", async ({ expect }) => {
+  test("大きさごとの間隔と余白を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -144,33 +143,24 @@ describe("Tabs の配置", () => {
     expect(lg.paddingInlineStart).toBe("8px");
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "区切り表示では大きめの間隔を付ける",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <Tabs id="sm" size="sm" items={[...items]} variant="segments" defaultValue="overview" />
-          <Tabs id="md" size="md" items={[...items]} variant="segments" defaultValue="overview" />
-          <Tabs id="lg" size="lg" items={[...items]} variant="segments" defaultValue="overview" />
-        </>,
-      );
+  test("区切り表示では大きめの間隔を付ける", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <Tabs id="sm" size="sm" items={[...items]} variant="segments" defaultValue="overview" />
+        <Tabs id="md" size="md" items={[...items]} variant="segments" defaultValue="overview" />
+        <Tabs id="lg" size="lg" items={[...items]} variant="segments" defaultValue="overview" />
+      </>,
+    );
 
-      // 検証
-      const sm = getComputedStyle(
-        screen.container.querySelector<HTMLElement>("#sm [role=tablist]")!,
-      );
-      expect(sm.columnGap).toBe("2px");
-      const md = getComputedStyle(
-        screen.container.querySelector<HTMLElement>("#md [role=tablist]")!,
-      );
-      expect(md.columnGap).toBe("4px");
-      const lg = getComputedStyle(
-        screen.container.querySelector<HTMLElement>("#lg [role=tablist]")!,
-      );
-      expect(lg.columnGap).toBe("6px");
-    },
-  );
+    // 検証
+    const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tablist]")!);
+    expect(sm.columnGap).toBe("2px");
+    const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tablist]")!);
+    expect(md.columnGap).toBe("4px");
+    const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tablist]")!);
+    expect(lg.columnGap).toBe("6px");
+  });
 
   test("大きさごとの活字と最小高さを反映する", async ({ expect }) => {
     // 準備と実行
@@ -194,27 +184,24 @@ describe("Tabs の配置", () => {
     expect(lg.minHeight).toBe("36px");
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "タブの左右の余白を大きさに合わせる",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <Tabs id="sm" size="sm" items={[...items]} defaultValue="overview" />
-          <Tabs id="md" size="md" items={[...items]} defaultValue="overview" />
-          <Tabs id="lg" size="lg" items={[...items]} defaultValue="overview" />
-        </>,
-      );
+  test("タブの左右の余白を大きさに合わせる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <Tabs id="sm" size="sm" items={[...items]} defaultValue="overview" />
+        <Tabs id="md" size="md" items={[...items]} defaultValue="overview" />
+        <Tabs id="lg" size="lg" items={[...items]} defaultValue="overview" />
+      </>,
+    );
 
-      // 検証
-      const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
-      expect(Number.parseFloat(sm.paddingInlineStart)).toBeCloseTo(8, 1);
-      const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
-      expect(Number.parseFloat(md.paddingInlineStart)).toBeCloseTo(12, 1);
-      const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
-      expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(16, 1);
-    },
-  );
+    // 検証
+    const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
+    expect(Number.parseFloat(sm.paddingInlineStart)).toBeCloseTo(8, 1);
+    const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
+    expect(Number.parseFloat(md.paddingInlineStart)).toBeCloseTo(12, 1);
+    const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
+    expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(16, 1);
+  });
 
   test("角丸を大きさに合わせる", async ({ expect }) => {
     // 準備と実行
@@ -297,7 +284,7 @@ describe("Tabs の配置", () => {
     });
   });
 
-  test.skipIf(!supportsCustomFunctions())("outlined でルートに枠線を付ける", async ({ expect }) => {
+  test("outlined でルートに枠線を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -313,7 +300,7 @@ describe("Tabs の配置", () => {
     expect(Number.parseFloat(outlined.borderTopWidth)).toBeGreaterThan(0);
   });
 
-  test.skipIf(!supportsCustomFunctions())("パネルに余白を付ける", async ({ expect }) => {
+  test("パネルに余白を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <Tabs

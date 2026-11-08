@@ -4,7 +4,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./breadcrumb.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { Breadcrumb } from "./breadcrumb.jsx";
 
@@ -43,7 +42,7 @@ describe("Breadcrumb の配置", () => {
     expect(link.textDecorationLine).toBe("none");
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさごとの間隔を付ける", async ({ expect }) => {
+  test("大きさごとの間隔を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -62,27 +61,24 @@ describe("Breadcrumb の配置", () => {
     expect(lg.columnGap).toBe("6px");
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "リンクの左右の余白を大きさの間隔に合わせる",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <Breadcrumb id="sm" size="sm" items={[...items]} />
-          <Breadcrumb id="md" size="md" items={[...items]} />
-          <Breadcrumb id="lg" size="lg" items={[...items]} />
-        </>,
-      );
+  test("リンクの左右の余白を大きさの間隔に合わせる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <Breadcrumb id="sm" size="sm" items={[...items]} />
+        <Breadcrumb id="md" size="md" items={[...items]} />
+        <Breadcrumb id="lg" size="lg" items={[...items]} />
+      </>,
+    );
 
-      // 検証
-      const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm a")!);
-      expect(sm.paddingInlineStart).toBe("2px");
-      const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md a")!);
-      expect(md.paddingInlineStart).toBe("4px");
-      const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg a")!);
-      expect(lg.paddingInlineStart).toBe("6px");
-    },
-  );
+    // 検証
+    const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm a")!);
+    expect(sm.paddingInlineStart).toBe("2px");
+    const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md a")!);
+    expect(md.paddingInlineStart).toBe("4px");
+    const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg a")!);
+    expect(lg.paddingInlineStart).toBe("6px");
+  });
 
   test("活字を大きさに追従させる", async ({ expect }) => {
     // 準備と実行

@@ -3,7 +3,6 @@ import * as React from "react";
 import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { Drawer } from "./drawer.jsx";
 
@@ -147,43 +146,37 @@ describe("Drawer の配置", () => {
     expect(rect.left).toBeGreaterThan(window.innerWidth / 2);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "ヘッダーと本文とフッターの余白を揃える",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <Drawer
-          title="見出し"
-          footer={<button type="button">保存</button>}
-          defaultOpen
-          description="説明"
-        >
-          本文
-        </Drawer>,
-      );
+  test("ヘッダーと本文とフッターの余白を揃える", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Drawer
+        title="見出し"
+        footer={<button type="button">保存</button>}
+        defaultOpen
+        description="説明"
+      >
+        本文
+      </Drawer>,
+    );
 
-      // 検証
-      const headerStyle = getComputedStyle(screen.getByClassName("sui_drawer_header").element());
-      expect(Number.parseFloat(headerStyle.paddingBlockStart)).toBeCloseTo(16, 2);
-      expect(Number.parseFloat(headerStyle.paddingBlockEnd)).toBeCloseTo(0, 2);
-      expect(Number.parseFloat(headerStyle.paddingInlineStart)).toBeCloseTo(16, 2);
-      expect(Number.parseFloat(headerStyle.rowGap)).toBeCloseTo(
-        window.innerWidth >= 768 ? 6 : 2,
-        2,
-      );
-      const bodyStyle = getComputedStyle(screen.getByClassName("sui_drawer_body").element());
-      expect(Number.parseFloat(bodyStyle.paddingBlockStart)).toBeCloseTo(16, 2);
-      expect(Number.parseFloat(bodyStyle.paddingInlineStart)).toBeCloseTo(16, 2);
-      const footerStyle = getComputedStyle(screen.getByClassName("sui_drawer_footer").element());
-      expect(Number.parseFloat(footerStyle.paddingBlockStart)).toBeCloseTo(0, 2);
-      expect(Number.parseFloat(footerStyle.paddingBlockEnd)).toBeCloseTo(16, 2);
-      expect(Number.parseFloat(footerStyle.paddingInlineStart)).toBeCloseTo(16, 2);
-      expect(Number.parseFloat(footerStyle.gap)).toBeCloseTo(8, 2);
-      expect(footerStyle.flexDirection).toBe("column");
-    },
-  );
+    // 検証
+    const headerStyle = getComputedStyle(screen.getByClassName("sui_drawer_header").element());
+    expect(Number.parseFloat(headerStyle.paddingBlockStart)).toBeCloseTo(16, 2);
+    expect(Number.parseFloat(headerStyle.paddingBlockEnd)).toBeCloseTo(0, 2);
+    expect(Number.parseFloat(headerStyle.paddingInlineStart)).toBeCloseTo(16, 2);
+    expect(Number.parseFloat(headerStyle.rowGap)).toBeCloseTo(window.innerWidth >= 768 ? 6 : 2, 2);
+    const bodyStyle = getComputedStyle(screen.getByClassName("sui_drawer_body").element());
+    expect(Number.parseFloat(bodyStyle.paddingBlockStart)).toBeCloseTo(16, 2);
+    expect(Number.parseFloat(bodyStyle.paddingInlineStart)).toBeCloseTo(16, 2);
+    const footerStyle = getComputedStyle(screen.getByClassName("sui_drawer_footer").element());
+    expect(Number.parseFloat(footerStyle.paddingBlockStart)).toBeCloseTo(0, 2);
+    expect(Number.parseFloat(footerStyle.paddingBlockEnd)).toBeCloseTo(16, 2);
+    expect(Number.parseFloat(footerStyle.paddingInlineStart)).toBeCloseTo(16, 2);
+    expect(Number.parseFloat(footerStyle.gap)).toBeCloseTo(8, 2);
+    expect(footerStyle.flexDirection).toBe("column");
+  });
 
-  test.skipIf(!supportsCustomFunctions())("見出しの下に説明を並べる", async ({ expect }) => {
+  test("見出しの下に説明を並べる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <Drawer title="見出し" defaultOpen description="説明">
@@ -201,77 +194,62 @@ describe("Drawer の配置", () => {
     expect(descriptionRect.left).toBeCloseTo(titleRect.left, 0);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "閉じるアイコンボタンを右上に置く",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <Drawer title="見出し" defaultOpen>
-          本文
-        </Drawer>,
-      );
+  test("閉じるアイコンボタンを右上に置く", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Drawer title="見出し" defaultOpen>
+        本文
+      </Drawer>,
+    );
 
-      // 検証
-      const controls = screen.getByClassName("sui_drawer_controls").element();
-      expect(getComputedStyle(controls).position).toBe("absolute");
-      expect(getComputedStyle(controls).justifyContent).toBe("flex-end");
-      expect(getComputedStyle(controls).gap).toBe("8px");
-      const headerRect = screen
-        .getByClassName("sui_drawer_header")
-        .element()
-        .getBoundingClientRect();
-      const buttonRect = screen
-        .getByRole("button", { name: "閉じる" })
-        .element()
-        .getBoundingClientRect();
-      expect(buttonRect.right).toBeCloseTo(headerRect.right - 16, 1);
-      expect(buttonRect.top).toBeCloseTo(headerRect.top + 16, 1);
-    },
-  );
+    // 検証
+    const controls = screen.getByClassName("sui_drawer_controls").element();
+    expect(getComputedStyle(controls).position).toBe("absolute");
+    expect(getComputedStyle(controls).justifyContent).toBe("flex-end");
+    expect(getComputedStyle(controls).gap).toBe("8px");
+    const headerRect = screen.getByClassName("sui_drawer_header").element().getBoundingClientRect();
+    const buttonRect = screen
+      .getByRole("button", { name: "閉じる" })
+      .element()
+      .getBoundingClientRect();
+    expect(buttonRect.right).toBeCloseTo(headerRect.right - 16, 1);
+    expect(buttonRect.top).toBeCloseTo(headerRect.top + 16, 1);
+  });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "操作が相対配置でも閉じるアイコンボタンを右端へ寄せる",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <Drawer controls="操作" slotProps={{ controls: { absolute: false } }} defaultOpen>
-          本文
-        </Drawer>,
-      );
+  test("操作が相対配置でも閉じるアイコンボタンを右端へ寄せる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Drawer controls="操作" slotProps={{ controls: { absolute: false } }} defaultOpen>
+        本文
+      </Drawer>,
+    );
 
-      // 検証
-      const controls = screen.getByClassName("sui_drawer_controls").element();
-      expect(getComputedStyle(controls).position).toBe("relative");
-      expect(getComputedStyle(controls).justifyContent).toBe("flex-end");
-      const headerRect = screen
-        .getByClassName("sui_drawer_header")
-        .element()
-        .getBoundingClientRect();
-      const buttonRect = screen
-        .getByRole("button", { name: "閉じる" })
-        .element()
-        .getBoundingClientRect();
-      expect(buttonRect.right).toBeCloseTo(headerRect.right - 16, 1);
-    },
-  );
+    // 検証
+    const controls = screen.getByClassName("sui_drawer_controls").element();
+    expect(getComputedStyle(controls).position).toBe("relative");
+    expect(getComputedStyle(controls).justifyContent).toBe("flex-end");
+    const headerRect = screen.getByClassName("sui_drawer_header").element().getBoundingClientRect();
+    const buttonRect = screen
+      .getByRole("button", { name: "閉じる" })
+      .element()
+      .getBoundingClientRect();
+    expect(buttonRect.right).toBeCloseTo(headerRect.right - 16, 1);
+  });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "本文だけのときはヘッダーを描画しない",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <Drawer defaultOpen showCloseIconButton={false}>
-          本文
-        </Drawer>,
-      );
+  test("本文だけのときはヘッダーを描画しない", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Drawer defaultOpen showCloseIconButton={false}>
+        本文
+      </Drawer>,
+    );
 
-      // 検証
-      expect(screen.getByClassName("sui_drawer_header").query()).toBe(null);
-      const content = screen.getByClassName("sui_drawer_content").element();
-      const body = screen.getByClassName("sui_drawer_body").element();
-      expect(body.getBoundingClientRect().top).toBeCloseTo(content.getBoundingClientRect().top, 1);
-    },
-  );
+    // 検証
+    expect(screen.getByClassName("sui_drawer_header").query()).toBe(null);
+    const content = screen.getByClassName("sui_drawer_content").element();
+    const body = screen.getByClassName("sui_drawer_body").element();
+    expect(body.getBoundingClientRect().top).toBeCloseTo(content.getBoundingClientRect().top, 1);
+  });
 
   test("insetで画面端から浮かせる", async ({ expect }) => {
     // 準備と実行

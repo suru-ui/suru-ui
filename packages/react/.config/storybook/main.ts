@@ -21,6 +21,7 @@ export default defineMain({
         unocss({
           presets: [
             presetWind3(),
+            // @ts-ignore
             presetSuruUI({ namespace: false }), // Suru UI のデザイントークンで上書きします。
           ],
         }),

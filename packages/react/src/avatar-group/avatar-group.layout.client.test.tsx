@@ -5,7 +5,6 @@ import { render } from "vitest-browser-react";
 import "./avatar-group.parts.js";
 import "../avatar/avatar.parts.js";
 import { AvatarRoot } from "../avatar/root/avatar.root.jsx";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import supportsSiblingIndex from "./_supports-sibling-index.js";
 import { AvatarGroupRoot } from "./root/avatar-group.root.jsx";
@@ -33,7 +32,7 @@ describe("AvatarGroupRoot の配置", () => {
     expect(avatars[2]!.getBoundingClientRect().top).toBeCloseTo(top, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("隣り合うアバターを互いに重ねる", async ({ expect }) => {
+  test("隣り合うアバターを互いに重ねる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <AvatarGroupRoot aria-label="仲間">
@@ -57,7 +56,7 @@ describe("AvatarGroupRoot の配置", () => {
     expect(first.right - second.left).toBeCloseTo(-overlap, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("reverse では逆側で重ねる", async ({ expect }) => {
+  test("reverse では逆側で重ねる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <AvatarGroupRoot reverse aria-label="仲間">
@@ -194,7 +193,7 @@ describe("AvatarGroupRoot の配置", () => {
     ).toBe(red);
   });
 
-  test.skipIf(!supportsCustomFunctions())("枠線で重なりを区切る", async ({ expect }) => {
+  test("枠線で重なりを区切る", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>

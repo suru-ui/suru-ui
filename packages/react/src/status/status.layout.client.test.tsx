@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./status.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { Status } from "./status.jsx";
 
@@ -69,7 +68,7 @@ describe("Status の配置", () => {
     );
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさごとの間隔を付ける", async ({ expect }) => {
+  test("大きさごとの間隔を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>

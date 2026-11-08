@@ -4,7 +4,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./fieldset.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import { Fieldset } from "./fieldset.jsx";
 import { FieldsetLegend } from "./legend/fieldset.legend.jsx";
 import "../../tests/src/_locators.js";
@@ -66,7 +65,7 @@ describe("フィールドセットの配置", () => {
     expect(legend.bottom).toBeLessThanOrEqual(content.top);
   });
 
-  test.skipIf(!supportsCustomFunctions())("凡例と内容の間隔を空ける", async ({ expect }) => {
+  test("凡例と内容の間隔を空ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <FieldsetRoot>
@@ -84,7 +83,7 @@ describe("フィールドセットの配置", () => {
     expect(content.top - legend.bottom).toBeCloseTo(gap, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("凡例の下に罫線を引く", async ({ expect }) => {
+  test("凡例の下に罫線を引く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <FieldsetRoot>

@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./meter.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { Meter } from "./meter.jsx";
 
@@ -41,26 +40,23 @@ describe("Meter の配置", () => {
     );
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "大きさが増えるほどトラックを高くする",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <Meter id="sm" size="sm" label="使用量" value={25} />
-          <Meter id="md" size="md" label="使用量" value={25} />
-          <Meter id="lg" size="lg" label="使用量" value={25} />
-        </>,
-      );
+  test("大きさが増えるほどトラックを高くする", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <Meter id="sm" size="sm" label="使用量" value={25} />
+        <Meter id="md" size="md" label="使用量" value={25} />
+        <Meter id="lg" size="lg" label="使用量" value={25} />
+      </>,
+    );
 
-      // 検証
-      const sm = Number.parseFloat(getComputedStyle(getTrack(screen.container, "sm")).height);
-      const md = Number.parseFloat(getComputedStyle(getTrack(screen.container, "md")).height);
-      const lg = Number.parseFloat(getComputedStyle(getTrack(screen.container, "lg")).height);
-      expect(md).toBeGreaterThan(sm);
-      expect(lg).toBeGreaterThan(md);
-    },
-  );
+    // 検証
+    const sm = Number.parseFloat(getComputedStyle(getTrack(screen.container, "sm")).height);
+    const md = Number.parseFloat(getComputedStyle(getTrack(screen.container, "md")).height);
+    const lg = Number.parseFloat(getComputedStyle(getTrack(screen.container, "lg")).height);
+    expect(md).toBeGreaterThan(sm);
+    expect(lg).toBeGreaterThan(md);
+  });
 
   test("指定した角丸でトラックとインジケーターを切り抜く", async ({ expect }) => {
     // 準備と実行
@@ -146,7 +142,7 @@ describe("Meter の配置", () => {
     );
   });
 
-  test.skipIf(!supportsCustomFunctions())("枠線をトラックへ描く", async ({ expect }) => {
+  test("枠線をトラックへ描く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>

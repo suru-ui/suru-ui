@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../resizable.parts.js";
-import supportsCustomFunctions from "../_supports-custom-functions.js";
 import { ResizablePanel } from "../panel/resizable.panel.jsx";
 import { ResizableRoot } from "../root/resizable.root.jsx";
 import "../../../tests/src/_locators.js";
@@ -74,7 +73,7 @@ describe("ResizableHandle", () => {
     expect(handle.classList.contains("sui_resizable_handle-disabled")).toBe(true);
   });
 
-  test.skipIf(!supportsCustomFunctions())("ホバーで配色を変える", async ({ expect }) => {
+  test("ホバーで配色を変える", async ({ expect }) => {
     // 準備
     const screen = await render(
       <ResizableRoot>

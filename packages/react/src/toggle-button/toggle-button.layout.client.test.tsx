@@ -4,7 +4,6 @@ import { render } from "vitest-browser-react";
 
 import "./toggle-button.parts.js";
 import { ButtonRoot } from "../button/root/button.root.jsx";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import { ToggleButtonCircularProgressFillRotation } from "./circular-progress-fill-rotation/toggle-button.circular-progress-fill-rotation.jsx";
 import { ToggleButtonCircularProgressFill } from "./circular-progress-fill/toggle-button.circular-progress-fill.jsx";
 import { ToggleButtonCircularProgressTrack } from "./circular-progress-track/toggle-button.circular-progress-track.jsx";
@@ -210,7 +209,7 @@ describe("ToggleButtonRoot の配置", () => {
     );
   });
 
-  test.skipIf(!supportsCustomFunctions())("outlined では枠線を表示する", async ({ expect }) => {
+  test("outlined では枠線を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<ToggleButtonRoot outlined />);
 

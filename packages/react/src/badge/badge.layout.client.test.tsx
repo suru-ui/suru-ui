@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./badge.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { BadgeRoot } from "./root/badge.root.jsx";
 
@@ -71,7 +70,7 @@ describe("BadgeRoot の配置", () => {
     expect(textRect.top + textRect.height / 2).toBeCloseTo(rootRect.top + rootRect.height / 2, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさごとの内側の余白を付ける", async ({ expect }) => {
+  test("大きさごとの内側の余白を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -96,7 +95,7 @@ describe("BadgeRoot の配置", () => {
     expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(14, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさごとの間隔を付ける", async ({ expect }) => {
+  test("大きさごとの間隔を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -175,7 +174,7 @@ describe("BadgeRoot の配置", () => {
     expect(root.backgroundColor).toBe(expected.backgroundColor);
   });
 
-  test.skipIf(!supportsCustomFunctions())("枠線を疑似要素で描く", async ({ expect }) => {
+  test("枠線を疑似要素で描く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -210,7 +209,7 @@ describe("BadgeRoot の配置", () => {
     expect(outlined.borderTopColor).toBe(expected.borderTopColor);
   });
 
-  test.skipIf(!supportsCustomFunctions())("リングを影で描く", async ({ expect }) => {
+  test("リングを影で描く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>

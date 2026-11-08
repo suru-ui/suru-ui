@@ -4,7 +4,6 @@ import { render } from "vitest-browser-react";
 
 import { FieldRoot } from "../field/root/field.root.jsx";
 import "./number-field.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { NumberField } from "./number-field.jsx";
 
@@ -26,35 +25,32 @@ describe("NumberField の配置", () => {
     expect(group.getBoundingClientRect().width).toBeCloseTo(root.getBoundingClientRect().width, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "スクラブ領域とグループを縦に並べる",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <span id="expected" style={{ gap: "--sui-gap(2)", display: "block" }} />
-          <NumberField scrubArea="数量" />
-        </>,
-      );
+  test("スクラブ領域とグループを縦に並べる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <span id="expected" style={{ gap: "--sui-gap(2)", display: "block" }} />
+        <NumberField scrubArea="数量" />
+      </>,
+    );
 
-      // 検証
-      const expected = Number.parseFloat(
-        getComputedStyle(screen.container.querySelector<HTMLElement>("#expected")!).rowGap,
-      );
-      const root = screen.getByClassName("sui_number_field").element();
-      expect(getComputedStyle(root).flexDirection).toBe("column");
-      const scrubRect = screen
-        .getByClassName("sui_number_field_scrub_area")
-        .element()
-        .getBoundingClientRect();
-      const groupRect = screen
-        .getByClassName("sui_number_field_group")
-        .element()
-        .getBoundingClientRect();
-      expect(scrubRect.bottom).toBeLessThanOrEqual(groupRect.top + 0.5);
-      expect(groupRect.top - scrubRect.bottom).toBeCloseTo(expected, 0);
-    },
-  );
+    // 検証
+    const expected = Number.parseFloat(
+      getComputedStyle(screen.container.querySelector<HTMLElement>("#expected")!).rowGap,
+    );
+    const root = screen.getByClassName("sui_number_field").element();
+    expect(getComputedStyle(root).flexDirection).toBe("column");
+    const scrubRect = screen
+      .getByClassName("sui_number_field_scrub_area")
+      .element()
+      .getBoundingClientRect();
+    const groupRect = screen
+      .getByClassName("sui_number_field_group")
+      .element()
+      .getBoundingClientRect();
+    expect(scrubRect.bottom).toBeLessThanOrEqual(groupRect.top + 0.5);
+    expect(groupRect.top - scrubRect.bottom).toBeCloseTo(expected, 0);
+  });
 
   test("大きさに応じたグループの最小高さを持つ", async ({ expect }) => {
     // 準備と実行
@@ -73,7 +69,7 @@ describe("NumberField の配置", () => {
     expect(getComputedStyle(groups[2]!).minHeight).toBe("36px");
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさに応じた水平余白を持つ", async ({ expect }) => {
+  test("大きさに応じた水平余白を持つ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -258,35 +254,32 @@ describe("NumberField の配置", () => {
     );
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "outlined で入力グループに枠線を描く",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <span
-            id="expected"
-            style={{
-              borderColor: "var(--sui-grey-naked-border-normal)",
-              borderStyle: "solid",
-              borderWidth: "--sui-border_width(1)",
-            }}
-          />
-          <NumberField outlined />
-        </>,
-      );
+  test("outlined で入力グループに枠線を描く", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <span
+          id="expected"
+          style={{
+            borderColor: "var(--sui-grey-naked-border-normal)",
+            borderStyle: "solid",
+            borderWidth: "--sui-border_width(1)",
+          }}
+        />
+        <NumberField outlined />
+      </>,
+    );
 
-      // 検証
-      const expected = getComputedStyle(screen.container.querySelector<HTMLElement>("#expected")!);
-      const after = getComputedStyle(
-        screen.getByClassName("sui_number_field_group").element(),
-        "::after",
-      );
-      expect(Number.parseFloat(after.borderTopWidth)).toBeGreaterThan(0.5);
-      expect(Number.parseFloat(after.borderTopWidth)).toBeLessThan(1.5);
-      expect(after.borderTopColor).toBe(expected.borderTopColor);
-    },
-  );
+    // 検証
+    const expected = getComputedStyle(screen.container.querySelector<HTMLElement>("#expected")!);
+    const after = getComputedStyle(
+      screen.getByClassName("sui_number_field_group").element(),
+      "::after",
+    );
+    expect(Number.parseFloat(after.borderTopWidth)).toBeGreaterThan(0.5);
+    expect(Number.parseFloat(after.borderTopWidth)).toBeLessThan(1.5);
+    expect(after.borderTopColor).toBe(expected.borderTopColor);
+  });
 
   test("outlined では hover で枠線色を変える", async ({ expect }) => {
     // 準備

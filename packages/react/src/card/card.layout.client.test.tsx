@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./card.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import { CardAction } from "./action/card.action.jsx";
 import { CardContent } from "./content/card.content.jsx";
 import { CardDescription } from "./description/card.description.jsx";
@@ -40,7 +39,7 @@ describe("CardRoot の配置", () => {
     expect(action.top).toBeCloseTo(title.top, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさごとの余白と間隔を付ける", async ({ expect }) => {
+  test("大きさごとの余白と間隔を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -80,50 +79,44 @@ describe("CardRoot の配置", () => {
     expect(lgContent.paddingInlineStart).toBe("20px");
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "フッターがあるときは下端の余白を詰める",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <CardRoot id="plain">
-            <CardContent>本文</CardContent>
-          </CardRoot>
-          <CardRoot id="with-footer">
-            <CardContent>本文</CardContent>
-            <CardFooter>フッター</CardFooter>
-          </CardRoot>
-        </>,
-      );
-
-      // 検証
-      const plain = getComputedStyle(screen.container.querySelector<HTMLElement>("#plain")!);
-      expect(plain.paddingBlockEnd).toBe("16px");
-      const withFooter = getComputedStyle(
-        screen.container.querySelector<HTMLElement>("#with-footer")!,
-      );
-      expect(withFooter.paddingBlockEnd).toBe("0px");
-    },
-  );
-
-  test.skipIf(!supportsCustomFunctions())(
-    "先頭の画像では上端の余白を詰める",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <CardRoot id="with-image">
-          <img alt="" />
+  test("フッターがあるときは下端の余白を詰める", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <CardRoot id="plain">
           <CardContent>本文</CardContent>
-        </CardRoot>,
-      );
+        </CardRoot>
+        <CardRoot id="with-footer">
+          <CardContent>本文</CardContent>
+          <CardFooter>フッター</CardFooter>
+        </CardRoot>
+      </>,
+    );
 
-      // 検証
-      const root = getComputedStyle(screen.container.querySelector<HTMLElement>("#with-image")!);
-      expect(root.paddingBlockStart).toBe("0px");
-    },
-  );
+    // 検証
+    const plain = getComputedStyle(screen.container.querySelector<HTMLElement>("#plain")!);
+    expect(plain.paddingBlockEnd).toBe("16px");
+    const withFooter = getComputedStyle(
+      screen.container.querySelector<HTMLElement>("#with-footer")!,
+    );
+    expect(withFooter.paddingBlockEnd).toBe("0px");
+  });
 
-  test.skipIf(!supportsCustomFunctions())("指定した角丸で切り抜く", async ({ expect }) => {
+  test("先頭の画像では上端の余白を詰める", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <CardRoot id="with-image">
+        <img alt="" />
+        <CardContent>本文</CardContent>
+      </CardRoot>,
+    );
+
+    // 検証
+    const root = getComputedStyle(screen.container.querySelector<HTMLElement>("#with-image")!);
+    expect(root.paddingBlockStart).toBe("0px");
+  });
+
+  test("指定した角丸で切り抜く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -145,7 +138,7 @@ describe("CardRoot の配置", () => {
     expect(lg.borderTopLeftRadius).toBe("16px");
   });
 
-  test.skipIf(!supportsCustomFunctions())("枠線を表示する", async ({ expect }) => {
+  test("枠線を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -162,28 +155,25 @@ describe("CardRoot の配置", () => {
     expect(Number.parseFloat(outlined.borderTopWidth)).toBeLessThan(1.5);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "フッターに区切り線と背景を付ける",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <span style={{ backgroundColor: "var(--sui-canvas-2)" }}>背景の基準</span>
-          <CardRoot id="with-footer">
-            <CardFooter>フッター</CardFooter>
-          </CardRoot>
-        </>,
-      );
+  test("フッターに区切り線と背景を付ける", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <span style={{ backgroundColor: "var(--sui-canvas-2)" }}>背景の基準</span>
+        <CardRoot id="with-footer">
+          <CardFooter>フッター</CardFooter>
+        </CardRoot>
+      </>,
+    );
 
-      // 検証
-      const expected = getComputedStyle(screen.getByText("背景の基準").element());
-      const footer = getComputedStyle(
-        screen.container.querySelector<HTMLElement>("#with-footer .sui_card_footer")!,
-      );
-      expect(Number.parseFloat(footer.borderBlockStartWidth)).toBeGreaterThan(0.5);
-      expect(footer.backgroundColor).toBe(expected.backgroundColor);
-    },
-  );
+    // 検証
+    const expected = getComputedStyle(screen.getByText("背景の基準").element());
+    const footer = getComputedStyle(
+      screen.container.querySelector<HTMLElement>("#with-footer .sui_card_footer")!,
+    );
+    expect(Number.parseFloat(footer.borderBlockStartWidth)).toBeGreaterThan(0.5);
+    expect(footer.backgroundColor).toBe(expected.backgroundColor);
+  });
 
   test("活字を大きさに追従させる", async ({ expect }) => {
     // 準備と実行
@@ -240,7 +230,7 @@ describe("CardRoot の配置", () => {
     expect(lgTitle.fontWeight).toBe("700");
   });
 
-  test.skipIf(!supportsCustomFunctions())("公開変数で余白を上書きできる", async ({ expect }) => {
+  test("公開変数で余白を上書きできる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<CardRoot id="custom" />);
     const root = screen.container.querySelector<HTMLElement>("#custom")!;

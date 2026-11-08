@@ -3,7 +3,6 @@ import * as React from "react";
 import { vi, test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import { MenuItem } from "./item/menu.item.jsx";
 import { Menu } from "./menu.jsx";
 import { MenuPopup } from "./popup/menu.popup.jsx";
@@ -22,53 +21,47 @@ const items = [
 ];
 
 describe("Menu の配置", () => {
-  test.skipIf(!supportsCustomFunctions())(
-    "ポップアップに角丸と項目の余白を付ける",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(<Menu items={items} defaultOpen />);
+  test("ポップアップに角丸と項目の余白を付ける", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<Menu items={items} defaultOpen />);
 
-      // 検証
-      const content = screen.getByRole("menu").element();
-      const style = getComputedStyle(content);
-      expect(Number.parseFloat(style.paddingBlockStart)).toBeCloseTo(0, 1);
-      expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(0, 1);
-      expect(style.borderRadius).toBe("12px");
-      expect(style.minWidth).toBe("192px");
-      expect(style.backgroundColor).toBe("rgb(255, 252, 240)");
+    // 検証
+    const content = screen.getByRole("menu").element();
+    const style = getComputedStyle(content);
+    expect(Number.parseFloat(style.paddingBlockStart)).toBeCloseTo(0, 1);
+    expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(0, 1);
+    expect(style.borderRadius).toBe("12px");
+    expect(style.minWidth).toBe("192px");
+    expect(style.backgroundColor).toBe("rgb(255, 252, 240)");
 
-      // 項目の当たり判定は、ポップアップの縁から少しだけ内側に置きます。
-      const firstItem = screen.getByRole("menuitem", { name: "編集" }).element();
-      const secondItem = screen.getByRole("menuitem", { name: "複製" }).element();
-      const firstItemStyle = getComputedStyle(firstItem);
-      expect(Number.parseFloat(firstItemStyle.marginBlockStart)).toBeCloseTo(5, 1);
-      expect(Number.parseFloat(firstItemStyle.marginInlineStart)).toBeCloseTo(5, 1);
+    // 項目の当たり判定は、ポップアップの縁から少しだけ内側に置きます。
+    const firstItem = screen.getByRole("menuitem", { name: "編集" }).element();
+    const secondItem = screen.getByRole("menuitem", { name: "複製" }).element();
+    const firstItemStyle = getComputedStyle(firstItem);
+    expect(Number.parseFloat(firstItemStyle.marginBlockStart)).toBeCloseTo(5, 1);
+    expect(Number.parseFloat(firstItemStyle.marginInlineStart)).toBeCloseTo(5, 1);
 
-      // 隣り合う項目は、Combobox と同じく隙間を空けずに並べます。
-      expect(
-        secondItem.getBoundingClientRect().top - firstItem.getBoundingClientRect().bottom,
-      ).toBeCloseTo(0, 1);
-    },
-  );
+    // 隣り合う項目は、Combobox と同じく隙間を空けずに並べます。
+    expect(
+      secondItem.getBoundingClientRect().top - firstItem.getBoundingClientRect().bottom,
+    ).toBeCloseTo(0, 1);
+  });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "大きさに応じて項目の余白と文字を変える",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(<Menu size="lg" items={items} defaultOpen />);
+  test("大きさに応じて項目の余白と文字を変える", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<Menu size="lg" items={items} defaultOpen />);
 
-      // 検証
-      const style = getComputedStyle(screen.getByRole("menu").element());
-      expect(Number.parseFloat(style.fontSize)).toBeGreaterThan(14);
+    // 検証
+    const style = getComputedStyle(screen.getByRole("menu").element());
+    expect(Number.parseFloat(style.fontSize)).toBeGreaterThan(14);
 
-      const item = screen.getByRole("menuitem", { name: "編集" }).element();
-      const itemStyle = getComputedStyle(item);
-      expect(Number.parseFloat(itemStyle.marginBlockStart)).toBeCloseTo(7, 1);
-      expect(Number.parseFloat(itemStyle.marginInlineStart)).toBeCloseTo(7, 1);
-    },
-  );
+    const item = screen.getByRole("menuitem", { name: "編集" }).element();
+    const itemStyle = getComputedStyle(item);
+    expect(Number.parseFloat(itemStyle.marginBlockStart)).toBeCloseTo(7, 1);
+    expect(Number.parseFloat(itemStyle.marginInlineStart)).toBeCloseTo(7, 1);
+  });
 
-  test.skipIf(!supportsCustomFunctions())("枠線を内側に引く", async ({ expect }) => {
+  test("枠線を内側に引く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Menu items={items} outlined defaultOpen />);
 
@@ -78,7 +71,7 @@ describe("Menu の配置", () => {
     expect(Number.parseFloat(style.borderTopWidth)).toBeCloseTo(1, 0);
   });
 
-  test.skipIf(!supportsCustomFunctions())("角丸なしでは直角にする", async ({ expect }) => {
+  test("角丸なしでは直角にする", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Menu items={items} radius="none" defaultOpen />);
 
@@ -86,7 +79,7 @@ describe("Menu の配置", () => {
     expect(getComputedStyle(screen.getByRole("menu").element()).borderRadius).toBe("0px");
   });
 
-  test.skipIf(!supportsCustomFunctions())("グループに間隔を空ける", async ({ expect }) => {
+  test("グループに間隔を空ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Menu items={items} defaultOpen />);
 
@@ -95,7 +88,7 @@ describe("Menu の配置", () => {
     expect(Number.parseFloat(getComputedStyle(group).gap)).toBeCloseTo(8, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("グループのラベルを項目に揃える", async ({ expect }) => {
+  test("グループのラベルを項目に揃える", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Menu items={items} defaultOpen />);
 
@@ -107,28 +100,25 @@ describe("Menu の配置", () => {
     expect(labelStyle.fontSize).toBe("12px");
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "項目を全幅に広げて内容を両端へ分ける",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(<Menu items={[{ label: "編集" }]} defaultOpen />);
+  test("項目を全幅に広げて内容を両端へ分ける", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<Menu items={[{ label: "編集" }]} defaultOpen />);
 
-      // 検証
-      const item = screen.getByRole("menuitem", { name: "編集" }).element();
-      const content = screen.getByRole("menu").element();
-      const style = getComputedStyle(item);
-      expect(style.justifyContent).toBe("space-between");
-      expect(Number.parseFloat(style.minHeight)).toBeCloseTo(32, 0);
-      // 項目ボタンは一覧向けに狭い余白 (`--sui-space(2.5 / 2)` = 5px) を持ちます。
-      expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(5, 1);
-      expect(item.getBoundingClientRect().width).toBeCloseTo(
-        content.getBoundingClientRect().width - 5 * 2,
-        0,
-      );
-    },
-  );
+    // 検証
+    const item = screen.getByRole("menuitem", { name: "編集" }).element();
+    const content = screen.getByRole("menu").element();
+    const style = getComputedStyle(item);
+    expect(style.justifyContent).toBe("space-between");
+    expect(Number.parseFloat(style.minHeight)).toBeCloseTo(32, 0);
+    // 項目ボタンは一覧向けに狭い余白 (`--sui-space(2.5 / 2)` = 5px) を持ちます。
+    expect(Number.parseFloat(style.paddingInlineStart)).toBeCloseTo(5, 1);
+    expect(item.getBoundingClientRect().width).toBeCloseTo(
+      content.getBoundingClientRect().width - 5 * 2,
+      0,
+    );
+  });
 
-  test.skipIf(!supportsCustomFunctions())("区切り線に余白を付ける", async ({ expect }) => {
+  test("区切り線に余白を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Menu items={items} defaultOpen />);
 
@@ -139,7 +129,7 @@ describe("Menu の配置", () => {
     expect(Number.parseFloat(style.marginBlockStart)).toBeCloseTo(12, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("サブメニューを親項目の右へ開く", async ({ expect }) => {
+  test("サブメニューを親項目の右へ開く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <Menu

@@ -4,7 +4,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./field.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import { FieldControl } from "./control/field.control.jsx";
 import { FieldDescription } from "./description/field.description.jsx";
 import { Field } from "./field.jsx";
@@ -74,29 +73,26 @@ describe("フィールドの配置", () => {
     expect(input.bottom).toBeLessThanOrEqual(description.top);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "ラベル・入力欄・説明文の間隔を空ける",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <FieldRoot>
-          <FieldLabel>名前</FieldLabel>
-          <FieldControl aria-label="名前" />
-          <FieldDescription>説明</FieldDescription>
-        </FieldRoot>,
-      );
+  test("ラベル・入力欄・説明文の間隔を空ける", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <FieldRoot>
+        <FieldLabel>名前</FieldLabel>
+        <FieldControl aria-label="名前" />
+        <FieldDescription>説明</FieldDescription>
+      </FieldRoot>,
+    );
 
-      // 検証
-      const root = screen.getByClassName("sui_field").element();
-      const gap = Number.parseFloat(getComputedStyle(root).rowGap);
-      expect(gap).toBeGreaterThan(0);
-      const label = screen.getByText("名前").element().getBoundingClientRect();
-      const input = screen.getByRole("textbox", { name: "名前" }).element().getBoundingClientRect();
-      const description = screen.getByText("説明").element().getBoundingClientRect();
-      expect(input.top - label.bottom).toBeCloseTo(gap, 1);
-      expect(description.top - input.bottom).toBeCloseTo(gap, 1);
-    },
-  );
+    // 検証
+    const root = screen.getByClassName("sui_field").element();
+    const gap = Number.parseFloat(getComputedStyle(root).rowGap);
+    expect(gap).toBeGreaterThan(0);
+    const label = screen.getByText("名前").element().getBoundingClientRect();
+    const input = screen.getByRole("textbox", { name: "名前" }).element().getBoundingClientRect();
+    const description = screen.getByText("説明").element().getBoundingClientRect();
+    expect(input.top - label.bottom).toBeCloseTo(gap, 1);
+    expect(description.top - input.bottom).toBeCloseTo(gap, 1);
+  });
 
   test("項目を縦並びにする", async ({ expect }) => {
     // 準備と実行
@@ -115,7 +111,7 @@ describe("フィールドの配置", () => {
     expect(item.flexDirection).toBe("column");
   });
 
-  test.skipIf(!supportsCustomFunctions())("項目内の間隔を空ける", async ({ expect }) => {
+  test("項目内の間隔を空ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <FieldRoot>

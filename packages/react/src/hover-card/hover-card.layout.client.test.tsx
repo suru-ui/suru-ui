@@ -3,7 +3,6 @@ import * as React from "react";
 import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { HoverCard } from "./hover-card.jsx";
 
@@ -17,7 +16,7 @@ function computedStyle(testId: string): CSSStyleDeclaration {
 }
 
 describe("HoverCard の余白と配置", () => {
-  test.skipIf(!supportsCustomFunctions())("大きさに応じて幅と余白を変える", async ({ expect }) => {
+  test("大きさに応じて幅と余白を変える", async ({ expect }) => {
     // 準備と実行
     await render(
       <>
@@ -48,28 +47,25 @@ describe("HoverCard の余白と配置", () => {
     expect(Number.parseFloat(md.paddingInlineStart)).toBe(Number.parseFloat(md.paddingBlockStart));
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "内容を縦に並べて子の間隔を空ける",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <HoverCard trigger={trigger} defaultOpen data-testid="stack">
-          <span>見出し</span>
-          <span>本文</span>
-        </HoverCard>,
-      );
+  test("内容を縦に並べて子の間隔を空ける", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <HoverCard trigger={trigger} defaultOpen data-testid="stack">
+        <span>見出し</span>
+        <span>本文</span>
+      </HoverCard>,
+    );
 
-      // 検証
-      const style = computedStyle("stack");
-      expect(style.display).toBe("flex");
-      expect(style.flexDirection).toBe("column");
-      const gap = Number.parseFloat(style.rowGap);
-      expect(gap).toBeGreaterThan(0);
-      const title = screen.getByText("見出し").element().getBoundingClientRect();
-      const body = screen.getByText("本文").element().getBoundingClientRect();
-      expect(body.top - title.bottom).toBeCloseTo(gap, 1);
-    },
-  );
+    // 検証
+    const style = computedStyle("stack");
+    expect(style.display).toBe("flex");
+    expect(style.flexDirection).toBe("column");
+    const gap = Number.parseFloat(style.rowGap);
+    expect(gap).toBeGreaterThan(0);
+    const title = screen.getByText("見出し").element().getBoundingClientRect();
+    const body = screen.getByText("本文").element().getBoundingClientRect();
+    expect(body.top - title.bottom).toBeCloseTo(gap, 1);
+  });
 
   test("角丸を指定どおりにする", async ({ expect }) => {
     // 準備と実行
@@ -89,7 +85,7 @@ describe("HoverCard の余白と配置", () => {
     expect(Number.parseFloat(computedStyle("lg").borderRadius)).toBeGreaterThan(0);
   });
 
-  test.skipIf(!supportsCustomFunctions())("枠線を内側に引く", async ({ expect }) => {
+  test("枠線を内側に引く", async ({ expect }) => {
     // 準備と実行
     await render(
       <>

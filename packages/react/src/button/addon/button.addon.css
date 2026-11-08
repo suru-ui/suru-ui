@@ -15,8 +15,8 @@
     text-overflow: ellipsis;
     font-feature-settings: "palt";
     vertical-align: middle;
-    white-space: nowrap;
     text-box: trim-both cap alphabetic;
+    white-space: nowrap;
 
     &:empty {
       display: none;

@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./pagination.parts.js";
-import supportsCustomFunctions from "../button/_supports-custom-functions.js";
 import { PaginationEllipsis } from "./ellipsis/pagination.ellipsis.jsx";
 import { PaginationItem } from "./item/pagination.item.jsx";
 import { PaginationNextButton } from "./next-button/pagination.next-button.jsx";
@@ -67,7 +66,7 @@ describe("PaginationRoot の配置", () => {
     expect(next.left).toBeGreaterThanOrEqual(item.right);
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさに応じた間隔を持つ", async ({ expect }) => {
+  test("大きさに応じた間隔を持つ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -174,22 +173,19 @@ describe("焦点リング", () => {
     expect(Number.parseFloat(getComputedStyle(next).outlineWidth)).toBeGreaterThan(0);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "省略記号ボタンはフォーカス時に焦点リングを表示する",
-    async ({ expect }) => {
-      // 準備
-      const screen = await render(
-        <PaginationRoot totalPages={20}>
-          <PaginationEllipsis end={4} start={2} />
-        </PaginationRoot>,
-      );
-      const button = screen.getByRole("button", { name: "2〜4ページへ移動" }).element();
+  test("省略記号ボタンはフォーカス時に焦点リングを表示する", async ({ expect }) => {
+    // 準備
+    const screen = await render(
+      <PaginationRoot totalPages={20}>
+        <PaginationEllipsis end={4} start={2} />
+      </PaginationRoot>,
+    );
+    const button = screen.getByRole("button", { name: "2〜4ページへ移動" }).element();
 
-      // 実行
-      button.focus({ focusVisible: true });
+    // 実行
+    button.focus({ focusVisible: true });
 
-      // 検証
-      expect(Number.parseFloat(getComputedStyle(button).outlineWidth)).toBeGreaterThan(0);
-    },
-  );
+    // 検証
+    expect(Number.parseFloat(getComputedStyle(button).outlineWidth)).toBeGreaterThan(0);
+  });
 });

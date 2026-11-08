@@ -10,6 +10,7 @@
   text-overflow: ellipsis;
   font-feature-settings: "palt";
   vertical-align: middle;
+  text-box: trim-both cap alphabetic;
   white-space: nowrap;
   text-decoration: none;
   touch-action: manipulation;
@@ -17,7 +18,6 @@
   user-select: none;
   outline-style: solid;
   border-style: solid;
-  text-box: trim-both cap alphabetic;
 }
 
 /* 変数 */
@@ -214,7 +214,10 @@
   }
 
   &.sui_button-radius_full {
-    --sui_button-border_radius: calc(var(--sui_button-min_height) / 2);
+    --sui_button-border_radius: calc(
+                                  var(--_sui_button-min_height, var(--sui_button-min_height))
+                                  / 2
+                                );
     --sui_button-corner_shape: superellipse(var(--sui-superellipse));
   }
 

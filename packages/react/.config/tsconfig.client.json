@@ -2,6 +2,7 @@
   "extends": ["@tsconfig/strictest"],
   "include": [
     "./global.d.ts",
+    "./_reset-pointer.ts",
     "../src/**/*.client.test.ts",
     "../src/**/*.client.test.tsx",
     "../tests/**/*.client.test.ts",

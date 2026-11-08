@@ -4,7 +4,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./alert.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import { AlertActions } from "./actions/alert.actions.jsx";
 import { AlertDescription } from "./description/alert.description.jsx";
 import { AlertIcon } from "./icon/alert.icon.jsx";
@@ -106,32 +105,29 @@ describe("AlertRoot の配置", () => {
     ).toBe("start");
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "説明文を横に並べたときアクションを末尾に置く",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <AlertRoot actionsPosition="side" descriptionPosition="side-end" aria-label="通知">
-          <AlertIcon />
-          <AlertTitle>更新完了</AlertTitle>
-          <AlertDescription>プロフィールを更新しました。</AlertDescription>
-          <AlertActions>
-            <button type="button">再試行</button>
-          </AlertActions>
-        </AlertRoot>,
-      );
+  test("説明文を横に並べたときアクションを末尾に置く", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertRoot actionsPosition="side" descriptionPosition="side-end" aria-label="通知">
+        <AlertIcon />
+        <AlertTitle>更新完了</AlertTitle>
+        <AlertDescription>プロフィールを更新しました。</AlertDescription>
+        <AlertActions>
+          <button type="button">再試行</button>
+        </AlertActions>
+      </AlertRoot>,
+    );
 
-      // 検証
-      const description = screen
-        .getByText("プロフィールを更新しました。")
-        .element()
-        .getBoundingClientRect();
-      const actions = screen.getByClassName("sui_alert_actions").element();
-      expect(getComputedStyle(actions).gridColumnStart).toBe("4");
-      const actionsRect = actions.getBoundingClientRect();
-      expect(actionsRect.left).toBeGreaterThan(description.right);
-    },
-  );
+    // 検証
+    const description = screen
+      .getByText("プロフィールを更新しました。")
+      .element()
+      .getBoundingClientRect();
+    const actions = screen.getByClassName("sui_alert_actions").element();
+    expect(getComputedStyle(actions).gridColumnStart).toBe("4");
+    const actionsRect = actions.getBoundingClientRect();
+    expect(actionsRect.left).toBeGreaterThan(description.right);
+  });
 
   test("説明文の下にアクションを置く", async ({ expect }) => {
     // 準備と実行
@@ -153,7 +149,7 @@ describe("AlertRoot の配置", () => {
     expect(description.bottom).toBeLessThanOrEqual(actions.top);
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさごとの余白と間隔を付ける", async ({ expect }) => {
+  test("大きさごとの余白と間隔を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -187,7 +183,7 @@ describe("AlertRoot の配置", () => {
     expect(lg.paddingInlineStart).toBe("14px");
   });
 
-  test.skipIf(!supportsCustomFunctions())("枠線の幅だけ内側の余白を詰める", async ({ expect }) => {
+  test("枠線の幅だけ内側の余白を詰める", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -211,44 +207,38 @@ describe("AlertRoot の配置", () => {
     expect(Number.parseFloat(outlined.paddingInlineStart)).toBeCloseTo(9, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "アイコンとタイトルの間隔を空ける",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <AlertRoot aria-label="通知">
-          <AlertIcon />
-          <AlertTitle>更新完了</AlertTitle>
-        </AlertRoot>,
-      );
+  test("アイコンとタイトルの間隔を空ける", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertRoot aria-label="通知">
+        <AlertIcon />
+        <AlertTitle>更新完了</AlertTitle>
+      </AlertRoot>,
+    );
 
-      // 検証
-      const icon = screen.getByClassName("sui_alert_icon").element().getBoundingClientRect();
-      const title = screen.getByText("更新完了").element().getBoundingClientRect();
-      expect(title.left - icon.right).toBeCloseTo(8, 1);
-    },
-  );
+    // 検証
+    const icon = screen.getByClassName("sui_alert_icon").element().getBoundingClientRect();
+    const title = screen.getByText("更新完了").element().getBoundingClientRect();
+    expect(title.left - icon.right).toBeCloseTo(8, 1);
+  });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "説明文をタイトルの行間だけ下げる",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <AlertRoot actionsPosition="bottom" aria-label="通知">
-          <AlertTitle>更新完了</AlertTitle>
-          <AlertDescription>プロフィールを更新しました。</AlertDescription>
-        </AlertRoot>,
-      );
+  test("説明文をタイトルの行間だけ下げる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertRoot actionsPosition="bottom" aria-label="通知">
+        <AlertTitle>更新完了</AlertTitle>
+        <AlertDescription>プロフィールを更新しました。</AlertDescription>
+      </AlertRoot>,
+    );
 
-      // 検証
-      const title = screen.getByText("更新完了").element().getBoundingClientRect();
-      const description = screen
-        .getByText("プロフィールを更新しました。")
-        .element()
-        .getBoundingClientRect();
-      expect(description.top - title.bottom).toBeCloseTo(2, 1);
-    },
-  );
+    // 検証
+    const title = screen.getByText("更新完了").element().getBoundingClientRect();
+    const description = screen
+      .getByText("プロフィールを更新しました。")
+      .element()
+      .getBoundingClientRect();
+    expect(description.top - title.bottom).toBeCloseTo(2, 1);
+  });
 
   test("アイコンをタイトルの行に揃える", async ({ expect }) => {
     // 準備と実行
@@ -370,7 +360,7 @@ describe("AlertRoot の配置", () => {
     expect(getComputedStyle(icon, "::before").backgroundColor).toBe(expected);
   });
 
-  test.skipIf(!supportsCustomFunctions())("アクションを右下に寄せる", async ({ expect }) => {
+  test("アクションを右下に寄せる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <AlertRoot actionsPosition="bottom" aria-label="通知">
@@ -406,109 +396,94 @@ describe("AlertRoot の配置", () => {
     expect(actionsRect.bottom).toBeCloseTo(root.bottom - 6, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "アクションをタイトルと説明文の右側に縦方向へ並べる",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
+  test("アクションをタイトルと説明文の右側に縦方向へ並べる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertRoot actionsPosition="side" aria-label="通知">
+        <AlertIcon />
+        <AlertTitle>更新完了</AlertTitle>
+        <AlertDescription>プロフィールを更新しました。</AlertDescription>
+        <AlertActions>
+          <button type="button">閉じる</button>
+          <button type="button">再試行</button>
+        </AlertActions>
+      </AlertRoot>,
+    );
+
+    // 検証
+    const root = screen.getByRole("alert", { name: "通知" }).element();
+    expect(root.classList.contains("sui_alert-actions_position_side")).toBe(true);
+    const rootRect = root.getBoundingClientRect();
+    const titleRect = screen.getByText("更新完了").element().getBoundingClientRect();
+    const descriptionRect = screen
+      .getByText("プロフィールを更新しました。")
+      .element()
+      .getBoundingClientRect();
+    const actions = screen.getByClassName("sui_alert_actions").element();
+    const actionsStyle = getComputedStyle(actions);
+    expect(actionsStyle.gridColumnStart).toBe("3");
+    expect(actionsStyle.flexDirection).toBe("column");
+    expect(actionsStyle.paddingBlockStart).toBe("0px");
+    expect(actionsStyle.paddingBlockEnd).toBe("0px");
+    const actionsRect = actions.getBoundingClientRect();
+    expect(actionsRect.left).toBeGreaterThan(descriptionRect.right);
+    expect(actionsRect.right).toBeCloseTo(rootRect.right - 10, 1);
+    const actionsCenter = (actionsRect.top + actionsRect.bottom) / 2;
+    const textCenter = (titleRect.top + descriptionRect.bottom) / 2;
+    expect(actionsCenter).toBeCloseTo(textCenter, 0);
+    const first = screen.getByRole("button", { name: "閉じる" }).element().getBoundingClientRect();
+    const second = screen.getByRole("button", { name: "再試行" }).element().getBoundingClientRect();
+    expect(second.top - first.bottom).toBeCloseTo(2, 1);
+  });
+
+  test("横配置では説明文との間に仕切り線を表示する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <span style={{ borderInlineStartColor: "var(--sui-border-1)" }}>色の基準</span>
         <AlertRoot actionsPosition="side" aria-label="通知">
-          <AlertIcon />
           <AlertTitle>更新完了</AlertTitle>
           <AlertDescription>プロフィールを更新しました。</AlertDescription>
           <AlertActions>
-            <button type="button">閉じる</button>
             <button type="button">再試行</button>
           </AlertActions>
-        </AlertRoot>,
-      );
+        </AlertRoot>
+      </>,
+    );
 
-      // 検証
-      const root = screen.getByRole("alert", { name: "通知" }).element();
-      expect(root.classList.contains("sui_alert-actions_position_side")).toBe(true);
-      const rootRect = root.getBoundingClientRect();
-      const titleRect = screen.getByText("更新完了").element().getBoundingClientRect();
-      const descriptionRect = screen
-        .getByText("プロフィールを更新しました。")
-        .element()
-        .getBoundingClientRect();
-      const actions = screen.getByClassName("sui_alert_actions").element();
-      const actionsStyle = getComputedStyle(actions);
-      expect(actionsStyle.gridColumnStart).toBe("3");
-      expect(actionsStyle.flexDirection).toBe("column");
-      expect(actionsStyle.paddingBlockStart).toBe("0px");
-      expect(actionsStyle.paddingBlockEnd).toBe("0px");
-      const actionsRect = actions.getBoundingClientRect();
-      expect(actionsRect.left).toBeGreaterThan(descriptionRect.right);
-      expect(actionsRect.right).toBeCloseTo(rootRect.right - 10, 1);
-      const actionsCenter = (actionsRect.top + actionsRect.bottom) / 2;
-      const textCenter = (titleRect.top + descriptionRect.bottom) / 2;
-      expect(actionsCenter).toBeCloseTo(textCenter, 0);
-      const first = screen
-        .getByRole("button", { name: "閉じる" })
-        .element()
-        .getBoundingClientRect();
-      const second = screen
-        .getByRole("button", { name: "再試行" })
-        .element()
-        .getBoundingClientRect();
-      expect(second.top - first.bottom).toBeCloseTo(2, 1);
-    },
-  );
+    // 検証
+    const expected = getComputedStyle(
+      screen.getByText("色の基準").element(),
+    ).borderInlineStartColor;
+    const actions = screen.getByClassName("sui_alert_actions").element();
+    const actionsStyle = getComputedStyle(actions);
+    expect(actionsStyle.borderInlineStartStyle).toBe("solid");
+    expect(actionsStyle.borderInlineStartWidth).toBe("1px");
+    expect(actionsStyle.borderInlineStartColor).toBe(expected);
+    const titleRect = screen.getByText("更新完了").element().getBoundingClientRect();
+    const descriptionRect = screen
+      .getByText("プロフィールを更新しました。")
+      .element()
+      .getBoundingClientRect();
+    const actionsRect = actions.getBoundingClientRect();
+    expect(actionsRect.height).toBeCloseTo(descriptionRect.bottom - titleRect.top, 0);
+  });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "横配置では説明文との間に仕切り線を表示する",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <span style={{ borderInlineStartColor: "var(--sui-border-1)" }}>色の基準</span>
-          <AlertRoot actionsPosition="side" aria-label="通知">
-            <AlertTitle>更新完了</AlertTitle>
-            <AlertDescription>プロフィールを更新しました。</AlertDescription>
-            <AlertActions>
-              <button type="button">再試行</button>
-            </AlertActions>
-          </AlertRoot>
-        </>,
-      );
+  test("説明文のないアクションは上下の余白を残さない", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <AlertRoot actionsPosition="bottom" aria-label="通知">
+        <AlertActions>
+          <button type="button">再試行</button>
+        </AlertActions>
+      </AlertRoot>,
+    );
 
-      // 検証
-      const expected = getComputedStyle(
-        screen.getByText("色の基準").element(),
-      ).borderInlineStartColor;
-      const actions = screen.getByClassName("sui_alert_actions").element();
-      const actionsStyle = getComputedStyle(actions);
-      expect(actionsStyle.borderInlineStartStyle).toBe("solid");
-      expect(actionsStyle.borderInlineStartWidth).toBe("1px");
-      expect(actionsStyle.borderInlineStartColor).toBe(expected);
-      const titleRect = screen.getByText("更新完了").element().getBoundingClientRect();
-      const descriptionRect = screen
-        .getByText("プロフィールを更新しました。")
-        .element()
-        .getBoundingClientRect();
-      const actionsRect = actions.getBoundingClientRect();
-      expect(actionsRect.height).toBeCloseTo(descriptionRect.bottom - titleRect.top, 0);
-    },
-  );
-
-  test.skipIf(!supportsCustomFunctions())(
-    "説明文のないアクションは上下の余白を残さない",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <AlertRoot actionsPosition="bottom" aria-label="通知">
-          <AlertActions>
-            <button type="button">再試行</button>
-          </AlertActions>
-        </AlertRoot>,
-      );
-
-      // 検証
-      const actions = getComputedStyle(screen.getByClassName("sui_alert_actions").element());
-      expect(actions.paddingBlockStart).toBe("0px");
-      expect(actions.paddingBlockEnd).toBe("0px");
-      expect(actions.marginBlockStart).toBe("0px");
-      expect(actions.borderBlockStartWidth).toBe("0px");
-    },
-  );
+    // 検証
+    const actions = getComputedStyle(screen.getByClassName("sui_alert_actions").element());
+    expect(actions.paddingBlockStart).toBe("0px");
+    expect(actions.paddingBlockEnd).toBe("0px");
+    expect(actions.marginBlockStart).toBe("0px");
+    expect(actions.borderBlockStartWidth).toBe("0px");
+  });
 });

@@ -90,7 +90,7 @@ describe("Tree の配置", () => {
     expect(step).toBeCloseTo(expected, 0);
   });
 
-  test("大きさごとの活字と最小高さを反映する", async ({ expect }) => {
+  test("大きさごとの活字と薄型の最小高さを反映する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -105,17 +105,18 @@ describe("Tree の配置", () => {
       screen.container.querySelector<HTMLElement>("#sm [role=treeitem]")!,
     );
     expect(sm.fontSize).toBe("12px");
-    expect(sm.minHeight).toBe("26px");
+    // 項目は薄型のボタンなので、最小高さはサイズの下限と行の高さの中間になります。
+    expect(Number.parseFloat(sm.minHeight)).toBeCloseTo(19.6, 1);
     const md = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#md [role=treeitem]")!,
     );
     expect(md.fontSize).toBe("14px");
-    expect(md.minHeight).toBe("32px");
+    expect(Number.parseFloat(md.minHeight)).toBeCloseTo(23.7, 1);
     const lg = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#lg [role=treeitem]")!,
     );
     expect(lg.fontSize).toBe("17px");
-    expect(lg.minHeight).toBe("36px");
+    expect(Number.parseFloat(lg.minHeight)).toBeCloseTo(27.35, 1);
   });
 
   test("角丸を大きさに合わせる", async ({ expect }) => {

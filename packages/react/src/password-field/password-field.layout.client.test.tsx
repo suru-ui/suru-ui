@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./password-field.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { PasswordField } from "./password-field.jsx";
 
@@ -39,7 +38,7 @@ describe("PasswordField の配置", () => {
     expect(getComputedStyle(roots[2]!).minHeight).toBe("36px");
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさに応じた水平余白を持つ", async ({ expect }) => {
+  test("大きさに応じた水平余白を持つ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -159,31 +158,28 @@ describe("PasswordField の配置", () => {
     );
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "指定した角丸で切替ボタンを切り抜く",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <span id="expected-sm" style={{ borderTopLeftRadius: "4px" }} />
-          <PasswordField radius="sm" />
-          <PasswordField radius="full" />
-        </>,
-      );
+  test("指定した角丸で切替ボタンを切り抜く", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <span id="expected-sm" style={{ borderTopLeftRadius: "4px" }} />
+        <PasswordField radius="sm" />
+        <PasswordField radius="full" />
+      </>,
+    );
 
-      // 検証
-      const toggles = screen.container.querySelectorAll<HTMLElement>(".sui_password_field_toggle");
-      expect(getComputedStyle(toggles[0]!).borderTopLeftRadius).toBe(
-        getComputedStyle(screen.container.querySelector<HTMLElement>("#expected-sm")!)
-          .borderTopLeftRadius,
-      );
-      const fullToggle = toggles[1]!.getBoundingClientRect();
-      expect(Number.parseFloat(getComputedStyle(toggles[1]!).borderTopLeftRadius)).toBeCloseTo(
-        fullToggle.width / 2,
-        1,
-      );
-    },
-  );
+    // 検証
+    const toggles = screen.container.querySelectorAll<HTMLElement>(".sui_password_field_toggle");
+    expect(getComputedStyle(toggles[0]!).borderTopLeftRadius).toBe(
+      getComputedStyle(screen.container.querySelector<HTMLElement>("#expected-sm")!)
+        .borderTopLeftRadius,
+    );
+    const fullToggle = toggles[1]!.getBoundingClientRect();
+    expect(Number.parseFloat(getComputedStyle(toggles[1]!).borderTopLeftRadius)).toBeCloseTo(
+      fullToggle.width / 2,
+      1,
+    );
+  });
 
   test("外観に応じた背景色を持つ", async ({ expect }) => {
     // 準備と実行
@@ -217,7 +213,7 @@ describe("PasswordField の配置", () => {
     );
   });
 
-  test.skipIf(!supportsCustomFunctions())("outlined でルートに枠線を描く", async ({ expect }) => {
+  test("outlined でルートに枠線を描く", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>

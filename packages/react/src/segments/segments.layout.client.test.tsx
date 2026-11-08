@@ -4,7 +4,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./segments.parts.js";
-import supportsCustomFunctions from "../button/_supports-custom-functions.js";
 import { SegmentsIndicator } from "./indicator/segments.indicator.jsx";
 import { SegmentsItem } from "./item/segments.item.jsx";
 import { SegmentsList } from "./list/segments.list.jsx";
@@ -80,7 +79,7 @@ describe("Segments の配置", () => {
     expect(day.left).toBeCloseTo(week.left, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさごとの間隔と余白を付ける", async ({ expect }) => {
+  test("大きさごとの間隔と余白を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -124,27 +123,24 @@ describe("Segments の配置", () => {
     expect(lg.minHeight).toBe("36px");
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "項目の左右の余白を大きさに合わせる",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <Segments id="sm" size="sm" items={[...items]} defaultValue="day" />
-          <Segments id="md" size="md" items={[...items]} defaultValue="day" />
-          <Segments id="lg" size="lg" items={[...items]} defaultValue="day" />
-        </>,
-      );
+  test("項目の左右の余白を大きさに合わせる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <Segments id="sm" size="sm" items={[...items]} defaultValue="day" />
+        <Segments id="md" size="md" items={[...items]} defaultValue="day" />
+        <Segments id="lg" size="lg" items={[...items]} defaultValue="day" />
+      </>,
+    );
 
-      // 検証
-      const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
-      expect(Number.parseFloat(sm.paddingInlineStart)).toBeCloseTo(6, 1);
-      const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
-      expect(Number.parseFloat(md.paddingInlineStart)).toBeCloseTo(10, 1);
-      const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
-      expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(14, 1);
-    },
-  );
+    // 検証
+    const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
+    expect(Number.parseFloat(sm.paddingInlineStart)).toBeCloseTo(6, 1);
+    const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
+    expect(Number.parseFloat(md.paddingInlineStart)).toBeCloseTo(10, 1);
+    const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
+    expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(14, 1);
+  });
 
   test("角丸を大きさに合わせる", async ({ expect }) => {
     // 準備と実行

@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./resizable.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import { ResizableHandle } from "./handle/resizable.handle.jsx";
 import { ResizablePanel } from "./panel/resizable.panel.jsx";
 import "../../tests/src/_locators.js";
@@ -171,7 +170,7 @@ describe("Resizable の配置", () => {
     expect(root.classList.contains("sui_resizable-orientation_vertical")).toBe(true);
   });
 
-  test.skipIf(!supportsCustomFunctions())("ハンドルに太さを持たせる", async ({ expect }) => {
+  test("ハンドルに太さを持たせる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <div style={{ width: 400, height: 200 }}>

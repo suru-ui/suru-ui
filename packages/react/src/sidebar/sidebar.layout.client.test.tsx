@@ -4,7 +4,6 @@ import { render } from "vitest-browser-react";
 
 import { FullSidebar } from "./_sidebar.jsx";
 import "../../tests/src/_locators.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import { SidebarTrigger, SidebarProvider } from "./sidebar.parts.js";
 
 /**
@@ -149,7 +148,7 @@ describe("Sidebar の配置", () => {
     expect(Number.parseFloat(style.borderRightWidth)).toBe(0);
   });
 
-  test.skipIf(!supportsCustomFunctions())("floating では余白と角丸を持つ", async ({ expect }) => {
+  test("floating では余白と角丸を持つ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<FullSidebar variant="floating" />);
 
@@ -161,7 +160,7 @@ describe("Sidebar の配置", () => {
     expect(Number.parseFloat(style.borderTopLeftRadius)).toBeCloseTo(12, 0);
   });
 
-  test.skipIf(!supportsCustomFunctions())("各領域がテーマの余白を持つ", async ({ expect }) => {
+  test("各領域がテーマの余白を持つ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<FullSidebar />);
 
@@ -197,21 +196,18 @@ describe("Sidebar の配置", () => {
     expect(Number.parseFloat(footer.rowGap)).toBeCloseTo(resolveLength("--sui-gap(1)"), 0);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "inset バリアントでは本文を押し込む",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(<FullSidebar variant="inset" />);
+  test("inset バリアントでは本文を押し込む", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<FullSidebar variant="inset" />);
 
-      // 検証
-      const style = getComputedStyle(screen.getByClassName("sui_sidebar_inset").element());
-      const margin = resolveLength("--sui-space(1)");
-      expect(Number.parseFloat(style.marginTop)).toBeCloseTo(margin, 0);
-      expect(Number.parseFloat(style.marginLeft)).toBeCloseTo(margin, 0);
-      expect(Number.parseFloat(style.borderTopWidth)).toBeGreaterThan(0);
-      expect(Number.parseFloat(style.borderTopLeftRadius)).toBeCloseTo(12, 0);
-    },
-  );
+    // 検証
+    const style = getComputedStyle(screen.getByClassName("sui_sidebar_inset").element());
+    const margin = resolveLength("--sui-space(1)");
+    expect(Number.parseFloat(style.marginTop)).toBeCloseTo(margin, 0);
+    expect(Number.parseFloat(style.marginLeft)).toBeCloseTo(margin, 0);
+    expect(Number.parseFloat(style.borderTopWidth)).toBeGreaterThan(0);
+    expect(Number.parseFloat(style.borderTopLeftRadius)).toBeCloseTo(12, 0);
+  });
 
   test("トリガーは 32px の正方形にする", async ({ expect }) => {
     // 準備と実行

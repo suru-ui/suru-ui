@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./chip.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { ChipRoot } from "./root/chip.root.jsx";
 
@@ -47,7 +46,7 @@ describe("ChipRoot の配置", () => {
     expect(textRect.top + textRect.height / 2).toBeCloseTo(rootRect.top + rootRect.height / 2, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさごとの内側の余白を付ける", async ({ expect }) => {
+  test("大きさごとの内側の余白を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -72,7 +71,7 @@ describe("ChipRoot の配置", () => {
     expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(14, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさごとの間隔を付ける", async ({ expect }) => {
+  test("大きさごとの間隔を付ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -153,7 +152,7 @@ describe("ChipRoot の配置", () => {
     expect(root.backgroundColor).toBe(expected.backgroundColor);
   });
 
-  test.skipIf(!supportsCustomFunctions())("枠線を表示する", async ({ expect }) => {
+  test("枠線を表示する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -184,36 +183,33 @@ describe("ChipRoot の配置", () => {
     expect(outlinedRect.height).toBeCloseTo(plainRect.height, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "アイコンを活字の高さと配色に合わせる",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <span
-            style={{
-              color:
-                "--sui-icon_color(var(--sui-grey-liquid-canvas_text-normal), var(--sui-grey-liquid-canvas-normal))",
-            }}
-          >
-            アイコンの基準
-          </span>
-          <ChipRoot>
-            <svg viewBox="0 0 24 24" data-testid="icon" />
-            新着
-          </ChipRoot>
-        </>,
-      );
+  test("アイコンを活字の高さと配色に合わせる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <span
+          style={{
+            color:
+              "--sui-icon_color(var(--sui-grey-liquid-canvas_text-normal), var(--sui-grey-liquid-canvas-normal))",
+          }}
+        >
+          アイコンの基準
+        </span>
+        <ChipRoot>
+          <svg viewBox="0 0 24 24" data-testid="icon" />
+          新着
+        </ChipRoot>
+      </>,
+    );
 
-      // 検証
-      const root = getComputedStyle(screen.getByClassName("sui_chip").element());
-      const textHeight = Number.parseFloat(root.lineHeight);
-      const icon = getComputedStyle(screen.getByTestId("icon").element());
-      expect(Number.parseFloat(icon.width)).toBeCloseTo(textHeight, 1);
-      expect(Number.parseFloat(icon.height)).toBeCloseTo(textHeight, 1);
-      expect(icon.color).toBe(getComputedStyle(screen.getByText("アイコンの基準").element()).color);
-    },
-  );
+    // 検証
+    const root = getComputedStyle(screen.getByClassName("sui_chip").element());
+    const textHeight = Number.parseFloat(root.lineHeight);
+    const icon = getComputedStyle(screen.getByTestId("icon").element());
+    expect(Number.parseFloat(icon.width)).toBeCloseTo(textHeight, 1);
+    expect(Number.parseFloat(icon.height)).toBeCloseTo(textHeight, 1);
+    expect(icon.color).toBe(getComputedStyle(screen.getByText("アイコンの基準").element()).color);
+  });
 
   test("外部の余白を持たない", async ({ expect }) => {
     // 準備と実行

@@ -37,6 +37,6 @@ export default defineConfig({
       include: ["src/**/*.ts"],
       reportsDirectory: "./coverage/client",
     },
-    setupFiles: [".config/_debugging.ts"],
+    setupFiles: [".config/_debugging.ts", ".config/_reset-pointer.ts"],
   },
 });

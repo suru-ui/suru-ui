@@ -10,7 +10,6 @@ import { Field } from "../field/field.jsx";
 import "./form.parts.js";
 import { Input } from "../input/input.jsx";
 import "../input/input.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { Form } from "./form.jsx";
 
@@ -78,26 +77,23 @@ describe("フォームの配置", () => {
     expect(field.bottom).toBeLessThanOrEqual(button.top);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "フィールドとボタンの間隔を空ける",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <Form>
-          <Field name="name" label="名前">
-            <Input />
-          </Field>
-          <Button type="submit">送信</Button>
-        </Form>,
-      );
+  test("フィールドとボタンの間隔を空ける", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Form>
+        <Field name="name" label="名前">
+          <Input />
+        </Field>
+        <Button type="submit">送信</Button>
+      </Form>,
+    );
 
-      // 検証
-      const root = screen.getByClassName("sui_form").element();
-      const gap = Number.parseFloat(getComputedStyle(root).rowGap);
-      expect(gap).toBeGreaterThan(0);
-      const field = screen.getByClassName("sui_field").element().getBoundingClientRect();
-      const button = screen.getByRole("button", { name: "送信" }).element().getBoundingClientRect();
-      expect(button.top - field.bottom).toBeCloseTo(gap, 1);
-    },
-  );
+    // 検証
+    const root = screen.getByClassName("sui_form").element();
+    const gap = Number.parseFloat(getComputedStyle(root).rowGap);
+    expect(gap).toBeGreaterThan(0);
+    const field = screen.getByClassName("sui_field").element().getBoundingClientRect();
+    const button = screen.getByRole("button", { name: "送信" }).element().getBoundingClientRect();
+    expect(button.top - field.bottom).toBeCloseTo(gap, 1);
+  });
 });

@@ -4,7 +4,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./select.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { Select } from "./select.jsx";
 
@@ -64,7 +63,7 @@ describe("Select の配置", () => {
     expect(full.borderTopLeftRadius).toBe("16px");
   });
 
-  test.skipIf(!supportsCustomFunctions())("枠線の有無を切り替える", async ({ expect }) => {
+  test("枠線の有無を切り替える", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>

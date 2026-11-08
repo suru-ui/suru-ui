@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./input.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import "../../tests/src/_locators.js";
 import { InputRoot } from "./root/input.root.jsx";
 
@@ -38,7 +37,7 @@ describe("InputRoot の配置", () => {
     expect(lg.minHeight).toBe("36px");
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさに応じた水平余白を持つ", async ({ expect }) => {
+  test("大きさに応じた水平余白を持つ", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -82,7 +81,7 @@ describe("InputRoot の配置", () => {
     expect(full.borderTopLeftRadius).toBe("16px");
   });
 
-  test.skipIf(!supportsCustomFunctions())("枠線の有無を切り替える", async ({ expect }) => {
+  test("枠線の有無を切り替える", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <>
@@ -142,21 +141,18 @@ describe("InputRoot の配置", () => {
     expect(getComputedStyle(input).borderTopColor).not.toBe(idle);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "outlined では focus-visible で枠線を太くする",
-    async ({ expect }) => {
-      // 準備
-      const screen = await render(<InputRoot outlined aria-label="名前" />);
-      const input = screen.getByRole("textbox", { name: "名前" }).element();
-      const idle = Number.parseFloat(getComputedStyle(input).borderTopWidth);
+  test("outlined では focus-visible で枠線を太くする", async ({ expect }) => {
+    // 準備
+    const screen = await render(<InputRoot outlined aria-label="名前" />);
+    const input = screen.getByRole("textbox", { name: "名前" }).element();
+    const idle = Number.parseFloat(getComputedStyle(input).borderTopWidth);
 
-      // 実行
-      input.focus({ focusVisible: true });
+    // 実行
+    input.focus({ focusVisible: true });
 
-      // 検証
-      expect(Number.parseFloat(getComputedStyle(input).borderTopWidth)).toBeGreaterThan(idle);
-    },
-  );
+    // 検証
+    expect(Number.parseFloat(getComputedStyle(input).borderTopWidth)).toBeGreaterThan(idle);
+  });
 
   test("外観に応じた背景色を持つ", async ({ expect }) => {
     // 準備と実行

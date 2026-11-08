@@ -3,7 +3,6 @@ import * as React from "react";
 import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import { FileUploadDropzone } from "./dropzone/file-upload.dropzone.jsx";
 import { FileUploadItemGroup } from "./item-group/file-upload.item-group.jsx";
 import { FileUploadItemName } from "./item-name/file-upload.item-name.jsx";
@@ -31,7 +30,7 @@ describe("ファイルアップロードの配置", () => {
     expect(root.flexDirection).toBe("column");
   });
 
-  test.skipIf(!supportsCustomFunctions())("ルートの間隔を大きさに合わせる", async ({ expect }) => {
+  test("ルートの間隔を大きさに合わせる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <FileUploadRoot size="sm">
@@ -52,7 +51,7 @@ describe("ファイルアップロードの配置", () => {
     expect(note.top - dropzone.bottom).toBeCloseTo(gap, 1);
   });
 
-  test.skipIf(!supportsCustomFunctions())("大きさが大きいほど間隔を広げる", async ({ expect }) => {
+  test("大きさが大きいほど間隔を広げる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <React.Fragment>
@@ -91,25 +90,20 @@ describe("ファイルアップロードの配置", () => {
     expect(dropzone.justifyContent).toBe("center");
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "ドロップゾーンに枠線と余白を付ける",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <FileUploadRoot>
-          <FileUploadDropzone>選ぶ</FileUploadDropzone>
-        </FileUploadRoot>,
-      );
+  test("ドロップゾーンに枠線と余白を付ける", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <FileUploadRoot>
+        <FileUploadDropzone>選ぶ</FileUploadDropzone>
+      </FileUploadRoot>,
+    );
 
-      // 検証
-      const dropzone = getComputedStyle(
-        screen.getByClassName("sui_file_upload_dropzone").element(),
-      );
-      expect(dropzone.borderTopStyle).toBe("solid");
-      expect(Number.parseFloat(dropzone.borderTopWidth)).toBeGreaterThan(0);
-      expect(Number.parseFloat(dropzone.paddingLeft)).toBeGreaterThan(0);
-    },
-  );
+    // 検証
+    const dropzone = getComputedStyle(screen.getByClassName("sui_file_upload_dropzone").element());
+    expect(dropzone.borderTopStyle).toBe("solid");
+    expect(Number.parseFloat(dropzone.borderTopWidth)).toBeGreaterThan(0);
+    expect(Number.parseFloat(dropzone.paddingLeft)).toBeGreaterThan(0);
+  });
 
   test("大きさに応じて縦幅を変える", async ({ expect }) => {
     // 準備と実行
@@ -205,7 +199,7 @@ describe("ファイルアップロードの配置", () => {
     expect(group.listStyleType).toBe("none");
   });
 
-  test.skipIf(!supportsCustomFunctions())("一覧項目の間隔を空ける", async ({ expect }) => {
+  test("一覧項目の間隔を空ける", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
       <FileUploadRoot>

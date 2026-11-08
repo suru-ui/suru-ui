@@ -3,7 +3,6 @@ import { test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "./collapsible.parts.js";
-import supportsCustomFunctions from "./_supports-custom-functions.js";
 import { CollapsibleContent } from "./content/collapsible.content.jsx";
 import { CollapsibleIndicator } from "./indicator/collapsible.indicator.jsx";
 import { CollapsibleRoot } from "./root/collapsible.root.jsx";
@@ -209,31 +208,28 @@ describe("Collapsible の配置", () => {
     expect(getComputedStyle(indicator.querySelector("svg")!).color).toBe(expected);
   });
 
-  test.skipIf(!supportsCustomFunctions())(
-    "インジケーターの配色をアイコンへ適用する",
-    async ({ expect }) => {
-      // 準備と実行
-      const screen = await render(
-        <>
-          <span
-            style={{
-              color:
-                "--sui-icon_color(var(--sui-grey-solid-canvas_text-normal), var(--sui-canvas-1))",
-            }}
-          >
-            基準
-          </span>
-          <CollapsibleRoot defaultOpen>
-            <TriggerWithIndicator />
-          </CollapsibleRoot>
-        </>,
-      );
+  test("インジケーターの配色をアイコンへ適用する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <span
+          style={{
+            color:
+              "--sui-icon_color(var(--sui-grey-solid-canvas_text-normal), var(--sui-canvas-1))",
+          }}
+        >
+          基準
+        </span>
+        <CollapsibleRoot defaultOpen>
+          <TriggerWithIndicator />
+        </CollapsibleRoot>
+      </>,
+    );
 
-      // 検証
-      const expected = getComputedStyle(screen.getByText("基準").element()).color;
-      const indicator = screen.getByTestId("indicator").element();
-      expect(getComputedStyle(indicator).color).toBe(expected);
-      expect(getComputedStyle(indicator.querySelector("svg")!).color).toBe(expected);
-    },
-  );
+    // 検証
+    const expected = getComputedStyle(screen.getByText("基準").element()).color;
+    const indicator = screen.getByTestId("indicator").element();
+    expect(getComputedStyle(indicator).color).toBe(expected);
+    expect(getComputedStyle(indicator.querySelector("svg")!).color).toBe(expected);
+  });
 });
