@@ -29,15 +29,15 @@
   --sui_context_menu_separator-color: var(--sui-border-1);
 
   &.sui_context_menu_separator-size_sm {
-    --sui_context_menu_separator-margin_block: --sui-space(2);
+    --sui_context_menu_separator-margin_block: --sui-space(0.5);
   }
 
   &.sui_context_menu_separator-size_md {
-    --sui_context_menu_separator-margin_block: --sui-space(3);
+    --sui_context_menu_separator-margin_block: --sui-space(1);
   }
 
   &.sui_context_menu_separator-size_lg {
-    --sui_context_menu_separator-margin_block: --sui-space(3);
+    --sui_context_menu_separator-margin_block: --sui-space(1.5);
   }
 }
 

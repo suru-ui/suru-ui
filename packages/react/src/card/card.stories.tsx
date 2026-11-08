@@ -99,7 +99,7 @@ export const WithAction = meta.story({
         <Card
           {...props}
           action={
-            <Button size="sm" variant="naked" aria-label="設定を開く">
+            <Button size="sm" squared variant="naked" aria-label="設定を開く">
               <ChevronRightIcon />
             </Button>
           }

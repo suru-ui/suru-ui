@@ -19,7 +19,7 @@
 
 /* 代入 */
 :scope {
-  --sui_menu_group-gap: --sui-gap(2);
+  --sui_menu_group-gap: --sui-gap(0);
 }
 
 } /* @scope */
