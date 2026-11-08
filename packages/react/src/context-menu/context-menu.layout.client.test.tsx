@@ -72,13 +72,13 @@ describe("ContextMenu の配置", () => {
     expect(getComputedStyle(screen.getByRole("menu").element()).borderRadius).toBe("0px");
   });
 
-  test("グループに間隔を空ける", async ({ expect }) => {
+  test("グループの項目を隙間なく並べる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<ContextMenu items={items} defaultOpen />);
 
     // 検証
     const group = screen.getByClassName("sui_context_menu_group").first().element();
-    expect(Number.parseFloat(getComputedStyle(group).gap)).toBeCloseTo(8, 1);
+    expect(Number.parseFloat(getComputedStyle(group).gap)).toBeCloseTo(0, 1);
   });
 
   test("グループのラベルを項目に揃える", async ({ expect }) => {
@@ -119,7 +119,7 @@ describe("ContextMenu の配置", () => {
     const separator = screen.getByRole("separator").element();
     const style = getComputedStyle(separator);
     expect(Number.parseFloat(style.height)).toBeCloseTo(1, 1);
-    expect(Number.parseFloat(style.marginBlockStart)).toBeCloseTo(12, 1);
+    expect(Number.parseFloat(style.marginBlockStart)).toBeCloseTo(4, 1);
   });
 
   test("サブメニューを親項目の右へ開く", async ({ expect }) => {
