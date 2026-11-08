@@ -1,4 +1,11 @@
-packages: ["packages/core", "packages/theme", "packages/react", "packages/unocss", "website"]
+packages:
+  [
+    "packages/core",
+    "packages/theme",
+    "packages/react",
+    "packages/unocss",
+    "website",
+  ]
 
 minimumReleaseAge: 10080 # 7 日
 minimumReleaseAgeExclude:
@@ -23,4 +30,5 @@ update:
   ignoreDeps:
     - "*" # パッケージの更新は ncu に任せます。
 
-overrides: {}
+overrides:
+  dompurify: 3.4.17

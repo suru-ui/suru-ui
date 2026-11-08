@@ -12,12 +12,12 @@
   "type": "module",
   "devDependencies": {
     "npm-check-updates": "23.1.1",
-    "oxfmt": "0.72.0",
-    "oxlint": "1.87.0",
-    "oxlint-tsgolint": "7.0.2004",
-    "skills": "1.7.2",
+    "oxfmt": "0.75.0",
+    "oxlint": "1.90.0",
+    "oxlint-tsgolint": "7.0.2005",
+    "skills": "1.7.4",
     "stylelint": "17.16.0",
-    "stylelint-config-recess-order": "7.8.0",
+    "stylelint-config-recess-order": "7.9.0",
     "stylelint-order": "8.1.2",
     "typescript": "7.0.2"
   }

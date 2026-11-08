@@ -9,6 +9,6 @@
     "@tsconfig/node24": "24.0.5",
     "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.19.2",
-    "blume": "2.2.3"
+    "blume": "2.2.6"
   }
 }

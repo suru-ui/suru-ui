@@ -17,7 +17,7 @@
       "source": "tai-kun/agent-skills",
       "sourceType": "github",
       "skillPath": "skills/jsdoc/SKILL.md",
-      "computedHash": "811621d9a79343b3e92a006a54742446528cd144ec470d98550ad794f570b97d"
+      "computedHash": "3acf93995d814e991edc08059738863e50b8b7665d6f8c809bde7632d16b8d49"
     },
     "pc-safety-guard": {
       "source": "tai-kun/agent-skills",
@@ -35,13 +35,13 @@
       "source": "tai-kun/agent-skills",
       "sourceType": "github",
       "skillPath": "skills/vitest/SKILL.md",
-      "computedHash": "3243cd5f4261ec2c1928ad455ed1de8b48f3756d765b0ffc765adfb6784c829f"
+      "computedHash": "fdfd09a411a1c012ade6226ab592ae0526cdc31599d4b5bdc281f01d1c74d3e2"
     },
     "yomiyasu": {
       "source": "nanaism/yomiyasu",
       "sourceType": "github",
       "skillPath": "skills/yomiyasu/SKILL.md",
-      "computedHash": "5d64758334b42b26a6a6e64a72852cbe3bbe4a55224f36089a6d57036b9b751b"
+      "computedHash": "931929b8d7be2c1413927dec7c7ad44b2fba5caee2cd8394a52e7727d3a2c959"
     }
   }
 }
