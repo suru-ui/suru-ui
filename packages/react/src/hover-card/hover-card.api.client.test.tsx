@@ -153,6 +153,33 @@ describe("getPositionerProps", () => {
     // 検証
     expect(api.getPositionerProps()).toStrictEqual({ side: "top" });
   });
+
+  test("矢印を有効にすると矢印の高さだけオフセットする", ({ expect }) => {
+    // 準備と実行
+    const api = new HoverCardAPI({ arrow: true });
+
+    // 検証
+    expect(api.getPositionerProps().sideOffset).toBe(6);
+  });
+
+  test("slotProps の矢印でもオフセットする", ({ expect }) => {
+    // 準備と実行
+    const api = new HoverCardAPI({ slotProps: { arrow: {}, positioner: { side: "top" } } });
+
+    // 検証
+    expect(api.getPositionerProps()).toStrictEqual({ side: "top", sideOffset: 6 });
+  });
+
+  test("指定した sideOffset を優先する", ({ expect }) => {
+    // 準備と実行
+    const api = new HoverCardAPI({
+      arrow: true,
+      slotProps: { positioner: { side: "top", sideOffset: 4 } },
+    });
+
+    // 検証
+    expect(api.getPositionerProps()).toStrictEqual({ side: "top", sideOffset: 4 });
+  });
 });
 
 describe("getPopupChildren", () => {

@@ -1,6 +1,6 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { test, describe } from "vitest";
+import { vi, test, describe } from "vitest";
 import { render } from "vitest-browser-react";
 
 import "../../tests/src/_locators.js";
@@ -119,6 +119,35 @@ describe("HoverCard の余白と配置", () => {
     expect(arrow.width).toBeCloseTo(12, 0);
     expect(arrow.height).toBeCloseTo(6, 0);
     expect(Math.abs(arrow.bottom - content.top)).toBeLessThanOrEqual(7);
+  });
+
+  test("矢印を有効にするとトリガーから矢印の分だけ離す", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <div style={{ paddingBlockStart: "300px" }}>
+        <HoverCard
+          arrow
+          trigger={trigger}
+          slotProps={{ positioner: { side: "bottom" } }}
+          defaultOpen
+        >
+          内容
+        </HoverCard>
+      </div>,
+    );
+
+    // 検証
+    await vi.waitFor(() => {
+      const content = screen
+        .getByClassName("sui_hover_card_popup")
+        .element()
+        .getBoundingClientRect();
+      const anchor = screen
+        .getByRole("link", { name: "利用規約" })
+        .element()
+        .getBoundingClientRect();
+      expect(Math.abs(content.top - anchor.bottom - 6)).toBeLessThanOrEqual(1);
+    });
   });
 
   test("オーバーレイを画面全体に広げる", async ({ expect }) => {

@@ -105,6 +105,8 @@ namespace HoverCardProps {
      * 矢印を表示するかどうかを指定します。
      *
      * 矢印の内容や props を変更するときは {@link HoverCardProps.slotProps|slotProps.arrow} を使います。
+     *
+     * 有効にすると、矢印の高さだけポップアップをトリガーから離します。
      */
     arrow?: boolean | undefined;
 
@@ -177,6 +179,9 @@ export interface IUseHoverCardAPI {
 
 // API
 // ---
+
+// 矢印の高さ (px) です。`hover-card.arrow.css` の `--sui_hover_card_arrow-size` と合わせます。
+const HOVER_CARD_ARROW_SIZE = 6;
 
 /**
  * {@link HoverCard} を構成する各パーツの props などを作成するための API です。
@@ -332,8 +337,10 @@ export class HoverCardAPI<TPayload = any> {
    */
   public getPositionerProps(): Omit<HoverCardPositionerProps, "children"> {
     const { positioner: props = {} } = this.slotProps;
+    const arrowProps = this.getArrowProps();
+    const { sideOffset = arrowProps ? HOVER_CARD_ARROW_SIZE : undefined, ...otherProps } = props;
 
-    return props;
+    return sideOffset === undefined ? otherProps : { ...otherProps, sideOffset };
   }
 
   /**
