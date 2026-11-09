@@ -123,6 +123,31 @@ describe("Segments の配置", () => {
     expect(lg.minHeight).toBe("36px");
   });
 
+  test("thin では項目の高さと上下の余白が小さくなる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <Segments id="plain" items={[...items]} defaultValue="day" />
+        <Segments id="thin" thin items={[...items]} defaultValue="day" />
+      </>,
+    );
+
+    // 検証
+    const plain = screen.container.querySelector<HTMLElement>("#plain")!;
+    const thin = screen.container.querySelector<HTMLElement>("#thin")!;
+    expect(thin.classList.contains("sui_segments-thin")).toBe(true);
+    const plainItem = screen.container.querySelector<HTMLElement>("#plain [role=tab]")!;
+    const thinItem = screen.container.querySelector<HTMLElement>("#thin [role=tab]")!;
+    expect(thinItem.classList.contains("sui_segments_item-thin")).toBe(true);
+    expect(Number.parseFloat(getComputedStyle(thinItem).paddingBlockStart)).toBeLessThan(
+      Number.parseFloat(getComputedStyle(plainItem).paddingBlockStart),
+    );
+    expect(Number.parseFloat(getComputedStyle(thinItem).minHeight)).toBeLessThan(
+      Number.parseFloat(getComputedStyle(plainItem).minHeight),
+    );
+    expect(thin.getBoundingClientRect().height).toBeLessThan(plain.getBoundingClientRect().height);
+  });
+
   test("項目の左右の余白を大きさに合わせる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

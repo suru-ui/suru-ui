@@ -143,6 +143,13 @@ export namespace SegmentsRootProps {
      * @default "md"
      */
     size?: SegmentsRootSize | undefined;
+
+    /**
+     * 上下の余白を半分にして高さを薄くするかどうかを指定します。
+     *
+     * @default false
+     */
+    thin?: boolean | undefined;
   };
 
   export type BaseUI = Omit<
@@ -188,6 +195,7 @@ export interface ISegmentsRoot extends IComponent<SegmentsRootProps> {
 export const SegmentsRoot: ISegmentsRoot = function SuiSegmentsRoot(props: SegmentsRootProps) {
   const {
     size = "md",
+    thin = false,
     color = "grey",
     items = [],
     style,
@@ -200,8 +208,8 @@ export const SegmentsRoot: ISegmentsRoot = function SuiSegmentsRoot(props: Segme
     ...otherProps
   } = props;
   const ctx = React.useMemo<SegmentsContext>(
-    () => ({ size, color, items, radius, activeVariant }),
-    [activeVariant, color, items, radius, size],
+    () => ({ size, thin, color, items, radius, activeVariant }),
+    [activeVariant, color, items, radius, size, thin],
   );
 
   return (
@@ -222,6 +230,7 @@ export const SegmentsRoot: ISegmentsRoot = function SuiSegmentsRoot(props: Segme
               (state) => `sui_segments-active_variant_${state.activeVariant}`,
               (state) => `sui_segments-orientation_${state.orientation}`,
               (state) => `sui_segments-tab_activation_direction_${state.tabActivationDirection}`,
+              (state) => state.thin && "sui_segments-thin",
             ),
           },
         )}

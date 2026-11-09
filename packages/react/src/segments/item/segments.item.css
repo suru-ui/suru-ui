@@ -42,8 +42,11 @@
 
 /* 可変 */
 :scope {
-  min-height: var(--sui_segments_item-min_height);
-  padding-block: var(--sui_segments_item-padding_block);
+  min-height: var(--_sui_segments_item-min_height, var(--sui_segments_item-min_height));
+  padding-block: var(
+                   --_sui_segments_item-padding_block,
+                   var(--sui_segments_item-padding_block)
+                 );
   padding-inline: var(--sui_segments_item-padding_inline);
   font-family: var(--sui_segments_item-font_family);
   font-size: var(--sui_segments_item-font_size);
@@ -223,6 +226,14 @@
 
 /* 変異 */
 :scope {
+  &.sui_segments_item-thin {
+    --_sui_segments_item-min_height: calc(
+                                        var(--sui_segments_item-virtual_content-leading)
+                                        + var(--sui_segments_item-padding_block)
+                                      );
+    --_sui_segments_item-padding_block: calc(var(--sui_segments_item-padding_block) / 2);
+  }
+
   &.sui_segments_item-active {
     --_sui_segments_item-color: var(--sui_segments_item-color-active);
   }

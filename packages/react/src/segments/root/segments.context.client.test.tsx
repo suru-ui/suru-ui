@@ -11,6 +11,7 @@ describe("useSegmentsContext", () => {
     // 準備
     const provided = {
       size: "lg",
+      thin: false,
       color: "blue",
       items: ["day", "week"],
       radius: "full",

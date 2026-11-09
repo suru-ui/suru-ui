@@ -68,6 +68,11 @@ export type SegmentsContext<TItem = any> = {
    * Segments の大きさです。
    */
   readonly size: SegmentsContextSize;
+
+  /**
+   * 上下の余白を半分にして高さを薄くするかどうかです。
+   */
+  readonly thin: boolean;
 };
 
 /**

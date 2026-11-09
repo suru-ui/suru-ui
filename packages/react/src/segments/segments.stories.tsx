@@ -21,6 +21,9 @@ const ctrl = controls(Segments, {
     control: "select",
     options: SIZES,
   },
+  thin: {
+    control: "boolean",
+  },
   color: {
     control: "select",
     options: COLORS,
@@ -54,6 +57,7 @@ export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
     size: "md",
+    thin: false,
     color: "grey",
     radius: undefined,
     activeVariant: "solid",
@@ -67,6 +71,7 @@ export const Colors = meta.story({
   name: "色",
   ...ctrl({
     size: "md",
+    thin: false,
     radius: undefined,
     activeVariant: "solid",
   }),
@@ -88,6 +93,7 @@ export const ActiveVariants = meta.story({
   name: "選択中の外観",
   ...ctrl({
     size: "md",
+    thin: false,
     color: "grey",
     radius: undefined,
   }),
@@ -114,6 +120,7 @@ export const Radii = meta.story({
   name: "角丸",
   ...ctrl({
     size: "md",
+    thin: false,
     color: "grey",
     activeVariant: "solid",
   }),
@@ -134,6 +141,7 @@ export const Radii = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
+    thin: false,
     color: "grey",
     radius: undefined,
     activeVariant: "solid",
@@ -152,10 +160,36 @@ export const Sizes = meta.story({
   },
 });
 
+export const Thin = meta.story({
+  name: "薄型",
+  ...ctrl({
+    size: "md",
+    thin: true,
+    color: "grey",
+    radius: undefined,
+    activeVariant: "solid",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <span>標準</span>
+          <Segments {...props} thin={false} items={usageItems} defaultValue="week" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <span>薄型</span>
+          <Segments {...props} items={usageItems} defaultValue="week" />
+        </div>
+      </div>
+    );
+  },
+});
+
 export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
     size: "md",
+    thin: false,
     color: "grey",
     radius: undefined,
     activeVariant: "solid",
@@ -181,6 +215,7 @@ export const Renderer = meta.story({
   name: "描画の上書き",
   ...ctrl({
     size: "md",
+    thin: false,
     color: "grey",
     radius: undefined,
     activeVariant: "solid",
@@ -202,6 +237,7 @@ export const DisabledItem = meta.story({
   name: "無効な項目",
   ...ctrl({
     size: "md",
+    thin: false,
     color: "grey",
     radius: undefined,
     activeVariant: "solid",

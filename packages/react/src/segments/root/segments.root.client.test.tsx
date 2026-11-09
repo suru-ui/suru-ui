@@ -20,6 +20,17 @@ describe("SegmentsRoot", () => {
     expect(root.classList.contains("sui_segments-active_variant_solid")).toBe(true);
     expect(root.classList.contains("sui_segments-orientation_horizontal")).toBe(true);
     expect(root.getAttribute("data-scope")).toBe("");
+    expect(root.classList.contains("sui_segments-thin")).toBe(false);
+  });
+
+  test("thin を修飾へ反映する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<SegmentsRoot thin />);
+
+    // 検証
+    expect(
+      screen.getByClassName("sui_segments").element().classList.contains("sui_segments-thin"),
+    ).toBe(true);
   });
 
   test("大きさと配色と角丸と外観を修飾へ反映する", async ({ expect }) => {
