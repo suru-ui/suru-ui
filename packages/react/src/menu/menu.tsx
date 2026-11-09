@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { CheckIcon, ChevronRightIcon } from "../_icons.jsx";
+import { DotIcon, CheckIcon, ChevronRightIcon } from "../_icons.jsx";
 import isLikelyVisibleNode, { type LikelyVisibleNode } from "../_is-likely-visible-node.js";
 import { getItemKey } from "../_item.js";
 import mergeProps from "../_merge-props.js";
@@ -316,7 +316,7 @@ export class MenuAPI<TItem = any> {
       defaultOpen,
       orientation,
       onOpenChange,
-      radioIndicator = <CheckIcon />,
+      radioIndicator = <DotIcon />,
       closeParentOnEsc,
       defaultTriggerId,
       checkboxIndicator = <CheckIcon />,

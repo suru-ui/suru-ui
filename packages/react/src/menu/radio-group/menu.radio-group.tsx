@@ -1,7 +1,7 @@
 import { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
-import { CheckIcon } from "../../_icons.jsx";
+import { DotIcon } from "../../_icons.jsx";
 import { getItemKey } from "../../_item.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
@@ -173,7 +173,7 @@ const defaultItemRenderer: IMenuRadioGroupItemRenderer = (item, index) => {
         <MenuRadioItem {...props} key={getItemKey(item) ?? index}>
           {label}
           <MenuRadioItemIndicator>
-            <CheckIcon />
+            <DotIcon />
           </MenuRadioItemIndicator>
         </MenuRadioItem>
       );

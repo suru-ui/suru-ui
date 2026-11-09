@@ -106,6 +106,17 @@ export const CheckIcon: IComponent<React.SVGProps<SVGSVGElement>> = function Sui
   );
 };
 
+/**
+ * ラジオ項目の選択状態を示すドットのアイコンです。
+ */
+export const DotIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiDotIcon(props) {
+  return (
+    <svg {...props} fill="currentColor" viewBox="0 0 16 16" focusable="false" aria-hidden="true">
+      <circle r="4" cx="8" cy="8" />
+    </svg>
+  );
+};
+
 export const PlusIcon: IComponent<React.SVGProps<SVGSVGElement>> = function SuiPlusIcon(props) {
   return (
     <svg

@@ -1,7 +1,7 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
 import * as React from "react";
 
-import { CheckIcon } from "../../_icons.jsx";
+import { DotIcon } from "../../_icons.jsx";
 import { getItemKey } from "../../_item.js";
 import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
@@ -173,7 +173,7 @@ const defaultItemRenderer: IContextMenuRadioGroupItemRenderer = (item, index) =>
         <ContextMenuRadioItem {...props} key={getItemKey(item) ?? index}>
           {label}
           <ContextMenuRadioItemIndicator>
-            <CheckIcon />
+            <DotIcon />
           </ContextMenuRadioItemIndicator>
         </ContextMenuRadioItem>
       );
