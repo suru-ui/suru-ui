@@ -184,6 +184,49 @@ describe("Tabs の配置", () => {
     expect(lg.minHeight).toBe("36px");
   });
 
+  test("thin ではタブの高さと上下の余白が小さくなる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <Tabs id="plain" items={[...items]} defaultValue="overview" />
+        <Tabs id="thin" thin items={[...items]} defaultValue="overview" />
+      </>,
+    );
+
+    // 検証
+    const plain = screen.container.querySelector<HTMLElement>("#plain")!;
+    const thin = screen.container.querySelector<HTMLElement>("#thin [role=tab]")!;
+    expect(plain.classList.contains("sui_tabs-thin")).toBe(false);
+    expect(
+      screen.container.querySelector<HTMLElement>("#thin")!.classList.contains("sui_tabs-thin"),
+    ).toBe(true);
+    expect(thin.classList.contains("sui_tabs_tab-thin")).toBe(true);
+    const plainTab = screen.container.querySelector<HTMLElement>("#plain [role=tab]")!;
+    expect(Number.parseFloat(getComputedStyle(thin).paddingBlockStart)).toBeLessThan(
+      Number.parseFloat(getComputedStyle(plainTab).paddingBlockStart),
+    );
+    expect(Number.parseFloat(getComputedStyle(thin).minHeight)).toBeLessThan(
+      Number.parseFloat(getComputedStyle(plainTab).minHeight),
+    );
+  });
+
+  test("thin のセグメントでもインジケーターがタブの高さに収まる", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Tabs thin items={[...items]} variant="segments" defaultValue="overview" />,
+    );
+
+    // 検証
+    await vi.waitFor(() => {
+      const tab = screen.getByRole("tab", { name: "概要" }).element().getBoundingClientRect();
+      const indicator = screen
+        .getByClassName("sui_tabs_indicator")
+        .element()
+        .getBoundingClientRect();
+      expect(indicator.height).toBeCloseTo(tab.height, 1);
+    });
+  });
+
   test("タブの左右の余白を大きさに合わせる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

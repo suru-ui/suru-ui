@@ -155,6 +155,13 @@ export namespace TabsRootProps {
     size?: TabsRootSize | undefined;
 
     /**
+     * 上下の余白を半分にして高さを薄くするかどうかを指定します。
+     *
+     * @default false
+     */
+    thin?: boolean | undefined;
+
+    /**
      * Tabs の主な外観を指定します。
      *
      * @default "line"
@@ -204,6 +211,7 @@ export interface ITabsRoot extends IComponent<TabsRootProps> {
 export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
   const {
     size = "md",
+    thin = false,
     items = [],
     style,
     radius = size,
@@ -217,8 +225,8 @@ export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
     ...otherProps
   } = props;
   const ctx = React.useMemo<TabsContext>(
-    () => ({ size, items, radius, variant, outlined, activeVariant }),
-    [activeVariant, items, outlined, radius, size, variant],
+    () => ({ size, thin, items, radius, variant, outlined, activeVariant }),
+    [activeVariant, items, outlined, radius, size, thin, variant],
   );
 
   return (
@@ -238,6 +246,7 @@ export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
               (state) => `sui_tabs-variant_${state.variant}`,
               (state) => `sui_tabs-active_variant_${state.activeVariant}`,
               (state) => state.outlined && "sui_tabs-outlined",
+              (state) => state.thin && "sui_tabs-thin",
               (state) => `sui_tabs-orientation_${state.orientation}`,
               (state) => `sui_tabs-tab_activation_direction_${state.tabActivationDirection}`,
             ),

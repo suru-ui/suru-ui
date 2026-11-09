@@ -22,6 +22,9 @@ const ctrl = controls(Tabs, {
     control: "select",
     options: SIZES,
   },
+  thin: {
+    control: "boolean",
+  },
   radius: {
     control: "select",
     options: RADII,
@@ -65,6 +68,7 @@ export const Usage = meta.story({
   name: "使い方",
   ...ctrl({
     size: "md",
+    thin: false,
     radius: undefined,
     variant: "line",
     outlined: true,
@@ -88,6 +92,7 @@ export const Variant = meta.story({
   name: "主な外観",
   ...ctrl({
     size: "md",
+    thin: false,
     radius: undefined,
     outlined: true,
     orientation: "horizontal",
@@ -118,6 +123,7 @@ export const ActiveVariants = meta.story({
   name: "選択中の外観",
   ...ctrl({
     size: "md",
+    thin: false,
     radius: undefined,
     variant: "segments",
     outlined: true,
@@ -148,6 +154,7 @@ export const Radii = meta.story({
   name: "角丸",
   ...ctrl({
     size: "md",
+    thin: false,
     variant: "line",
     outlined: true,
     orientation: "horizontal",
@@ -177,6 +184,7 @@ export const Radii = meta.story({
 export const Sizes = meta.story({
   name: "大きさ",
   ...ctrl({
+    thin: false,
     radius: undefined,
     variant: "line",
     outlined: true,
@@ -204,10 +212,51 @@ export const Sizes = meta.story({
   },
 });
 
+export const Thin = meta.story({
+  name: "薄型",
+  ...ctrl({
+    size: "md",
+    thin: true,
+    radius: undefined,
+    variant: "line",
+    outlined: true,
+    orientation: "horizontal",
+    activeVariant: "liquid",
+  }),
+  render(props) {
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <span>標準</span>
+          <Tabs
+            {...props}
+            thin={false}
+            items={usageItems}
+            className="w-96"
+            slotProps={{ panel: { className: "min-h-28" } }}
+            defaultValue="overview"
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <span>薄型</span>
+          <Tabs
+            {...props}
+            items={usageItems}
+            className="w-96"
+            slotProps={{ panel: { className: "min-h-28" } }}
+            defaultValue="overview"
+          />
+        </div>
+      </div>
+    );
+  },
+});
+
 export const Vertical = meta.story({
   name: "垂直方向",
   ...ctrl({
     size: "md",
+    thin: false,
     radius: undefined,
     variant: "line",
     outlined: true,
@@ -239,6 +288,7 @@ export const Controlled = meta.story({
   name: "制御",
   ...ctrl({
     size: "md",
+    thin: false,
     radius: undefined,
     variant: "line",
     outlined: true,
@@ -268,6 +318,7 @@ export const Disabled = meta.story({
   name: "無効",
   ...ctrl({
     size: "md",
+    thin: false,
     radius: undefined,
     variant: "line",
     outlined: true,

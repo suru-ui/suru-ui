@@ -95,6 +95,10 @@
       --sui_tabs_indicator-min_height: var(--sui-size-lg);
     }
 
+    &.sui_tabs_indicator-thin {
+      --sui_tabs_indicator-min_height: 0px;
+    }
+
     &.sui_tabs_indicator-active_variant_solid {
       --sui_tabs_indicator-z_index: 0;
       --sui_tabs_indicator-display: block;

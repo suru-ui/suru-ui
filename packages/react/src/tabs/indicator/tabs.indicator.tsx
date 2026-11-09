@@ -80,6 +80,7 @@ export const TabsIndicator: ITabsIndicator = function SuiTabsIndicator(props) {
             (state) => `sui_tabs_indicator-radius_${state.radius}`,
             (state) => `sui_tabs_indicator-variant_${state.variant}`,
             (state) => state.outlined && "sui_tabs_indicator-outlined",
+            (state) => state.thin && "sui_tabs_indicator-thin",
             (state) => `sui_tabs_indicator-active_variant_${state.activeVariant}`,
             (state) => `sui_tabs_indicator-orientation_${state.orientation}`,
             (state) =>

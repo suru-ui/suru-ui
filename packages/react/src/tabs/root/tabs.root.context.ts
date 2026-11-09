@@ -72,6 +72,11 @@ export type TabsContext<TItem = any> = {
   readonly size: TabsContextSize;
 
   /**
+   * 上下の余白を半分にして高さを薄くするかどうかです。
+   */
+  readonly thin: boolean;
+
+  /**
    * Tabs の主な外観です。
    */
   readonly variant: TabsContextVariant;

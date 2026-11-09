@@ -11,6 +11,7 @@ describe("useTabsContext", () => {
     // 準備
     const provided = {
       size: "lg",
+      thin: false,
       items: ["overview", "projects"],
       radius: "none",
       variant: "segments",

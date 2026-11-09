@@ -20,6 +20,17 @@ describe("TabsRoot", () => {
     expect(root.classList.contains("sui_tabs-active_variant_liquid")).toBe(true);
     expect(root.classList.contains("sui_tabs-orientation_horizontal")).toBe(true);
     expect(root.getAttribute("data-scope")).toBe("");
+    expect(root.classList.contains("sui_tabs-thin")).toBe(false);
+  });
+
+  test("thin を修飾へ反映する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<TabsRoot thin />);
+
+    // 検証
+    expect(screen.getByClassName("sui_tabs").element().classList.contains("sui_tabs-thin")).toBe(
+      true,
+    );
   });
 
   test("大きさと角丸と外観を修飾へ反映する", async ({ expect }) => {

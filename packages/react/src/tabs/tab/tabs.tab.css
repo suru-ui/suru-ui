@@ -41,8 +41,11 @@
 
 /* 可変 */
 :scope {
-  min-height: var(--sui_tabs_tab-min_height);
-  padding-block: var(--sui_tabs_tab-padding_block);
+  min-height: var(--_sui_tabs_tab-min_height, var(--sui_tabs_tab-min_height));
+  padding-block: var(
+                   --_sui_tabs_tab-padding_block,
+                   var(--sui_tabs_tab-padding_block)
+                 );
   padding-inline: var(--sui_tabs_tab-padding_inline);
   font-family: var(--sui_tabs_tab-font_family);
   font-size: var(--sui_tabs_tab-font_size);
@@ -128,6 +131,14 @@
 
 /* 変異 */
 :scope {
+  &.sui_tabs_tab-thin {
+    --_sui_tabs_tab-min_height: calc(
+                                     var(--sui_tabs_tab-virtual_content-leading)
+                                     + var(--sui_tabs_tab-padding_block)
+                                   );
+    --_sui_tabs_tab-padding_block: calc(var(--sui_tabs_tab-padding_block) / 2);
+  }
+
   &.sui_tabs_tab-active {
     --_sui_tabs_tab-color: var(--sui_tabs_tab-color-active);
   }
