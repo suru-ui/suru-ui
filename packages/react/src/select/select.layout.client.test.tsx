@@ -144,6 +144,21 @@ describe("Select の配置", () => {
     expect(naked.backgroundColor).not.toBe(liquid.backgroundColor);
   });
 
+  test("ポップアップの枠線の色を Menu や ContextMenu と同じにする", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <>
+        <span style={{ borderColor: "var(--sui-border-1)", borderStyle: "solid" }}>枠線の基準</span>
+        <Select items={["りんご"]} defaultOpen aria-label="果物" />
+      </>,
+    );
+
+    // 検証
+    expect(
+      getComputedStyle(screen.getByClassName("sui_select_popup").element()).borderTopColor,
+    ).toBe(getComputedStyle(screen.getByText("枠線の基準").element()).borderTopColor);
+  });
+
   test("無効時は配色とカーソルを変える", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

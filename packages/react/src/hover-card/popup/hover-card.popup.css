@@ -87,7 +87,7 @@
                                                var(--sui-canvas-1),
                                                var(--sui-canvas-2)
                                              );
-  --sui_hover_card_popup-border_color: var(--sui-grey-naked-border-normal);
+  --sui_hover_card_popup-border_color: var(--sui-border-1);
   --sui_hover_card_popup-border_width: --sui-border_width(1);
   --sui_hover_card_popup-border_radius: --sui-corner_radius(3);
   --sui_hover_card_popup-corner_shape: superellipse(var(--sui-superellipse));

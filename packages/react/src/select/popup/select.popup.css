@@ -63,7 +63,7 @@
   --sui_select_popup-color: var(--sui-canvas_text-1);
   --sui_select_popup-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
   --sui_select_popup-background_color: --sui-light-dark(var(--sui-canvas-1), var(--sui-canvas-2));
-  --sui_select_popup-border_color: var(--sui-grey-naked-border-normal);
+  --sui_select_popup-border_color: var(--sui-border-1);
   --sui_select_popup-border_width: --sui-border_width(1);
   --sui_select_popup-border_radius: --sui-corner_radius(3);
   --sui_select_popup-corner_shape: superellipse(var(--sui-superellipse));

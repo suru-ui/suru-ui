@@ -150,6 +150,26 @@ describe("HoverCard の余白と配置", () => {
     });
   });
 
+  test("枠線の色を Menu や ContextMenu と同じにする", async ({ expect }) => {
+    // 準備と実行
+    await render(
+      <>
+        <span
+          style={{ borderColor: "var(--sui-border-1)", borderStyle: "solid" }}
+          data-testid="border-color"
+        />
+        <HoverCard trigger={trigger} outlined defaultOpen data-testid="outlined">
+          枠あり
+        </HoverCard>
+      </>,
+    );
+
+    // 検証
+    expect(computedStyle("outlined").borderTopColor).toBe(
+      computedStyle("border-color").borderTopColor,
+    );
+  });
+
   test("オーバーレイを画面全体に広げる", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
