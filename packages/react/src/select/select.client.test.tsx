@@ -130,6 +130,32 @@ describe("Select", () => {
     expect(unverified.classList.contains("sui_select-unverified")).toBe(true);
   });
 
+  test("既定では Backdrop を表示しない", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<Select items={fruits} defaultOpen />);
+
+    // 検証
+    expect(screen.getByClassName("sui_select_backdrop").query()).toBe(null);
+  });
+
+  test("Backdrop を有効にすると表示する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<Select items={fruits} backdrop defaultOpen />);
+
+    // 検証
+    expect(screen.getByClassName("sui_select_backdrop").query()).not.toBe(null);
+  });
+
+  test("slotProps だけで Backdrop を表示する", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(
+      <Select items={fruits} slotProps={{ backdrop: { id: "backdrop" } }} defaultOpen />,
+    );
+
+    // 検証
+    expect(screen.getByClassName("sui_select_backdrop").element().id).toBe("backdrop");
+  });
+
   test("slotProps で各パーツの props を変更する", async ({ expect }) => {
     // 準備と実行
     const screen = await render(

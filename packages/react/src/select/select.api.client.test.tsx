@@ -270,14 +270,46 @@ describe("getPositionerProps", () => {
   });
 });
 
+describe("getBackdropProps", () => {
+  test("指定しないときは表示しない", ({ expect }) => {
+    // 準備と実行
+    const api = new SelectAPI({});
+
+    // 検証
+    expect(api.getBackdropProps()).toBe(null);
+  });
+
+  test("有効にすると props を返す", ({ expect }) => {
+    // 準備と実行
+    const api = new SelectAPI({ backdrop: true });
+
+    // 検証
+    expect(api.getBackdropProps()).toStrictEqual({});
+  });
+
+  test("slotProps だけでも表示する", ({ expect }) => {
+    // 準備と実行
+    const api = new SelectAPI({ slotProps: { backdrop: { id: "backdrop" } } });
+
+    // 検証
+    expect(api.getBackdropProps()).toStrictEqual({ id: "backdrop" });
+  });
+});
+
 describe("getRootProps", () => {
   test("Select 固有の props を Root へ渡さない", ({ expect }) => {
     // 準備と実行
-    const api = new SelectAPI({ label: "果物", slotProps: {}, placeholder: "選択" });
+    const api = new SelectAPI({
+      label: "果物",
+      backdrop: true,
+      slotProps: {},
+      placeholder: "選択",
+    });
     const props = api.getRootProps();
 
     // 検証
     expect(props).not.toHaveProperty("label");
+    expect(props).not.toHaveProperty("backdrop");
     expect(props).not.toHaveProperty("placeholder");
     expect(props).not.toHaveProperty("slotProps");
   });

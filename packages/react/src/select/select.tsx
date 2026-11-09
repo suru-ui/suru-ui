@@ -192,6 +192,15 @@ namespace SelectProps {
 
   export type Select<TValue = any> = {
     /**
+     * Backdrop を表示するかどうかを指定します。
+     *
+     * Backdrop の内容や props を変更するときは {@link SelectProps.slotProps|slotProps.backdrop} を使います。
+     *
+     * @default false
+     */
+    backdrop?: boolean | undefined;
+
+    /**
      * リストの内容、または各項目をレンダリングする関数です。
      *
      * 関数を指定した場合は {@link SelectRootProps.items|items} の各項目が引数として渡されます。
@@ -269,6 +278,7 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
   public constructor(props: SelectProps<TValue, TMultiple>) {
     const {
       label,
+      backdrop = false,
       children,
       slotProps = {},
       placeholder = "選択してください",
@@ -304,7 +314,7 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
       onOpenChangeComplete,
       ...triggerProps
     } = rootAndTriggerProps;
-    this.selectProps = { label, children, placeholder };
+    this.selectProps = { label, backdrop, children, placeholder };
     this.slotProps = slotProps;
     this.rootProps = {
       id,
@@ -374,11 +384,18 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
 
   /**
    * {@link SelectBackdrop} に渡す props を取得します。
+   *
+   * それを表示しないときは `null` を返します。
    */
-  public getBackdropProps(): Omit<SelectBackdropProps, "children"> {
-    const { backdrop: props = {} } = this.slotProps;
+  public getBackdropProps(): Omit<SelectBackdropProps, "children"> | null {
+    const { backdrop } = this.selectProps;
+    const { backdrop: props } = this.slotProps;
 
-    return props;
+    if (backdrop || props) {
+      return props || {};
+    }
+
+    return null;
   }
 
   /**
@@ -654,6 +671,7 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
   function SuiSelect(props: SelectProps) {
     const api = useSelectAPI(props);
     const labelProps = api.getLabelProps();
+    const backdropProps = api.getBackdropProps();
 
     return (
       <SelectRoot {...api.getRootProps()}>
@@ -663,7 +681,7 @@ export const Select: ISelect = /*#__PURE__*/ Object.assign(
           <SelectIcon {...api.getIconProps()} />
         </SelectTrigger>
         <SelectPortal {...api.getPortalProps()}>
-          <SelectBackdrop {...api.getBackdropProps()} />
+          {backdropProps && <SelectBackdrop {...backdropProps} />}
           <SelectPositioner {...api.getPositionerProps()}>
             <SelectPopup {...api.getPopupProps()}>
               <SelectScrollUpArrow {...api.getScrollUpArrowProps()} />
