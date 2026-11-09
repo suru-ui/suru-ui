@@ -25,20 +25,9 @@
 /* 代入 */
 :scope {
   --sui_menu_separator-height: --sui-border_width(1);
+  --sui_menu_separator-margin_block: --sui-space(0);
   --sui_menu_separator-margin_inline: --sui-space(0);
   --sui_menu_separator-color: var(--sui-border-1);
-
-  &.sui_menu_separator-size_sm {
-    --sui_menu_separator-margin_block: --sui-space(0.5);
-  }
-
-  &.sui_menu_separator-size_md {
-    --sui_menu_separator-margin_block: --sui-space(1);
-  }
-
-  &.sui_menu_separator-size_lg {
-    --sui_menu_separator-margin_block: --sui-space(1.5);
-  }
 }
 
 } /* @scope */

@@ -29,6 +29,15 @@
   line-height: var(--sui_context_menu_group_label-line_height);
   color: var(--sui_context_menu_group_label-color);
   letter-spacing: var(--sui_context_menu_group_label-letter_spacing);
+
+  &:first-child {
+    margin-block-start: var(--sui_context_menu_popup-virtual_padding_block);
+  }
+
+  &:last-child,
+  &:last-of-type {
+    margin-block-end: var(--sui_context_menu_popup-virtual_padding_block);
+  }
 }
 
 /* 代入 */
@@ -38,7 +47,12 @@
 
   &.sui_context_menu_group_label-size_sm {
     --sui_context_menu_group_label-padding_block: --sui-space(1);
-    --sui_context_menu_group_label-padding_inline: --sui-space(2);
+    --sui_context_menu_group_label-padding_inline: calc(
+                                             /* --sui_context_menu_item-margin_inline */
+                                             --sui-space(calc(1.5 / 2))
+                                             /* --sui_button-padding_inline */
+                                             + --sui-space(calc(1.5 / 2))
+                                           );
     --sui_context_menu_group_label-font_size: var(--sui-text-dns-sm-n-font_size);
     --sui_context_menu_group_label-font_weight: var(--sui-text-dns-sm-n-font_weight);
     --sui_context_menu_group_label-line_height: var(--sui-text-dns-sm-n-line_height);
@@ -47,7 +61,12 @@
 
   &.sui_context_menu_group_label-size_md {
     --sui_context_menu_group_label-padding_block: --sui-space(1);
-    --sui_context_menu_group_label-padding_inline: --sui-space(2);
+    --sui_context_menu_group_label-padding_inline: calc(
+                                             /* --sui_context_menu_item-margin_inline */
+                                             --sui-space(calc(2.5 / 2))
+                                             /* --sui_button-padding_inline */
+                                             + --sui-space(calc(2.5 / 2))
+                                           );
     --sui_context_menu_group_label-font_size: var(--sui-text-dns-sm-n-font_size);
     --sui_context_menu_group_label-font_weight: var(--sui-text-dns-sm-n-font_weight);
     --sui_context_menu_group_label-line_height: var(--sui-text-dns-sm-n-line_height);
@@ -55,8 +74,13 @@
   }
 
   &.sui_context_menu_group_label-size_lg {
-    --sui_context_menu_group_label-padding_block: --sui-space(1);
-    --sui_context_menu_group_label-padding_inline: --sui-space(2);
+    --sui_context_menu_group_label-padding_block: --sui-space(2);
+    --sui_context_menu_group_label-padding_inline: calc(
+                                             /* --sui_context_menu_item-margin_inline */
+                                             --sui-space(calc(3.5 / 2))
+                                             /* --sui_button-padding_inline */
+                                             + --sui-space(calc(3.5 / 2))
+                                           );
     --sui_context_menu_group_label-font_size: var(--sui-text-dns-md-n-font_size);
     --sui_context_menu_group_label-font_weight: var(--sui-text-dns-md-n-font_weight);
     --sui_context_menu_group_label-line_height: var(--sui-text-dns-md-n-line_height);
