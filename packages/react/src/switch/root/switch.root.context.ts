@@ -12,7 +12,7 @@ export type SwitchContextColor = Color;
 /**
  * スイッチの角丸の大きさです。
  */
-export type SwitchContextRadius = "none" | Size | "full";
+export type SwitchContextRadius = "none" | Size | "full" | "circle";
 
 /**
  * スイッチの大きさです。

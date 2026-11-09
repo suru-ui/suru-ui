@@ -145,6 +145,11 @@
     --sui_switch-corner_shape: superellipse(var(--sui-superellipse));
   }
 
+  &.sui_switch-radius_circle {
+    --sui_switch-border_radius: calc(var(--sui_switch-height) / 2);
+    --sui_switch-corner_shape: none;
+  }
+
   &.sui_switch-color_grey {
     --sui_switch-border_color-checked: var(--sui-grey-solid-border-normal);
     --sui_switch-canvas-idle-checked: var(--sui-grey-solid-canvas-normal);

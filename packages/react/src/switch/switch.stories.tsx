@@ -5,7 +5,7 @@ import { preview, controls } from "../../.config/storybook/preview.js";
 import { Switch } from "./index.js";
 
 const COLORS: readonly Switch.Color[] = theme.COLORS;
-const RADII: readonly Switch.Radius[] = ["none", ...theme.SIZES, "full"];
+const RADII: readonly Switch.Radius[] = ["none", ...theme.SIZES, "full", "circle"];
 const SIZES: readonly Switch.Size[] = theme.SIZES;
 const VARIANTS: readonly Switch.Variant[] = ["naked", "liquid"];
 

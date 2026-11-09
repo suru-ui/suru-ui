@@ -127,6 +127,49 @@ describe("Switch の配置", () => {
     );
   });
 
+  test("つまみの角丸をレールの角丸から余白を引いた値にする", async ({ expect }) => {
+    // 準備と実行
+    const radii = ["none", "sm", "md", "lg", "full", "circle"] as const;
+    const screen = await render(
+      <>
+        {radii.map((radius) => (
+          <Switch key={radius} radius={radius} data-testid={radius} />
+        ))}
+      </>,
+    );
+
+    // 検証
+    for (const radius of radii) {
+      const root = screen.getByTestId(radius).element();
+      const rootStyle = getComputedStyle(root);
+      const rootRadius = Number.parseFloat(rootStyle.borderTopLeftRadius);
+      const padding = Number.parseFloat(rootStyle.paddingTop);
+      const thumb = root.querySelector<HTMLElement>(".sui_switch_thumb")!;
+      expect(Number.parseFloat(getComputedStyle(thumb).borderTopLeftRadius)).toBeCloseTo(
+        Math.max(0, rootRadius - padding),
+        1,
+      );
+    }
+  });
+
+  test("角丸 circle は corner-shape を使わず高さの半分にする", async ({ expect }) => {
+    // 準備と実行
+    const screen = await render(<Switch radius="circle" data-testid="circle" />);
+
+    // 検証
+    const root = screen.getByTestId("circle").element();
+    const style = getComputedStyle(root);
+    expect(style.getPropertyValue("--sui_switch-corner_shape").trim()).toBe("none");
+    expect(Number.parseFloat(style.borderTopLeftRadius)).toBeCloseTo(
+      root.getBoundingClientRect().height / 2,
+      1,
+    );
+    const thumb = root.querySelector<HTMLElement>(".sui_switch_thumb")!;
+    expect(getComputedStyle(thumb).getPropertyValue("--sui_switch_thumb-corner_shape").trim()).toBe(
+      "none",
+    );
+  });
+
   test("枠線を表示しても大きさを変えない", async ({ expect }) => {
     // 準備と実行
     const screen = await render(
