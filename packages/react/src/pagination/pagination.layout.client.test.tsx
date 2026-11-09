@@ -180,7 +180,7 @@ describe("焦点リング", () => {
         <PaginationEllipsis end={4} start={2} />
       </PaginationRoot>,
     );
-    const button = screen.getByRole("button", { name: "2〜4ページへ移動" }).element();
+    const button = screen.getByRole("combobox", { name: "2〜4ページへ移動" }).element();
 
     // 実行
     button.focus({ focusVisible: true });

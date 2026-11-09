@@ -3,9 +3,31 @@ import * as React from "react";
 import { MoreIcon } from "../../_icons.jsx";
 import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
-import useRender, { type RenderProps } from "../../_use-render.js";
+import type { RenderProps } from "../../_use-render.js";
 import * as Button from "../../button/button.parts.js";
 import cn from "../../cn.js";
+import { useComboboxAPI } from "../../combobox/combobox.jsx";
+import {
+  ComboboxItem,
+  ComboboxList,
+  ComboboxRoot,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxPopup,
+  ComboboxPortal,
+  ComboboxStatus,
+  ComboboxTrigger,
+  ComboboxInputGroup,
+  ComboboxPositioner,
+} from "../../combobox/combobox.parts.js";
+import {
+  ScrollAreaRoot,
+  ScrollAreaThumb,
+  ScrollAreaCorner,
+  ScrollAreaContent,
+  ScrollAreaViewport,
+  ScrollAreaScrollbar,
+} from "../../scroll-area/scroll-area.parts.js";
 import type { IComponent } from "../../types.js";
 import { usePaginationContext } from "../root/pagination.root.context.js";
 import { PaginationEllipsisContext } from "./pagination.ellipsis.context.js";
@@ -65,7 +87,7 @@ export type IPaginationEllipsis = IComponent<PaginationEllipsisProps>;
 /**
  * 飛ばされたページ範囲を表す省略記号コンポーネントです。
  *
- * 押下すると入力欄が表示され、範囲内のページ番号を入力してそのページへ移動できます。`Enter` で決定、`Escape` で取り消します。大きさ・角丸は {@link PaginationRoot} から引き継ぎます。
+ * 押下するとポップアップが開き、入力欄でページを絞り込み、選択肢から移動先のページを選べます。大きさ・角丸は {@link PaginationRoot} から引き継ぎます。
  */
 export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEllipsis(props) {
   const ctx = usePaginationContext();
@@ -89,109 +111,121 @@ export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEll
     Math.max(1, Math.trunc(end ?? start)),
   );
   const label = ariaLabel ?? `${resolvedStart}〜${resolvedEnd}ページへ移動`;
-  const [editing, setEditing] = React.useState(false);
-  const inputRef = React.useRef<HTMLInputElement>(null);
   const isDisabled = ctx.disabled || disabled;
-
-  React.useEffect(() => {
-    if (editing) {
-      inputRef.current?.focus();
-    }
-  }, [editing]);
-
-  const inputElement = useRender<HTMLInputElement, {}, boolean>({
-    props: {
-      ref: inputRef,
-      type: "text",
-      onBlur() {
-        setEditing(false);
-      },
-      pattern: "[0-9]*",
-      disabled: isDisabled,
-      className: cn(
-        "sui_pagination_ellipsis_input",
-        isDisabled && "sui_pagination_ellipsis_input-disabled",
+  const items = React.useMemo(
+    () =>
+      Array.from(
+        { length: resolvedEnd - resolvedStart + 1 },
+        (_, index): number => resolvedStart + index,
       ),
-      inputMode: "numeric",
-      onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-        if (event.key === "Escape") {
-          setEditing(false);
-
-          return;
-        }
-
-        if (event.key !== "Enter") {
-          return;
-        }
-
-        const value = Number.parseInt(event.currentTarget.value, 10);
-        setEditing(false);
-        if (Number.isNaN(value)) {
-          return;
-        }
-
-        ctx.goToPage(Math.min(Math.max(value, resolvedStart), resolvedEnd), {
-          event,
-          reason: "ellipsis",
-        });
+    [resolvedEnd, resolvedStart],
+  );
+  const api = useComboboxAPI<number>({
+    size: ctx.size,
+    color: "grey",
+    items,
+    radius: ctx.radius,
+    disabled: isDisabled,
+    slotProps: {
+      list: {
+        children: (page) => (
+          <ComboboxItem
+            key={page}
+            value={page}
+            onClick={(event) => {
+              ctx.goToPage(page, { event, reason: "ellipsis" });
+            }}
+          >
+            {page}
+          </ComboboxItem>
+        ),
       },
-      placeholder: String(resolvedStart),
-      defaultValue: "",
-      "aria-label": label,
+      input: {
+        "aria-label": "ページを検索",
+      },
+      popup: {
+        style: {
+          minWidth: "min(14rem, var(--available-width))",
+        },
+      },
     },
-    enabled: editing,
-    defaultTagName: "input",
+    placeholder: "ページを検索",
+    inputInPopup: true,
+    itemToStringLabel: (page) => String(page),
   });
 
-  if (editing) {
-    return inputElement;
-  }
-
-  const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
-    onClick?.(event);
-    if (!event.defaultPrevented && !isDisabled) {
-      setEditing(true);
-    }
-  };
-
   return (
-    <Button.Root
-      {...otherButtonProps}
-      {...proxyRenderProps<Button.Root.State, PaginationEllipsisState>(
-        (state) => ({ ...ctx, ...state }),
-        {
-          style,
-          render: (htmlProps, state) => (
-            <PaginationEllipsisContext value={state}>
-              <RenderElement
-                state={state}
-                render={render}
-                htmlProps={htmlProps}
-                defaultTagName="button"
-              />
-            </PaginationEllipsisContext>
-          ),
-          className: cn<PaginationEllipsisState>(
-            className,
-            "sui_pagination_ellipsis",
-            (state) => `sui_pagination_ellipsis-size_${state.size}`,
-            (state) => `sui_pagination_ellipsis-color_${state.color}`,
-            (state) => `sui_pagination_ellipsis-radius_${state.radius}`,
-            (state) => state.disabled && "sui_pagination_ellipsis-disabled",
-          ),
-        },
-      )}
-      size={ctx.size}
-      color="grey"
-      radius={ctx.radius}
-      onClick={handleClick}
-      squared
-      variant="naked"
-      disabled={isDisabled}
-      aria-label={label}
-    >
-      <MoreIcon />
-    </Button.Root>
+    <ComboboxRoot {...api.getRootProps()}>
+      <ComboboxTrigger
+        {...api.getTriggerProps()}
+        onClick={onClick}
+        disabled={isDisabled}
+        nativeButton
+        aria-label={label}
+      >
+        {(htmlProps) => (
+          <Button.Root
+            {...htmlProps}
+            {...otherButtonProps}
+            {...proxyRenderProps<Button.Root.State, PaginationEllipsisState>(
+              (buttonState) => ({ ...ctx, ...buttonState }),
+              {
+                style,
+                render: (buttonProps, state) => (
+                  <PaginationEllipsisContext value={state}>
+                    <RenderElement
+                      state={state}
+                      render={render}
+                      htmlProps={buttonProps}
+                      defaultTagName="button"
+                    />
+                  </PaginationEllipsisContext>
+                ),
+                className: (state) =>
+                  cn(
+                    htmlProps.className,
+                    typeof className === "function" ? className(state) : className,
+                    "sui_pagination_ellipsis",
+                    `sui_pagination_ellipsis-size_${state.size}`,
+                    `sui_pagination_ellipsis-radius_${state.radius}`,
+                    state.disabled && "sui_pagination_ellipsis-disabled",
+                  ),
+              },
+            )}
+            size={ctx.size}
+            color="grey"
+            radius={ctx.radius}
+            squared
+            variant="naked"
+            disabled={isDisabled}
+          >
+            <MoreIcon />
+          </Button.Root>
+        )}
+      </ComboboxTrigger>
+      <ComboboxPortal {...api.getPortalProps()}>
+        <ComboboxPositioner {...api.getPositionerProps()}>
+          <ComboboxPopup {...api.getPopupProps()}>
+            <ComboboxInputGroup {...api.getInputGroupInPopupProps()}>
+              <ComboboxInput {...api.getInputProps()} />
+            </ComboboxInputGroup>
+            <ScrollAreaRoot {...api.getScrollAreaProps()}>
+              <ScrollAreaViewport {...api.getViewportProps()}>
+                <ScrollAreaContent {...api.getContentProps()}>
+                  <ComboboxStatus {...api.getStatusProps()} />
+                  <ComboboxEmpty {...api.getEmptyProps()} />
+                  <ComboboxList {...api.getListProps()} />
+                </ScrollAreaContent>
+              </ScrollAreaViewport>
+              <ScrollAreaScrollbar {...api.getScrollbarProps()}>
+                <ScrollAreaThumb {...api.getThumbProps()} />
+              </ScrollAreaScrollbar>
+              <ScrollAreaCorner {...api.getCornerProps()} />
+            </ScrollAreaRoot>
+          </ComboboxPopup>
+        </ComboboxPositioner>
+      </ComboboxPortal>
+    </ComboboxRoot>
   );
 };
 

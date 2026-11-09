@@ -220,7 +220,9 @@ export const EllipsisJump = meta.story({
     return (
       <div className="flex flex-col gap-2">
         <Pagination {...props} />
-        <span>省略記号（…）を押すと入力欄が開き、番号の入力で直接移動できます。</span>
+        <span>
+          省略記号（…）を押すとポップアップが開き、入力欄でページを絞り込んで移動先を選べます。
+        </span>
       </div>
     );
   },
@@ -327,8 +329,8 @@ export const Accessibility = meta.story({
         <Pagination {...props} aria-label="検索結果のページ移動" />
         <span>
           全体は nav 要素とラベルで示し、現在のページは aria-current で示します。ボタンは Tab
-          で移動して Enter または Space で操作でき、省略記号の入力欄は Enter で決定して Escape
-          で取り消せます。
+          で移動して Enter または Space で操作でき、省略記号のポップアップは入力欄で候補を絞り込み、
+          矢印キーと Enter で選択できます。
         </span>
       </div>
     );

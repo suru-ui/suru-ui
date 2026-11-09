@@ -292,7 +292,7 @@ export { PaginationAPI as API, usePaginationAPI as useAPI };
 /**
  * ページ移動を行うページネーションコンポーネントです。
  *
- * 総ページ数から表示する項目を組み立て、前後の移動ボタンとページ番号ボタンを並べます。省略記号（…）を押下すると入力欄が表示され、ページ番号を入力してそのページへ直接移動できます。
+ * 総ページ数から表示する項目を組み立て、前後の移動ボタンとページ番号ボタンを並べます。省略記号（…）を押下するとポップアップが開き、入力欄でページを絞り込んで移動先を選べます。
  */
 export const Pagination: IPagination = Object.assign(
   function SuiPagination(props: PaginationProps) {

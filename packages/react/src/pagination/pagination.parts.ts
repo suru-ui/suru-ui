@@ -1,6 +1,4 @@
 import "./root/pagination.root.css";
-import "./ellipsis/pagination.ellipsis.css";
-import "./ellipsis-input/pagination.ellipsis-input.css";
 
 export * from "./root/pagination.root.context.js";
 export * from "./previous-button/pagination.previous-button.context.js";
