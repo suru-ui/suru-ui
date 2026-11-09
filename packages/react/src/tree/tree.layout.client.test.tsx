@@ -83,10 +83,8 @@ describe("Tree の配置", () => {
     expect(step).toBeGreaterThan(0);
     expect(buttonPadding - componentsPadding).toBeCloseTo(step, 0);
     const indicator = components.querySelector(".sui_tree_item_indicator");
-    // 間隔トークンを解決できないブラウザーでは `column-gap` が `normal` になり、段差はインジケーター幅だけになります。
     const columnGap = Number.parseFloat(getComputedStyle(components).columnGap);
-    const expected =
-      indicator!.getBoundingClientRect().width + (Number.isNaN(columnGap) ? 0 : columnGap);
+    const expected = indicator!.getBoundingClientRect().width + columnGap;
     expect(step).toBeCloseTo(expected, 0);
   });
 

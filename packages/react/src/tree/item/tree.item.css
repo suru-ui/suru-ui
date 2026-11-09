@@ -1,17 +1,4 @@
 /* 項目は ButtonRoot 経由で描画され、ButtonRoot が data-scope を持つため、下限なしのブロックにします。 */
-/* `@function` を解決できないブラウザーでは Button の余白と間隔が無効なトークン列になるため、長さとして登録して初期値 `0px` に落とします。 */
-@property --sui_tree_item-gap {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --sui_tree_item-padding_inline {
-  syntax: "<length>";
-  inherits: false;
-  initial-value: 0px;
-}
-
 @layer sui.component {
 @scope (.sui_tree_item) {
 
