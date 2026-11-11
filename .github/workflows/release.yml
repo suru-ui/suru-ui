@@ -63,8 +63,8 @@ jobs:
         run: |
           # NOTE: workspaces の定義順がトポロジカル順（依存される側が先）であることを前提に、
           # 上から順にビルドする。順序を変える場合は依存関係を考慮すること。
-          dirs="$(jq -r '.workspaces[]' package.json)"
-          while IFS= read -r dir; do
+          mapfile -t dirs < <(jq -r '.workspaces[]' package.json)
+          for dir in "${dirs[@]}"; do
             if [ -z "$dir" ] || [ ! -f "$dir/package.json" ]; then
               continue
             fi
@@ -84,13 +84,13 @@ jobs:
               npm run build
             )
             echo "::endgroup::"
-          done <<< "$dirs"
+          done
 
       - name: "整形"
         if: inputs.skip-checks != true
         run: |
-          dirs="$(jq -r '.workspaces[]' package.json)"
-          while IFS= read -r dir; do
+          mapfile -t dirs < <(jq -r '.workspaces[]' package.json)
+          for dir in "${dirs[@]}"; do
             if [ -z "$dir" ] || [ ! -f "$dir/package.json" ]; then
               continue
             fi
@@ -111,13 +111,13 @@ jobs:
               mise run test:format
             )
             echo "::endgroup::"
-          done <<< "$dirs"
+          done
 
       - name: "lint"
         if: inputs.skip-checks != true
         run: |
-          dirs="$(jq -r '.workspaces[]' package.json)"
-          while IFS= read -r dir; do
+          mapfile -t dirs < <(jq -r '.workspaces[]' package.json)
+          for dir in "${dirs[@]}"; do
             if [ -z "$dir" ] || [ ! -f "$dir/package.json" ]; then
               continue
             fi
@@ -138,13 +138,13 @@ jobs:
               mise run test:lint
             )
             echo "::endgroup::"
-          done <<< "$dirs"
+          done
 
       - name: "テスト"
         if: inputs.skip-checks != true
         run: |
-          dirs="$(jq -r '.workspaces[]' package.json)"
-          while IFS= read -r dir; do
+          mapfile -t dirs < <(jq -r '.workspaces[]' package.json)
+          for dir in "${dirs[@]}"; do
             if [ -z "$dir" ] || [ ! -f "$dir/package.json" ]; then
               continue
             fi
@@ -173,7 +173,7 @@ jobs:
               mise run test
             )
             echo "::endgroup::"
-          done <<< "$dirs"
+          done
 
       - name: "公開パッケージを決定"
         id: packages
@@ -188,8 +188,8 @@ jobs:
           list=""
           first_tag=""
 
-          dirs="$(jq -r '.workspaces[]' package.json)"
-          while IFS= read -r dir; do
+          mapfile -t dirs < <(jq -r '.workspaces[]' package.json)
+          for dir in "${dirs[@]}"; do
             if [ -z "$dir" ] || [ ! -f "$dir/package.json" ]; then
               continue
             fi
@@ -218,7 +218,7 @@ jobs:
             fi
 
             list+="$dir"$'\t'"$name"$'\t'"$VERSION"$'\n'
-          done <<< "$dirs"
+          done
 
           if [ "$PACKAGE_NAME" != "*" ] && [ "$matched" = "false" ]; then
             echo "::error::公開対象のパッケージ「$PACKAGE_NAME」が見つかりません。"
