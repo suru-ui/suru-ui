@@ -1,5 +1,6 @@
 {
   "extends": ["@tsconfig/node24", "@tsconfig/strictest"],
+  "include": ["./global.d.ts", "../src/**/*"],
   "exclude": [
     "../src/**/*.stories.tsx",
     "../src/**/*.test.ts",

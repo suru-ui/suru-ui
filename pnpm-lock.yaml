@@ -254,9 +254,6 @@ importers:
       '@suru-ui/theme':
         specifier: workspace:*
         version: link:../theme
-      '@unocss/core':
-        specifier: ^66.0.0
-        version: 66.11.0
     devDependencies:
       '@tsconfig/node24':
         specifier: 24.0.5
@@ -267,6 +264,9 @@ importers:
       '@types/node':
         specifier: 24.19.2
         version: 24.19.2
+      '@unocss/core':
+        specifier: 66.12.0
+        version: 66.12.0
       '@vitest/coverage-v8':
         specifier: 4.1.12
         version: 4.1.12(@vitest/browser@4.1.12)(vitest@4.1.12)
@@ -2912,9 +2912,6 @@ packages:
 
   '@unocss/config@66.12.0':
     resolution: {integrity: sha512-TP4/RDxminVfM19SMX053bYgmyZwB4TEDSpAeUchv3CLvvIsMUrxQ9LUQ2QMe+W2FU+u5U6GArKSQZpbgCSGYQ==}
-
-  '@unocss/core@66.11.0':
-    resolution: {integrity: sha512-eDMgNWF0LnpNQJXiBEofsAbh2EusQjkVDefBC526U5vOqRwMmqNuYs32rvUwYxf4O/ryIEgFJQAvDv+JpwfSKg==}
 
   '@unocss/core@66.12.0':
     resolution: {integrity: sha512-kWPbF6ilPyrKm5+XNKsHtCZYY5BSHGeCPKb19bEQnvFknPyi57xfBpI/3GSj5zs8i0EMbQkJbT22BcgeJ4DAZw==}
@@ -8907,8 +8904,6 @@ snapshots:
       colorette: 2.0.20
       consola: 3.4.2
       unconfig: 7.5.0
-
-  '@unocss/core@66.11.0': {}
 
   '@unocss/core@66.12.0': {}
 

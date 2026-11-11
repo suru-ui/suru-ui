@@ -96,7 +96,8 @@ describe("Menu の配置", () => {
     const label = screen.getByText("果物").element();
     const labelStyle = getComputedStyle(label);
     expect(Number.parseFloat(labelStyle.paddingBlockStart)).toBeCloseTo(4, 1);
-    expect(Number.parseFloat(labelStyle.paddingInlineStart)).toBeCloseTo(8, 1);
+    // 項目の余白 (5px) と項目内の文字の余白 (5px) を合わせた位置に揃えます。
+    expect(Number.parseFloat(labelStyle.paddingInlineStart)).toBeCloseTo(10, 1);
     expect(labelStyle.fontSize).toBe("12px");
   });
 
@@ -118,7 +119,7 @@ describe("Menu の配置", () => {
     );
   });
 
-  test("区切り線に余白を付ける", async ({ expect }) => {
+  test("区切り線に余白を付けない", async ({ expect }) => {
     // 準備と実行
     const screen = await render(<Menu items={items} defaultOpen />);
 
@@ -126,7 +127,7 @@ describe("Menu の配置", () => {
     const separator = screen.getByRole("separator").element();
     const style = getComputedStyle(separator);
     expect(Number.parseFloat(style.height)).toBeCloseTo(1, 1);
-    expect(Number.parseFloat(style.marginBlockStart)).toBeCloseTo(4, 1);
+    expect(Number.parseFloat(style.marginBlockStart)).toBeCloseTo(0, 1);
   });
 
   test("サブメニューを親項目の右へ開く", async ({ expect }) => {
