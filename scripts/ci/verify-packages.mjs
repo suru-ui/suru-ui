@@ -43,6 +43,23 @@ function isPrivatePackage(packageData) {
 }
 
 /**
+ * package.json の exports から CSS のエントリーポイントを抽出します。
+ *
+ * @param {unknown} packageData package.json の内容です。
+ *
+ * @returns {string[]} CSS のエントリーポイントです。
+ */
+function getCssEntrypoints(packageData) {
+  if (!isJsonObject(packageData) || !isJsonObject(packageData.exports)) {
+    return [];
+  }
+
+  return Object.entries(packageData.exports)
+    .filter(([, value]) => typeof value === "string" && value.endsWith(".css"))
+    .map(([key]) => key);
+}
+
+/**
  * 検証コマンドを 1 件実行します。
  *
  * @param {string} dir 実行先のワークスペースディレクトリーです。
@@ -69,8 +86,9 @@ function runCheck(dir, args, label) {
  *
  * @param {string} dir 対象のワークスペースディレクトリーです。
  * @param {string} runnerTemp pack 成果物の出力先ディレクトリーです。
+ * @param {unknown} packageData package.json の内容です。
  */
-function verifyPackage(dir, runnerTemp) {
+function verifyPackage(dir, runnerTemp, packageData) {
   const packResult = spawnSync("pnpm", ["pack", "--pack-destination", runnerTemp], {
     cwd: join(ROOT, dir),
     encoding: "utf8",
@@ -96,7 +114,15 @@ function verifyPackage(dir, runnerTemp) {
   }
 
   runCheck(dir, ["exec", "publint", file], "publint");
-  runCheck(dir, ["exec", "attw", "--profile", "esm-only", file], "attw");
+
+  const attwArgs = ["exec", "attw", file, "--profile", "esm-only"];
+  const cssEntrypoints = getCssEntrypoints(packageData);
+
+  if (cssEntrypoints.length > 0) {
+    attwArgs.push("--exclude-entrypoints", ...cssEntrypoints);
+  }
+
+  runCheck(dir, attwArgs, "attw");
 }
 
 /**
@@ -137,7 +163,7 @@ function main() {
       continue;
     }
 
-    verifyPackage(entry.dir, runnerTemp);
+    verifyPackage(entry.dir, runnerTemp, entry.data);
   }
 }
 
@@ -150,4 +176,4 @@ if (isMainModule()) {
   }
 }
 
-export { isPrivatePackage };
+export { isPrivatePackage, getCssEntrypoints };

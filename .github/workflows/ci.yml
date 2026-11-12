@@ -53,6 +53,10 @@ jobs:
       - name: "依存関係をインストール"
         run: pnpm install --frozen-lockfile
 
+      - name: "内部パッケージのビルド"
+        # ルートの検証は各ワークスペースのソースも型チェックするため、内部パッケージの型定義を先に生成します。
+        run: pnpm --filter './packages/**' run build
+
       - name: "ルートの検証"
         run: mise run test:check
 

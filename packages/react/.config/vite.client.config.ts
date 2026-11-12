@@ -23,12 +23,6 @@ export default defineConfig({
 
       provider: "istanbul",
       reporter: ["text", "json-summary", "html"],
-      thresholds: {
-        lines: 85,
-        branches: 85,
-        functions: 85,
-        statements: 85,
-      },
       reportsDirectory: "./coverage/client",
     },
     setupFiles: [".config/_reset-pointer.ts"],

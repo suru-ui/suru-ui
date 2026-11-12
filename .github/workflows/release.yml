@@ -56,11 +56,11 @@ jobs:
       - name: "依存関係をインストール"
         run: pnpm install --frozen-lockfile
 
-      - name: "ルートの検証"
-        run: mise run test:check
-
       - name: "ビルド"
         run: node scripts/release/each-workspace.mjs build
+
+      - name: "ルートの検証"
+        run: mise run test:check
 
       - name: "静的検証"
         run: node scripts/release/each-workspace.mjs check
