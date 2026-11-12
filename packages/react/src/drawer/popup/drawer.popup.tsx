@@ -22,7 +22,7 @@ export namespace DrawerPopupProps {
     Pick<
       React.ComponentProps<typeof Drawer.Popup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DrawerPopupProps より:
+      // DrawerPopupProps より :
       "initialFocus" | "finalFocus"
     >,
     keyof Render | keyof SuruUI
@@ -49,7 +49,7 @@ export type IDrawerPopup = IComponent<DrawerPopupProps>;
  *
  * `initialFocus` と `finalFocus` を使うと、開閉時に移動するフォーカス先を指定できます。
  */
-export const DrawerPopup: IDrawerPopup = function SuiDrawerPopup(props) {
+export const DrawerPopup: IDrawerPopup = (props) => {
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -87,7 +87,6 @@ export const DrawerPopup: IDrawerPopup = function SuiDrawerPopup(props) {
 };
 
 export { DrawerPopup as Popup };
-
 export namespace Popup {
   export type State = DrawerPopupState;
 

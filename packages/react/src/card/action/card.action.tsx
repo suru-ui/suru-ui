@@ -11,9 +11,7 @@ import { type CardContext, useCardContext } from "../root/card.root.context.js";
 export type CardActionState = Override<
   CardContext,
   {
-    /**
-     * 絶対位置に配置されているかどうかです。
-     */
+    /** 絶対位置に配置されているかどうかです。 */
     absolute: boolean;
   }
 >;
@@ -22,9 +20,7 @@ export namespace CardActionProps {
   export type Render = RenderProps<CardActionState>;
 
   export type SuruUI = {
-    /**
-     * 絶対位置で配置します。
-     */
+    /** 絶対位置で配置します。 */
     absolute?: boolean | undefined;
   };
 
@@ -46,10 +42,8 @@ export type CardActionProps = CardActionProps.Render &
 
 export type ICardAction = IComponent<CardActionProps>;
 
-/**
- * カードのヘッダー右上に操作要素を配置するコンポーネントです。
- */
-export const CardAction: ICardAction = function SuiCardAction(props) {
+/** カードのヘッダー右上に操作要素を配置するコンポーネントです。 */
+export const CardAction: ICardAction = (props) => {
   const ctx = useCardContext();
   const { absolute = false, ...otherDivProps } = props;
 
@@ -66,13 +60,15 @@ export const CardAction: ICardAction = function SuiCardAction(props) {
         ),
       },
     ],
-    state: { ...ctx, absolute },
+    state: {
+      ...ctx,
+      absolute,
+    },
     defaultTagName: "div",
   });
 };
 
 export { CardAction as Action };
-
 export namespace Action {
   export type State = CardActionState;
 

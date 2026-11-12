@@ -47,7 +47,7 @@ export type INumberFieldAddon = IComponent<NumberFieldAddonProps>;
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
-export const NumberFieldAddon: INumberFieldAddon = function SuiNumberFieldAddon(props) {
+export const NumberFieldAddon: INumberFieldAddon = (props) => {
   const ctx = useNumberFieldGroupContext();
   const { disableFocusOnClick = false, ...otherSpanProps } = props;
 
@@ -83,7 +83,6 @@ export const NumberFieldAddon: INumberFieldAddon = function SuiNumberFieldAddon(
 };
 
 export { NumberFieldAddon as Addon };
-
 export namespace Addon {
   export type State = NumberFieldAddonState;
 

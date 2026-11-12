@@ -79,16 +79,21 @@ export type IImageRoot = IComponent<ImageRootProps>;
  *
  * 既定では `object-fit` を指定せず、画像は元の比率のまま表示されます。`fit` でコンテナーへのはめ込み方法を、`radius` で角丸を指定できます。
  */
-export const ImageRoot: IImageRoot = function SuiImageRoot(props) {
+export const ImageRoot: IImageRoot = (props) => {
   const {
     fit,
     radius = "none",
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherImgProps
   } = props;
-
-  const ctx = React.useMemo<ImageContext>(() => ({ fit, radius }), [fit, radius]);
+  const ctx = React.useMemo<ImageContext>(
+    () => ({
+      fit,
+      radius,
+    }),
+    [fit, radius],
+  );
   const element = useRender({
     props: [
       otherImgProps,
@@ -109,7 +114,6 @@ export const ImageRoot: IImageRoot = function SuiImageRoot(props) {
 };
 
 export { ImageRoot as Root };
-
 export namespace Root {
   export type State = ImageRootState;
 

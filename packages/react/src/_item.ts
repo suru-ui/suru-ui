@@ -1,4 +1,4 @@
-// 参考:
+// 参考 :
 // https://github.com/mui/base-ui/blob/v1.7.0/packages/react/src/internals/resolveValueLabel.tsx#L60-L73
 // https://github.com/mui/base-ui/blob/v1.7.0/packages/react/src/internals/resolveValueLabel.tsx#L75-L83
 // https://github.com/mui/base-ui/blob/v1.7.0/packages/react/src/internals/serializeValue.ts
@@ -35,17 +35,15 @@ export function hasItems<X extends object>(x: X): x is X & IItemGroup {
 }
 
 export function isItemGroup(item: unknown): item is IItemGroup;
-
+// oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- 呼び出し元の型へ絞り込むため。
 export function isItemGroup<TItem extends IItemGroup>(item: unknown): item is TItem;
-
 export function isItemGroup(item: unknown): boolean {
   return isObject(item) && hasItems(item);
 }
 
 export function isLabeledItem(item: unknown): item is ILabeledItem;
-
+// oxlint-disable-next-line typescript/no-unnecessary-type-parameters -- 呼び出し元の型へ絞り込むため。
 export function isLabeledItem<TItem extends ILabeledItem>(item: unknown): item is TItem;
-
 export function isLabeledItem(item: unknown): boolean {
   return isObject(item) && hasLabel(item) && hasValue(item);
 }
@@ -102,6 +100,7 @@ export function defaultItemToStringValue(item: unknown): string {
   }
 }
 
+/* oxlint-disable typescript/consistent-return -- キーが存在しない場合は undefined を返すため。 */
 export function getItemKey(item: unknown): NonNullable<React.Key> | undefined {
   if (isReactKey(item)) {
     return item;
@@ -109,19 +108,19 @@ export function getItemKey(item: unknown): NonNullable<React.Key> | undefined {
 
   switch (typeof item) {
     case "object":
-      switch (true) {
-        case item === null:
-          return undefined;
-
-        case "key" in item! && isReactKey(item.key):
-          return item.key;
-
-        case "id" in item! && isReactKey(item.id):
-          return item.id;
-
-        default:
-          return undefined;
+      if (item === null) {
+        return undefined;
       }
+
+      if ("key" in item && isReactKey(item.key)) {
+        return item.key;
+      }
+
+      if ("id" in item && isReactKey(item.id)) {
+        return item.id;
+      }
+
+      return undefined;
 
     case "symbol":
       return item.description;
@@ -134,18 +133,10 @@ export function getItemKey(item: unknown): NonNullable<React.Key> | undefined {
   }
 }
 
-function isReactKey(key: unknown): key is NonNullable<React.Key> {
-  const k = key as NonNullable<React.Key>;
-  switch (typeof k) {
-    case "string":
-    case "number":
-    case "bigint":
-      return true;
+/* oxlint-enable typescript/consistent-return */
 
-    default:
-      k satisfies never;
-      return false;
-  }
+function isReactKey(key: unknown): key is NonNullable<React.Key> {
+  return typeof key === "string" || typeof key === "number" || typeof key === "bigint";
 }
 
 function serializeValue(value: unknown): string {

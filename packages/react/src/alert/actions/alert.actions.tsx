@@ -18,10 +18,7 @@ export namespace AlertActionsProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type AlertActionsProps = AlertActionsProps.Render &
 
 export type IAlertActions = IComponent<AlertActionsProps>;
 
-/**
- * アラートの操作ボタンを右寄せでまとめるコンポーネントです。
- */
-export const AlertActions: IAlertActions = function SuiAlertActions(props) {
+/** アラートの操作ボタンを右寄せでまとめるコンポーネントです。 */
+export const AlertActions: IAlertActions = (props) => {
   const ctx = useAlertContext();
 
   return useRender({
@@ -63,7 +58,6 @@ export const AlertActions: IAlertActions = function SuiAlertActions(props) {
 };
 
 export { AlertActions as Actions };
-
 export namespace Actions {
   export type State = AlertActionsState;
 

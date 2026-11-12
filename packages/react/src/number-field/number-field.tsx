@@ -35,8 +35,7 @@ import {
   NumberFieldScrubAreaCursor,
 } from "./number-field.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type NumberFieldColor = NumberFieldRootColor;
 
@@ -112,9 +111,7 @@ namespace NumberFieldProps {
      */
     decrement?: NumberFieldDecrementProps["children"] | undefined;
 
-    /**
-     * 入力欄の末尾に表示する内容です。
-     */
+    /** 入力欄の末尾に表示する内容です。 */
     endAddons?: Iterable<React.ReactNode> | undefined;
 
     /**
@@ -131,14 +128,10 @@ namespace NumberFieldProps {
      */
     scrubArea?: NumberFieldScrubAreaProps["children"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: NumberFieldSlotProps | undefined;
 
-    /**
-     * 入力欄の先頭に表示する内容です。
-     */
+    /** 入力欄の先頭に表示する内容です。 */
     startAddons?: Iterable<React.ReactNode> | undefined;
   };
 
@@ -157,14 +150,15 @@ export interface IUseNumberFieldAPI {
    * {@link NumberFieldAPI} を作成します。
    *
    * @param props {@link NumberField} の props です。
+   *
    * @returns 数値入力欄の API です
    */
   (props: NumberFieldProps): NumberFieldAPI;
 }
 
-// API
-// ---
+// API.
 
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- 未指定を表す一意なセンチネルです。
 const NONE = {} as never;
 
 /**
@@ -181,6 +175,7 @@ export class NumberFieldAPI {
 
   /**
    * @param props {@link NumberField} の props です。
+   *
    * @internal
    */
   public constructor(props: NumberFieldProps) {
@@ -201,7 +196,9 @@ export class NumberFieldAPI {
       scrubArea,
       startAddons,
     };
-    this.inputProps = { placeholder };
+    this.inputProps = {
+      placeholder,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -247,12 +244,14 @@ export class NumberFieldAPI {
    * 入力欄の末尾に表示する {@link NumberFieldAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { endAddons: addons = [] } = this.numberFieldProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -353,12 +352,14 @@ export class NumberFieldAPI {
    * 入力欄の先頭に表示する {@link NumberFieldAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { startAddons: addons = [] } = this.numberFieldProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -370,14 +371,11 @@ export class NumberFieldAPI {
 /**
  * {@link NumberFieldAPI} を作成するフックです。
  */
-export const useNumberFieldAPI: IUseNumberFieldAPI = function useSuiNumberFieldAPI(props) {
-  return new NumberFieldAPI(props);
-};
+export const useNumberFieldAPI: IUseNumberFieldAPI = (props) => new NumberFieldAPI(props);
 
 export { NumberFieldAPI as API, useNumberFieldAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface INumberField extends IComponent<NumberFieldProps> {
   readonly useContext: IUseNumberFieldContext;
@@ -389,7 +387,7 @@ export interface INumberField extends IComponent<NumberFieldProps> {
  * 矢印キーで値を増減でき、ステッパーボタンやドラッグ操作にも対応します。
  */
 export const NumberField: INumberField = /*#__PURE__*/ Object.assign(
-  function SuiNumberField(props: NumberFieldProps) {
+  (props: NumberFieldProps) => {
     const api = useNumberFieldAPI(props);
     const scrubAreaProps = api.getScrubAreaProps();
     const decrementProps = api.getDecrementProps();

@@ -1,6 +1,6 @@
 {
   "name": "@suru-ui/unocss",
-  "version": "0.4.0",
+  "version": "0.0.0",
   "description": "",
   "homepage": "https://suru-ui.github.io/suru-ui/",
   "license": "MIT",
@@ -19,29 +19,22 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/src/index.d.ts",
-      "default": "./dist/src/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "scripts": {
-    "build": "tsc --project ./.config/tsconfig.build.json"
+    "build": "vp -C .config pack"
   },
   "dependencies": {
     "@suru-ui/theme": "workspace:*"
   },
   "devDependencies": {
-    "@tsconfig/node24": "24.0.5",
-    "@tsconfig/strictest": "2.0.8",
-    "@types/node": "24.19.2",
-    "@unocss/core": "66.12.0",
-    "@vitest/coverage-v8": "4.1.12",
+    "@vitest/coverage-v8": "catalog:",
     "unocss": "66.12.0",
-    "valibot": "1.5.0",
-    "vite": "8.3.5",
-    "vitest": "4.1.12"
+    "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@logtape/logtape": "^2.0.0",
     "@unocss/core": "^66.0.0"
   },
   "readme": "README.md"

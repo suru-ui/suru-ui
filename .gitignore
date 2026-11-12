@@ -229,4 +229,6 @@ __screenshots__/
 skills/
 .temp-*
 .tmp-*
-review*.md
+.vitest/
+# scripts の node:test 用テストファイルは初期化後のリポジトリーでは追跡しません。
+scripts/**/*.test.mjs

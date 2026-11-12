@@ -65,6 +65,7 @@ export interface ISelectListItemRenderer<TValue = any> {
    * @param item 現在の項目です。
    * @param index 項目のインデックスです。
    * @param items すべての項目です。
+   *
    * @returns レンダリングする内容です。
    */
   (
@@ -89,7 +90,7 @@ export namespace SelectListProps {
       Pick<
         React.ComponentProps<typeof BaseSelect.List>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // SelectListProps より:
+        // SelectListProps より :
         "children"
       >,
       keyof Render | keyof SuruUI
@@ -128,7 +129,7 @@ export interface ISelectList extends IComponent<SelectListProps> {
  *
  * {@link SelectRoot} の `items` を読み取り、関数子を受け取った場合は各項目に適用します。
  */
-export const SelectList: ISelectList = function SuiSelectList(props: SelectListProps) {
+export const SelectList: ISelectList = (props: SelectListProps) => {
   const ctx = useSelectPopupContext();
   const { style, render, children = defaultListItemRenderer, className, ...otherProps } = props;
 
@@ -136,7 +137,10 @@ export const SelectList: ISelectList = function SuiSelectList(props: SelectListP
     <BaseSelect.List
       {...otherProps}
       {...proxyRenderProps<BaseSelect.List.State, SelectListState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -201,15 +205,15 @@ function renderListItems(
                 };
               }),
             };
-          } else {
-            return {
-              ...item,
-              items: Object.entries(item.items).map(([value, label]) => ({
-                label,
-                value,
-              })),
-            };
           }
+
+          return {
+            ...item,
+            items: Object.entries(item.items).map(([value, label]) => ({
+              label,
+              value,
+            })),
+          };
         }
 
         return {
@@ -221,13 +225,14 @@ function renderListItems(
   }
 
   return Object.entries(items)
-    .map(([value, label]): SelectListLabeledItemObject => ({ label, value }))
+    .map(([value, label]): SelectListLabeledItemObject => ({
+      label,
+      value,
+    }))
     .map(renderer);
 }
 
-/**
- * 項目とグループを既定の見た目で描画するレンダラーです。
- */
+/** 項目とグループを既定の見た目で描画するレンダラーです。 */
 const defaultListItemRenderer: ISelectListItemRenderer = (item, index, items) => {
   if ("items" in item) {
     const { items: groupItems, label, ...otherGroupProps } = item;
@@ -256,7 +261,6 @@ const defaultListItemRenderer: ISelectListItemRenderer = (item, index, items) =>
 };
 
 export { SelectList as List };
-
 export namespace List {
   export type State<TValue = any> = SelectListState<TValue>;
 

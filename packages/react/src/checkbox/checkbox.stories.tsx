@@ -225,7 +225,13 @@ export const Controlled = meta.story({
     return (
       <div className="flex flex-col gap-3">
         <label className="flex items-center gap-2">
-          <Checkbox {...props} checked={checked} onCheckedChange={(next) => setChecked(next)} />
+          <Checkbox
+            {...props}
+            checked={checked}
+            onCheckedChange={(next) => {
+              setChecked(next);
+            }}
+          />
           クリックで切り替え: {checked ? "ON" : "OFF"}
         </label>
       </div>

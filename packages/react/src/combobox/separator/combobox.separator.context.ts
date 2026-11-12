@@ -29,18 +29,18 @@ export type IUseComboboxSeparatorContext = IUseContext<ComboboxSeparatorContext>
 /**
  * {@link ComboboxSeparatorContext} を読み取るフックです。
  */
-export const useComboboxSeparatorContext: IUseComboboxSeparatorContext =
-  function useSuiComboboxSeparatorContext(optional): any {
-    const ctx = React.use(ComboboxSeparatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ComboboxSeparatorContext",
-        providerName: "ComboboxSeparator",
-      });
-    }
+export const useComboboxSeparatorContext: IUseComboboxSeparatorContext = (optional): any => {
+  const ctx = React.use(ComboboxSeparatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ComboboxSeparatorContext",
+      providerName: "ComboboxSeparator",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ComboboxSeparatorContext as SeparatorContext,

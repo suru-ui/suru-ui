@@ -25,11 +25,10 @@ export type IUseTabsListContext = IUseContext<TabsListContext>;
 /**
  * {@link TabsListContext} を読み取るフックです。
  */
-export const useTabsListContext: IUseTabsListContext = function useSuiTabsListContext(
-  optional,
-): any {
+export const useTabsListContext: IUseTabsListContext = (optional): any => {
   const ctx = React.use(TabsListContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "TabsListContext",
       providerName: "TabsList",

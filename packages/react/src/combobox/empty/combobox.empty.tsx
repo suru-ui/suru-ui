@@ -25,16 +25,13 @@ export namespace ComboboxEmptyProps {
     Pick<
       React.ComponentProps<typeof Combobox.Empty>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxEmptyProps より:
+      // ComboboxEmptyProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Combobox.Empty>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Combobox.Empty>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -47,10 +44,8 @@ export type ComboboxEmptyProps = ComboboxEmptyProps.Render &
 
 export type IComboboxEmpty = IComponent<ComboboxEmptyProps>;
 
-/**
- * 候補リストが空のときに内容を表示する要素です。
- */
-export const ComboboxEmpty: IComboboxEmpty = function SuiComboboxEmpty(props) {
+/** 候補リストが空のときに内容を表示する要素です。 */
+export const ComboboxEmpty: IComboboxEmpty = (props) => {
   const ctx = useComboboxPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +53,10 @@ export const ComboboxEmpty: IComboboxEmpty = function SuiComboboxEmpty(props) {
     <Combobox.Empty
       {...otherProps}
       {...proxyRenderProps<Combobox.Empty.State, ComboboxEmptyState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -96,7 +94,6 @@ export const ComboboxEmpty: IComboboxEmpty = function SuiComboboxEmpty(props) {
 };
 
 export { ComboboxEmpty as Empty };
-
 export namespace Empty {
   export type State<TItem = any> = ComboboxEmptyState<TItem>;
 

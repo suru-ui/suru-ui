@@ -25,17 +25,17 @@ export type IUseAutocompleteClearContext = IUseContext<AutocompleteClearContext>
 /**
  * {@link AutocompleteClearContext} を読み取るフックです。
  */
-export const useAutocompleteClearContext: IUseAutocompleteClearContext =
-  function useSuiAutocompleteClearContext(optional): any {
-    const ctx = React.use(AutocompleteClearContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompleteClearContext",
-        providerName: "AutocompleteClear",
-      });
-    }
+export const useAutocompleteClearContext: IUseAutocompleteClearContext = (optional): any => {
+  const ctx = React.use(AutocompleteClearContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompleteClearContext",
+      providerName: "AutocompleteClear",
+    });
+  }
+
+  return ctx;
+};
 
 export { AutocompleteClearContext as ClearContext, useAutocompleteClearContext as useClearContext };

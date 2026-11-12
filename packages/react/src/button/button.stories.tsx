@@ -183,22 +183,23 @@ export const Thin = meta.story({
 });
 
 class FakeClient {
-  #size = 300;
+  readonly #size = 300;
 
-  #sleep = (t: number) => new Promise((r) => setTimeout(r, t));
+  readonly #sleep = (t: number) => new Promise((r) => setTimeout(r, t));
 
-  async connect() {
+  public async connect() {
     await this.#sleep(1e3);
   }
 
-  async stat(_resourceName: string) {
+  public async stat(_resourceName: string) {
     return {
       size: this.#size,
     };
   }
 
-  async *read(_resourceName: string) {
+  public async *read(_resourceName: string) {
     let total = 0;
+
     while (total < this.#size) {
       const latency = Math.random() * 1e3;
       await this.#sleep(latency);
@@ -207,18 +208,18 @@ class FakeClient {
         const claim = Math.random() * 30;
         const acc = total;
         total += claim;
+
         total = Math.min(total, this.#size);
 
         return total - acc;
       })();
-
       yield {
         length: chunkSize,
       };
     }
   }
 
-  async disconnect() {
+  public async disconnect() {
     await this.#sleep(1e3);
   }
 }
@@ -230,13 +231,14 @@ function useProgress() {
     const resourceName = evt.currentTarget.value;
     startTransition(async () => {
       const client = new FakeClient();
-
       await client.connect();
+
       const { size } = await client.stat(resourceName);
 
       setPercentage(0);
 
       let total = 0;
+
       for await (const chunk of client.read(resourceName)) {
         total += chunk.length;
         setPercentage((total / size) * 100);
@@ -358,11 +360,11 @@ export const FullWidth = meta.story({
     return (
       <div className="space-y-3">
         <Button {...props} className="w-full">
-          {"width: 100%"}
+          width: 100%
         </Button>
         <div className="flex w-[200px] gap-1">
           <Button {...props} className="w-full">
-            {"width: 100%"}
+            width: 100%
           </Button>
           <Button {...props} squared>
             <EllipsisIcon />
@@ -370,7 +372,7 @@ export const FullWidth = meta.story({
         </div>
         <div className="flex w-[200px] gap-1">
           <Button {...props} className="flex-1">
-            {"flex: 1"}
+            flex: 1
           </Button>
           <Button {...props} squared>
             <EllipsisIcon />

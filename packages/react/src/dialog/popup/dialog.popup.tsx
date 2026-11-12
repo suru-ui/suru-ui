@@ -15,14 +15,10 @@ import {
   DialogPopupContext,
 } from "./dialog.popup.context.js";
 
-/**
- * ダイアログの角丸の大きさです。
- */
+/** ダイアログの角丸の大きさです。 */
 export type DialogPopupRadius = DialogPopupContextRadius;
 
-/**
- * ダイアログの大きさです。
- */
+/** ダイアログの大きさです。 */
 export type DialogPopupSize = DialogPopupContextSize;
 
 /**
@@ -58,7 +54,7 @@ export namespace DialogPopupProps {
       Pick<
         React.ComponentProps<typeof Dialog.Popup>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // DialogPopupProps より:
+        // DialogPopupProps より :
         "initialFocus" | "finalFocus"
       >,
       keyof Render | keyof SuruUI
@@ -86,7 +82,7 @@ export type IDialogPopup = IComponent<DialogPopupProps>;
  *
  * 見た目はカードとして描画され、大きさや角丸や枠線はカードのルートから引き継ぎます。
  */
-export const DialogPopup: IDialogPopup = function SuiDialogPopup(props) {
+export const DialogPopup: IDialogPopup = (props) => {
   const {
     size,
     style,
@@ -114,16 +110,20 @@ export const DialogPopup: IDialogPopup = function SuiDialogPopup(props) {
               htmlProps,
               cardRootProps,
               proxyRenderProps<Card.Root.State, DialogPopupState>(
-                (cardState) => ({ ...popupState, ...cardState, variant }),
+                (cardState) => ({
+                  ...popupState,
+                  ...cardState,
+                  variant,
+                }),
                 {
                   style,
-                  render(htmlProps: {}, state) {
+                  render(currentHtmlProps: {}, state) {
                     return (
                       <DialogPopupContext value={state}>
                         <RenderElement
                           state={state}
                           render={render}
-                          htmlProps={htmlProps}
+                          htmlProps={currentHtmlProps}
                           defaultTagName="div"
                         />
                       </DialogPopupContext>
@@ -154,7 +154,6 @@ export const DialogPopup: IDialogPopup = function SuiDialogPopup(props) {
 };
 
 export { DialogPopup as Popup };
-
 export namespace Popup {
   export type State = DialogPopupState;
 

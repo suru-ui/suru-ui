@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Skeleton } from "./index.js";
 

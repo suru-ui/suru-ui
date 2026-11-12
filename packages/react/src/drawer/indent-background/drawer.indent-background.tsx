@@ -19,7 +19,7 @@ export namespace DrawerIndentBackgroundProps {
     Pick<
       React.ComponentProps<typeof Drawer.IndentBackground>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DrawerIndentBackgroundProps より:
+      // DrawerIndentBackgroundProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -27,7 +27,7 @@ export namespace DrawerIndentBackgroundProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Drawer.IndentBackground>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -46,9 +46,7 @@ export type IDrawerIndentBackground = IComponent<DrawerIndentBackgroundProps>;
  *
  * `DrawerProvider` の子として `DrawerIndent` より前に配置します。
  */
-export const DrawerIndentBackground: IDrawerIndentBackground = function SuiDrawerIndentBackground(
-  props,
-) {
+export const DrawerIndentBackground: IDrawerIndentBackground = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -64,7 +62,6 @@ export const DrawerIndentBackground: IDrawerIndentBackground = function SuiDrawe
 };
 
 export { DrawerIndentBackground as IndentBackground };
-
 export namespace IndentBackground {
   export type State = DrawerIndentBackgroundState;
 

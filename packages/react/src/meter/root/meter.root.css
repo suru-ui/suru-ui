@@ -1,27 +1,25 @@
 @layer sui.component {
-@scope (.sui_meter) to ([data-scope]) {
+  @scope (.sui_meter) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: grid;
+      grid-template-columns: minmax(0px, 1fr) auto;
+      width: 100%;
+    }
 
-/* 固定 */
-:scope {
-  display: grid;
-  grid-template-columns: minmax(0px, 1fr) auto;
-  width: 100%;
-}
+    /* 変数 */
+    :scope {
+      --sui_meter-gap: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_meter-gap: ;
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_meter-gap);
+    }
 
-/* 可変 */
-:scope {
-  gap: var(--sui_meter-gap);
-}
-
-/* 代入 */
-:scope {
-  --sui_meter-gap: --sui-gap(2);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_meter-gap: --sui-gap(2);
+    }
+  } /* @scope */
 } /* @layer */

@@ -13,9 +13,7 @@ import { type SidebarContextState, useSidebarContext } from "../root/sidebar.roo
 export type SidebarTriggerState = Override<
   SidebarContextState,
   {
-    /**
-     * この切り替えボタンを無効にするかどうかです。
-     */
+    /** この切り替えボタンを無効にするかどうかです。 */
     readonly disabled: boolean;
   }
 >;
@@ -29,7 +27,7 @@ export namespace SidebarTriggerProps {
 
   export type HTML = Omit<
     BaseUIComponentProps<"button", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -48,7 +46,7 @@ export type ISidebarTrigger = IComponent<SidebarTriggerProps>;
  *
  * 子要素を省略すると既定のアイコンが表示されます。
  */
-export const SidebarTrigger: ISidebarTrigger = function SuiSidebarTrigger(props) {
+export const SidebarTrigger: ISidebarTrigger = (props) => {
   const ctx = useSidebarContext();
   const {
     type = "button",
@@ -56,7 +54,7 @@ export const SidebarTrigger: ISidebarTrigger = function SuiSidebarTrigger(props)
     children,
     disabled,
     "aria-label": ariaLabelProp,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherButtonProps
   } = props;
@@ -101,8 +99,8 @@ export const SidebarTrigger: ISidebarTrigger = function SuiSidebarTrigger(props)
           (state) => state.variant !== undefined && `sui_sidebar_trigger-variant_${state.variant}`,
         ),
         "aria-label": ariaLabel,
-        "aria-expanded": ctx.open,
         "data-scope": dataScope,
+        "aria-expanded": ctx.open,
       },
     ],
     state: renderState,
@@ -111,7 +109,6 @@ export const SidebarTrigger: ISidebarTrigger = function SuiSidebarTrigger(props)
 };
 
 export { SidebarTrigger as Trigger };
-
 export namespace Trigger {
   export type State = SidebarTriggerState;
 

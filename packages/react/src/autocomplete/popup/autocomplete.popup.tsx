@@ -32,7 +32,7 @@ export namespace AutocompletePopupProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.Popup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AutocompletePopupProps より:
+      // AutocompletePopupProps より :
       "finalFocus" | "initialFocus"
     >,
     keyof Render | keyof SuruUI
@@ -54,10 +54,8 @@ export type AutocompletePopupProps = AutocompletePopupProps.Render &
 
 export type IAutocompletePopup = IComponent<AutocompletePopupProps>;
 
-/**
- * 検索結果リストを表示するポップアップ要素です。
- */
-export const AutocompletePopup: IAutocompletePopup = function SuiAutocompletePopup(props) {
+/** 検索結果リストを表示するポップアップ要素です。 */
+export const AutocompletePopup: IAutocompletePopup = (props) => {
   const ctx = useAutocompletePositionerContext();
   const { style, render, outlined = true, className, ...otherProps } = props;
 
@@ -65,7 +63,11 @@ export const AutocompletePopup: IAutocompletePopup = function SuiAutocompletePop
     <Autocomplete.Popup
       {...otherProps}
       {...proxyRenderProps<Autocomplete.Popup.State, AutocompletePopupState>(
-        (state) => ({ ...ctx, outlined, ...state }),
+        (state) => ({
+          ...ctx,
+          outlined,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -102,7 +104,6 @@ export const AutocompletePopup: IAutocompletePopup = function SuiAutocompletePop
 };
 
 export { AutocompletePopup as Popup };
-
 export namespace Popup {
   export type State<TItem = any> = AutocompletePopupState<TItem>;
 

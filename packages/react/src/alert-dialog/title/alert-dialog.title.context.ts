@@ -24,17 +24,17 @@ export type IUseAlertDialogTitleContext = IUseContext<AlertDialogTitleContext>;
 /**
  * {@link AlertDialogTitleContext} を読み取るフックです。
  */
-export const useAlertDialogTitleContext: IUseAlertDialogTitleContext =
-  function useSuiAlertDialogTitleContext(optional): any {
-    const ctx = React.use(AlertDialogTitleContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AlertDialogTitleContext",
-        providerName: "AlertDialogTitle",
-      });
-    }
+export const useAlertDialogTitleContext: IUseAlertDialogTitleContext = (optional): any => {
+  const ctx = React.use(AlertDialogTitleContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AlertDialogTitleContext",
+      providerName: "AlertDialogTitle",
+    });
+  }
+
+  return ctx;
+};
 
 export { AlertDialogTitleContext as TitleContext, useAlertDialogTitleContext as useTitleContext };

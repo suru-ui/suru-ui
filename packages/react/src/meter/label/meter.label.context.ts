@@ -21,11 +21,10 @@ export type IUseMeterLabelContext = IUseContext<MeterLabelContext>;
 /**
  * {@link MeterLabelContext} を読み取るフックです。
  */
-export const useMeterLabelContext: IUseMeterLabelContext = function useSuiMeterLabelContext(
-  optional,
-): any {
+export const useMeterLabelContext: IUseMeterLabelContext = (optional): any => {
   const ctx = React.use(MeterLabelContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "MeterLabelContext",
       providerName: "MeterLabel",

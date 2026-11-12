@@ -9,14 +9,10 @@ import type { IComponent } from "../../types.js";
 import { useAccordionContext } from "../root/accordion.root.context.js";
 import { AccordionItemContext } from "./accordion.item.context.js";
 
-/**
- * アコーディオンの項目の開閉状態が変更するイベントの詳細です。
- */
+/** アコーディオンの項目の開閉状態が変更するイベントの詳細です。 */
 export type AccordionItemChangeEventDetails = Accordion.Item.ChangeEventDetails;
 
-/**
- * アコーディオンの項目の開閉状態を変更する理由です。
- */
+/** アコーディオンの項目の開閉状態を変更する理由です。 */
 export type AccordionItemChangeEventReason = Accordion.Item.ChangeEventReason;
 
 /**
@@ -33,9 +29,9 @@ export namespace AccordionItemProps {
     Pick<
       React.ComponentProps<typeof Accordion.Item>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // Pick<UseCollapsibleRootParameters, 'disabled'> より:
+      // Pick<UseCollapsibleRootParameters, 'disabled'> より :
       | "disabled"
-      // AccordionItemProps より:
+      // AccordionItemProps より :
       | "value"
       | "onOpenChange"
     >,
@@ -58,10 +54,8 @@ export type AccordionItemProps = AccordionItemProps.Render &
 
 export type IAccordionItem = IComponent<AccordionItemProps>;
 
-/**
- * アコーディオンの項目コンポーネントです。
- */
-export const AccordionItem: IAccordionItem = function SuiAccordionItem(props) {
+/** アコーディオンの項目コンポーネントです。 */
+export const AccordionItem: IAccordionItem = (props) => {
   const ctx = useAccordionContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -69,7 +63,10 @@ export const AccordionItem: IAccordionItem = function SuiAccordionItem(props) {
     <Accordion.Item
       {...otherProps}
       {...proxyRenderProps<Accordion.Item.State, AccordionItemState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -88,10 +85,12 @@ export const AccordionItem: IAccordionItem = function SuiAccordionItem(props) {
             (state) => state.open && "sui_accordion_item-open",
             (state) => state.hidden && "sui_accordion_item-hidden",
             (state) => state.disabled && "sui_accordion_item-disabled",
+            // oxlint-disable-next-line typescript/no-deprecated -- Base UI の orientation を後方互換のため使用します。
             (state) => `sui_accordion_item-size_${state.size}`,
             (state) => `sui_accordion_item-radius_${state.radius}`,
             (state) => state.separator && "sui_accordion_item-separator",
             (state) => `sui_accordion_item-index_${state.index}`,
+            // oxlint-disable-next-line typescript/no-deprecated -- Base UI の orientation を後方互換のため使用します。
             (state) => `sui_accordion_item-orientation_${state.orientation}`,
           ),
         },
@@ -101,7 +100,6 @@ export const AccordionItem: IAccordionItem = function SuiAccordionItem(props) {
 };
 
 export { AccordionItem as Item };
-
 export namespace Item {
   export type State = AccordionItemState;
 

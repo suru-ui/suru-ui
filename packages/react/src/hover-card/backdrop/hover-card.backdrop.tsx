@@ -23,7 +23,7 @@ export namespace HoverCardBackdropProps {
     Pick<
       React.ComponentProps<typeof PreviewCard.Backdrop>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PreviewCardBackdropProps より:
+      // PreviewCardBackdropProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace HoverCardBackdropProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof PreviewCard.Backdrop>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -45,10 +45,8 @@ export type HoverCardBackdropProps = HoverCardBackdropProps.Render &
 
 export type IHoverCardBackdrop = IComponent<HoverCardBackdropProps>;
 
-/**
- * ポップアップの背後に表示されるオーバーレイ要素です。
- */
-export const HoverCardBackdrop: IHoverCardBackdrop = function SuiHoverCardBackdrop(props) {
+/** ポップアップの背後に表示されるオーバーレイ要素です。 */
+export const HoverCardBackdrop: IHoverCardBackdrop = (props) => {
   const ctx = useHoverCardContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const HoverCardBackdrop: IHoverCardBackdrop = function SuiHoverCardBackdr
     <PreviewCard.Backdrop
       {...otherProps}
       {...proxyRenderProps<PreviewCard.Backdrop.State, HoverCardBackdropState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -87,7 +88,6 @@ export const HoverCardBackdrop: IHoverCardBackdrop = function SuiHoverCardBackdr
 };
 
 export { HoverCardBackdrop as Backdrop };
-
 export namespace Backdrop {
   export type State = HoverCardBackdropState;
 

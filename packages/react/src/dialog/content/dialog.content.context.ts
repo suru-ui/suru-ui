@@ -21,17 +21,17 @@ export type IUseDialogContentContext = IUseContext<DialogContentContext>;
 /**
  * {@link DialogContentContext} を読み取るフックです。
  */
-export const useDialogContentContext: IUseDialogContentContext =
-  function useSuiDialogContentContext(optional): any {
-    const ctx = React.use(DialogContentContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "DialogContentContext",
-        providerName: "DialogContent",
-      });
-    }
+export const useDialogContentContext: IUseDialogContentContext = (optional): any => {
+  const ctx = React.use(DialogContentContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "DialogContentContext",
+      providerName: "DialogContent",
+    });
+  }
+
+  return ctx;
+};
 
 export { DialogContentContext as ContentContext, useDialogContentContext as useContentContext };

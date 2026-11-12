@@ -6,6 +6,7 @@ import type { IComponent } from "../types.js";
 import { createItemRenderer, getSegmentsItemLabel, getSegmentsItemProps } from "./_segments.jsx";
 import type { SegmentsContext } from "./root/segments.root.context.js";
 import {
+  type SegmentsItem,
   type SegmentsRootSize,
   type SegmentsItemProps,
   type SegmentsItemValue,
@@ -21,14 +22,12 @@ import {
   type SegmentsRootActiveVariant,
   type SegmentsRootChangeEventReason,
   type SegmentsRootChangeEventDetails,
-  SegmentsItem,
   SegmentsList,
   SegmentsRoot,
   SegmentsIndicator,
 } from "./segments.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type SegmentsActiveVariant = SegmentsRootActiveVariant;
 
@@ -93,9 +92,7 @@ namespace SegmentsProps {
      */
     children?: SegmentsListProps<TItem>["children"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: SegmentsSlotProps | undefined;
   };
 }
@@ -112,14 +109,15 @@ export interface IUseSegmentsAPI {
    * {@link SegmentsAPI} を作成します。
    *
    * @template TItem 項目の型です。
+   *
    * @param props {@link Segments} の props です。
+   *
    * @returns セグメントの API です。
    */
   <TItem = any>(props: SegmentsProps<TItem>): SegmentsAPI<TItem>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Segments} を構成する各パーツの props などを作成するための API です。
@@ -133,21 +131,24 @@ export class SegmentsAPI<TItem = any> {
 
   private readonly slotProps: SegmentsSlotProps;
 
+  private readonly defaultItemRenderer: ISegmentsItemRenderer = createItemRenderer<TItem>(
+    (item) => this.getItemProps(item),
+    (item) => this.getLabel(item),
+  );
+
   /**
    * @param props {@link Segments} の props です。
+   *
    * @internal
    */
   public constructor(props: SegmentsProps<TItem>) {
     const { children, slotProps = {}, ...rootProps } = props;
     this.rootProps = rootProps;
-    this.segmentsProps = { children };
+    this.segmentsProps = {
+      children,
+    };
     this.slotProps = slotProps;
   }
-
-  private readonly defaultItemRenderer: ISegmentsItemRenderer = createItemRenderer<TItem>(
-    (item) => this.getItemProps(item),
-    (item) => this.getLabel(item),
-  );
 
   /**
    * {@link SegmentsIndicator} に渡す props を取得します。
@@ -167,7 +168,13 @@ export class SegmentsAPI<TItem = any> {
     const { item: props = {} } = this.slotProps;
     const itemProps = getSegmentsItemProps(item);
 
-    return mergeProps<typeof SegmentsItem>([{ ...props, value: itemProps.value }, itemProps]);
+    return mergeProps<typeof SegmentsItem>([
+      {
+        ...props,
+        value: itemProps.value,
+      },
+      itemProps,
+    ]);
   }
 
   /**
@@ -215,14 +222,11 @@ export class SegmentsAPI<TItem = any> {
 /**
  * {@link SegmentsAPI} を作成するフックです。
  */
-export const useSegmentsAPI: IUseSegmentsAPI = function useSuiSegmentsAPI(props) {
-  return new SegmentsAPI(props);
-};
+export const useSegmentsAPI: IUseSegmentsAPI = (props) => new SegmentsAPI(props);
 
 export { SegmentsAPI as API, useSegmentsAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface ISegments extends IComponent<SegmentsProps> {
   /**
@@ -236,7 +240,7 @@ export interface ISegments extends IComponent<SegmentsProps> {
  *
  * `items` からセグメントの並びを組み立てます。レイアウトを細かく制御する場合は、{@link SegmentsRoot} と各パーツを直接組み立てます。
  */
-export const Segments: ISegments = function SuiSegments(props: SegmentsProps) {
+export const Segments: ISegments = (props: SegmentsProps) => {
   const api = useSegmentsAPI(props);
 
   return (

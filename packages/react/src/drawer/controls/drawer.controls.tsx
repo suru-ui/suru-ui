@@ -41,10 +41,8 @@ export type DrawerControlsProps = DrawerControlsProps.Render &
 
 export type IDrawerControls = IComponent<DrawerControlsProps>;
 
-/**
- * ドロワーのコントロールコンポーネントです。
- */
-export const DrawerControls: IDrawerControls = function SuiDrawerControls(props) {
+/** ドロワーのコントロールコンポーネントです。 */
+export const DrawerControls: IDrawerControls = (props) => {
   const ctx = useDrawerHeaderContext();
   const { absolute = true, ...otherDivProps } = props;
   const element = useRender({
@@ -76,7 +74,6 @@ export const DrawerControls: IDrawerControls = function SuiDrawerControls(props)
 };
 
 export { DrawerControls as Controls };
-
 export namespace Controls {
   export type State = DrawerControlsState;
 

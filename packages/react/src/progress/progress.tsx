@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import isLikelyVisibleNode from "../_is-likely-visible-node.js";
 import type { IComponent } from "../types.js";
 import {
@@ -21,8 +19,7 @@ import {
   ProgressIndicator,
 } from "./progress.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type ProgressStatus = ProgressRootStatus;
 
@@ -73,9 +70,7 @@ namespace ProgressProps {
      */
     label?: ProgressLabelProps["children"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: ProgressSlotProps | undefined;
 
     /**
@@ -101,13 +96,13 @@ export interface IUseProgressAPI {
    * {@link ProgressAPI} を作成します。
    *
    * @param props {@link Progress} の props です。
+   *
    * @returns 進捗の API です
    */
   (props: ProgressProps): ProgressAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Progress} を構成する各パーツの props を作成するための API です。
@@ -123,11 +118,15 @@ export class ProgressAPI {
 
   /**
    * @param props {@link Progress} の props です。
+   *
    * @internal
    */
   public constructor(props: ProgressProps) {
     const { label, value = null, slotProps = {}, ...rootProps } = props;
-    this.progressProps = { label, value };
+    this.progressProps = {
+      label,
+      value,
+    };
     this.rootProps = rootProps;
     this.slotProps = slotProps;
   }
@@ -199,21 +198,18 @@ export class ProgressAPI {
 /**
  * {@link ProgressAPI} を作成するフックです。
  */
-export const useProgressAPI: IUseProgressAPI = function useSuiProgressAPI(props) {
-  return new ProgressAPI(props);
-};
+export const useProgressAPI: IUseProgressAPI = (props) => new ProgressAPI(props);
 
 export { ProgressAPI as API, useProgressAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * 時間のかかる処理の進捗を表示するコンポーネントです。
  *
  * `value` に `null` を指定すると不確定状態になります。
  */
-export const Progress: IProgress = function SuiProgress(props) {
+export const Progress: IProgress = (props) => {
   const api = useProgressAPI(props);
   const labelProps = api.getLabelProps();
   const valueProps = api.getValueProps();

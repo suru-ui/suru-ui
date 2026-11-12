@@ -15,19 +15,13 @@ import {
   ToggleButtonContext,
 } from "./toggle-button.root.context.js";
 
-/**
- * トグルボタンの押下状態が変更されたイベントの詳細です。
- */
+/** トグルボタンの押下状態が変更されたイベントの詳細です。 */
 export type ToggleButtonRootChangeEventDetails = Toggle.ChangeEventDetails;
 
-/**
- * トグルボタンの押下状態が変更された理由です。
- */
+/** トグルボタンの押下状態が変更された理由です。 */
 export type ToggleButtonRootChangeEventReason = Toggle.ChangeEventReason;
 
-/**
- * トグルボタンの配色です。
- */
+/** トグルボタンの配色です。 */
 export type ToggleButtonRootColor = ToggleButtonContextColor;
 
 /**
@@ -98,7 +92,7 @@ export namespace ToggleButtonRootProps {
     /**
      * トグルボタンの角丸の大きさを指定します。
      *
-     * 既定値:
+     * 既定値 :
      * | {@link ButtonRootProps.size|size} | radius |
      * | ------ | ------ |
      * | `"xs"` | `"sm"` |
@@ -140,9 +134,9 @@ export namespace ToggleButtonRootProps {
       Pick<
         React.ComponentProps<typeof Toggle<TValue>>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // NativeButtonProps より:
+        // NativeButtonProps より :
         | keyof NativeButtonProps
-        // ToggleProps より:
+        // ToggleProps より :
         | "pressed"
         | "defaultPressed"
         | "disabled"
@@ -171,10 +165,8 @@ export type ToggleButtonRootProps<TValue extends string = string> = ToggleButton
 
 export type IToggleButtonRoot = IComponent<ToggleButtonRootProps>;
 
-/**
- * トグルボタンのルートコンポーネントです。
- */
-export const ToggleButtonRoot: IToggleButtonRoot = function SuiToggleButtonRoot(props) {
+/** トグルボタンのルートコンポーネントです。 */
+export const ToggleButtonRoot: IToggleButtonRoot = (props) => {
   const {
     size = "md",
     color = "grey",
@@ -192,7 +184,7 @@ export const ToggleButtonRoot: IToggleButtonRoot = function SuiToggleButtonRoot(
     nativeButton,
     defaultPressed,
     onPressedChange,
-    focusableWhenDisabled = !disabled && pending,
+    focusableWhenDisabled = disabled !== true && pending,
     ...otherProps
   } = props;
   const baseuiProps: Required<ToggleButtonRootProps.BaseUI> = {
@@ -261,7 +253,6 @@ export const ToggleButtonRoot: IToggleButtonRoot = function SuiToggleButtonRoot(
 };
 
 export { ToggleButtonRoot as Root };
-
 export namespace Root {
   export type State = ToggleButtonRootState;
 

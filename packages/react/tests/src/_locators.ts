@@ -1,4 +1,4 @@
-import { locators, type Locator } from "vitest/browser";
+import { type Locator, locators } from "vite-plus/test/browser";
 
 /**
  * クラス名で要素を特定するカスタム Locator です。
@@ -10,7 +10,7 @@ locators.extend({
   },
 });
 
-declare module "vitest/browser" {
+declare module "vite-plus/test/browser" {
   interface LocatorSelectors {
     getByClassName(className: string): Locator;
   }

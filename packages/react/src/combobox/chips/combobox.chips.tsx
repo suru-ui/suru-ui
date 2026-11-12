@@ -25,16 +25,13 @@ export namespace ComboboxChipsProps {
     Pick<
       React.ComponentProps<typeof Combobox.Chips>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxChipsProps より:
+      // ComboboxChipsProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Combobox.Chips>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Combobox.Chips>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -47,10 +44,8 @@ export type ComboboxChipsProps = ComboboxChipsProps.Render &
 
 export type IComboboxChips = IComponent<ComboboxChipsProps>;
 
-/**
- * 複数選択した値を表示するチップのコンテナーです。
- */
-export const ComboboxChips: IComboboxChips = function SuiComboboxChips(props) {
+/** 複数選択した値を表示するチップのコンテナーです。 */
+export const ComboboxChips: IComboboxChips = (props) => {
   const ctx = useComboboxInputGroupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +53,10 @@ export const ComboboxChips: IComboboxChips = function SuiComboboxChips(props) {
     <Combobox.Chips
       {...otherProps}
       {...proxyRenderProps<Combobox.Chips.State, ComboboxChipsState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -103,7 +101,6 @@ export const ComboboxChips: IComboboxChips = function SuiComboboxChips(props) {
 };
 
 export { ComboboxChips as Chips };
-
 export namespace Chips {
   export type State<TItem = any> = ComboboxChipsState<TItem>;
 

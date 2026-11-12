@@ -18,10 +18,7 @@ export namespace DrawerHeaderProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type DrawerHeaderProps = DrawerHeaderProps.Render &
 
 export type IDrawerHeader = IComponent<DrawerHeaderProps>;
 
-/**
- * ドロワーのヘッダーコンポーネントです。
- */
-export const DrawerHeader: IDrawerHeader = function SuiDrawerHeader(props) {
+/** ドロワーのヘッダーコンポーネントです。 */
+export const DrawerHeader: IDrawerHeader = (props) => {
   const ctx = useDrawerContentContext();
   const element = useRender({
     props: [
@@ -66,7 +61,6 @@ export const DrawerHeader: IDrawerHeader = function SuiDrawerHeader(props) {
 };
 
 export { DrawerHeader as Header };
-
 export namespace Header {
   export type State = DrawerHeaderState;
 

@@ -26,7 +26,7 @@ export namespace ComboboxItemIndicatorProps {
     Pick<
       React.ComponentProps<typeof Combobox.ItemIndicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxItemIndicatorProps より:
+      // ComboboxItemIndicatorProps より :
       "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -48,12 +48,8 @@ export type ComboboxItemIndicatorProps = ComboboxItemIndicatorProps.Render &
 
 export type IComboboxItemIndicator = IComponent<ComboboxItemIndicatorProps>;
 
-/**
- * 項目が選択されていることを示す要素です。
- */
-export const ComboboxItemIndicator: IComboboxItemIndicator = function SuiComboboxItemIndicator(
-  props,
-) {
+/** 項目が選択されていることを示す要素です。 */
+export const ComboboxItemIndicator: IComboboxItemIndicator = (props) => {
   const ctx = useComboboxItemContext();
   const { style, render, children = <CheckIcon />, className, ...otherProps } = props;
 
@@ -61,7 +57,10 @@ export const ComboboxItemIndicator: IComboboxItemIndicator = function SuiCombobo
     <Combobox.ItemIndicator
       {...otherProps}
       {...proxyRenderProps<Combobox.ItemIndicator.State, ComboboxItemIndicatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -104,7 +103,6 @@ export const ComboboxItemIndicator: IComboboxItemIndicator = function SuiCombobo
 };
 
 export { ComboboxItemIndicator as ItemIndicator };
-
 export namespace ItemIndicator {
   export type State<TItem = any> = ComboboxItemIndicatorState<TItem>;
 

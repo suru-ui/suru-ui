@@ -12,9 +12,7 @@ import {
   PaginationContext,
 } from "./pagination.root.context.js";
 
-/**
- * ページネーションの配色です。
- */
+/** ページネーションの配色です。 */
 export type PaginationRootColor = Color;
 
 /**
@@ -131,19 +129,19 @@ export type IPaginationRoot = IComponent<PaginationRootProps>;
  *
  * 現在のページを内部状態で管理し、子パーツへ配色や大きさとともに提供します。前後の移動ボタンやページ番号ボタンは利用者が組み立てます。一括で組み立てる場合は {@link Pagination} を使います。
  */
-export const PaginationRoot: IPaginationRoot = function SuiPaginationRoot(props) {
+export const PaginationRoot: IPaginationRoot = (props) => {
   const {
     page: pageProp,
     size = "md",
     color = "grey",
     radius = size,
     disabled = false,
+    "aria-label": ariaLabel = "ページネーション",
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
+    "data-scope": dataScope = "",
     totalPages,
     defaultPage,
     onPageChange,
-    "aria-label": ariaLabel = "ページネーション",
-    // @ts-expect-error
-    "data-scope": dataScope = "",
     ...otherNavProps
   } = props;
   const {
@@ -158,7 +156,15 @@ export const PaginationRoot: IPaginationRoot = function SuiPaginationRoot(props)
     onPageChange,
   });
   const ctx = React.useMemo<PaginationContext>(
-    () => ({ page, size, color, radius, disabled, goToPage, totalPages: maxPage }),
+    () => ({
+      page,
+      size,
+      color,
+      radius,
+      disabled,
+      goToPage,
+      totalPages: maxPage,
+    }),
     [color, disabled, goToPage, maxPage, page, radius, size],
   );
   const element = useRender({
@@ -184,7 +190,6 @@ export const PaginationRoot: IPaginationRoot = function SuiPaginationRoot(props)
 };
 
 export { PaginationRoot as Root };
-
 export namespace Root {
   export type State = PaginationRootState;
 

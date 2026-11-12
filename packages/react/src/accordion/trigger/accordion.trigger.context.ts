@@ -12,9 +12,7 @@ export type AccordionTriggerContext = Readonly<
   Override<
     Override<AccordionItemContext, Accordion.Trigger.State>,
     {
-      /**
-       * `true` の場合、Suru UI のスタイルがついていません。
-       */
+      /** `true` の場合、Suru UI のスタイルがついていません。 */
       unstyled: boolean;
     }
   >
@@ -31,18 +29,20 @@ export type IUseAccordionTriggerContext = IUseContext<AccordionTriggerContext>;
 /**
  * {@link AccordionTriggerContext} を読み取るフックです。
  */
-export const useAccordionTriggerContext: IUseAccordionTriggerContext =
-  function useSuiAccordionTriggerContext(optional?: boolean): any {
-    const ctx = React.use(AccordionTriggerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AccordionTriggerContext",
-        providerName: "AccordionTrigger",
-      });
-    }
+export const useAccordionTriggerContext: IUseAccordionTriggerContext = (
+  optional?: boolean,
+): any => {
+  const ctx = React.use(AccordionTriggerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AccordionTriggerContext",
+      providerName: "AccordionTrigger",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   AccordionTriggerContext as TriggerContext,

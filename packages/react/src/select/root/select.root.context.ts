@@ -40,42 +40,32 @@ export type SelectContextVariant = "naked" | "liquid";
  * @template TValue 項目の値の型です。
  */
 export type SelectContext<TValue = any> = {
-  /**
-   * リストに表示する項目の一覧です。
-   */
+  /** リストに表示する項目の一覧です。 */
   readonly items: SelectRootItems<TValue> | undefined;
 
-  /**
-   * 枠線を表示するかどうかです。
-   */
+  /** 枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * 選択欄とポップアップの角丸です。
-   */
+  /** 選択欄とポップアップの角丸です。 */
   readonly radius: SelectContextRadius;
 
-  /**
-   * 選択欄とリスト項目のサイズです。
-   */
+  /** 選択欄とリスト項目のサイズです。 */
   readonly size: SelectContextSize;
 
-  /**
-   * 選択欄の主な外観です。
-   */
+  /** 選択欄の主な外観です。 */
   readonly variant: SelectContextVariant;
 };
 
-/**
- * Select のスタイルと項目を子パーツへ伝播するコンテキストです。
- */
+/** Select のスタイルと項目を子パーツへ伝播するコンテキストです。 */
 export const SelectContext: React.Context<SelectContext | null> =
   React.createContext<SelectContext | null>(null);
 
 export interface IUseSelectContext extends IUseContext<SelectContext> {
   /**
    * @template TValue 項目の値の型です。
+   *
    * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   *
    * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
    */
   <TValue = any>(optional?: false): SelectContext<TValue>;
@@ -85,11 +75,10 @@ export interface IUseSelectContext extends IUseContext<SelectContext> {
 /**
  * {@link SelectContext} を読み取るフックです。
  */
-export const useSelectContext: IUseSelectContext = function useSuiSelectContext(
-  optional?: boolean,
-): any {
+export const useSelectContext: IUseSelectContext = (optional?: boolean): any => {
   const ctx = React.use(SelectContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SelectContext",
       providerName: "SelectRoot",
@@ -100,7 +89,6 @@ export const useSelectContext: IUseSelectContext = function useSuiSelectContext(
 };
 
 export { SelectContext as Context, useSelectContext as useContext };
-
 export namespace Context {
   export type Radius = SelectContextRadius;
 

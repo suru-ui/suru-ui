@@ -41,7 +41,7 @@ export namespace ContextMenuSubmenuRootProps {
       React.ComponentProps<typeof ContextMenu.SubmenuRoot>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
 
-      // MenuSubmenuRootProps より:
+      // MenuSubmenuRootProps より :
       | "defaultOpen"
       | "loopFocus"
       | "highlightItemOnHover"
@@ -58,9 +58,8 @@ export namespace ContextMenuSubmenuRootProps {
       // | "handle"
       // | "children"
 
-      // MenuSubmenuRootProps より:
+      // MenuSubmenuRootProps より :
       | "onOpenChange"
-      | "closeParentOnEsc"
       | "children"
     >,
     keyof Render | keyof SuruUI
@@ -92,9 +91,9 @@ export interface IContextMenuSubmenuRoot extends IComponent<ContextMenuSubmenuRo
  *
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const ContextMenuSubmenuRoot: IContextMenuSubmenuRoot = function SuiContextMenuSubmenuRoot(
+export const ContextMenuSubmenuRoot: IContextMenuSubmenuRoot = (
   props: ContextMenuSubmenuRootProps,
-) {
+) => {
   const parentCtx = useContextMenuContext();
   const { items = parentCtx.items, ...otherProps } = props;
   const ctx = React.useMemo<ContextMenuContext>(
@@ -114,7 +113,6 @@ export const ContextMenuSubmenuRoot: IContextMenuSubmenuRoot = function SuiConte
 };
 
 export { ContextMenuSubmenuRoot as SubmenuRoot };
-
 export namespace SubmenuRoot {
   export type State<TItem = any> = ContextMenuSubmenuRootState<TItem>;
 

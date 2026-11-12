@@ -9,9 +9,7 @@ import type { Override, IComponent } from "../../types.js";
 import { useProgressContext } from "../root/progress.root.context.js";
 import { ProgressValueContext } from "./progress.value.context.js";
 
-/**
- * 値をレンダリングする関数のインターフェイスです。
- */
+/** 値をレンダリングする関数のインターフェイスです。 */
 export interface IProgressValueRenderer {
   /**
    * 進捗の現在値をレンダリングします。
@@ -20,6 +18,7 @@ export interface IProgressValueRenderer {
    *
    * @param formattedValue 書式化された値です。
    * @param value 現在値です。
+   *
    * @returns レンダリングする内容です。
    */
   (formattedValue: string | null, value: number | null): React.ReactNode;
@@ -40,7 +39,7 @@ export namespace ProgressValueProps {
       Pick<
         React.ComponentProps<typeof Progress.Value>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // ProgressValueProps より:
+        // ProgressValueProps より :
         "children"
       >,
       keyof Render | keyof SuruUI
@@ -72,17 +71,25 @@ export type IProgressValue = IComponent<ProgressValueProps>;
  *
  * 不確定状態では既定の表示が空になります。
  */
-export const ProgressValue: IProgressValue = function SuiProgressValue(props) {
+export const ProgressValue: IProgressValue = (props) => {
   const ctx = useProgressContext();
   const { style, render, children, className, ...otherProps } = props;
-  const renderer =
-    typeof children === "function" ? children : children != null ? () => children : undefined;
+  let renderer;
+
+  if (typeof children === "function") {
+    renderer = children;
+  } else if (children !== null && children !== undefined) {
+    renderer = (): React.ReactNode => children;
+  }
 
   return (
     <Progress.Value
       {...otherProps}
       {...proxyRenderProps<Progress.Value.State, ProgressValueState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -114,7 +121,6 @@ export const ProgressValue: IProgressValue = function SuiProgressValue(props) {
 };
 
 export { ProgressValue as Value };
-
 export namespace Value {
   export type State = ProgressValueState;
 

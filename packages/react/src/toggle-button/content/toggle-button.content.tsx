@@ -27,15 +27,10 @@ export type ToggleButtonContentProps = ToggleButtonContentProps.Render &
 
 export type IToggleButtonContent = IComponent<ToggleButtonContentProps>;
 
-/**
- * トグルボタンのコンテンツを表示するコンポーネントです。
- */
-export const ToggleButtonContent: IToggleButtonContent = function SuiToggleButtonContent(props) {
-  return <Button.Content {...props} />;
-};
+/** トグルボタンのコンテンツを表示するコンポーネントです。 */
+export const ToggleButtonContent: IToggleButtonContent = (props) => <Button.Content {...props} />;
 
 export { ToggleButtonContent as Content };
-
 export namespace Content {
   export type State = ToggleButtonContentState;
 

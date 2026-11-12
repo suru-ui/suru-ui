@@ -25,17 +25,17 @@ export type IUseContextMenuGroupContext = IUseContext<ContextMenuGroupContext>;
 /**
  * {@link ContextMenuGroupContext} を読み取るフックです。
  */
-export const useContextMenuGroupContext: IUseContextMenuGroupContext =
-  function useSuiContextMenuGroupContext(optional): any {
-    const ctx = React.use(ContextMenuGroupContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ContextMenuGroupContext",
-        providerName: "ContextMenuGroup",
-      });
-    }
+export const useContextMenuGroupContext: IUseContextMenuGroupContext = (optional): any => {
+  const ctx = React.use(ContextMenuGroupContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ContextMenuGroupContext",
+      providerName: "ContextMenuGroup",
+    });
+  }
+
+  return ctx;
+};
 
 export { ContextMenuGroupContext as GroupContext, useContextMenuGroupContext as useGroupContext };

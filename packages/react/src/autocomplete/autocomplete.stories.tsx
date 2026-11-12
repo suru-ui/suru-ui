@@ -23,7 +23,7 @@ type VirtualizedItem = {
   readonly name: string;
 };
 
-const virtualizedItems: readonly VirtualizedItem[] = Array.from({ length: 10000 }, (_, index) => ({
+const virtualizedItems: readonly VirtualizedItem[] = Array.from({ length: 10_000 }, (_, index) => ({
   id: String(index + 1),
   name: `項目 ${String(index + 1).padStart(4, "0")}`,
 }));
@@ -48,7 +48,6 @@ function VirtualizedList(props: { virtualizerRef: React.RefObject<VirtualizerIns
     scrollPaddingEnd: 4,
     scrollPaddingStart: 4,
   });
-
   React.useImperativeHandle(virtualizerRef, () => virtualizer);
 
   const handleScrollElementRef = React.useCallback(
@@ -85,6 +84,7 @@ function VirtualizedList(props: { virtualizerRef: React.RefObject<VirtualizerIns
       >
         {virtualizer.getVirtualItems().map((virtualItem) => {
           const item = filteredItems[virtualItem.index];
+
           if (!item) {
             return null;
           }
@@ -543,10 +543,22 @@ export const Objects = meta.story({
     };
 
     const prefectures: readonly Prefecture[] = [
-      { label: "東京都", value: "13" },
-      { label: "大阪府", value: "27" },
-      { label: "京都府", value: "26" },
-      { label: "福岡県", value: "40" },
+      {
+        label: "東京都",
+        value: "13",
+      },
+      {
+        label: "大阪府",
+        value: "27",
+      },
+      {
+        label: "京都府",
+        value: "26",
+      },
+      {
+        label: "福岡県",
+        value: "40",
+      },
     ];
 
     return <Autocomplete {...props} items={prefectures} className="w-[200px]" />;
@@ -580,6 +592,7 @@ export const Virtualized = meta.story({
           itemToStringValue={(item) => item.name}
           onItemHighlighted={(item, eventDetails) => {
             const virtualizer = virtualizerRef.current;
+
             if (item === undefined || !virtualizer) {
               return;
             }

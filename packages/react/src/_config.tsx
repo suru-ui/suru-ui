@@ -2,6 +2,11 @@ import * as React from "react";
 
 import type { IComponent } from "./types.js";
 
+interface ConfigContextProps {
+  children?: React.ReactNode;
+  [key: string]: unknown;
+}
+
 interface Config {
   /**
    * `children` 以外のプロパティーを設定に結合して子孫に提供するコンポーネントです。
@@ -19,6 +24,7 @@ interface Config {
      * キーに対応する値をそのまま返します。
      *
      * @param key 取り出す値のキーです。
+     *
      * @returns キーに対応する値です。
      */
     (key: string): unknown;
@@ -29,6 +35,7 @@ interface Config {
      *
      * @param key 取り出す値のキーです。
      * @param typeGuard 値の型を判定する型ガードです。
+     *
      * @returns 型ガードを満たす値または `null` です。
      */
     <TValue>(key: string, typeGuard: (value: any) => value is TValue): TValue | null;
@@ -40,6 +47,7 @@ interface Config {
      * @param key 取り出す値のキーです。
      * @param typeGuard 値の型を判定する型ガードです。
      * @param defaultValue 型ガードを満たさない場合に返す値です。
+     *
      * @returns 型ガードを満たす値または既定値です。
      */
     <TValue, const TDefaultValue>(
@@ -50,9 +58,7 @@ interface Config {
   };
 }
 
-/**
- * 対応表を持つ内部的な設定です。
- */
+/** 対応表を持つ内部的な設定です。 */
 class ConfigState implements Config {
   /**
    * キーと値の対応表です。
@@ -72,10 +78,11 @@ class ConfigState implements Config {
 
   public get(
     key: string,
-    typeGuard: (value: any) => boolean = () => true,
+    typeGuard: (value: any) => boolean = (): boolean => true,
     defaultValue: unknown = null,
-  ) {
+  ): unknown {
     const value = this.#map[key];
+
     if (typeGuard(value)) {
       return value;
     }
@@ -83,12 +90,18 @@ class ConfigState implements Config {
     return defaultValue;
   }
 
-  public Context(props: { children?: React.ReactNode; [key: string]: unknown }) {
-    const config = React.use(Config) as ConfigState;
+  public Context(props: ConfigContextProps): React.ReactNode {
+    const config = React.use(Config);
+
+    if (!(config instanceof ConfigState)) {
+      throw new TypeError("Config は ConfigState で提供する必要があります。");
+    }
+
     const { children, ...values } = props;
 
     const set: Record<string, unknown> = {};
     let dirty = false;
+
     for (const key in values) {
       if (!Object.is(config.#map[key], values[key])) {
         set[key] = values[key];
@@ -97,7 +110,16 @@ class ConfigState implements Config {
     }
 
     return (
-      <Config value={dirty ? new ConfigState({ ...config.#map, ...set }) : config}>
+      <Config
+        value={
+          dirty
+            ? new ConfigState({
+                ...config.#map,
+                ...set,
+              })
+            : config
+        }
+      >
         {children}
       </Config>
     );

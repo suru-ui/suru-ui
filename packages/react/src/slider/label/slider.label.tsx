@@ -23,16 +23,13 @@ export namespace SliderLabelProps {
     Pick<
       React.ComponentProps<typeof Slider.Label>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SliderLabelProps より:
+      // SliderLabelProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Slider.Label>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Slider.Label>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,10 +42,8 @@ export type SliderLabelProps = SliderLabelProps.Render &
 
 export type ISliderLabel = IComponent<SliderLabelProps>;
 
-/**
- * スライダーのラベルコンポーネントです。
- */
-export const SliderLabel: ISliderLabel = function SuiSliderLabel(props) {
+/** スライダーのラベルコンポーネントです。 */
+export const SliderLabel: ISliderLabel = (props) => {
   const ctx = useSliderContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +51,10 @@ export const SliderLabel: ISliderLabel = function SuiSliderLabel(props) {
     <Slider.Label
       {...otherProps}
       {...proxyRenderProps<Slider.Label.State, SliderLabelState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (

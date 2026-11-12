@@ -27,25 +27,17 @@ export type HoverCardContextSize = Size;
  * {@link HoverCardRoot} が子パーツへ提供する状態です。
  */
 export type HoverCardContext = {
-  /**
-   * ホバーカードに枠線を表示するかどうかです。
-   */
+  /** ホバーカードに枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * ホバーカードの角丸の大きさです。
-   */
+  /** ホバーカードの角丸の大きさです。 */
   readonly radius: HoverCardContextRadius;
 
-  /**
-   * ホバーカードの大きさです。
-   */
+  /** ホバーカードの大きさです。 */
   readonly size: HoverCardContextSize;
 };
 
-/**
- * ホバーカードの見た目を子パーツへ伝播するコンテキストです。
- */
+/** ホバーカードの見た目を子パーツへ伝播するコンテキストです。 */
 export const HoverCardContext: React.Context<HoverCardContext | null> =
   React.createContext<HoverCardContext | null>(null);
 
@@ -54,11 +46,10 @@ export type IUseHoverCardContext = IUseContext<HoverCardContext>;
 /**
  * {@link HoverCardContext} を読み取るフックです。
  */
-export const useHoverCardContext: IUseHoverCardContext = function useSuiHoverCardContext(
-  optional?: boolean,
-): any {
+export const useHoverCardContext: IUseHoverCardContext = (optional?: boolean): any => {
   const ctx = React.use(HoverCardContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "HoverCardContext",
       providerName: "HoverCardRoot",
@@ -69,7 +60,6 @@ export const useHoverCardContext: IUseHoverCardContext = function useSuiHoverCar
 };
 
 export { HoverCardContext as Context, useHoverCardContext as useContext };
-
 export namespace Context {
   export type Radius = HoverCardContextRadius;
 

@@ -22,9 +22,7 @@ export type StatTrendDirection = "up" | "down" | "flat";
 export type StatTrendState = Override<
   StatRootState,
   {
-    /**
-     * 変化の方向です。
-     */
+    /** 変化の方向です。 */
     readonly direction: StatTrendDirection;
   }
 >;
@@ -70,17 +68,19 @@ function getTrendDirectionFromNumber(value: number): StatTrendDirection {
   return value < 0 ? "down" : "up";
 }
 
-const TREND_DIRECTION_NUMBER = /([+\-−]?)[^\d\n+\-−]*?([\d,]+(?:\.\d+)?)/;
+const TREND_DIRECTION_NUMBER = /(?<sign>[+\-−]?)[^\d\n+\-−]*?(?<digits>[\d,]+(?:\.\d+)?)/u;
 
 function getTrendDirectionFromString(value: string): StatTrendDirection | null {
   // 文字列の先頭にある数値の符号から方向を求めます。
   const match = TREND_DIRECTION_NUMBER.exec(value.normalize("NFKC"));
+
   if (match === null) {
     return null;
   }
 
-  const [, sign = "", digits = ""] = match;
+  const { sign = "", digits = "" } = match.groups ?? {};
   const magnitude = Number(digits.replaceAll(",", ""));
+
   if (!Number.isFinite(magnitude)) {
     return null;
   }
@@ -97,6 +97,7 @@ function getDefaultTrendDirection(value: React.ReactNode): StatTrendDirection {
   if (typeof value === "number" && Number.isFinite(value)) {
     return getTrendDirectionFromNumber(value);
   }
+
   if (typeof value === "string") {
     return getTrendDirectionFromString(value) ?? "flat";
   }
@@ -109,10 +110,16 @@ function getDefaultTrendDirection(value: React.ReactNode): StatTrendDirection {
  *
  * `dd` 要素を描画し、前回からの増減を矢印と色で示します。
  */
-export const StatTrend: IStatTrend = function SuiStatTrend(props) {
+export const StatTrend: IStatTrend = (props) => {
   const ctx = useStatContext();
   const { children, direction = getDefaultTrendDirection(children), ...otherDdProps } = props;
-  const state = React.useMemo<StatTrendState>(() => ({ ...ctx, direction }), [ctx, direction]);
+  const state = React.useMemo<StatTrendState>(
+    () => ({
+      ...ctx,
+      direction,
+    }),
+    [ctx, direction],
+  );
 
   return useRender({
     props: [
@@ -121,8 +128,8 @@ export const StatTrend: IStatTrend = function SuiStatTrend(props) {
         children,
         className: cn<StatTrendState>(
           "sui_stat_trend",
-          (state) => `sui_stat_trend-size_${state.size}`,
-          (state) => `sui_stat_trend-direction_${state.direction}`,
+          (currentState) => `sui_stat_trend-size_${currentState.size}`,
+          (currentState) => `sui_stat_trend-direction_${currentState.direction}`,
         ),
       },
     ],
@@ -132,7 +139,6 @@ export const StatTrend: IStatTrend = function SuiStatTrend(props) {
 };
 
 export { StatTrend as Trend };
-
 export namespace Trend {
   export type State = StatTrendState;
 

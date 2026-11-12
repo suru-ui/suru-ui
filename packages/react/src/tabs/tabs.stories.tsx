@@ -306,7 +306,9 @@ export const Controlled = meta.story({
           value={value}
           className="w-96"
           slotProps={{ panel: { className: "min-h-28" } }}
-          onValueChange={(nextValue) => setValue(String(nextValue))}
+          onValueChange={(nextValue) => {
+            setValue(String(nextValue));
+          }}
         />
         <span>現在の値: {value}</span>
       </div>

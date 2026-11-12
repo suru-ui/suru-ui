@@ -25,7 +25,7 @@ export namespace TabsIndicatorProps {
     Pick<
       React.ComponentProps<typeof BaseTabs.Indicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TabsIndicatorProps より:
+      // TabsIndicatorProps より :
       "renderBeforeHydration"
     >,
     keyof Render | keyof SuruUI
@@ -52,7 +52,7 @@ export type ITabsIndicator = IComponent<TabsIndicatorProps>;
  *
  * {@link TabsList} の子要素として配置します。
  */
-export const TabsIndicator: ITabsIndicator = function SuiTabsIndicator(props) {
+export const TabsIndicator: ITabsIndicator = (props) => {
   const ctx = useTabsContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -60,7 +60,10 @@ export const TabsIndicator: ITabsIndicator = function SuiTabsIndicator(props) {
     <BaseTabs.Indicator
       {...otherProps}
       {...proxyRenderProps<BaseTabs.Indicator.State, TabsIndicatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -93,7 +96,6 @@ export const TabsIndicator: ITabsIndicator = function SuiTabsIndicator(props) {
 };
 
 export { TabsIndicator as Indicator };
-
 export namespace Indicator {
   export type State<TItem = any> = TabsIndicatorState<TItem>;
 

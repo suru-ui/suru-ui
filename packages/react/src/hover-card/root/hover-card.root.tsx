@@ -50,6 +50,7 @@ export interface IHoverCardRootRenderer<TPayload = any> {
    * 内容をレンダリングします。
    *
    * @param args レンダリングに必要な値です。
+   *
    * @returns レンダリングする内容です。
    */
   (args: { payload: TPayload | undefined }): React.ReactNode;
@@ -104,7 +105,7 @@ export namespace HoverCardRootProps {
     Pick<
       React.ComponentProps<typeof PreviewCard.Root<TPayload>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PreviewCardRootProps より:
+      // PreviewCardRootProps より :
       | "defaultOpen"
       | "open"
       | "onOpenChange"
@@ -149,12 +150,14 @@ export interface IHoverCardRoot extends IComponent<HoverCardRootProps> {
  *
  * ホバーカードの開閉状態を管理し、各パーツをグループ化します。それ自身は HTML 要素をレンダリングしません。
  */
-export const HoverCardRoot: IHoverCardRoot = function SuiHoverCardRoot<TPayload>(
-  props: HoverCardRootProps<TPayload>,
-) {
+export const HoverCardRoot: IHoverCardRoot = <TPayload,>(props: HoverCardRootProps<TPayload>) => {
   const { size = "md", radius = size, outlined = true, ...otherProps } = props;
   const ctx = React.useMemo<HoverCardContext>(
-    () => ({ size, radius, outlined }),
+    () => ({
+      size,
+      radius,
+      outlined,
+    }),
     [size, radius, outlined],
   );
 
@@ -166,7 +169,6 @@ export const HoverCardRoot: IHoverCardRoot = function SuiHoverCardRoot<TPayload>
 };
 
 export { HoverCardRoot as Root };
-
 export namespace Root {
   export type State = HoverCardRootState;
 

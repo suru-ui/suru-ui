@@ -1,3 +1,4 @@
+import { typeTableDetailsIds, routeByBrowserLanguage } from "@tai-kun/blume-integrations";
 import { defineConfig } from "blume";
 import { filesystem, githubReleases } from "blume/sources";
 
@@ -6,49 +7,26 @@ const GITHUB_REPO = "suru-ui";
 const GITHUB_OWNER = "suru-ui";
 
 export default defineConfig({
-  content: {
-    sources: [
-      filesystem({
-        root: "content",
-      }),
-      githubReleases({
-        prefix: "changelog",
-        owner: GITHUB_OWNER,
-        repo: GITHUB_REPO,
-      }),
-    ],
-  },
+  integrations: [typeTableDetailsIds(), routeByBrowserLanguage()],
 
   title: PROJET_NAME,
   description: `Documentation for ${PROJET_NAME}`,
-  deployment: {
-    site: `https://${GITHUB_OWNER}.github.io`,
-    base: `/${GITHUB_REPO}`,
-  },
-  navigation: {
-    repo: `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}`,
-    // タブのラベルは必ず en を一番上にしてください。
-    // 既定の言語コードが und なので、ドキュメント以外のページでは英語版の UI にフォールバックされるようにします。
-    tabs: [
-      {
-        label: {
-          en: "Documents",
-          ja: "ドキュメント",
-        },
-        path: "/",
-      },
-      {
-        label: {
-          en: "Changelog",
-          ja: "変更履歴",
-        },
-        path: "/changelog",
-      },
+
+  content: {
+    sources: [
+      filesystem(),
+      githubReleases({
+        repo: GITHUB_REPO,
+        owner: GITHUB_OWNER,
+        prefix: "changelog",
+      }),
     ],
   },
-  // 対応するロケール以外の言語コードを規定値にすることで、トップレベルのページが無いコンテンツのルーティングを可能にします。
-  // ここでは ISO 639-2 で定義されている特殊コードの 1 つである und（言語不明）を採用しています。
-  // und は Blume の内部処理をハックするために使用されているため、言語セレクターから theme.css で消します。
+  deployment: {
+    base: `/${GITHUB_REPO}`,
+    site: `https://${GITHUB_OWNER}.github.io`,
+  },
+
   i18n: {
     locales: [
       {
@@ -59,11 +37,28 @@ export default defineConfig({
         code: "en",
         label: "English",
       },
+    ],
+    defaultLocale: "ja",
+  },
+  navigation: {
+    repo: `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}`,
+    // タブのラベルは必ず en を一番上にしてください。
+    // ドキュメント以外のページでは英語版の UI にフォールバックされるようにします。
+    tabs: [
       {
-        code: "und",
-        label: "UNDETERMINED",
+        path: "/",
+        label: {
+          en: "Documents",
+          ja: "ドキュメント",
+        },
+      },
+      {
+        path: "/changelog",
+        label: {
+          en: "Changelog",
+          ja: "変更履歴",
+        },
       },
     ],
-    defaultLocale: "und",
   },
 });

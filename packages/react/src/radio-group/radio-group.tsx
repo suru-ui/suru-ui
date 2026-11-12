@@ -15,8 +15,7 @@ import {
   useRadioGroupContext,
 } from "./radio-group.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type RadioGroupChangeEventDetails = RadioGroupRootChangeEventDetails;
 
@@ -49,14 +48,15 @@ export interface IUseRadioGroupAPI {
    * {@link RadioGroupAPI} を作成します。
    *
    * @template TValue 項目の値の型です。
+   *
    * @param props {@link RadioGroup} の props です。
+   *
    * @returns ラジオボタングループの API です
    */
   <TValue = any>(props: RadioGroupProps<TValue>): RadioGroupAPI<TValue>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link RadioGroup} を構成する各パーツの props などを作成するための API です。
@@ -68,6 +68,7 @@ export class RadioGroupAPI<TValue = any> {
 
   /**
    * @param props {@link RadioGroup} の props です。
+   *
    * @internal
    */
   public constructor(props: RadioGroupProps<TValue>) {
@@ -85,31 +86,24 @@ export class RadioGroupAPI<TValue = any> {
 /**
  * {@link RadioGroupAPI} を作成するフックです。
  */
-export const useRadioGroupAPI: IUseRadioGroupAPI = function useSuiRadioGroupAPI<TValue>(
-  props: RadioGroupProps<TValue>,
-) {
-  return new RadioGroupAPI(props);
-};
+export const useRadioGroupAPI: IUseRadioGroupAPI = <TValue,>(props: RadioGroupProps<TValue>) =>
+  new RadioGroupAPI(props);
 
 export { type RadioGroupAPI as API, useRadioGroupAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IRadioGroup extends IComponent<RadioGroupProps> {
   /**
    * @template TValue 項目の値の型です。
    */
   <TValue = any>(props: RadioGroupProps<TValue>): IComponent.Return;
-
   readonly useContext: IUseRadioGroupContext;
 }
 
-/**
- * ラジオボタンをグループ化するコンポーネントです。
- */
+/** ラジオボタンをグループ化するコンポーネントです。 */
 export const RadioGroup: IRadioGroup = /*#__PURE__*/ Object.assign(
-  function SuiRadioGroup(props: RadioGroupProps) {
+  (props: RadioGroupProps) => {
     const api = useRadioGroupAPI(props);
 
     return <RadioGroupRoot {...api.getRootProps()} />;

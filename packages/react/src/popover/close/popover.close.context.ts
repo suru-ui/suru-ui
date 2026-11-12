@@ -21,11 +21,10 @@ export type IUsePopoverCloseContext = IUseContext<PopoverCloseContext>;
 /**
  * {@link PopoverCloseContext} を読み取るフックです。
  */
-export const usePopoverCloseContext: IUsePopoverCloseContext = function useSuiPopoverCloseContext(
-  optional,
-): any {
+export const usePopoverCloseContext: IUsePopoverCloseContext = (optional): any => {
   const ctx = React.use(PopoverCloseContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "PopoverCloseContext",
       providerName: "PopoverClose",

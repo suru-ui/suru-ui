@@ -23,18 +23,18 @@ export type IUseAlertDialogActionContext = IUseContext<AlertDialogActionContext>
 /**
  * {@link AlertDialogActionContext} を読み取るフックです。
  */
-export const useAlertDialogActionContext: IUseAlertDialogActionContext =
-  function useSuiAlertDialogActionContext(optional): any {
-    const ctx = React.use(AlertDialogActionContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AlertDialogActionContext",
-        providerName: "AlertDialogAction",
-      });
-    }
+export const useAlertDialogActionContext: IUseAlertDialogActionContext = (optional): any => {
+  const ctx = React.use(AlertDialogActionContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AlertDialogActionContext",
+      providerName: "AlertDialogAction",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   AlertDialogActionContext as ActionContext,

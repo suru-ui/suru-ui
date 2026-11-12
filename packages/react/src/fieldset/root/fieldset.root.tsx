@@ -19,16 +19,13 @@ export namespace FieldsetRootProps {
     Pick<
       React.ComponentProps<typeof Fieldset.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // FieldsetRootProps より:
+      // FieldsetRootProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Fieldset.Root>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Fieldset.Root>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -46,10 +43,10 @@ export type IFieldsetRoot = IComponent<FieldsetRootProps>;
  *
  * 関連するコントロールを凡例とともにグループ化します。
  */
-export const FieldsetRoot: IFieldsetRoot = function SuiFieldsetRoot(props) {
+export const FieldsetRoot: IFieldsetRoot = (props) => {
   const {
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -68,7 +65,6 @@ export const FieldsetRoot: IFieldsetRoot = function SuiFieldsetRoot(props) {
 };
 
 export { FieldsetRoot as Root };
-
 export namespace Root {
   export type State = FieldsetRootState;
 

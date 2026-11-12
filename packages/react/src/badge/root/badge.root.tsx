@@ -14,9 +14,7 @@ import {
   BadgeContext,
 } from "./badge.root.context.js";
 
-/**
- * バッジの配色です。
- */
+/** バッジの配色です。 */
 export type BadgeRootColor = BadgeContextColor;
 
 /**
@@ -159,7 +157,7 @@ export type IBadgeRoot = IComponent<BadgeRootProps>;
  *
  * 大きさ、配色、角丸などの外観を自身のスタイルに集約します。
  */
-export const BadgeRoot: IBadgeRoot = function SuiBadgeRoot(props) {
+export const BadgeRoot: IBadgeRoot = (props) => {
   const {
     ring = false,
     size = "sm",
@@ -170,13 +168,21 @@ export const BadgeRoot: IBadgeRoot = function SuiBadgeRoot(props) {
     children,
     outlined = false,
     position,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherSpanProps
   } = props;
-
   const ctx = React.useMemo<BadgeContext>(
-    () => ({ ring, size, color, radius, overlap, variant, outlined, position }),
+    () => ({
+      ring,
+      size,
+      color,
+      radius,
+      overlap,
+      variant,
+      outlined,
+      position,
+    }),
     [ring, size, color, radius, overlap, variant, outlined, position],
   );
   const element = useRender({
@@ -206,7 +212,6 @@ export const BadgeRoot: IBadgeRoot = function SuiBadgeRoot(props) {
 };
 
 export { BadgeRoot as Root };
-
 export namespace Root {
   export type State = BadgeRootState;
 

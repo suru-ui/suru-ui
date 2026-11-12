@@ -25,18 +25,20 @@ export type IUseComboboxItemIndicatorContext = IUseContext<ComboboxItemIndicator
 /**
  * {@link ComboboxItemIndicatorContext} を読み取るフックです。
  */
-export const useComboboxItemIndicatorContext: IUseComboboxItemIndicatorContext =
-  function useSuiComboboxItemIndicatorContext(optional): any {
-    const ctx = React.use(ComboboxItemIndicatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ComboboxItemIndicatorContext",
-        providerName: "ComboboxItemIndicator",
-      });
-    }
+export const useComboboxItemIndicatorContext: IUseComboboxItemIndicatorContext = (
+  optional,
+): any => {
+  const ctx = React.use(ComboboxItemIndicatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ComboboxItemIndicatorContext",
+      providerName: "ComboboxItemIndicator",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ComboboxItemIndicatorContext as ItemIndicatorContext,

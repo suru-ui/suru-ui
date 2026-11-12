@@ -25,11 +25,10 @@ export type IUseSelectIconContext = IUseContext<SelectIconContext>;
 /**
  * {@link SelectIconContext} を読み取るフックです。
  */
-export const useSelectIconContext: IUseSelectIconContext = function useSuiSelectIconContext(
-  optional,
-): any {
+export const useSelectIconContext: IUseSelectIconContext = (optional): any => {
   const ctx = React.use(SelectIconContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SelectIconContext",
       providerName: "SelectIcon",

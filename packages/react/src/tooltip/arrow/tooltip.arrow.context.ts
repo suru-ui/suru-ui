@@ -21,11 +21,10 @@ export type IUseTooltipArrowContext = IUseContext<TooltipArrowContext>;
 /**
  * {@link TooltipArrowContext} を読み取るフックです。
  */
-export const useTooltipArrowContext: IUseTooltipArrowContext = function useSuiTooltipArrowContext(
-  optional,
-): any {
+export const useTooltipArrowContext: IUseTooltipArrowContext = (optional): any => {
   const ctx = React.use(TooltipArrowContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "TooltipArrowContext",
       providerName: "TooltipArrow",

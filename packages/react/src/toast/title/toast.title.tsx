@@ -26,17 +26,14 @@ export namespace ToastTitleProps {
       Pick<
         React.ComponentProps<typeof Toast.Title>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // ToastTitleProps より:
+        // ToastTitleProps より :
         never
       >,
       keyof Render | keyof SuruUI
     >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Toast.Title>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Toast.Title>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -49,10 +46,8 @@ export type ToastTitleProps = ToastTitleProps.Render &
 
 export type IToastTitle = IComponent<ToastTitleProps>;
 
-/**
- * 通知のタイトルを表示する見出し要素です。
- */
-export const ToastTitle: IToastTitle = function SuiToastTitle(props) {
+/** 通知のタイトルを表示する見出し要素です。 */
+export const ToastTitle: IToastTitle = (props) => {
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -63,15 +58,18 @@ export const ToastTitle: IToastTitle = function SuiToastTitle(props) {
           {...mergeProps<typeof Alert.Title>([
             htmlProps,
             proxyRenderProps<Alert.Title.State, ToastTitleState>(
-              (alertState) => ({ ...toastState, ...alertState }),
+              (alertState) => ({
+                ...toastState,
+                ...alertState,
+              }),
               {
                 style,
-                render: (htmlProps, state) => (
+                render: (currentHtmlProps, state) => (
                   <ToastTitleContext value={state}>
                     <RenderElement
                       state={state}
                       render={render}
-                      htmlProps={htmlProps}
+                      htmlProps={currentHtmlProps}
                       defaultTagName="h2"
                     />
                   </ToastTitleContext>
@@ -99,7 +97,6 @@ export const ToastTitle: IToastTitle = function SuiToastTitle(props) {
 };
 
 export { ToastTitle as Title };
-
 export namespace Title {
   export type State = ToastTitleState;
 

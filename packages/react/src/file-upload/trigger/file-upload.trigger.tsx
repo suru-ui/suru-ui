@@ -15,9 +15,7 @@ import {
 export type FileUploadTriggerState = Override<
   FileUploadContextState,
   {
-    /**
-     * このボタンを無効にするかどうかです。
-     */
+    /** このボタンを無効にするかどうかです。 */
     readonly disabled: boolean;
   }
 >;
@@ -31,7 +29,7 @@ export namespace FileUploadTriggerProps {
 
   export type HTML = Omit<
     BaseUIComponentProps<"button", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,13 +45,11 @@ export type FileUploadTriggerProps = FileUploadTriggerProps.Render &
 
 export type IFileUploadTrigger = IComponent<FileUploadTriggerProps>;
 
-/**
- * ファイル選択ダイアログを開くボタンです。
- */
-export const FileUploadTrigger: IFileUploadTrigger = function SuiFileUploadTrigger(props) {
+/** ファイル選択ダイアログを開くボタンです。 */
+export const FileUploadTrigger: IFileUploadTrigger = (props) => {
   const ctx = useFileUploadContext();
   const { disabled: disabledProp, ...otherButtonProps } = props;
-  const disabled = ctx.disabled || disabledProp || false;
+  const disabled = (ctx.disabled || disabledProp) ?? false;
   const state = React.useMemo<FileUploadTriggerState>(
     () => ({
       name: ctx.name,
@@ -83,13 +79,13 @@ export const FileUploadTrigger: IFileUploadTrigger = function SuiFileUploadTrigg
         disabled,
         className: cn<FileUploadTriggerState>(
           "sui_file_upload_trigger",
-          (state) => `sui_file_upload_trigger-size_${state.size}`,
-          (state) => `sui_file_upload_trigger-color_${state.color}`,
-          (state) => `sui_file_upload_trigger-radius_${state.radius}`,
-          (state) => `sui_file_upload_trigger-variant_${state.variant}`,
-          (state) => state.disabled && "sui_file_upload_trigger-disabled",
-          (state) => state.multiple && "sui_file_upload_trigger-multiple",
-          (state) => state.required && "sui_file_upload_trigger-required",
+          (currentState) => `sui_file_upload_trigger-size_${currentState.size}`,
+          (currentState) => `sui_file_upload_trigger-color_${currentState.color}`,
+          (currentState) => `sui_file_upload_trigger-radius_${currentState.radius}`,
+          (currentState) => `sui_file_upload_trigger-variant_${currentState.variant}`,
+          (currentState) => currentState.disabled && "sui_file_upload_trigger-disabled",
+          (currentState) => currentState.multiple && "sui_file_upload_trigger-multiple",
+          (currentState) => currentState.required && "sui_file_upload_trigger-required",
         ),
       },
     ],
@@ -99,7 +95,6 @@ export const FileUploadTrigger: IFileUploadTrigger = function SuiFileUploadTrigg
 };
 
 export { FileUploadTrigger as Trigger };
-
 export namespace Trigger {
   export type State = FileUploadTriggerState;
 

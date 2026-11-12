@@ -195,7 +195,13 @@ export const Controlled = meta.story({
         <Dialog {...props} open={open} onOpenChange={setOpen}>
           <p className="text-sm text-neutral-500">外部のボタンからも開閉できます。</p>
         </Dialog>
-        <Button onClick={() => setOpen(true)}>開く</Button>
+        <Button
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
+          開く
+        </Button>
       </>
     );
   },
@@ -221,7 +227,9 @@ export const Form = meta.story({
           <TextField
             value={name}
             placeholder="田中 太郎"
-            onValueChange={(value) => setName(value)}
+            onValueChange={(value) => {
+              setName(value);
+            }}
           />
         </div>
       </Dialog>
@@ -285,8 +293,19 @@ export const Imperative = meta.story({
 
     return (
       <div className="flex items-center gap-4">
-        <Button onClick={() => handle.open(null)}>開く</Button>
-        <Button onClick={() => handle.close()} variant="liquid">
+        <Button
+          onClick={() => {
+            handle.open(null);
+          }}
+        >
+          開く
+        </Button>
+        <Button
+          variant="liquid"
+          onClick={() => {
+            handle.close();
+          }}
+        >
           閉じる
         </Button>
         <Dialog {...props} close={<Button variant="naked">閉じる</Button>} handle={handle} />
@@ -379,7 +398,13 @@ export const ValidationClose = meta.story({
       >
         <div className="flex flex-col gap-1">
           <span className="text-sm text-neutral-500">確認コード</span>
-          <TextField value={code} placeholder="123456" onValueChange={(value) => setCode(value)} />
+          <TextField
+            value={code}
+            placeholder="123456"
+            onValueChange={(value) => {
+              setCode(value);
+            }}
+          />
           {invalid && <span className="text-sm text-red-500">確認コードを入力します。</span>}
         </div>
       </Dialog>

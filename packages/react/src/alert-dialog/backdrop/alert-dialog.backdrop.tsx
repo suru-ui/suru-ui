@@ -19,7 +19,7 @@ export namespace AlertDialogBackdropProps {
     Pick<
       React.ComponentProps<typeof AlertDialog.Backdrop>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DialogBackdropProps より:
+      // DialogBackdropProps より :
       "forceRender"
     >,
     keyof Render | keyof SuruUI
@@ -41,10 +41,8 @@ export type AlertDialogBackdropProps = AlertDialogBackdropProps.Render &
 
 export type IAlertDialogBackdrop = IComponent<AlertDialogBackdropProps>;
 
-/**
- * ポップアップの背後に表示されるオーバーレイコンポーネントです。
- */
-export const AlertDialogBackdrop: IAlertDialogBackdrop = function SuiAlertDialogBackdrop(props) {
+/** ポップアップの背後に表示されるオーバーレイコンポーネントです。 */
+export const AlertDialogBackdrop: IAlertDialogBackdrop = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -63,7 +61,6 @@ export const AlertDialogBackdrop: IAlertDialogBackdrop = function SuiAlertDialog
 };
 
 export { AlertDialogBackdrop as Backdrop };
-
 export namespace Backdrop {
   export type State = AlertDialogBackdropState;
 

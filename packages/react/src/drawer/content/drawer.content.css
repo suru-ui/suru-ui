@@ -1,54 +1,52 @@
 @layer sui.component {
-@scope (.sui_drawer_content) to ([data-scope]) {
+  @scope (.sui_drawer_content) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      min-height: 0px;
+      overflow: hidden;
+      overscroll-behavior: contain;
+      border-radius: inherit;
+      transition-timing-function: cubic-bezier(0.45, 1.005, 0, 1.005);
+      transition-property: opacity;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  min-height: 0px;
-  overflow: hidden;
-  overscroll-behavior: contain;
-  border-radius: inherit;
-  transition-timing-function: cubic-bezier(0.45, 1.005, 0, 1.005);
-  transition-property: opacity;
-}
+    /* 変数 */
+    :scope {
+      --sui_drawer_content-user_select: ;
+      --sui_drawer_content-opacity: ;
+      --sui_drawer_content-transition_duration: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_drawer_content-user_select: ;
-  --sui_drawer_content-opacity: ;
-  --sui_drawer_content-transition_duration: ;
-}
+    /* 可変 */
+    :scope {
+      user-select: var(--_sui_drawer_content-user_select, var(--sui_drawer_content-user_select));
+      opacity: var(--_sui_drawer_content-opacity, var(--sui_drawer_content-opacity));
+      transition-duration: var(--sui_drawer_content-transition_duration);
+    }
 
-/* 可変 */
-:scope {
-  user-select: var(--_sui_drawer_content-user_select, var(--sui_drawer_content-user_select));
-  opacity: var(--_sui_drawer_content-opacity, var(--sui_drawer_content-opacity));
-  transition-duration: var(--sui_drawer_content-transition_duration);
-}
+    /* 代入 */
+    :scope {
+      --sui_drawer_content-user_select: text;
+      --sui_drawer_content-opacity: 1;
+      --sui_drawer_content-transition_duration: 300ms;
+    }
 
-/* 代入 */
-:scope {
-  --sui_drawer_content-user_select: text;
-  --sui_drawer_content-opacity: 1;
-  --sui_drawer_content-transition_duration: 300ms;
-}
+    /* 変異 */
+    :scope {
+      &.sui_drawer_content-nested_drawer_open {
+        --_sui_drawer_content-opacity: 0;
+      }
 
-/* 変異 */
-:scope {
-  &.sui_drawer_content-nested_drawer_open {
-    --_sui_drawer_content-opacity: 0;
-  }
+      &.sui_drawer_content-nested_drawer_swiping {
+        --_sui_drawer_content-opacity: 1;
+      }
 
-  &.sui_drawer_content-nested_drawer_swiping {
-    --_sui_drawer_content-opacity: 1;
-  }
-
-  &.sui_drawer_content-swiping {
-    --_sui_drawer_content-user_select: none;
-  }
-}
-
-} /* @scope */
+      &.sui_drawer_content-swiping {
+        --_sui_drawer_content-user_select: none;
+      }
+    }
+  } /* @scope */
 } /* @layer */

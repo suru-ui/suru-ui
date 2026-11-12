@@ -13,10 +13,10 @@ export type NumberFormatterCompactDisplay = Option<"compactDisplay">;
 /**
  * 通貨の表示方法です。
  *
- * - `"symbol"`: 通貨記号 (例: `¥`)
- * - `"narrowSymbol"`: より短い通貨記号 (例: `$`)
- * - `"code"`: ISO 4217 の通貨コード (例: `JPY`)
- * - `"name"`: 通貨名 (例: `日本円`)
+ * - `"symbol"`: 通貨記号 (例 : `¥`)
+ * - `"narrowSymbol"`: より短い通貨記号 (例 : `$`)
+ * - `"code"`: ISO 4217 の通貨コード (例 : `JPY`)
+ * - `"name"`: 通貨名 (例 : `日本円`)
  */
 export type NumberFormatterCurrencyDisplay = Option<"currencyDisplay">;
 
@@ -36,7 +36,7 @@ export type NumberFormatterCurrencySign = Option<"currencySign">;
 export type NumberFormatterLocale =
   NonNullable<ConstructorParameters<typeof Intl.NumberFormat>[0]> extends
     | (infer TLocale)
-    | ReadonlyArray<infer TLocale>
+    | readonly (infer TLocale)[]
     ? TLocale
     : never;
 
@@ -52,25 +52,19 @@ export type NumberFormatterLocaleMatcher = Option<"localeMatcher">;
  * 数値の表記方法です。
  *
  * - `"standard"`: 通常の表記
- * - `"scientific"`: 科学的記数法 (例: `1.5E3`)
- * - `"engineering"`: 指数が 3 の倍数になる科学的記数法 (例: `15E3`)
- * - `"compact"`: 短縮表記 (例: `1.5万`)
+ * - `"scientific"`: 科学的記数法 (例 : `1.5E3`)
+ * - `"engineering"`: 指数が 3 の倍数になる科学的記数法 (例 : `15E3`)
+ * - `"compact"`: 短縮表記 (例 : `1.5万`)
  */
 export type NumberFormatterNotation = Option<"notation">;
 
-/**
- * 丸めの刻み幅です。
- */
+/** 丸めの刻み幅です。 */
 export type NumberFormatterRoundingIncrement = Option<"roundingIncrement">;
 
-/**
- * 数値の丸め方法です。
- */
+/** 数値の丸め方法です。 */
 export type NumberFormatterRoundingMode = Option<"roundingMode">;
 
-/**
- * `minimumFractionDigits` と `minimumSignificantDigits` のどちらの精度を優先するかです。
- */
+/** `minimumFractionDigits` と `minimumSignificantDigits` のどちらの精度を優先するかです。 */
 export type NumberFormatterRoundingPriority = Option<"roundingPriority">;
 
 /**
@@ -105,15 +99,13 @@ export type NumberFormatterTrailingZeroDisplay = Option<"trailingZeroDisplay">;
 /**
  * 単位の表示スタイルです。
  *
- * - `"short"`: 短縮した単位 (例: `km`)
- * - `"narrow"`: より短い単位 (例: `km`)
- * - `"long"`: 省略しない単位 (例: `キロメートル`)
+ * - `"short"`: 短縮した単位 (例 : `km`)
+ * - `"narrow"`: より短い単位 (例 : `km`)
+ * - `"long"`: 省略しない単位 (例 : `キロメートル`)
  */
 export type NumberFormatterUnitDisplay = Option<"unitDisplay">;
 
-/**
- * 位取りの区切り (例: `1,000`) を表示するかどうかです。
- */
+/** 位取りの区切り (例 : `1,000`) を表示するかどうかです。 */
 export type NumberFormatterUseGrouping = Option<"useGrouping">;
 
 /**
@@ -127,9 +119,7 @@ export type NumberFormatterOptions = Readonly<
   }
 >;
 
-/**
- * 数値を書式化するフォーマッターです。
- */
+/** 数値を書式化するフォーマッターです。 */
 export type INumberFormatter = Intl.NumberFormat;
 
 const cacheMap: callFnOnce.CacheMap = new Map();
@@ -140,6 +130,7 @@ const cacheMap: callFnOnce.CacheMap = new Map();
  * 同じロケールとオプションの組み合わせに対するインスタンスはキャッシュされ、再利用されます。
  *
  * @param options 数値の書式設定オプションです。
+ *
  * @returns 数値の書式化に使う `Intl.NumberFormat` です。
  */
 export default function getNumberFormatter(options: NumberFormatterOptions = {}): INumberFormatter {
@@ -148,7 +139,7 @@ export default function getNumberFormatter(options: NumberFormatterOptions = {})
     ...options,
     locales: (Array.isArray(locales) ? locales : [locales]).map((locale) =>
       // new Intl.Locale で作成されたオブジェクトも文字列に変換します。
-      // 例: String(new Intl.Locale("ja-JP")) -> "ja-JP"
+      // 例 : String(new Intl.Locale("ja-JP")) -> "ja-JP"。
       String(locale),
     ),
   });

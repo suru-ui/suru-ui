@@ -25,11 +25,10 @@ export type IUseComboboxIconContext = IUseContext<ComboboxIconContext>;
 /**
  * {@link ComboboxIconContext} を読み取るフックです。
  */
-export const useComboboxIconContext: IUseComboboxIconContext = function useSuiComboboxIconContext(
-  optional,
-): any {
+export const useComboboxIconContext: IUseComboboxIconContext = (optional): any => {
   const ctx = React.use(ComboboxIconContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "ComboboxIconContext",
       providerName: "ComboboxIcon",

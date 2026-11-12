@@ -23,7 +23,7 @@ export namespace TooltipViewportProps {
     Pick<
       React.ComponentProps<typeof Tooltip.Viewport>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TooltipViewportProps より:
+      // TooltipViewportProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace TooltipViewportProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Tooltip.Viewport>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -50,7 +50,7 @@ export type ITooltipViewport = IComponent<TooltipViewportProps>;
  *
  * 1 つのツールチップを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
-export const TooltipViewport: ITooltipViewport = function SuiTooltipViewport(props) {
+export const TooltipViewport: ITooltipViewport = (props) => {
   const ctx = useTooltipPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +58,10 @@ export const TooltipViewport: ITooltipViewport = function SuiTooltipViewport(pro
     <Tooltip.Viewport
       {...otherProps}
       {...proxyRenderProps<Tooltip.Viewport.State, TooltipViewportState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -97,7 +100,6 @@ export const TooltipViewport: ITooltipViewport = function SuiTooltipViewport(pro
 };
 
 export { TooltipViewport as Viewport };
-
 export namespace Viewport {
   export type State = TooltipViewportState;
 

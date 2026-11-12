@@ -20,7 +20,7 @@ export namespace CheckboxIndicatorProps {
     Pick<
       React.ComponentProps<typeof Checkbox.Indicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // CheckboxIndicatorProps より:
+      // CheckboxIndicatorProps より :
       "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -42,10 +42,8 @@ export type CheckboxIndicatorProps = CheckboxIndicatorProps.Render &
 
 export type ICheckboxIndicator = IComponent<CheckboxIndicatorProps>;
 
-/**
- * チェックボックスのインジケーターコンポーネントです。
- */
-export const CheckboxIndicator: ICheckboxIndicator = function SuiCheckboxIndicator(props) {
+/** チェックボックスのインジケーターコンポーネントです。 */
+export const CheckboxIndicator: ICheckboxIndicator = (props) => {
   const { children = <CheckboxIcon />, className, ...otherProps } = props;
 
   return (
@@ -77,7 +75,6 @@ export const CheckboxIndicator: ICheckboxIndicator = function SuiCheckboxIndicat
 };
 
 export { CheckboxIndicator as Indicator };
-
 export namespace Indicator {
   export type State = CheckboxIndicatorState;
 

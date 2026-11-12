@@ -19,7 +19,7 @@ export namespace FieldLabelProps {
     Pick<
       React.ComponentProps<typeof Field.Label>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // FieldLabelProps より:
+      // FieldLabelProps より :
       "nativeLabel"
     >,
     keyof Render | keyof SuruUI
@@ -46,7 +46,7 @@ export type IFieldLabel = IComponent<FieldLabelProps>;
  *
  * 自動的に入力欄と関連付けられ、クリックで入力欄にフォーカスされます。
  */
-export const FieldLabel: IFieldLabel = function SuiFieldLabel(props) {
+export const FieldLabel: IFieldLabel = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -69,7 +69,6 @@ export const FieldLabel: IFieldLabel = function SuiFieldLabel(props) {
 };
 
 export { FieldLabel as Label };
-
 export namespace Label {
   export type State = FieldLabelState;
 

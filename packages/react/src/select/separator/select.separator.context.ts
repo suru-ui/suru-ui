@@ -29,18 +29,18 @@ export type IUseSelectSeparatorContext = IUseContext<SelectSeparatorContext>;
 /**
  * {@link SelectSeparatorContext} を読み取るフックです。
  */
-export const useSelectSeparatorContext: IUseSelectSeparatorContext =
-  function useSuiSelectSeparatorContext(optional): any {
-    const ctx = React.use(SelectSeparatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "SelectSeparatorContext",
-        providerName: "SelectSeparator",
-      });
-    }
+export const useSelectSeparatorContext: IUseSelectSeparatorContext = (optional): any => {
+  const ctx = React.use(SelectSeparatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "SelectSeparatorContext",
+      providerName: "SelectSeparator",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   SelectSeparatorContext as SeparatorContext,

@@ -23,16 +23,13 @@ export namespace ProgressTrackProps {
     Pick<
       React.ComponentProps<typeof Progress.Track>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ProgressTrackProps より:
+      // ProgressTrackProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Progress.Track>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Progress.Track>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,10 +42,8 @@ export type ProgressTrackProps = ProgressTrackProps.Render &
 
 export type IProgressTrack = IComponent<ProgressTrackProps>;
 
-/**
- * 進捗の全範囲を表すトラックコンポーネントです。
- */
-export const ProgressTrack: IProgressTrack = function SuiProgressTrack(props) {
+/** 進捗の全範囲を表すトラックコンポーネントです。 */
+export const ProgressTrack: IProgressTrack = (props) => {
   const ctx = useProgressContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +51,10 @@ export const ProgressTrack: IProgressTrack = function SuiProgressTrack(props) {
     <Progress.Track
       {...otherProps}
       {...proxyRenderProps<Progress.Track.State, ProgressTrackState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -86,7 +84,6 @@ export const ProgressTrack: IProgressTrack = function SuiProgressTrack(props) {
 };
 
 export { ProgressTrack as Track };
-
 export namespace Track {
   export type State = ProgressTrackState;
 

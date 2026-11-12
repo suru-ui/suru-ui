@@ -25,18 +25,20 @@ export type IUseSelectScrollDownArrowContext = IUseContext<SelectScrollDownArrow
 /**
  * {@link SelectScrollDownArrowContext} を読み取るフックです。
  */
-export const useSelectScrollDownArrowContext: IUseSelectScrollDownArrowContext =
-  function useSuiSelectScrollDownArrowContext(optional): any {
-    const ctx = React.use(SelectScrollDownArrowContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "SelectScrollDownArrowContext",
-        providerName: "SelectScrollDownArrow",
-      });
-    }
+export const useSelectScrollDownArrowContext: IUseSelectScrollDownArrowContext = (
+  optional,
+): any => {
+  const ctx = React.use(SelectScrollDownArrowContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "SelectScrollDownArrowContext",
+      providerName: "SelectScrollDownArrow",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   SelectScrollDownArrowContext as ScrollDownArrowContext,

@@ -21,11 +21,10 @@ export type IUseSwitchThumbContext = IUseContext<SwitchThumbContext>;
 /**
  * {@link SwitchThumbContext} を読み取るフックです。
  */
-export const useSwitchThumbContext: IUseSwitchThumbContext = function useSuiSwitchThumbContext(
-  optional,
-): any {
+export const useSwitchThumbContext: IUseSwitchThumbContext = (optional): any => {
   const ctx = React.use(SwitchThumbContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SwitchThumbContext",
       providerName: "SwitchThumb",

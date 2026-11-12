@@ -25,11 +25,10 @@ export type IUseSelectGroupContext = IUseContext<SelectGroupContext>;
 /**
  * {@link SelectGroupContext} を読み取るフックです。
  */
-export const useSelectGroupContext: IUseSelectGroupContext = function useSuiSelectGroupContext(
-  optional,
-): any {
+export const useSelectGroupContext: IUseSelectGroupContext = (optional): any => {
   const ctx = React.use(SelectGroupContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SelectGroupContext",
       providerName: "SelectGroup",

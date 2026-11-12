@@ -7,14 +7,10 @@ import type { IUseContext } from "../../types.js";
  * {@link ButtonCircularProgress} が子パーツへ提供するコンテキストです。
  */
 export type ButtonCircularProgressContext = {
-  /**
-   * 不定モードで表示するかどうかです。
-   */
+  /** 不定モードで表示するかどうかです。 */
   readonly indeterminate: boolean;
 
-  /**
-   * 進捗率です。
-   */
+  /** 進捗率です。 */
   readonly percentage: number | undefined;
 };
 
@@ -29,18 +25,20 @@ export type IUseButtonCircularProgressContext = IUseContext<ButtonCircularProgre
 /**
  * {@link ButtonCircularProgressContext} を読み取るフックです。
  */
-export const useButtonCircularProgressContext: IUseButtonCircularProgressContext =
-  function useSuiButtonCircularProgressContext(optional?: boolean): any {
-    const ctx = React.use(ButtonCircularProgressContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ButtonCircularProgressContext",
-        providerName: "ButtonCircularProgress",
-      });
-    }
+export const useButtonCircularProgressContext: IUseButtonCircularProgressContext = (
+  optional?: boolean,
+): any => {
+  const ctx = React.use(ButtonCircularProgressContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ButtonCircularProgressContext",
+      providerName: "ButtonCircularProgress",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ButtonCircularProgressContext as CircularProgressContext,

@@ -25,18 +25,18 @@ export type IUseContextMenuTriggerContext = IUseContext<ContextMenuTriggerContex
 /**
  * {@link ContextMenuTriggerContext} を読み取るフックです。
  */
-export const useContextMenuTriggerContext: IUseContextMenuTriggerContext =
-  function useSuiContextMenuTriggerContext(optional): any {
-    const ctx = React.use(ContextMenuTriggerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ContextMenuTriggerContext",
-        providerName: "ContextMenuTrigger",
-      });
-    }
+export const useContextMenuTriggerContext: IUseContextMenuTriggerContext = (optional): any => {
+  const ctx = React.use(ContextMenuTriggerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ContextMenuTriggerContext",
+      providerName: "ContextMenuTrigger",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ContextMenuTriggerContext as TriggerContext,

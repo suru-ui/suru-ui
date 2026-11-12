@@ -1,4 +1,4 @@
-// TODO(tai-kun): いつか複合コンポーネントの方に組み込む
+// NOTE(tai-kun): いつか複合コンポーネントの方に組み込みます。
 
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
@@ -27,7 +27,7 @@ export namespace AutocompleteBackdropProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.Backdrop>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AutocompleteBackdropProps より:
+      // AutocompleteBackdropProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -35,7 +35,7 @@ export namespace AutocompleteBackdropProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Autocomplete.Backdrop>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -49,10 +49,8 @@ export type AutocompleteBackdropProps = AutocompleteBackdropProps.Render &
 
 export type IAutocompleteBackdrop = IComponent<AutocompleteBackdropProps>;
 
-/**
- * ポップアップの背後に表示される要素です。
- */
-export const AutocompleteBackdrop: IAutocompleteBackdrop = function SuiAutocompleteBackdrop(props) {
+/** ポップアップの背後に表示される要素です。 */
+export const AutocompleteBackdrop: IAutocompleteBackdrop = (props) => {
   const ctx = useAutocompletePortalContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -60,7 +58,10 @@ export const AutocompleteBackdrop: IAutocompleteBackdrop = function SuiAutocompl
     <Autocomplete.Backdrop
       {...otherProps}
       {...proxyRenderProps<Autocomplete.Backdrop.State, AutocompleteBackdropState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -93,7 +94,6 @@ export const AutocompleteBackdrop: IAutocompleteBackdrop = function SuiAutocompl
 };
 
 export { AutocompleteBackdrop as Backdrop };
-
 export namespace Backdrop {
   export type State<TItem = any> = AutocompleteBackdropState<TItem>;
 

@@ -23,18 +23,18 @@ export type IUseAlertDialogFooterContext = IUseContext<AlertDialogFooterContext>
 /**
  * {@link AlertDialogFooterContext} を読み取るフックです。
  */
-export const useAlertDialogFooterContext: IUseAlertDialogFooterContext =
-  function useSuiAlertDialogFooterContext(optional): any {
-    const ctx = React.use(AlertDialogFooterContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AlertDialogFooterContext",
-        providerName: "AlertDialogFooter",
-      });
-    }
+export const useAlertDialogFooterContext: IUseAlertDialogFooterContext = (optional): any => {
+  const ctx = React.use(AlertDialogFooterContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AlertDialogFooterContext",
+      providerName: "AlertDialogFooter",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   AlertDialogFooterContext as FooterContext,

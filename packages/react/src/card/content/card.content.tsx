@@ -18,10 +18,7 @@ export namespace CardContentProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type CardContentProps = CardContentProps.Render &
 
 export type ICardContent = IComponent<CardContentProps>;
 
-/**
- * カードの本文を表示するコンポーネントです。
- */
-export const CardContent: ICardContent = function SuiCardContent(props) {
+/** カードの本文を表示するコンポーネントです。 */
+export const CardContent: ICardContent = (props) => {
   const ctx = useCardContext();
 
   return useRender({
@@ -58,7 +53,6 @@ export const CardContent: ICardContent = function SuiCardContent(props) {
 };
 
 export { CardContent as Content };
-
 export namespace Content {
   export type State = CardContentState;
 

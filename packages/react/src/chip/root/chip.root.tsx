@@ -12,9 +12,7 @@ import {
   ChipContext,
 } from "./chip.root.context.js";
 
-/**
- * チップの配色です。
- */
+/** チップの配色です。 */
 export type ChipRootColor = ChipContextColor;
 
 /**
@@ -115,20 +113,25 @@ export type IChipRoot = IComponent<ChipRootProps>;
  *
  * `render` に `button` 要素を渡すと、押せるチップとして描画できます。
  */
-export const ChipRoot: IChipRoot = function SuiChipRoot(props) {
+export const ChipRoot: IChipRoot = (props) => {
   const {
     size = "sm",
     color = "grey",
     radius = "full",
     variant = "liquid",
     outlined = false,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherSpanProps
   } = props;
-
   const ctx = React.useMemo<ChipContext>(
-    () => ({ size, color, radius, variant, outlined }),
+    () => ({
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+    }),
     [size, color, radius, variant, outlined],
   );
   const element = useRender({
@@ -154,7 +157,6 @@ export const ChipRoot: IChipRoot = function SuiChipRoot(props) {
 };
 
 export { ChipRoot as Root };
-
 export namespace Root {
   export type State = ChipRootState;
 

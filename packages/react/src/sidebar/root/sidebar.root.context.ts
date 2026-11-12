@@ -20,14 +20,10 @@ export type SidebarOpenState = "expanded" | "collapsed";
  * {@link SidebarProvider} が子パーツへ提供する状態です。
  */
 export type SidebarContextState = {
-  /**
-   * サイドバーが開いているかどうかです。
-   */
+  /** サイドバーが開いているかどうかです。 */
   readonly open: boolean;
 
-  /**
-   * サイドバーの開閉状態です。
-   */
+  /** サイドバーの開閉状態です。 */
   readonly state: SidebarOpenState;
 
   /**
@@ -59,14 +55,10 @@ export type SidebarContext = Readonly<
   Override<
     SidebarContextState,
     {
-      /**
-       * サイドバーの開閉状態を設定します。
-       */
+      /** サイドバーの開閉状態を設定します。 */
       readonly setOpen: (open: boolean) => void;
 
-      /**
-       * サイドバーの開閉状態を切り替えます。
-       */
+      /** サイドバーの開閉状態を切り替えます。 */
       readonly toggle: () => void;
     }
   >
@@ -83,11 +75,10 @@ export type IUseSidebarContext = IUseContext<SidebarContext>;
 /**
  * {@link SidebarContext} を読み取るフックです。
  */
-export const useSidebarContext: IUseSidebarContext = function useSuiSidebarContext(
-  optional?: boolean,
-): any {
+export const useSidebarContext: IUseSidebarContext = (optional?: boolean): any => {
   const ctx = React.use(SidebarContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SidebarContext",
       providerName: "SidebarProvider",
@@ -98,7 +89,6 @@ export const useSidebarContext: IUseSidebarContext = function useSuiSidebarConte
 };
 
 export { SidebarContext as Context, useSidebarContext as useContext };
-
 export namespace Context {
   export type Collapsible = SidebarRootCollapsible;
 

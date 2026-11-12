@@ -6,7 +6,7 @@ import {
 // ButtonCircularProgressFill は Context を変更・拡張しないため、親の ButtonCircularProgressContext をそのまま使う。
 export {
   ButtonCircularProgressContext as CircularProgressFillContext,
-  useButtonCircularProgressContext as useCircularProgressFillContext,
   ButtonCircularProgressContext as ButtonCircularProgressFillContext,
+  useButtonCircularProgressContext as useCircularProgressFillContext,
   useButtonCircularProgressContext as useButtonCircularProgressFillContext,
 };

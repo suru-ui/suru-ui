@@ -19,7 +19,7 @@ export namespace DrawerBackdropProps {
     Pick<
       React.ComponentProps<typeof Drawer.Backdrop>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DrawerBackdropProps より:
+      // DrawerBackdropProps より :
       "forceRender"
     >,
     keyof Render | keyof SuruUI
@@ -41,10 +41,8 @@ export type DrawerBackdropProps = DrawerBackdropProps.Render &
 
 export type IDrawerBackdrop = IComponent<DrawerBackdropProps>;
 
-/**
- * ポップアップの背後に表示されるオーバーレイコンポーネントです。
- */
-export const DrawerBackdrop: IDrawerBackdrop = function SuiDrawerBackdrop(props) {
+/** ポップアップの背後に表示されるオーバーレイコンポーネントです。 */
+export const DrawerBackdrop: IDrawerBackdrop = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -63,7 +61,6 @@ export const DrawerBackdrop: IDrawerBackdrop = function SuiDrawerBackdrop(props)
 };
 
 export { DrawerBackdrop as Backdrop };
-
 export namespace Backdrop {
   export type State = DrawerBackdropState;
 

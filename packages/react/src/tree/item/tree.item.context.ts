@@ -12,24 +12,16 @@ export type TreeItemContext = Readonly<
   Override<
     TreeContextState,
     {
-      /**
-       * 項目が無効かどうかです。
-       */
+      /** 項目が無効かどうかです。 */
       readonly disabled: boolean;
 
-      /**
-       * 項目が展開されているかどうかです。
-       */
+      /** 項目が展開されているかどうかです。 */
       readonly expanded: boolean;
 
-      /**
-       * 項目の角丸です。
-       */
+      /** 項目の角丸です。 */
       readonly radius: TreeItemRadius;
 
-      /**
-       * 項目が選択されているかどうかです。
-       */
+      /** 項目が選択されているかどうかです。 */
       readonly selected: boolean;
     }
   >
@@ -46,11 +38,10 @@ export type IUseTreeItemContext = IUseContext<TreeItemContext>;
 /**
  * {@link TreeItemContext} を読み取るフックです。
  */
-export const useTreeItemContext: IUseTreeItemContext = function useSuiTreeItemContext(
-  optional,
-): any {
+export const useTreeItemContext: IUseTreeItemContext = (optional): any => {
   const ctx = React.use(TreeItemContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "TreeItemContext",
       providerName: "TreeItem",

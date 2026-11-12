@@ -11,9 +11,7 @@ import {
   StatusContext,
 } from "./status.root.context.js";
 
-/**
- * ステータスの配色です。
- */
+/** ステータスの配色です。 */
 export type StatusRootColor = StatusContextColor;
 
 /**
@@ -111,20 +109,25 @@ export type IStatusRoot = IComponent<StatusRootProps>;
  *
  * 大きさと配色、リップルの修飾を自身のクラスに集約し、子のインジケーターへ反映します。
  */
-export const StatusRoot: IStatusRoot = function SuiStatusRoot(props) {
+export const StatusRoot: IStatusRoot = (props) => {
   const {
     ping = false,
     size = "md",
     color = "grey",
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
+    "data-scope": dataScope = "",
     rippleSize = "md",
     containRipple = false,
-    // @ts-expect-error
-    "data-scope": dataScope = "",
     ...otherSpanProps
   } = props;
-
   const ctx = React.useMemo<StatusContext>(
-    () => ({ ping, size, color, rippleSize, containRipple }),
+    () => ({
+      ping,
+      size,
+      color,
+      rippleSize,
+      containRipple,
+    }),
     [ping, size, color, rippleSize, containRipple],
   );
   const element = useRender({
@@ -150,7 +153,6 @@ export const StatusRoot: IStatusRoot = function SuiStatusRoot(props) {
 };
 
 export { StatusRoot as Root };
-
 export namespace Root {
   export type State = StatusRootState;
 

@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { ButtonRoot } from "./button.root.jsx";
@@ -6,10 +6,10 @@ import "../../../tests/src/_locators.js";
 
 describe("ButtonRoot", () => {
   test("指定した大きさと配色と角丸と外観のクラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ButtonRoot size="lg" color="blue" variant="naked" />);
 
-    // 検証
+    // 検証。
     const button = screen.getByClassName("sui_button").element();
     expect(button.classList.contains("sui_button-size_lg")).toBe(true);
     expect(button.classList.contains("sui_button-color_blue")).toBe(true);
@@ -18,7 +18,7 @@ describe("ButtonRoot", () => {
   });
 
   test("角丸を指定しないときは大きさに追従させる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ButtonRoot id="sm" size="sm" />
@@ -26,18 +26,19 @@ describe("ButtonRoot", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const sm = screen.container.querySelector<HTMLElement>("#sm")!;
     expect(sm.classList.contains("sui_button-radius_sm")).toBe(true);
+
     const full = screen.container.querySelector<HTMLElement>("#full")!;
     expect(full.classList.contains("sui_button-radius_full")).toBe(true);
   });
 
   test("修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ButtonRoot item muted squared outlined />);
 
-    // 検証
+    // 検証。
     const button = screen.getByClassName("sui_button").element();
     expect(button.classList.contains("sui_button-item")).toBe(true);
     expect(button.classList.contains("sui_button-muted")).toBe(true);
@@ -46,49 +47,49 @@ describe("ButtonRoot", () => {
   });
 
   test("スコープの始点になる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ButtonRoot />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_button").element().getAttribute("data-scope")).toBe("");
   });
 
   test("無効時は無効の状態クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ButtonRoot disabled />);
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_button").element().classList.contains("sui_button-disabled"),
     ).toBe(true);
   });
 
   test("保留中は pending の状態クラスだけを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ButtonRoot pending />);
 
-    // 検証
+    // 検証。
     const button = screen.getByClassName("sui_button").element();
     expect(button.classList.contains("sui_button-pending")).toBe(true);
     expect(button.classList.contains("sui_button-disabled")).toBe(false);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ButtonRoot render={<a href="/docs" aria-label="ドキュメント" />} nativeButton={false}>
         ドキュメント
       </ButtonRoot>,
     );
 
-    // 検証
+    // 検証。
     const link = screen.getByClassName("sui_button").element();
     expect(link.tagName).toBe("A");
     expect(link.classList.contains("sui_button")).toBe(true);
   });
 
   test("render の関数へ状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ButtonRoot
         item
@@ -119,7 +120,7 @@ describe("ButtonRoot", () => {
       />,
     );
 
-    // 検証
+    // 検証。
     const button = screen.getByClassName("sui_button").element();
     expect(button.tagName).toBe("BUTTON");
     expect(button.getAttribute("data-probe")).toBe(
@@ -128,7 +129,7 @@ describe("ButtonRoot", () => {
   });
 
   test("className の関数へ状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ButtonRoot
         size="lg"
@@ -138,7 +139,7 @@ describe("ButtonRoot", () => {
       />,
     );
 
-    // 検証
+    // 検証。
     const button = screen.getByClassName("sui_button").element();
     expect(button.classList.contains("probe-pending_true")).toBe(true);
     expect(button.classList.contains("probe-size_lg")).toBe(true);

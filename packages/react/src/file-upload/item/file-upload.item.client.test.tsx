@@ -1,6 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { FileUploadRoot } from "../root/file-upload.root.jsx";
@@ -9,10 +8,9 @@ import { FileUploadItem } from "./file-upload.item.jsx";
 import "../../../tests/src/_locators.js";
 
 const textFile = new File(["hello"], "hello.txt", { type: "text/plain" });
-
 describe("FileUploadItem", () => {
   test("既定で項目と基底クラスを持つ", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadItem file={textFile}>中身</FileUploadItem>
@@ -20,27 +18,27 @@ describe("FileUploadItem", () => {
     );
     const item = screen.getByClassName("sui_file_upload_item").element();
 
-    // 検証
+    // 検証。
     expect(item.tagName).toBe("LI");
     expect(item.textContent).toBe("中身");
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadItem file={textFile} className="custom" />
       </FileUploadRoot>,
     );
 
-    // 検証
+    // 検証。
     const item = screen.getByClassName("sui_file_upload_item").element();
     expect(item.classList.contains("custom")).toBe(true);
     expect(item.classList.contains("sui_file_upload_item")).toBe(true);
   });
 
   test("render の関数へ状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot size="lg">
         <FileUploadItem
@@ -52,21 +50,21 @@ describe("FileUploadItem", () => {
       </FileUploadRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_file_upload_item").element().getAttribute("data-probe")).toBe(
       "lg/hello.txt",
     );
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadItem file={textFile} render={<div />} />
       </FileUploadRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_file_upload_item").element().tagName).toBe("DIV");
   });
 });

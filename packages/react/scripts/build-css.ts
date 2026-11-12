@@ -16,9 +16,9 @@ const themeCss = require.resolve("@suru-ui/theme/suru.css");
 function collectCssFiles(): string[] {
   return dependencyTree
     .toList({
+      filter: (fullpath) => fullpath.startsWith(src + path.sep),
       filename: path.join(src, "index.ts"),
       directory: src,
-      filter: (fullpath) => fullpath.startsWith(src + path.sep),
     })
     .filter((fullpath) => fullpath.endsWith(".css"));
 }
@@ -31,6 +31,7 @@ async function main(): Promise<void> {
     ordered.map(async (fullpath) => {
       const comment = `/* ${path.relative(src, fullpath)} */`;
       const css = await fsp.readFile(fullpath, "utf-8");
+
       return `${comment}\n${css}`;
     }),
   );
@@ -38,7 +39,6 @@ async function main(): Promise<void> {
   // テーマ層を先頭に含め、追記ではなく上書きで書き出す。
   const theme = await fsp.readFile(themeCss, "utf-8");
   const content = `/* theme */\n\n${theme}\n\n/* components */\n\n${cssFiles.join("\n")}\n`;
-
   await fsp.writeFile(dst, content, "utf-8");
 }
 

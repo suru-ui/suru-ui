@@ -22,9 +22,7 @@ import { ComboboxInputGroupContext } from "./combobox.input-group.context.js";
  */
 export type ComboboxInputGroupState<TItem = any> = ComboboxInputGroupContext<TItem>;
 
-/**
- * 入力グループの配色です。
- */
+/** 入力グループの配色です。 */
 export type ComboboxInputGroupColor = ComboboxContextColor;
 
 /**
@@ -99,7 +97,7 @@ export namespace ComboboxInputGroupProps {
     Pick<
       React.ComponentProps<typeof Combobox.InputGroup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxInputGroupProps より:
+      // ComboboxInputGroupProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -126,7 +124,7 @@ export type IComboboxInputGroup = IComponent<ComboboxInputGroupProps>;
  *
  * Root のスタイルプロパティーがこの要素へ適用されます。
  */
-export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInputGroup(props) {
+export const ComboboxInputGroup: IComboboxInputGroup = (props) => {
   const ctx = useComboboxContext();
   const {
     size = ctx.size,
@@ -137,7 +135,7 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
     variant = ctx.variant,
     outlined = true,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -146,7 +144,15 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
     <Combobox.InputGroup
       {...otherProps}
       {...proxyRenderProps<Combobox.InputGroup.State, ComboboxInputGroupState>(
-        (state) => ({ ...ctx, size, color, radius, variant, outlined, ...state }),
+        (state) => ({
+          ...ctx,
+          size,
+          color,
+          radius,
+          variant,
+          outlined,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -192,7 +198,6 @@ export const ComboboxInputGroup: IComboboxInputGroup = function SuiComboboxInput
 };
 
 export { ComboboxInputGroup as InputGroup };
-
 export namespace InputGroup {
   export type State<TItem = any> = ComboboxInputGroupState<TItem>;
 

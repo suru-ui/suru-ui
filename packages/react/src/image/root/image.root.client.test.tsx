@@ -1,4 +1,4 @@
-import { vi, test, describe } from "vitest";
+import { vi, test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "../image.parts.js";
@@ -6,13 +6,12 @@ import { type ImageRootProps, ImageRoot } from "./image.root.jsx";
 import "../../../tests/src/_locators.js";
 
 const imageSrc = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
-
 describe("ImageRoot", () => {
   test("img を既定の要素にして既定の修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ImageRoot alt="風景" src={imageSrc} />);
 
-    // 検証
+    // 検証。
     const root = screen.getByAltText("風景").element();
     expect(root.tagName).toBe("IMG");
     expect(root.classList.contains("sui_image")).toBe(true);
@@ -21,7 +20,7 @@ describe("ImageRoot", () => {
   });
 
   test("指定した表示方法の修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ImageRoot alt="cover" fit="cover" src={imageSrc} />
@@ -32,7 +31,7 @@ describe("ImageRoot", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_image-fit_cover").query()).not.toBe(null);
     expect(screen.getByClassName("sui_image-fit_contain").query()).not.toBe(null);
     expect(screen.getByClassName("sui_image-fit_fill").query()).not.toBe(null);
@@ -41,7 +40,7 @@ describe("ImageRoot", () => {
   });
 
   test("指定した角丸の修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ImageRoot alt="none" src={imageSrc} radius="none" />
@@ -52,7 +51,7 @@ describe("ImageRoot", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_image-radius_none").query()).not.toBe(null);
     expect(screen.getByClassName("sui_image-radius_sm").query()).not.toBe(null);
     expect(screen.getByClassName("sui_image-radius_md").query()).not.toBe(null);
@@ -61,25 +60,25 @@ describe("ImageRoot", () => {
   });
 
   test("スタイル起点として data-scope を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ImageRoot alt="風景" src={imageSrc} />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_image").element().getAttribute("data-scope")).toBe("");
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ImageRoot alt="風景" src={imageSrc} className="custom" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_image").element();
     expect(root.classList.contains("custom")).toBe(true);
     expect(root.classList.contains("sui_image")).toBe(true);
   });
 
   test("利用者の props を img へ渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ImageRoot
         alt="風景"
@@ -91,7 +90,7 @@ describe("ImageRoot", () => {
       />,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByAltText("風景").element();
     expect(root.getAttribute("width")).toBe("320");
     expect(root.getAttribute("height")).toBe("180");
@@ -100,21 +99,21 @@ describe("ImageRoot", () => {
   });
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ImageRoot render={<span />} />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_image").element().tagName).toBe("SPAN");
   });
 
   test("画像の読み込み完了を通知する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const onLoad = vi.fn<NonNullable<ImageRootProps["onLoad"]>>();
 
-    // 実行
+    // 実行。
     const screen = await render(<ImageRoot alt="風景" src={imageSrc} onLoad={onLoad} />);
 
-    // 検証
+    // 検証。
     await vi.waitFor(() => {
       expect(onLoad).toHaveBeenCalled();
     });
@@ -122,15 +121,15 @@ describe("ImageRoot", () => {
   });
 
   test("画像の読み込み失敗を通知する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const onError = vi.fn<NonNullable<ImageRootProps["onError"]>>();
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ImageRoot alt="壊れた画像" src="data:image/png;base64,invalid" onError={onError} />,
     );
 
-    // 検証
+    // 検証。
     await vi.waitFor(() => {
       expect(onError).toHaveBeenCalled();
     });

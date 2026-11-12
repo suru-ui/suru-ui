@@ -25,7 +25,7 @@ export namespace SelectItemIndicatorProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.ItemIndicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectItemIndicatorProps より:
+      // SelectItemIndicatorProps より :
       "children" | "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -47,10 +47,8 @@ export type SelectItemIndicatorProps = SelectItemIndicatorProps.Render &
 
 export type ISelectItemIndicator = IComponent<SelectItemIndicatorProps>;
 
-/**
- * 選択された項目を示す要素です。
- */
-export const SelectItemIndicator: ISelectItemIndicator = function SuiSelectItemIndicator(props) {
+/** 選択された項目を示す要素です。 */
+export const SelectItemIndicator: ISelectItemIndicator = (props) => {
   const ctx = useSelectItemContext();
   const { style, render, className, keepMounted = true, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const SelectItemIndicator: ISelectItemIndicator = function SuiSelectItemI
     <BaseSelect.ItemIndicator
       {...otherProps}
       {...proxyRenderProps<BaseSelect.ItemIndicator.State, SelectItemIndicatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -97,7 +98,6 @@ export const SelectItemIndicator: ISelectItemIndicator = function SuiSelectItemI
 };
 
 export { SelectItemIndicator as ItemIndicator };
-
 export namespace ItemIndicator {
   export type State<TValue = any> = SelectItemIndicatorState<TValue>;
 

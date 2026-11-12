@@ -25,18 +25,18 @@ export type IUseSegmentsIndicatorContext = IUseContext<SegmentsIndicatorContext>
 /**
  * {@link SegmentsIndicatorContext} を読み取るフックです。
  */
-export const useSegmentsIndicatorContext: IUseSegmentsIndicatorContext =
-  function useSuiSegmentsIndicatorContext(optional): any {
-    const ctx = React.use(SegmentsIndicatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "SegmentsIndicatorContext",
-        providerName: "SegmentsIndicator",
-      });
-    }
+export const useSegmentsIndicatorContext: IUseSegmentsIndicatorContext = (optional): any => {
+  const ctx = React.use(SegmentsIndicatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "SegmentsIndicatorContext",
+      providerName: "SegmentsIndicator",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   SegmentsIndicatorContext as IndicatorContext,

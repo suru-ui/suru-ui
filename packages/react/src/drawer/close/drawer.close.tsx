@@ -15,9 +15,7 @@ export namespace DrawerCloseProps {
   export type Render = Omit<RenderProps<DrawerCloseState>, "render">;
 
   export type SuruUI = {
-    /**
-     * ボタンとして描画する関数です。
-     */
+    /** ボタンとして描画する関数です。 */
     children: NonNullable<RenderProps<DrawerCloseState>["render"]>;
   };
 
@@ -25,9 +23,9 @@ export namespace DrawerCloseProps {
     Pick<
       React.ComponentProps<typeof Drawer.Close>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // DrawerCloseProps より:
+      // DrawerCloseProps より :
       | never
     >,
     keyof Render | keyof SuruUI
@@ -49,10 +47,8 @@ export type DrawerCloseProps = DrawerCloseProps.Render &
 
 export type IDrawerClose = IComponent<DrawerCloseProps>;
 
-/**
- * ドロワーを閉じるボタンコンポーネントです。
- */
-export const DrawerClose: IDrawerClose = function SuiDrawerClose(props) {
+/** ドロワーを閉じるボタンコンポーネントです。 */
+export const DrawerClose: IDrawerClose = (props) => {
   const { children, className, ...otherProps } = props;
 
   return (
@@ -69,7 +65,6 @@ export const DrawerClose: IDrawerClose = function SuiDrawerClose(props) {
 };
 
 export { DrawerClose as Close };
-
 export namespace Close {
   export type State = DrawerCloseState;
 

@@ -26,7 +26,7 @@ export namespace SelectSeparatorProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Separator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectSeparatorProps より:
+      // SelectSeparatorProps より :
       "orientation"
     >,
     keyof Render | keyof SuruUI
@@ -48,20 +48,21 @@ export type SelectSeparatorProps = SelectSeparatorProps.Render &
 
 export type ISelectSeparator = IComponent<SelectSeparatorProps>;
 
-/**
- * 項目やグループを区切る要素です。
- */
-export const SelectSeparator: ISelectSeparator = function SuiSelectSeparator(props) {
+/** 項目やグループを区切る要素です。 */
+export const SelectSeparator: ISelectSeparator = (props) => {
   const listCtx = useSelectListContext();
   const groupCtx = useSelectGroupContext(true);
-  const ctx = groupCtx || listCtx;
+  const ctx = groupCtx ?? listCtx;
   const { style, render, className, ...otherProps } = props;
 
   return (
     <BaseSelect.Separator
       {...otherProps}
       {...proxyRenderProps<BaseSelect.Separator.State, SelectSeparatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -97,7 +98,6 @@ export const SelectSeparator: ISelectSeparator = function SuiSelectSeparator(pro
 };
 
 export { SelectSeparator as Separator };
-
 export namespace Separator {
   export type State<TValue = any> = SelectSeparatorState<TValue>;
 

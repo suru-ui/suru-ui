@@ -20,10 +20,7 @@ export namespace AutocompleteAddonProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"span", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"span", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -41,7 +38,7 @@ export type IAutocompleteAddon = IComponent<AutocompleteAddonProps>;
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
-export const AutocompleteAddon: IAutocompleteAddon = function SuiAutocompleteAddon(props) {
+export const AutocompleteAddon: IAutocompleteAddon = (props) => {
   const ctx = useInputGroupContext();
 
   return useRender({
@@ -78,7 +75,6 @@ export const AutocompleteAddon: IAutocompleteAddon = function SuiAutocompleteAdd
 };
 
 export { AutocompleteAddon as Addon };
-
 export namespace Addon {
   export type State<TItem = any> = AutocompleteAddonState<TItem>;
 

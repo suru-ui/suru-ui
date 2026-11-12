@@ -16,14 +16,10 @@ import { isItemObject } from "../_menubar.jsx";
 export type MenubarRootItemObject = Override<
   Omit<Menu.Props<Menu.ItemObject>, "children">,
   {
-    /**
-     * ポップアップに表示する内容です。
-     */
+    /** ポップアップに表示する内容です。 */
     readonly items: NonNullable<Menu.Props<Menu.ItemObject>["items"]>;
 
-    /**
-     * メニューを開くトリガーに表示する要素です。
-     */
+    /** メニューを開くトリガーに表示する要素です。 */
     readonly trigger: NonNullable<Menu.Props<Menu.ItemObject>["trigger"]>;
   }
 >;
@@ -40,14 +36,13 @@ export interface IMenubarRootItemRenderer<TItem = any> {
    * @param item 現在の項目です。
    * @param index 項目のインデックスです。
    * @param items すべての項目です。
+   *
    * @returns レンダリングする内容です。
    */
   (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
 }
 
-/**
- * メニューバーの向きです。
- */
+/** メニューバーの向きです。 */
 export type MenubarRootOrientation = MenubarRootState["orientation"];
 
 /**
@@ -78,7 +73,7 @@ export namespace MenubarRootProps {
     Pick<
       React.ComponentProps<typeof BaseMenubar>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenubarProps より:
+      // MenubarProps より :
       "modal" | "disabled" | "orientation" | "loopFocus"
     >,
     keyof Render | keyof SuruUI
@@ -107,28 +102,26 @@ export interface IMenubarRoot extends IComponent<MenubarRootProps> {
   <TItem = any>(props: MenubarRootProps<TItem>): IComponent.Return;
 }
 
-/**
- * メニューを横または縦に並べるルート要素です。
- */
-export const MenubarRoot: IMenubarRoot = function SuiMenubarRoot(props: MenubarRootProps) {
-  const defaultItemRenderer: IMenubarRootItemRenderer = (item, index) => {
-    switch (true) {
-      case isItemObject(item):
-        return <Menu {...item} key={getItemKey(item) ?? index} />;
+const defaultItemRenderer: IMenubarRootItemRenderer = (item, index) => {
+  switch (true) {
+    case isItemObject(item):
+      return <Menu {...item} key={getItemKey(item) ?? index} />;
 
-      default:
-        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
-    }
-  };
+    default:
+      return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
+  }
+};
 
+/** メニューを横または縦に並べるルート要素です。 */
+export const MenubarRoot: IMenubarRoot = (props: MenubarRootProps) => {
   const {
     items = [],
     children = defaultItemRenderer,
     disabled = false,
     className,
-    orientation = "horizontal",
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
+    orientation = "horizontal",
     ...otherProps
   } = props;
 
@@ -153,7 +146,6 @@ export const MenubarRoot: IMenubarRoot = function SuiMenubarRoot(props: MenubarR
 };
 
 export { MenubarRoot as Root };
-
 export namespace Root {
   export type State = MenubarRootState;
 

@@ -192,8 +192,14 @@ export const Grouped = meta.story({
   ...ctrl({
     size: "md",
     items: [
-      { items: ["りんご", "ばなな", "みかん"], label: "果物" },
-      { items: ["にんじん", "きゅうり", "トマト"], label: "野菜" },
+      {
+        items: ["りんご", "ばなな", "みかん"],
+        label: "果物",
+      },
+      {
+        items: ["にんじん", "きゅうり", "トマト"],
+        label: "野菜",
+      },
     ],
     label: "食材",
     radius: undefined,

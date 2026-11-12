@@ -1,17 +1,15 @@
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { Combobox } from "../combobox.jsx";
 
 const fruits = ["りんご", "ばなな"];
-
 describe("ComboboxItem", () => {
   test("項目を表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Combobox items={fruits} defaultOpen />);
 
-    // 検証
+    // 検証。
     const items = screen
       .getByRole("option")
       .elements()
@@ -20,12 +18,13 @@ describe("ComboboxItem", () => {
   });
 
   test("選択項目を選択状態にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Combobox items={fruits} defaultOpen defaultValue="りんご" />);
 
-    // 検証
+    // 検証。
     const selected = screen.getByRole("option", { name: "りんご" }).element();
     expect(selected.classList.contains("sui_combobox_item-selected")).toBe(true);
+
     const unselected = screen.getByRole("option", { name: "ばなな" }).element();
     expect(unselected.classList.contains("sui_combobox_item-selected")).toBe(false);
   });

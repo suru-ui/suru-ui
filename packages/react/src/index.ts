@@ -1,4 +1,4 @@
-/** utilities */
+/** ユーティリティー。 */
 
 export type * from "./cn.js";
 export { default as cn } from "./cn.js";
@@ -10,7 +10,7 @@ export { default as getNumberFormatter } from "./get-number-formatter.js";
 
 export type * from "./types.js";
 
-/** components */
+/** コンポーネント。 */
 
 export {
   type AccordionAPI,

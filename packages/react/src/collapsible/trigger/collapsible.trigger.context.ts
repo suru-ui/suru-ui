@@ -23,18 +23,18 @@ export type IUseCollapsibleTriggerContext = IUseContext<CollapsibleTriggerContex
 /**
  * {@link CollapsibleTriggerContext} を読み取るフックです。
  */
-export const useCollapsibleTriggerContext: IUseCollapsibleTriggerContext =
-  function useSuiCollapsibleTriggerContext(optional): any {
-    const ctx = React.use(CollapsibleTriggerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "CollapsibleTriggerContext",
-        providerName: "CollapsibleTrigger",
-      });
-    }
+export const useCollapsibleTriggerContext: IUseCollapsibleTriggerContext = (optional): any => {
+  const ctx = React.use(CollapsibleTriggerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "CollapsibleTriggerContext",
+      providerName: "CollapsibleTrigger",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   CollapsibleTriggerContext as TriggerContext,

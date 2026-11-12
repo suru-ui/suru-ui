@@ -1,174 +1,170 @@
 @layer sui.component {
-@scope (.sui_alert_title) to ([data-scope]) {
+  @scope (.sui_alert_title) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      line-break: strict;
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
 
-/* 固定 */
-:scope {
-  line-break: strict;
-  word-break: normal;
-  overflow-wrap: anywhere;
-}
-
-/* 可変 */
-:scope {
-  font-family: var(--sui_alert_title-font_family);
-  font-size: var(--sui_alert_title-font_size);
-  font-weight: var(--sui_alert_title-font_weight);
-  line-height: var(--sui_alert_title-line_height);
-  color: var(--sui_alert_title-color);
-  letter-spacing: var(--sui_alert_title-letter_spacing);
-}
-
-} /* @scope */
+    /* 可変 */
+    :scope {
+      font-family: var(--sui_alert_title-font_family);
+      font-size: var(--sui_alert_title-font_size);
+      font-weight: var(--sui_alert_title-font_weight);
+      line-height: var(--sui_alert_title-line_height);
+      color: var(--sui_alert_title-color);
+      letter-spacing: var(--sui_alert_title-letter_spacing);
+    }
+  } /* @scope */
 } /* @layer */
 
 /* 活字・配色・配置の指定はルートの修飾クラスに依存し、タイトル自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_alert) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  &:has(.sui_alert_icon) .sui_alert_title {
-    grid-column-start: 2;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_alert_title-font_family: ;
-  --sui_alert_title-font_size: ;
-  --sui_alert_title-font_weight: ;
-  --sui_alert_title-line_height: ;
-  --sui_alert_title-color: ;
-  --sui_alert_title-letter_spacing: ;
-}
-
-/* 代入 */
-:scope {
-  --sui_alert_title-font_family: var(--sui-font-sans);
-
-  &.sui_alert-size_sm {
-    --sui_alert_title-font_size: var(--sui-text-std-sm-b-font_size);
-    --sui_alert_title-font_weight: var(--sui-text-std-sm-b-font_weight);
-    --sui_alert_title-line_height: var(--sui-text-std-sm-b-line_height);
-    --sui_alert_title-letter_spacing: var(--sui-text-std-sm-b-letter_spacing);
-  }
-
-  &.sui_alert-size_md {
-    --sui_alert_title-font_size: var(--sui-text-std-md-b-font_size);
-    --sui_alert_title-font_weight: var(--sui-text-std-md-b-font_weight);
-    --sui_alert_title-line_height: var(--sui-text-std-md-b-line_height);
-    --sui_alert_title-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
-  }
-
-  &.sui_alert-size_lg {
-    --sui_alert_title-font_size: var(--sui-text-std-lg-b-font_size);
-    --sui_alert_title-font_weight: var(--sui-text-std-lg-b-font_weight);
-    --sui_alert_title-line_height: var(--sui-text-std-lg-b-line_height);
-    --sui_alert_title-letter_spacing: var(--sui-text-std-lg-b-letter_spacing);
-  }
-
-  &.sui_alert-color_grey {
-    --sui_alert_title-color: var(--sui-canvas_text-1);
-  }
-
-  &.sui_alert-color_blue {
-    &.sui_alert-variant_muted {
-      --sui_alert_title-color: var(--sui-blue-naked-canvas_text-normal);
+  @scope (.sui_alert) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      &:has(.sui_alert_icon) .sui_alert_title {
+        grid-column-start: 2;
+      }
     }
 
-    &.sui_alert-variant_naked {
-      --sui_alert_title-color: var(--sui-blue-naked-canvas_text-normal);
+    /* 変数 */
+    :scope {
+      --sui_alert_title-font_family: ;
+      --sui_alert_title-font_size: ;
+      --sui_alert_title-font_weight: ;
+      --sui_alert_title-line_height: ;
+      --sui_alert_title-color: ;
+      --sui_alert_title-letter_spacing: ;
     }
 
-    &.sui_alert-variant_liquid {
-      --sui_alert_title-color: var(--sui-blue-liquid-canvas_text-normal);
-    }
-  }
+    /* 代入 */
+    :scope {
+      --sui_alert_title-font_family: var(--sui-font-sans);
 
-  &.sui_alert-color_purple {
-    &.sui_alert-variant_muted {
-      --sui_alert_title-color: var(--sui-purple-naked-canvas_text-normal);
-    }
+      &.sui_alert-size_sm {
+        --sui_alert_title-font_size: var(--sui-text-std-sm-b-font_size);
+        --sui_alert_title-font_weight: var(--sui-text-std-sm-b-font_weight);
+        --sui_alert_title-line_height: var(--sui-text-std-sm-b-line_height);
+        --sui_alert_title-letter_spacing: var(--sui-text-std-sm-b-letter_spacing);
+      }
 
-    &.sui_alert-variant_naked {
-      --sui_alert_title-color: var(--sui-purple-naked-canvas_text-normal);
-    }
+      &.sui_alert-size_md {
+        --sui_alert_title-font_size: var(--sui-text-std-md-b-font_size);
+        --sui_alert_title-font_weight: var(--sui-text-std-md-b-font_weight);
+        --sui_alert_title-line_height: var(--sui-text-std-md-b-line_height);
+        --sui_alert_title-letter_spacing: var(--sui-text-std-md-b-letter_spacing);
+      }
 
-    &.sui_alert-variant_liquid {
-      --sui_alert_title-color: var(--sui-purple-liquid-canvas_text-normal);
-    }
-  }
+      &.sui_alert-size_lg {
+        --sui_alert_title-font_size: var(--sui-text-std-lg-b-font_size);
+        --sui_alert_title-font_weight: var(--sui-text-std-lg-b-font_weight);
+        --sui_alert_title-line_height: var(--sui-text-std-lg-b-line_height);
+        --sui_alert_title-letter_spacing: var(--sui-text-std-lg-b-letter_spacing);
+      }
 
-  &.sui_alert-color_magenta {
-    &.sui_alert-variant_muted {
-      --sui_alert_title-color: var(--sui-magenta-naked-canvas_text-normal);
-    }
+      &.sui_alert-color_grey {
+        --sui_alert_title-color: var(--sui-canvas_text-1);
+      }
 
-    &.sui_alert-variant_naked {
-      --sui_alert_title-color: var(--sui-magenta-naked-canvas_text-normal);
-    }
+      &.sui_alert-color_blue {
+        &.sui_alert-variant_muted {
+          --sui_alert_title-color: var(--sui-blue-naked-canvas_text-normal);
+        }
 
-    &.sui_alert-variant_liquid {
-      --sui_alert_title-color: var(--sui-magenta-liquid-canvas_text-normal);
-    }
-  }
+        &.sui_alert-variant_naked {
+          --sui_alert_title-color: var(--sui-blue-naked-canvas_text-normal);
+        }
 
-  &.sui_alert-color_red {
-    &.sui_alert-variant_muted {
-      --sui_alert_title-color: var(--sui-red-naked-canvas_text-normal);
-    }
+        &.sui_alert-variant_liquid {
+          --sui_alert_title-color: var(--sui-blue-liquid-canvas_text-normal);
+        }
+      }
 
-    &.sui_alert-variant_naked {
-      --sui_alert_title-color: var(--sui-red-naked-canvas_text-normal);
-    }
+      &.sui_alert-color_purple {
+        &.sui_alert-variant_muted {
+          --sui_alert_title-color: var(--sui-purple-naked-canvas_text-normal);
+        }
 
-    &.sui_alert-variant_liquid {
-      --sui_alert_title-color: var(--sui-red-liquid-canvas_text-normal);
-    }
-  }
+        &.sui_alert-variant_naked {
+          --sui_alert_title-color: var(--sui-purple-naked-canvas_text-normal);
+        }
 
-  &.sui_alert-color_orange {
-    &.sui_alert-variant_muted {
-      --sui_alert_title-color: var(--sui-orange-naked-canvas_text-normal);
-    }
+        &.sui_alert-variant_liquid {
+          --sui_alert_title-color: var(--sui-purple-liquid-canvas_text-normal);
+        }
+      }
 
-    &.sui_alert-variant_naked {
-      --sui_alert_title-color: var(--sui-orange-naked-canvas_text-normal);
-    }
+      &.sui_alert-color_magenta {
+        &.sui_alert-variant_muted {
+          --sui_alert_title-color: var(--sui-magenta-naked-canvas_text-normal);
+        }
 
-    &.sui_alert-variant_liquid {
-      --sui_alert_title-color: var(--sui-orange-liquid-canvas_text-normal);
-    }
-  }
+        &.sui_alert-variant_naked {
+          --sui_alert_title-color: var(--sui-magenta-naked-canvas_text-normal);
+        }
 
-  &.sui_alert-color_yellow {
-    &.sui_alert-variant_muted {
-      --sui_alert_title-color: var(--sui-yellow-naked-canvas_text-normal);
-    }
+        &.sui_alert-variant_liquid {
+          --sui_alert_title-color: var(--sui-magenta-liquid-canvas_text-normal);
+        }
+      }
 
-    &.sui_alert-variant_naked {
-      --sui_alert_title-color: var(--sui-yellow-naked-canvas_text-normal);
-    }
+      &.sui_alert-color_red {
+        &.sui_alert-variant_muted {
+          --sui_alert_title-color: var(--sui-red-naked-canvas_text-normal);
+        }
 
-    &.sui_alert-variant_liquid {
-      --sui_alert_title-color: var(--sui-yellow-liquid-canvas_text-normal);
-    }
-  }
+        &.sui_alert-variant_naked {
+          --sui_alert_title-color: var(--sui-red-naked-canvas_text-normal);
+        }
 
-  &.sui_alert-color_green {
-    &.sui_alert-variant_muted {
-      --sui_alert_title-color: var(--sui-green-naked-canvas_text-normal);
-    }
+        &.sui_alert-variant_liquid {
+          --sui_alert_title-color: var(--sui-red-liquid-canvas_text-normal);
+        }
+      }
 
-    &.sui_alert-variant_naked {
-      --sui_alert_title-color: var(--sui-green-naked-canvas_text-normal);
-    }
+      &.sui_alert-color_orange {
+        &.sui_alert-variant_muted {
+          --sui_alert_title-color: var(--sui-orange-naked-canvas_text-normal);
+        }
 
-    &.sui_alert-variant_liquid {
-      --sui_alert_title-color: var(--sui-green-liquid-canvas_text-normal);
-    }
-  }
-}
+        &.sui_alert-variant_naked {
+          --sui_alert_title-color: var(--sui-orange-naked-canvas_text-normal);
+        }
 
-} /* @scope */
+        &.sui_alert-variant_liquid {
+          --sui_alert_title-color: var(--sui-orange-liquid-canvas_text-normal);
+        }
+      }
+
+      &.sui_alert-color_yellow {
+        &.sui_alert-variant_muted {
+          --sui_alert_title-color: var(--sui-yellow-naked-canvas_text-normal);
+        }
+
+        &.sui_alert-variant_naked {
+          --sui_alert_title-color: var(--sui-yellow-naked-canvas_text-normal);
+        }
+
+        &.sui_alert-variant_liquid {
+          --sui_alert_title-color: var(--sui-yellow-liquid-canvas_text-normal);
+        }
+      }
+
+      &.sui_alert-color_green {
+        &.sui_alert-variant_muted {
+          --sui_alert_title-color: var(--sui-green-naked-canvas_text-normal);
+        }
+
+        &.sui_alert-variant_naked {
+          --sui_alert_title-color: var(--sui-green-naked-canvas_text-normal);
+        }
+
+        &.sui_alert-variant_liquid {
+          --sui_alert_title-color: var(--sui-green-liquid-canvas_text-normal);
+        }
+      }
+    }
+  } /* @scope */
 } /* @layer */

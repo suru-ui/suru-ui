@@ -23,17 +23,17 @@ export type IUseNumberFieldGroupContext = IUseContext<NumberFieldGroupContext>;
 /**
  * {@link NumberFieldGroupContext} を読み取るフックです。
  */
-export const useNumberFieldGroupContext: IUseNumberFieldGroupContext =
-  function useSuiNumberFieldGroupContext(optional): any {
-    const ctx = React.use(NumberFieldGroupContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "NumberFieldGroupContext",
-        providerName: "NumberFieldGroup",
-      });
-    }
+export const useNumberFieldGroupContext: IUseNumberFieldGroupContext = (optional): any => {
+  const ctx = React.use(NumberFieldGroupContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "NumberFieldGroupContext",
+      providerName: "NumberFieldGroup",
+    });
+  }
+
+  return ctx;
+};
 
 export { NumberFieldGroupContext as GroupContext, useNumberFieldGroupContext as useGroupContext };

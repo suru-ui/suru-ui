@@ -19,7 +19,7 @@ export namespace ScrollAreaCornerProps {
     Pick<
       React.ComponentProps<typeof BaseScrollArea.Corner>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ScrollAreaCornerProps より:
+      // ScrollAreaCornerProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -27,7 +27,7 @@ export namespace ScrollAreaCornerProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof BaseScrollArea.Corner>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -41,18 +41,16 @@ export type ScrollAreaCornerProps = ScrollAreaCornerProps.Render &
 
 export type IScrollAreaCorner = IComponent<ScrollAreaCornerProps>;
 
-/**
- * 水平スクロールバーと垂直スクロールバーの交差部分を埋める要素です。
- */
-export const ScrollAreaCorner: IScrollAreaCorner = function SuiScrollAreaCorner(props) {
+/** 水平スクロールバーと垂直スクロールバーの交差部分を埋める要素です。 */
+export const ScrollAreaCorner: IScrollAreaCorner = (props) => {
   const { className, ...otherProps } = props;
+
   return (
     <BaseScrollArea.Corner {...otherProps} className={cn(className, "sui_scroll_area_corner")} />
   );
 };
 
 export { ScrollAreaCorner as Corner };
-
 export namespace Corner {
   export type State = ScrollAreaCornerState;
 

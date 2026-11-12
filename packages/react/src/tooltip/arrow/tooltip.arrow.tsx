@@ -23,16 +23,13 @@ export namespace TooltipArrowProps {
     Pick<
       React.ComponentProps<typeof Tooltip.Arrow>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TooltipArrowProps より:
+      // TooltipArrowProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Tooltip.Arrow>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Tooltip.Arrow>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,10 +42,8 @@ export type TooltipArrowProps = TooltipArrowProps.Render &
 
 export type ITooltipArrow = IComponent<TooltipArrowProps>;
 
-/**
- * ポップアップとトリガーをつなぐ矢印要素です。
- */
-export const TooltipArrow: ITooltipArrow = function SuiTooltipArrow(props) {
+/** ポップアップとトリガーをつなぐ矢印要素です。 */
+export const TooltipArrow: ITooltipArrow = (props) => {
   const ctx = useTooltipPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +51,10 @@ export const TooltipArrow: ITooltipArrow = function SuiTooltipArrow(props) {
     <Tooltip.Arrow
       {...otherProps}
       {...proxyRenderProps<Tooltip.Arrow.State, TooltipArrowState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -92,7 +90,6 @@ export const TooltipArrow: ITooltipArrow = function SuiTooltipArrow(props) {
 };
 
 export { TooltipArrow as Arrow };
-
 export namespace Arrow {
   export type State = TooltipArrowState;
 

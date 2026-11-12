@@ -37,7 +37,7 @@ export type IDialogAction = IComponent<DialogActionProps>;
  *
  * 積み上げ式では右上へ重ねて配置します。
  */
-export const DialogAction: IDialogAction = function SuiDialogAction(props) {
+export const DialogAction: IDialogAction = (props) => {
   const ctx = useDialogPopupContext();
   const { style, render, absolute = ctx.variant === "stacked", className, ...otherProps } = props;
 
@@ -45,7 +45,10 @@ export const DialogAction: IDialogAction = function SuiDialogAction(props) {
     <Card.Action
       {...otherProps}
       {...proxyRenderProps<Card.Action.State, DialogActionState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -81,7 +84,6 @@ export const DialogAction: IDialogAction = function SuiDialogAction(props) {
 };
 
 export { DialogAction as Action };
-
 export namespace Action {
   export type State = DialogActionState;
 

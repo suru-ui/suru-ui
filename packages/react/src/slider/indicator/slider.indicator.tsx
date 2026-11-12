@@ -23,7 +23,7 @@ export namespace SliderIndicatorProps {
     Pick<
       React.ComponentProps<typeof Slider.Indicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SliderIndicatorProps より:
+      // SliderIndicatorProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace SliderIndicatorProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Slider.Indicator>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -45,10 +45,8 @@ export type SliderIndicatorProps = SliderIndicatorProps.Render &
 
 export type ISliderIndicator = IComponent<SliderIndicatorProps>;
 
-/**
- * スライダーの現在値を示すインジケーターコンポーネントです。
- */
-export const SliderIndicator: ISliderIndicator = function SuiSliderIndicator(props) {
+/** スライダーの現在値を示すインジケーターコンポーネントです。 */
+export const SliderIndicator: ISliderIndicator = (props) => {
   const ctx = useSliderTrackContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const SliderIndicator: ISliderIndicator = function SuiSliderIndicator(pro
     <Slider.Indicator
       {...otherProps}
       {...proxyRenderProps<Slider.Indicator.State, SliderIndicatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (

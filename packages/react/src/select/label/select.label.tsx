@@ -25,7 +25,7 @@ export namespace SelectLabelProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Label>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectLabelProps より:
+      // SelectLabelProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace SelectLabelProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof BaseSelect.Label>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type SelectLabelProps = SelectLabelProps.Render &
 
 export type ISelectLabel = IComponent<SelectLabelProps>;
 
-/**
- * 選択欄に対応する表示ラベルです。
- */
-export const SelectLabel: ISelectLabel = function SuiSelectLabel(props) {
+/** 選択欄に対応する表示ラベルです。 */
+export const SelectLabel: ISelectLabel = (props) => {
   const ctx = useSelectContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const SelectLabel: ISelectLabel = function SuiSelectLabel(props) {
     <BaseSelect.Label
       {...otherProps}
       {...proxyRenderProps<BaseSelect.Label.State, SelectLabelState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -94,7 +95,6 @@ export const SelectLabel: ISelectLabel = function SuiSelectLabel(props) {
 };
 
 export { SelectLabel as Label };
-
 export namespace Label {
   export type State<TValue = any> = SelectLabelState<TValue>;
 

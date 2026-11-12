@@ -3,11 +3,11 @@
   "include": ["./**/*"],
   "exclude": ["./global.d.ts"],
   "compilerOptions": {
-    "types": ["node", "vite/client"],
+    "types": ["node", "vite-plus/client"],
     "lib": ["ESNext"],
     "noEmit": true,
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "erasableSyntaxOnly": true
   }
 }

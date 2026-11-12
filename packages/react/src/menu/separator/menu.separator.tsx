@@ -25,7 +25,7 @@ export namespace MenuSeparatorProps {
     Pick<
       React.ComponentProps<typeof Menu.Separator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SeparatorProps より:
+      // SeparatorProps より :
       "orientation"
     >,
     keyof Render | keyof SuruUI
@@ -47,10 +47,8 @@ export type MenuSeparatorProps = MenuSeparatorProps.Render &
 
 export type IMenuSeparator = IComponent<MenuSeparatorProps>;
 
-/**
- * メニュー項目を区切る要素です。
- */
-export const MenuSeparator: IMenuSeparator = function SuiMenuSeparator(props) {
+/** メニュー項目を区切る要素です。 */
+export const MenuSeparator: IMenuSeparator = (props) => {
   const ctx = useMenuContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const MenuSeparator: IMenuSeparator = function SuiMenuSeparator(props) {
     <Menu.Separator
       {...otherProps}
       {...proxyRenderProps<Menu.Separator.State, MenuSeparatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -86,7 +87,6 @@ export const MenuSeparator: IMenuSeparator = function SuiMenuSeparator(props) {
 };
 
 export { MenuSeparator as Separator };
-
 export namespace Separator {
   export type State<TItem = any> = MenuSeparatorState<TItem>;
 

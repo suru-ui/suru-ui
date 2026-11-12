@@ -1,9 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { test, expect, describe } from "vite-plus/test";
 
 import { sortNamespaceExports } from "../../scripts/sort-namespace-exports.js";
 
 describe("sortNamespaceExports", () => {
-  it("State、Props を先頭に並べ替える", () => {
+  test("State、Props を先頭に並べ替える", () => {
     const source = [
       "export namespace Root {",
       "  export type Props = RootProps;",
@@ -21,7 +21,7 @@ describe("sortNamespaceExports", () => {
     expect(sortNamespaceExports(source)).toBe(expected);
   });
 
-  it("Context、SlotProps は State、Props の後に並べる", () => {
+  test("Context、SlotProps は State、Props の後に並べる", () => {
     const source = [
       "export namespace Root {",
       "  export type SlotProps = RootSlotProps;",
@@ -43,7 +43,7 @@ describe("sortNamespaceExports", () => {
     expect(sortNamespaceExports(source)).toBe(expected);
   });
 
-  it("固定名以外の型は名前順に並べ替える", () => {
+  test("固定名以外の型は名前順に並べ替える", () => {
     const source = [
       "export namespace Root {",
       "  export type State = RootState;",
@@ -67,7 +67,7 @@ describe("sortNamespaceExports", () => {
     expect(sortNamespaceExports(source)).toBe(expected);
   });
 
-  it("「I + 大文字」で始まるインターフェースは先頭の「I」を除いた名前順に並べ替える", () => {
+  test("「I + 大文字」で始まるインターフェースは先頭の「I」を除いた名前順に並べ替える", () => {
     const source = [
       "export namespace Root {",
       "  export interface IVariant {",
@@ -95,7 +95,7 @@ describe("sortNamespaceExports", () => {
     expect(sortNamespaceExports(source)).toBe(expected);
   });
 
-  it("ネストした名前空間は末尾に名前順で並べ替える", () => {
+  test("ネストした名前空間は末尾に名前順で並べ替える", () => {
     const source = [
       "export namespace Root {",
       "  export namespace Panel {",
@@ -131,7 +131,7 @@ describe("sortNamespaceExports", () => {
     expect(sortNamespaceExports(source)).toBe(expected);
   });
 
-  it("固定名で同名の型と名前空間がある場合は名前空間を型の直後に置く", () => {
+  test("固定名で同名の型と名前空間がある場合は名前空間を型の直後に置く", () => {
     const source = [
       "export namespace Root {",
       "  export namespace Props {",
@@ -159,7 +159,7 @@ describe("sortNamespaceExports", () => {
     expect(sortNamespaceExports(source)).toBe(expected);
   });
 
-  it("固定名以外の同名ペアは名前空間を末尾に置く", () => {
+  test("固定名以外の同名ペアは名前空間を末尾に置く", () => {
     const source = [
       "export namespace Root {",
       "  export namespace Panel {",
@@ -183,7 +183,7 @@ describe("sortNamespaceExports", () => {
     expect(sortNamespaceExports(source)).toBe(expected);
   });
 
-  it("コメントはメンバーと一緒に移動する", () => {
+  test("コメントはメンバーと一緒に移動する", () => {
     const source = [
       "export namespace Root {",
       "  /**",
@@ -213,7 +213,7 @@ describe("sortNamespaceExports", () => {
     expect(sortNamespaceExports(source)).toBe(expected);
   });
 
-  it("既に並べ替え済みなら変更しない", () => {
+  test("既に並べ替え済みなら変更しない", () => {
     const source = [
       "export namespace Root {",
       "  export type State = RootState;",
@@ -224,19 +224,19 @@ describe("sortNamespaceExports", () => {
     expect(sortNamespaceExports(source)).toBe(source);
   });
 
-  it("メンバーが 1 つだけなら変更しない", () => {
+  test("メンバーが 1 つだけなら変更しない", () => {
     const source = ["export namespace Root {", "  export type State = RootState;", "}", ""].join(
       "\n",
     );
     expect(sortNamespaceExports(source)).toBe(source);
   });
 
-  it("名前空間以外の型は対象外", () => {
+  test("名前空間以外の型は対象外", () => {
     const source = ["type Props = RootProps;", "type State = RootState;", ""].join("\n");
     expect(sortNamespaceExports(source)).toBe(source);
   });
 
-  it("指定した名前空間では固有の固定名を名前順より先に並べる", () => {
+  test("指定した名前空間では固有の固定名を名前順より先に並べる", () => {
     const source = [
       "export namespace Props {",
       "  export type SuruUI = RootProps.SuruUI;",
@@ -257,12 +257,17 @@ describe("sortNamespaceExports", () => {
     ].join("\n");
     expect(
       sortNamespaceExports(source, {
-        namespaceFixedOrders: [{ namespace: "Props", names: ["Render", "SuruUI"] }],
+        namespaceFixedOrders: [
+          {
+            names: ["Render", "SuruUI"],
+            namespace: "Props",
+          },
+        ],
       }),
     ).toBe(expected);
   });
 
-  it("指定に一致しない名前空間には固有の固定名を適用しない", () => {
+  test("指定に一致しない名前空間には固有の固定名を適用しない", () => {
     const source = [
       "export namespace Root {",
       "  export type SuruUI = RootSuruUI;",
@@ -283,12 +288,17 @@ describe("sortNamespaceExports", () => {
     ].join("\n");
     expect(
       sortNamespaceExports(source, {
-        namespaceFixedOrders: [{ namespace: "Props", names: ["Render", "SuruUI"] }],
+        namespaceFixedOrders: [
+          {
+            names: ["Render", "SuruUI"],
+            namespace: "Props",
+          },
+        ],
       }),
     ).toBe(expected);
   });
 
-  it("名前空間の指定に正規表現を使える", () => {
+  test("名前空間の指定に正規表現を使える", () => {
     const source = [
       "export namespace ListProps {",
       "  export type Size = ListSize;",
@@ -305,12 +315,17 @@ describe("sortNamespaceExports", () => {
     ].join("\n");
     expect(
       sortNamespaceExports(source, {
-        namespaceFixedOrders: [{ namespace: /Props$/, names: ["Render"] }],
+        namespaceFixedOrders: [
+          {
+            names: ["Render"],
+            namespace: /Props$/u,
+          },
+        ],
       }),
     ).toBe(expected);
   });
 
-  it("固有の固定名の後に全体の固定名を並べる", () => {
+  test("固有の固定名の後に全体の固定名を並べる", () => {
     const source = [
       "export namespace Props {",
       "  export type BaseUI = RootProps.BaseUI;",
@@ -329,7 +344,12 @@ describe("sortNamespaceExports", () => {
     ].join("\n");
     expect(
       sortNamespaceExports(source, {
-        namespaceFixedOrders: [{ namespace: "Props", names: ["SuruUI"] }],
+        namespaceFixedOrders: [
+          {
+            names: ["SuruUI"],
+            namespace: "Props",
+          },
+        ],
       }),
     ).toBe(expected);
   });

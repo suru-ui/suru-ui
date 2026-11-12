@@ -23,18 +23,18 @@ export type IUsePasswordFieldAddonContext = IUseContext<PasswordFieldAddonContex
 /**
  * {@link PasswordFieldAddonContext} を読み取るフックです。
  */
-export const usePasswordFieldAddonContext: IUsePasswordFieldAddonContext =
-  function useSuiPasswordFieldAddonContext(optional): any {
-    const ctx = React.use(PasswordFieldAddonContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "PasswordFieldAddonContext",
-        providerName: "PasswordFieldAddon",
-      });
-    }
+export const usePasswordFieldAddonContext: IUsePasswordFieldAddonContext = (optional): any => {
+  const ctx = React.use(PasswordFieldAddonContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "PasswordFieldAddonContext",
+      providerName: "PasswordFieldAddon",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   PasswordFieldAddonContext as AddonContext,

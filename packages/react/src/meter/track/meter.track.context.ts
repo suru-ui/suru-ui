@@ -21,11 +21,10 @@ export type IUseMeterTrackContext = IUseContext<MeterTrackContext>;
 /**
  * {@link MeterTrackContext} を読み取るフックです。
  */
-export const useMeterTrackContext: IUseMeterTrackContext = function useSuiMeterTrackContext(
-  optional,
-): any {
+export const useMeterTrackContext: IUseMeterTrackContext = (optional): any => {
   const ctx = React.use(MeterTrackContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "MeterTrackContext",
       providerName: "MeterTrack",

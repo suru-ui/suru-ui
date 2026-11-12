@@ -25,7 +25,7 @@ export namespace AutocompleteGroupLabelProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.GroupLabel>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AutocompleteGroupLabelProps より:
+      // AutocompleteGroupLabelProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace AutocompleteGroupLabelProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Autocomplete.GroupLabel>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,12 +47,8 @@ export type AutocompleteGroupLabelProps = AutocompleteGroupLabelProps.Render &
 
 export type IAutocompleteGroupLabel = IComponent<AutocompleteGroupLabelProps>;
 
-/**
- * グループに自動的に対応付けられるラベル要素です。
- */
-export const AutocompleteGroupLabel: IAutocompleteGroupLabel = function SuiAutocompleteGroupLabel(
-  props,
-) {
+/** グループに自動的に対応付けられるラベル要素です。 */
+export const AutocompleteGroupLabel: IAutocompleteGroupLabel = (props) => {
   const ctx = useAutocompleteGroupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -60,7 +56,10 @@ export const AutocompleteGroupLabel: IAutocompleteGroupLabel = function SuiAutoc
     <Autocomplete.GroupLabel
       {...otherProps}
       {...proxyRenderProps<Autocomplete.GroupLabel.State, AutocompleteGroupLabelState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -97,7 +96,6 @@ export const AutocompleteGroupLabel: IAutocompleteGroupLabel = function SuiAutoc
 };
 
 export { AutocompleteGroupLabel as GroupLabel };
-
 export namespace GroupLabel {
   export type State<TItem = any> = AutocompleteGroupLabelState<TItem>;
 

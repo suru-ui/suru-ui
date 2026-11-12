@@ -1,53 +1,49 @@
 @layer sui.component {
-@scope (.sui_file_upload) to ([data-scope]) {
+  @scope (.sui_file_upload) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex-direction: column;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  flex-direction: column;
-}
+    /* 変数 */
+    :scope {
+      --sui_file_upload-gap: ;
+      --sui_file_upload-font_family: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_file_upload-gap: ;
-  --sui_file_upload-font_family: ;
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_file_upload-gap);
+      font-family: var(--sui_file_upload-font_family);
+    }
 
-/* 可変 */
-:scope {
-  gap: var(--sui_file_upload-gap);
-  font-family: var(--sui_file_upload-font_family);
-}
+    /* 代入 */
+    :scope {
+      --sui_file_upload-font_family: var(--sui-font-sans);
 
-/* 代入 */
-:scope {
-  --sui_file_upload-font_family: var(--sui-font-sans);
+      &.sui_file_upload-size_sm {
+        --sui_file_upload-gap: --sui-gap(0.5);
+      }
 
-  &.sui_file_upload-size_sm {
-    --sui_file_upload-gap: --sui-gap(0.5);
-  }
+      &.sui_file_upload-size_md {
+        --sui_file_upload-gap: --sui-gap(1);
+      }
 
-  &.sui_file_upload-size_md {
-    --sui_file_upload-gap: --sui-gap(1);
-  }
-
-  &.sui_file_upload-size_lg {
-    --sui_file_upload-gap: --sui-gap(1.5);
-  }
-}
-
-} /* @scope */
+      &.sui_file_upload-size_lg {
+        --sui_file_upload-gap: --sui-gap(1.5);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_file_upload) to ([data-scope]) {
-
-:scope {
-  &.sui_file_upload-disabled {
-    cursor: not-allowed;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_file_upload) to ([data-scope]) {
+    :scope {
+      &.sui_file_upload-disabled {
+        cursor: not-allowed;
+      }
+    }
+  } /* @scope */
 } /* @layer */

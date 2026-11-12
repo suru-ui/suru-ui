@@ -1,14 +1,12 @@
 import { createGenerator } from "@unocss/core";
 import { presetWind3 } from "unocss";
-import { describe, test } from "vitest";
+import { test, describe } from "vite-plus/test";
 
-import { SUI_UTILITIES_LAYER, presetSuruUI } from "../src/index.js";
+import { presetSuruUI, SUI_UTILITIES_LAYER } from "../src/index.js";
 
 const preset = presetSuruUI();
 
-/**
- * 指定したユーティリティーを Suru UI のプリセットで生成し、その CSS を返します。
- */
+/** 指定したユーティリティーを Suru UI のプリセットで生成し、その CSS を返します。 */
 async function generate(utilities: string | string[]): Promise<string> {
   const uno = await createGenerator({ presets: [preset] });
   const { css } = await uno.generate(utilities, { preflights: false });
@@ -18,7 +16,7 @@ async function generate(utilities: string | string[]): Promise<string> {
 
 describe("presetSuruUI", () => {
   test("プリセット名とレイヤーを提供する", ({ expect }) => {
-    // 検証
+    // 検証：
     expect(preset.name).toBe("@suru-ui/unocss");
     expect(preset.layer).toBe(SUI_UTILITIES_LAYER);
   });
@@ -26,7 +24,7 @@ describe("presetSuruUI", () => {
 
 describe("色トークン", () => {
   test("スケールの色をユーティリティーとして生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate([
       "bg-sui-blue-60",
       "text-sui-grey-0",
@@ -34,7 +32,7 @@ describe("色トークン", () => {
       "fill-sui-green-40",
     ]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".bg-sui-blue-60{background-color:var(--sui-blue-60);}");
     expect(css).toContain(".text-sui-grey-0{color:var(--sui-grey-0);}");
     expect(css).toContain(".border-sui-red-alpha-20{border-color:var(--sui-red-alpha-20);}");
@@ -42,7 +40,7 @@ describe("色トークン", () => {
   });
 
   test("意味を持つ色をユーティリティーとして生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate([
       "bg-sui-canvas-1",
       "text-sui-canvas_text-2",
@@ -53,7 +51,7 @@ describe("色トークン", () => {
       "bg-sui-disabled-naked-canvas",
     ]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".bg-sui-canvas-1{background-color:var(--sui-canvas-1);}");
     expect(css).toContain(".text-sui-canvas_text-2{color:var(--sui-canvas_text-2);}");
     expect(css).toContain(".border-sui-border-3{border-color:var(--sui-border-3);}");
@@ -68,14 +66,14 @@ describe("色トークン", () => {
   });
 
   test("配色テンプレートの色をユーティリティーとして生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate([
       "bg-sui-green-liquid-canvas-strong",
       "text-sui-green-liquid-canvas_text-normal",
       "border-sui-grey-solid-border-subtle",
     ]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(
       ".bg-sui-green-liquid-canvas-strong{background-color:var(--sui-green-liquid-canvas-strong);}",
     );
@@ -88,10 +86,10 @@ describe("色トークン", () => {
   });
 
   test("不透明度を受け付ける", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["bg-sui-blue-60/50", "text-sui-canvas_text-1/25"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(
       ".bg-sui-blue-60\\/50{background-color:color-mix(in oklab, var(--sui-blue-60) 50%, transparent);}",
     );
@@ -101,66 +99,66 @@ describe("色トークン", () => {
   });
 
   test("存在しない色トークンと範囲外の不透明度を無視する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["bg-sui-blue-1", "bg-sui-unknown", "bg-sui-blue-60/101"]);
 
-    // 検証
+    // 検証：
     expect(css).toBe("");
   });
 });
 
 describe("余白", () => {
   test("パディングとマージンを --sui-space() で生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["p-sui-2", "mt-sui-3", "px-sui-1"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".p-sui-2{padding:--sui-space(2);}");
     expect(css).toContain(".mt-sui-3{margin-top:--sui-space(3);}");
     expect(css).toContain(".px-sui-1{padding-inline:--sui-space(1);}");
   });
 
   test("マージンの負の値を生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["-m-sui-2"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".-m-sui-2{margin:--sui-space(-2);}");
   });
 
   test("パディングの負の値を無視する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["-p-sui-2"]);
 
-    // 検証
+    // 検証：
     expect(css).toBe("");
   });
 
   test("ギャップを --sui-gap() で生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["gap-sui-4", "gap-x-sui-2", "gap-y-sui-1.5"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".gap-sui-4{gap:--sui-gap(4);}");
     expect(css).toContain(".gap-x-sui-2{column-gap:--sui-gap(2);}");
     expect(css).toContain(".gap-y-sui-1\\.5{row-gap:--sui-gap(1.5);}");
   });
 
   test("ギャップの負の値を無視する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["-gap-sui-2"]);
 
-    // 検証
+    // 検証：
     expect(css).toBe("");
   });
 });
 
 describe("大きさ", () => {
   test("数値の大きさを --sui-space() で生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["h-sui-4", "size-sui-2", "min-h-sui-6", "max-h-sui-8"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".h-sui-4{height:--sui-space(4);}");
     expect(css).toContain(".size-sui-2{width:--sui-space(2);height:--sui-space(2);}");
     expect(css).toContain(".min-h-sui-6{min-height:--sui-space(6);}");
@@ -168,10 +166,10 @@ describe("大きさ", () => {
   });
 
   test("名前付きの大きさをトークンで生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["h-sui-sm", "min-h-sui-md", "max-h-sui-lg", "size-sui-lg"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".h-sui-sm{height:var(--sui-size-sm);}");
     expect(css).toContain(".min-h-sui-md{min-height:var(--sui-size-md);}");
     expect(css).toContain(".max-h-sui-lg{max-height:var(--sui-size-lg);}");
@@ -181,7 +179,7 @@ describe("大きさ", () => {
 
 describe("コンテナー", () => {
   test("コンテナーの大きさを幅・flex-basis・論理プロパティーで生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate([
       "w-sui-3xs",
       "min-w-sui-2xs",
@@ -191,7 +189,7 @@ describe("コンテナー", () => {
       "max-inline-sui-7xl",
     ]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".w-sui-3xs{width:var(--sui-container-3xs);}");
     expect(css).toContain(".min-w-sui-2xs{min-width:var(--sui-container-2xs);}");
     expect(css).toContain(".max-w-sui-xs{max-width:var(--sui-container-xs);}");
@@ -201,7 +199,7 @@ describe("コンテナー", () => {
   });
 
   test("名前が重複する値は幅をコンテナー、高さを大きさとして生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate([
       "w-sui-sm",
       "min-w-sui-md",
@@ -212,7 +210,7 @@ describe("コンテナー", () => {
       "size-sui-lg",
     ]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".w-sui-sm{width:var(--sui-container-sm);}");
     expect(css).toContain(".min-w-sui-md{min-width:var(--sui-container-md);}");
     expect(css).toContain(".max-w-sui-lg{max-width:var(--sui-container-lg);}");
@@ -223,7 +221,7 @@ describe("コンテナー", () => {
   });
 
   test("段階の数値を --sui-space() で生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate([
       "w-sui-8",
       "min-w-sui-10",
@@ -233,7 +231,7 @@ describe("コンテナー", () => {
       "max-inline-sui-6",
     ]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".w-sui-8{width:--sui-space(8);}");
     expect(css).toContain(".min-w-sui-10{min-width:--sui-space(10);}");
     expect(css).toContain(".max-w-sui-12{max-width:--sui-space(12);}");
@@ -243,7 +241,7 @@ describe("コンテナー", () => {
   });
 
   test("適用できない値や存在しない名前を無視する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate([
       "h-sui-3xs",
       "max-h-sui-7xl",
@@ -252,17 +250,17 @@ describe("コンテナー", () => {
       "min-inline-sui-unknown",
     ]);
 
-    // 検証
+    // 検証：
     expect(css).toBe("");
   });
 });
 
 describe("位置", () => {
   test("位置を --sui-space() で生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["top-sui-2", "inset-x-sui-1", "-inset-sui-3"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".top-sui-2{top:--sui-space(2);}");
     expect(css).toContain(".inset-x-sui-1{inset-inline:--sui-space(1);}");
     expect(css).toContain(".-inset-sui-3{inset:--sui-space(-3);}");
@@ -271,10 +269,10 @@ describe("位置", () => {
 
 describe("枠線と角丸", () => {
   test("枠線の幅を --sui-border_width() と border-style で生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["border-sui-2", "border-t-sui-1", "outline-sui-3"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".border-sui-2{border-width:--sui-border_width(2);border-style:solid;}");
     expect(css).toContain(
       ".border-t-sui-1{border-top-width:--sui-border_width(1);border-style:solid;}",
@@ -283,10 +281,10 @@ describe("枠線と角丸", () => {
   });
 
   test("枠線の幅の段階を省略すると既定値を使う", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["border-sui", "border-t-sui"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".border-sui{border-width:--sui-border_width(1);border-style:solid;}");
     expect(css).toContain(
       ".border-t-sui{border-top-width:--sui-border_width(1);border-style:solid;}",
@@ -294,10 +292,10 @@ describe("枠線と角丸", () => {
   });
 
   test("角丸を --sui-corner_radius() と corner-shape で生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["rounded-sui-2", "rounded-t-sui-1"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(
       ".rounded-sui-2{border-radius:--sui-corner_radius(2);corner-shape:superellipse(var(--sui-superellipse));}",
     );
@@ -307,10 +305,10 @@ describe("枠線と角丸", () => {
   });
 
   test("角丸の段階を省略すると既定値を使う", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["rounded-sui", "rounded-t-sui"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(
       ".rounded-sui{border-radius:--sui-corner_radius(1);corner-shape:superellipse(var(--sui-superellipse));}",
     );
@@ -320,10 +318,10 @@ describe("枠線と角丸", () => {
   });
 
   test("色トークンと幅のユーティリティーを区別する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["border-sui-blue-60", "border-sui-2"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".border-sui-blue-60{border-color:var(--sui-blue-60);}");
     expect(css).toContain(".border-sui-2{border-width:--sui-border_width(2);border-style:solid;}");
   });
@@ -331,7 +329,7 @@ describe("枠線と角丸", () => {
 
 describe("ドロップシャドウ", () => {
   test("中立と色ごとのドロップシャドウを filter で生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate([
       "drop-shadow-sui-xs",
       "drop-shadow-sui-sm",
@@ -339,7 +337,7 @@ describe("ドロップシャドウ", () => {
       "drop-shadow-sui-red-2xl",
     ]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".drop-shadow-sui-xs{filter:drop-shadow(var(--sui-drop_shadow-xs));}");
     expect(css).toContain(".drop-shadow-sui-sm{filter:drop-shadow(var(--sui-drop_shadow-sm));}");
     expect(css).toContain(
@@ -351,29 +349,29 @@ describe("ドロップシャドウ", () => {
   });
 
   test("存在しないドロップシャドウを無視する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate([
       "drop-shadow-sui-grey-xs",
       "drop-shadow-sui-blue-1",
       "drop-shadow-sui-unknown",
     ]);
 
-    // 検証
+    // 検証：
     expect(css).toBe("");
   });
 
   test("名前空間を外して生成する", async ({ expect }) => {
-    // 準備
+    // 準備：
     const uno = await createGenerator({
       presets: [presetSuruUI({ namespace: false })],
     });
 
-    // 実行
+    // 実行：
     const { css } = await uno.generate(["drop-shadow-sm", "drop-shadow-blue-lg"], {
       preflights: false,
     });
 
-    // 検証
+    // 検証：
     expect(css).toContain(".drop-shadow-sm{filter:drop-shadow(var(--sui-drop_shadow-sm));}");
     expect(css).toContain(
       ".drop-shadow-blue-lg{filter:drop-shadow(var(--sui-blue-drop_shadow-lg));}",
@@ -383,73 +381,73 @@ describe("ドロップシャドウ", () => {
 
 describe("フォント", () => {
   test("フォントファミリーをトークンで生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["font-sui-sans", "font-sui-mono"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(".font-sui-sans{font-family:var(--sui-font-sans);}");
     expect(css).toContain(".font-sui-mono{font-family:var(--sui-font-mono);}");
   });
 
   test("存在しないフォントファミリーを無視する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["font-sui-serif"]);
 
-    // 検証
+    // 検証：
     expect(css).toBe("");
   });
 
   test("文字スタイルをトークンで生成する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["text-sui-oln-md-m"]);
 
-    // 検証
+    // 検証：
     expect(css).toContain(
       ".text-sui-oln-md-m{font-size:var(--sui-text-oln-md-m-font_size);font-weight:var(--sui-text-oln-md-m-font_weight);letter-spacing:var(--sui-text-oln-md-m-letter_spacing);line-height:var(--sui-text-oln-md-m-line_height);}",
     );
   });
 
   test("存在しない文字スタイルを無視する", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["text-sui-dns-md-m", "text-sui-oln-5xl-n"]);
 
-    // 検証
+    // 検証：
     expect(css).toBe("");
   });
 });
 
 describe("CSS カスケードレイヤー", () => {
   test("sui.utilities レイヤーに出力する", async ({ expect }) => {
-    // 準備
+    // 準備：
     const uno = await createGenerator({
-      outputToCssLayers: true,
       presets: [preset],
+      outputToCssLayers: true,
     });
 
-    // 実行
+    // 実行：
     const { css } = await uno.generate(["p-sui-2"], { preflights: false });
 
-    // 検証
+    // 検証：
     expect(css).toContain(`@layer ${SUI_UTILITIES_LAYER}`);
   });
 });
 
 describe("名前空間", () => {
   test("既定では名前空間を外したユーティリティーを生成しない", async ({ expect }) => {
-    // 実行
+    // 実行：
     const css = await generate(["p-2", "bg-blue-60", "rounded-2", "font-sans"]);
 
-    // 検証
+    // 検証：
     expect(css).toBe("");
   });
 
   test("名前空間を外して生成する", async ({ expect }) => {
-    // 準備
+    // 準備：
     const uno = await createGenerator({
       presets: [presetSuruUI({ namespace: false })],
     });
 
-    // 実行
+    // 実行：
     const { css } = await uno.generate(
       [
         "p-2",
@@ -472,7 +470,7 @@ describe("名前空間", () => {
       { preflights: false },
     );
 
-    // 検証
+    // 検証：
     expect(css).toContain(".p-2{padding:--sui-space(2);}");
     expect(css).toContain(".bg-blue-60{background-color:var(--sui-blue-60);}");
     expect(css).toContain(".text-canvas_text-1{color:var(--sui-canvas_text-1);}");
@@ -500,15 +498,15 @@ describe("名前空間", () => {
   });
 
   test("別のプリセットの後に置くとルールを上書きする", async ({ expect }) => {
-    // 準備
+    // 準備：
     const uno = await createGenerator({
       presets: [presetWind3(), presetSuruUI({ namespace: false })],
     });
 
-    // 実行
+    // 実行：
     const { css } = await uno.generate(["p-2", "w-8", "gap-4"], { preflights: false });
 
-    // 検証
+    // 検証：
     expect(css).toContain(".p-2{padding:--sui-space(2);}");
     expect(css).toContain(".w-8{width:--sui-space(8);}");
     expect(css).toContain(".gap-4{gap:--sui-gap(4);}");

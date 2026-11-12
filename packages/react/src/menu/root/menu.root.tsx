@@ -43,14 +43,10 @@ namespace MenuRootLabeledItemObject {
   export type BaseUI = Omit<MenuItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 項目のラベルです。
-     */
+    /** 項目のラベルです。 */
     readonly label: MenuItemProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type?: "item" | undefined;
   };
 }
@@ -62,14 +58,10 @@ namespace MenuRootLinkItemObject {
   export type BaseUI = Omit<MenuLinkItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 項目のラベルです。
-     */
+    /** 項目のラベルです。 */
     readonly label: MenuLinkItemProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type: "link";
   };
 }
@@ -80,14 +72,10 @@ namespace MenuRootCheckboxItemObject {
   export type BaseUI = Omit<MenuCheckboxItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 項目のラベルです。
-     */
+    /** 項目のラベルです。 */
     readonly label: MenuCheckboxItemProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type: "checkbox";
   };
 }
@@ -99,14 +87,10 @@ namespace MenuRootRadioItemObject {
   export type BaseUI = Omit<MenuRadioItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 項目のラベルです。
-     */
+    /** 項目のラベルです。 */
     readonly label: MenuRadioItemProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type?: "radio" | undefined;
   };
 }
@@ -119,14 +103,10 @@ namespace MenuRootRadioItemObjectGroup {
   export type BaseUI = Omit<MenuRadioGroupProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * ラジオ項目です。
-     */
+    /** ラジオ項目です。 */
     readonly items: readonly MenuRootRadioItemObject[];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type: "radio-group";
   };
 }
@@ -139,19 +119,13 @@ namespace MenuRootSubmenuItemObject {
   export type BaseUI = Omit<MenuSubmenuRootProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 子項目です。
-     */
+    /** 子項目です。 */
     readonly items: readonly MenuRootItemObject[];
 
-    /**
-     * 項目のラベルです。
-     */
+    /** 項目のラベルです。 */
     readonly label: MenuSubmenuTriggerProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type: "submenu";
   };
 }
@@ -170,19 +144,13 @@ namespace MenuRootItemObjectGroup {
   export type BaseUI = Omit<MenuGroupProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 子項目です。
-     */
+    /** 子項目です。 */
     readonly items: readonly MenuRootGroupedItemObject[];
 
-    /**
-     * グループのラベルです。
-     */
+    /** グループのラベルです。 */
     readonly label?: MenuGroupLabelProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type?: "group" | undefined;
   };
 }
@@ -287,7 +255,7 @@ export namespace MenuRootProps {
     Pick<
       Menu.Root.Props<TPayload>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuRootProps より:
+      // MenuRootProps より :
       | "defaultOpen"
       | "loopFocus"
       | "highlightItemOnHover"
@@ -338,7 +306,7 @@ export interface IMenuRoot extends IComponent<MenuRootProps> {
  * 開閉状態を管理し、各パーツをグループ化します。
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const MenuRoot: IMenuRoot = function SuiMenuRoot(props: MenuRootProps) {
+export const MenuRoot: IMenuRoot = (props: MenuRootProps) => {
   const {
     size = "md",
     items = [],
@@ -348,7 +316,14 @@ export const MenuRoot: IMenuRoot = function SuiMenuRoot(props: MenuRootProps) {
     ...otherProps
   } = props;
   const ctx = React.useMemo<MenuContext>(
-    () => ({ size, depth: 1, items, radius, variant, outlined }),
+    () => ({
+      size,
+      depth: 1,
+      items,
+      radius,
+      variant,
+      outlined,
+    }),
     [size, items, radius, variant, outlined],
   );
 
@@ -360,7 +335,6 @@ export const MenuRoot: IMenuRoot = function SuiMenuRoot(props: MenuRootProps) {
 };
 
 export { MenuRoot as Root };
-
 export namespace Root {
   export type State<TItem = any> = MenuRootState<TItem>;
 

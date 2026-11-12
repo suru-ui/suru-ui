@@ -18,7 +18,7 @@ export namespace ButtonCircularProgressFillRotationProps {
 
   export type HTML = Omit<
     BaseUIComponentProps<"animateTransform", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -39,37 +39,35 @@ export type IButtonCircularProgressFillRotation =
  *
  * 不定モードの場合のみ有効になります。
  */
-export const ButtonCircularProgressFillRotation: IButtonCircularProgressFillRotation =
-  function SuiButtonCircularProgressFillRotation(props) {
-    const ctx = useButtonCircularProgressContext();
-    const {
-      dur = "0.75s",
-      type = "rotate",
-      values = "0;360",
-      repeatCount = "indefinite",
-      attributeName = "transform",
-      ...otherAnimateTransformProps
-    } = props;
+export const ButtonCircularProgressFillRotation: IButtonCircularProgressFillRotation = (props) => {
+  const ctx = useButtonCircularProgressContext();
+  const {
+    dur = "0.75s",
+    type = "rotate",
+    values = "0;360",
+    repeatCount = "indefinite",
+    attributeName = "transform",
+    ...otherAnimateTransformProps
+  } = props;
 
-    return useRender({
-      props: [
-        otherAnimateTransformProps,
-        {
-          dur,
-          type,
-          values,
-          className: "sui_button_circular_progress_fill_rotation",
-          repeatCount,
-          attributeName,
-        },
-      ],
-      enabled: ctx.indeterminate,
-      defaultTagName: "animateTransform",
-    });
-  };
+  return useRender({
+    props: [
+      otherAnimateTransformProps,
+      {
+        dur,
+        type,
+        values,
+        className: "sui_button_circular_progress_fill_rotation",
+        repeatCount,
+        attributeName,
+      },
+    ],
+    enabled: ctx.indeterminate,
+    defaultTagName: "animateTransform",
+  });
+};
 
 export { ButtonCircularProgressFillRotation as CircularProgressFillRotation };
-
 export namespace CircularProgressFillRotation {
   export type State = ButtonCircularProgressFillRotationState;
 

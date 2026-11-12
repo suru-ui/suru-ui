@@ -12,8 +12,7 @@ import {
   StatusIndicator,
 } from "./status.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type StatusColor = StatusRootColor;
 
@@ -40,14 +39,10 @@ namespace StatusProps {
   export type Root = Omit<StatusRootProps, keyof Status>;
 
   export type Status = {
-    /**
-     * ステータスに表示するラベルです。
-     */
+    /** ステータスに表示するラベルです。 */
     children?: React.ReactNode | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: StatusSlotProps | undefined;
   };
 }
@@ -64,13 +59,13 @@ export interface IUseStatusAPI {
    * {@link StatusAPI} を作成します。
    *
    * @param props {@link Status} の props です。
+   *
    * @returns ステータスの API です
    */
   (props: StatusProps): StatusAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Status} を構成する各パーツの props を作成するための API です。
@@ -84,11 +79,14 @@ export class StatusAPI {
 
   /**
    * @param props {@link Status} の props です。
+   *
    * @internal
    */
   public constructor(props: StatusProps) {
     const { children, slotProps = {}, ...rootProps } = props;
-    this.statusProps = { children };
+    this.statusProps = {
+      children,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -102,9 +100,7 @@ export class StatusAPI {
     return props;
   }
 
-  /**
-   * ラベルとして表示する内容を取得します。
-   */
+  /** ラベルとして表示する内容を取得します。 */
   public getLabel(): React.ReactNode {
     return this.statusProps.children;
   }
@@ -120,19 +116,14 @@ export class StatusAPI {
 /**
  * {@link StatusAPI} を作成するフックです。
  */
-export const useStatusAPI: IUseStatusAPI = function useSuiStatusAPI(props) {
-  return new StatusAPI(props);
-};
+export const useStatusAPI: IUseStatusAPI = (props) => new StatusAPI(props);
 
 export { StatusAPI as API, useStatusAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
-/**
- * 状態を示すドットとラベルを並べて表示するコンポーネントです。
- */
-export const Status: IStatus = function SuiStatus(props) {
+/** 状態を示すドットとラベルを並べて表示するコンポーネントです。 */
+export const Status: IStatus = (props) => {
   const api = useStatusAPI(props);
 
   return (

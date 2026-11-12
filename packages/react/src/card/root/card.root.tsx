@@ -74,20 +74,22 @@ export type CardRootProps = CardRootProps.Render &
 
 export type ICardRoot = IComponent<CardRootProps>;
 
-/**
- * カードの各パーツをまとめるルートコンポーネントです。
- */
-export const CardRoot: ICardRoot = function SuiCardRoot(props) {
+/** カードの各パーツをまとめるルートコンポーネントです。 */
+export const CardRoot: ICardRoot = (props) => {
   const {
     size = "md",
     radius = size,
     outlined = true,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
   const ctx = React.useMemo<CardContext>(
-    () => ({ size, radius, outlined }),
+    () => ({
+      size,
+      radius,
+      outlined,
+    }),
     [size, radius, outlined],
   );
   const element = useRender({
@@ -111,7 +113,6 @@ export const CardRoot: ICardRoot = function SuiCardRoot(props) {
 };
 
 export { CardRoot as Root };
-
 export namespace Root {
   export type State = CardRootState;
 

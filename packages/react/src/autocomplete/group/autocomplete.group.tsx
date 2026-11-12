@@ -20,9 +20,7 @@ export namespace AutocompleteGroupProps {
   export type Render<TItem = any> = RenderProps<AutocompleteGroupState<TItem>>;
 
   export type SuruUI<TItem = any> = {
-    /**
-     * グループに含まれる項目です。
-     */
+    /** グループに含まれる項目です。 */
     items?: readonly TItem[] | undefined;
   };
 
@@ -30,7 +28,7 @@ export namespace AutocompleteGroupProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.Group>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AutocompleteGroupProps より:
+      // AutocompleteGroupProps より :
       "items"
     >,
     keyof Render | keyof SuruUI
@@ -59,7 +57,7 @@ export type IAutocompleteGroup = IComponent<AutocompleteGroupProps>;
  *
  * {@link Root} の `items` にグループの配列を渡したときに使います。
  */
-export const AutocompleteGroup: IAutocompleteGroup = function SuiAutocompleteGroup(props) {
+export const AutocompleteGroup: IAutocompleteGroup = (props) => {
   const ctx = useAutocompleteListContext();
   const { items, style, render, className, ...otherProps } = props;
 
@@ -67,7 +65,11 @@ export const AutocompleteGroup: IAutocompleteGroup = function SuiAutocompleteGro
     <Autocomplete.Group
       {...otherProps}
       {...proxyRenderProps<Autocomplete.Group.State, AutocompleteGroupState>(
-        (state) => ({ ...ctx, items, ...state }),
+        (state) => ({
+          ...ctx,
+          items,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -105,7 +107,6 @@ export const AutocompleteGroup: IAutocompleteGroup = function SuiAutocompleteGro
 };
 
 export { AutocompleteGroup as Group };
-
 export namespace Group {
   export type State<TItem = any> = AutocompleteGroupState<TItem>;
 

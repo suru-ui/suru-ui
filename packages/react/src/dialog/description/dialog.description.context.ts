@@ -24,18 +24,18 @@ export type IUseDialogDescriptionContext = IUseContext<DialogDescriptionContext>
 /**
  * {@link DialogDescriptionContext} を読み取るフックです。
  */
-export const useDialogDescriptionContext: IUseDialogDescriptionContext =
-  function useSuiDialogDescriptionContext(optional): any {
-    const ctx = React.use(DialogDescriptionContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "DialogDescriptionContext",
-        providerName: "DialogDescription",
-      });
-    }
+export const useDialogDescriptionContext: IUseDialogDescriptionContext = (optional): any => {
+  const ctx = React.use(DialogDescriptionContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "DialogDescriptionContext",
+      providerName: "DialogDescription",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   DialogDescriptionContext as DescriptionContext,

@@ -1,9 +1,9 @@
 import { COLORS, COLOR_TEMPLATES } from "@suru-ui/theme";
 
 import {
-  type TextStyleProperty,
   type DropShadowSize,
   type DropShadowColor,
+  type TextStyleProperty,
   TEXT_SIZES,
   COLOR_STEPS,
   PROMINENCES,
@@ -17,35 +17,26 @@ import {
   TEXT_FAMILY_WEIGHTS,
 } from "./constants.js";
 
-/**
- * 色トークンかどうかを判定するための集合です。要素は `sui-` を含まない名前です。
- */
+/** 色トークンかどうかを判定するための集合です。要素は `sui-` を含まない名前です。 */
 export const COLOR_TOKENS: ReadonlySet<string> = createColorTokens();
 
-/**
- * 文字スタイルかどうかを判定するための集合です。要素は `text-sui-` を含まない名前です。
- */
+/** 文字スタイルかどうかを判定するための集合です。要素は `text-sui-` を含まない名前です。 */
 export const TEXT_STYLES: ReadonlySet<string> = createTextStyles();
 
-/**
- * コンテナーの大きさかどうかを判定するための集合です。要素は `container-` を含まない名前です。
- */
+/** コンテナーの大きさかどうかを判定するための集合です。要素は `container-` を含まない名前です。 */
 export const CONTAINER_TOKENS: ReadonlySet<string> = new Set(CONTAINER_SIZES);
 
-/**
- * ドロップシャドウの大きさの集合です。
- */
+/** ドロップシャドウの大きさの集合です。 */
 export const DROP_SHADOW_SIZE_SET: ReadonlySet<string> = new Set(DROP_SHADOW_SIZES);
 
-/**
- * ドロップシャドウの色の集合です。
- */
+/** ドロップシャドウの色の集合です。 */
 export const DROP_SHADOW_COLOR_SET: ReadonlySet<string> = new Set(DROP_SHADOW_COLORS);
 
 /**
  * 色トークンの名前から、その値を参照する CSS カスタムプロパティーの式を返します。
  *
  * @param token 色トークンの名前です。`sui-` を含みません。
+ *
  * @returns `var()` による参照式です。
  */
 export function colorTokenVar(token: string): string {
@@ -75,6 +66,7 @@ export function isTextStyle(style: string): boolean {
  *
  * @param style 文字スタイルの名前です。`text-sui-` を含みません。
  * @param property 参照するプロパティーです。
+ *
  * @returns `var()` による参照式です。
  */
 export function textStyleVar(style: string, property: TextStyleProperty): string {
@@ -113,6 +105,7 @@ export function isDropShadowColor(color: any): color is DropShadowColor {
  *
  * @param color ドロップシャドウの色です。中立の影の場合は `undefined` です。
  * @param size ドロップシャドウの大きさです。
+ *
  * @returns `var()` による参照式です。
  */
 export function dropShadowVar(color: string | undefined, size: string): string {

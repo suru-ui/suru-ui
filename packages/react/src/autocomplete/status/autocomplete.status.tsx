@@ -25,7 +25,7 @@ export namespace AutocompleteStatusProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.Status>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AutocompleteStatusProps より:
+      // AutocompleteStatusProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace AutocompleteStatusProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Autocomplete.Status>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -52,7 +52,7 @@ export type IAutocompleteStatus = IComponent<AutocompleteStatusProps>;
  *
  * この要素は常に DOM にマウントされたままにしてください。内容を変更するときは、要素を出し入れするのではなく children を差し替えます。
  */
-export const AutocompleteStatus: IAutocompleteStatus = function SuiAutocompleteStatus(props) {
+export const AutocompleteStatus: IAutocompleteStatus = (props) => {
   const ctx = useAutocompletePopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -60,7 +60,10 @@ export const AutocompleteStatus: IAutocompleteStatus = function SuiAutocompleteS
     <Autocomplete.Status
       {...otherProps}
       {...proxyRenderProps<Autocomplete.Status.State, AutocompleteStatusState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -97,7 +100,6 @@ export const AutocompleteStatus: IAutocompleteStatus = function SuiAutocompleteS
 };
 
 export { AutocompleteStatus as Status };
-
 export namespace Status {
   export type State<TItem = any> = AutocompleteStatusState<TItem>;
 

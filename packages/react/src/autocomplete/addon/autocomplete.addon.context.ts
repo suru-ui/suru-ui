@@ -6,7 +6,7 @@ import {
 // AutocompleteAddon は Context を変更・拡張しないため、親の AutocompleteInputGroupContext をそのまま使う。
 export {
   InputGroupContext as AddonContext,
-  useInputGroupContext as useAddonContext,
   InputGroupContext as AutocompleteAddonContext,
+  useInputGroupContext as useAddonContext,
   useInputGroupContext as useAutocompleteAddonContext,
 };

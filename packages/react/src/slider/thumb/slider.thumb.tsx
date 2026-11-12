@@ -23,7 +23,7 @@ export namespace SliderThumbProps {
     Pick<
       React.ComponentProps<typeof Slider.Thumb>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SliderThumbProps より:
+      // SliderThumbProps より :
       | "disabled"
       | "aria-valuetext"
       | "getAriaLabel"
@@ -59,7 +59,7 @@ export type ISliderThumb = IComponent<SliderThumbProps>;
  *
  * 矢印キーで操作でき、フォーカス時はフォーカスリングが表示されます。
  */
-export const SliderThumb: ISliderThumb = function SuiSliderThumb(props) {
+export const SliderThumb: ISliderThumb = (props) => {
   const ctx = useSliderTrackContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -67,7 +67,10 @@ export const SliderThumb: ISliderThumb = function SuiSliderThumb(props) {
     <Slider.Thumb
       {...otherProps}
       {...proxyRenderProps<Slider.Thumb.State, SliderThumbState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (

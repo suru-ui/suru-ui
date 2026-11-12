@@ -25,16 +25,13 @@ export namespace MenuBackdropProps {
     Pick<
       React.ComponentProps<typeof Menu.Backdrop>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuBackdropProps より:
+      // MenuBackdropProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Menu.Backdrop>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Menu.Backdrop>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -47,10 +44,8 @@ export type MenuBackdropProps = MenuBackdropProps.Render &
 
 export type IMenuBackdrop = IComponent<MenuBackdropProps>;
 
-/**
- * メニューの背後に表示されるオーバーレイ要素です。
- */
-export const MenuBackdrop: IMenuBackdrop = function SuiMenuBackdrop(props) {
+/** メニューの背後に表示されるオーバーレイ要素です。 */
+export const MenuBackdrop: IMenuBackdrop = (props) => {
   const ctx = useMenuContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +53,10 @@ export const MenuBackdrop: IMenuBackdrop = function SuiMenuBackdrop(props) {
     <Menu.Backdrop
       {...otherProps}
       {...proxyRenderProps<Menu.Backdrop.State, MenuBackdropState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -90,7 +88,6 @@ export const MenuBackdrop: IMenuBackdrop = function SuiMenuBackdrop(props) {
 };
 
 export { MenuBackdrop as Backdrop };
-
 export namespace Backdrop {
   export type State<TItem = any> = MenuBackdropState<TItem>;
 

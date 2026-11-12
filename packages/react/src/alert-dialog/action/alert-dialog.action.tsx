@@ -37,7 +37,7 @@ export type IAlertDialogAction = IComponent<AlertDialogActionProps>;
  *
  * 積み上げ式では右上へ重ねて配置します。
  */
-export const AlertDialogAction: IAlertDialogAction = function SuiAlertDialogAction(props) {
+export const AlertDialogAction: IAlertDialogAction = (props) => {
   const ctx = useAlertDialogPopupContext();
   const { style, render, absolute = ctx.variant === "stacked", className, ...otherProps } = props;
 
@@ -45,7 +45,10 @@ export const AlertDialogAction: IAlertDialogAction = function SuiAlertDialogActi
     <Card.Action
       {...otherProps}
       {...proxyRenderProps<Card.Action.State, AlertDialogActionState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -81,7 +84,6 @@ export const AlertDialogAction: IAlertDialogAction = function SuiAlertDialogActi
 };
 
 export { AlertDialogAction as Action };
-
 export namespace Action {
   export type State = AlertDialogActionState;
 

@@ -1,87 +1,82 @@
 @layer sui.component {
-@scope (.sui_accordion_indicator) to ([data-scope]) {
+  @scope (.sui_accordion_indicator) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-}
+    /* 変数 */
+    :scope {
+      --sui_accordion_indicator-size: ;
+      --sui_accordion_indicator-color: ;
+      --sui_accordion_indicator-rotate-closed: ;
+      --sui_accordion_indicator-rotate-open: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_accordion_indicator-size: ;
-  --sui_accordion_indicator-color: ;
-  --sui_accordion_indicator-rotate-closed: ;
-  --sui_accordion_indicator-rotate-open: ;
-}
+    /* 可変 */
+    :scope {
+      width: var(--sui_accordion_indicator-size);
+      height: var(--sui_accordion_indicator-size);
+      color: var(--sui_accordion_indicator-color);
+      rotate: var(--_sui_accordion_indicator-rotate, var(--sui_accordion_indicator-rotate-closed));
 
-/* 可変 */
-:scope {
-  width: var(--sui_accordion_indicator-size);
-  height: var(--sui_accordion_indicator-size);
-  color: var(--sui_accordion_indicator-color);
-  rotate: var(--_sui_accordion_indicator-rotate, var(--sui_accordion_indicator-rotate-closed));
+      svg:not(.sui-ignore) {
+        width: var(--sui_accordion_indicator-size);
+        height: var(--sui_accordion_indicator-size);
+        color: var(--sui_accordion_indicator-color);
+      }
+    }
 
-  svg:not(.sui-ignore) {
-    width: var(--sui_accordion_indicator-size);
-    height: var(--sui_accordion_indicator-size);
-    color: var(--sui_accordion_indicator-color);
-  }
-}
+    /* 代入 */
+    :scope {
+      --sui_accordion_indicator-size: var(--sui_accordion_trigger__svg-size);
+      --sui_accordion_indicator-color: var(--sui_accordion_trigger__svg-color);
+      --sui_accordion_indicator-rotate-closed: 0deg;
+      --sui_accordion_indicator-rotate-open: 180deg;
+    }
 
-/* 代入 */
-:scope {
-  --sui_accordion_indicator-size: var(--sui_accordion_trigger__svg-size);
-  --sui_accordion_indicator-color: var(--sui_accordion_trigger__svg-color);
-  --sui_accordion_indicator-rotate-closed: 0deg;
-  --sui_accordion_indicator-rotate-open: 180deg;
-}
-
-/* 変異 */
-:scope {
-  &.sui_accordion_indicator-open {
-    --_sui_accordion_indicator-rotate: var(--sui_accordion_indicator-rotate-open);
-  }
-}
-
-} /* @scope */
+    /* 変異 */
+    :scope {
+      &.sui_accordion_indicator-open {
+        --_sui_accordion_indicator-rotate: var(--sui_accordion_indicator-rotate-open);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_accordion_indicator) to ([data-scope]) {
-
-:scope {
-  &.sui_accordion_indicator-disabled {
-    cursor: default;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_accordion_indicator) to ([data-scope]) {
+    :scope {
+      &.sui_accordion_indicator-disabled {
+        cursor: default;
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 /* スタイル付きトリガーの内側に限定するため、トリガー起点の別ブロックにします。 */
 @layer sui.important {
-@scope (.sui_accordion_trigger) to ([data-scope]) {
+  @scope (.sui_accordion_trigger) to ([data-scope]) {
+    :scope {
+      &.sui_accordion_trigger-disabled:not(.sui_accordion_trigger-unstyled)
+        .sui_accordion_indicator {
+        color: --sui-icon_color(
+          var(--sui-disabled-naked-canvas_text),
+          var(--sui-disabled-naked-canvas)
+        );
 
-:scope {
-  &.sui_accordion_trigger-disabled:not(.sui_accordion_trigger-unstyled) .sui_accordion_indicator {
-    color: --sui-icon_color(
-             var(--sui-disabled-naked-canvas_text),
-             var(--sui-disabled-naked-canvas)
-           );
-
-    svg:not(.sui-ignore) {
-      color: --sui-icon_color(
-               var(--sui-disabled-naked-canvas_text),
-               var(--sui-disabled-naked-canvas)
-             );
+        svg:not(.sui-ignore) {
+          color: --sui-icon_color(
+            var(--sui-disabled-naked-canvas_text),
+            var(--sui-disabled-naked-canvas)
+          );
+        }
+      }
     }
-  }
-}
-
-} /* @scope */
+  } /* @scope */
 } /* @layer */

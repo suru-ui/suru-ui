@@ -23,18 +23,20 @@ export type IUseNumberFieldScrubAreaCursorContext = IUseContext<NumberFieldScrub
 /**
  * {@link NumberFieldScrubAreaCursorContext} を読み取るフックです。
  */
-export const useNumberFieldScrubAreaCursorContext: IUseNumberFieldScrubAreaCursorContext =
-  function useSuiNumberFieldScrubAreaCursorContext(optional): any {
-    const ctx = React.use(NumberFieldScrubAreaCursorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "NumberFieldScrubAreaCursorContext",
-        providerName: "NumberFieldScrubAreaCursor",
-      });
-    }
+export const useNumberFieldScrubAreaCursorContext: IUseNumberFieldScrubAreaCursorContext = (
+  optional,
+): any => {
+  const ctx = React.use(NumberFieldScrubAreaCursorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "NumberFieldScrubAreaCursorContext",
+      providerName: "NumberFieldScrubAreaCursor",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   NumberFieldScrubAreaCursorContext as ScrubAreaCursorContext,

@@ -23,16 +23,13 @@ export namespace DrawerContentProps {
     Pick<
       React.ComponentProps<typeof Drawer.Content>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DrawerContentProps より:
+      // DrawerContentProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Drawer.Content>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Drawer.Content>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,10 +42,8 @@ export type DrawerContentProps = DrawerContentProps.Render &
 
 export type IDrawerContent = IComponent<DrawerContentProps>;
 
-/**
- * ドロワー内のテキスト選択とスワイプ操作を分けるコンテンツコンポーネントです。
- */
-export const DrawerContent: IDrawerContent = function SuiDrawerContent(props) {
+/** ドロワー内のテキスト選択とスワイプ操作を分けるコンテンツコンポーネントです。 */
+export const DrawerContent: IDrawerContent = (props) => {
   const ctx = useDrawerPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +51,10 @@ export const DrawerContent: IDrawerContent = function SuiDrawerContent(props) {
     <Drawer.Content
       {...otherProps}
       {...proxyRenderProps<Drawer.Content.State, DrawerContentState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -90,7 +88,6 @@ export const DrawerContent: IDrawerContent = function SuiDrawerContent(props) {
 };
 
 export { DrawerContent as Content };
-
 export namespace Content {
   export type State = DrawerContentState;
 

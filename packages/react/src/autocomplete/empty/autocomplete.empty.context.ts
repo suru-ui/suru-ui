@@ -25,17 +25,17 @@ export type IUseAutocompleteEmptyContext = IUseContext<AutocompleteEmptyContext>
 /**
  * {@link AutocompleteEmptyContext} を読み取るフックです。
  */
-export const useAutocompleteEmptyContext: IUseAutocompleteEmptyContext =
-  function useSuiAutocompleteEmptyContext(optional): any {
-    const ctx = React.use(AutocompleteEmptyContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompleteEmptyContext",
-        providerName: "AutocompleteEmpty",
-      });
-    }
+export const useAutocompleteEmptyContext: IUseAutocompleteEmptyContext = (optional): any => {
+  const ctx = React.use(AutocompleteEmptyContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompleteEmptyContext",
+      providerName: "AutocompleteEmpty",
+    });
+  }
+
+  return ctx;
+};
 
 export { AutocompleteEmptyContext as EmptyContext, useAutocompleteEmptyContext as useEmptyContext };

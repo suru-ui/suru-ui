@@ -23,7 +23,7 @@ export namespace CollapsibleContentProps {
     Pick<
       React.ComponentProps<typeof Collapsible.Panel>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // CollapsiblePanelProps より:
+      // CollapsiblePanelProps より :
       "hiddenUntilFound" | "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -45,10 +45,8 @@ export type CollapsibleContentProps = CollapsibleContentProps.Render &
 
 export type ICollapsibleContent = IComponent<CollapsibleContentProps>;
 
-/**
- * コラプシブルのコンテンツコンポーネントです。
- */
-export const CollapsibleContent: ICollapsibleContent = function SuiCollapsibleContent(props) {
+/** コラプシブルのコンテンツコンポーネントです。 */
+export const CollapsibleContent: ICollapsibleContent = (props) => {
   const ctx = useCollapsibleContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const CollapsibleContent: ICollapsibleContent = function SuiCollapsibleCo
     <Collapsible.Panel
       {...otherProps}
       {...proxyRenderProps<Collapsible.Panel.State, CollapsibleContentState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -86,7 +87,6 @@ export const CollapsibleContent: ICollapsibleContent = function SuiCollapsibleCo
 };
 
 export { CollapsibleContent as Content };
-
 export namespace Content {
   export type State = CollapsibleContentState;
 

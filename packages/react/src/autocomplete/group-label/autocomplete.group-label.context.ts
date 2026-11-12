@@ -25,18 +25,20 @@ export type IUseAutocompleteGroupLabelContext = IUseContext<AutocompleteGroupLab
 /**
  * {@link AutocompleteGroupLabelContext} を読み取るフックです。
  */
-export const useAutocompleteGroupLabelContext: IUseAutocompleteGroupLabelContext =
-  function useSuiAutocompleteGroupLabelContext(optional): any {
-    const ctx = React.use(AutocompleteGroupLabelContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompleteGroupLabelContext",
-        providerName: "AutocompleteGroupLabel",
-      });
-    }
+export const useAutocompleteGroupLabelContext: IUseAutocompleteGroupLabelContext = (
+  optional,
+): any => {
+  const ctx = React.use(AutocompleteGroupLabelContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompleteGroupLabelContext",
+      providerName: "AutocompleteGroupLabel",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   AutocompleteGroupLabelContext as GroupLabelContext,

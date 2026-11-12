@@ -1,12 +1,10 @@
 /* disabled */
 @layer sui.important {
-@scope (.sui_combobox) to ([data-scope]) {
-
-:scope {
-  &.sui_combobox-disabled {
-    cursor: not-allowed;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_combobox) to ([data-scope]) {
+    :scope {
+      &.sui_combobox-disabled {
+        cursor: not-allowed;
+      }
+    }
+  } /* @scope */
 } /* @layer */

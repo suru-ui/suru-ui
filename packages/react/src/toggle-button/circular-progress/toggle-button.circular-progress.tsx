@@ -27,16 +27,12 @@ export type ToggleButtonCircularProgressProps = ToggleButtonCircularProgressProp
 
 export type IToggleButtonCircularProgress = IComponent<ToggleButtonCircularProgressProps>;
 
-/**
- * 円形プログレスバーの SVG ルートコンポーネントです。
- */
-export const ToggleButtonCircularProgress: IToggleButtonCircularProgress =
-  function SuiToggleButtonCircularProgress(props) {
-    return <Button.CircularProgress {...props} />;
-  };
+/** 円形プログレスバーの SVG ルートコンポーネントです。 */
+export const ToggleButtonCircularProgress: IToggleButtonCircularProgress = (props) => (
+  <Button.CircularProgress {...props} />
+);
 
 export { ToggleButtonCircularProgress as CircularProgress };
-
 export namespace CircularProgress {
   export type State = ToggleButtonCircularProgressState;
 

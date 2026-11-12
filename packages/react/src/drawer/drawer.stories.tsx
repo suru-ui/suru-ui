@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Button } from "../button/index.js";
 import { Drawer } from "./index.js";

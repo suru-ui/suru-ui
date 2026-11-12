@@ -124,11 +124,11 @@ export const Compact = meta.story({
       <div className="flex flex-wrap gap-6">
         <div className="flex flex-col items-center gap-2">
           <span>1500000</span>
-          <FormatNumber {...props} value={1500000} />
+          <FormatNumber {...props} value={1_500_000} />
         </div>
         <div className="flex flex-col items-center gap-2">
           <span>1500000000</span>
-          <FormatNumber {...props} value={1500000000} />
+          <FormatNumber {...props} value={1_500_000_000} />
         </div>
       </div>
     );

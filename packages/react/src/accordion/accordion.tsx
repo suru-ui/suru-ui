@@ -37,8 +37,7 @@ import {
   useAccordionTriggerContext,
 } from "./accordion.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type AccordionChangeEventDetails = AccordionRootChangeEventDetails;
 
@@ -102,9 +101,7 @@ namespace AccordionProps {
      */
     indicator?: React.ReactNode;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: AccordionSlotProps | undefined;
   };
 
@@ -129,7 +126,9 @@ export interface IUseAccordionAPI {
    *
    * @template TItem 項目の型です。
    * @template TValue 項目の値の型です。
+   *
    * @param props {@link Accordion} の props です。
+   *
    * @returns アコーディオンの API です
    */
   <TItem = any, TValue = $InferItemObjectValue<TItem>>(
@@ -145,16 +144,12 @@ export interface IAccordion extends IComponent<AccordionProps> {
   <TItem = any, TValue = $InferItemObjectValue<TItem>>(
     props: AccordionProps<TItem, TValue>,
   ): IComponent.Return;
-
   readonly useContext: IUseAccordionContext;
-
   readonly useItemContext: IUseAccordionItemContext;
-
   readonly useTriggerContext: IUseAccordionTriggerContext;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Accordion} を構成する各パーツの props などを作成するための API です。
@@ -169,18 +164,7 @@ export class AccordionAPI<TItem = any, TValue = any> {
 
   private readonly rootProps: AccordionRootProps<TItem, TValue>;
 
-  /**
-   * @param props {@link Accordion} の props です。
-   * @internal
-   */
-  public constructor(props: AccordionProps<TItem, TValue>) {
-    const { indicator, slotProps = {}, ...rootProps } = props;
-    this.indicator = indicator;
-    this.slotProps = slotProps;
-    this.rootProps = rootProps;
-  }
-
-  private defaultItemRenderer: IAccordionItemRenderer = (item, index) => {
+  private readonly defaultItemRenderer: IAccordionItemRenderer = (item, index) => {
     switch (true) {
       case isItemObject(item): {
         const indicatorProps = this.getIndicatorProps();
@@ -202,6 +186,18 @@ export class AccordionAPI<TItem = any, TValue = any> {
         return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
     }
   };
+
+  /**
+   * @param props {@link Accordion} の props です。
+   *
+   * @internal
+   */
+  public constructor(props: AccordionProps<TItem, TValue>) {
+    const { indicator, slotProps = {}, ...rootProps } = props;
+    this.indicator = indicator;
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
 
   /**
    * {@link AccordionContent} に渡す props を取得します。
@@ -307,20 +303,15 @@ export class AccordionAPI<TItem = any, TValue = any> {
 /**
  * {@link AccordionAPI} を作成するフックです。
  */
-export const useAccordionAPI: IUseAccordionAPI = function useSuiAccordionAPI(props) {
-  return new AccordionAPI(props);
-};
+export const useAccordionAPI: IUseAccordionAPI = (props) => new AccordionAPI(props);
 
 export { AccordionAPI as API, useAccordionAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
-/**
- * アコーディオンを表示するコンポーネントです。
- */
+/** アコーディオンを表示するコンポーネントです。 */
 export const Accordion: IAccordion = Object.assign(
-  function SuiAccordion(props: AccordionProps) {
+  (props: AccordionProps) => {
     const api = useAccordionAPI(props);
 
     return <AccordionRoot {...api.getRootProps()} />;

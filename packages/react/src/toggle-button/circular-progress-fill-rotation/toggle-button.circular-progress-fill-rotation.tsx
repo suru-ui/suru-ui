@@ -35,13 +35,11 @@ export type IToggleButtonCircularProgressFillRotation =
  *
  * 不定モードの場合のみ有効になります。
  */
-export const ToggleButtonCircularProgressFillRotation: IToggleButtonCircularProgressFillRotation =
-  function SuiToggleButtonCircularProgressFillRotation(props) {
-    return <Button.CircularProgressFillRotation {...props} />;
-  };
+export const ToggleButtonCircularProgressFillRotation: IToggleButtonCircularProgressFillRotation = (
+  props,
+) => <Button.CircularProgressFillRotation {...props} />;
 
 export { ToggleButtonCircularProgressFillRotation as CircularProgressFillRotation };
-
 export namespace CircularProgressFillRotation {
   export type State = ToggleButtonCircularProgressFillRotationState;
 

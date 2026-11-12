@@ -21,11 +21,10 @@ export type IUseSliderLabelContext = IUseContext<SliderLabelContext>;
 /**
  * {@link SliderLabelContext} を読み取るフックです。
  */
-export const useSliderLabelContext: IUseSliderLabelContext = function useSuiSliderLabelContext(
-  optional,
-): any {
+export const useSliderLabelContext: IUseSliderLabelContext = (optional): any => {
   const ctx = React.use(SliderLabelContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SliderLabelContext",
       providerName: "SliderLabel",

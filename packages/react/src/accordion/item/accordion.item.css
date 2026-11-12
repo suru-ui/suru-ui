@@ -1,75 +1,67 @@
 @layer sui.component {
-@scope (.sui_accordion_item) to ([data-scope]) {
+  @scope (.sui_accordion_item) to ([data-scope]) {
+    /* 変数 */
+    :scope {
+      --sui_accordion_item-separator_color: ;
+      --sui_accordion_item-separator_width: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_accordion_item-separator_color: ;
-  --sui_accordion_item-separator_width: ;
-}
+    /* 代入 */
+    :scope {
+      --sui_accordion_item-separator_color: var(--sui-border-1);
+      --sui_accordion_item-separator_width: --sui-border_width(1);
+    }
 
-/* 代入 */
-:scope {
-  --sui_accordion_item-separator_color: var(--sui-border-1);
-  --sui_accordion_item-separator_width: --sui-border_width(1);
-}
-
-/* 変異 */
-:scope {
-  &.sui_accordion_item-separator {
-    --_sui_accordion_item-border_top_color: var(--sui_accordion_item-separator_color);
-    --_sui_accordion_item-border_top_width: var(--sui_accordion_item-separator_width);
-  }
-}
-
-} /* @scope */
+    /* 変異 */
+    :scope {
+      &.sui_accordion_item-separator {
+        --_sui_accordion_item-border_top_color: var(--sui_accordion_item-separator_color);
+        --_sui_accordion_item-border_top_width: var(--sui_accordion_item-separator_width);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* 隣接する項目に依存するため、ルート起点の別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_accordion) to ([data-scope]) {
+  @scope (.sui_accordion) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      .sui_accordion_item + .sui_accordion_item {
+        border-top-style: solid;
+      }
+    }
 
-/* 固定 */
-:scope {
-  .sui_accordion_item + .sui_accordion_item {
-    border-top-style: solid;
-  }
-}
-
-/* 可変 */
-:scope {
-  .sui_accordion_item + .sui_accordion_item {
-    border-top-color: var(--_sui_accordion_item-border_top_color, transparent);
-    border-top-width: var(--_sui_accordion_item-border_top_width, 0px);
-  }
-}
-
-} /* @scope */
+    /* 可変 */
+    :scope {
+      .sui_accordion_item + .sui_accordion_item {
+        border-top-color: var(--_sui_accordion_item-border_top_color, transparent);
+        border-top-width: var(--_sui_accordion_item-border_top_width, 0px);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_accordion_item) to ([data-scope]) {
-
-:scope {
-  &.sui_accordion_item-disabled {
-    cursor: default;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_accordion_item) to ([data-scope]) {
+    :scope {
+      &.sui_accordion_item-disabled {
+        cursor: default;
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 /* 隣接する項目に依存するため、ルート起点の別ブロックにします。 */
 @layer sui.important {
-@scope (.sui_accordion) to ([data-scope]) {
-
-:scope {
-  &.sui_accordion-separator .sui_accordion_item-disabled + .sui_accordion_item-disabled {
-    border-top-color: var(--sui-disabled-naked-border);
-    border-top-width: var(--sui-disabled-border_width);
-  }
-}
-
-} /* @scope */
+  @scope (.sui_accordion) to ([data-scope]) {
+    :scope {
+      &.sui_accordion-separator .sui_accordion_item-disabled + .sui_accordion_item-disabled {
+        border-top-color: var(--sui-disabled-naked-border);
+        border-top-width: var(--sui-disabled-border_width);
+      }
+    }
+  } /* @scope */
 } /* @layer */

@@ -1,5 +1,4 @@
 import * as theme from "@suru-ui/theme";
-import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import {
@@ -15,18 +14,42 @@ const COLORS: readonly Breadcrumb.Color[] = theme.COLORS;
 const SIZES: readonly Breadcrumb.Size[] = theme.SIZES;
 
 const items = [
-  { href: "#", label: "ホーム" },
-  { href: "#", label: "製品" },
-  { href: "#", label: "Suru UI" },
+  {
+    href: "#",
+    label: "ホーム",
+  },
+  {
+    href: "#",
+    label: "製品",
+  },
+  {
+    href: "#",
+    label: "Suru UI",
+  },
   { label: "パンくずリスト" },
 ];
 
 const collapsedItems = [
-  { href: "#", label: "ホーム" },
-  { href: "#", label: "製品" },
-  { href: "#", label: "ライブラリ" },
-  { href: "#", label: "コンポーネント" },
-  { href: "#", label: "Breadcrumb" },
+  {
+    href: "#",
+    label: "ホーム",
+  },
+  {
+    href: "#",
+    label: "製品",
+  },
+  {
+    href: "#",
+    label: "ライブラリ",
+  },
+  {
+    href: "#",
+    label: "コンポーネント",
+  },
+  {
+    href: "#",
+    label: "Breadcrumb",
+  },
   { label: "省略表示" },
 ];
 
@@ -117,8 +140,15 @@ export const Disabled = meta.story({
       <Breadcrumb
         {...props}
         items={[
-          { href: "#", label: "ホーム" },
-          { href: "#", label: "製品", disabled: true },
+          {
+            href: "#",
+            label: "ホーム",
+          },
+          {
+            href: "#",
+            label: "製品",
+            disabled: true,
+          },
           { label: "パンくずリスト" },
         ]}
       />

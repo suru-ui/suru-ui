@@ -1,10 +1,8 @@
 @layer sui.component {
-@scope (.sui_scroll_area_content) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  display: block;
-}
-
-} /* @scope */
+  @scope (.sui_scroll_area_content) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: block;
+    }
+  } /* @scope */
 } /* @layer */

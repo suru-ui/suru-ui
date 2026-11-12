@@ -16,10 +16,7 @@ export namespace SidebarInsetProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"main", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"main", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -37,7 +34,7 @@ export type ISidebarInset = IComponent<SidebarInsetProps>;
  *
  * {@link SidebarRoot} に `variant="inset"` を指定すると、押し込まれた外観になります。
  */
-export const SidebarInset: ISidebarInset = function SuiSidebarInset(props) {
+export const SidebarInset: ISidebarInset = (props) => {
   const ctx = useSidebarContext();
 
   return useRender({
@@ -53,7 +50,6 @@ export const SidebarInset: ISidebarInset = function SuiSidebarInset(props) {
 };
 
 export { SidebarInset as Inset };
-
 export namespace Inset {
   export type State = SidebarInsetState;
 

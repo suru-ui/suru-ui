@@ -1,5 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "./collapsible.parts.js";
@@ -9,10 +9,7 @@ import { CollapsibleRoot } from "./root/collapsible.root.jsx";
 import "../../tests/src/_locators.js";
 import { CollapsibleTrigger } from "./trigger/collapsible.trigger.jsx";
 
-/**
- * トリガーを Suru UI のコンポーネントと同じ `data-scope` 付きのボタンで描画し、
- * スコープの境界を跨いだインジケーターのスタイルを検証するために使用します。
- */
+/** トリガーを Suru UI のコンポーネントと同じ `data-scope` 付きのボタンで描画し、スコープの境界を跨いだインジケーターのスタイルを検証するために使用します。 */
 function TriggerWithIndicator() {
   return (
     <CollapsibleTrigger>
@@ -28,14 +25,14 @@ function TriggerWithIndicator() {
 
 describe("Collapsible の配置", () => {
   test("data-scope を持つトリガー内のインジケーターにもスタイルを適用する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CollapsibleRoot defaultOpen>
         <TriggerWithIndicator />
       </CollapsibleRoot>,
     );
 
-    // 検証
+    // 検証。
     const indicator = screen.getByTestId("indicator").element();
     const style = getComputedStyle(indicator);
     const svg = indicator.querySelector("svg")!;
@@ -48,7 +45,7 @@ describe("Collapsible の配置", () => {
   });
 
   test("開いた状態ではインジケーターを回転する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <CollapsibleRoot id="closed">
@@ -60,7 +57,7 @@ describe("Collapsible の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const closed = screen.container.querySelector<HTMLElement>("#closed [data-testid=indicator]")!;
     const open = screen.container.querySelector<HTMLElement>("#open [data-testid=indicator]")!;
     expect(getComputedStyle(closed).rotate).not.toBe(getComputedStyle(open).rotate);
@@ -68,7 +65,7 @@ describe("Collapsible の配置", () => {
   });
 
   test("大きさごとにインジケーターとコンテンツの活字サイズを変える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <CollapsibleRoot size="sm" defaultOpen>
@@ -86,7 +83,7 @@ describe("Collapsible の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const [sm, md, lg] = screen.container.querySelectorAll<HTMLElement>(
       ".sui_collapsible_indicator",
     );
@@ -96,6 +93,7 @@ describe("Collapsible の配置", () => {
     expect(Number.parseFloat(getComputedStyle(md!).width)).toBeLessThan(
       Number.parseFloat(getComputedStyle(lg!).width),
     );
+
     const contentSm = screen.container.querySelector<HTMLElement>("#content-sm")!;
     const contentMd = screen.container.querySelector<HTMLElement>("#content-md")!;
     const contentLg = screen.container.querySelector<HTMLElement>("#content-lg")!;
@@ -108,7 +106,7 @@ describe("Collapsible の配置", () => {
   });
 
   test("余分な外部余白や内側の余白を持たない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CollapsibleRoot defaultOpen>
         <CollapsibleTrigger>
@@ -122,9 +120,10 @@ describe("Collapsible の配置", () => {
       </CollapsibleRoot>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_collapsible").element();
     const content = screen.container.querySelector<HTMLElement>("#content")!;
+
     for (const element of [root, content]) {
       const style = getComputedStyle(element);
       expect(style.marginTop).toBe("0px");
@@ -136,7 +135,7 @@ describe("Collapsible の配置", () => {
   });
 
   test("コンテンツをトリガーの下に配置する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <CollapsibleRoot defaultOpen>
         <CollapsibleTrigger>
@@ -153,31 +152,32 @@ describe("Collapsible の配置", () => {
     const trigger = screen.getByRole("button", { name: "開閉" }).element();
     const content = screen.container.querySelector<HTMLElement>("#content")!;
 
-    // 実行
+    // 実行。
     const rootRect = root.getBoundingClientRect();
     const triggerRect = trigger.getBoundingClientRect();
     const contentRect = content.getBoundingClientRect();
 
-    // 検証
+    // 検証。
     expect(contentRect.left).toBeCloseTo(rootRect.left, 1);
     expect(contentRect.width).toBeCloseTo(rootRect.width, 1);
     expect(contentRect.top).toBeGreaterThanOrEqual(triggerRect.bottom - 0.5);
   });
 
   test("インジケーターの内容を中央に配置する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CollapsibleRoot defaultOpen>
         <TriggerWithIndicator />
       </CollapsibleRoot>,
     );
 
-    // 検証
+    // 検証。
     const indicator = screen.getByTestId("indicator").element();
     const style = getComputedStyle(indicator);
     expect(style.display).toBe("inline-flex");
     expect(style.alignItems).toBe("center");
     expect(style.justifyContent).toBe("center");
+
     const indicatorRect = indicator.getBoundingClientRect();
     const svgRect = indicator.querySelector("svg")!.getBoundingClientRect();
     expect(svgRect.left + svgRect.width / 2).toBeCloseTo(
@@ -191,7 +191,7 @@ describe("Collapsible の配置", () => {
   });
 
   test("無効なインジケーターの配色を変える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ color: "var(--sui-disabled-naked-canvas_text)" }}>基準</span>
@@ -201,7 +201,7 @@ describe("Collapsible の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const indicator = screen.getByTestId("indicator").element();
     const expected = getComputedStyle(screen.getByText("基準").element()).color;
     expect(getComputedStyle(indicator).color).toBe(expected);
@@ -209,7 +209,7 @@ describe("Collapsible の配置", () => {
   });
 
   test("インジケーターの配色をアイコンへ適用する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span
@@ -226,7 +226,7 @@ describe("Collapsible の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByText("基準").element()).color;
     const indicator = screen.getByTestId("indicator").element();
     expect(getComputedStyle(indicator).color).toBe(expected);

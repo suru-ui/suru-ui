@@ -23,18 +23,18 @@ export type IUseHoverCardTriggerContext = IUseContext<HoverCardTriggerContext>;
 /**
  * {@link HoverCardTriggerContext} を読み取るフックです。
  */
-export const useHoverCardTriggerContext: IUseHoverCardTriggerContext =
-  function useSuiHoverCardTriggerContext(optional): any {
-    const ctx = React.use(HoverCardTriggerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "HoverCardTriggerContext",
-        providerName: "HoverCardTrigger",
-      });
-    }
+export const useHoverCardTriggerContext: IUseHoverCardTriggerContext = (optional): any => {
+  const ctx = React.use(HoverCardTriggerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "HoverCardTriggerContext",
+      providerName: "HoverCardTrigger",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   HoverCardTriggerContext as TriggerContext,

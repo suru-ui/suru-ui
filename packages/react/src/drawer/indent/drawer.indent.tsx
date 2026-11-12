@@ -19,16 +19,13 @@ export namespace DrawerIndentProps {
     Pick<
       React.ComponentProps<typeof Drawer.Indent>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DrawerIndentProps より:
+      // DrawerIndentProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Drawer.Indent>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Drawer.Indent>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -41,10 +38,8 @@ export type DrawerIndentProps = DrawerIndentProps.Render &
 
 export type IDrawerIndent = IComponent<DrawerIndentProps>;
 
-/**
- * アプリケーションのメイン UI を囲み、ドロワーのインデント状態を受け取る要素です。
- */
-export const DrawerIndent: IDrawerIndent = function SuiDrawerIndent(props) {
+/** アプリケーションのメイン UI を囲み、ドロワーのインデント状態を受け取る要素です。 */
+export const DrawerIndent: IDrawerIndent = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -60,7 +55,6 @@ export const DrawerIndent: IDrawerIndent = function SuiDrawerIndent(props) {
 };
 
 export { DrawerIndent as Indent };
-
 export namespace Indent {
   export type State = DrawerIndentState;
 

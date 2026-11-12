@@ -19,10 +19,7 @@ export namespace CollapsibleIndicatorProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"span", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"span", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -40,7 +37,7 @@ export type ICollapsibleIndicator = IComponent<CollapsibleIndicatorProps>;
  *
  * 開閉に合わせて回転し、現在の状態を視覚的に伝えます。
  */
-export const CollapsibleIndicator: ICollapsibleIndicator = function SuiCollapsibleIndicator(props) {
+export const CollapsibleIndicator: ICollapsibleIndicator = (props) => {
   const ctx = useCollapsibleContext();
   const { children = <ChevronRightIcon />, ...otherSpanProps } = props;
 
@@ -66,7 +63,6 @@ export const CollapsibleIndicator: ICollapsibleIndicator = function SuiCollapsib
 };
 
 export { CollapsibleIndicator as Indicator };
-
 export namespace Indicator {
   export type State = CollapsibleIndicatorState;
 

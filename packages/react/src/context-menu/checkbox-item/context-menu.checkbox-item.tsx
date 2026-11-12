@@ -23,14 +23,10 @@ export type ContextMenuCheckboxItemChangeEventDetails = ContextMenu.CheckboxItem
  */
 export type ContextMenuCheckboxItemChangeEventReason = ContextMenu.CheckboxItem.ChangeEventReason;
 
-/**
- * チェックボックス項目の配色です。
- */
+/** チェックボックス項目の配色です。 */
 export type ContextMenuCheckboxItemColor = Button.Root.Color;
 
-/**
- * チェックボックス項目の角丸です。
- */
+/** チェックボックス項目の角丸です。 */
 export type ContextMenuCheckboxItemRadius = Button.Root.Radius;
 
 /**
@@ -83,9 +79,9 @@ export namespace ContextMenuCheckboxItemProps {
       Pick<
         React.ComponentProps<typeof ContextMenu.CheckboxItem>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // NonNativeButtonProps より:
+        // NonNativeButtonProps より :
         | keyof NonNativeButtonProps
-        // MenuCheckboxItemProps より:
+        // MenuCheckboxItemProps より :
         | "checked"
         | "defaultChecked"
         | "onCheckedChange"
@@ -115,109 +111,109 @@ export type ContextMenuCheckboxItemProps = ContextMenuCheckboxItemProps.Render &
 
 export type IContextMenuCheckboxItem = IComponent<ContextMenuCheckboxItemProps>;
 
-/**
- * 設定をオンまたはオフにできるコンテキストメニュー項目です。
- */
-export const ContextMenuCheckboxItem: IContextMenuCheckboxItem =
-  function SuiContextMenuCheckboxItem(props) {
-    const ctx = useContextMenuContext();
-    const {
-      id,
-      color = "grey",
-      label,
-      style,
-      radius = ctx.radius,
-      render,
-      checked,
-      onClick,
-      variant = ctx.variant,
-      disabled,
-      className,
-      closeOnClick,
-      nativeButton = false,
-      defaultChecked,
-      onCheckedChange,
-      focusableWhenDisabled,
-      ...otherProps
-    } = props;
-    const baseuiProps: Required<ContextMenuCheckboxItemProps.BaseUI> = {
-      id,
-      label,
-      checked,
-      onClick,
-      disabled,
-      closeOnClick,
-      nativeButton,
-      defaultChecked,
-      onCheckedChange,
-      focusableWhenDisabled,
-    };
-
-    return (
-      <ContextMenu.CheckboxItem
-        {...otherProps}
-        {...baseuiProps}
-        render={(htmlProps: {}, itemState) => {
-          const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
-            Pick<Button.Root.Props.HTML, "disabled"> = {
-            item: true,
-            size: ctx.size,
-            thin: undefined,
-            color,
-            muted: undefined,
-            radius,
-            pending: undefined,
-            squared: undefined,
-            variant: getItemVariant(itemState, variant),
-            disabled: itemState.disabled,
-            outlined: undefined,
-            nativeButton,
-            focusableWhenDisabled,
-          };
-
-          return (
-            <Button.Root
-              {...mergeProps<typeof Button.Root>([
-                htmlProps,
-                buttonRootProps,
-                proxyRenderProps<Button.Root.State, ContextMenuCheckboxItemState>(
-                  (state) => ({ ...ctx, ...state, ...itemState }),
-                  {
-                    style,
-                    render: (htmlProps, state) => (
-                      <ContextMenuCheckboxItemContext value={state}>
-                        <RenderElement
-                          state={state}
-                          render={render ?? <div />}
-                          htmlProps={htmlProps}
-                          defaultTagName="div"
-                        />
-                      </ContextMenuCheckboxItemContext>
-                    ),
-                    className: cn<ContextMenuCheckboxItemState>(
-                      className,
-                      "sui_context_menu_item",
-                      "sui_context_menu_checkbox_item",
-                      (state) => state.checked && "sui_context_menu_item-checked",
-                      (state) => state.highlighted && "sui_context_menu_item-highlighted",
-                      (state) => state.disabled && "sui_context_menu_item-disabled",
-                      (state) => `sui_context_menu_item-size_${state.size}`,
-                      (state) => `sui_context_menu_item-radius_${state.radius}`,
-                      (state) => `sui_context_menu_item-variant_${state.variant}`,
-                      (state) => state.outlined && "sui_context_menu_item-outlined",
-                    ),
-                  },
-                ),
-              ])}
-            />
-          );
-        }}
-      />
-    );
+/** 設定をオンまたはオフにできるコンテキストメニュー項目です。 */
+export const ContextMenuCheckboxItem: IContextMenuCheckboxItem = (props) => {
+  const ctx = useContextMenuContext();
+  const {
+    id,
+    color = "grey",
+    label,
+    style,
+    radius = ctx.radius,
+    render,
+    checked,
+    onClick,
+    variant = ctx.variant,
+    disabled,
+    className,
+    closeOnClick,
+    nativeButton = false,
+    defaultChecked,
+    onCheckedChange,
+    focusableWhenDisabled,
+    ...otherProps
+  } = props;
+  const baseuiProps: Required<ContextMenuCheckboxItemProps.BaseUI> = {
+    id,
+    label,
+    checked,
+    onClick,
+    disabled,
+    closeOnClick,
+    nativeButton,
+    defaultChecked,
+    onCheckedChange,
+    focusableWhenDisabled,
   };
 
-export { ContextMenuCheckboxItem as CheckboxItem };
+  return (
+    <ContextMenu.CheckboxItem
+      {...otherProps}
+      {...baseuiProps}
+      render={(htmlProps: {}, itemState) => {
+        const buttonRootProps: Required<Button.Root.Props.SuruUI & Button.Root.Props.BaseUI> &
+          Pick<Button.Root.Props.HTML, "disabled"> = {
+          item: true,
+          size: ctx.size,
+          thin: undefined,
+          color,
+          muted: undefined,
+          radius,
+          pending: undefined,
+          squared: undefined,
+          variant: getItemVariant(itemState, variant),
+          disabled: itemState.disabled,
+          outlined: undefined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
 
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps<Button.Root.State, ContextMenuCheckboxItemState>(
+                (state) => ({
+                  ...ctx,
+                  ...state,
+                  ...itemState,
+                }),
+                {
+                  style,
+                  render: (currentHtmlProps, state) => (
+                    <ContextMenuCheckboxItemContext value={state}>
+                      <RenderElement
+                        state={state}
+                        render={render ?? <div />}
+                        htmlProps={currentHtmlProps}
+                        defaultTagName="div"
+                      />
+                    </ContextMenuCheckboxItemContext>
+                  ),
+                  className: cn<ContextMenuCheckboxItemState>(
+                    className,
+                    "sui_context_menu_item",
+                    "sui_context_menu_checkbox_item",
+                    (state) => state.checked && "sui_context_menu_item-checked",
+                    (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                    (state) => state.disabled && "sui_context_menu_item-disabled",
+                    (state) => `sui_context_menu_item-size_${state.size}`,
+                    (state) => `sui_context_menu_item-radius_${state.radius}`,
+                    (state) => `sui_context_menu_item-variant_${state.variant}`,
+                    (state) => state.outlined && "sui_context_menu_item-outlined",
+                  ),
+                },
+              ),
+            ])}
+          />
+        );
+      }}
+    />
+  );
+};
+
+export { ContextMenuCheckboxItem as CheckboxItem };
 export namespace CheckboxItem {
   export type State<TItem = any> = ContextMenuCheckboxItemState<TItem>;
 

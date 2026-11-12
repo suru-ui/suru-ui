@@ -10,24 +10,16 @@ import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { ToastCloseContext } from "./toast.close.context.js";
 
-/**
- * 通知を閉じるボタンの配色です。
- */
+/** 通知を閉じるボタンの配色です。 */
 export type ToastCloseColor = Button.Root.Color;
 
-/**
- * 通知を閉じるボタンの角丸の大きさです。
- */
+/** 通知を閉じるボタンの角丸の大きさです。 */
 export type ToastCloseRadius = Button.Root.Radius;
 
-/**
- * 通知を閉じるボタンの大きさです。
- */
+/** 通知を閉じるボタンの大きさです。 */
 export type ToastCloseSize = Button.Root.Size;
 
-/**
- * 通知を閉じるボタンの主な外観です。
- */
+/** 通知を閉じるボタンの主な外観です。 */
 export type ToastCloseVariant = Button.Root.Variant;
 
 /**
@@ -46,7 +38,7 @@ export namespace ToastCloseProps {
       Pick<
         React.ComponentProps<typeof Toast.Close>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // ToastCloseProps より:
+        // ToastCloseProps より :
         never
       >,
       keyof Render | keyof SuruUI
@@ -69,10 +61,8 @@ export type ToastCloseProps = ToastCloseProps.Render &
 
 export type IToastClose = IComponent<ToastCloseProps>;
 
-/**
- * 通知を閉じるボタン要素です。
- */
-export const ToastClose: IToastClose = function SuiToastClose(props) {
+/** 通知を閉じるボタン要素です。 */
+export const ToastClose: IToastClose = (props) => {
   const {
     size,
     thin,
@@ -120,15 +110,18 @@ export const ToastClose: IToastClose = function SuiToastClose(props) {
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, ToastCloseState>(
-                (buttonState) => ({ ...toastState, ...buttonState }),
+                (buttonState) => ({
+                  ...toastState,
+                  ...buttonState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <ToastCloseContext value={state}>
                       <RenderElement
                         state={state}
                         render={render}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="button"
                       />
                     </ToastCloseContext>
@@ -159,7 +152,6 @@ export const ToastClose: IToastClose = function SuiToastClose(props) {
 };
 
 export { ToastClose as Close };
-
 export namespace Close {
   export type State = ToastCloseState;
 

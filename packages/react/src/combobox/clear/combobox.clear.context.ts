@@ -25,17 +25,17 @@ export type IUseComboboxClearContext = IUseContext<ComboboxClearContext>;
 /**
  * {@link ComboboxClearContext} を読み取るフックです。
  */
-export const useComboboxClearContext: IUseComboboxClearContext =
-  function useSuiComboboxClearContext(optional): any {
-    const ctx = React.use(ComboboxClearContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ComboboxClearContext",
-        providerName: "ComboboxClear",
-      });
-    }
+export const useComboboxClearContext: IUseComboboxClearContext = (optional): any => {
+  const ctx = React.use(ComboboxClearContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ComboboxClearContext",
+      providerName: "ComboboxClear",
+    });
+  }
+
+  return ctx;
+};
 
 export { ComboboxClearContext as ClearContext, useComboboxClearContext as useClearContext };

@@ -211,14 +211,17 @@ export const Squared = meta.story({
   },
 });
 
+function sleep(t: number): Promise<void> {
+  return new Promise((r) => setTimeout(r, t));
+}
+
 function useToggleFeature() {
   const [flag, setFlag] = React.useState(false);
   const [pending, startTransition] = React.useTransition();
   const clickHandler = () => {
     startTransition(async () => {
-      const sleep = (t: number) => new Promise((r) => setTimeout(r, t));
-
       await sleep(1e3);
+
       setFlag((f) => !f);
     });
   };
@@ -235,8 +238,6 @@ function useToggleProgress() {
   const [pending, startTransition] = React.useTransition();
   const clickHandler = () => {
     startTransition(async () => {
-      const sleep = (t: number) => new Promise((r) => setTimeout(r, t));
-
       setPercentage(0);
       for (let value = 0; value <= 100; value += 20) {
         await sleep(200);
@@ -320,11 +321,11 @@ export const FullWidth = meta.story({
     return (
       <div className="space-y-1">
         <ToggleButton {...props} className="w-full">
-          {"width: 100%"}
+          width: 100%
         </ToggleButton>
         <div className="flex w-[200px] gap-1">
           <ToggleButton {...props} className="w-full">
-            {"width: 100%"}
+            width: 100%
           </ToggleButton>
           <ToggleButton {...props} squared>
             <ItalicIcon />
@@ -332,7 +333,7 @@ export const FullWidth = meta.story({
         </div>
         <div className="flex w-[200px] gap-1">
           <ToggleButton {...props} className="flex-1">
-            {"flex: 1"}
+            flex: 1
           </ToggleButton>
           <ToggleButton {...props} squared>
             <ItalicIcon />

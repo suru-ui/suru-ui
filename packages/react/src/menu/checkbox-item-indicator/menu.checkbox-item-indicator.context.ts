@@ -25,18 +25,20 @@ export type IUseMenuCheckboxItemIndicatorContext = IUseContext<MenuCheckboxItemI
 /**
  * {@link MenuCheckboxItemIndicatorContext} を読み取るフックです。
  */
-export const useMenuCheckboxItemIndicatorContext: IUseMenuCheckboxItemIndicatorContext =
-  function useSuiMenuCheckboxItemIndicatorContext(optional): any {
-    const ctx = React.use(MenuCheckboxItemIndicatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "MenuCheckboxItemIndicatorContext",
-        providerName: "MenuCheckboxItemIndicator",
-      });
-    }
+export const useMenuCheckboxItemIndicatorContext: IUseMenuCheckboxItemIndicatorContext = (
+  optional,
+): any => {
+  const ctx = React.use(MenuCheckboxItemIndicatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "MenuCheckboxItemIndicatorContext",
+      providerName: "MenuCheckboxItemIndicator",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   MenuCheckboxItemIndicatorContext as CheckboxItemIndicatorContext,

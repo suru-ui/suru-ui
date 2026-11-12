@@ -21,17 +21,17 @@ export type IUseProgressValueContext = IUseContext<ProgressValueContext>;
 /**
  * {@link ProgressValueContext} を読み取るフックです。
  */
-export const useProgressValueContext: IUseProgressValueContext =
-  function useSuiProgressValueContext(optional): any {
-    const ctx = React.use(ProgressValueContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ProgressValueContext",
-        providerName: "ProgressValue",
-      });
-    }
+export const useProgressValueContext: IUseProgressValueContext = (optional): any => {
+  const ctx = React.use(ProgressValueContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ProgressValueContext",
+      providerName: "ProgressValue",
+    });
+  }
+
+  return ctx;
+};
 
 export { ProgressValueContext as ValueContext, useProgressValueContext as useValueContext };

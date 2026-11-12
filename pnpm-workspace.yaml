@@ -1,15 +1,19 @@
-packages:
-  [
-    "packages/core",
-    "packages/theme",
-    "packages/react",
-    "packages/unocss",
-    "website",
-  ]
+packages: ["packages/core", "packages/react", "packages/theme", "packages/unocss", "website"]
 
 minimumReleaseAge: 10080 # 7 日
 minimumReleaseAgeExclude:
-  - call-fn-once
+  - "@oxfmt/*"
+  - "@oxlint-tsgolint/*"
+  - "@oxlint/*"
+  - "@tai-kun/blume-integrations"
+  - "@tai-kun/vp-lint-plugins"
+  - "@vitest/*"
+  - "@voidzero-dev/*"
+  - oxfmt
+  - oxlint
+  - oxlint-tsgolint
+  - vite-plus
+  - vitest
 
 blockExoticSubdeps: true
 
@@ -30,5 +34,12 @@ update:
   ignoreDeps:
     - "*" # パッケージの更新は ncu に任せます。
 
+catalog:
+  "@vitest/browser-playwright": 5.1.0
+  "@vitest/coverage-istanbul": 5.1.0
+  "@vitest/coverage-v8": 5.1.0
+  playwright: 1.64.1
+  vite-plus: 1.5.0
+  vitest-browser-react: 2.3.0
 overrides:
   dompurify: 3.4.17

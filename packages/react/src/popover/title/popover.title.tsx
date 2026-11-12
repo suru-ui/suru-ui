@@ -23,16 +23,13 @@ export namespace PopoverTitleProps {
     Pick<
       React.ComponentProps<typeof Popover.Title>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PopoverTitleProps より:
+      // PopoverTitleProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Popover.Title>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Popover.Title>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,10 +42,8 @@ export type PopoverTitleProps = PopoverTitleProps.Render &
 
 export type IPopoverTitle = IComponent<PopoverTitleProps>;
 
-/**
- * ポップオーバーのタイトルを表示する見出し要素です。
- */
-export const PopoverTitle: IPopoverTitle = function SuiPopoverTitle(props) {
+/** ポップオーバーのタイトルを表示する見出し要素です。 */
+export const PopoverTitle: IPopoverTitle = (props) => {
   const ctx = usePopoverPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +51,10 @@ export const PopoverTitle: IPopoverTitle = function SuiPopoverTitle(props) {
     <Popover.Title
       {...otherProps}
       {...proxyRenderProps<Popover.Title.State, PopoverTitleState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -91,7 +89,6 @@ export const PopoverTitle: IPopoverTitle = function SuiPopoverTitle(props) {
 };
 
 export { PopoverTitle as Title };
-
 export namespace Title {
   export type State = PopoverTitleState;
 

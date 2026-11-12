@@ -23,18 +23,18 @@ export type IUseTooltipViewportContext = IUseContext<TooltipViewportContext>;
 /**
  * {@link TooltipViewportContext} を読み取るフックです。
  */
-export const useTooltipViewportContext: IUseTooltipViewportContext =
-  function useSuiTooltipViewportContext(optional): any {
-    const ctx = React.use(TooltipViewportContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "TooltipViewportContext",
-        providerName: "TooltipViewport",
-      });
-    }
+export const useTooltipViewportContext: IUseTooltipViewportContext = (optional): any => {
+  const ctx = React.use(TooltipViewportContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "TooltipViewportContext",
+      providerName: "TooltipViewport",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   TooltipViewportContext as ViewportContext,

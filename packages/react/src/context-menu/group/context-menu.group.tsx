@@ -25,7 +25,7 @@ export namespace ContextMenuGroupProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.Group>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuGroupProps より:
+      // MenuGroupProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace ContextMenuGroupProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof ContextMenu.Group>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type ContextMenuGroupProps = ContextMenuGroupProps.Render &
 
 export type IContextMenuGroup = IComponent<ContextMenuGroupProps>;
 
-/**
- * 関連するコンテキストメニュー項目をまとめるグループ要素です。
- */
-export const ContextMenuGroup: IContextMenuGroup = function SuiContextMenuGroup(props) {
+/** 関連するコンテキストメニュー項目をまとめるグループ要素です。 */
+export const ContextMenuGroup: IContextMenuGroup = (props) => {
   const ctx = usePopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const ContextMenuGroup: IContextMenuGroup = function SuiContextMenuGroup(
     <ContextMenu.Group
       {...otherProps}
       {...proxyRenderProps<ContextMenu.Group.State, ContextMenuGroupState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -95,7 +96,6 @@ export const ContextMenuGroup: IContextMenuGroup = function SuiContextMenuGroup(
 };
 
 export { ContextMenuGroup as Group };
-
 export namespace Group {
   export type State<TItem = any> = ContextMenuGroupState<TItem>;
 

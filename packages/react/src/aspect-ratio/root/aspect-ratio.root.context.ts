@@ -26,20 +26,14 @@ export type AspectRatioContextRatio = NonNullable<React.CSSProperties["aspectRat
  * {@link AspectRatioRoot} が提供する状態です。
  */
 export type AspectRatioContext = {
-  /**
-   * コンテナーの角丸の大きさです。
-   */
+  /** コンテナーの角丸の大きさです。 */
   readonly radius: AspectRatioContextRadius;
 
-  /**
-   * コンテンツの幅と高さの比率です。
-   */
+  /** コンテンツの幅と高さの比率です。 */
   readonly ratio: AspectRatioContextRatio;
 };
 
-/**
- * アスペクト比コンテナーの見た目を子孫へ伝播するコンテキストです。
- */
+/** アスペクト比コンテナーの見た目を子孫へ伝播するコンテキストです。 */
 export const AspectRatioContext: React.Context<AspectRatioContext | null> =
   React.createContext<AspectRatioContext | null>(null);
 
@@ -48,11 +42,10 @@ export type IUseAspectRatioContext = IUseContext<AspectRatioContext>;
 /**
  * {@link AspectRatioContext} を読み取るフックです。
  */
-export const useAspectRatioContext: IUseAspectRatioContext = function useSuiAspectRatioContext(
-  optional?: boolean,
-): any {
+export const useAspectRatioContext: IUseAspectRatioContext = (optional?: boolean): any => {
   const ctx = React.use(AspectRatioContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "AspectRatioContext",
       providerName: "AspectRatioRoot",
@@ -63,7 +56,6 @@ export const useAspectRatioContext: IUseAspectRatioContext = function useSuiAspe
 };
 
 export { AspectRatioContext as Context, useAspectRatioContext as useContext };
-
 export namespace Context {
   export type Radius = AspectRatioContextRadius;
 

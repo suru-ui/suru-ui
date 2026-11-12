@@ -31,9 +31,9 @@ export namespace PopoverCloseProps {
     Pick<
       React.ComponentProps<typeof Popover.Close>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // PopoverCloseProps より:
+      // PopoverCloseProps より :
       | never
     >,
     keyof Render | keyof SuruUI
@@ -60,7 +60,7 @@ export type IPopoverClose = IComponent<PopoverCloseProps>;
  *
  * 子要素は何にもラップされず、そのまま Base UI の `render` プロパティーに渡されます。
  */
-export const PopoverClose: IPopoverClose = function SuiPopoverClose(props) {
+export const PopoverClose: IPopoverClose = (props) => {
   const ctx = usePopoverPopupContext();
   const { style, children, className, ...otherProps } = props;
 
@@ -68,7 +68,10 @@ export const PopoverClose: IPopoverClose = function SuiPopoverClose(props) {
     <Popover.Close
       {...otherProps}
       {...proxyRenderProps<Popover.Close.State, PopoverCloseState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -103,7 +106,6 @@ export const PopoverClose: IPopoverClose = function SuiPopoverClose(props) {
 };
 
 export { PopoverClose as Close };
-
 export namespace Close {
   export type State = PopoverCloseState;
 

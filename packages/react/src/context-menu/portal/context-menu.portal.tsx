@@ -27,7 +27,7 @@ export namespace ContextMenuPortalProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.Portal>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ContextMenuPortalProps より:
+      // ContextMenuPortalProps より :
       "keepMounted" | "container"
     >,
     keyof Render | keyof SuruUI
@@ -54,13 +54,13 @@ export type IContextMenuPortal = IComponent<ContextMenuPortalProps>;
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const ContextMenuPortal: IContextMenuPortal = function SuiContextMenuPortal(props) {
+export const ContextMenuPortal: IContextMenuPortal = (props) => {
   const ctx = useContextMenuContext();
   const {
     style,
     render,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -69,7 +69,10 @@ export const ContextMenuPortal: IContextMenuPortal = function SuiContextMenuPort
     <ContextMenu.Portal
       {...otherProps}
       {...proxyRenderProps<ContextMenu.Portal.State, ContextMenuPortalState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render,
@@ -89,7 +92,6 @@ export const ContextMenuPortal: IContextMenuPortal = function SuiContextMenuPort
 };
 
 export { ContextMenuPortal as Portal };
-
 export namespace Portal {
   export type State<TItem = any> = ContextMenuPortalState<TItem>;
 

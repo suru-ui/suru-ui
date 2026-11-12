@@ -25,17 +25,17 @@ export type IUseAutocompletePopupContext = IUseContext<AutocompletePopupContext>
 /**
  * {@link AutocompletePopupContext} を読み取るフックです。
  */
-export const useAutocompletePopupContext: IUseAutocompletePopupContext =
-  function useSuiAutocompletePopupContext(optional): any {
-    const ctx = React.use(AutocompletePopupContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompletePopupContext",
-        providerName: "AutocompletePopup",
-      });
-    }
+export const useAutocompletePopupContext: IUseAutocompletePopupContext = (optional): any => {
+  const ctx = React.use(AutocompletePopupContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompletePopupContext",
+      providerName: "AutocompletePopup",
+    });
+  }
+
+  return ctx;
+};
 
 export { AutocompletePopupContext as PopupContext, useAutocompletePopupContext as usePopupContext };

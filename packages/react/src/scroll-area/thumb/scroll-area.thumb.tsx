@@ -19,7 +19,7 @@ export namespace ScrollAreaThumbProps {
     Pick<
       React.ComponentProps<typeof BaseScrollArea.Thumb>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ScrollAreaThumbProps より:
+      // ScrollAreaThumbProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -27,7 +27,7 @@ export namespace ScrollAreaThumbProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof BaseScrollArea.Thumb>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -41,11 +41,10 @@ export type ScrollAreaThumbProps = ScrollAreaThumbProps.Render &
 
 export type IScrollAreaThumb = IComponent<ScrollAreaThumbProps>;
 
-/**
- * スクロール位置とスクロール可能な範囲を示す、スクロールバー内のつまみ要素です。
- */
-export const ScrollAreaThumb: IScrollAreaThumb = function SuiScrollAreaThumb(props) {
+/** スクロール位置とスクロール可能な範囲を示す、スクロールバー内のつまみ要素です。 */
+export const ScrollAreaThumb: IScrollAreaThumb = (props) => {
   const { className, ...otherProps } = props;
+
   return (
     <BaseScrollArea.Thumb
       {...otherProps}
@@ -60,7 +59,6 @@ export const ScrollAreaThumb: IScrollAreaThumb = function SuiScrollAreaThumb(pro
 };
 
 export { ScrollAreaThumb as Thumb };
-
 export namespace Thumb {
   export type State = ScrollAreaThumbState;
 

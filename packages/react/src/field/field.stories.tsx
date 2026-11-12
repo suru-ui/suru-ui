@@ -47,7 +47,12 @@ export const Usage = meta.story({
   }),
   render(props) {
     return (
-      <Form onSubmit={(evt) => evt.preventDefault()} className="grid grid-rows-[100px_auto]">
+      <Form
+        className="grid grid-rows-[100px_auto]"
+        onSubmit={(evt) => {
+          evt.preventDefault();
+        }}
+      >
         <Field
           {...props}
           name="sui:email"
@@ -79,7 +84,6 @@ export const Error = meta.story({
   }),
   render(props) {
     const actionsRef = React.useRef<Form.Actions>(null);
-
     React.useEffect(() => {
       actionsRef.current?.validate("sui:name");
     }, []);
@@ -114,8 +118,10 @@ export const ValidationModes = meta.story({
         {VALIDATION_MODES.map((validationMode) => (
           <Form
             key={validationMode}
-            onSubmit={(evt) => evt.preventDefault()}
             className="flex flex-col gap-2"
+            onSubmit={(evt) => {
+              evt.preventDefault();
+            }}
           >
             <span>{validationMode}</span>
             <Field
@@ -149,7 +155,12 @@ export const ErrorMatches = meta.story({
   }),
   render(props) {
     return (
-      <Form onSubmit={(evt) => evt.preventDefault()} className="flex flex-col gap-6">
+      <Form
+        className="flex flex-col gap-6"
+        onSubmit={(evt) => {
+          evt.preventDefault();
+        }}
+      >
         <Field
           {...props}
           name="sui:password:object"
@@ -207,7 +218,11 @@ export const CustomValidate = meta.story({
   }),
   render(props) {
     return (
-      <Form onSubmit={(evt) => evt.preventDefault()}>
+      <Form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+        }}
+      >
         <Field
           {...props}
           name="sui:username"
@@ -235,17 +250,25 @@ export const Validity = meta.story({
   }),
   render(props) {
     return (
-      <Form onSubmit={(evt) => evt.preventDefault()}>
+      <Form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+        }}
+      >
         <Field
           {...props}
           name="sui:email:validity"
-          validity={(state) =>
-            state.validity.valid === false ? (
-              <span className="text-sm text-red-600">{state.errors.join("、")}</span>
-            ) : state.validity.valid === true ? (
-              <span className="text-sm text-green-600">有効なメールアドレスです。</span>
-            ) : null
-          }
+          validity={(state) => {
+            if (state.validity.valid === false) {
+              return <span className="text-sm text-red-600">{state.errors.join("、")}</span>;
+            }
+
+            if (state.validity.valid === true) {
+              return <span className="text-sm text-green-600">有効なメールアドレスです。</span>;
+            }
+
+            return null;
+          }}
           errorMatches={false}
         >
           <TextField type="email" required className="w-[320px]" placeholder="you@example.com" />
@@ -266,7 +289,11 @@ export const NativeControl = meta.story({
   }),
   render(props) {
     return (
-      <Form onSubmit={(evt) => evt.preventDefault()}>
+      <Form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+        }}
+      >
         <Field
           {...props}
           name="sui:tel"
@@ -297,7 +324,12 @@ export const WithCheckbox = meta.story({
     const Parts = FieldParts;
 
     return (
-      <Form onSubmit={(evt) => evt.preventDefault()} className="flex flex-col gap-3">
+      <Form
+        className="flex flex-col gap-3"
+        onSubmit={(evt) => {
+          evt.preventDefault();
+        }}
+      >
         <Field {...props} name="sui:interest" errorMatches={{ valueMissing: "選択してください。" }}>
           <div className="flex flex-col gap-2">
             <Field.Item className="flex flex-row items-center gap-2">
@@ -355,7 +387,11 @@ export const Parts = meta.story({
     const Field = FieldParts;
 
     return (
-      <Form onSubmit={(evt) => evt.preventDefault()}>
+      <Form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+        }}
+      >
         <Field.Root {...props} name="sui:nickname">
           <Field.Label>ニックネーム</Field.Label>
           <TextField required className="w-[320px]" placeholder="すーるー" />
@@ -379,8 +415,10 @@ export const LoginForm = meta.story({
   render(props) {
     return (
       <Form
-        onSubmit={(evt) => evt.preventDefault()}
         className="flex w-[320px] flex-col gap-4 rounded border p-4"
+        onSubmit={(evt) => {
+          evt.preventDefault();
+        }}
       >
         <Field
           {...props}

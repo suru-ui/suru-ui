@@ -15,9 +15,7 @@ export namespace DrawerTriggerProps {
   export type Render = Omit<RenderProps<DrawerTriggerState>, "render">;
 
   export type SuruUI = {
-    /**
-     * ボタンとして描画する関数です。
-     */
+    /** ボタンとして描画する関数です。 */
     children: NonNullable<RenderProps<DrawerTriggerState>["render"]>;
   };
 
@@ -25,9 +23,9 @@ export namespace DrawerTriggerProps {
     Pick<
       React.ComponentProps<typeof Drawer.Trigger<TPayload>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // DrawerTriggerProps より:
+      // DrawerTriggerProps より :
       | "handle"
       | "payload"
       | "id"
@@ -58,10 +56,8 @@ export interface IDrawerTrigger extends IComponent<DrawerTriggerProps> {
   <TPayload = any>(props: DrawerTriggerProps<TPayload>): IComponent.Return;
 }
 
-/**
- * ドロワーを開くボタンコンポーネントです。
- */
-export const DrawerTrigger: IDrawerTrigger = function SuiDrawerTrigger(props: DrawerTriggerProps) {
+/** ドロワーを開くボタンコンポーネントです。 */
+export const DrawerTrigger: IDrawerTrigger = (props: DrawerTriggerProps) => {
   const { handle, children, className, ...otherProps } = props;
 
   return (
@@ -80,7 +76,6 @@ export const DrawerTrigger: IDrawerTrigger = function SuiDrawerTrigger(props: Dr
 };
 
 export { DrawerTrigger as Trigger };
-
 export namespace Trigger {
   export type State = DrawerTriggerState;
 

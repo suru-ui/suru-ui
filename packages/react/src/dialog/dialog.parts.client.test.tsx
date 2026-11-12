@@ -1,5 +1,5 @@
 import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { DialogAction } from "./action/dialog.action.jsx";
@@ -37,10 +37,10 @@ function renderDialog(children: React.ReactNode, props?: DialogPopupProps) {
 
 describe("DialogPortal", () => {
   test("ポップアップを別の場所へ配置する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<DialogTitle>見出し</DialogTitle>);
 
-    // 検証
+    // 検証。
     const portal = screen.getByClassName("sui_dialog_portal").element();
     expect(portal.tagName).toBe("DIV");
     expect(portal.getAttribute("data-scope")).toBe("");
@@ -49,10 +49,10 @@ describe("DialogPortal", () => {
 
 describe("DialogBackdrop", () => {
   test("オーバーレイを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<DialogTitle>見出し</DialogTitle>);
 
-    // 検証
+    // 検証。
     const backdrop = screen.getByClassName("sui_dialog_backdrop").element();
     expect(backdrop.tagName).toBe("DIV");
   });
@@ -60,10 +60,10 @@ describe("DialogBackdrop", () => {
 
 describe("DialogViewport", () => {
   test("配置コンテナーを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<DialogTitle>見出し</DialogTitle>);
 
-    // 検証
+    // 検証。
     const viewport = screen.getByClassName("sui_dialog_viewport").element();
     expect(viewport.tagName).toBe("DIV");
   });
@@ -71,14 +71,14 @@ describe("DialogViewport", () => {
 
 describe("DialogHeader", () => {
   test("カードのヘッダーとして描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <DialogHeader>
         <span>内容</span>
       </DialogHeader>,
     );
 
-    // 検証
+    // 検証。
     const header = screen.getByClassName("sui_dialog_header").element();
     expect(header.tagName).toBe("DIV");
     expect(header.classList.contains("sui_card_header")).toBe(true);
@@ -86,7 +86,7 @@ describe("DialogHeader", () => {
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <DialogHeader
         render={(props, state) => (
@@ -96,26 +96,36 @@ describe("DialogHeader", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_dialog_header").element().getAttribute("data-probe")).toBe(
       "sm/lg/stacked/true",
     );
   });
 
   test("className と style の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <DialogHeader
         style={(state) => ({ opacity: state.outlined ? "0.5" : "1" })}
         className={(state) => `probe-variant_${state.variant}`}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     const header = screen.getByClassName("sui_dialog_header").element();
     expect(header.classList.contains("probe-variant_stacked")).toBe(true);
     expect(header.style.opacity).toBe("0.5");
@@ -124,17 +134,17 @@ describe("DialogHeader", () => {
 
 describe("DialogTitle", () => {
   test("見出しとして描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<DialogTitle>見出し</DialogTitle>);
 
-    // 検証
+    // 検証。
     const title = screen.getByRole("heading", { name: "見出し" }).element();
     expect(title.tagName).toBe("H2");
     expect(title.classList.contains("sui_card_title")).toBe(true);
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <DialogTitle
         render={(props, state) => (
@@ -145,10 +155,15 @@ describe("DialogTitle", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_dialog_title").element().getAttribute("data-probe")).toBe(
       "sm/lg/stacked/true",
     );
@@ -157,17 +172,17 @@ describe("DialogTitle", () => {
 
 describe("DialogDescription", () => {
   test("説明文として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<DialogDescription>説明</DialogDescription>);
 
-    // 検証
+    // 検証。
     const description = screen.getByText("説明").element();
     expect(description.tagName).toBe("P");
     expect(description.classList.contains("sui_card_description")).toBe(true);
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <DialogDescription
         render={(props, state) => (
@@ -177,10 +192,15 @@ describe("DialogDescription", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_dialog_description").element().getAttribute("data-probe"),
     ).toBe("sm/lg/stacked/true");
@@ -189,10 +209,10 @@ describe("DialogDescription", () => {
 
 describe("DialogAction", () => {
   test("カードの操作要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<DialogAction>操作</DialogAction>);
 
-    // 検証
+    // 検証。
     const action = screen.getByClassName("sui_dialog_action").element();
     expect(action.tagName).toBe("DIV");
     expect(action.classList.contains("sui_card_action")).toBe(true);
@@ -200,7 +220,7 @@ describe("DialogAction", () => {
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <DialogAction
         render={(props, state) => (
@@ -210,10 +230,15 @@ describe("DialogAction", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_dialog_action").element().getAttribute("data-probe")).toBe(
       "sm/lg/stacked/true",
     );
@@ -222,10 +247,10 @@ describe("DialogAction", () => {
 
 describe("DialogContent", () => {
   test("カードの本文として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<DialogContent title="説明">本文</DialogContent>);
 
-    // 検証
+    // 検証。
     const content = screen.getByClassName("sui_dialog_content").element();
     expect(content.tagName).toBe("DIV");
     expect(content.classList.contains("sui_card_content")).toBe(true);
@@ -234,7 +259,7 @@ describe("DialogContent", () => {
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <DialogContent
         render={(props, state) => (
@@ -244,10 +269,15 @@ describe("DialogContent", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_dialog_content").element().getAttribute("data-probe")).toBe(
       "sm/lg/stacked/true",
     );
@@ -256,14 +286,14 @@ describe("DialogContent", () => {
 
 describe("DialogFooter", () => {
   test("カードのフッターとして描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <DialogFooter>
         <span>操作</span>
       </DialogFooter>,
     );
 
-    // 検証
+    // 検証。
     const footer = screen.getByClassName("sui_dialog_footer").element();
     expect(footer.tagName).toBe("DIV");
     expect(footer.classList.contains("sui_card_footer")).toBe(true);
@@ -271,7 +301,7 @@ describe("DialogFooter", () => {
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <DialogFooter
         render={(props, state) => (
@@ -281,10 +311,15 @@ describe("DialogFooter", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_dialog_footer").element().getAttribute("data-probe")).toBe(
       "sm/lg/stacked/true",
     );
@@ -293,7 +328,7 @@ describe("DialogFooter", () => {
 
 describe("DialogToggleTrigger", () => {
   test("描画関数の要素にクラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <DialogRoot>
         <DialogToggleTrigger>
@@ -306,7 +341,7 @@ describe("DialogToggleTrigger", () => {
       </DialogRoot>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByRole("button", { name: "開く" }).element();
     expect(trigger.classList.contains("sui_dialog_trigger")).toBe(true);
   });
@@ -314,7 +349,7 @@ describe("DialogToggleTrigger", () => {
 
 describe("DialogCloseTrigger", () => {
   test("描画関数の要素にクラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <DialogCloseTrigger>
         {(props) => (
@@ -325,7 +360,7 @@ describe("DialogCloseTrigger", () => {
       </DialogCloseTrigger>,
     );
 
-    // 検証
+    // 検証。
     const close = screen.getByRole("button", { name: "閉じる" }).element();
     expect(close.classList.contains("sui_dialog_close")).toBe(true);
   });

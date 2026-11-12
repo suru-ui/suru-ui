@@ -25,7 +25,7 @@ export namespace MenuCheckboxItemIndicatorProps {
     Pick<
       React.ComponentProps<typeof Menu.CheckboxItemIndicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuCheckboxItemIndicatorProps より:
+      // MenuCheckboxItemIndicatorProps より :
       "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -47,54 +47,53 @@ export type MenuCheckboxItemIndicatorProps = MenuCheckboxItemIndicatorProps.Rend
 
 export type IMenuCheckboxItemIndicator = IComponent<MenuCheckboxItemIndicatorProps>;
 
-/**
- * チェックされた項目を示す要素です。
- */
-export const MenuCheckboxItemIndicator: IMenuCheckboxItemIndicator =
-  function SuiMenuCheckboxItemIndicator(props) {
-    const ctx = useMenuContext();
-    const { style, render, className, ...otherProps } = props;
+/** チェックされた項目を示す要素です。 */
+export const MenuCheckboxItemIndicator: IMenuCheckboxItemIndicator = (props) => {
+  const ctx = useMenuContext();
+  const { style, render, className, ...otherProps } = props;
 
-    return (
-      <Menu.CheckboxItemIndicator
-        {...otherProps}
-        {...proxyRenderProps<Menu.CheckboxItemIndicator.State, MenuCheckboxItemIndicatorState>(
-          (state) => ({ ...ctx, ...state }),
-          {
-            style,
-            render: (htmlProps, state) => (
-              <MenuCheckboxItemIndicatorContext value={state}>
-                <RenderElement
-                  state={state}
-                  render={render}
-                  htmlProps={htmlProps}
-                  defaultTagName="span"
-                />
-              </MenuCheckboxItemIndicatorContext>
-            ),
-            className: cn<MenuCheckboxItemIndicatorState>(
-              className,
-              "sui_menu_item_indicator",
-              "sui_menu_checkbox_item_indicator",
-              (state) => !state.checked && "sui_menu_item_indicator-unchecked",
-              (state) => `sui_menu_item_indicator-size_${state.size}`,
-              (state) => `sui_menu_item_indicator-radius_${state.radius}`,
-              (state) => `sui_menu_item_indicator-variant_${state.variant}`,
-              (state) => state.outlined && "sui_menu_item_indicator-outlined",
-              (state) => state.disabled && "sui_menu_item_indicator-disabled",
-              (state) => state.highlighted && "sui_menu_item_indicator-highlighted",
-              (state) =>
-                state.transitionStatus !== undefined &&
-                `sui_menu_item_indicator-transition_status_${state.transitionStatus}`,
-            ),
-          },
-        )}
-      />
-    );
-  };
+  return (
+    <Menu.CheckboxItemIndicator
+      {...otherProps}
+      {...proxyRenderProps<Menu.CheckboxItemIndicator.State, MenuCheckboxItemIndicatorState>(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <MenuCheckboxItemIndicatorContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="span"
+              />
+            </MenuCheckboxItemIndicatorContext>
+          ),
+          className: cn<MenuCheckboxItemIndicatorState>(
+            className,
+            "sui_menu_item_indicator",
+            "sui_menu_checkbox_item_indicator",
+            (state) => !state.checked && "sui_menu_item_indicator-unchecked",
+            (state) => `sui_menu_item_indicator-size_${state.size}`,
+            (state) => `sui_menu_item_indicator-radius_${state.radius}`,
+            (state) => `sui_menu_item_indicator-variant_${state.variant}`,
+            (state) => state.outlined && "sui_menu_item_indicator-outlined",
+            (state) => state.disabled && "sui_menu_item_indicator-disabled",
+            (state) => state.highlighted && "sui_menu_item_indicator-highlighted",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_menu_item_indicator-transition_status_${state.transitionStatus}`,
+          ),
+        },
+      )}
+    />
+  );
+};
 
 export { MenuCheckboxItemIndicator as CheckboxItemIndicator };
-
 export namespace CheckboxItemIndicator {
   export type State<TItem = any> = MenuCheckboxItemIndicatorState<TItem>;
 

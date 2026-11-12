@@ -1,29 +1,27 @@
 @layer sui.component {
-@scope (.sui_alert_dialog_backdrop) to ([data-scope]) {
+  @scope (.sui_alert_dialog_backdrop) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: absolute;
+      inset: 0px;
+    }
 
-/* 固定 */
-:scope {
-  position: absolute;
-  inset: 0px;
-}
+    /* 変数 */
+    :scope {
+      --sui_alert_dialog_backdrop-background_color: ;
+      --sui_alert_dialog_backdrop-filter-blur: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_alert_dialog_backdrop-background_color: ;
-  --sui_alert_dialog_backdrop-filter-blur: ;
-}
+    /* 可変 */
+    :scope {
+      background-color: var(--sui_alert_dialog_backdrop-background_color);
+      backdrop-filter: var(--sui_alert_dialog_backdrop-filter-blur);
+    }
 
-/* 可変 */
-:scope {
-  background-color: var(--sui_alert_dialog_backdrop-background_color);
-  backdrop-filter: var(--sui_alert_dialog_backdrop-filter-blur);
-}
-
-/* 代入 */
-:scope {
-  --sui_alert_dialog_backdrop-background_color: var(--sui-backdrop-color);
-  --sui_alert_dialog_backdrop-filter-blur: blur(var(--sui-backdrop-blur));
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_alert_dialog_backdrop-background_color: var(--sui-backdrop-color);
+      --sui_alert_dialog_backdrop-filter-blur: blur(var(--sui-backdrop-blur));
+    }
+  } /* @scope */
 } /* @layer */

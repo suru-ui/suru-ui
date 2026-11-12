@@ -1,128 +1,123 @@
 @layer sui.component {
-@scope (.sui_autocomplete_addon) to ([data-scope]) {
+  @scope (.sui_autocomplete_addon) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: relative;
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      align-self: center;
+      justify-content: center;
+      overflow: hidden;
+      white-space: nowrap;
 
-/* 固定 */
-:scope {
-  position: relative;
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  align-self: center;
-  justify-content: center;
-  overflow: hidden;
-  white-space: nowrap;
+      &:empty {
+        display: none;
+      }
+    }
 
-  &:empty {
-    display: none;
-  }
-}
+    /* 変数 */
+    :scope {
+      --sui_autocomplete_addon-min_width: ;
+      --sui_autocomplete_addon-virtual_padding_block: ;
+      --sui_autocomplete_addon-font_family: ;
+      --sui_autocomplete_addon-font_size: ;
+      --sui_autocomplete_addon-font_weight: ;
+      --sui_autocomplete_addon-line_height: ;
+      --sui_autocomplete_addon-color: ;
+      --sui_autocomplete_addon-letter_spacing: ;
+      --sui_autocomplete_addon__svg-size: ;
+      --sui_autocomplete_addon__svg-color: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_autocomplete_addon-min_width: ;
-  --sui_autocomplete_addon-virtual_padding_block: ;
-  --sui_autocomplete_addon-font_family: ;
-  --sui_autocomplete_addon-font_size: ;
-  --sui_autocomplete_addon-font_weight: ;
-  --sui_autocomplete_addon-line_height: ;
-  --sui_autocomplete_addon-color: ;
-  --sui_autocomplete_addon-letter_spacing: ;
-  --sui_autocomplete_addon__svg-size: ;
-  --sui_autocomplete_addon__svg-color: ;
-}
+    /* 可変 */
+    :scope {
+      min-width: var(--sui_autocomplete_addon-min_width);
+      font-family: var(--sui_autocomplete_addon-font_family);
+      font-size: var(--sui_autocomplete_addon-font_size);
+      font-weight: var(--sui_autocomplete_addon-font_weight);
+      line-height: var(--sui_autocomplete_addon-line_height);
+      color: var(--sui_autocomplete_addon-color);
+      letter-spacing: var(--sui_autocomplete_addon-letter_spacing);
 
-/* 可変 */
-:scope {
-  min-width: var(--sui_autocomplete_addon-min_width);
-  font-family: var(--sui_autocomplete_addon-font_family);
-  font-size: var(--sui_autocomplete_addon-font_size);
-  font-weight: var(--sui_autocomplete_addon-font_weight);
-  line-height: var(--sui_autocomplete_addon-line_height);
-  color: var(--sui_autocomplete_addon-color);
-  letter-spacing: var(--sui_autocomplete_addon-letter_spacing);
+      svg:not(.sui-ignore) {
+        width: var(--sui_autocomplete_addon__svg-size);
+        height: var(--sui_autocomplete_addon__svg-size);
+        color: var(--sui_autocomplete_addon__svg-color);
+      }
+    }
 
-  svg:not(.sui-ignore) {
-    width: var(--sui_autocomplete_addon__svg-size);
-    height: var(--sui_autocomplete_addon__svg-size);
-    color: var(--sui_autocomplete_addon__svg-color);
-  }
-}
+    /* 代入 */
+    :scope {
+      --sui_autocomplete_addon-min_width: calc(
+        var(--sui_autocomplete_addon__svg-size) +
+          var(--sui_autocomplete_addon-virtual_padding_block) * 2
+      );
+      --sui_autocomplete_addon-virtual_padding_block: --sui-space(0.5);
+      --sui_autocomplete_addon-font_family: var(--sui-font-sans);
+      --sui_autocomplete_addon-color: var(--sui-canvas_text-2);
+      --sui_autocomplete_addon__svg-size: calc(
+        var(--sui_autocomplete_addon-font_size) * var(--sui_autocomplete_addon-line_height)
+      );
+      --sui_autocomplete_addon__svg-color: --sui-icon_color(
+        var(--sui_autocomplete_addon-color),
+        var(--sui_autocomplete-background_color)
+      );
 
-/* 代入 */
-:scope {
-  --sui_autocomplete_addon-min_width: calc(
-                                        var(--sui_autocomplete_addon__svg-size)
-                                        + var(--sui_autocomplete_addon-virtual_padding_block) * 2
-                                      );
-  --sui_autocomplete_addon-virtual_padding_block: --sui-space(0.5);
-  --sui_autocomplete_addon-font_family: var(--sui-font-sans);
-  --sui_autocomplete_addon-color: var(--sui-canvas_text-2);
-  --sui_autocomplete_addon__svg-size: calc(
-                                        var(--sui_autocomplete_addon-font_size)
-                                        * var(--sui_autocomplete_addon-line_height)
-                                      );
-  --sui_autocomplete_addon__svg-color: --sui-icon_color(
-                                         var(--sui_autocomplete_addon-color),
-                                         var(--sui_autocomplete-background_color)
-                                       );
+      &.sui_autocomplete_addon-size_sm {
+        --sui_autocomplete_addon-font_size: var(--sui-text-oln-sm-n-font_size);
+        --sui_autocomplete_addon-font_weight: var(--sui-text-oln-sm-n-font_weight);
+        --sui_autocomplete_addon-line_height: var(--sui-text-oln-sm-n-line_height);
+        --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+      }
 
-  &.sui_autocomplete_addon-size_sm {
-    --sui_autocomplete_addon-font_size: var(--sui-text-oln-sm-n-font_size);
-    --sui_autocomplete_addon-font_weight: var(--sui-text-oln-sm-n-font_weight);
-    --sui_autocomplete_addon-line_height: var(--sui-text-oln-sm-n-line_height);
-    --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
-  }
+      &.sui_autocomplete_addon-size_md {
+        --sui_autocomplete_addon-font_size: var(--sui-text-oln-md-n-font_size);
+        --sui_autocomplete_addon-font_weight: var(--sui-text-oln-md-n-font_weight);
+        --sui_autocomplete_addon-line_height: var(--sui-text-oln-md-n-line_height);
+        --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+      }
 
-  &.sui_autocomplete_addon-size_md {
-    --sui_autocomplete_addon-font_size: var(--sui-text-oln-md-n-font_size);
-    --sui_autocomplete_addon-font_weight: var(--sui-text-oln-md-n-font_weight);
-    --sui_autocomplete_addon-line_height: var(--sui-text-oln-md-n-line_height);
-    --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
-  }
-
-  &.sui_autocomplete_addon-size_lg {
-    --sui_autocomplete_addon-font_size: var(--sui-text-oln-lg-n-font_size);
-    --sui_autocomplete_addon-font_weight: var(--sui-text-oln-lg-n-font_weight);
-    --sui_autocomplete_addon-line_height: var(--sui-text-oln-lg-n-line_height);
-    --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
-  }
-}
-
-} /* @scope */
+      &.sui_autocomplete_addon-size_lg {
+        --sui_autocomplete_addon-font_size: var(--sui-text-oln-lg-n-font_size);
+        --sui_autocomplete_addon-font_weight: var(--sui-text-oln-lg-n-font_weight);
+        --sui_autocomplete_addon-line_height: var(--sui-text-oln-lg-n-line_height);
+        --sui_autocomplete_addon-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_autocomplete) to ([data-scope]) {
+  @scope (.sui_autocomplete) to ([data-scope]) {
+    /* ルートの無効化状態に依存し、補助表示自身に等価なクラスが無いため、ルート起点の別ブロックにします。 */
+    :scope {
+      &.sui_autocomplete-variant_naked.sui_autocomplete-disabled .sui_autocomplete_addon {
+        color: var(--sui-disabled-naked-canvas_text);
+      }
 
-/* ルートの無効化状態に依存し、補助表示自身に等価なクラスが無いため、ルート起点の別ブロックにします。 */
-:scope {
-  &.sui_autocomplete-variant_naked.sui_autocomplete-disabled .sui_autocomplete_addon {
-    color: var(--sui-disabled-naked-canvas_text);
-  }
+      &.sui_autocomplete-variant_naked.sui_autocomplete-disabled
+        .sui_autocomplete_addon
+        svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+          var(--sui-disabled-naked-canvas_text),
+          var(--sui-disabled-naked-canvas)
+        );
+      }
 
-  &.sui_autocomplete-variant_naked.sui_autocomplete-disabled
-    .sui_autocomplete_addon
-      svg:not(.sui-ignore) {
-    color: --sui-icon_color(
-             var(--sui-disabled-naked-canvas_text),
-             var(--sui-disabled-naked-canvas)
-           );
-  }
+      &.sui_autocomplete-variant_liquid.sui_autocomplete-disabled .sui_autocomplete_addon {
+        color: var(--sui-disabled-liquid-canvas_text);
+      }
 
-  &.sui_autocomplete-variant_liquid.sui_autocomplete-disabled .sui_autocomplete_addon {
-    color: var(--sui-disabled-liquid-canvas_text);
-  }
-
-  &.sui_autocomplete-variant_liquid.sui_autocomplete-disabled
-    .sui_autocomplete_addon
-      svg:not(.sui-ignore) {
-    color: --sui-icon_color(
-             var(--sui-disabled-liquid-canvas_text),
-             var(--sui-disabled-liquid-canvas)
-           );
-  }
-}
-
-} /* @scope */
+      &.sui_autocomplete-variant_liquid.sui_autocomplete-disabled
+        .sui_autocomplete_addon
+        svg:not(.sui-ignore) {
+        color: --sui-icon_color(
+          var(--sui-disabled-liquid-canvas_text),
+          var(--sui-disabled-liquid-canvas)
+        );
+      }
+    }
+  } /* @scope */
 } /* @layer */

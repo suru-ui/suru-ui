@@ -20,11 +20,10 @@ export type IUseDrawerBodyContext = IUseContext<DrawerBodyContext>;
 /**
  * {@link DrawerBodyContext} を読み取るフックです。
  */
-export const useDrawerBodyContext: IUseDrawerBodyContext = function useSuiDrawerBodyContext(
-  optional,
-): any {
+export const useDrawerBodyContext: IUseDrawerBodyContext = (optional): any => {
   const ctx = React.use(DrawerBodyContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "DrawerBodyContext",
       providerName: "DrawerBody",

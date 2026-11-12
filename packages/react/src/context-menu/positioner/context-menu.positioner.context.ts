@@ -25,18 +25,20 @@ export type IUseContextMenuPositionerContext = IUseContext<ContextMenuPositioner
 /**
  * {@link ContextMenuPositionerContext} を読み取るフックです。
  */
-export const useContextMenuPositionerContext: IUseContextMenuPositionerContext =
-  function useSuiContextMenuPositionerContext(optional): any {
-    const ctx = React.use(ContextMenuPositionerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ContextMenuPositionerContext",
-        providerName: "ContextMenuPositioner",
-      });
-    }
+export const useContextMenuPositionerContext: IUseContextMenuPositionerContext = (
+  optional,
+): any => {
+  const ctx = React.use(ContextMenuPositionerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ContextMenuPositionerContext",
+      providerName: "ContextMenuPositioner",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ContextMenuPositionerContext as PositionerContext,

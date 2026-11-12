@@ -7,9 +7,7 @@ import type { Override, IUseContext } from "../../types.js";
  * {@link PasswordFieldRoot} が子パーツへ提供する表示状態です。
  */
 export type PasswordFieldContextState = {
-  /**
-   * パスワードを表示しているかどうかです。
-   */
+  /** パスワードを表示しているかどうかです。 */
   readonly visible: boolean;
 };
 
@@ -30,9 +28,7 @@ export type PasswordFieldContext = Readonly<
   >
 >;
 
-/**
- * PasswordField の表示状態を子パーツへ伝播するコンテキストです。
- */
+/** PasswordField の表示状態を子パーツへ伝播するコンテキストです。 */
 export const PasswordFieldContext: React.Context<PasswordFieldContext | null> =
   React.createContext<PasswordFieldContext | null>(null);
 
@@ -41,17 +37,17 @@ export type IUsePasswordFieldContext = IUseContext<PasswordFieldContext>;
 /**
  * {@link PasswordFieldContext} を読み取るフックです。
  */
-export const usePasswordFieldContext: IUsePasswordFieldContext =
-  function useSuiPasswordFieldContext(optional?: boolean): any {
-    const ctx = React.use(PasswordFieldContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "PasswordFieldContext",
-        providerName: "PasswordFieldRoot",
-      });
-    }
+export const usePasswordFieldContext: IUsePasswordFieldContext = (optional?: boolean): any => {
+  const ctx = React.use(PasswordFieldContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "PasswordFieldContext",
+      providerName: "PasswordFieldRoot",
+    });
+  }
+
+  return ctx;
+};
 
 export { PasswordFieldContext as Context, usePasswordFieldContext as useContext };

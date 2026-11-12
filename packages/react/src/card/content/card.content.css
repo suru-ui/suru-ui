@@ -1,64 +1,62 @@
 @layer sui.component {
-@scope (.sui_card_content) to ([data-scope]) {
+  @scope (.sui_card_content) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      line-break: strict;
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
 
-/* 固定 */
-:scope {
-  line-break: strict;
-  word-break: normal;
-  overflow-wrap: anywhere;
-}
+    /* 変数 */
+    :scope {
+      --sui_card_content-padding_inline: ;
+      --sui_card_content-font_family: ;
+      --sui_card_content-font_size: ;
+      --sui_card_content-font_weight: ;
+      --sui_card_content-line_height: ;
+      --sui_card_content-color: ;
+      --sui_card_content-letter_spacing: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_card_content-padding_inline: ;
-  --sui_card_content-font_family: ;
-  --sui_card_content-font_size: ;
-  --sui_card_content-font_weight: ;
-  --sui_card_content-line_height: ;
-  --sui_card_content-color: ;
-  --sui_card_content-letter_spacing: ;
-}
+    /* 可変 */
+    :scope {
+      padding-inline: var(--sui_card_content-padding_inline);
+      font-family: var(--sui_card_content-font_family);
+      font-size: var(--sui_card_content-font_size);
+      font-weight: var(--sui_card_content-font_weight);
+      line-height: var(--sui_card_content-line_height);
+      color: var(--sui_card_content-color);
+      letter-spacing: var(--sui_card_content-letter_spacing);
+    }
 
-/* 可変 */
-:scope {
-  padding-inline: var(--sui_card_content-padding_inline);
-  font-family: var(--sui_card_content-font_family);
-  font-size: var(--sui_card_content-font_size);
-  font-weight: var(--sui_card_content-font_weight);
-  line-height: var(--sui_card_content-line_height);
-  color: var(--sui_card_content-color);
-  letter-spacing: var(--sui_card_content-letter_spacing);
-}
+    /* 代入 */
+    :scope {
+      --sui_card_content-font_family: var(--sui-font-sans);
+      --sui_card_content-color: var(--sui_card-color);
 
-/* 代入 */
-:scope {
-  --sui_card_content-font_family: var(--sui-font-sans);
-  --sui_card_content-color: var(--sui_card-color);
+      &.sui_card_content-size_sm {
+        --sui_card_content-padding_inline: --sui-space(3);
+        --sui_card_content-font_size: var(--sui-text-std-sm-n-font_size);
+        --sui_card_content-font_weight: var(--sui-text-std-sm-n-font_weight);
+        --sui_card_content-line_height: var(--sui-text-std-sm-n-line_height);
+        --sui_card_content-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+      }
 
-  &.sui_card_content-size_sm {
-    --sui_card_content-padding_inline: --sui-space(3);
-    --sui_card_content-font_size: var(--sui-text-std-sm-n-font_size);
-    --sui_card_content-font_weight: var(--sui-text-std-sm-n-font_weight);
-    --sui_card_content-line_height: var(--sui-text-std-sm-n-line_height);
-    --sui_card_content-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
-  }
+      &.sui_card_content-size_md {
+        --sui_card_content-padding_inline: --sui-space(4);
+        --sui_card_content-font_size: var(--sui-text-std-md-n-font_size);
+        --sui_card_content-font_weight: var(--sui-text-std-md-n-font_weight);
+        --sui_card_content-line_height: var(--sui-text-std-md-n-line_height);
+        --sui_card_content-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+      }
 
-  &.sui_card_content-size_md {
-    --sui_card_content-padding_inline: --sui-space(4);
-    --sui_card_content-font_size: var(--sui-text-std-md-n-font_size);
-    --sui_card_content-font_weight: var(--sui-text-std-md-n-font_weight);
-    --sui_card_content-line_height: var(--sui-text-std-md-n-line_height);
-    --sui_card_content-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
-  }
-
-  &.sui_card_content-size_lg {
-    --sui_card_content-padding_inline: --sui-space(5);
-    --sui_card_content-font_size: var(--sui-text-std-lg-n-font_size);
-    --sui_card_content-font_weight: var(--sui-text-std-lg-n-font_weight);
-    --sui_card_content-line_height: var(--sui-text-std-lg-n-line_height);
-    --sui_card_content-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
-  }
-}
-
-} /* @scope */
+      &.sui_card_content-size_lg {
+        --sui_card_content-padding_inline: --sui-space(5);
+        --sui_card_content-font_size: var(--sui-text-std-lg-n-font_size);
+        --sui_card_content-font_weight: var(--sui-text-std-lg-n-font_weight);
+        --sui_card_content-line_height: var(--sui-text-std-lg-n-line_height);
+        --sui_card_content-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+      }
+    }
+  } /* @scope */
 } /* @layer */

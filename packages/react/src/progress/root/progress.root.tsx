@@ -22,9 +22,7 @@ import {
  */
 export type ProgressRootStatus = Progress.Status;
 
-/**
- * 進捗の配色です。
- */
+/** 進捗の配色です。 */
 export type ProgressRootColor = ProgressContextColor;
 
 /**
@@ -104,7 +102,7 @@ export namespace ProgressRootProps {
     Pick<
       React.ComponentProps<typeof Progress.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ProgressRootProps より:
+      // ProgressRootProps より :
       "aria-valuetext" | "format" | "getAriaValueText" | "locale" | "max" | "min" | "value"
     >,
     keyof Render | keyof SuruUI
@@ -131,7 +129,7 @@ export type IProgressRoot = IComponent<ProgressRootProps>;
  *
  * `value` に `null` を指定すると、不確定状態になります。
  */
-export const ProgressRoot: IProgressRoot = function SuiProgressRoot(props) {
+export const ProgressRoot: IProgressRoot = (props) => {
   const {
     size = "md",
     color = "grey",
@@ -141,12 +139,18 @@ export const ProgressRoot: IProgressRoot = function SuiProgressRoot(props) {
     variant = "liquid",
     outlined = true,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const ctx = React.useMemo<ProgressContext>(
-    () => ({ size, color, radius, variant, outlined }),
+    () => ({
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+    }),
     [size, color, radius, variant, outlined],
   );
 
@@ -155,7 +159,10 @@ export const ProgressRoot: IProgressRoot = function SuiProgressRoot(props) {
       <Progress.Root
         {...otherProps}
         {...proxyRenderProps<Progress.Root.State, ProgressRootState>(
-          (state) => ({ ...ctx, ...state }),
+          (state) => ({
+            ...ctx,
+            ...state,
+          }),
           {
             style,
             render,
@@ -178,7 +185,6 @@ export const ProgressRoot: IProgressRoot = function SuiProgressRoot(props) {
 };
 
 export { ProgressRoot as Root };
-
 export namespace Root {
   export type State = ProgressRootState;
 

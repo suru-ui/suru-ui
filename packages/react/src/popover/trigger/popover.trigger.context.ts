@@ -21,17 +21,17 @@ export type IUsePopoverTriggerContext = IUseContext<PopoverTriggerContext>;
 /**
  * {@link PopoverTriggerContext} を読み取るフックです。
  */
-export const usePopoverTriggerContext: IUsePopoverTriggerContext =
-  function useSuiPopoverTriggerContext(optional): any {
-    const ctx = React.use(PopoverTriggerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "PopoverTriggerContext",
-        providerName: "PopoverTrigger",
-      });
-    }
+export const usePopoverTriggerContext: IUsePopoverTriggerContext = (optional): any => {
+  const ctx = React.use(PopoverTriggerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "PopoverTriggerContext",
+      providerName: "PopoverTrigger",
+    });
+  }
+
+  return ctx;
+};
 
 export { PopoverTriggerContext as TriggerContext, usePopoverTriggerContext as useTriggerContext };

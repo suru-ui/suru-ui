@@ -25,7 +25,7 @@ export namespace MenuGroupLabelProps {
     Pick<
       React.ComponentProps<typeof Menu.GroupLabel>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuGroupLabelProps より:
+      // MenuGroupLabelProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace MenuGroupLabelProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Menu.GroupLabel>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type MenuGroupLabelProps = MenuGroupLabelProps.Render &
 
 export type IMenuGroupLabel = IComponent<MenuGroupLabelProps>;
 
-/**
- * グループに自動的に対応付けられるラベル要素です。
- */
-export const MenuGroupLabel: IMenuGroupLabel = function SuiMenuGroupLabel(props) {
+/** グループに自動的に対応付けられるラベル要素です。 */
+export const MenuGroupLabel: IMenuGroupLabel = (props) => {
   const ctx = useGroupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const MenuGroupLabel: IMenuGroupLabel = function SuiMenuGroupLabel(props)
     <Menu.GroupLabel
       {...otherProps}
       {...proxyRenderProps<Menu.GroupLabel.State, MenuGroupLabelState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -95,7 +96,6 @@ export const MenuGroupLabel: IMenuGroupLabel = function SuiMenuGroupLabel(props)
 };
 
 export { MenuGroupLabel as GroupLabel };
-
 export namespace GroupLabel {
   export type State<TItem = any> = MenuGroupLabelState<TItem>;
 

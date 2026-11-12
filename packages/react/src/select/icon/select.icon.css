@@ -1,42 +1,37 @@
 @layer sui.component {
-@scope (.sui_select_icon) to ([data-scope]) {
+  @scope (.sui_select_icon) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
+    /* 変数 */
+    :scope {
+      --sui_select_icon__svg-size: ;
+      --sui_select_icon__svg-color: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_select_icon__svg-size: ;
-  --sui_select_icon__svg-color: ;
-}
+    /* 可変 */
+    :scope {
+      svg:not(.sui-ignore) {
+        width: var(--sui_select_icon__svg-size);
+        height: var(--sui_select_icon__svg-size);
+        color: var(--sui_select_icon__svg-color);
+      }
+    }
 
-/* 可変 */
-:scope {
-  svg:not(.sui-ignore) {
-    width: var(--sui_select_icon__svg-size);
-    height: var(--sui_select_icon__svg-size);
-    color: var(--sui_select_icon__svg-color);
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_select_icon__svg-size: calc(
-                                 var(--sui_select-font_size)
-                                 * var(--sui_select-line_height)
-                               );
-  --sui_select_icon__svg-color: --sui-icon_color(
-                                  var(--_sui_select-color, var(--sui_select-color-idle)),
-                                  var(--_sui_select-background_color,
-                                    var(--sui_select-background_color-idle)
-                                  )
-                                );
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_select_icon__svg-size: calc(
+        var(--sui_select-font_size) * var(--sui_select-line_height)
+      );
+      --sui_select_icon__svg-color: --sui-icon_color(
+        var(--_sui_select-color, var(--sui_select-color-idle)),
+        var(--_sui_select-background_color, var(--sui_select-background_color-idle))
+      );
+    }
+  } /* @scope */
 } /* @layer */

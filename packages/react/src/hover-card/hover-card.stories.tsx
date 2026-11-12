@@ -78,7 +78,10 @@ export const Positions = meta.story({
             {...props}
             trigger={<Button variant="liquid">{side}</Button>}
             slotProps={{
-              positioner: { side, sideOffset: 8 },
+              positioner: {
+                side,
+                sideOffset: 8,
+              },
             }}
           >
             {side} に表示されます。
@@ -126,9 +129,21 @@ type Member = {
 };
 
 const MEMBERS: readonly Member[] = [
-  { id: "tanaka", name: "田中 太郎", role: "フロントエンドエンジニア" },
-  { id: "suzuki", name: "鈴木 花子", role: "デザイナー" },
-  { id: "sato", name: "佐藤 次郎", role: "バックエンドエンジニア" },
+  {
+    id: "tanaka",
+    name: "田中 太郎",
+    role: "フロントエンドエンジニア",
+  },
+  {
+    id: "suzuki",
+    name: "鈴木 花子",
+    role: "デザイナー",
+  },
+  {
+    id: "sato",
+    name: "佐藤 次郎",
+    role: "バックエンドエンジニア",
+  },
 ];
 
 export const SharedPayload = meta.story({
@@ -177,7 +192,12 @@ export const Controlled = meta.story({
         >
           外部の状態で開閉を制御できます。
         </HoverCard>
-        <Button onClick={() => setOpen((prev) => !prev)} variant="liquid">
+        <Button
+          variant="liquid"
+          onClick={() => {
+            setOpen((prev) => !prev);
+          }}
+        >
           切り替える
         </Button>
       </div>

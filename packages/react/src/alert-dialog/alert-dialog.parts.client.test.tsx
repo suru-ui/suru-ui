@@ -1,5 +1,5 @@
 import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { AlertDialogAction } from "./action/alert-dialog.action.jsx";
@@ -37,10 +37,10 @@ function renderDialog(children: React.ReactNode, props?: AlertDialogPopupProps) 
 
 describe("AlertDialogPortal", () => {
   test("ポップアップを別の場所へ配置する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<AlertDialogTitle>見出し</AlertDialogTitle>);
 
-    // 検証
+    // 検証。
     const portal = screen.getByClassName("sui_alert_dialog_portal").element();
     expect(portal.tagName).toBe("DIV");
     expect(portal.getAttribute("data-scope")).toBe("");
@@ -49,10 +49,10 @@ describe("AlertDialogPortal", () => {
 
 describe("AlertDialogBackdrop", () => {
   test("オーバーレイを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<AlertDialogTitle>見出し</AlertDialogTitle>);
 
-    // 検証
+    // 検証。
     const backdrop = screen.getByClassName("sui_alert_dialog_backdrop").element();
     expect(backdrop.tagName).toBe("DIV");
   });
@@ -60,10 +60,10 @@ describe("AlertDialogBackdrop", () => {
 
 describe("AlertDialogViewport", () => {
   test("配置コンテナーを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<AlertDialogTitle>見出し</AlertDialogTitle>);
 
-    // 検証
+    // 検証。
     const viewport = screen.getByClassName("sui_alert_dialog_viewport").element();
     expect(viewport.tagName).toBe("DIV");
   });
@@ -71,14 +71,14 @@ describe("AlertDialogViewport", () => {
 
 describe("AlertDialogHeader", () => {
   test("カードのヘッダーとして描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <AlertDialogHeader>
         <span>内容</span>
       </AlertDialogHeader>,
     );
 
-    // 検証
+    // 検証。
     const header = screen.getByClassName("sui_alert_dialog_header").element();
     expect(header.tagName).toBe("DIV");
     expect(header.classList.contains("sui_card_header")).toBe(true);
@@ -86,7 +86,7 @@ describe("AlertDialogHeader", () => {
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <AlertDialogHeader
         render={(props, state) => (
@@ -96,26 +96,36 @@ describe("AlertDialogHeader", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_alert_dialog_header").element().getAttribute("data-probe"),
     ).toBe("sm/lg/stacked/true");
   });
 
   test("className と style の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <AlertDialogHeader
         style={(state) => ({ opacity: state.outlined ? "0.5" : "1" })}
         className={(state) => `probe-variant_${state.variant}`}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     const header = screen.getByClassName("sui_alert_dialog_header").element();
     expect(header.classList.contains("probe-variant_stacked")).toBe(true);
     expect(header.style.opacity).toBe("0.5");
@@ -124,10 +134,10 @@ describe("AlertDialogHeader", () => {
 
 describe("AlertDialogTitle", () => {
   test("見出しとして描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<AlertDialogTitle>見出し</AlertDialogTitle>);
 
-    // 検証
+    // 検証。
     const title = screen.getByRole("heading", { name: "見出し" }).element();
     expect(title.tagName).toBe("H2");
     expect(title.classList.contains("sui_card_title")).toBe(true);
@@ -135,7 +145,7 @@ describe("AlertDialogTitle", () => {
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <AlertDialogTitle
         render={(props, state) => (
@@ -146,10 +156,15 @@ describe("AlertDialogTitle", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_alert_dialog_title").element().getAttribute("data-probe"),
     ).toBe("sm/lg/stacked/true");
@@ -158,10 +173,10 @@ describe("AlertDialogTitle", () => {
 
 describe("AlertDialogDescription", () => {
   test("説明文として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<AlertDialogDescription>説明</AlertDialogDescription>);
 
-    // 検証
+    // 検証。
     const description = screen.getByText("説明").element();
     expect(description.tagName).toBe("P");
     expect(description.classList.contains("sui_card_description")).toBe(true);
@@ -169,7 +184,7 @@ describe("AlertDialogDescription", () => {
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <AlertDialogDescription
         render={(props, state) => (
@@ -179,10 +194,15 @@ describe("AlertDialogDescription", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_alert_dialog_description").element().getAttribute("data-probe"),
     ).toBe("sm/lg/stacked/true");
@@ -191,10 +211,10 @@ describe("AlertDialogDescription", () => {
 
 describe("AlertDialogContent", () => {
   test("カードの本文として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<AlertDialogContent title="説明">本文</AlertDialogContent>);
 
-    // 検証
+    // 検証。
     const content = screen.getByClassName("sui_alert_dialog_content").element();
     expect(content.tagName).toBe("DIV");
     expect(content.classList.contains("sui_card_content")).toBe(true);
@@ -203,7 +223,7 @@ describe("AlertDialogContent", () => {
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <AlertDialogContent
         render={(props, state) => (
@@ -213,10 +233,15 @@ describe("AlertDialogContent", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_alert_dialog_content").element().getAttribute("data-probe"),
     ).toBe("sm/lg/stacked/true");
@@ -225,14 +250,14 @@ describe("AlertDialogContent", () => {
 
 describe("AlertDialogFooter", () => {
   test("フッターを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <AlertDialogFooter>
         <span>操作</span>
       </AlertDialogFooter>,
     );
 
-    // 検証
+    // 検証。
     const footer = screen.getByClassName("sui_alert_dialog_footer").element();
     expect(footer.tagName).toBe("DIV");
     expect(footer.classList.contains("sui_card_footer")).toBe(true);
@@ -240,7 +265,7 @@ describe("AlertDialogFooter", () => {
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <AlertDialogFooter
         render={(props, state) => (
@@ -250,10 +275,15 @@ describe("AlertDialogFooter", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_alert_dialog_footer").element().getAttribute("data-probe"),
     ).toBe("sm/lg/stacked/true");
@@ -262,10 +292,10 @@ describe("AlertDialogFooter", () => {
 
 describe("AlertDialogAction", () => {
   test("カードの操作要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(<AlertDialogAction>操作</AlertDialogAction>);
 
-    // 検証
+    // 検証。
     const action = screen.getByClassName("sui_alert_dialog_action").element();
     expect(action.tagName).toBe("DIV");
     expect(action.classList.contains("sui_card_action")).toBe(true);
@@ -273,7 +303,7 @@ describe("AlertDialogAction", () => {
   });
 
   test("render の関数へポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <AlertDialogAction
         render={(props, state) => (
@@ -283,10 +313,15 @@ describe("AlertDialogAction", () => {
           />
         )}
       />,
-      { size: "sm", radius: "lg", variant: "stacked", outlined: true },
+      {
+        size: "sm",
+        radius: "lg",
+        variant: "stacked",
+        outlined: true,
+      },
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_alert_dialog_action").element().getAttribute("data-probe"),
     ).toBe("sm/lg/stacked/true");
@@ -295,7 +330,7 @@ describe("AlertDialogAction", () => {
 
 describe("AlertDialogToggleTrigger", () => {
   test("描画関数の要素にクラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialogRoot>
         <AlertDialogToggleTrigger>
@@ -308,7 +343,7 @@ describe("AlertDialogToggleTrigger", () => {
       </AlertDialogRoot>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByRole("button", { name: "削除" }).element();
     expect(trigger.classList.contains("sui_alert_dialog_trigger")).toBe(true);
   });
@@ -316,7 +351,7 @@ describe("AlertDialogToggleTrigger", () => {
 
 describe("AlertDialogCloseTrigger", () => {
   test("描画関数の要素にクラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDialog(
       <AlertDialogCloseTrigger>
         {(props) => (
@@ -327,7 +362,7 @@ describe("AlertDialogCloseTrigger", () => {
       </AlertDialogCloseTrigger>,
     );
 
-    // 検証
+    // 検証。
     const close = screen.getByRole("button", { name: "閉じる" }).element();
     expect(close.classList.contains("sui_alert_dialog_close")).toBe(true);
   });

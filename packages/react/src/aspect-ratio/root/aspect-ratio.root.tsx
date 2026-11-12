@@ -78,16 +78,21 @@ export type IAspectRatioRoot = IComponent<AspectRatioRootProps>;
  *
  * 直接の子要素はコンテナーいっぱいに広がるように配置されます。画像や動画、地図の埋め込みなどの表示に使います。
  */
-export const AspectRatioRoot: IAspectRatioRoot = function SuiAspectRatioRoot(props) {
+export const AspectRatioRoot: IAspectRatioRoot = (props) => {
   const {
     ratio = 1,
     radius = "none",
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
-
-  const ctx = React.useMemo<AspectRatioContext>(() => ({ ratio, radius }), [radius, ratio]);
+  const ctx = React.useMemo<AspectRatioContext>(
+    () => ({
+      ratio,
+      radius,
+    }),
+    [radius, ratio],
+  );
   const element = useRender({
     props: [
       otherDivProps,
@@ -110,7 +115,6 @@ export const AspectRatioRoot: IAspectRatioRoot = function SuiAspectRatioRoot(pro
 };
 
 export { AspectRatioRoot as Root };
-
 export namespace Root {
   export type State = AspectRatioRootState;
 

@@ -1,4 +1,4 @@
-import { beforeAll } from "vitest";
+import { beforeAll } from "vite-plus/test";
 
 import { preview } from "./preview.js";
 

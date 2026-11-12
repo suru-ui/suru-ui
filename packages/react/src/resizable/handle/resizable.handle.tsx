@@ -20,19 +20,13 @@ export type ResizableHandleDirection = "horizontal" | "vertical";
 export type ResizableHandleState = Override<
   ResizableContext,
   {
-    /**
-     * ハンドルの向きです。
-     */
+    /** ハンドルの向きです。 */
     readonly direction: ResizableHandleDirection;
 
-    /**
-     * ハンドルが無効かどうかです。
-     */
+    /** ハンドルが無効かどうかです。 */
     readonly disabled: boolean;
 
-    /**
-     * ハンドルを非表示にするかどうかです。
-     */
+    /** ハンドルを非表示にするかどうかです。 */
     readonly invisible: boolean;
   }
 >;
@@ -55,7 +49,7 @@ export namespace ResizableHandleProps {
     Pick<
       React.ComponentProps<typeof Separator>,
       // [注意] 必ず react-resizable-panels の型を確認してから取り出すプロパティーを決めます。
-      // SeparatorProps より:
+      // SeparatorProps より :
       "disabled" | "disableDoubleClick" | "elementRef" | "id"
     >,
     keyof Render | keyof SuruUI
@@ -77,10 +71,8 @@ export type ResizableHandleProps = ResizableHandleProps.Render &
 
 export type IResizableHandle = IComponent<ResizableHandleProps>;
 
-/**
- * 隣接するパネルのサイズを変更するハンドルです。
- */
-export const ResizableHandle: IResizableHandle = function SuiResizableHandle(props) {
+/** 隣接するパネルのサイズを変更するハンドルです。 */
+export const ResizableHandle: IResizableHandle = (props) => {
   const ctx = useResizableContext();
   const { render = <Separator />, disabled = false, invisible = false, ...otherProps } = props;
   // ハンドルはパネル群と直交するため、ルートの orientation とは逆の向きになります。
@@ -88,7 +80,10 @@ export const ResizableHandle: IResizableHandle = function SuiResizableHandle(pro
 
   return useRender({
     props: [
-      { ...otherProps, render },
+      {
+        ...otherProps,
+        render,
+      },
       {
         disabled,
         className: cn<ResizableHandleState>(
@@ -101,13 +96,17 @@ export const ResizableHandle: IResizableHandle = function SuiResizableHandle(pro
         "aria-orientation": direction,
       },
     ],
-    state: { ...ctx, disabled, direction, invisible },
+    state: {
+      ...ctx,
+      disabled,
+      direction,
+      invisible,
+    },
     defaultTagName: "div",
   });
 };
 
 export { ResizableHandle as Handle };
-
 export namespace Handle {
   export type State = ResizableHandleState;
 

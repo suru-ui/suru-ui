@@ -11,9 +11,7 @@ import {
   BreadcrumbContext,
 } from "./breadcrumb.root.context.js";
 
-/**
- * パンくずリストの配色です。
- */
+/** パンくずリストの配色です。 */
 export type BreadcrumbRootColor = BreadcrumbContextColor;
 
 /**
@@ -24,9 +22,7 @@ export type BreadcrumbRootColor = BreadcrumbContextColor;
 export type BreadcrumbRootItemObject = Override<
   Omit<BreadcrumbLinkProps, "children">,
   {
-    /**
-     * 項目の表示内容です。
-     */
+    /** 項目の表示内容です。 */
     readonly label: React.ReactNode;
   }
 >;
@@ -105,20 +101,22 @@ export interface IBreadcrumbRoot extends IComponent<BreadcrumbRootProps> {
  *
  * 大きさと配色を子パーツへ伝播し、`items` を {@link BreadcrumbList} の既定の並びで表示するためのデータ源になります。
  */
-export const BreadcrumbRoot: IBreadcrumbRoot = function SuiBreadcrumbRoot(
-  props: BreadcrumbRootProps,
-) {
+export const BreadcrumbRoot: IBreadcrumbRoot = (props: BreadcrumbRootProps) => {
   const {
     size = "md",
     color = "grey",
     items = [],
     "aria-label": ariaLabel = "パンくずリスト",
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherNavProps
   } = props;
   const ctx = React.useMemo<BreadcrumbContext>(
-    () => ({ size, color, items }),
+    () => ({
+      size,
+      color,
+      items,
+    }),
     [size, color, items],
   );
   const element = useRender({
@@ -142,7 +140,6 @@ export const BreadcrumbRoot: IBreadcrumbRoot = function SuiBreadcrumbRoot(
 };
 
 export { BreadcrumbRoot as Root };
-
 export namespace Root {
   export type State<TItem = any> = BreadcrumbRootState<TItem>;
 

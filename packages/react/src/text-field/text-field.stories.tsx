@@ -335,6 +335,7 @@ export const Controlled = meta.story({
   }),
   render(props) {
     const [value, setValue] = React.useState("田中 太郎");
+
     return (
       <div className="flex flex-col gap-2">
         <TextField {...props} value={value} className="w-[320px]" onValueChange={setValue} />
@@ -343,7 +344,12 @@ export const Controlled = meta.story({
           {value === "" ? "(空)" : value}
         </span>
         <div>
-          <button type="button" onClick={() => setValue("")}>
+          <button
+            type="button"
+            onClick={() => {
+              setValue("");
+            }}
+          >
             クリア
           </button>
         </div>
@@ -443,7 +449,12 @@ export const Required = meta.story({
   }),
   render(props) {
     return (
-      <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-3">
+      <form
+        className="flex flex-col gap-3"
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <Field label="氏名" description="空のまま送信すると枠線が赤くなります。">
           <TextField
             {...props}

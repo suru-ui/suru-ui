@@ -28,7 +28,7 @@ export namespace TabsListProps {
       Pick<
         React.ComponentProps<typeof BaseTabs.List>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // TabsListProps より:
+        // TabsListProps より :
         "children" | "activateOnFocus" | "loopFocus"
       >,
       keyof Render | keyof SuruUI
@@ -67,7 +67,7 @@ export interface ITabsList extends IComponent<TabsListProps> {
  *
  * {@link TabsRoot} の `items` を読み取り、`children` を省略した場合は既定の並びで表示します。
  */
-export const TabsList: ITabsList = function SuiTabsList(props: TabsListProps) {
+export const TabsList: ITabsList = (props: TabsListProps) => {
   const ctx = useTabsContext();
   const {
     style,
@@ -82,44 +82,48 @@ export const TabsList: ITabsList = function SuiTabsList(props: TabsListProps) {
   return (
     <BaseTabs.List
       {...otherProps}
-      {...proxyRenderProps<BaseTabs.List.State, TabsListState>((state) => ({ ...ctx, ...state }), {
-        style,
-        render: (htmlProps, state) => (
-          <TabsListContext value={state}>
-            <RenderElement
-              state={state}
-              render={render}
-              htmlProps={htmlProps}
-              defaultTagName="div"
-            />
-          </TabsListContext>
-        ),
-        className: cn<TabsListState>(
-          className,
-          "sui_tabs_list",
-          (state) => `sui_tabs_list-size_${state.size}`,
-          (state) => `sui_tabs_list-radius_${state.radius}`,
-          (state) => `sui_tabs_list-variant_${state.variant}`,
-          (state) => state.outlined && "sui_tabs_list-outlined",
-          (state) => `sui_tabs_list-active_variant_${state.activeVariant}`,
-          (state) => `sui_tabs_list-orientation_${state.orientation}`,
-          (state) => `sui_tabs_list-tab_activation_direction_${state.tabActivationDirection}`,
-        ),
-      })}
+      {...proxyRenderProps<BaseTabs.List.State, TabsListState>(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <TabsListContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </TabsListContext>
+          ),
+          className: cn<TabsListState>(
+            className,
+            "sui_tabs_list",
+            (state) => `sui_tabs_list-size_${state.size}`,
+            (state) => `sui_tabs_list-radius_${state.radius}`,
+            (state) => `sui_tabs_list-variant_${state.variant}`,
+            (state) => state.outlined && "sui_tabs_list-outlined",
+            (state) => `sui_tabs_list-active_variant_${state.activeVariant}`,
+            (state) => `sui_tabs_list-orientation_${state.orientation}`,
+            (state) => `sui_tabs_list-tab_activation_direction_${state.tabActivationDirection}`,
+          ),
+        },
+      )}
       aria-label={ariaLabel}
     >
       {typeof children === "function" ? items.map(children) : children}
     </BaseTabs.List>
   );
 };
-
 const defaultListItemRenderer: ITabsRootItemRenderer = createItemRenderer(
   getTabsItemProps,
   getTabsItemLabel,
 );
 
 export { TabsList as List };
-
 export namespace List {
   export type State<TItem = any> = TabsListState<TItem>;
 

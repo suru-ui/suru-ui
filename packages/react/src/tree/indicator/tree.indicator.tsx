@@ -49,7 +49,7 @@ export type ITreeItemIndicator = IComponent<TreeItemIndicatorProps>;
  *
  * 既定では右向きのシェブロンアイコンを表示し、展開時には下向きに回転します。
  */
-export const TreeItemIndicator: ITreeItemIndicator = function SuiTreeItemIndicator(props) {
+export const TreeItemIndicator: ITreeItemIndicator = (props) => {
   const ctx = useTreeContext();
   const { visible = true, children = <ChevronRightIcon />, ...otherSpanProps } = props;
   const state = React.useMemo<TreeItemIndicatorState>(
@@ -75,12 +75,12 @@ export const TreeItemIndicator: ITreeItemIndicator = function SuiTreeItemIndicat
         className: cn<TreeItemIndicatorState>(
           "sui_tree_item_indicator",
           !visible && "sui_tree_item_indicator-hidden",
-          (state) => `sui_tree_item_indicator-size_${state.size}`,
-          (state) => `sui_tree_item_indicator-color_${state.color}`,
-          (state) => `sui_tree_item_indicator-radius_${state.radius}`,
-          (state) => `sui_tree_item_indicator-variant_${state.variant}`,
-          (state) => state.outlined && "sui_tree_item_indicator-outlined",
-          (state) => state.muted && "sui_tree_item_indicator-muted",
+          (currentState) => `sui_tree_item_indicator-size_${currentState.size}`,
+          (currentState) => `sui_tree_item_indicator-color_${currentState.color}`,
+          (currentState) => `sui_tree_item_indicator-radius_${currentState.radius}`,
+          (currentState) => `sui_tree_item_indicator-variant_${currentState.variant}`,
+          (currentState) => currentState.outlined && "sui_tree_item_indicator-outlined",
+          (currentState) => currentState.muted && "sui_tree_item_indicator-muted",
         ),
       },
     ],
@@ -90,7 +90,6 @@ export const TreeItemIndicator: ITreeItemIndicator = function SuiTreeItemIndicat
 };
 
 export { TreeItemIndicator as Indicator };
-
 export namespace Indicator {
   export type State = TreeItemIndicatorState;
 

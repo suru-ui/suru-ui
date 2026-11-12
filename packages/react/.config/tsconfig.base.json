@@ -3,13 +3,13 @@
   "include": ["./global.d.ts", "../scripts/**/*", "../src/**/*"],
   "exclude": ["../src/**/*.stories.tsx", "../src/**/*.test.ts", "../src/**/*.test.tsx"],
   "compilerOptions": {
-    "types": ["node"],
+    "types": ["node", "vite-plus/client", "vite-plus/test/matchers"],
     "lib": ["DOM", "ESNext"],
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "noEmit": true,
     "target": "es2020",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "erasableSyntaxOnly": true
   }
 }

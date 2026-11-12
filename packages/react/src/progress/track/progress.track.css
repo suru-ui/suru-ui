@@ -1,100 +1,96 @@
 @layer sui.component {
-@scope (.sui_progress_track) to ([data-scope]) {
+  @scope (.sui_progress_track) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: relative;
+      grid-column: 1 / -1;
+      width: 100%;
+      overflow: hidden;
+      border-style: solid;
+    }
 
-/* 固定 */
-:scope {
-  position: relative;
-  grid-column: 1 / -1;
-  width: 100%;
-  overflow: hidden;
-  border-style: solid;
-}
-
-/* 可変 */
-:scope {
-  height: var(--sui_progress_track-height);
-  background-color: var(--sui_progress_track-background_color);
-  border-color: var(--_sui_progress_track-border_color, transparent);
-  border-width: var(--_sui_progress_track-border_width, 0px);
-  border-radius: var(--sui_progress_track-border_radius);
-  corner-shape: var(--sui_progress_track-corner_shape);
-}
-
-} /* @scope */
+    /* 可変 */
+    :scope {
+      height: var(--sui_progress_track-height);
+      background-color: var(--sui_progress_track-background_color);
+      border-color: var(--_sui_progress_track-border_color, transparent);
+      border-width: var(--_sui_progress_track-border_width, 0px);
+      border-radius: var(--sui_progress_track-border_radius);
+      corner-shape: var(--sui_progress_track-corner_shape);
+    }
+  } /* @scope */
 } /* @layer */
 
 /* 寸法・角丸・配色の代入はルートの size・radius・variant 修飾クラスに依存し、outlined の変異もルートに依存しトラック自身には対応するクラスが無いため、空宣言・代入・変異をまとめてルート起点の別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_progress) to ([data-scope]) {
+  @scope (.sui_progress) to ([data-scope]) {
+    /* 変数 */
+    :scope {
+      --sui_progress_track-height: ;
+      --sui_progress_track-background_color: ;
+      --sui_progress_track-border_color: ;
+      --sui_progress_track-border_width: ;
+      --sui_progress_track-border_radius: ;
+      --sui_progress_track-corner_shape: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_progress_track-height: ;
-  --sui_progress_track-background_color: ;
-  --sui_progress_track-border_color: ;
-  --sui_progress_track-border_width: ;
-  --sui_progress_track-border_radius: ;
-  --sui_progress_track-corner_shape: ;
-}
+    /* 代入 */
+    :scope {
+      --sui_progress_track-border_width: --sui-border_width(1);
 
-/* 代入 */
-:scope {
-  --sui_progress_track-border_width: --sui-border_width(1);
+      &.sui_progress-size_sm {
+        --sui_progress_track-height: --sui-border_width(3);
+      }
 
-  &.sui_progress-size_sm {
-    --sui_progress_track-height: --sui-border_width(3);
-  }
+      &.sui_progress-size_md {
+        --sui_progress_track-height: --sui-border_width(5);
+      }
 
-  &.sui_progress-size_md {
-    --sui_progress_track-height: --sui-border_width(5);
-  }
+      &.sui_progress-size_lg {
+        --sui_progress_track-height: --sui-border_width(7);
+      }
 
-  &.sui_progress-size_lg {
-    --sui_progress_track-height: --sui-border_width(7);
-  }
+      &.sui_progress-radius_none {
+        --sui_progress_track-border_radius: 0px;
+      }
 
-  &.sui_progress-radius_none {
-    --sui_progress_track-border_radius: 0px;
-  }
+      &.sui_progress-radius_sm {
+        --sui_progress_track-border_radius: --sui-corner_radius(1);
+        --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_progress-radius_sm {
-    --sui_progress_track-border_radius: --sui-corner_radius(1);
-    --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_progress-radius_md {
+        --sui_progress_track-border_radius: --sui-corner_radius(2);
+        --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_progress-radius_md {
-    --sui_progress_track-border_radius: --sui-corner_radius(2);
-    --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_progress-radius_lg {
+        --sui_progress_track-border_radius: --sui-corner_radius(3);
+        --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_progress-radius_lg {
-    --sui_progress_track-border_radius: --sui-corner_radius(3);
-    --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_progress-radius_full {
+        --sui_progress_track-border_radius: calc(var(--sui_progress_track-height) / 2);
+        --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_progress-radius_full {
-    --sui_progress_track-border_radius: calc(var(--sui_progress_track-height) / 2);
-    --sui_progress_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_progress-variant_naked {
+        --sui_progress_track-background_color: var(--sui-grey-naked-canvas-normal);
+        --sui_progress_track-border_color: var(--sui-border-1);
+      }
 
-  &.sui_progress-variant_naked {
-    --sui_progress_track-background_color: var(--sui-grey-naked-canvas-normal);
-    --sui_progress_track-border_color: var(--sui-border-1);
-  }
+      &.sui_progress-variant_liquid {
+        --sui_progress_track-background_color: var(--sui-grey-liquid-canvas-normal);
+        --sui_progress_track-border_color: var(--sui-border-1);
+      }
+    }
 
-  &.sui_progress-variant_liquid {
-    --sui_progress_track-background_color: var(--sui-grey-liquid-canvas-normal);
-    --sui_progress_track-border_color: var(--sui-border-1);
-  }
-}
-
-/* 変異 */
-:scope {
-  &.sui_progress-outlined .sui_progress_track {
-    --_sui_progress_track-border_color: var(--sui_progress_track-border_color);
-    --_sui_progress_track-border_width: var(--sui_progress_track-border_width);
-  }
-}
-
-} /* @scope */
+    /* 変異 */
+    :scope {
+      &.sui_progress-outlined .sui_progress_track {
+        --_sui_progress_track-border_color: var(--sui_progress_track-border_color);
+        --_sui_progress_track-border_width: var(--sui_progress_track-border_width);
+      }
+    }
+  } /* @scope */
 } /* @layer */

@@ -25,18 +25,18 @@ export type IUseComboboxPositionerContext = IUseContext<ComboboxPositionerContex
 /**
  * {@link ComboboxPositionerContext} を読み取るフックです。
  */
-export const useComboboxPositionerContext: IUseComboboxPositionerContext =
-  function useSuiComboboxPositionerContext(optional): any {
-    const ctx = React.use(ComboboxPositionerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ComboboxPositionerContext",
-        providerName: "ComboboxPositioner",
-      });
-    }
+export const useComboboxPositionerContext: IUseComboboxPositionerContext = (optional): any => {
+  const ctx = React.use(ComboboxPositionerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ComboboxPositionerContext",
+      providerName: "ComboboxPositioner",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ComboboxPositionerContext as PositionerContext,

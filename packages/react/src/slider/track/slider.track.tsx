@@ -23,16 +23,13 @@ export namespace SliderTrackProps {
     Pick<
       React.ComponentProps<typeof Slider.Track>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SliderTrackProps より:
+      // SliderTrackProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Slider.Track>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Slider.Track>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,10 +42,8 @@ export type SliderTrackProps = SliderTrackProps.Render &
 
 export type ISliderTrack = IComponent<SliderTrackProps>;
 
-/**
- * スライダーの全範囲を表すトラックコンポーネントです。
- */
-export const SliderTrack: ISliderTrack = function SuiSliderTrack(props) {
+/** スライダーの全範囲を表すトラックコンポーネントです。 */
+export const SliderTrack: ISliderTrack = (props) => {
   const ctx = useSliderControlContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +51,10 @@ export const SliderTrack: ISliderTrack = function SuiSliderTrack(props) {
     <Slider.Track
       {...otherProps}
       {...proxyRenderProps<Slider.Track.State, SliderTrackState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (

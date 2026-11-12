@@ -25,9 +25,9 @@ export namespace NumberFieldIncrementProps {
     Pick<
       React.ComponentProps<typeof NumberField.Increment>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // NumberFieldIncrementProps より:
+      // NumberFieldIncrementProps より :
       | never
     >,
     keyof Render | keyof SuruUI
@@ -49,10 +49,8 @@ export type NumberFieldIncrementProps = NumberFieldIncrementProps.Render &
 
 export type INumberFieldIncrement = IComponent<NumberFieldIncrementProps>;
 
-/**
- * 値を増やすボタンです。
- */
-export const NumberFieldIncrement: INumberFieldIncrement = function SuiNumberFieldIncrement(props) {
+/** 値を増やすボタンです。 */
+export const NumberFieldIncrement: INumberFieldIncrement = (props) => {
   const ctx = useNumberFieldAddonContext();
   const {
     style,
@@ -67,7 +65,10 @@ export const NumberFieldIncrement: INumberFieldIncrement = function SuiNumberFie
     <NumberField.Increment
       {...otherProps}
       {...proxyRenderProps<NumberField.Increment.State, NumberFieldIncrementState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -111,7 +112,6 @@ export const NumberFieldIncrement: INumberFieldIncrement = function SuiNumberFie
 };
 
 export { NumberFieldIncrement as Increment };
-
 export namespace Increment {
   export type State = NumberFieldIncrementState;
 

@@ -51,7 +51,7 @@ export namespace FormRootProps {
     Pick<
       React.ComponentProps<typeof Form<TValues>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // FormRootProps より:
+      // FormRootProps より :
       "validationMode" | "errors" | "onFormSubmit" | "actionsRef"
     >,
     keyof Render | keyof SuruUI
@@ -87,10 +87,10 @@ export interface IFormRoot extends IComponent<FormRootProps> {
  *
  * フィールドの検証状態をまとめ、送信時に値を集めます。
  */
-export const FormRoot: IFormRoot = function SuiFormRoot(props: FormRootProps) {
+export const FormRoot: IFormRoot = (props: FormRootProps) => {
   const {
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -99,7 +99,6 @@ export const FormRoot: IFormRoot = function SuiFormRoot(props: FormRootProps) {
 };
 
 export { FormRoot as Root };
-
 export namespace Root {
   export type State = FormRootState;
 

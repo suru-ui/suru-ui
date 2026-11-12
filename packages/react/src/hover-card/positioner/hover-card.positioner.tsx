@@ -23,7 +23,7 @@ export namespace HoverCardPositionerProps {
     Pick<
       React.ComponentProps<typeof PreviewCard.Positioner>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // UseAnchorPositioningSharedParameters より:
+      // UseAnchorPositioningSharedParameters より :
       | "anchor"
       | "positionMethod"
       | "side"
@@ -56,10 +56,8 @@ export type HoverCardPositionerProps = HoverCardPositionerProps.Render &
 
 export type IHoverCardPositioner = IComponent<HoverCardPositionerProps>;
 
-/**
- * トリガーを基準にポップアップを配置する要素です。
- */
-export const HoverCardPositioner: IHoverCardPositioner = function SuiHoverCardPositioner(props) {
+/** トリガーを基準にポップアップを配置する要素です。 */
+export const HoverCardPositioner: IHoverCardPositioner = (props) => {
   const ctx = useHoverCardPortalContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -67,7 +65,10 @@ export const HoverCardPositioner: IHoverCardPositioner = function SuiHoverCardPo
     <PreviewCard.Positioner
       {...otherProps}
       {...proxyRenderProps<PreviewCard.Positioner.State, HoverCardPositionerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -99,7 +100,6 @@ export const HoverCardPositioner: IHoverCardPositioner = function SuiHoverCardPo
 };
 
 export { HoverCardPositioner as Positioner };
-
 export namespace Positioner {
   export type State = HoverCardPositionerState;
 

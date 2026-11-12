@@ -1,6 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "../../tests/src/_locators.js";
@@ -9,10 +8,9 @@ import { AlertDialog } from "./alert-dialog.jsx";
 const cancelButton = <button type="button">キャンセル</button>;
 
 const confirmButton = <button type="button">削除する</button>;
-
 describe("AlertDialog の配置", () => {
   test("ポップアップを画面の中央に置く", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog
         title="見出し"
@@ -25,7 +23,7 @@ describe("AlertDialog の配置", () => {
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const popup = screen.getByClassName("sui_alert_dialog_popup").element();
     const rect = popup.getBoundingClientRect();
     expect(rect.left).toBeCloseTo((window.innerWidth - rect.width) / 2, 0);
@@ -33,14 +31,14 @@ describe("AlertDialog の配置", () => {
   });
 
   test("オーバーレイを画面全体に広げる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog title="見出し" defaultOpen>
         本文
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const backdrop = screen.getByClassName("sui_alert_dialog_backdrop").element();
     const rect = backdrop.getBoundingClientRect();
     expect(rect.width).toBe(window.innerWidth);
@@ -48,14 +46,14 @@ describe("AlertDialog の配置", () => {
   });
 
   test("カードと同じ余白と行間と角丸を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog title="見出し" defaultOpen>
         本文
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const popup = screen.getByClassName("sui_alert_dialog_popup").element();
     const style = getComputedStyle(popup);
     expect(style.paddingBlockStart).toBe("16px");
@@ -65,14 +63,14 @@ describe("AlertDialog の配置", () => {
   });
 
   test("見出しと説明をアイコンの右へ並べる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog icon={<span>!</span>} title="見出し" defaultOpen description="説明">
         本文
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const icon = screen.getByClassName("sui_alert_dialog_icon").element();
     const iconRect = icon.getBoundingClientRect();
     const titleRect = screen
@@ -90,14 +88,14 @@ describe("AlertDialog の配置", () => {
   });
 
   test("説明がなければアイコンを見出しの行に収める", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog icon={<span>!</span>} title="見出し" defaultOpen>
         本文
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const header = screen.getByClassName("sui_alert_dialog_header").element();
     const iconRect = screen
       .getByClassName("sui_alert_dialog_icon")
@@ -107,18 +105,19 @@ describe("AlertDialog の配置", () => {
   });
 
   test("操作をフッターの右端へ寄せる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog title="見出し" cancel={cancelButton} confirm={confirmButton} defaultOpen>
         本文
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const popup = screen.getByClassName("sui_alert_dialog_popup").element();
     const footer = screen.getByClassName("sui_alert_dialog_footer").element();
     expect(getComputedStyle(footer).justifyContent).toBe("flex-end");
     expect(getComputedStyle(footer).gap).toBe("8px");
+
     const confirmRect = screen
       .getByRole("button", { name: "削除する" })
       .element()
@@ -135,7 +134,7 @@ describe("AlertDialog の配置", () => {
   });
 
   test("積み上げ式では内容を中央に寄せる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog
         icon={<span>!</span>}
@@ -150,7 +149,7 @@ describe("AlertDialog の配置", () => {
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const popup = screen.getByClassName("sui_alert_dialog_popup").element();
     const iconRect = screen
       .getByClassName("sui_alert_dialog_icon")
@@ -166,25 +165,28 @@ describe("AlertDialog の配置", () => {
     expect(titleRect.top).toBeLessThan(descriptionRect.top);
     expect(iconRect.left + iconRect.width / 2).toBeCloseTo(popupRect.left + popupRect.width / 2, 0);
     expect(getComputedStyle(screen.getByText("説明").element()).textAlign).toBe("center");
+
     const footer = screen.getByClassName("sui_alert_dialog_footer").element();
     expect(getComputedStyle(footer).display).toBe("grid");
+
     const columns = getComputedStyle(footer).gridTemplateColumns.split(" ");
     expect(columns).toHaveLength(2);
     expect(Number.parseFloat(columns[0]!)).toBeCloseTo(Number.parseFloat(columns[1]!), 0);
   });
 
   test("積み上げ式では操作を右上へ絶対配置する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog title="見出し" variant="stacked" defaultOpen showCancelIconButton>
         本文
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const popup = screen.getByClassName("sui_alert_dialog_popup").element();
     const action = screen.getByClassName("sui_alert_dialog_action").element();
     expect(getComputedStyle(action).position).toBe("absolute");
+
     const popupRect = popup.getBoundingClientRect();
     const actionRect = action.getBoundingClientRect();
     // ポップアップは Card 継承で枠線を持つため、rect (border box) から枠線幅を除いて比べます。
@@ -195,7 +197,7 @@ describe("AlertDialog の配置", () => {
   });
 
   test("アイコンの大きさと角丸を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog
         icon={
@@ -210,56 +212,58 @@ describe("AlertDialog の配置", () => {
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const icon = screen.getByClassName("sui_alert_dialog_icon").element();
     const style = getComputedStyle(icon);
     expect(Number.parseFloat(style.width)).toBeCloseTo(48, 1);
     expect(style.width).toBe(style.height);
     expect(style.borderRadius).toBe("8px");
+
     const svgRect = icon.querySelector("svg")?.getBoundingClientRect();
     expect(svgRect?.width).toBeCloseTo(32, 1);
     expect(svgRect?.height).toBeCloseTo(32, 1);
   });
 
   test("枠線を内側に引く", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog title="見出し" outlined defaultOpen>
         本文
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(screen.getByClassName("sui_alert_dialog_popup").element());
     expect(style.borderTopStyle).toBe("solid");
     expect(Number.parseFloat(style.borderTopWidth)).toBeGreaterThan(0.5);
   });
 
   test("角丸なしでは直角にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog title="見出し" radius="none" defaultOpen>
         本文
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     expect(
       getComputedStyle(screen.getByClassName("sui_alert_dialog_popup").element()).borderRadius,
     ).toBe("0px");
   });
 
   test("閉じるアイコンボタンを右上に置く", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog title="見出し" defaultOpen showCancelIconButton>
         本文
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const button = screen.getByRole("button", { name: "閉じる" }).element();
     expect(button.classList.contains("sui_alert_dialog_close")).toBe(true);
+
     const headerRect = screen
       .getByClassName("sui_alert_dialog_header")
       .element()
@@ -270,16 +274,17 @@ describe("AlertDialog の配置", () => {
   });
 
   test("見出しがなくても閉じるアイコンボタンを右上に置く", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AlertDialog defaultOpen showCancelIconButton>
         本文
       </AlertDialog>,
     );
 
-    // 検証
+    // 検証。
     const action = screen.getByClassName("sui_alert_dialog_action").element();
     expect(getComputedStyle(action).justifySelf).toBe("end");
+
     const headerRect = screen
       .getByClassName("sui_alert_dialog_header")
       .element()

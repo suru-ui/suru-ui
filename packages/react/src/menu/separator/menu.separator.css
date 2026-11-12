@@ -1,34 +1,32 @@
 @layer sui.component {
-@scope (.sui_menu_separator) to ([data-scope]) {
+  @scope (.sui_menu_separator) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: block;
+    }
 
-/* 固定 */
-:scope {
-  display: block;
-}
+    /* 変数 */
+    :scope {
+      --sui_menu_separator-height: ;
+      --sui_menu_separator-margin_block: ;
+      --sui_menu_separator-margin_inline: ;
+      --sui_menu_separator-color: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_menu_separator-height: ;
-  --sui_menu_separator-margin_block: ;
-  --sui_menu_separator-margin_inline: ;
-  --sui_menu_separator-color: ;
-}
+    /* 可変 */
+    :scope {
+      height: var(--sui_menu_separator-height);
+      margin-block: var(--sui_menu_separator-margin_block);
+      margin-inline: var(--sui_menu_separator-margin_inline);
+      background-color: var(--sui_menu_separator-color);
+    }
 
-/* 可変 */
-:scope {
-  height: var(--sui_menu_separator-height);
-  margin-block: var(--sui_menu_separator-margin_block);
-  margin-inline: var(--sui_menu_separator-margin_inline);
-  background-color: var(--sui_menu_separator-color);
-}
-
-/* 代入 */
-:scope {
-  --sui_menu_separator-height: --sui-border_width(1);
-  --sui_menu_separator-margin_block: --sui-space(0);
-  --sui_menu_separator-margin_inline: --sui-space(0);
-  --sui_menu_separator-color: var(--sui-border-1);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_menu_separator-height: --sui-border_width(1);
+      --sui_menu_separator-margin_block: --sui-space(0);
+      --sui_menu_separator-margin_inline: --sui-space(0);
+      --sui_menu_separator-color: var(--sui-border-1);
+    }
+  } /* @scope */
 } /* @layer */

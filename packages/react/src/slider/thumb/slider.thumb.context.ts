@@ -21,11 +21,10 @@ export type IUseSliderThumbContext = IUseContext<SliderThumbContext>;
 /**
  * {@link SliderThumbContext} を読み取るフックです。
  */
-export const useSliderThumbContext: IUseSliderThumbContext = function useSuiSliderThumbContext(
-  optional,
-): any {
+export const useSliderThumbContext: IUseSliderThumbContext = (optional): any => {
   const ctx = React.use(SliderThumbContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SliderThumbContext",
       providerName: "SliderThumb",

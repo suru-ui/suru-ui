@@ -26,7 +26,7 @@ export namespace ToastDescriptionProps {
       Pick<
         React.ComponentProps<typeof Toast.Description>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // ToastDescriptionProps より:
+        // ToastDescriptionProps より :
         never
       >,
       keyof Render | keyof SuruUI
@@ -35,7 +35,7 @@ export namespace ToastDescriptionProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Toast.Description>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -49,10 +49,8 @@ export type ToastDescriptionProps = ToastDescriptionProps.Render &
 
 export type IToastDescription = IComponent<ToastDescriptionProps>;
 
-/**
- * 通知の説明文を表示する段落要素です。
- */
-export const ToastDescription: IToastDescription = function SuiToastDescription(props) {
+/** 通知の説明文を表示する段落要素です。 */
+export const ToastDescription: IToastDescription = (props) => {
   const { style, render, className, ...otherProps } = props;
 
   return (
@@ -63,15 +61,18 @@ export const ToastDescription: IToastDescription = function SuiToastDescription(
           {...mergeProps<typeof Alert.Description>([
             htmlProps,
             proxyRenderProps<Alert.Description.State, ToastDescriptionState>(
-              (alertState) => ({ ...toastState, ...alertState }),
+              (alertState) => ({
+                ...toastState,
+                ...alertState,
+              }),
               {
                 style,
-                render: (htmlProps, state) => (
+                render: (currentHtmlProps, state) => (
                   <ToastDescriptionContext value={state}>
                     <RenderElement
                       state={state}
                       render={render}
-                      htmlProps={htmlProps}
+                      htmlProps={currentHtmlProps}
                       defaultTagName="p"
                     />
                   </ToastDescriptionContext>
@@ -99,7 +100,6 @@ export const ToastDescription: IToastDescription = function SuiToastDescription(
 };
 
 export { ToastDescription as Description };
-
 export namespace Description {
   export type State = ToastDescriptionState;
 

@@ -2,22 +2,18 @@ import * as fs from "node:fs";
 import { createRequire } from "node:module";
 import * as path from "node:path";
 
-/**
- * 対象ファイルのディレクトリーです。
- */
+/** 対象ファイルのディレクトリーです。 */
 const TARGET_DIR = "src";
 
 /**
  * ソート対象の CSS 変数名の接頭辞です。
  *
- * 例: `--sui_button-`、`--_sui_chip-`
+ * 例 : `--sui_button-`、`--_sui_chip-`。
  */
-const TARGET_PREFIX_RE = /^--(?:_)?sui_/;
+const TARGET_PREFIX_RE = /^--(?:_)?sui_/u;
 
-/**
- * ソート対象の CSS 変数名です。
- */
-const TARGET_VARIABLE_RE = /^--(?:_)?sui_[a-z_]+-/;
+/** ソート対象の CSS 変数名です。 */
+const TARGET_VARIABLE_RE = /^--(?:_)?sui_[a-z_]+-/u;
 
 /**
  * 独自のトークンを CSS プロパティーへ割り当てる設定です。
@@ -25,7 +21,7 @@ const TARGET_VARIABLE_RE = /^--(?:_)?sui_[a-z_]+-/;
  * キーは変数名から判定したトークン名、値はそのトークンが同等とみなす CSS プロパティー名のリストです。
  * 並び順の解決では、リスト内で最初に stylelint の並び順が存在するプロパティーの位置を採用します。
  *
- * 例: `size` は `width` / `height` と同じグループとして扱います。
+ * 例 : `size` は `width` / `height` と同じグループとして扱います。
  */
 const PROPERTY_ALIASES: Readonly<Record<string, readonly string[]>> = {
   "focusring-color": ["outline-color"],
@@ -43,9 +39,9 @@ const PROPERTY_ALIASES: Readonly<Record<string, readonly string[]>> = {
  * セグメント内の一致で判定し、一致した部分を取り除きます。
  * 配列の順序で照合し、最初に一致した指定だけを適用します。
  *
- * 例: `/^virtual_/` は `virtual_size` から `virtual_` を取り除き、`size` として扱います。
+ * 例 : `/^virtual_/u` は `virtual_size` から `virtual_` を取り除き、`size` として扱います。
  */
-const SEGMENT_PATTERNS: readonly RegExp[] = [/^virtual_/];
+const SEGMENT_PATTERNS: readonly RegExp[] = [/^virtual_/u];
 
 /**
  * CSS プロパティーを判定できない変数のうち、名前順より先に固定で並べるセグメント名です。
@@ -54,30 +50,22 @@ const SEGMENT_PATTERNS: readonly RegExp[] = [/^virtual_/];
  * 文字列は完全一致、正規表現はパターン一致で判定します。
  * 配列の順序がそのまま並び順になり、一致するセグメントを持たない変数は名前順になります。
  *
- * 例: 状態を表すセグメントを `idle` → `hover` → `active` → `checked` の順にします。
+ * 例 : 状態を表すセグメントを `idle` → `hover` → `active` → `checked` の順にします。
  */
 const FIXED_ORDER_SEGMENTS: readonly (string | RegExp)[] = ["idle", "hover", "active", "checked"];
 
-// -------------------------------------------------------------------------------------------------
-
-/**
- * stylelint-order の `order/properties-order` に渡すプロパティーグループです。
- */
+/** stylelint-order の `order/properties-order` に渡すプロパティーグループです。 */
 interface PropertyGroup {
   properties: readonly string[];
 }
 
-/**
- * postcss のノードで使われるソース位置です。
- */
+/** postcss のノードで使われるソース位置です。 */
 interface CssSource {
   start: { offset: number };
   end: { offset: number };
 }
 
-/**
- * 実装で使う postcss のノードに必要なフィールドのみを定義したものです。
- */
+/** 実装で使う postcss のノードに必要なフィールドのみを定義したものです。 */
 interface CssNode {
   type: string;
   prop?: string | undefined;
@@ -104,12 +92,11 @@ const propertyGroups = (
   }
 ).default;
 
-/**
- * プロパティー名を stylelint の並び順の位置へ解決するテーブルです。
- */
+/** プロパティー名を stylelint の並び順の位置へ解決するテーブルです。 */
 const PROPERTY_ORDERS: ReadonlyMap<string, number> = (() => {
   const orders = new Map<string, number>();
   let order = 0;
+
   for (const group of propertyGroups) {
     for (const property of group.properties) {
       if (!orders.has(property)) {
@@ -129,17 +116,20 @@ const PROPERTY_ORDERS: ReadonlyMap<string, number> = (() => {
  */
 function lookupOrder(name: string): number | null {
   const order = PROPERTY_ORDERS.get(name);
+
   if (order !== undefined) {
     return order;
   }
 
   const aliases = PROPERTY_ALIASES[name];
+
   if (aliases === undefined) {
     return null;
   }
 
   for (const alias of aliases) {
     const aliasOrder = PROPERTY_ORDERS.get(alias);
+
     if (aliasOrder !== undefined) {
       return aliasOrder;
     }
@@ -160,6 +150,7 @@ function matchesSegment(pattern: string | RegExp, segment: string): boolean {
   }
 
   pattern.lastIndex = 0;
+
   return pattern.test(segment);
 }
 
@@ -170,8 +161,10 @@ function matchesSegment(pattern: string | RegExp, segment: string): boolean {
  */
 function lookupFixedOrder(name: string): number | null {
   const segments = name.replace(TARGET_PREFIX_RE, "").split("-");
+
   for (let i = 0; i < FIXED_ORDER_SEGMENTS.length; i++) {
     const pattern = FIXED_ORDER_SEGMENTS[i]!;
+
     if (segments.some((segment) => matchesSegment(pattern, segment))) {
       return i;
     }
@@ -180,9 +173,7 @@ function lookupFixedOrder(name: string): number | null {
   return null;
 }
 
-/**
- * セグメントから `SEGMENT_PATTERNS` に一致する部分を取り除きます。
- */
+/** セグメントから `SEGMENT_PATTERNS` に一致する部分を取り除きます。 */
 function removeSegmentPattern(segment: string): string {
   for (const pattern of SEGMENT_PATTERNS) {
     if (!matchesSegment(pattern, segment)) {
@@ -195,17 +186,12 @@ function removeSegmentPattern(segment: string): string {
   return segment;
 }
 
-/**
- * CSS 変数から判定した CSS プロパティーの情報です。
- */
+/** CSS 変数から判定した CSS プロパティーの情報です。 */
 interface DeterminedProperty {
-  /**
-   * `_` を `-` に置き換えた正規化済みのプロパティー名です。
-   */
+  /** `_` を `-` に置き換えた正規化済みのプロパティー名です。 */
   name: string;
-  /**
-   * stylelint の並び順での位置です。
-   */
+
+  /** stylelint の並び順での位置です。 */
   order: number;
 }
 
@@ -216,7 +202,7 @@ interface DeterminedProperty {
  * 各セグメントから `SEGMENT_PATTERNS` に一致する部分を取り除き、`_` は `-` に置き換えます。
  * 末尾のセグメントはバリアントとして除外した候補も試し、最も長い候補を優先します。
  *
- * 例:
+ * 例 :
  * - `--sui_button-border_radius` → `border-radius`
  * - `--sui_button-background_color-normal` → `background-color` (バリアント `normal`)
  * - `--sui_button_content_svg-size` → `size` (`PROPERTY_ALIASES` により `width` / `height` と同一視)
@@ -228,6 +214,7 @@ function determineProperty(prop: string): DeterminedProperty | null {
   }
 
   const segments = prop.replace(TARGET_PREFIX_RE, "").split("-");
+
   for (const excludeVariant of [false, true]) {
     const limit = segments.length - (excludeVariant ? 1 : 0);
     // バリアントを除外すると候補が空になる場合はスキップします。
@@ -237,8 +224,12 @@ function determineProperty(prop: string): DeterminedProperty | null {
         .map((segment) => removeSegmentPattern(segment).replaceAll("_", "-"))
         .join("-");
       const order = lookupOrder(name);
+
       if (order !== null) {
-        return { name, order };
+        return {
+          name,
+          order,
+        };
       }
     }
   }
@@ -254,39 +245,37 @@ function determineProperty(prop: string): DeterminedProperty | null {
  */
 function componentDepth(prop: string): number {
   const component = prop.slice(2).split("-", 1)[0] ?? "";
-  return component.split(/_+/).filter((part) => part !== "").length;
+
+  return component.split(/_+/u).filter((part) => part !== "").length;
 }
 
-/**
- * ブロック内の各宣言の情報です。
- */
+/** ブロック内の各宣言の情報です。 */
 interface DeclItem {
-  /**
-   * 元の宣言列におけるインデックスです。
-   */
+  /** 元の宣言列におけるインデックスです。 */
   index: number;
-  /**
-   * CSS 変数名です。
-   */
+
+  /** CSS 変数名です。 */
   name: string;
+
   /**
    * 判定した CSS プロパティーの正規化済みの名前です。
    * 判定できない場合は CSS 変数名そのものになります。
    */
   propertyName: string;
+
   /**
    * stylelint の並び順での位置です。
    * CSS プロパティーを判定できない場合は `null` です。
    */
   order: number | null;
+
   /**
    * `FIXED_ORDER_SEGMENTS` での固定順の位置です。
    * CSS プロパティーを判定できた場合や固定順のセグメントを持たない場合は `null` です。
    */
   fixedOrder: number | null;
-  /**
-   * コンポーネント名部分のネストの深さです。
-   */
+
+  /** コンポーネント名部分のネストの深さです。 */
   depth: number;
 }
 
@@ -305,11 +294,20 @@ function compareItems(a: DeclItem, b: DeclItem): number {
   if (a.order === null && b.order === null) {
     const aFixed = a.fixedOrder ?? FIXED_ORDER_SEGMENTS.length;
     const bFixed = b.fixedOrder ?? FIXED_ORDER_SEGMENTS.length;
+
     if (aFixed !== bFixed) {
       return aFixed - bFixed;
     }
 
-    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+    if (a.name < b.name) {
+      return -1;
+    }
+
+    if (a.name > b.name) {
+      return 1;
+    }
+
+    return 0;
   }
 
   if (a.order === null) {
@@ -323,25 +321,18 @@ function compareItems(a: DeclItem, b: DeclItem): number {
   return a.order - b.order;
 }
 
-/**
- * ブロック内の連続した宣言領域の並べ替え計画です。
- */
+/** ブロック内の連続した宣言領域の並べ替え計画です。 */
 interface SortPlan {
-  /**
-   * 宣言領域の開始位置 (先頭の宣言の開始オフセット) です。
-   */
+  /** 宣言領域の開始位置 (先頭の宣言の開始オフセット) です。 */
   start: number;
-  /**
-   * 宣言領域の終了位置 (最後の宣言の終了オフセット) です。
-   */
+
+  /** 宣言領域の終了位置 (最後の宣言の終了オフセット) です。 */
   end: number;
-  /**
-   * 元の宣言列です。
-   */
+
+  /** 元の宣言列です。 */
   decls: CssNode[];
-  /**
-   * 新しい位置 `i` に置く宣言の元インデックスです。
-   */
+
+  /** 新しい位置 `i` に置く宣言の元インデックスです。 */
   newOrder: number[];
 }
 
@@ -370,25 +361,26 @@ function planDecls(decls: CssNode[]): SortPlan | null {
     const determined = determineProperty(name);
 
     return {
-      index,
       name,
-      propertyName: determined?.name ?? name,
+      depth: componentDepth(name),
+      index,
       order: determined?.order ?? null,
       fixedOrder: determined === null ? lookupFixedOrder(name) : null,
-      depth: componentDepth(name),
+      propertyName: determined?.name ?? name,
     };
   });
 
   const newOrder = items.toSorted(compareItems).map((item) => item.index);
   const isSameOrder = newOrder.every((value, i) => value === i);
+
   if (isSameOrder) {
     return null;
   }
 
   return {
-    start: offsetStart(decls[0]!),
-    end: offsetEnd(decls[decls.length - 1]!),
+    end: offsetEnd(decls.at(-1)!),
     decls,
+    start: offsetStart(decls[0]!),
     newOrder,
   };
 }
@@ -409,6 +401,7 @@ function collectPlans(root: CssNode): SortPlan[] {
     let run: CssNode[] = [];
     const flush = (): void => {
       const plan = planDecls(run);
+
       if (plan !== null) {
         plans.push(plan);
       }
@@ -449,14 +442,17 @@ function collectPlans(root: CssNode): SortPlan[] {
 function renderRule(source: string, plan: SortPlan): string {
   const { decls, newOrder } = plan;
   const separators: string[] = [];
+
   for (let i = 0; i < decls.length - 1; i++) {
     separators.push(source.slice(offsetEnd(decls[i]!), offsetStart(decls[i + 1]!)));
   }
 
   let text = "";
+
   for (let i = 0; i < newOrder.length; i++) {
     const decl = decls[newOrder[i]!]!;
     text += source.slice(offsetStart(decl), offsetEnd(decl));
+
     if (i < separators.length) {
       text += separators[i]!;
     }
@@ -477,12 +473,14 @@ function renderRule(source: string, plan: SortPlan): string {
 export function sortCssVariables(source: string): string {
   const root = postcss.parse(source, {});
   const plans = collectPlans(root);
+
   if (plans.length === 0) {
     return source;
   }
 
   let text = "";
   let cursor = 0;
+
   for (const plan of plans) {
     text += source.slice(cursor, plan.start);
     text += renderRule(source, plan);
@@ -503,6 +501,7 @@ async function main(): Promise<void> {
   for (const filePath of files) {
     const source = fs.readFileSync(filePath, "utf-8");
     const formatted = sortCssVariables(source);
+
     if (formatted === source) {
       continue;
     }

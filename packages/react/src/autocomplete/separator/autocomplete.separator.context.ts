@@ -29,18 +29,20 @@ export type IUseAutocompleteSeparatorContext = IUseContext<AutocompleteSeparator
 /**
  * {@link AutocompleteSeparatorContext} を読み取るフックです。
  */
-export const useAutocompleteSeparatorContext: IUseAutocompleteSeparatorContext =
-  function useSuiAutocompleteSeparatorContext(optional): any {
-    const ctx = React.use(AutocompleteSeparatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompleteSeparatorContext",
-        providerName: "AutocompleteSeparator",
-      });
-    }
+export const useAutocompleteSeparatorContext: IUseAutocompleteSeparatorContext = (
+  optional,
+): any => {
+  const ctx = React.use(AutocompleteSeparatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompleteSeparatorContext",
+      providerName: "AutocompleteSeparator",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   AutocompleteSeparatorContext as SeparatorContext,

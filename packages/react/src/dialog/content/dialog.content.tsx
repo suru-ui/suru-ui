@@ -32,10 +32,8 @@ export type DialogContentProps = DialogContentProps.Render &
 
 export type IDialogContent = IComponent<DialogContentProps>;
 
-/**
- * ダイアログの本文を表示するコンポーネントです。
- */
-export const DialogContent: IDialogContent = function SuiDialogContent(props) {
+/** ダイアログの本文を表示するコンポーネントです。 */
+export const DialogContent: IDialogContent = (props) => {
   const ctx = useDialogPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -43,7 +41,10 @@ export const DialogContent: IDialogContent = function SuiDialogContent(props) {
     <Card.Content
       {...otherProps}
       {...proxyRenderProps<Card.Content.State, DialogContentState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -77,7 +78,6 @@ export const DialogContent: IDialogContent = function SuiDialogContent(props) {
 };
 
 export { DialogContent as Content };
-
 export namespace Content {
   export type State = DialogContentState;
 

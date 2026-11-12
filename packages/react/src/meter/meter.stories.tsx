@@ -211,11 +211,24 @@ export const Values = meta.story({
   }),
   render(props) {
     const items = [
-      { label: "空 (0)", value: 0 },
-      { label: "半分 (50)", value: 50 },
-      { label: "満杯 (100)", value: 100 },
-      { label: "範囲外 (120)", value: 120 },
+      {
+        label: "空 (0)",
+        value: 0,
+      },
+      {
+        label: "半分 (50)",
+        value: 50,
+      },
+      {
+        label: "満杯 (100)",
+        value: 100,
+      },
+      {
+        label: "範囲外 (120)",
+        value: 120,
+      },
     ] as const;
+
     return (
       <div className="flex w-[300px] flex-col gap-6">
         {items.map((item) => (
@@ -237,10 +250,20 @@ export const CustomRange = meta.story({
   }),
   render(props) {
     const items = [
-      { label: "下限 (-50)", value: -50 },
-      { label: "中央 (0)", value: 0 },
-      { label: "上限 (50)", value: 50 },
+      {
+        label: "下限 (-50)",
+        value: -50,
+      },
+      {
+        label: "中央 (0)",
+        value: 0,
+      },
+      {
+        label: "上限 (50)",
+        value: 50,
+      },
     ] as const;
+
     return (
       <div className="flex w-[300px] flex-col gap-6">
         {items.map((item) => (
@@ -276,7 +299,11 @@ export const Formatting = meta.story({
           min={0}
           label="容量 (GB)"
           value={36.5}
-          format={{ unit: "gigabyte", style: "unit", maximumFractionDigits: 1 }}
+          format={{
+            unit: "gigabyte",
+            style: "unit",
+            maximumFractionDigits: 1,
+          }}
           locale="ja-JP"
         />
         <Meter
@@ -362,7 +389,11 @@ export const Storage = meta.story({
           min={0}
           label="ストレージ"
           value={183}
-          format={{ unit: "gigabyte", style: "unit", maximumFractionDigits: 0 }}
+          format={{
+            unit: "gigabyte",
+            style: "unit",
+            maximumFractionDigits: 0,
+          }}
           locale="ja-JP"
         />
         <span className="text-sm text-(--sui-canvas_text-2)">残り 73 GB です。</span>
@@ -383,10 +414,23 @@ export const Dashboard = meta.story({
   }),
   render(props) {
     const items = [
-      { color: "red", label: "CPU", value: 82 },
-      { color: "blue", label: "メモリー", value: 64 },
-      { color: "green", label: "ディスク", value: 37 },
+      {
+        color: "red",
+        label: "CPU",
+        value: 82,
+      },
+      {
+        color: "blue",
+        label: "メモリー",
+        value: 64,
+      },
+      {
+        color: "green",
+        label: "ディスク",
+        value: 37,
+      },
     ] as const;
+
     return (
       <div className="flex w-[300px] flex-col gap-6">
         {items.map((item) => (

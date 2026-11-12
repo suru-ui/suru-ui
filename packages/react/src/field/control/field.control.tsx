@@ -29,7 +29,7 @@ export namespace FieldControlProps {
     Pick<
       React.ComponentProps<typeof Field.Control>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // FieldControlProps より:
+      // FieldControlProps より :
       "onValueChange" | "defaultValue"
     >,
     keyof Render | keyof SuruUI
@@ -51,10 +51,8 @@ export type FieldControlProps = FieldControlProps.Render &
 
 export type IFieldControl = IComponent<FieldControlProps>;
 
-/**
- * フィールドの入力欄コンポーネントです。
- */
-export const FieldControl: IFieldControl = function SuiFieldControl(props) {
+/** フィールドの入力欄コンポーネントです。 */
+export const FieldControl: IFieldControl = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -77,7 +75,6 @@ export const FieldControl: IFieldControl = function SuiFieldControl(props) {
 };
 
 export { FieldControl as Control };
-
 export namespace Control {
   export type State = FieldControlState;
 

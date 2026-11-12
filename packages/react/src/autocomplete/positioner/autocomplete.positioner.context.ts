@@ -25,18 +25,20 @@ export type IUseAutocompletePositionerContext = IUseContext<AutocompletePosition
 /**
  * {@link AutocompletePositionerContext} を読み取るフックです。
  */
-export const useAutocompletePositionerContext: IUseAutocompletePositionerContext =
-  function useSuiAutocompletePositionerContext(optional): any {
-    const ctx = React.use(AutocompletePositionerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompletePositionerContext",
-        providerName: "AutocompletePositioner",
-      });
-    }
+export const useAutocompletePositionerContext: IUseAutocompletePositionerContext = (
+  optional,
+): any => {
+  const ctx = React.use(AutocompletePositionerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompletePositionerContext",
+      providerName: "AutocompletePositioner",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   AutocompletePositionerContext as PositionerContext,

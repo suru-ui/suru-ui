@@ -75,8 +75,7 @@ import {
   ContextMenuCheckboxItemIndicator,
 } from "./context-menu.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type ContextMenuActions = ContextMenuRootActions;
 
@@ -238,9 +237,7 @@ namespace ContextMenuProps {
      */
     radioIndicator?: React.ReactNode;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: ContextMenuSlotProps | undefined;
 
     /**
@@ -270,14 +267,15 @@ export interface IUseContextMenuAPI {
    * {@link ContextMenuAPI} を作成します。
    *
    * @template TItem 項目の型です。
+   *
    * @param props {@link ContextMenu} の props です。
+   *
    * @returns コンテキストメニューの API です。
    */
   <TItem = any>(props: ContextMenuProps<TItem>): ContextMenuAPI<TItem>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link ContextMenu} を構成する各パーツの props を作成するための API です。
@@ -296,58 +294,6 @@ export class ContextMenuAPI<TItem = any> {
   private readonly slotProps: ContextMenuSlotProps;
 
   private readonly trigger: ContextMenuTriggerProps["children"] | undefined;
-
-  /**
-   * @param props {@link ContextMenu} の props です。
-   * @internal
-   */
-  public constructor(props: ContextMenuProps<TItem>) {
-    const {
-      open,
-      size,
-      items,
-      radius,
-      trigger,
-      variant,
-      disabled,
-      outlined,
-      loopFocus,
-      slotProps = {},
-      actionsRef,
-      defaultOpen,
-      orientation,
-      onOpenChange,
-      radioIndicator = <DotIcon />,
-      closeParentOnEsc,
-      checkboxIndicator = <CheckIcon />,
-      highlightItemOnHover,
-      onOpenChangeComplete,
-      ...popupProps
-    } = props;
-
-    this.checkboxIndicator = checkboxIndicator;
-    this.popupProps = popupProps;
-    this.radioIndicator = radioIndicator;
-    this.rootProps = {
-      open,
-      size,
-      items,
-      radius,
-      variant,
-      disabled,
-      outlined,
-      loopFocus,
-      actionsRef,
-      defaultOpen,
-      orientation,
-      onOpenChange,
-      closeParentOnEsc,
-      highlightItemOnHover,
-      onOpenChangeComplete,
-    };
-    this.slotProps = slotProps;
-    this.trigger = trigger;
-  }
 
   private readonly defaultPopupItemRenderer: IContextMenuPopupItemRenderer = (
     item,
@@ -443,6 +389,56 @@ export class ContextMenuAPI<TItem = any> {
   };
 
   /**
+   * @param props {@link ContextMenu} の props です。
+   *
+   * @internal
+   */
+  public constructor(props: ContextMenuProps<TItem>) {
+    const {
+      open,
+      size,
+      items,
+      radius,
+      trigger,
+      variant,
+      disabled,
+      outlined,
+      loopFocus,
+      slotProps = {},
+      actionsRef,
+      defaultOpen,
+      orientation,
+      onOpenChange,
+      radioIndicator = <DotIcon />,
+      checkboxIndicator = <CheckIcon />,
+      highlightItemOnHover,
+      onOpenChangeComplete,
+      ...popupProps
+    } = props;
+    this.checkboxIndicator = checkboxIndicator;
+    this.popupProps = popupProps;
+    this.radioIndicator = radioIndicator;
+    this.rootProps = {
+      open,
+      size,
+      items,
+      radius,
+      variant,
+      disabled,
+      outlined,
+      loopFocus,
+      actionsRef,
+      defaultOpen,
+      orientation,
+      onOpenChange,
+      highlightItemOnHover,
+      onOpenChangeComplete,
+    };
+    this.slotProps = slotProps;
+    this.trigger = trigger;
+  }
+
+  /**
    * {@link ContextMenuBackdrop} に渡す props を取得します。
    */
   public getBackdropProps(): Omit<ContextMenuBackdropProps, "children"> {
@@ -519,6 +515,7 @@ export class ContextMenuAPI<TItem = any> {
     }
 
     const { label } = item;
+
     if (isLikelyVisibleNode(label)) {
       return {
         ...props,
@@ -757,21 +754,17 @@ export class ContextMenuAPI<TItem = any> {
 /**
  * {@link ContextMenuAPI} を作成するフックです。
  */
-export const useContextMenuAPI: IUseContextMenuAPI = function useSuiContextMenuAPI(props) {
-  return new ContextMenuAPI(props);
-};
+export const useContextMenuAPI: IUseContextMenuAPI = (props) => new ContextMenuAPI(props);
 
 export { ContextMenuAPI as API, useContextMenuAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IContextMenu extends IComponent<ContextMenuProps> {
   /**
    * @template TItem 項目の型です。
    */
   <TItem = any>(props: ContextMenuProps<TItem>): IComponent.Return;
-
   readonly useContext: IUseContextMenuContext;
 }
 
@@ -781,7 +774,7 @@ export interface IContextMenu extends IComponent<ContextMenuProps> {
  * 右クリックまたは長押しの対象とポップアップを組み立てます。
  */
 export const ContextMenu: IContextMenu = Object.assign(
-  function SuiContextMenu(props: ContextMenuProps) {
+  (props: ContextMenuProps) => {
     const api = useContextMenuAPI(props);
     const triggerProps = api.getTriggerProps();
 

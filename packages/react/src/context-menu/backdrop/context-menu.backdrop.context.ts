@@ -25,18 +25,18 @@ export type IUseContextMenuBackdropContext = IUseContext<ContextMenuBackdropCont
 /**
  * {@link ContextMenuBackdropContext} を読み取るフックです。
  */
-export const useContextMenuBackdropContext: IUseContextMenuBackdropContext =
-  function useSuiContextMenuBackdropContext(optional): any {
-    const ctx = React.use(ContextMenuBackdropContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ContextMenuBackdropContext",
-        providerName: "ContextMenuBackdrop",
-      });
-    }
+export const useContextMenuBackdropContext: IUseContextMenuBackdropContext = (optional): any => {
+  const ctx = React.use(ContextMenuBackdropContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ContextMenuBackdropContext",
+      providerName: "ContextMenuBackdrop",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ContextMenuBackdropContext as BackdropContext,

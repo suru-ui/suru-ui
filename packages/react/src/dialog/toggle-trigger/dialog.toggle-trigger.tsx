@@ -15,9 +15,7 @@ export namespace DialogToggleTriggerProps {
   export type Render = Omit<RenderProps<DialogToggleTriggerState>, "render">;
 
   export type SuruUI = {
-    /**
-     * ボタンとして描画する関数です。
-     */
+    /** ボタンとして描画する関数です。 */
     children: NonNullable<RenderProps<DialogToggleTriggerState>["render"]>;
   };
 
@@ -25,9 +23,9 @@ export namespace DialogToggleTriggerProps {
     Pick<
       React.ComponentProps<typeof Dialog.Trigger<TPayload>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // DialogTriggerProps より:
+      // DialogTriggerProps より :
       | "handle"
       | "payload"
       | "id"
@@ -53,10 +51,8 @@ export type DialogToggleTriggerProps<TPayload = any> = DialogToggleTriggerProps.
 
 export type IDialogToggleTrigger = IComponent<DialogToggleTriggerProps>;
 
-/**
- * ダイアログを開くボタンコンポーネントです。
- */
-export const DialogToggleTrigger: IDialogToggleTrigger = function SuiDialogToggleTrigger(props) {
+/** ダイアログを開くボタンコンポーネントです。 */
+export const DialogToggleTrigger: IDialogToggleTrigger = (props) => {
   const { handle, children, className, ...otherProps } = props;
 
   return (
@@ -75,7 +71,6 @@ export const DialogToggleTrigger: IDialogToggleTrigger = function SuiDialogToggl
 };
 
 export { DialogToggleTrigger as ToggleTrigger };
-
 export namespace ToggleTrigger {
   export type State = DialogToggleTriggerState;
 

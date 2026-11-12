@@ -1,10 +1,8 @@
 @layer sui.component {
-@scope (.sui_number_field_scrub_area_cursor) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  pointer-events: none;
-}
-
-} /* @scope */
+  @scope (.sui_number_field_scrub_area_cursor) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      pointer-events: none;
+    }
+  } /* @scope */
 } /* @layer */

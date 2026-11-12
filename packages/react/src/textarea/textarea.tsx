@@ -11,8 +11,7 @@ import {
   TextareaRoot,
 } from "./textarea.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type TextareaChangeEventDetails = TextareaRootChangeEventDetails;
 
@@ -43,13 +42,13 @@ export interface IUseTextareaAPI {
    * {@link TextareaAPI} を作成します。
    *
    * @param props {@link Textarea} の props です。
+   *
    * @returns テキストエリアの API です
    */
   (props: TextareaProps): TextareaAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Textarea} を構成する各パーツの props を作成するための API です。
@@ -59,6 +58,7 @@ export class TextareaAPI {
 
   /**
    * @param props {@link Textarea} の props です。
+   *
    * @internal
    */
   public constructor(props: TextareaProps) {
@@ -76,19 +76,14 @@ export class TextareaAPI {
 /**
  * {@link TextareaAPI} を作成するフックです。
  */
-export const useTextareaAPI: IUseTextareaAPI = function useSuiTextareaAPI(props) {
-  return new TextareaAPI(props);
-};
+export const useTextareaAPI: IUseTextareaAPI = (props) => new TextareaAPI(props);
 
 export { TextareaAPI as API, useTextareaAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
-/**
- * 複数行のテキストを入力するテキストエリアを表示するコンポーネントです。
- */
-export const Textarea: ITextarea = function SuiTextarea(props) {
+/** 複数行のテキストを入力するテキストエリアを表示するコンポーネントです。 */
+export const Textarea: ITextarea = (props) => {
   const api = useTextareaAPI(props);
 
   return <TextareaRoot {...api.getRootProps()} />;

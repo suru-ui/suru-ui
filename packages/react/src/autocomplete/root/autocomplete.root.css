@@ -1,12 +1,10 @@
 /* disabled */
 @layer sui.important {
-@scope (.sui_autocomplete) to ([data-scope]) {
-
-:scope {
-  &.sui_autocomplete-disabled {
-    cursor: not-allowed;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_autocomplete) to ([data-scope]) {
+    :scope {
+      &.sui_autocomplete-disabled {
+        cursor: not-allowed;
+      }
+    }
+  } /* @scope */
 } /* @layer */

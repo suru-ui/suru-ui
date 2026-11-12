@@ -9,25 +9,20 @@ import "./preview.css";
 import "virtual:uno.css";
 
 export const preview = definePreview({
+  tags: ["autodocs"],
+  addons: [addonDocs(), addonThemes(), addonVitest()],
   decorators: [
     withThemeByDataAttribute({
       themes: {
-        ライト: "light",
         ダーク: "dark",
+        ライト: "light",
       },
       defaultTheme: "ライト",
     }),
   ],
-  addons: [
-    addonDocs(),
-    // @ts-ignore addonThemes は呼び出し可能ではないという方エラーが出るので回避する。
-    addonThemes(),
-    addonVitest(),
-  ],
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
 });
 
 export default preview;
@@ -38,15 +33,14 @@ export function controls<TProps>(
 ): <TArgs extends Partial<TProps> & Record<string & {}, unknown>>(
   args: TArgs,
 ) => {
-  argTypes: ArgTypes<Record<keyof TArgs, unknown>>;
   args: TArgs;
+  argTypes: ArgTypes<Record<keyof TArgs, unknown>>;
 };
-
 export function controls(_: any, argTypes: any): any {
   return (args: any) => ({
-    argTypes: Object.fromEntries(
-      Object.keys(args).map((key) => [key, argTypes[key] || { control: false }]),
-    ),
     args,
+    argTypes: Object.fromEntries(
+      Object.keys(args).map((key) => [key, argTypes[key] ?? { control: false }]),
+    ),
   });
 }

@@ -19,13 +19,20 @@ const FIXED_ORDER_NAMES: readonly (string | RegExp)[] = [
   "Props",
   "SlotProps",
   "Context",
-  /[a-z]Context$/,
+  /[a-z]Context$/u,
 ];
 
-/**
- * 特定の名前空間に限って名前順より先に固定で並べる型エクスポートの名前。
- */
+/** 特定の名前空間に限って名前順より先に固定で並べる型エクスポートの名前。 */
 export type NamespaceFixedOrder = {
+  /**
+   * 名前順より先に固定で並べる型エクスポートの名前。
+   *
+   * 文字列は完全一致、正規表現はパターン一致で判定します。
+   * 配列の順序がそのまま並び順になります。
+   * 一致した指定は設定順に結合し、{@linkcode FIXED_ORDER_NAMES} より先に並べます。
+   */
+  names: readonly (string | RegExp)[];
+
   /**
    * 対象の名前空間。
    *
@@ -33,14 +40,6 @@ export type NamespaceFixedOrder = {
    * ネストした名前空間は直近の名前で判定する。
    */
   namespace: string | RegExp;
-  /**
-   * 名前順より先に固定で並べる型エクスポートの名前。
-   *
-   * 文字列は完全一致、正規表現はパターン一致で判定する。
-   * 配列の順序がそのまま並び順になる。一致した指定は設定順に結合し、
-   * {@linkcode FIXED_ORDER_NAMES} より先に並べる。
-   */
-  names: readonly (string | RegExp)[];
 };
 
 /**
@@ -50,7 +49,10 @@ export type NamespaceFixedOrder = {
  */
 const NAMESPACE_FIXED_ORDERS: readonly NamespaceFixedOrder[] = [
   // Props 系の名前空間は結合順 (`Render & SuruUI & BaseUI & HTML`) に合わせる。
-  { namespace: /Props$/, names: ["Render", "SuruUI", "BaseUI", "HTML"] },
+  {
+    names: ["Render", "SuruUI", "BaseUI", "HTML"],
+    namespace: /Props$/u,
+  },
 ];
 
 /** 並べ替えのオプション。 */
@@ -70,8 +72,10 @@ type Block = TSModuleBlock;
 type SortOrder = {
   /** この名前空間で有効な固定順の名前 (名前空間固有の指定と全体の指定)。 */
   fixedNames: readonly (string | RegExp)[];
+
   /** 名前順の型エクスポートの分類グループ。 */
   namedGroup: number;
+
   /** ネストした名前空間の分類グループ。 */
   namespaceGroup: number;
 };
@@ -86,7 +90,9 @@ function matchesName(pattern: string | RegExp, name: string): boolean {
   if (typeof pattern === "string") {
     return pattern === name;
   }
+
   pattern.lastIndex = 0;
+
   return pattern.test(name);
 }
 
@@ -105,7 +111,12 @@ function getSortOrder(
       .flatMap((entry) => entry.names),
     ...FIXED_ORDER_NAMES,
   ];
-  return { fixedNames, namedGroup: fixedNames.length, namespaceGroup: fixedNames.length + 1 };
+
+  return {
+    fixedNames,
+    namedGroup: fixedNames.length,
+    namespaceGroup: fixedNames.length + 1,
+  };
 }
 
 /**
@@ -116,6 +127,7 @@ function getSortOrder(
  */
 function getGroup(fixedNames: readonly (string | RegExp)[], name: string): number {
   const index = fixedNames.findIndex((pattern) => matchesName(pattern, name));
+
   return index === -1 ? fixedNames.length : index;
 }
 
@@ -128,28 +140,31 @@ function isNode(value: unknown): value is Node {
   if (typeof value !== "object" || value === null || !("type" in value)) {
     return false;
   }
+
   const type = (value as { type?: unknown }).type;
+
   return typeof type === "string" && type !== "CommentLine" && type !== "CommentBlock";
 }
 
 /** 並べ替え対象の名前空間。 */
 type NamespaceBlock = {
-  /** 名前空間の名前 (`namespace A.B` は `"A.B"`)。 */
-  name: string;
   /** 名前空間の本体 (`{ ... }` の部分)。 */
   body: Block;
+
+  /** 名前空間の名前 (`namespace A.B` は `"A.B"`)。 */
+  name: string;
 };
 
-/**
- * 名前空間の宣言名をドット区切りで返す。
- */
+/** 名前空間の宣言名をドット区切りで返す。 */
 function getNamespaceName(id: TSModuleDeclaration["id"]): string {
   if (id.type === "TSQualifiedName") {
     return `${getNamespaceName(id.left)}.${id.right.name}`;
   }
+
   if (id.type === "ThisExpression") {
     return "this";
   }
+
   return id.type === "Identifier" ? id.name : id.value;
 }
 
@@ -160,10 +175,15 @@ function collectBlocks(root: Node, result: NamespaceBlock[] = []): NamespaceBloc
     root.kind === "namespace" &&
     root.body?.type === "TSModuleBlock"
   ) {
-    result.push({ name: getNamespaceName(root.id), body: root.body });
+    result.push({
+      body: root.body,
+      name: getNamespaceName(root.id),
+    });
   }
+
   for (const key of Object.keys(root) as (keyof Node)[]) {
     const value = root[key];
+
     if (isNode(value)) {
       collectBlocks(value, result);
     } else if (Array.isArray(value)) {
@@ -174,15 +194,14 @@ function collectBlocks(root: Node, result: NamespaceBlock[] = []): NamespaceBloc
       }
     }
   }
+
   return result;
 }
 
 /**
  * メンバーの名前と分類グループを返す。
  *
- * 型エクスポート (`export type X = ...`) は名前を持ち、ネストした名前空間
- * (`export namespace X { ... }`) も名前を持つ。それ以外の文は名前を持たない
- * ため `null` を返す。
+ * 型エクスポート (`export type X = ...`) は名前を持ち、ネストした名前空間 (`export namespace X { ... }`) も名前を持つ。それ以外の文は名前を持たないため `null` を返す。
  */
 function getMemberInfo(
   member: Statement,
@@ -193,13 +212,21 @@ function getMemberInfo(
   isNamespace: boolean;
 } {
   if (member.type !== "ExportNamedDeclaration") {
-    return { name: null, group: -1, isNamespace: false };
+    return {
+      name: null,
+      group: -1,
+      isNamespace: false,
+    };
   }
 
   const declaration = member.declaration;
 
   if (declaration?.type === "TSModuleDeclaration" && declaration.id.type === "Identifier") {
-    return { name: declaration.id.name, group: sort.namespaceGroup, isNamespace: true };
+    return {
+      name: declaration.id.name,
+      group: sort.namespaceGroup,
+      isNamespace: true,
+    };
   }
 
   if (
@@ -209,52 +236,72 @@ function getMemberInfo(
     "id" in declaration &&
     (declaration as { id?: { name?: string } }).id?.name !== undefined
   ) {
-    // インターフェース名が「I + 大文字」で始まる場合は、先頭の「I」を並び順の
-    // 対象から除く (`IFoo` → `Foo` として扱う)。
+    // インターフェース名が「I + 大文字」で始まる場合は、先頭の「I」を並び順の対象から除く (`IFoo` → `Foo` として扱う)。
     const name = (declaration as { id: { name: string } }).id.name;
+
     if (declaration.type === "TSInterfaceDeclaration" && /^I[A-Z]/u.test(name)) {
-      return { name: name.slice(1), group: getGroup(sort.fixedNames, name), isNamespace: false };
+      return {
+        name: name.slice(1),
+        group: getGroup(sort.fixedNames, name),
+        isNamespace: false,
+      };
     }
 
-    return { name, group: getGroup(sort.fixedNames, name), isNamespace: false };
+    return {
+      name,
+      group: getGroup(sort.fixedNames, name),
+      isNamespace: false,
+    };
   }
 
-  return { name: null, group: -1, isNamespace: false };
+  return {
+    name: null,
+    group: -1,
+    isNamespace: false,
+  };
 }
 
 /**
  * 2 つのメンバーの比較関数。
  *
- * グループ順で並べ、グループ内は名前の辞書順にする。同名の型と名前空間は
- * 型を先にする。名前空間同士もグループが等しいため名前順になる。
+ * グループ順で並べ、グループ内は名前の辞書順にする。同名の型と名前空間は型を先にする。名前空間同士もグループが等しいため名前順になる。
  */
 function compareItems(
-  a: { name: string; group: number; isNamespace: boolean },
-  b: { name: string; group: number; isNamespace: boolean },
+  a: {
+    name: string;
+    group: number;
+    isNamespace: boolean;
+  },
+  b: {
+    name: string;
+    group: number;
+    isNamespace: boolean;
+  },
 ): number {
   if (a.group !== b.group) {
     return a.group - b.group;
   }
+
   if (a.name !== b.name) {
     return a.name < b.name ? -1 : 1;
   }
+
   if (a.isNamespace !== b.isNamespace) {
     return a.isNamespace ? 1 : -1;
   }
+
   return 0;
 }
 
 /**
  * メンバーの開始位置を返す。
  *
- * メンバーに付随する JSDoc などのコメントはメンバーと一緒に移動するため、
- * 先頭のコメントの開始位置まで範囲を広げる。Babel 8 はコメントを次の
- * メンバーの leading コメントとしても付与するため、trailing コメントは
- * ここで扱わない (重複してしまう)。
+ * メンバーに付随する JSDoc などのコメントはメンバーと一緒に移動するため、先頭のコメントの開始位置まで範囲を広げる。Babel 8 はコメントを次のメンバーの leading コメントとしても付与するため、trailing コメントはここで扱わない (重複してしまう)。
  */
 function extendedStart(member: Statement): number {
   const memberStart = member.start!;
   const firstComment = member.leadingComments?.[0];
+
   if (
     firstComment !== undefined &&
     typeof firstComment.start === "number" &&
@@ -262,14 +309,14 @@ function extendedStart(member: Statement): number {
   ) {
     return firstComment.start;
   }
+
   return memberStart;
 }
 
 /**
  * 名前空間の本体のメンバーを並べ替えた結果を返す。
  *
- * 名前を持たない文は位置を維持し、型エクスポートとネストした名前空間を
- * 「名前空間固有の指定 → {@linkcode FIXED_ORDER_NAMES} の順 → 名前順」の順に並べ替える。
+ * 名前を持たない文は位置を維持し、型エクスポートとネストした名前空間を「名前空間固有の指定 → {@linkcode FIXED_ORDER_NAMES} の順 → 名前順」の順に並べ替える。
  * 固定名で同名の型と名前空間がある場合は、名前空間を型の直後に置く。
  * それ以外のネストした名前空間は末尾に続き、やはり名前順になる。
  *
@@ -280,20 +327,31 @@ function planReplacement(
   namespaceName: string,
   namespaceFixedOrders: readonly NamespaceFixedOrder[],
 ): {
-  start: number;
   end: number;
+  start: number;
   members: Statement[];
+
   /** 新しい位置 `i` に置くメンバーの元インデックス。 */
   newOrder: number[];
 } | null {
   const members = block.body;
   const sort = getSortOrder(namespaceName, namespaceFixedOrders);
-  const items = members.map((member) => ({ member, ...getMemberInfo(member, sort) }));
+  const items = members.map((member) => ({
+    member,
+    ...getMemberInfo(member, sort),
+  }));
 
   const sortable = items.filter(
-    (item): item is { member: Statement; name: string; group: number; isNamespace: boolean } =>
-      item.name !== null,
+    (
+      item,
+    ): item is {
+      name: string;
+      group: number;
+      member: Statement;
+      isNamespace: boolean;
+    } => item.name !== null,
   );
+
   if (sortable.length < 2) {
     return null;
   }
@@ -305,7 +363,9 @@ function planReplacement(
       if (getGroup(sort.fixedNames, name) === sort.namedGroup) {
         return false;
       }
+
       const kinds = sortable.filter((item) => item.name === name);
+
       return kinds.some((item) => item.isNamespace) && kinds.some((item) => !item.isNamespace);
     }),
   );
@@ -322,12 +382,14 @@ function planReplacement(
 
   // 名前を持たない文が元の位置に残るように、並べ替えの要否を判定する。
   const isSameOrder = sorted.every((item, i) => item.member === sortable[i]!.member);
+
   if (isSameOrder) {
     return null;
   }
 
   const newOrder: number[] = members.map(() => 0);
   let cursor = 0;
+
   for (let i = 0; i < members.length; i++) {
     if (items[i]!.name === null) {
       newOrder[i] = i;
@@ -337,8 +399,8 @@ function planReplacement(
   }
 
   return {
+    end: members.at(-1)!.end!,
     start: extendedStart(members[0]!),
-    end: members[members.length - 1]!.end!,
     members,
     newOrder,
   };
@@ -346,20 +408,22 @@ function planReplacement(
 
 /** 名前空間の並べ替え計画を、ネストを考慮してテキストへ変換するための置換ノード。 */
 type ReplacementNode = {
-  start: number;
   end: number;
+  start: number;
   members: Statement[];
-  newOrder: number[];
+
   /** この範囲の内側にある置換ノード (`start` 昇順)。 */
   children: ReplacementNode[];
+  newOrder: number[];
 };
 
-/**
- * 置換ノードの入れ子関係 (`children`) を構築し、ルートのノードを返す。
- */
+/** 置換ノードの入れ子関係 (`children`) を構築し、ルートのノードを返す。 */
 function buildTree(plans: NonNullable<ReturnType<typeof planReplacement>>[]): ReplacementNode[] {
   const nodes = plans
-    .map((plan) => ({ ...plan, children: [] as ReplacementNode[] }))
+    .map((plan) => ({
+      ...plan,
+      children: [] as ReplacementNode[],
+    }))
     .toSorted((a, b) => a.start - b.start);
 
   const roots: ReplacementNode[] = [];
@@ -368,17 +432,21 @@ function buildTree(plans: NonNullable<ReturnType<typeof planReplacement>>[]): Re
   for (const node of nodes) {
     // 自身を包含する直近のノードを親にする。
     while (stack.length > 0) {
-      const parent = stack[stack.length - 1]!;
+      const parent = stack.at(-1)!;
+
       if (parent.start <= node.start && node.end <= parent.end) {
         break;
       }
+
       stack.pop();
     }
+
     if (stack.length > 0) {
-      stack[stack.length - 1]!.children.push(node);
+      stack.at(-1)!.children.push(node);
     } else {
       roots.push(node);
     }
+
     stack.push(node);
   }
 
@@ -399,22 +467,24 @@ function renderRange(
 ): string {
   let text = "";
   let cursor = start;
+
   for (const node of nodes) {
     if (node.end <= start || node.start >= end) {
       continue;
     }
+
     text += source.slice(cursor, node.start);
     text += rendered.get(node)!;
     cursor = node.end;
   }
+
   return text + source.slice(cursor, end);
 }
 
 /**
  * 名前空間の本体のメンバー領域を並べ替えたテキストを返す。
  *
- * メンバーのテキストは元のソースから切り出し (付随するコメントを含む)、
- * メンバー間のセパレーター (改行やインデント) は元の順序のまま維持する。
+ * メンバーのテキストは元のソースから切り出し (付随するコメントを含む)、メンバー間のセパレーター (改行やインデント) は元の順序のまま維持する。
  * ネストした名前空間の並べ替えは、子の置換ノードを適用して反映する。
  */
 function renderBody(
@@ -427,43 +497,47 @@ function renderBody(
   // メンバー間のセパレーター (改行やインデント) を元の順序のまま維持する。
   // 次のメンバーの先頭コメントは範囲外に残す。
   const separators: string[] = [];
+
   for (let i = 0; i < members.length - 1; i++) {
     separators.push(source.slice(members[i]!.end!, extendedStart(members[i + 1]!)));
   }
 
   const parts: string[] = [];
+
   for (let i = 0; i < node.newOrder.length; i++) {
     const member = members[node.newOrder[i]!]!;
     // メンバーの中にネストした名前空間の本体があれば、その並べ替え結果を反映する。
     const text = renderRange(source, extendedStart(member), member.end!, node.children, rendered);
     parts.push(text);
+
     if (i < separators.length) {
       parts.push(separators[i]!);
     }
   }
+
   return parts.join("");
 }
 
 /**
  * ソース内の型名前空間のメンバーを並べ替える。
  *
- * 名前空間 (`namespace X { ... }`) の型エクスポートとネストした名前空間を
- * 「名前空間固有の指定 → {@linkcode FIXED_ORDER_NAMES} の順 → 名前順」の順に並べ替える。
+ * 名前空間 (`namespace X { ... }`) の型エクスポートとネストした名前空間を「名前空間固有の指定 → {@linkcode FIXED_ORDER_NAMES} の順 → 名前順」の順に並べ替える。
  * パースできない場合は変更しない。
  *
  * @param options 並べ替えのオプションです。
  */
 export function sortNamespaceExports(source: string, options?: SortOptions): string {
   const result = parse(source, {
-    sourceType: "module",
     plugins: ["typescript", "jsx"],
+    sourceType: "module",
   });
 
   const namespaceFixedOrders = options?.namespaceFixedOrders ?? NAMESPACE_FIXED_ORDERS;
   const blocks = collectBlocks(result.program);
   const plans = blocks
-    .map(({ name, body }) => planReplacement(body, name, namespaceFixedOrders))
+    .map(({ body, name }) => planReplacement(body, name, namespaceFixedOrders))
     .filter((plan): plan is NonNullable<typeof plan> => plan !== null);
+
   if (plans.length === 0) {
     return source;
   }
@@ -487,11 +561,13 @@ export function sortNamespaceExports(source: string, options?: SortOptions): str
   // ルートのノード同士は重ならないため、ソース位置順に適用してよい。
   let text = "";
   let cursor = 0;
+
   for (const node of roots) {
     text += source.slice(cursor, node.start);
     text += rendered.get(node)!;
     cursor = node.end;
   }
+
   const output = text + source.slice(cursor);
 
   return output === source ? source : output;
@@ -501,7 +577,10 @@ async function main(): Promise<void> {
   const isCheck = process.argv.includes("--check");
   const files = TARGET_DIRS.flatMap((dir) =>
     fs
-      .globSync("**/*.tsx", { cwd: dir, exclude: ["**/__screenshots__/**"] })
+      .globSync("**/*.tsx", {
+        cwd: dir,
+        exclude: ["**/__screenshots__/**"],
+      })
       .map((fullpath) => path.join(dir, fullpath)),
   );
 
@@ -510,9 +589,11 @@ async function main(): Promise<void> {
   for (const filePath of files) {
     const source = fs.readFileSync(filePath, "utf-8");
     const formatted = sortNamespaceExports(source);
+
     if (formatted === source) {
       continue;
     }
+
     changedFiles.push(filePath);
     if (!isCheck) {
       fs.writeFileSync(filePath, formatted, "utf-8");
@@ -524,6 +605,7 @@ async function main(): Promise<void> {
     for (const filePath of changedFiles) {
       console.error(`  ${filePath}`);
     }
+
     process.exit(1);
   }
 }

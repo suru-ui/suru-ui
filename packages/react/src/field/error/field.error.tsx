@@ -19,7 +19,7 @@ export namespace FieldErrorProps {
     Pick<
       React.ComponentProps<typeof Field.Error>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // FieldErrorProps より:
+      // FieldErrorProps より :
       "match"
     >,
     keyof Render | keyof SuruUI
@@ -46,7 +46,7 @@ export type IFieldError = IComponent<FieldErrorProps>;
  *
  * 検証に失敗したときに表示されます。
  */
-export const FieldError: IFieldError = function SuiFieldError(props) {
+export const FieldError: IFieldError = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -72,7 +72,6 @@ export const FieldError: IFieldError = function SuiFieldError(props) {
 };
 
 export { FieldError as Error };
-
 export namespace Error {
   export type State = FieldErrorState;
 

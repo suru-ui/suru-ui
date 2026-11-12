@@ -25,7 +25,7 @@ export namespace MenuPositionerProps {
     Pick<
       React.ComponentProps<typeof Menu.Positioner>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // UseAnchorPositioningSharedParameters より:
+      // UseAnchorPositioningSharedParameters より :
       | "anchor"
       | "positionMethod"
       | "side"
@@ -58,10 +58,8 @@ export type MenuPositionerProps = MenuPositionerProps.Render &
 
 export type IMenuPositioner = IComponent<MenuPositionerProps>;
 
-/**
- * ポップアップをトリガーに位置合わせする要素です。
- */
-export const MenuPositioner: IMenuPositioner = function SuiMenuPositioner(props) {
+/** ポップアップをトリガーに位置合わせする要素です。 */
+export const MenuPositioner: IMenuPositioner = (props) => {
   const ctx = useMenuPortalContext();
   const {
     // ルートメニューは上下優先、サブメニューは左右優先にします。
@@ -79,7 +77,10 @@ export const MenuPositioner: IMenuPositioner = function SuiMenuPositioner(props)
       side={side}
       align={align}
       {...proxyRenderProps<Menu.Positioner.State, MenuPositionerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -102,7 +103,8 @@ export const MenuPositioner: IMenuPositioner = function SuiMenuPositioner(props)
             (state) => state.open && "sui_menu_positioner-open",
             (state) => state.nested && "sui_menu_positioner-nested",
             (state) => state.anchorHidden && "sui_menu_positioner-anchor_hidden",
-            (state) => state.instant && "sui_menu_positioner-instant",
+            (state) =>
+              state.instant !== undefined && state.instant !== "" && "sui_menu_positioner-instant",
             (state) => `sui_menu_positioner-side_${state.side.replaceAll("-", "_")}`,
             (state) => `sui_menu_positioner-align_${state.align}`,
           ),
@@ -113,7 +115,6 @@ export const MenuPositioner: IMenuPositioner = function SuiMenuPositioner(props)
 };
 
 export { MenuPositioner as Positioner };
-
 export namespace Positioner {
   export type State<TItem = any> = MenuPositionerState<TItem>;
 

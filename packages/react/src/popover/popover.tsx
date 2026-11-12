@@ -1,8 +1,7 @@
-import * as React from "react";
-
 import type { IComponent } from "../types.js";
 import {
   type PopoverHandle,
+  type PopoverContext,
   type PopoverRootSize,
   type PopoverRootProps,
   type PopoverRootState,
@@ -22,7 +21,6 @@ import {
   PopoverArrow,
   PopoverPopup,
   PopoverPortal,
-  PopoverContext,
   PopoverTrigger,
   PopoverBackdrop,
   PopoverPositioner,
@@ -30,8 +28,7 @@ import {
   createPopoverHandle,
 } from "./popover.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type PopoverActions = PopoverRootActions;
 
@@ -103,9 +100,7 @@ namespace PopoverProps {
      */
     backdrop?: boolean | undefined;
 
-    /**
-     * ポップオーバーの内容です。
-     */
+    /** ポップオーバーの内容です。 */
     children?: PopoverPopupProps["children"] | undefined;
 
     /**
@@ -115,9 +110,7 @@ namespace PopoverProps {
      */
     handle?: PopoverHandle<TPayload> | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: PopoverSlotProps<TPayload> | undefined;
 
     /**
@@ -147,14 +140,15 @@ export interface IUsePopoverAPI {
    * {@link PopoverAPI} を作成します。
    *
    * @template TPayload トリガーが送信するデータの型です。
+   *
    * @param props {@link Popover} の props です。
+   *
    * @returns ポップオーバーの API です
    */
   <TPayload = any>(props: PopoverProps<TPayload>): PopoverAPI<TPayload>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Popover} を構成する各パーツの props などを作成するための API です。
@@ -172,6 +166,7 @@ export class PopoverAPI<TPayload = any> {
 
   /**
    * @param props {@link Popover} の props です。
+   *
    * @internal
    */
   public constructor(props: PopoverProps<TPayload>) {
@@ -232,7 +227,7 @@ export class PopoverAPI<TPayload = any> {
     const { arrow: props } = this.slotProps;
 
     if (arrow || props) {
-      return props || {};
+      return props ?? {};
     }
 
     return null;
@@ -248,7 +243,7 @@ export class PopoverAPI<TPayload = any> {
     const { backdrop: props } = this.slotProps;
 
     if (backdrop || props) {
-      return props || {};
+      return props ?? {};
     }
 
     return null;
@@ -334,16 +329,12 @@ export class PopoverAPI<TPayload = any> {
 /**
  * {@link PopoverAPI} を作成するフックです。
  */
-export const usePopoverAPI: IUsePopoverAPI = function useSuiPopoverAPI<TPayload>(
-  props: PopoverProps<TPayload>,
-) {
-  return new PopoverAPI(props);
-};
+export const usePopoverAPI: IUsePopoverAPI = <TPayload,>(props: PopoverProps<TPayload>) =>
+  new PopoverAPI(props);
 
 export { PopoverAPI as API, usePopoverAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IPopover extends IComponent<PopoverProps> {
   /**
@@ -355,7 +346,6 @@ export interface IPopover extends IComponent<PopoverProps> {
    * {@link PopoverHandle} を作成する関数です。
    */
   readonly createHandle: ICreatePopoverHandle;
-
   readonly useContext: IUsePopoverContext;
 }
 
@@ -366,7 +356,7 @@ export interface IPopover extends IComponent<PopoverProps> {
  * 構成を細かく制御する場合は、{@link PopoverRoot|Root} を直接組み立てます。
  */
 export const Popover: IPopover = /*#__PURE__*/ Object.assign(
-  function SuiPopover(props: PopoverProps) {
+  (props: PopoverProps) => {
     const api = usePopoverAPI(props);
     const triggerProps = api.getTriggerProps();
     const arrowProps = api.getArrowProps();

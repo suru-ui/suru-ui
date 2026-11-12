@@ -1,74 +1,70 @@
 @layer sui.component {
-@scope (.sui_card_description) to ([data-scope]) {
+  @scope (.sui_card_description) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      grid-column-start: 1;
+      line-break: strict;
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
 
-/* 固定 */
-:scope {
-  grid-column-start: 1;
-  line-break: strict;
-  word-break: normal;
-  overflow-wrap: anywhere;
-}
+    /* 変数 */
+    :scope {
+      --sui_card_description-font_family: ;
+      --sui_card_description-font_size: ;
+      --sui_card_description-font_weight: ;
+      --sui_card_description-line_height: ;
+      --sui_card_description-color: ;
+      --sui_card_description-letter_spacing: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_card_description-font_family: ;
-  --sui_card_description-font_size: ;
-  --sui_card_description-font_weight: ;
-  --sui_card_description-line_height: ;
-  --sui_card_description-color: ;
-  --sui_card_description-letter_spacing: ;
-}
+    /* 可変 */
+    :scope {
+      font-family: var(--sui_card_description-font_family);
+      font-size: var(--sui_card_description-font_size);
+      font-weight: var(--sui_card_description-font_weight);
+      line-height: var(--sui_card_description-line_height);
+      color: var(--sui_card_description-color);
+      letter-spacing: var(--sui_card_description-letter_spacing);
+    }
 
-/* 可変 */
-:scope {
-  font-family: var(--sui_card_description-font_family);
-  font-size: var(--sui_card_description-font_size);
-  font-weight: var(--sui_card_description-font_weight);
-  line-height: var(--sui_card_description-line_height);
-  color: var(--sui_card_description-color);
-  letter-spacing: var(--sui_card_description-letter_spacing);
-}
+    /* 代入 */
+    :scope {
+      --sui_card_description-font_family: var(--sui-font-sans);
+      --sui_card_description-color: var(--sui-canvas_text-2);
 
-/* 代入 */
-:scope {
-  --sui_card_description-font_family: var(--sui-font-sans);
-  --sui_card_description-color: var(--sui-canvas_text-2);
+      &.sui_card_description-size_sm {
+        --sui_card_description-font_size: var(--sui-text-std-sm-n-font_size);
+        --sui_card_description-font_weight: var(--sui-text-std-sm-n-font_weight);
+        --sui_card_description-line_height: var(--sui-text-std-sm-n-line_height);
+        --sui_card_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
+      }
 
-  &.sui_card_description-size_sm {
-    --sui_card_description-font_size: var(--sui-text-std-sm-n-font_size);
-    --sui_card_description-font_weight: var(--sui-text-std-sm-n-font_weight);
-    --sui_card_description-line_height: var(--sui-text-std-sm-n-line_height);
-    --sui_card_description-letter_spacing: var(--sui-text-std-sm-n-letter_spacing);
-  }
+      &.sui_card_description-size_md {
+        --sui_card_description-font_size: var(--sui-text-std-md-n-font_size);
+        --sui_card_description-font_weight: var(--sui-text-std-md-n-font_weight);
+        --sui_card_description-line_height: var(--sui-text-std-md-n-line_height);
+        --sui_card_description-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+      }
 
-  &.sui_card_description-size_md {
-    --sui_card_description-font_size: var(--sui-text-std-md-n-font_size);
-    --sui_card_description-font_weight: var(--sui-text-std-md-n-font_weight);
-    --sui_card_description-line_height: var(--sui-text-std-md-n-line_height);
-    --sui_card_description-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
-  }
-
-  &.sui_card_description-size_lg {
-    --sui_card_description-font_size: var(--sui-text-std-lg-n-font_size);
-    --sui_card_description-font_weight: var(--sui-text-std-lg-n-font_weight);
-    --sui_card_description-line_height: var(--sui-text-std-lg-n-line_height);
-    --sui_card_description-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
-  }
-}
-
-} /* @scope */
+      &.sui_card_description-size_lg {
+        --sui_card_description-font_size: var(--sui-text-std-lg-n-font_size);
+        --sui_card_description-font_weight: var(--sui-text-std-lg-n-font_weight);
+        --sui_card_description-line_height: var(--sui-text-std-lg-n-line_height);
+        --sui_card_description-letter_spacing: var(--sui-text-std-lg-n-letter_spacing);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* 兄弟パーツの有無に依存するため、ルート起点の別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_card) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  &:has(.sui_card_title) .sui_card_description {
-    grid-row-start: 2;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_card) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      &:has(.sui_card_title) .sui_card_description {
+        grid-row-start: 2;
+      }
+    }
+  } /* @scope */
 } /* @layer */

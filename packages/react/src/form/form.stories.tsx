@@ -70,7 +70,9 @@ export const ValidationModes = meta.story({
           <Form
             key={validationMode}
             {...props}
-            onSubmit={(event) => event.preventDefault()}
+            onSubmit={(event) => {
+              event.preventDefault();
+            }}
             className="flex w-80 flex-col items-start gap-2"
             validationMode={validationMode}
           >
@@ -143,13 +145,13 @@ export const ActionsRef = meta.story({
           <Button type="submit">送信</Button>
         </Form>
         <div className="flex gap-2">
-          <Button size="sm" onClick={() => actionsRef.current?.validate()} variant="liquid">
+          <Button size="sm" variant="liquid" onClick={() => actionsRef.current?.validate()}>
             すべて検証
           </Button>
           <Button
             size="sm"
-            onClick={() => actionsRef.current?.validate("sui:nickname")}
             variant="liquid"
+            onClick={() => actionsRef.current?.validate("sui:nickname")}
           >
             1件のみ検証
           </Button>
@@ -201,7 +203,13 @@ export const WithFieldset = meta.story({
   }),
   render(props) {
     return (
-      <Form {...props} onSubmit={(event) => event.preventDefault()} className="w-96">
+      <Form
+        {...props}
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+        className="w-96"
+      >
         <Fieldset legend="お届け先">
           <Field name="sui:name" label="氏名">
             <Input required placeholder="例: 山田 太郎" />
@@ -261,7 +269,9 @@ export const LoginForm = meta.story({
     return (
       <Form
         {...props}
-        onSubmit={(event) => event.preventDefault()}
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
         className="flex w-80 flex-col gap-4 rounded border p-4"
       >
         <Field
@@ -307,7 +317,9 @@ export const ContactForm = meta.story({
     return (
       <Form
         {...props}
-        onSubmit={(event) => event.preventDefault()}
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
         className="flex w-96 flex-col gap-4 rounded border p-4"
       >
         <Fieldset legend="お問い合わせ内容">

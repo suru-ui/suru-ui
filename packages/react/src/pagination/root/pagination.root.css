@@ -1,83 +1,79 @@
 @layer sui.component {
-@scope (.sui_pagination) to ([data-scope]) {
+  @scope (.sui_pagination) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      align-items: center;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  align-items: center;
-}
+    /* 変数 */
+    :scope {
+      --sui_pagination-gap: ;
+      --sui_pagination-min_height: ;
+      --sui_pagination-font_size: ;
+      --sui_pagination-border_radius: ;
+      --sui_pagination-corner_shape: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_pagination-gap: ;
-  --sui_pagination-min_height: ;
-  --sui_pagination-font_size: ;
-  --sui_pagination-border_radius: ;
-  --sui_pagination-corner_shape: ;
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_pagination-gap);
+    }
 
-/* 可変 */
-:scope {
-  gap: var(--sui_pagination-gap);
-}
+    /* 代入 */
+    :scope {
+      &.sui_pagination-size_sm {
+        --sui_pagination-gap: --sui-gap(0.5);
+        --sui_pagination-min_height: var(--sui-size-sm);
+        --sui_pagination-font_size: var(--sui-text-oln-sm-m-font_size);
+      }
 
-/* 代入 */
-:scope {
-  &.sui_pagination-size_sm {
-    --sui_pagination-gap: --sui-gap(0.5);
-    --sui_pagination-min_height: var(--sui-size-sm);
-    --sui_pagination-font_size: var(--sui-text-oln-sm-m-font_size);
-  }
+      &.sui_pagination-size_md {
+        --sui_pagination-gap: --sui-gap(0.5);
+        --sui_pagination-min_height: var(--sui-size-md);
+        --sui_pagination-font_size: var(--sui-text-oln-md-m-font_size);
+      }
 
-  &.sui_pagination-size_md {
-    --sui_pagination-gap: --sui-gap(0.5);
-    --sui_pagination-min_height: var(--sui-size-md);
-    --sui_pagination-font_size: var(--sui-text-oln-md-m-font_size);
-  }
+      &.sui_pagination-size_lg {
+        --sui_pagination-gap: --sui-gap(1);
+        --sui_pagination-min_height: var(--sui-size-lg);
+        --sui_pagination-font_size: var(--sui-text-oln-lg-m-font_size);
+      }
 
-  &.sui_pagination-size_lg {
-    --sui_pagination-gap: --sui-gap(1);
-    --sui_pagination-min_height: var(--sui-size-lg);
-    --sui_pagination-font_size: var(--sui-text-oln-lg-m-font_size);
-  }
+      &.sui_pagination-radius_none {
+        --sui_pagination-border_radius: 0px;
+      }
 
-  &.sui_pagination-radius_none {
-    --sui_pagination-border_radius: 0px;
-  }
+      &.sui_pagination-radius_sm {
+        --sui_pagination-border_radius: --sui-corner_radius(1);
+        --sui_pagination-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_pagination-radius_sm {
-    --sui_pagination-border_radius: --sui-corner_radius(1);
-    --sui_pagination-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_pagination-radius_md {
+        --sui_pagination-border_radius: --sui-corner_radius(2);
+        --sui_pagination-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_pagination-radius_md {
-    --sui_pagination-border_radius: --sui-corner_radius(2);
-    --sui_pagination-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_pagination-radius_lg {
+        --sui_pagination-border_radius: --sui-corner_radius(3);
+        --sui_pagination-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_pagination-radius_lg {
-    --sui_pagination-border_radius: --sui-corner_radius(3);
-    --sui_pagination-corner_shape: superellipse(var(--sui-superellipse));
-  }
-
-  &.sui_pagination-radius_full {
-    --sui_pagination-border_radius: calc(var(--sui_pagination-min_height) / 2);
-    --sui_pagination-corner_shape: superellipse(var(--sui-superellipse));
-  }
-}
-
-} /* @scope */
+      &.sui_pagination-radius_full {
+        --sui_pagination-border_radius: calc(var(--sui_pagination-min_height) / 2);
+        --sui_pagination-corner_shape: superellipse(var(--sui-superellipse));
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_pagination) to ([data-scope]) {
-
-:scope {
-  &.sui_pagination-disabled {
-    cursor: not-allowed;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_pagination) to ([data-scope]) {
+    :scope {
+      &.sui_pagination-disabled {
+        cursor: not-allowed;
+      }
+    }
+  } /* @scope */
 } /* @layer */

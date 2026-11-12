@@ -1,4 +1,4 @@
-// TODO(tai-kun): いつか複合コンポーネントの方に組み込む
+// NOTE(tai-kun): いつか複合コンポーネントの方に組み込みます。
 
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
@@ -27,7 +27,7 @@ export namespace ComboboxBackdropProps {
     Pick<
       React.ComponentProps<typeof Combobox.Backdrop>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxBackdropProps より:
+      // ComboboxBackdropProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -35,7 +35,7 @@ export namespace ComboboxBackdropProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Combobox.Backdrop>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -49,10 +49,8 @@ export type ComboboxBackdropProps = ComboboxBackdropProps.Render &
 
 export type IComboboxBackdrop = IComponent<ComboboxBackdropProps>;
 
-/**
- * ポップアップの背後に表示される要素です。
- */
-export const ComboboxBackdrop: IComboboxBackdrop = function SuiComboboxBackdrop(props) {
+/** ポップアップの背後に表示される要素です。 */
+export const ComboboxBackdrop: IComboboxBackdrop = (props) => {
   const ctx = useComboboxPortalContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -60,7 +58,10 @@ export const ComboboxBackdrop: IComboboxBackdrop = function SuiComboboxBackdrop(
     <Combobox.Backdrop
       {...otherProps}
       {...proxyRenderProps<Combobox.Backdrop.State, ComboboxBackdropState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -94,7 +95,6 @@ export const ComboboxBackdrop: IComboboxBackdrop = function SuiComboboxBackdrop(
 };
 
 export { ComboboxBackdrop as Backdrop };
-
 export namespace Backdrop {
   export type State<TItem = any> = ComboboxBackdropState<TItem>;
 

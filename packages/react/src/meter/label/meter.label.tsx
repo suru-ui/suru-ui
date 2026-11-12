@@ -23,16 +23,13 @@ export namespace MeterLabelProps {
     Pick<
       React.ComponentProps<typeof Meter.Label>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MeterLabelProps より:
+      // MeterLabelProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Meter.Label>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Meter.Label>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,44 +42,47 @@ export type MeterLabelProps = MeterLabelProps.Render &
 
 export type IMeterLabel = IComponent<MeterLabelProps>;
 
-/**
- * メーターのラベルコンポーネントです。
- */
-export const MeterLabel: IMeterLabel = function SuiMeterLabel(props) {
+/** メーターのラベルコンポーネントです。 */
+export const MeterLabel: IMeterLabel = (props) => {
   const ctx = useMeterContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
     <Meter.Label
       {...otherProps}
-      {...proxyRenderProps<Meter.Label.State, MeterLabelState>((state) => ({ ...ctx, ...state }), {
-        style,
-        render: (htmlProps, state) => (
-          <MeterLabelContext value={state}>
-            <RenderElement
-              state={state}
-              render={render}
-              htmlProps={htmlProps}
-              defaultTagName="span"
-            />
-          </MeterLabelContext>
-        ),
-        className: cn<MeterLabelState>(
-          className,
-          "sui_meter_label",
-          (state) => `sui_meter_label-size_${state.size}`,
-          (state) => `sui_meter_label-color_${state.color}`,
-          (state) => `sui_meter_label-radius_${state.radius}`,
-          (state) => `sui_meter_label-variant_${state.variant}`,
-          (state) => state.outlined && "sui_meter_label-outlined",
-        ),
-      })}
+      {...proxyRenderProps<Meter.Label.State, MeterLabelState>(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <MeterLabelContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="span"
+              />
+            </MeterLabelContext>
+          ),
+          className: cn<MeterLabelState>(
+            className,
+            "sui_meter_label",
+            (state) => `sui_meter_label-size_${state.size}`,
+            (state) => `sui_meter_label-color_${state.color}`,
+            (state) => `sui_meter_label-radius_${state.radius}`,
+            (state) => `sui_meter_label-variant_${state.variant}`,
+            (state) => state.outlined && "sui_meter_label-outlined",
+          ),
+        },
+      )}
     />
   );
 };
 
 export { MeterLabel as Label };
-
 export namespace Label {
   export type State = MeterLabelState;
 

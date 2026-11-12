@@ -25,7 +25,7 @@ export namespace SegmentsIndicatorProps {
     Pick<
       React.ComponentProps<typeof BaseTabs.Indicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TabsIndicatorProps より:
+      // TabsIndicatorProps より :
       "renderBeforeHydration"
     >,
     keyof Render | keyof SuruUI
@@ -52,7 +52,7 @@ export type ISegmentsIndicator = IComponent<SegmentsIndicatorProps>;
  *
  * {@link SegmentsList} の子要素として配置します。
  */
-export const SegmentsIndicator: ISegmentsIndicator = function SuiSegmentsIndicator(props) {
+export const SegmentsIndicator: ISegmentsIndicator = (props) => {
   const ctx = useSegmentsContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -60,7 +60,10 @@ export const SegmentsIndicator: ISegmentsIndicator = function SuiSegmentsIndicat
     <BaseTabs.Indicator
       {...otherProps}
       {...proxyRenderProps<BaseTabs.Indicator.State, SegmentsIndicatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -91,7 +94,6 @@ export const SegmentsIndicator: ISegmentsIndicator = function SuiSegmentsIndicat
 };
 
 export { SegmentsIndicator as Indicator };
-
 export namespace Indicator {
   export type State<TItem = any> = SegmentsIndicatorState<TItem>;
 

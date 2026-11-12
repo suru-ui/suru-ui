@@ -27,7 +27,7 @@ export namespace AlertDialogTitleProps {
       Pick<
         React.ComponentProps<typeof AlertDialog.Title>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // AlertDialogTitleProps より:
+        // AlertDialogTitleProps より :
         never
       >,
       keyof Render | keyof SuruUI
@@ -36,7 +36,7 @@ export namespace AlertDialogTitleProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof AlertDialog.Title>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -55,7 +55,7 @@ export type IAlertDialogTitle = IComponent<AlertDialogTitleProps>;
  *
  * 見た目はカードの見出しとして描画され、ポップアップのラベルに関連付けます。
  */
-export const AlertDialogTitle: IAlertDialogTitle = function SuiAlertDialogTitle(props) {
+export const AlertDialogTitle: IAlertDialogTitle = (props) => {
   const ctx = useAlertDialogPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -67,15 +67,18 @@ export const AlertDialogTitle: IAlertDialogTitle = function SuiAlertDialogTitle(
           {...mergeProps<typeof Card.Title>([
             htmlProps,
             proxyRenderProps<Card.Title.State, AlertDialogTitleState>(
-              (state) => ({ ...ctx, ...state }),
+              (state) => ({
+                ...ctx,
+                ...state,
+              }),
               {
                 style,
-                render: (htmlProps, state) => (
+                render: (currentHtmlProps, state) => (
                   <AlertDialogTitleContext value={state}>
                     <RenderElement
                       state={state}
                       render={render}
-                      htmlProps={htmlProps}
+                      htmlProps={currentHtmlProps}
                       defaultTagName="h2"
                     />
                   </AlertDialogTitleContext>
@@ -104,7 +107,6 @@ export const AlertDialogTitle: IAlertDialogTitle = function SuiAlertDialogTitle(
 };
 
 export { AlertDialogTitle as Title };
-
 export namespace Title {
   export type State = AlertDialogTitleState;
 

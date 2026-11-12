@@ -12,14 +12,10 @@ import type { Override, IComponent } from "../../types.js";
 import { useContextMenuContext } from "../root/context-menu.root.context.js";
 import { ContextMenuSubmenuTriggerContext } from "./context-menu.submenu-trigger.context.js";
 
-/**
- * サブメニュー項目の配色です。
- */
+/** サブメニュー項目の配色です。 */
 export type ContextMenuSubmenuTriggerColor = Button.Root.Color;
 
-/**
- * サブメニュー項目の角丸です。
- */
+/** サブメニュー項目の角丸です。 */
 export type ContextMenuSubmenuTriggerRadius = Button.Root.Radius;
 
 /**
@@ -70,9 +66,9 @@ export namespace ContextMenuSubmenuTriggerProps {
       Pick<
         React.ComponentProps<typeof ContextMenu.SubmenuTrigger>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // NonNativeButtonProps より:
+        // NonNativeButtonProps より :
         | keyof NonNativeButtonProps
-        // MenuSubmenuTriggerProps より:
+        // MenuSubmenuTriggerProps より :
         | "onClick"
         | "label"
         | "id"
@@ -101,110 +97,110 @@ export type ContextMenuSubmenuTriggerProps = ContextMenuSubmenuTriggerProps.Rend
 
 export type IContextMenuSubmenuTrigger = IComponent<ContextMenuSubmenuTriggerProps>;
 
-/**
- * サブメニューを開くコンテキストメニュー項目です。
- */
-export const ContextMenuSubmenuTrigger: IContextMenuSubmenuTrigger =
-  function SuiContextMenuSubmenuTrigger(props) {
-    const ctx = useContextMenuContext();
-    const {
-      id,
-      color = "grey",
-      delay,
-      label,
-      style,
-      radius = ctx.radius,
-      render,
-      onClick,
-      variant = ctx.variant,
-      disabled,
-      className,
-      closeDelay,
-      openOnHover,
-      nativeButton = false,
-      focusableWhenDisabled,
-      ...otherProps
-    } = props;
-    const baseuiProps: Required<ContextMenuSubmenuTriggerProps.BaseUI> = {
-      id,
-      delay,
-      label,
-      onClick,
-      disabled,
-      closeDelay,
-      openOnHover,
-      nativeButton,
-      focusableWhenDisabled,
-    };
-
-    return (
-      <ContextMenu.SubmenuTrigger
-        {...otherProps}
-        {...baseuiProps}
-        render={(htmlProps: {}, itemState) => {
-          const buttonRootProps: Required<
-            Button.Root.Props.SuruUI &
-              Button.Root.Props.BaseUI &
-              Pick<Button.Root.Props.HTML, "disabled">
-          > = {
-            item: true,
-            size: ctx.size,
-            thin: undefined,
-            color,
-            muted: undefined,
-            radius,
-            pending: undefined,
-            squared: undefined,
-            variant,
-            disabled: itemState.disabled,
-            outlined: undefined,
-            nativeButton,
-            focusableWhenDisabled,
-          };
-
-          return (
-            <Button.Root
-              {...mergeProps<typeof Button.Root>([
-                htmlProps,
-                buttonRootProps,
-                proxyRenderProps<Button.Root.State, ContextMenuSubmenuTriggerState>(
-                  (state) => ({ ...ctx, ...state, ...itemState }),
-                  {
-                    style,
-                    render: (htmlProps, state) => (
-                      <ContextMenuSubmenuTriggerContext value={state}>
-                        <RenderElement
-                          state={state}
-                          render={render}
-                          htmlProps={htmlProps}
-                          defaultTagName="div"
-                        />
-                      </ContextMenuSubmenuTriggerContext>
-                    ),
-                    className: cn<ContextMenuSubmenuTriggerState>(
-                      className,
-                      "sui_context_menu_item",
-                      "sui_context_menu_submenu_trigger",
-                      (state) => state.disabled && "sui_context_menu_item-disabled",
-                      (state) => state.highlighted && "sui_context_menu_item-highlighted",
-                      (state) => state.open && "sui_context_menu_item-open",
-                      (state) => `sui_context_menu_item-size_${state.size}`,
-                      (state) => `sui_context_menu_item-radius_${state.radius}`,
-                      (state) => `sui_context_menu_item-variant_${state.variant}`,
-                      (state) => state.outlined && "sui_context_menu_item-outlined",
-                    ),
-                  },
-                ),
-              ])}
-            />
-          );
-        }}
-      />
-    );
+/** サブメニューを開くコンテキストメニュー項目です。 */
+export const ContextMenuSubmenuTrigger: IContextMenuSubmenuTrigger = (props) => {
+  const ctx = useContextMenuContext();
+  const {
+    id,
+    color = "grey",
+    delay,
+    label,
+    style,
+    radius = ctx.radius,
+    render,
+    onClick,
+    variant = ctx.variant,
+    disabled,
+    className,
+    closeDelay,
+    openOnHover,
+    nativeButton = false,
+    focusableWhenDisabled,
+    ...otherProps
+  } = props;
+  const baseuiProps: Required<ContextMenuSubmenuTriggerProps.BaseUI> = {
+    id,
+    delay,
+    label,
+    onClick,
+    disabled,
+    closeDelay,
+    openOnHover,
+    nativeButton,
+    focusableWhenDisabled,
   };
 
-export { ContextMenuSubmenuTrigger as SubmenuTrigger };
+  return (
+    <ContextMenu.SubmenuTrigger
+      {...otherProps}
+      {...baseuiProps}
+      render={(htmlProps: {}, itemState) => {
+        const buttonRootProps: Required<
+          Button.Root.Props.SuruUI &
+            Button.Root.Props.BaseUI &
+            Pick<Button.Root.Props.HTML, "disabled">
+        > = {
+          item: true,
+          size: ctx.size,
+          thin: undefined,
+          color,
+          muted: undefined,
+          radius,
+          pending: undefined,
+          squared: undefined,
+          variant,
+          disabled: itemState.disabled,
+          outlined: undefined,
+          nativeButton,
+          focusableWhenDisabled,
+        };
 
+        return (
+          <Button.Root
+            {...mergeProps<typeof Button.Root>([
+              htmlProps,
+              buttonRootProps,
+              proxyRenderProps<Button.Root.State, ContextMenuSubmenuTriggerState>(
+                (state) => ({
+                  ...ctx,
+                  ...state,
+                  ...itemState,
+                }),
+                {
+                  style,
+                  render: (currentHtmlProps, state) => (
+                    <ContextMenuSubmenuTriggerContext value={state}>
+                      <RenderElement
+                        state={state}
+                        render={render}
+                        htmlProps={currentHtmlProps}
+                        defaultTagName="div"
+                      />
+                    </ContextMenuSubmenuTriggerContext>
+                  ),
+                  className: cn<ContextMenuSubmenuTriggerState>(
+                    className,
+                    "sui_context_menu_item",
+                    "sui_context_menu_submenu_trigger",
+                    (state) => state.disabled && "sui_context_menu_item-disabled",
+                    (state) => state.highlighted && "sui_context_menu_item-highlighted",
+                    (state) => state.open && "sui_context_menu_item-open",
+                    (state) => `sui_context_menu_item-size_${state.size}`,
+                    (state) => `sui_context_menu_item-radius_${state.radius}`,
+                    (state) => `sui_context_menu_item-variant_${state.variant}`,
+                    (state) => state.outlined && "sui_context_menu_item-outlined",
+                  ),
+                },
+              ),
+            ])}
+          />
+        );
+      }}
+    />
+  );
+};
+
+export { ContextMenuSubmenuTrigger as SubmenuTrigger };
 export namespace SubmenuTrigger {
   export type State<TItem = any> = ContextMenuSubmenuTriggerState<TItem>;
 

@@ -19,7 +19,7 @@ export namespace AlertDialogPortalProps {
     Pick<
       React.ComponentProps<typeof AlertDialog.Portal>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DialogPortalProps より:
+      // DialogPortalProps より :
       "keepMounted" | "container"
     >,
     keyof Render | keyof SuruUI
@@ -46,10 +46,10 @@ export type IAlertDialogPortal = IComponent<AlertDialogPortalProps>;
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const AlertDialogPortal: IAlertDialogPortal = function SuiAlertDialogPortal(props) {
+export const AlertDialogPortal: IAlertDialogPortal = (props) => {
   const {
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -64,7 +64,6 @@ export const AlertDialogPortal: IAlertDialogPortal = function SuiAlertDialogPort
 };
 
 export { AlertDialogPortal as Portal };
-
 export namespace Portal {
   export type State = AlertDialogPortalState;
 

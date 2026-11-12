@@ -37,7 +37,7 @@ export type IDialogFooter = IComponent<DialogFooterProps>;
  *
  * 積み上げ式では内容を等幅の 2 列に並べます。
  */
-export const DialogFooter: IDialogFooter = function SuiDialogFooter(props) {
+export const DialogFooter: IDialogFooter = (props) => {
   const ctx = useDialogPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -45,7 +45,10 @@ export const DialogFooter: IDialogFooter = function SuiDialogFooter(props) {
     <Card.Footer
       {...otherProps}
       {...proxyRenderProps<Card.Footer.State, DialogFooterState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -79,7 +82,6 @@ export const DialogFooter: IDialogFooter = function SuiDialogFooter(props) {
 };
 
 export { DialogFooter as Footer };
-
 export namespace Footer {
   export type State = DialogFooterState;
 

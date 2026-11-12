@@ -1,27 +1,25 @@
 @layer sui.component {
-@scope (.sui_sidebar_group_content) to ([data-scope]) {
+  @scope (.sui_sidebar_group_content) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
+    /* 変数 */
+    :scope {
+      --sui_sidebar_group_content-gap: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_sidebar_group_content-gap: ;
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_sidebar_group_content-gap);
+    }
 
-/* 可変 */
-:scope {
-  gap: var(--sui_sidebar_group_content-gap);
-}
-
-/* 代入 */
-:scope {
-  --sui_sidebar_group_content-gap: --sui-gap(0.5);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_sidebar_group_content-gap: --sui-gap(0.5);
+    }
+  } /* @scope */
 } /* @layer */

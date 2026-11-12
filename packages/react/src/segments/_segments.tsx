@@ -11,6 +11,7 @@ import { decomposeItemObject } from "./utils/segments.utils.js";
  * 項目が `label` を持つオブジェクトかどうかを判定します。
  *
  * @param item 判定する値です。
+ *
  * @returns `label` を持つオブジェクトの場合に `true` を返します。
  */
 export function isItemObject(item: unknown): item is SegmentsRootItemObject {
@@ -23,6 +24,7 @@ export function isItemObject(item: unknown): item is SegmentsRootItemObject {
  * `label` は children として扱うため取り除きます。
  *
  * @param item 項目です。
+ *
  * @returns セグメントの props です。
  */
 export function getSegmentsItemProps(item: unknown): Omit<SegmentsItemProps, "children"> {
@@ -39,6 +41,7 @@ export function getSegmentsItemProps(item: unknown): Omit<SegmentsItemProps, "ch
  * 項目のラベルを求めます。
  *
  * @param item 項目です。
+ *
  * @returns 表示するラベルです。
  */
 export function getSegmentsItemLabel(item: unknown): React.ReactNode {
@@ -51,8 +54,10 @@ export function getSegmentsItemLabel(item: unknown): React.ReactNode {
  * {@link SegmentsList} と合成の両方で同じ組み立てを使うために使用します。
  *
  * @template TItem 項目の型です。
+ *
  * @param getItemProps 項目から {@link SegmentsItem} の props を求める関数です。
  * @param getLabel 項目からラベルを求める関数です。
+ *
  * @returns 項目をレンダリングする関数です。
  */
 export function createItemRenderer<TItem = any>(

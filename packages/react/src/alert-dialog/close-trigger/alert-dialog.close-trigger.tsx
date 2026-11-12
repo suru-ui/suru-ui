@@ -15,9 +15,7 @@ export namespace AlertDialogCloseTriggerProps {
   export type Render = Omit<RenderProps<AlertDialogCloseTriggerState>, "render">;
 
   export type SuruUI = {
-    /**
-     * ボタンとしてレンダリングする要素です。
-     */
+    /** ボタンとしてレンダリングする要素です。 */
     children: NonNullable<React.ComponentProps<typeof AlertDialog.Close>["render"]>;
   };
 
@@ -25,9 +23,9 @@ export namespace AlertDialogCloseTriggerProps {
     Pick<
       React.ComponentProps<typeof AlertDialog.Close>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // DialogCloseProps より:
+      // DialogCloseProps より :
       | never
     >,
     keyof Render | keyof SuruUI
@@ -49,28 +47,24 @@ export type AlertDialogCloseTriggerProps = AlertDialogCloseTriggerProps.Render &
 
 export type IAlertDialogCloseTrigger = IComponent<AlertDialogCloseTriggerProps>;
 
-/**
- * アラートダイアログを閉じるボタンコンポーネントです。
- */
-export const AlertDialogCloseTrigger: IAlertDialogCloseTrigger =
-  function SuiAlertDialogCloseTrigger(props) {
-    const { children, className, ...otherProps } = props;
+/** アラートダイアログを閉じるボタンコンポーネントです。 */
+export const AlertDialogCloseTrigger: IAlertDialogCloseTrigger = (props) => {
+  const { children, className, ...otherProps } = props;
 
-    return (
-      <AlertDialog.Close
-        {...otherProps}
-        render={children}
-        className={cn<AlertDialogCloseTriggerState>(
-          className,
-          "sui_alert_dialog_close",
-          (state) => state.disabled && "sui_alert_dialog_close-disabled",
-        )}
-      />
-    );
-  };
+  return (
+    <AlertDialog.Close
+      {...otherProps}
+      render={children}
+      className={cn<AlertDialogCloseTriggerState>(
+        className,
+        "sui_alert_dialog_close",
+        (state) => state.disabled && "sui_alert_dialog_close-disabled",
+      )}
+    />
+  );
+};
 
 export { AlertDialogCloseTrigger as CloseTrigger };
-
 export namespace CloseTrigger {
   export type State = AlertDialogCloseTriggerState;
 

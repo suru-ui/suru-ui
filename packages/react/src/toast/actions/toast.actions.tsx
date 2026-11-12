@@ -27,15 +27,10 @@ export type ToastActionsProps = ToastActionsProps.Render &
 
 export type IToastActions = IComponent<ToastActionsProps>;
 
-/**
- * 通知の操作ボタンを右寄せでまとめるコンポーネントです。
- */
-export const ToastActions: IToastActions = function SuiToastActions(props) {
-  return <Alert.Actions {...props} />;
-};
+/** 通知の操作ボタンを右寄せでまとめるコンポーネントです。 */
+export const ToastActions: IToastActions = (props) => <Alert.Actions {...props} />;
 
 export { ToastActions as Actions };
-
 export namespace Actions {
   export type State = ToastActionsState;
 

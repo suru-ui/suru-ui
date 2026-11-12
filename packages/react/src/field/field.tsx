@@ -22,8 +22,7 @@ import {
   FieldDescription,
 } from "./field.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type FieldActions = FieldRootActions;
 
@@ -44,7 +43,7 @@ export type FieldErrorMatches =
   | boolean
   | FieldErrorMatch
   | readonly FieldErrorMatch[]
-  | { readonly [_ in FieldErrorMatch]?: React.ReactNode };
+  | Readonly<Partial<Record<FieldErrorMatch, React.ReactNode>>>;
 
 export type FieldValidityData = FieldRootValidityData;
 
@@ -83,9 +82,7 @@ export type FieldState = FieldRootState;
 
 namespace FieldProps {
   export type Field = {
-    /**
-     * 入力欄の下に表示する説明文です。
-     */
+    /** 入力欄の下に表示する説明文です。 */
     description?: FieldDescriptionProps["children"] | undefined;
 
     /**
@@ -97,19 +94,13 @@ namespace FieldProps {
      */
     errorMatches?: FieldErrorMatches | undefined;
 
-    /**
-     * 入力欄の上に表示するラベルです。
-     */
+    /** 入力欄の上に表示するラベルです。 */
     label?: FieldLabelProps["children"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: FieldSlotProps | undefined;
 
-    /**
-     * 入力欄の検証状態に応じて表示する内容です。
-     */
+    /** 入力欄の検証状態に応じて表示する内容です。 */
     validity?: FieldValidityProps["children"] | undefined;
   };
 
@@ -126,13 +117,13 @@ export interface IUseFieldAPI {
    * {@link FieldAPI} を作成します。
    *
    * @param props {@link Field} の props です。
+   *
    * @returns フィールドの API です
    */
   (props: FieldProps): FieldAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Field} を構成する各パーツの props を作成するための API です。
@@ -148,6 +139,7 @@ export class FieldAPI {
 
   /**
    * @param props {@link Field} の props です。
+   *
    * @internal
    */
   public constructor(props: FieldProps) {
@@ -159,7 +151,12 @@ export class FieldAPI {
       errorMatches = true,
       ...rootProps
     } = props;
-    this.fieldProps = { label, validity, description, errorMatches };
+    this.fieldProps = {
+      label,
+      validity,
+      description,
+      errorMatches,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -197,15 +194,24 @@ export class FieldAPI {
     }
 
     if (typeof errorMatches === "boolean" || typeof errorMatches === "string") {
-      return [{ ...props, match: errorMatches }];
+      return [
+        {
+          ...props,
+          match: errorMatches,
+        },
+      ];
     }
 
     if (Array.isArray(errorMatches)) {
       const matches = [...new Set(errorMatches)];
 
-      return matches.map((match) => ({ ...props, match }));
+      return matches.map((match) => ({
+        ...props,
+        match,
+      }));
     }
 
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Object.entries はキーの型を保持しないため。
     const entries = Object.entries(errorMatches) as [FieldErrorMatch, React.ReactNode][];
 
     return entries.map(([match, children]) => ({
@@ -264,14 +270,11 @@ export class FieldAPI {
 /**
  * {@link FieldAPI} を作成するフックです。
  */
-export const useFieldAPI: IUseFieldAPI = function useSuiFieldAPI(props) {
-  return new FieldAPI(props);
-};
+export const useFieldAPI: IUseFieldAPI = (props) => new FieldAPI(props);
 
 export { FieldAPI as API, useFieldAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IField extends IComponent<FieldProps> {
   /**
@@ -291,7 +294,7 @@ export interface IField extends IComponent<FieldProps> {
  * ラベル、入力欄、エラーメッセージ、説明文をグループ化し、検証状態を管理します。
  */
 export const Field: IField = /*#__PURE__*/ Object.assign(
-  function SuiField(props: FieldProps) {
+  (props: FieldProps) => {
     const api = useFieldAPI(props);
     const { children, ...otherRootProps } = api.getRootProps();
     const labelProps = api.getLabelProps();

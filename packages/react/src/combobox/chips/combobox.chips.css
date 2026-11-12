@@ -1,33 +1,31 @@
 @layer sui.component {
-@scope (.sui_combobox_chips) to ([data-scope]) {
+  @scope (.sui_combobox_chips) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex: 1 1 auto;
+      flex-wrap: wrap;
+      align-content: center;
+      align-items: center;
+      min-width: 0px;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  flex: 1 1 auto;
-  flex-wrap: wrap;
-  align-content: center;
-  align-items: center;
-  min-width: 0px;
-}
+    /* 変数 */
+    :scope {
+      --sui_combobox_chips-row_gap: ;
+      --sui_combobox_chips-column_gap: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_combobox_chips-row_gap: ;
-  --sui_combobox_chips-column_gap: ;
-}
+    /* 可変 */
+    :scope {
+      row-gap: var(--sui_combobox_chips-row_gap);
+      column-gap: var(--sui_combobox_chips-column_gap);
+    }
 
-/* 可変 */
-:scope {
-  row-gap: var(--sui_combobox_chips-row_gap);
-  column-gap: var(--sui_combobox_chips-column_gap);
-}
-
-/* 代入 */
-:scope {
-  --sui_combobox_chips-row_gap: --sui-space(1);
-  --sui_combobox_chips-column_gap: --sui-space(1);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_combobox_chips-row_gap: --sui-space(1);
+      --sui_combobox_chips-column_gap: --sui-space(1);
+    }
+  } /* @scope */
 } /* @layer */

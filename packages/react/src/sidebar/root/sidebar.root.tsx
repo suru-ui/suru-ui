@@ -44,19 +44,13 @@ export type SidebarRootCollapsible = "offcanvas" | "icon" | "none";
 export type SidebarRootState = Override<
   SidebarContextState,
   {
-    /**
-     * 折りたたみの方法です。
-     */
+    /** 折りたたみの方法です。 */
     readonly collapsible: SidebarRootCollapsible;
 
-    /**
-     * 配置する辺です。
-     */
+    /** 配置する辺です。 */
     readonly side: SidebarRootSide;
 
-    /**
-     * 外観バリアントです。
-     */
+    /** 外観バリアントです。 */
     readonly variant: SidebarRootVariant;
   }
 >;
@@ -108,41 +102,50 @@ export type ISidebarRoot = IComponent<SidebarRootProps>;
 /**
  * サイドバー本体の要素です。
  *
- * 子要素には {@link SidebarHeader}、{@link SidebarContent}、{@link SidebarFooter}、
- * {@link SidebarGroup}、{@link SidebarRail} を配置します。
+ * 子要素には {@link SidebarHeader}、{@link SidebarContent}、{@link SidebarFooter}、{@link SidebarGroup}、{@link SidebarRail} を配置します。
  */
-export const SidebarRoot: ISidebarRoot = function SuiSidebarRoot(props) {
+export const SidebarRoot: ISidebarRoot = (props) => {
   const ctx = useSidebarContext();
   const {
     side = "left",
     variant = "sidebar",
-    collapsible = "offcanvas",
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
+    collapsible = "offcanvas",
     ...otherAsideProps
   } = props;
   const state: SidebarOpenState = ctx.open ? "expanded" : "collapsed";
   const renderState = React.useMemo<SidebarRootState>(
-    () => ({ open: ctx.open, side, state, variant, collapsible }),
+    () => ({
+      open: ctx.open,
+      side,
+      state,
+      variant,
+      collapsible,
+    }),
     [collapsible, ctx.open, side, state, variant],
   );
   // collapsible・side・variant は Root の内側でだけ確定するため、子孫へ伝えます。
   const childCtx = React.useMemo<SidebarContext>(
-    () => ({ ...ctx, side, variant, collapsible }),
+    () => ({
+      ...ctx,
+      side,
+      variant,
+      collapsible,
+    }),
     [collapsible, ctx, side, variant],
   );
-
   const element = useRender({
     props: [
       otherAsideProps,
       {
         className: cn<SidebarRootState>(
           "sui_sidebar",
-          (state) => `sui_sidebar-side_${state.side}`,
-          (state) => `sui_sidebar-variant_${state.variant}`,
-          (state) => `sui_sidebar-collapsible_${state.collapsible}`,
-          (state) => `sui_sidebar-${state.state}`,
-          (state) => state.open && "sui_sidebar-open",
+          (currentState) => `sui_sidebar-side_${currentState.side}`,
+          (currentState) => `sui_sidebar-variant_${currentState.variant}`,
+          (currentState) => `sui_sidebar-collapsible_${currentState.collapsible}`,
+          (currentState) => `sui_sidebar-${currentState.state}`,
+          (currentState) => currentState.open && "sui_sidebar-open",
         ),
         "data-scope": dataScope,
       },
@@ -155,7 +158,6 @@ export const SidebarRoot: ISidebarRoot = function SuiSidebarRoot(props) {
 };
 
 export { SidebarRoot as Root };
-
 export namespace Root {
   export type State = SidebarRootState;
 

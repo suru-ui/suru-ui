@@ -40,9 +40,9 @@ export namespace MenuTriggerProps {
     Pick<
       Menu.Trigger.Props<TPayload>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // MenuTriggerProps より:
+      // MenuTriggerProps より :
       | "disabled"
       | "payload"
       | "delay"
@@ -80,7 +80,7 @@ export interface IMenuTrigger extends IComponent<MenuTriggerProps> {
  *
  * `children` には表示する内容ではなく、トリガーとしてレンダリングする要素を渡します。
  */
-export const MenuTrigger: IMenuTrigger = function SuiMenuTrigger(props: MenuTriggerProps) {
+export const MenuTrigger: IMenuTrigger = (props: MenuTriggerProps) => {
   const ctx = useMenuContext(true);
   const { style, handle, children, className, ...otherProps } = props;
 
@@ -128,7 +128,6 @@ export const MenuTrigger: IMenuTrigger = function SuiMenuTrigger(props: MenuTrig
 };
 
 export { MenuTrigger as Trigger };
-
 export namespace Trigger {
   export type State<TItem = any> = MenuTriggerState<TItem>;
 

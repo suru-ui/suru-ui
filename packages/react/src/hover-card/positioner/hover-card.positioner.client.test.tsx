@@ -1,5 +1,4 @@
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { HoverCardPopup } from "../popup/hover-card.popup.jsx";
@@ -10,7 +9,7 @@ import "../../../tests/src/_locators.js";
 
 describe("HoverCardPositioner", () => {
   test("配置コンテナーを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <HoverCardRoot defaultOpen>
         <HoverCardPortal>
@@ -21,14 +20,14 @@ describe("HoverCardPositioner", () => {
       </HoverCardRoot>,
     );
 
-    // 検証
+    // 検証。
     const positioner = screen.getByClassName("sui_hover_card_positioner").element();
     expect(positioner.tagName).toBe("DIV");
     expect(positioner.classList.contains("sui_hover_card_positioner")).toBe(true);
   });
 
   test("render の関数へルートの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <HoverCardRoot size="lg" radius="sm" outlined defaultOpen>
         <HoverCardPortal>
@@ -43,7 +42,7 @@ describe("HoverCardPositioner", () => {
       </HoverCardRoot>,
     );
 
-    // 検証
+    // 検証。
     const positioner = screen.getByClassName("sui_hover_card_positioner").element();
     expect(positioner.getAttribute("data-probe")).toBe("lg/sm/true");
   });

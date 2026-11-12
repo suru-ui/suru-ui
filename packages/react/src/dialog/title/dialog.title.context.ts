@@ -24,11 +24,10 @@ export type IUseDialogTitleContext = IUseContext<DialogTitleContext>;
 /**
  * {@link DialogTitleContext} を読み取るフックです。
  */
-export const useDialogTitleContext: IUseDialogTitleContext = function useSuiDialogTitleContext(
-  optional,
-): any {
+export const useDialogTitleContext: IUseDialogTitleContext = (optional): any => {
   const ctx = React.use(DialogTitleContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "DialogTitleContext",
       providerName: "DialogTitle",

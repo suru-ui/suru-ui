@@ -8,9 +8,7 @@ import type { GroupContext } from "../group/autocomplete.group.context.js";
 import type { ListContext } from "../list/autocomplete.list.context.js";
 
 type ItemContextValue<TItem> = {
-  /**
-   * 項目の値です。
-   */
+  /** 項目の値です。 */
   value: TItem | undefined;
 };
 
@@ -31,9 +29,7 @@ export type AutocompleteItemContext<TValue = any> =
   // | ItemContext<GroupContext, TValue>
   ItemContext<ListContext<TValue> & GroupContext<TValue>, TValue>;
 
-/**
- * 項目の値を子要素へ伝播するコンテキストです。
- */
+/** 項目の値を子要素へ伝播するコンテキストです。 */
 export const AutocompleteItemContext: React.Context<AutocompleteItemContext | null> =
   React.createContext<AutocompleteItemContext | null>(null);
 
@@ -41,7 +37,8 @@ function useSuiAutocompleteItemContext(optional?: false): AutocompleteItemContex
 function useSuiAutocompleteItemContext(optional?: boolean): AutocompleteItemContext | null;
 function useSuiAutocompleteItemContext(optional?: boolean): AutocompleteItemContext | null {
   const ctx = React.use(AutocompleteItemContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "AutocompleteItemContext",
       providerName: "AutocompleteItem",

@@ -25,16 +25,13 @@ export namespace MenuViewportProps {
     Pick<
       React.ComponentProps<typeof Menu.Viewport>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuViewportProps より:
+      // MenuViewportProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Menu.Viewport>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Menu.Viewport>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -47,10 +44,8 @@ export type MenuViewportProps = MenuViewportProps.Render &
 
 export type IMenuViewport = IComponent<MenuViewportProps>;
 
-/**
- * トリガーの切り替えに伴うメニュー内容のアニメーション用ビューポートです。
- */
-export const MenuViewport: IMenuViewport = function SuiMenuViewport(props) {
+/** トリガーの切り替えに伴うメニュー内容のアニメーション用ビューポートです。 */
+export const MenuViewport: IMenuViewport = (props) => {
   const ctx = useMenuContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +53,10 @@ export const MenuViewport: IMenuViewport = function SuiMenuViewport(props) {
     <Menu.Viewport
       {...otherProps}
       {...proxyRenderProps<Menu.Viewport.State, MenuViewportState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -91,7 +89,6 @@ export const MenuViewport: IMenuViewport = function SuiMenuViewport(props) {
 };
 
 export { MenuViewport as Viewport };
-
 export namespace Viewport {
   export type State<TItem = any> = MenuViewportState<TItem>;
 

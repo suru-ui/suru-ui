@@ -25,16 +25,13 @@ export namespace MenuArrowProps {
     Pick<
       React.ComponentProps<typeof Menu.Arrow>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuArrowProps より:
+      // MenuArrowProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Menu.Arrow>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Menu.Arrow>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -47,53 +44,56 @@ export type MenuArrowProps = MenuArrowProps.Render &
 
 export type IMenuArrow = IComponent<MenuArrowProps>;
 
-/**
- * ポップアップとトリガーをつなぐ矢印要素です。
- */
-export const MenuArrow: IMenuArrow = function SuiMenuArrow(props) {
+/** ポップアップとトリガーをつなぐ矢印要素です。 */
+export const MenuArrow: IMenuArrow = (props) => {
   const ctx = usePopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
     <Menu.Arrow
       {...otherProps}
-      {...proxyRenderProps<Menu.Arrow.State, MenuArrowState>((state) => ({ ...ctx, ...state }), {
-        style,
-        render: (htmlProps, state) => (
-          <MenuArrowContext value={state}>
-            <RenderElement
-              state={state}
-              render={render}
-              htmlProps={htmlProps}
-              defaultTagName="div"
-            />
-          </MenuArrowContext>
-        ),
-        className: cn<MenuArrowState>(
-          className,
-          "sui_menu_arrow",
-          (state) => `sui_menu_arrow-size_${state.size}`,
-          (state) => `sui_menu_arrow-radius_${state.radius}`,
-          (state) => `sui_menu_arrow-variant_${state.variant}`,
-          (state) => state.outlined && "sui_menu_arrow-outlined",
-          (state) => state.open && "sui_menu_arrow-open",
-          (state) => state.anchorHidden && "sui_menu_arrow-anchor_hidden",
-          (state) => state.nested && "sui_menu_arrow-nested",
-          (state) => state.instant && "sui_menu_arrow-instant",
-          (state) =>
-            state.transitionStatus !== undefined &&
-            `sui_menu_arrow-transition_status_${state.transitionStatus}`,
-          (state) => state.uncentered && "sui_menu_arrow-uncentered",
-          (state) => `sui_menu_arrow-side_${state.side.replaceAll("-", "_")}`,
-          (state) => `sui_menu_arrow-align_${state.align}`,
-        ),
-      })}
+      {...proxyRenderProps<Menu.Arrow.State, MenuArrowState>(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <MenuArrowContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </MenuArrowContext>
+          ),
+          className: cn<MenuArrowState>(
+            className,
+            "sui_menu_arrow",
+            (state) => `sui_menu_arrow-size_${state.size}`,
+            (state) => `sui_menu_arrow-radius_${state.radius}`,
+            (state) => `sui_menu_arrow-variant_${state.variant}`,
+            (state) => state.outlined && "sui_menu_arrow-outlined",
+            (state) => state.open && "sui_menu_arrow-open",
+            (state) => state.anchorHidden && "sui_menu_arrow-anchor_hidden",
+            (state) => state.nested && "sui_menu_arrow-nested",
+            (state) => state.instant && "sui_menu_arrow-instant",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_menu_arrow-transition_status_${state.transitionStatus}`,
+            (state) => state.uncentered && "sui_menu_arrow-uncentered",
+            (state) => `sui_menu_arrow-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_menu_arrow-align_${state.align}`,
+          ),
+        },
+      )}
     />
   );
 };
 
 export { MenuArrow as Arrow };
-
 export namespace Arrow {
   export type State<TItem = any> = MenuArrowState<TItem>;
 

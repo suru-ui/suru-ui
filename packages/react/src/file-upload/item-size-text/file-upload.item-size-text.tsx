@@ -19,10 +19,7 @@ export namespace FileUploadItemSizeTextProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"span", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"span", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -35,12 +32,8 @@ export type FileUploadItemSizeTextProps = FileUploadItemSizeTextProps.Render &
 
 export type IFileUploadItemSizeText = IComponent<FileUploadItemSizeTextProps>;
 
-/**
- * ファイルサイズを人間が読める形式で表示するコンポーネントです。
- */
-export const FileUploadItemSizeText: IFileUploadItemSizeText = function SuiFileUploadItemSizeText(
-  props,
-) {
+/** ファイルサイズを人間が読める形式で表示するコンポーネントです。 */
+export const FileUploadItemSizeText: IFileUploadItemSizeText = (props) => {
   const ctx = useFileUploadItemContext();
   const { children = formatFileSize(ctx.file.size), ...otherSpanProps } = props;
 
@@ -67,7 +60,6 @@ export const FileUploadItemSizeText: IFileUploadItemSizeText = function SuiFileU
 };
 
 export { FileUploadItemSizeText as ItemSizeText };
-
 export namespace ItemSizeText {
   export type State = FileUploadItemSizeTextState;
 

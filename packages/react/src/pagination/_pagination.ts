@@ -9,6 +9,7 @@ import type {
  * 総ページ数を 1 以上の整数へ丸めます。
  *
  * @param totalPages 丸める前の総ページ数です。
+ *
  * @returns 1 以上の整数です。
  */
 function normalizeTotalPages(totalPages: number): number {
@@ -20,6 +21,7 @@ function normalizeTotalPages(totalPages: number): number {
  *
  * @param page 丸める前のページ番号です。
  * @param totalPages 1 以上の整数に丸め済みの総ページ数です。
+ *
  * @returns 1 以上かつ総ページ数以下の整数です。
  */
 function clampPage(page: number, totalPages: number): number {
@@ -44,9 +46,7 @@ export interface IUsePaginationStateOptions {
    */
   readonly disabled?: boolean | undefined;
 
-  /**
-   * ページが変更されたときに呼び出されるコールバックです。
-   */
+  /** ページが変更されたときに呼び出されるコールバックです。 */
   readonly onPageChange?:
     | ((page: number, details: PaginationRootChangeEventDetails) => void)
     | undefined;
@@ -58,9 +58,7 @@ export interface IUsePaginationStateOptions {
    */
   readonly page?: number | undefined;
 
-  /**
-   * 総ページ数です。
-   */
+  /** 総ページ数です。 */
   readonly totalPages: number;
 }
 
@@ -68,19 +66,13 @@ export interface IUsePaginationStateOptions {
  * {@link usePaginationState} が返す状態です。
  */
 export interface IUsePaginationState {
-  /**
-   * 現在のページです。
-   */
+  /** 現在のページです。 */
   readonly page: number;
 
-  /**
-   * 指定したページへ移動する関数です。
-   */
+  /** 指定したページへ移動する関数です。 */
   readonly goToPage: PaginationGoToPage;
 
-  /**
-   * 1 以上の整数に丸め済みの総ページ数です。
-   */
+  /** 1 以上の整数に丸め済みの総ページ数です。 */
   readonly totalPages: number;
 }
 
@@ -101,6 +93,7 @@ export function usePaginationState(options: IUsePaginationStateOptions): IUsePag
       }
 
       const target = clampPage(nextPage, maxPage);
+
       if (target === page) {
         return;
       }
@@ -114,5 +107,9 @@ export function usePaginationState(options: IUsePaginationStateOptions): IUsePag
     [disabled, maxPage, onPageChange, page, pageProp, totalPages],
   );
 
-  return { page, goToPage, totalPages: maxPage };
+  return {
+    page,
+    goToPage,
+    totalPages: maxPage,
+  };
 }

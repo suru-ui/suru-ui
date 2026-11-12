@@ -1,53 +1,49 @@
 @layer sui.component {
-@scope (.sui_context_menu_item) to ([data-scope]) {
+  @scope (.sui_context_menu_item) to ([data-scope]) {
+    /* 変数 */
+    :scope {
+      --sui_context_menu_item-margin_inline: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_context_menu_item-margin_inline: ;
-}
+    /* 可変 */
+    :scope {
+      margin-inline: var(--sui_context_menu_item-margin_inline);
 
-/* 可変 */
-:scope {
-  margin-inline: var(--sui_context_menu_item-margin_inline);
+      &:first-child {
+        margin-block-start: var(--sui_context_menu_popup-virtual_padding_block);
+      }
 
-  &:first-child {
-    margin-block-start: var(--sui_context_menu_popup-virtual_padding_block);
-  }
+      /* サブメニュー展開時は Base UI のフォーカスガードが末尾に追加され `:last-child` が外れるため、同種要素の末尾も対象にします。 */
+      &:last-child,
+      &:last-of-type {
+        margin-block-end: var(--sui_context_menu_popup-virtual_padding_block);
+      }
+    }
 
-  /* サブメニュー展開時は Base UI のフォーカスガードが末尾に追加され `:last-child` が外れるため、同種要素の末尾も対象にします。 */
-  &:last-child,
-  &:last-of-type {
-    margin-block-end: var(--sui_context_menu_popup-virtual_padding_block);
-  }
-}
+    /* 代入 */
+    :scope {
+      &.sui_context_menu_item-size_sm {
+        --sui_context_menu_item-margin_inline: --sui-space(calc(1.5 / 2));
+      }
 
-/* 代入 */
-:scope {
-  &.sui_context_menu_item-size_sm {
-    --sui_context_menu_item-margin_inline: --sui-space(calc(1.5 / 2));
-  }
+      &.sui_context_menu_item-size_md {
+        --sui_context_menu_item-margin_inline: --sui-space(calc(2.5 / 2));
+      }
 
-  &.sui_context_menu_item-size_md {
-    --sui_context_menu_item-margin_inline: --sui-space(calc(2.5 / 2));
-  }
-
-  &.sui_context_menu_item-size_lg {
-    --sui_context_menu_item-margin_inline: --sui-space(calc(3.5 / 2));
-  }
-}
-
-} /* @scope */
+      &.sui_context_menu_item-size_lg {
+        --sui_context_menu_item-margin_inline: --sui-space(calc(3.5 / 2));
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_context_menu_item) to ([data-scope]) {
-
-:scope {
-  &.sui_context_menu_item-disabled {
-    cursor: not-allowed;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_context_menu_item) to ([data-scope]) {
+    :scope {
+      &.sui_context_menu_item-disabled {
+        cursor: not-allowed;
+      }
+    }
+  } /* @scope */
 } /* @layer */

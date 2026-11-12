@@ -14,19 +14,13 @@ import {
   CheckboxGroupContext,
 } from "./checkbox-group.root.context.js";
 
-/**
- * チェックボックスグループの選択状態が変更されたイベントの詳細です。
- */
+/** チェックボックスグループの選択状態が変更されたイベントの詳細です。 */
 export type CheckboxGroupRootChangeEventDetails = CheckboxGroup.ChangeEventDetails;
 
-/**
- * チェックボックスグループの選択状態が変更された理由です。
- */
+/** チェックボックスグループの選択状態が変更された理由です。 */
 export type CheckboxGroupRootChangeEventReason = CheckboxGroup.ChangeEventReason;
 
-/**
- * チェックボックスの配色です。
- */
+/** チェックボックスの配色です。 */
 export type CheckboxGroupRootColor = CheckboxGroupContextColor;
 
 /**
@@ -132,7 +126,7 @@ export namespace CheckboxGroupRootProps {
     Pick<
       React.ComponentProps<typeof CheckboxGroup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // CheckboxGroupProps より:
+      // CheckboxGroupProps より :
       "value" | "defaultValue" | "onValueChange" | "allValues" | "disabled"
     >,
     keyof Render | keyof SuruUI
@@ -154,10 +148,8 @@ export type CheckboxGroupRootProps = CheckboxGroupRootProps.Render &
 
 export type ICheckboxGroupRoot = IComponent<CheckboxGroupRootProps>;
 
-/**
- * チェックボックスグループのルートコンポーネントです。
- */
-export const CheckboxGroupRoot: ICheckboxGroupRoot = function SuiCheckboxGroupRoot(props) {
+/** チェックボックスグループのルートコンポーネントです。 */
+export const CheckboxGroupRoot: ICheckboxGroupRoot = (props) => {
   const {
     size = "md",
     color = "grey",
@@ -168,9 +160,9 @@ export const CheckboxGroupRoot: ICheckboxGroupRoot = function SuiCheckboxGroupRo
     disabled,
     outlined = true,
     className,
-    orientation = "vertical",
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
+    orientation = "vertical",
     ...otherProps
   } = props;
   const ctx = React.useMemo<CheckboxGroupContext>(
@@ -191,7 +183,10 @@ export const CheckboxGroupRoot: ICheckboxGroupRoot = function SuiCheckboxGroupRo
       <CheckboxGroup
         {...otherProps}
         {...proxyRenderProps<CheckboxGroup.State, CheckboxGroupRootState>(
-          (state) => ({ ...ctx, ...state }),
+          (state) => ({
+            ...ctx,
+            ...state,
+          }),
           {
             style,
             render,
@@ -223,7 +218,6 @@ export const CheckboxGroupRoot: ICheckboxGroupRoot = function SuiCheckboxGroupRo
 };
 
 export { CheckboxGroupRoot as Root };
-
 export namespace Root {
   export type State = CheckboxGroupRootState;
 

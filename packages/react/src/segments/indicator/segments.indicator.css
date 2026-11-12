@@ -1,277 +1,276 @@
 @layer sui.component {
-@scope (.sui_segments_indicator) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
-  border-style: solid;
-}
-
-/* 変数 */
-:scope {
-  --sui_segments_indicator-min_height: ;
-  --sui_segments_indicator-background_color: ;
-  --sui_segments_indicator-border_color: ;
-  --sui_segments_indicator-border_width: ;
-  --sui_segments_indicator-border_radius: ;
-  --sui_segments_indicator-corner_shape: ;
-  --sui_segments_indicator-active_height: ;
-  --sui_segments_indicator-active_left: ;
-  --sui_segments_indicator-active_top: ;
-  --sui_segments_indicator-active_width: ;
-}
-
-/* 可変 */
-:scope {
-  inset-block-start: var(--sui_segments_indicator-active_top);
-  inset-inline-start: var(--sui_segments_indicator-active_left);
-  width: var(--sui_segments_indicator-active_width);
-  height: var(--sui_segments_indicator-active_height);
-  min-height: var(--sui_segments_indicator-min_height);
-  background-color: var(--sui_segments_indicator-background_color);
-  border-color: var(--sui_segments_indicator-border_color);
-  border-width: var(--sui_segments_indicator-border_width);
-  border-radius: var(--sui_segments_indicator-border_radius);
-  corner-shape: var(--sui_segments_indicator-corner_shape);
-  transition: var(--_sui_segments_indicator-transition,
-                inset-inline-start 240ms cubic-bezier(0.25, 0.7, 0.3, 1),
-                width              240ms cubic-bezier(0.25, 0.7, 0.3, 1),
-                inset-block-start  240ms cubic-bezier(0.25, 0.7, 0.3, 1),
-                height             240ms cubic-bezier(0.25, 0.7, 0.3, 1)
-              );
-}
-
-/* 代入 */
-:scope {
-  --sui_segments_indicator-min_height: var(--sui_segments_item-min_height);
-  --sui_segments_indicator-border_color: transparent;
-  --sui_segments_indicator-border_width: 0px;
-  --sui_segments_indicator-border_radius: var(--sui_segments-border_radius);
-  --sui_segments_indicator-corner_shape: var(--sui_segments-corner_shape);
-
-  /* Base UI がインジケーター自身に設定する変数を受けるため、要素起点で代入します。 */
-  --sui_segments_indicator-active_height: var(--active-tab-height, 0px);
-  --sui_segments_indicator-active_left: var(--active-tab-left, 0px);
-  --sui_segments_indicator-active_top: var(--active-tab-top, 0px);
-  --sui_segments_indicator-active_width: var(--active-tab-width, 0px);
-
-  &.sui_segments_indicator-color_grey {
-    &.sui_segments_indicator-active_variant_solid {
-      --sui_segments_indicator-background_color: var(--sui-grey-solid-canvas-normal);
+  @scope (.sui_segments_indicator) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      border-style: solid;
     }
 
-    &.sui_segments_indicator-active_variant_naked {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui_segments_list-background_color) 100%,
-                                                   var(--sui-grey-naked-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-grey-naked-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
+    /* 変数 */
+    :scope {
+      --sui_segments_indicator-min_height: ;
+      --sui_segments_indicator-background_color: ;
+      --sui_segments_indicator-border_color: ;
+      --sui_segments_indicator-border_width: ;
+      --sui_segments_indicator-border_radius: ;
+      --sui_segments_indicator-corner_shape: ;
+      --sui_segments_indicator-active_height: ;
+      --sui_segments_indicator-active_left: ;
+      --sui_segments_indicator-active_top: ;
+      --sui_segments_indicator-active_width: ;
     }
 
-    &.sui_segments_indicator-active_variant_liquid {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui-canvas-1) 100%,
-                                                   var(--sui-grey-liquid-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-grey-liquid-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-  }
-
-  &.sui_segments_indicator-color_blue {
-    &.sui_segments_indicator-active_variant_solid {
-      --sui_segments_indicator-background_color: var(--sui-blue-solid-canvas-normal);
-    }
-
-    &.sui_segments_indicator-active_variant_naked {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui_segments_list-background_color) 100%,
-                                                   var(--sui-blue-naked-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-blue-naked-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
+    /* 可変 */
+    :scope {
+      inset-block-start: var(--sui_segments_indicator-active_top);
+      inset-inline-start: var(--sui_segments_indicator-active_left);
+      width: var(--sui_segments_indicator-active_width);
+      height: var(--sui_segments_indicator-active_height);
+      min-height: var(--sui_segments_indicator-min_height);
+      background-color: var(--sui_segments_indicator-background_color);
+      border-color: var(--sui_segments_indicator-border_color);
+      border-width: var(--sui_segments_indicator-border_width);
+      border-radius: var(--sui_segments_indicator-border_radius);
+      corner-shape: var(--sui_segments_indicator-corner_shape);
+      transition: var(
+        --_sui_segments_indicator-transition,
+        inset-inline-start 240ms cubic-bezier(0.25, 0.7, 0.3, 1),
+        width 240ms cubic-bezier(0.25, 0.7, 0.3, 1),
+        inset-block-start 240ms cubic-bezier(0.25, 0.7, 0.3, 1),
+        height 240ms cubic-bezier(0.25, 0.7, 0.3, 1)
+      );
     }
 
-    &.sui_segments_indicator-active_variant_liquid {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui-canvas-1) 100%,
-                                                   var(--sui-blue-liquid-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-blue-liquid-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
+    /* 代入 */
+    :scope {
+      --sui_segments_indicator-min_height: var(--sui_segments_item-min_height);
+      --sui_segments_indicator-border_color: transparent;
+      --sui_segments_indicator-border_width: 0px;
+      --sui_segments_indicator-border_radius: var(--sui_segments-border_radius);
+      --sui_segments_indicator-corner_shape: var(--sui_segments-corner_shape);
+
+      /* Base UI がインジケーター自身に設定する変数を受けるため、要素起点で代入します。 */
+      --sui_segments_indicator-active_height: var(--active-tab-height, 0px);
+      --sui_segments_indicator-active_left: var(--active-tab-left, 0px);
+      --sui_segments_indicator-active_top: var(--active-tab-top, 0px);
+      --sui_segments_indicator-active_width: var(--active-tab-width, 0px);
+
+      &.sui_segments_indicator-color_grey {
+        &.sui_segments_indicator-active_variant_solid {
+          --sui_segments_indicator-background_color: var(--sui-grey-solid-canvas-normal);
+        }
+
+        &.sui_segments_indicator-active_variant_naked {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui_segments_list-background_color) 100%,
+            var(--sui-grey-naked-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-grey-naked-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+
+        &.sui_segments_indicator-active_variant_liquid {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui-canvas-1) 100%,
+            var(--sui-grey-liquid-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-grey-liquid-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+      }
+
+      &.sui_segments_indicator-color_blue {
+        &.sui_segments_indicator-active_variant_solid {
+          --sui_segments_indicator-background_color: var(--sui-blue-solid-canvas-normal);
+        }
+
+        &.sui_segments_indicator-active_variant_naked {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui_segments_list-background_color) 100%,
+            var(--sui-blue-naked-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-blue-naked-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+
+        &.sui_segments_indicator-active_variant_liquid {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui-canvas-1) 100%,
+            var(--sui-blue-liquid-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-blue-liquid-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+      }
+
+      &.sui_segments_indicator-color_purple {
+        &.sui_segments_indicator-active_variant_solid {
+          --sui_segments_indicator-background_color: var(--sui-purple-solid-canvas-normal);
+        }
+
+        &.sui_segments_indicator-active_variant_naked {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui_segments_list-background_color) 100%,
+            var(--sui-purple-naked-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-purple-naked-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+
+        &.sui_segments_indicator-active_variant_liquid {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui-canvas-1) 100%,
+            var(--sui-purple-liquid-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-purple-liquid-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+      }
+
+      &.sui_segments_indicator-color_magenta {
+        &.sui_segments_indicator-active_variant_solid {
+          --sui_segments_indicator-background_color: var(--sui-magenta-solid-canvas-normal);
+        }
+
+        &.sui_segments_indicator-active_variant_naked {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui_segments_list-background_color) 100%,
+            var(--sui-magenta-naked-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-magenta-naked-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+
+        &.sui_segments_indicator-active_variant_liquid {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui-canvas-1) 100%,
+            var(--sui-magenta-liquid-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-magenta-liquid-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+      }
+
+      &.sui_segments_indicator-color_red {
+        &.sui_segments_indicator-active_variant_solid {
+          --sui_segments_indicator-background_color: var(--sui-red-solid-canvas-normal);
+        }
+
+        &.sui_segments_indicator-active_variant_naked {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui_segments_list-background_color) 100%,
+            var(--sui-red-naked-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-red-naked-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+
+        &.sui_segments_indicator-active_variant_liquid {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui-canvas-1) 100%,
+            var(--sui-red-liquid-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-red-liquid-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+      }
+
+      &.sui_segments_indicator-color_orange {
+        &.sui_segments_indicator-active_variant_solid {
+          --sui_segments_indicator-background_color: var(--sui-orange-solid-canvas-normal);
+        }
+
+        &.sui_segments_indicator-active_variant_naked {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui_segments_list-background_color) 100%,
+            var(--sui-orange-naked-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-orange-naked-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+
+        &.sui_segments_indicator-active_variant_liquid {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui-canvas-1) 100%,
+            var(--sui-orange-liquid-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-orange-liquid-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+      }
+
+      &.sui_segments_indicator-color_yellow {
+        &.sui_segments_indicator-active_variant_solid {
+          --sui_segments_indicator-background_color: var(--sui-yellow-solid-canvas-normal);
+        }
+
+        &.sui_segments_indicator-active_variant_naked {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui_segments_list-background_color) 100%,
+            var(--sui-yellow-naked-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-yellow-naked-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+
+        &.sui_segments_indicator-active_variant_liquid {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui-canvas-1) 100%,
+            var(--sui-yellow-liquid-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-yellow-liquid-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+      }
+
+      &.sui_segments_indicator-color_green {
+        &.sui_segments_indicator-active_variant_solid {
+          --sui_segments_indicator-background_color: var(--sui-green-solid-canvas-normal);
+        }
+
+        &.sui_segments_indicator-active_variant_naked {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui_segments_list-background_color) 100%,
+            var(--sui-green-naked-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-green-naked-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+
+        &.sui_segments_indicator-active_variant_liquid {
+          --sui_segments_indicator-background_color: color-mix(
+            in oklab,
+            var(--sui-canvas-1) 100%,
+            var(--sui-green-liquid-canvas-normal) 100%
+          );
+          --sui_segments_indicator-border_color: var(--sui-green-liquid-border-normal);
+          --sui_segments_indicator-border_width: --sui-border_width(1);
+        }
+      }
     }
-  }
 
-  &.sui_segments_indicator-color_purple {
-    &.sui_segments_indicator-active_variant_solid {
-      --sui_segments_indicator-background_color: var(--sui-purple-solid-canvas-normal);
+    /* 変異 */
+    :scope {
+      @media (prefers-reduced-motion: reduce) {
+        --_sui_segments_indicator-transition: none;
+      }
     }
-
-    &.sui_segments_indicator-active_variant_naked {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui_segments_list-background_color) 100%,
-                                                   var(--sui-purple-naked-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-purple-naked-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-
-    &.sui_segments_indicator-active_variant_liquid {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui-canvas-1) 100%,
-                                                   var(--sui-purple-liquid-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-purple-liquid-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-  }
-
-  &.sui_segments_indicator-color_magenta {
-    &.sui_segments_indicator-active_variant_solid {
-      --sui_segments_indicator-background_color: var(--sui-magenta-solid-canvas-normal);
-    }
-
-    &.sui_segments_indicator-active_variant_naked {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui_segments_list-background_color) 100%,
-                                                   var(--sui-magenta-naked-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-magenta-naked-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-
-    &.sui_segments_indicator-active_variant_liquid {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui-canvas-1) 100%,
-                                                   var(--sui-magenta-liquid-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-magenta-liquid-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-  }
-
-  &.sui_segments_indicator-color_red {
-    &.sui_segments_indicator-active_variant_solid {
-      --sui_segments_indicator-background_color: var(--sui-red-solid-canvas-normal);
-    }
-
-    &.sui_segments_indicator-active_variant_naked {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui_segments_list-background_color) 100%,
-                                                   var(--sui-red-naked-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-red-naked-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-
-    &.sui_segments_indicator-active_variant_liquid {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui-canvas-1) 100%,
-                                                   var(--sui-red-liquid-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-red-liquid-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-  }
-
-  &.sui_segments_indicator-color_orange {
-    &.sui_segments_indicator-active_variant_solid {
-      --sui_segments_indicator-background_color: var(--sui-orange-solid-canvas-normal);
-    }
-
-    &.sui_segments_indicator-active_variant_naked {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui_segments_list-background_color) 100%,
-                                                   var(--sui-orange-naked-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-orange-naked-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-
-    &.sui_segments_indicator-active_variant_liquid {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui-canvas-1) 100%,
-                                                   var(--sui-orange-liquid-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-orange-liquid-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-  }
-
-  &.sui_segments_indicator-color_yellow {
-    &.sui_segments_indicator-active_variant_solid {
-      --sui_segments_indicator-background_color: var(--sui-yellow-solid-canvas-normal);
-    }
-
-    &.sui_segments_indicator-active_variant_naked {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui_segments_list-background_color) 100%,
-                                                   var(--sui-yellow-naked-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-yellow-naked-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-
-    &.sui_segments_indicator-active_variant_liquid {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui-canvas-1) 100%,
-                                                   var(--sui-yellow-liquid-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-yellow-liquid-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-  }
-
-  &.sui_segments_indicator-color_green {
-    &.sui_segments_indicator-active_variant_solid {
-      --sui_segments_indicator-background_color: var(--sui-green-solid-canvas-normal);
-    }
-
-    &.sui_segments_indicator-active_variant_naked {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui_segments_list-background_color) 100%,
-                                                   var(--sui-green-naked-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-green-naked-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-
-    &.sui_segments_indicator-active_variant_liquid {
-      --sui_segments_indicator-background_color: color-mix(
-                                                   in oklab,
-                                                   var(--sui-canvas-1) 100%,
-                                                   var(--sui-green-liquid-canvas-normal) 100%
-                                                 );
-      --sui_segments_indicator-border_color: var(--sui-green-liquid-border-normal);
-      --sui_segments_indicator-border_width: --sui-border_width(1);
-    }
-  }
-}
-
-/* 変異 */
-:scope {
-  @media (prefers-reduced-motion: reduce) {
-    --_sui_segments_indicator-transition: none;
-  }
-}
-
-} /* @scope */
+  } /* @scope */
 } /* @layer */

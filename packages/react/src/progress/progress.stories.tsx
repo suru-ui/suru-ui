@@ -65,19 +65,20 @@ export const Usage = meta.story({
   }),
   render(props) {
     const [value, setValue] = React.useState(0);
-
     React.useEffect(() => {
       const interval = setInterval(() => {
         setValue((current) => {
-          if (current >= props.max!) {
+          if (current >= (props.max ?? 100)) {
             return 0;
-          } else {
-            return Math.min(100, Math.round(current + Math.random() * 25));
           }
+
+          return Math.min(100, Math.round(current + Math.random() * 25));
         });
       }, 2e3);
 
-      return () => clearInterval(interval);
+      return () => {
+        clearInterval(interval);
+      };
     }, [props.max]);
 
     return <Progress {...props} value={value} className="w-[300px]" />;
@@ -324,16 +325,18 @@ export const RealWorld = meta.story({
   render(props) {
     const [value, setValue] = React.useState(0);
     const done = value >= 100;
-
     React.useEffect(() => {
       if (done) {
-        return;
+        return () => {};
       }
+
       const timer = setInterval(() => {
         setValue((current) => Math.min(100, current + 10));
       }, 500);
 
-      return () => clearInterval(timer);
+      return () => {
+        clearInterval(timer);
+      };
     }, [done]);
 
     return (
@@ -341,9 +344,11 @@ export const RealWorld = meta.story({
         <Progress {...props} label={done ? "アップロード完了" : props.label} value={value} />
         <button
           type="button"
-          onClick={() => setValue(0)}
           disabled={!done}
           className="w-fit text-sm underline"
+          onClick={() => {
+            setValue(0);
+          }}
         >
           はじめからやり直す
         </button>

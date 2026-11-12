@@ -25,7 +25,7 @@ export namespace SelectIconProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Icon>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectIconProps より:
+      // SelectIconProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace SelectIconProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof BaseSelect.Icon>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type SelectIconProps = SelectIconProps.Render &
 
 export type ISelectIcon = IComponent<SelectIconProps>;
 
-/**
- * ポップアップの開閉を示すアイコンのラッパー要素です。
- */
-export const SelectIcon: ISelectIcon = function SuiSelectIcon(props) {
+/** ポップアップの開閉を示すアイコンのラッパー要素です。 */
+export const SelectIcon: ISelectIcon = (props) => {
   const ctx = useSelectTriggerContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const SelectIcon: ISelectIcon = function SuiSelectIcon(props) {
     <BaseSelect.Icon
       {...otherProps}
       {...proxyRenderProps<BaseSelect.Icon.State, SelectIconState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -100,7 +101,6 @@ export const SelectIcon: ISelectIcon = function SuiSelectIcon(props) {
 };
 
 export { SelectIcon as Icon };
-
 export namespace Icon {
   export type State<TValue = any> = SelectIconState<TValue>;
 

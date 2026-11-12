@@ -51,8 +51,7 @@ import {
   DrawerVirtualKeyboardProvider,
 } from "./drawer.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type DrawerActions = DrawerRootActions;
 
@@ -162,9 +161,7 @@ export type DrawerState = DrawerRootState;
 
 namespace DrawerProps {
   export type Drawer<TPayload = any> = {
-    /**
-     * ドロワーの本文です。
-     */
+    /** ドロワーの本文です。 */
     children?: DrawerBodyProps["children"] | undefined;
 
     /**
@@ -177,24 +174,16 @@ namespace DrawerProps {
      */
     controls?: DrawerControlsProps["children"] | undefined;
 
-    /**
-     * ドロワーの説明文です。
-     */
+    /** ドロワーの説明文です。 */
     description?: React.ReactNode | undefined;
 
-    /**
-     * ドロワーのフッターです。
-     */
+    /** ドロワーのフッターです。 */
     footer?: React.ReactNode | undefined;
 
-    /**
-     * トリガーとドロワーに関連付けるためのハンドルです。
-     */
+    /** トリガーとドロワーに関連付けるためのハンドルです。 */
     handle?: DrawerHandle<TPayload> | undefined;
 
-    /**
-     * 閉じるボタンがクリックされたときに呼ばれるコールバックです。
-     */
+    /** 閉じるボタンがクリックされたときに呼ばれるコールバックです。 */
     onClose?: DrawerCloseProps["onClick"] | undefined;
 
     /**
@@ -211,14 +200,10 @@ namespace DrawerProps {
      */
     showSwipeHandle?: boolean | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: DrawerSlotProps<TPayload> | undefined;
 
-    /**
-     * ドロワーの見出しです。
-     */
+    /** ドロワーの見出しです。 */
     title?: React.ReactNode | undefined;
 
     /**
@@ -244,14 +229,15 @@ export interface IUseDrawerAPI {
    * {@link DrawerAPI} を作成します。
    *
    * @template TPayload トリガーが送信するデータの型です。
+   *
    * @param props {@link Drawer} の props です。
+   *
    * @returns ドロワーの API です。
    */
   <TPayload = any>(props: DrawerProps<TPayload>): DrawerAPI<TPayload>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Drawer} を構成する各パーツの props などを作成するための API です。
@@ -272,6 +258,7 @@ export class DrawerAPI<TPayload = any> {
   /**
    * @param props {@link Drawer} の props です。
    * @param handle トリガーとドロワーを関連付けるためのハンドルです。
+   *
    * @internal
    */
   public constructor(
@@ -346,35 +333,6 @@ export class DrawerAPI<TPayload = any> {
    *
    * それを表示しないときは `null` を返します。
    */
-  private getCloseIconButtonProps(): DrawerCloseProps | null {
-    const { onClose, showCloseIconButton } = this.drawerProps;
-
-    if (!showCloseIconButton) {
-      return null;
-    }
-
-    const { close: props = {} } = this.slotProps;
-    const { onClick, ...otherProps } = props;
-
-    return {
-      ...otherProps,
-      onClick(evt) {
-        onClick?.(evt);
-        if (evt.defaultPrevented) {
-          return;
-        }
-
-        onClose?.(evt);
-      },
-      children: (
-        <Button.Root radius="full" squared variant="naked" aria-label="閉じる">
-          <Button.Content>
-            <XIcon />
-          </Button.Content>
-        </Button.Root>
-      ),
-    };
-  }
 
   /**
    * {@link DrawerBackdrop} に渡す props を取得します。
@@ -499,7 +457,7 @@ export class DrawerAPI<TPayload = any> {
       isLikelyVisibleNode(title) ||
       isLikelyVisibleNode(description) ||
       isLikelyVisibleNode(controls) ||
-      showCloseIconButton
+      showCloseIconButton === true
     ) {
       return props ?? {};
     }
@@ -555,7 +513,7 @@ export class DrawerAPI<TPayload = any> {
     const { swipeHandle: props } = this.slotProps;
     const { showSwipeHandle } = this.drawerProps;
 
-    if (showSwipeHandle || props !== undefined) {
+    if (showSwipeHandle === true || props !== undefined) {
       return props ?? {};
     }
 
@@ -623,14 +581,42 @@ export class DrawerAPI<TPayload = any> {
 
     return props ?? null;
   }
+
+  private getCloseIconButtonProps(): DrawerCloseProps | null {
+    const { onClose, showCloseIconButton } = this.drawerProps;
+
+    if (showCloseIconButton !== true) {
+      return null;
+    }
+
+    const { close: props = {} } = this.slotProps;
+    const { onClick, ...otherProps } = props;
+
+    return {
+      ...otherProps,
+      onClick(evt) {
+        onClick?.(evt);
+        if (evt.defaultPrevented) {
+          return;
+        }
+
+        onClose?.(evt);
+      },
+      children: (
+        <Button.Root radius="full" squared variant="naked" aria-label="閉じる">
+          <Button.Content>
+            <XIcon />
+          </Button.Content>
+        </Button.Root>
+      ),
+    };
+  }
 }
 
 /**
  * {@link DrawerAPI} を作成するフックです。
  */
-export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI<TPayload>(
-  props: DrawerProps<TPayload>,
-) {
+export const useDrawerAPI: IUseDrawerAPI = <TPayload,>(props: DrawerProps<TPayload>) => {
   const handle = React.useMemo(
     () => props.handle ?? createDrawerHandle<TPayload>(),
     [props.handle],
@@ -641,8 +627,7 @@ export const useDrawerAPI: IUseDrawerAPI = function useSuiDrawerAPI<TPayload>(
 
 export { DrawerAPI as API, useDrawerAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IDrawer extends IComponent<DrawerProps> {
   /**
@@ -662,7 +647,7 @@ export interface IDrawer extends IComponent<DrawerProps> {
  * 構成を細かく制御する場合は、{@link DrawerRoot|Root} を直接組み立てます。
  */
 export const Drawer: IDrawer = /*#__PURE__*/ Object.assign(
-  function SuiDrawer(props: DrawerProps) {
+  (props: DrawerProps) => {
     const api = useDrawerAPI(props);
     const triggerProps = api.getTriggerProps();
     const swipeAreaProps = api.getSwipeAreaProps();
@@ -674,7 +659,6 @@ export const Drawer: IDrawer = /*#__PURE__*/ Object.assign(
     const bodyProps = api.getBodyProps();
     const footerProps = api.getFooterProps();
     const virtualKeyboardProviderProps = api.getVirtualKeyboardProviderProps();
-
     const portal = (
       <DrawerPortal {...api.getPortalProps()}>
         <DrawerBackdrop {...api.getBackdropProps()} />

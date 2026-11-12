@@ -276,7 +276,13 @@ function Counter() {
   return (
     <div className="flex items-center gap-2">
       <p>カウント: {count}</p>
-      <Button onClick={() => setCount((current) => current + 1)}>増やす</Button>
+      <Button
+        onClick={() => {
+          setCount((current) => current + 1);
+        }}
+      >
+        増やす
+      </Button>
     </div>
   );
 }

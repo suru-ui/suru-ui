@@ -9,14 +9,10 @@ import cn from "../../cn.js";
 import type { IComponent } from "../../types.js";
 import { CollapsibleContext } from "./collapsible.root.context.js";
 
-/**
- * コラプシブルの開閉状態が変更されるイベントの詳細です。
- */
+/** コラプシブルの開閉状態が変更されるイベントの詳細です。 */
 export type CollapsibleRootChangeEventDetails = Collapsible.Root.ChangeEventDetails;
 
-/**
- * コラプシブルの開閉状態が変更される理由です。
- */
+/** コラプシブルの開閉状態が変更される理由です。 */
 export type CollapsibleRootChangeEventReason = Collapsible.Root.ChangeEventReason;
 
 /**
@@ -49,7 +45,7 @@ export namespace CollapsibleRootProps {
     Pick<
       React.ComponentProps<typeof Collapsible.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // CollapsibleRootProps より:
+      // CollapsibleRootProps より :
       "open" | "defaultOpen" | "onOpenChange" | "disabled"
     >,
     keyof Render | keyof SuruUI
@@ -76,13 +72,13 @@ export type ICollapsibleRoot = IComponent<CollapsibleRootProps>;
  *
  * 開閉状態を管理し、トリガーと内容をグループ化します。
  */
-export const CollapsibleRoot: ICollapsibleRoot = function SuiCollapsibleRoot(props) {
+export const CollapsibleRoot: ICollapsibleRoot = (props) => {
   const {
     size = "md",
     style,
     render,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -91,7 +87,10 @@ export const CollapsibleRoot: ICollapsibleRoot = function SuiCollapsibleRoot(pro
     <Collapsible.Root
       {...otherProps}
       {...proxyRenderProps<Collapsible.Root.State, CollapsibleRootState>(
-        (state) => ({ ...state, size }),
+        (state) => ({
+          ...state,
+          size,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -122,7 +121,6 @@ export const CollapsibleRoot: ICollapsibleRoot = function SuiCollapsibleRoot(pro
 };
 
 export { CollapsibleRoot as Root };
-
 export namespace Root {
   export type State = CollapsibleRootState;
 

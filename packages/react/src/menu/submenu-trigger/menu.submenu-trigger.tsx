@@ -12,14 +12,10 @@ import type { Override, IComponent } from "../../types.js";
 import { useMenuContext } from "../root/menu.root.context.js";
 import { MenuSubmenuTriggerContext } from "./menu.submenu-trigger.context.js";
 
-/**
- * サブメニュー項目の配色です。
- */
+/** サブメニュー項目の配色です。 */
 export type MenuSubmenuTriggerColor = Button.Root.Color;
 
-/**
- * サブメニュー項目の角丸です。
- */
+/** サブメニュー項目の角丸です。 */
 export type MenuSubmenuTriggerRadius = Button.Root.Radius;
 
 /**
@@ -70,9 +66,9 @@ export namespace MenuSubmenuTriggerProps {
       Pick<
         React.ComponentProps<typeof Menu.SubmenuTrigger>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // NonNativeButtonProps より:
+        // NonNativeButtonProps より :
         | keyof NonNativeButtonProps
-        // MenuSubmenuTriggerProps より:
+        // MenuSubmenuTriggerProps より :
         | "onClick"
         | "label"
         | "id"
@@ -101,10 +97,8 @@ export type MenuSubmenuTriggerProps = MenuSubmenuTriggerProps.Render &
 
 export type IMenuSubmenuTrigger = IComponent<MenuSubmenuTriggerProps>;
 
-/**
- * サブメニューを開くメニュー項目です。
- */
-export const MenuSubmenuTrigger: IMenuSubmenuTrigger = function SuiMenuSubmenuTrigger(props) {
+/** サブメニューを開くメニュー項目です。 */
+export const MenuSubmenuTrigger: IMenuSubmenuTrigger = (props) => {
   const ctx = useMenuContext();
   const {
     id,
@@ -167,15 +161,19 @@ export const MenuSubmenuTrigger: IMenuSubmenuTrigger = function SuiMenuSubmenuTr
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, MenuSubmenuTriggerState>(
-                (state) => ({ ...ctx, ...state, ...itemState }),
+                (state) => ({
+                  ...ctx,
+                  ...state,
+                  ...itemState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <MenuSubmenuTriggerContext value={state}>
                       <RenderElement
                         state={state}
                         render={render}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="div"
                       />
                     </MenuSubmenuTriggerContext>
@@ -203,7 +201,6 @@ export const MenuSubmenuTrigger: IMenuSubmenuTrigger = function SuiMenuSubmenuTr
 };
 
 export { MenuSubmenuTrigger as SubmenuTrigger };
-
 export namespace SubmenuTrigger {
   export type State<TItem = any> = MenuSubmenuTriggerState<TItem>;
 

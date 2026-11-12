@@ -12,14 +12,10 @@ import type { Override, IComponent } from "../../types.js";
 import { useMenuContext } from "../root/menu.root.context.js";
 import { MenuItemContext } from "./menu.item.context.js";
 
-/**
- * メニューの操作項目の配色です。
- */
+/** メニューの操作項目の配色です。 */
 export type MenuItemColor = Button.Root.Color;
 
-/**
- * メニューの操作項目の角丸です。
- */
+/** メニューの操作項目の角丸です。 */
 export type MenuItemRadius = Button.Root.Radius;
 
 /**
@@ -70,9 +66,9 @@ export namespace MenuItemProps {
       Pick<
         React.ComponentProps<typeof Menu.Item>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // NonNativeButtonProps より:
+        // NonNativeButtonProps より :
         | keyof NonNativeButtonProps
-        // MenuItemProps より:
+        // MenuItemProps より :
         | "onClick"
         | "disabled"
         | "label"
@@ -99,10 +95,8 @@ export type MenuItemProps = MenuItemProps.Render &
 
 export type IMenuItem = IComponent<MenuItemProps>;
 
-/**
- * メニューの操作項目です。
- */
-export const MenuItem: IMenuItem = function SuiMenuItem(props) {
+/** メニューの操作項目です。 */
+export const MenuItem: IMenuItem = (props) => {
   const ctx = useMenuContext();
   const {
     id,
@@ -161,15 +155,19 @@ export const MenuItem: IMenuItem = function SuiMenuItem(props) {
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, MenuItemState>(
-                (state) => ({ ...ctx, ...state, ...itemState }),
+                (state) => ({
+                  ...ctx,
+                  ...state,
+                  ...itemState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <MenuItemContext value={state}>
                       <RenderElement
                         state={state}
                         render={render ?? <div />}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="div"
                       />
                     </MenuItemContext>
@@ -195,7 +193,6 @@ export const MenuItem: IMenuItem = function SuiMenuItem(props) {
 };
 
 export { MenuItem as Item };
-
 export namespace Item {
   export type State<TItem = any> = MenuItemState<TItem>;
 

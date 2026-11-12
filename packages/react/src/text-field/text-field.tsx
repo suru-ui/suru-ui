@@ -22,8 +22,7 @@ import {
   useTextFieldContext,
 } from "./text-field.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type TextFieldChangeEventDetails = TextFieldInputChangeEventDetails;
 
@@ -78,19 +77,13 @@ namespace TextFieldProps {
   export type Root = Omit<TextFieldRootProps, keyof TextField | keyof Input>;
 
   export type TextField = {
-    /**
-     * 入力欄の末尾に表示する内容です。
-     */
+    /** 入力欄の末尾に表示する内容です。 */
     endAddons?: Iterable<React.ReactNode> | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: TextFieldSlotProps | undefined;
 
-    /**
-     * 入力欄の先頭に表示する内容です。
-     */
+    /** 入力欄の先頭に表示する内容です。 */
     startAddons?: Iterable<React.ReactNode> | undefined;
   };
 }
@@ -105,14 +98,15 @@ export interface IUseTextFieldAPI {
    * {@link TextFieldAPI} を作成します。
    *
    * @param props {@link TextField} の props です。
+   *
    * @returns 文字入力欄の API です
    */
   (props: TextFieldProps): TextFieldAPI;
 }
 
-// API
-// ---
+// API.
 
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- 未指定を表す一意なセンチネルです。
 const NONE = {} as never;
 
 /**
@@ -129,6 +123,7 @@ export class TextFieldAPI {
 
   /**
    * @param props {@link TextField} の props です。
+   *
    * @internal
    */
   public constructor(props: TextFieldProps) {
@@ -188,12 +183,14 @@ export class TextFieldAPI {
    * 入力欄の末尾に表示する {@link TextFieldAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { endAddons: addons = [] } = this.textFieldProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -224,12 +221,14 @@ export class TextFieldAPI {
    * 入力欄の先頭に表示する {@link TextFieldAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { startAddons: addons = [] } = this.textFieldProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -241,14 +240,11 @@ export class TextFieldAPI {
 /**
  * {@link TextFieldAPI} を作成するフックです。
  */
-export const useTextFieldAPI: IUseTextFieldAPI = function useSuiTextFieldAPI(props) {
-  return new TextFieldAPI(props);
-};
+export const useTextFieldAPI: IUseTextFieldAPI = (props) => new TextFieldAPI(props);
 
 export { TextFieldAPI as API, useTextFieldAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface ITextField extends IComponent<TextFieldProps> {
   readonly useContext: IUseTextFieldContext;
@@ -260,7 +256,7 @@ export interface ITextField extends IComponent<TextFieldProps> {
  * 枠線の内側に入力欄と補助表示を並べ、枠線全体への操作で入力欄へ焦点を移します。
  */
 export const TextField: ITextField = /*#__PURE__*/ Object.assign(
-  function SuiTextField(props: TextFieldProps) {
+  (props: TextFieldProps) => {
     const api = useTextFieldAPI(props);
 
     return (

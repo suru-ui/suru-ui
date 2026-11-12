@@ -32,9 +32,9 @@ export namespace ComboboxItemProps {
         Pick<
           React.ComponentProps<typeof Combobox.Item>,
           // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-          // NonNativeButtonProps より:
+          // NonNativeButtonProps より :
           | keyof NonNativeButtonProps
-          // ComboboxItemProps より:
+          // ComboboxItemProps より :
           | "children"
           | "onClick"
           | "index"
@@ -72,13 +72,11 @@ export interface IComboboxItem extends IComponent<ComboboxItemProps> {
   <TValue = any>(props: ComboboxItemProps<TValue>): IComponent.Return;
 }
 
-/**
- * 候補リストの個々の項目要素です。
- */
-export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: ComboboxItemProps) {
+/** 候補リストの個々の項目要素です。 */
+export const ComboboxItem: IComboboxItem = (props: ComboboxItemProps) => {
   const listCtx = useComboboxListContext();
   const groupCtx = useComboboxGroupContext(true);
-  const ctx = groupCtx || listCtx;
+  const ctx = groupCtx ?? listCtx;
   const {
     index,
     style,
@@ -133,15 +131,20 @@ export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: Combo
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, ComboboxItemState>(
-                (buttonState) => ({ ...ctx, value, ...buttonState, ...itemState }),
+                (buttonState) => ({
+                  ...ctx,
+                  value,
+                  ...buttonState,
+                  ...itemState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <ComboboxItemContext value={state}>
                       <RenderElement
                         state={state}
                         render={render}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="div"
                       />
                     </ComboboxItemContext>
@@ -178,7 +181,6 @@ export const ComboboxItem: IComboboxItem = function SuiComboboxItem(props: Combo
 };
 
 export { ComboboxItem as Item };
-
 export namespace Item {
   export type State<TValue = any> = ComboboxItemState<TValue>;
 

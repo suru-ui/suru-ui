@@ -27,17 +27,14 @@ export namespace DialogTitleProps {
       Pick<
         React.ComponentProps<typeof Dialog.Title>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // DialogTitleProps より:
+        // DialogTitleProps より :
         never
       >,
       keyof Render | keyof SuruUI
     >
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Dialog.Title>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Dialog.Title>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -55,7 +52,7 @@ export type IDialogTitle = IComponent<DialogTitleProps>;
  *
  * 見た目はカードの見出しとして描画され、ポップアップのラベルに関連付けます。
  */
-export const DialogTitle: IDialogTitle = function SuiDialogTitle(props) {
+export const DialogTitle: IDialogTitle = (props) => {
   const ctx = useDialogPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -67,15 +64,18 @@ export const DialogTitle: IDialogTitle = function SuiDialogTitle(props) {
           {...mergeProps<typeof Card.Title>([
             htmlProps,
             proxyRenderProps<Card.Title.State, DialogTitleState>(
-              (state) => ({ ...ctx, ...state }),
+              (state) => ({
+                ...ctx,
+                ...state,
+              }),
               {
                 style,
-                render: (htmlProps, state) => (
+                render: (currentHtmlProps, state) => (
                   <DialogTitleContext value={state}>
                     <RenderElement
                       state={state}
                       render={render}
-                      htmlProps={htmlProps}
+                      htmlProps={currentHtmlProps}
                       defaultTagName="h2"
                     />
                   </DialogTitleContext>
@@ -104,7 +104,6 @@ export const DialogTitle: IDialogTitle = function SuiDialogTitle(props) {
 };
 
 export { DialogTitle as Title };
-
 export namespace Title {
   export type State = DialogTitleState;
 

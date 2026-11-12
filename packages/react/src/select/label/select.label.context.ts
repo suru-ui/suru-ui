@@ -25,11 +25,10 @@ export type IUseSelectLabelContext = IUseContext<SelectLabelContext>;
 /**
  * {@link SelectLabelContext} を読み取るフックです。
  */
-export const useSelectLabelContext: IUseSelectLabelContext = function useSuiSelectLabelContext(
-  optional,
-): any {
+export const useSelectLabelContext: IUseSelectLabelContext = (optional): any => {
   const ctx = React.use(SelectLabelContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SelectLabelContext",
       providerName: "SelectLabel",

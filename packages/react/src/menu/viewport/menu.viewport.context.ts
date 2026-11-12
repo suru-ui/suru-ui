@@ -25,11 +25,10 @@ export type IUseMenuViewportContext = IUseContext<MenuViewportContext>;
 /**
  * {@link MenuViewportContext} を読み取るフックです。
  */
-export const useMenuViewportContext: IUseMenuViewportContext = function useSuiMenuViewportContext(
-  optional,
-): any {
+export const useMenuViewportContext: IUseMenuViewportContext = (optional): any => {
   const ctx = React.use(MenuViewportContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "MenuViewportContext",
       providerName: "MenuViewport",

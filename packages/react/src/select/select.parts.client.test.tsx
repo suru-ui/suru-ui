@@ -1,5 +1,5 @@
 import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../errors.js";
@@ -67,9 +67,7 @@ function renderParts(children?: React.ReactNode) {
   );
 }
 
-/**
- * スタイル情報を持つ Root の下で、各パーツの render へ検証用の属性を付けた Select を描画します。
- */
+/** スタイル情報を持つ Root の下で、各パーツの render へ検証用の属性を付けた Select を描画します。 */
 function renderStateProbes() {
   return render(
     <SelectRoot size="lg" items={fruits} radius="sm" variant="naked" outlined defaultOpen>
@@ -241,29 +239,29 @@ function renderStateProbes() {
 
 describe("SelectRoot", () => {
   test("自身の HTML 要素を描画しない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<SelectRoot items={fruits} />);
 
-    // 検証
+    // 検証。
     expect(screen.container.querySelector("[data-scope]")).toBe(null);
   });
 });
 
 describe("SelectLabel", () => {
   test("ラベル要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     const label = screen.getByText("果物", { exact: true }).element();
     expect(label.classList.contains("sui_select_label")).toBe(true);
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(screen.getByText("果物", { exact: true }).element().getAttribute("data-probe")).toBe(
       "label/lg/sm/naked/true",
     );
@@ -272,14 +270,14 @@ describe("SelectLabel", () => {
 
 describe("SelectTrigger", () => {
   test("スタイル起点として修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SelectRoot size="lg" items={fruits} radius="sm" variant="naked" outlined>
         <SelectTrigger aria-label="果物" />
       </SelectRoot>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByRole("combobox", { name: "果物" }).element();
     expect(trigger.tagName).toBe("BUTTON");
     expect(trigger.classList.contains("sui_select")).toBe(true);
@@ -291,10 +289,10 @@ describe("SelectTrigger", () => {
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(
       screen.getByRole("combobox", { name: "果物" }).element().getAttribute("data-probe"),
     ).toBe("trigger/lg/sm/naked/true");
@@ -303,7 +301,7 @@ describe("SelectTrigger", () => {
 
 describe("SelectValue", () => {
   test("プレースホルダーを表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SelectRoot items={fruits}>
         <SelectTrigger aria-label="果物">
@@ -312,17 +310,17 @@ describe("SelectValue", () => {
       </SelectRoot>,
     );
 
-    // 検証
+    // 検証。
     const value = screen.getByText("選択").element();
     expect(value.classList.contains("sui_select_value")).toBe(true);
     expect(value.classList.contains("sui_select_value-placeholder")).toBe(true);
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(screen.getByText("選択").element().getAttribute("data-probe")).toBe(
       "value/lg/sm/naked/true",
     );
@@ -331,18 +329,18 @@ describe("SelectValue", () => {
 
 describe("SelectIcon", () => {
   test("アイコンのラッパーを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_icon").element().tagName).toBe("SPAN");
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_icon").element().getAttribute("data-probe")).toBe(
       "icon/lg/sm/naked/true",
     );
@@ -351,24 +349,24 @@ describe("SelectIcon", () => {
 
 describe("SelectPortal", () => {
   test("ポータル要素にスコープを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     const portal = screen.getByClassName("sui_select_portal").element();
     expect(portal.getAttribute("data-scope")).toBe("");
   });
 
   test("Root の外ではエラーを投げる", async ({ expect }) => {
-    // 実行と検証
+    // 実行と検証。
     await expect(render(<SelectPortal />)).rejects.toThrow(ContextMissingError);
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_portal").element().getAttribute("data-probe")).toBe(
       "portal/lg/sm/naked/true",
     );
@@ -377,18 +375,18 @@ describe("SelectPortal", () => {
 
 describe("SelectBackdrop", () => {
   test("オーバーレイを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_backdrop").element().tagName).toBe("DIV");
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_backdrop").element().getAttribute("data-probe")).toBe(
       "backdrop/lg/sm/naked/true",
     );
@@ -397,18 +395,18 @@ describe("SelectBackdrop", () => {
 
 describe("SelectPositioner", () => {
   test("配置コンテナーを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_positioner").element().tagName).toBe("DIV");
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_select_positioner").element().getAttribute("data-probe"),
     ).toBe("positioner/lg/sm/naked/true");
@@ -417,18 +415,18 @@ describe("SelectPositioner", () => {
 
 describe("SelectPopup", () => {
   test("ポップアップの内容を描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_popup").element().tagName).toBe("DIV");
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_popup").element().getAttribute("data-probe")).toBe(
       "popup/lg/sm/naked/true",
     );
@@ -437,15 +435,15 @@ describe("SelectPopup", () => {
 
 describe("SelectList", () => {
   test("リスト要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("listbox").element().classList.contains("sui_select_list")).toBe(true);
   });
 
   test("Root の items を既定の見た目で描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SelectRoot items={fruits} defaultOpen>
         <SelectTrigger aria-label="果物">
@@ -461,15 +459,15 @@ describe("SelectList", () => {
       </SelectRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("option", { name: "りんご" }).query()).not.toBe(null);
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("listbox").element().getAttribute("data-probe")).toBe(
       "list/lg/sm/naked/true",
     );
@@ -478,18 +476,18 @@ describe("SelectList", () => {
 
 describe("SelectGroup", () => {
   test("グループ要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("group").element().classList.contains("sui_select_group")).toBe(true);
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("group").element().getAttribute("data-probe")).toBe(
       "group/lg/sm/naked/true",
     );
@@ -498,19 +496,19 @@ describe("SelectGroup", () => {
 
 describe("SelectGroupLabel", () => {
   test("見出し要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     const label = screen.getByClassName("sui_select_group_label").element();
     expect(label.textContent).toBe("果物の一覧");
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_select_group_label").element().getAttribute("data-probe"),
     ).toBe("groupLabel/lg/sm/naked/true");
@@ -519,20 +517,20 @@ describe("SelectGroupLabel", () => {
 
 describe("SelectItem", () => {
   test("項目要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     const item = screen.getByRole("option", { name: "りんご" }).element();
     expect(item.classList.contains("sui_select_item")).toBe(true);
     expect(item.classList.contains("sui_button-item")).toBe(true);
   });
 
   test("render の関数へスタイル情報と項目の状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(
       screen.getByRole("option", { name: "りんご" }).element().getAttribute("data-probe"),
     ).toBe("item/lg/false/false");
@@ -541,19 +539,18 @@ describe("SelectItem", () => {
 
 describe("SelectItemText", () => {
   test("項目の表示テキストを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_item_text").element().textContent).toBe("りんご");
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
-    // Item は Button を内包し、size のみ Select から引き継ぎ、radius/outlined は Button の既定 (lg→md/false) になる。
+    // 検証 Item は Button を内包し、size のみ Select から引き継ぎ、radius/outlined は Button の既定 (lg→md/false) になる。
     expect(screen.getByClassName("sui_select_item_text").element().getAttribute("data-probe")).toBe(
       "itemText/lg/md/naked/false",
     );
@@ -562,18 +559,18 @@ describe("SelectItemText", () => {
 
 describe("SelectItemIndicator", () => {
   test("選択状態を DOM に維持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_item_indicator").query()).not.toBe(null);
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_select_item_indicator").element().getAttribute("data-probe"),
     ).toBe("itemIndicator/lg/md/naked/false");
@@ -582,18 +579,18 @@ describe("SelectItemIndicator", () => {
 
 describe("SelectSeparator", () => {
   test("区切り要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_separator").element().tagName).toBe("DIV");
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_separator").element().getAttribute("data-probe")).toBe(
       "separator/lg/sm/naked/true",
     );
@@ -602,18 +599,18 @@ describe("SelectSeparator", () => {
 
 describe("SelectScrollUpArrow", () => {
   test("上方向のスクロール要素を描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_scroll_up_arrow").query()).not.toBe(null);
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_select_scroll_up_arrow").element().getAttribute("data-probe"),
     ).toBe("scrollUp/lg/sm/naked/true");
@@ -622,18 +619,18 @@ describe("SelectScrollUpArrow", () => {
 
 describe("SelectScrollDownArrow", () => {
   test("下方向のスクロール要素を描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_scroll_down_arrow").query()).not.toBe(null);
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_select_scroll_down_arrow").element().getAttribute("data-probe"),
     ).toBe("scrollDown/lg/sm/naked/true");
@@ -642,18 +639,18 @@ describe("SelectScrollDownArrow", () => {
 
 describe("SelectArrow", () => {
   test("矢印要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderParts();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_arrow").element().tagName).toBe("DIV");
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderStateProbes();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_select_arrow").element().getAttribute("data-probe")).toBe(
       "arrow/lg/sm/naked/true",
     );

@@ -1,76 +1,70 @@
 @layer sui.component {
-@scope (.sui_slider_indicator) to ([data-scope]) {
+  @scope (.sui_slider_indicator) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      border-radius: inherit;
+      corner-shape: inherit;
+    }
 
-/* 固定 */
-:scope {
-  border-radius: inherit;
-  corner-shape: inherit;
-}
-
-/* 可変 */
-:scope {
-  background-color: var(--sui_slider_indicator-canvas);
-}
-
-} /* @scope */
+    /* 可変 */
+    :scope {
+      background-color: var(--sui_slider_indicator-canvas);
+    }
+  } /* @scope */
 } /* @layer */
 
 /* 配色の指定はルートの修飾クラスに依存し、インジケーター自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_slider) to ([data-scope]) {
+  @scope (.sui_slider) to ([data-scope]) {
+    /* 変数 */
+    :scope {
+      --sui_slider_indicator-canvas: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_slider_indicator-canvas: ;
-}
+    /* 代入 */
+    :scope {
+      &.sui_slider-color_grey {
+        --sui_slider_indicator-canvas: var(--sui-grey-solid-canvas-normal);
+      }
 
-/* 代入 */
-:scope {
-  &.sui_slider-color_grey {
-    --sui_slider_indicator-canvas: var(--sui-grey-solid-canvas-normal);
-  }
+      &.sui_slider-color_blue {
+        --sui_slider_indicator-canvas: var(--sui-blue-solid-canvas-normal);
+      }
 
-  &.sui_slider-color_blue {
-    --sui_slider_indicator-canvas: var(--sui-blue-solid-canvas-normal);
-  }
+      &.sui_slider-color_purple {
+        --sui_slider_indicator-canvas: var(--sui-purple-solid-canvas-normal);
+      }
 
-  &.sui_slider-color_purple {
-    --sui_slider_indicator-canvas: var(--sui-purple-solid-canvas-normal);
-  }
+      &.sui_slider-color_magenta {
+        --sui_slider_indicator-canvas: var(--sui-magenta-solid-canvas-normal);
+      }
 
-  &.sui_slider-color_magenta {
-    --sui_slider_indicator-canvas: var(--sui-magenta-solid-canvas-normal);
-  }
+      &.sui_slider-color_red {
+        --sui_slider_indicator-canvas: var(--sui-red-solid-canvas-normal);
+      }
 
-  &.sui_slider-color_red {
-    --sui_slider_indicator-canvas: var(--sui-red-solid-canvas-normal);
-  }
+      &.sui_slider-color_orange {
+        --sui_slider_indicator-canvas: var(--sui-orange-solid-canvas-normal);
+      }
 
-  &.sui_slider-color_orange {
-    --sui_slider_indicator-canvas: var(--sui-orange-solid-canvas-normal);
-  }
+      &.sui_slider-color_yellow {
+        --sui_slider_indicator-canvas: var(--sui-yellow-solid-canvas-normal);
+      }
 
-  &.sui_slider-color_yellow {
-    --sui_slider_indicator-canvas: var(--sui-yellow-solid-canvas-normal);
-  }
-
-  &.sui_slider-color_green {
-    --sui_slider_indicator-canvas: var(--sui-green-solid-canvas-normal);
-  }
-}
-
-} /* @scope */
+      &.sui_slider-color_green {
+        --sui_slider_indicator-canvas: var(--sui-green-solid-canvas-normal);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_slider_indicator) to ([data-scope]) {
-
-:scope {
-  &.sui_slider_indicator-disabled {
-    background-color: var(--sui-disabled-solid-canvas);
-  }
-}
-
-} /* @scope */
+  @scope (.sui_slider_indicator) to ([data-scope]) {
+    :scope {
+      &.sui_slider_indicator-disabled {
+        background-color: var(--sui-disabled-solid-canvas);
+      }
+    }
+  } /* @scope */
 } /* @layer */

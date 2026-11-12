@@ -23,7 +23,7 @@ export namespace PopoverBackdropProps {
     Pick<
       React.ComponentProps<typeof Popover.Backdrop>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PopoverBackdropProps より:
+      // PopoverBackdropProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace PopoverBackdropProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Popover.Backdrop>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -45,10 +45,8 @@ export type PopoverBackdropProps = PopoverBackdropProps.Render &
 
 export type IPopoverBackdrop = IComponent<PopoverBackdropProps>;
 
-/**
- * ポップアップの背後に表示されるオーバーレイ要素です。
- */
-export const PopoverBackdrop: IPopoverBackdrop = function SuiPopoverBackdrop(props) {
+/** ポップアップの背後に表示されるオーバーレイ要素です。 */
+export const PopoverBackdrop: IPopoverBackdrop = (props) => {
   const ctx = usePopoverPortalContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const PopoverBackdrop: IPopoverBackdrop = function SuiPopoverBackdrop(pro
     <Popover.Backdrop
       {...otherProps}
       {...proxyRenderProps<Popover.Backdrop.State, PopoverBackdropState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -87,7 +88,6 @@ export const PopoverBackdrop: IPopoverBackdrop = function SuiPopoverBackdrop(pro
 };
 
 export { PopoverBackdrop as Backdrop };
-
 export namespace Backdrop {
   export type State = PopoverBackdropState;
 

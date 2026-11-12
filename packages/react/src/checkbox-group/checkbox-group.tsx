@@ -15,8 +15,7 @@ import {
   useCheckboxGroupContext,
 } from "./checkbox-group.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type CheckboxGroupChangeEventDetails = CheckboxGroupRootChangeEventDetails;
 
@@ -47,13 +46,13 @@ export interface IUseCheckboxGroupAPI {
    * {@link CheckboxGroupAPI} を作成します。
    *
    * @param props {@link CheckboxGroup} の props です。
+   *
    * @returns チェックボックスグループの API です
    */
   (props: CheckboxGroupProps): CheckboxGroupAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link CheckboxGroup} を構成する各パーツの props などを作成するための API です。
@@ -63,6 +62,7 @@ export class CheckboxGroupAPI {
 
   /**
    * @param props {@link CheckboxGroup} の props です。
+   *
    * @internal
    */
   public constructor(props: CheckboxGroupProps) {
@@ -80,24 +80,19 @@ export class CheckboxGroupAPI {
 /**
  * {@link CheckboxGroupAPI} を作成するフックです。
  */
-export const useCheckboxGroupAPI: IUseCheckboxGroupAPI = function useSuiCheckboxGroupAPI(props) {
-  return new CheckboxGroupAPI(props);
-};
+export const useCheckboxGroupAPI: IUseCheckboxGroupAPI = (props) => new CheckboxGroupAPI(props);
 
 export { type CheckboxGroupAPI as API, useCheckboxGroupAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface ICheckboxGroup extends IComponent<CheckboxGroupProps> {
   readonly useContext: IUseCheckboxGroupContext;
 }
 
-/**
- * チェックボックスをグループ化するコンポーネントです。
- */
+/** チェックボックスをグループ化するコンポーネントです。 */
 export const CheckboxGroup: ICheckboxGroup = /*#__PURE__*/ Object.assign(
-  function SuiCheckboxGroup(props: CheckboxGroupProps) {
+  (props: CheckboxGroupProps) => {
     const api = useCheckboxGroupAPI(props);
 
     return <CheckboxGroupRoot {...api.getRootProps()} />;

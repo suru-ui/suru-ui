@@ -18,10 +18,7 @@ export namespace ButtonAddonProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"span", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"span", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -39,7 +36,7 @@ export type IButtonAddon = IComponent<ButtonAddonProps>;
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
-export const ButtonAddon: IButtonAddon = function SuiButtonAddon(props) {
+export const ButtonAddon: IButtonAddon = (props) => {
   const ctx = useButtonContext();
 
   return useRender({
@@ -66,7 +63,6 @@ export const ButtonAddon: IButtonAddon = function SuiButtonAddon(props) {
 };
 
 export { ButtonAddon as Addon };
-
 export namespace Addon {
   export type State = ButtonAddonState;
 

@@ -23,7 +23,7 @@ export namespace MeterIndicatorProps {
     Pick<
       React.ComponentProps<typeof Meter.Indicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MeterIndicatorProps より:
+      // MeterIndicatorProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace MeterIndicatorProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Meter.Indicator>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -45,10 +45,8 @@ export type MeterIndicatorProps = MeterIndicatorProps.Render &
 
 export type IMeterIndicator = IComponent<MeterIndicatorProps>;
 
-/**
- * メーターの現在値を示すインジケーターコンポーネントです。
- */
-export const MeterIndicator: IMeterIndicator = function SuiMeterIndicator(props) {
+/** メーターの現在値を示すインジケーターコンポーネントです。 */
+export const MeterIndicator: IMeterIndicator = (props) => {
   const ctx = useMeterTrackContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const MeterIndicator: IMeterIndicator = function SuiMeterIndicator(props)
     <Meter.Indicator
       {...otherProps}
       {...proxyRenderProps<Meter.Indicator.State, MeterIndicatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -85,7 +86,6 @@ export const MeterIndicator: IMeterIndicator = function SuiMeterIndicator(props)
 };
 
 export { MeterIndicator as Indicator };
-
 export namespace Indicator {
   export type State = MeterIndicatorState;
 

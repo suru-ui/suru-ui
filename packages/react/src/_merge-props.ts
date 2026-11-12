@@ -1,4 +1,4 @@
-// 参考: https://github.com/mui/base-ui/blob/v1.7.0/packages/react/src/merge-props/mergeProps.ts
+// 参考 : https://github.com/mui/base-ui/blob/v1.7.0/packages/react/src/merge-props/mergeProps.ts。
 
 import type { WithBaseUIEvent } from "@base-ui/react/internals/types";
 import { mergePropsN, mergeClassNames } from "@base-ui/react/merge-props";
@@ -8,7 +8,9 @@ import type * as React from "react";
 import type { RenderProps } from "./_use-render.js";
 
 type ElementType = React.ElementType;
+
 type PropsOf<T extends React.ElementType> = WithBaseUIEvent<React.ComponentPropsWithRef<T>>;
+
 type InputProps<T extends React.ElementType> =
   | PropsOf<T>
   | ((otherProps: PropsOf<T>) => PropsOf<T>)
@@ -24,24 +26,37 @@ export default function mergeProps<T extends ElementType>(propsList: InputProps<
     propsList.map((propsItem) => {
       if (typeof propsItem === "function") {
         const propsFactory = propsItem;
+
+        // oxlint-disable-next-line typescript/explicit-function-return-type -- mergePropsN が返り値の型を推論します。
         return (...args) => {
           const { style, render, className, ...props } = propsFactory(...args);
-          mergeInto(renderProps, { style, render, className });
+          mergeInto(renderProps, {
+            style,
+            render,
+            className,
+          });
 
           return props;
         };
       }
+
       if (propsItem) {
         const { style, render, className, ...props } = propsItem;
-        mergeInto(renderProps, { style, render, className });
+        mergeInto(renderProps, {
+          style,
+          render,
+          className,
+        });
 
         return props;
       }
 
+      // oxlint-disable-next-line typescript/consistent-return -- 未定義の項目はそのまま返します。
       return propsItem satisfies undefined;
     }),
   );
 
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- 呼び出し元の props 型に依存するため。
   return {
     ...mergedProps,
     ...renderProps,
@@ -63,7 +78,7 @@ function mergeInto(merged: RenderProps, input: Required<RenderProps> | undefined
     } else {
       const ourStyle = merged.style;
       const theirStyle = style;
-      merged.style = function mergedStyle(state) {
+      merged.style = function mergedStyle(state): React.CSSProperties | undefined {
         return mergeObjects(resolveStyle(ourStyle, state), resolveStyle(theirStyle, state));
       };
     }
@@ -77,7 +92,7 @@ function mergeInto(merged: RenderProps, input: Required<RenderProps> | undefined
     } else {
       const ourClassName = merged.className;
       const theirClassName = className;
-      merged.className = function mergedClassName(state) {
+      merged.className = function mergedClassName(state): string | undefined {
         return mergeClassNames(
           resolveClassName(ourClassName, state),
           resolveClassName(theirClassName, state),

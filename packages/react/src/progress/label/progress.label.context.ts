@@ -21,17 +21,17 @@ export type IUseProgressLabelContext = IUseContext<ProgressLabelContext>;
 /**
  * {@link ProgressLabelContext} を読み取るフックです。
  */
-export const useProgressLabelContext: IUseProgressLabelContext =
-  function useSuiProgressLabelContext(optional): any {
-    const ctx = React.use(ProgressLabelContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ProgressLabelContext",
-        providerName: "ProgressLabel",
-      });
-    }
+export const useProgressLabelContext: IUseProgressLabelContext = (optional): any => {
+  const ctx = React.use(ProgressLabelContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ProgressLabelContext",
+      providerName: "ProgressLabel",
+    });
+  }
+
+  return ctx;
+};
 
 export { ProgressLabelContext as LabelContext, useProgressLabelContext as useLabelContext };

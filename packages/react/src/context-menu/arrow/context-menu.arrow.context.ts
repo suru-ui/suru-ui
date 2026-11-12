@@ -25,17 +25,17 @@ export type IUseContextMenuArrowContext = IUseContext<ContextMenuArrowContext>;
 /**
  * {@link ContextMenuArrowContext} を読み取るフックです。
  */
-export const useContextMenuArrowContext: IUseContextMenuArrowContext =
-  function useSuiContextMenuArrowContext(optional): any {
-    const ctx = React.use(ContextMenuArrowContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ContextMenuArrowContext",
-        providerName: "ContextMenuArrow",
-      });
-    }
+export const useContextMenuArrowContext: IUseContextMenuArrowContext = (optional): any => {
+  const ctx = React.use(ContextMenuArrowContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ContextMenuArrowContext",
+      providerName: "ContextMenuArrow",
+    });
+  }
+
+  return ctx;
+};
 
 export { ContextMenuArrowContext as ArrowContext, useContextMenuArrowContext as useArrowContext };

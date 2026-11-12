@@ -162,7 +162,10 @@ export const Positions = meta.story({
             trigger={<Button variant="liquid">{side}</Button>}
             slotProps={{
               arrow: {},
-              positioner: { side, sideOffset: 8 },
+              positioner: {
+                side,
+                sideOffset: 8,
+              },
             }}
           >
             <PopoverParts.Description>{side} に表示されます。</PopoverParts.Description>
@@ -184,7 +187,12 @@ export const Controlled = meta.story({
         <Popover open={open} trigger={<Button>詳細</Button>} onOpenChange={setOpen}>
           <PopoverParts.Description>外部の状態で開閉を制御できます。</PopoverParts.Description>
         </Popover>
-        <Button onClick={() => setOpen((prev) => !prev)} variant="liquid">
+        <Button
+          variant="liquid"
+          onClick={() => {
+            setOpen((prev) => !prev);
+          }}
+        >
           切り替える
         </Button>
       </div>
@@ -270,7 +278,11 @@ export const Edge = meta.story({
           {...props}
           trigger={<Button>左端</Button>}
           slotProps={{
-            positioner: { side: "bottom", align: "start", sideOffset: 8 },
+            positioner: {
+              side: "bottom",
+              align: "start",
+              sideOffset: 8,
+            },
           }}
         >
           <PopoverParts.Description>
@@ -281,7 +293,11 @@ export const Edge = meta.story({
           {...props}
           trigger={<Button>右端</Button>}
           slotProps={{
-            positioner: { side: "bottom", align: "end", sideOffset: 8 },
+            positioner: {
+              side: "bottom",
+              align: "end",
+              sideOffset: 8,
+            },
           }}
         >
           <PopoverParts.Description>

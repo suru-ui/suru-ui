@@ -1,64 +1,61 @@
 @layer sui.component {
-@scope (.sui_select_scroll_up_arrow) to ([data-scope]) {
+  @scope (.sui_select_scroll_up_arrow) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      top: 0;
+      left: 0;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
 
-/* 固定 */
-:scope {
-  top: 0;
-  left: 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
+    /* 変数 */
+    :scope {
+      --sui_select_scroll_up_arrow-size: ;
+      --sui_select_scroll_up_arrow-background_color: ;
+      --sui_select_scroll_up_arrow-background_image: ;
+      --sui_select_scroll_up_arrow-border_radius: ;
+      --sui_select_scroll_up_arrow-corner_shape: ;
+      --sui_select_scroll_up_arrow__svg-size: ;
+      --sui_select_scroll_up_arrow__svg-color: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_select_scroll_up_arrow-size: ;
-  --sui_select_scroll_up_arrow-background_color: ;
-  --sui_select_scroll_up_arrow-background_image: ;
-  --sui_select_scroll_up_arrow-border_radius: ;
-  --sui_select_scroll_up_arrow-corner_shape: ;
-  --sui_select_scroll_up_arrow__svg-size: ;
-  --sui_select_scroll_up_arrow__svg-color: ;
-}
+    /* 可変 */
+    :scope {
+      height: var(--sui_select_scroll_up_arrow-size);
+      background-image: var(--sui_select_scroll_up_arrow-background_image);
+      border-top-left-radius: var(--sui_select_scroll_up_arrow-border_radius);
+      border-top-right-radius: var(--sui_select_scroll_up_arrow-border_radius);
+      corner-shape: var(--sui_select_scroll_up_arrow-corner_shape);
 
-/* 可変 */
-:scope {
-  height: var(--sui_select_scroll_up_arrow-size);
-  background-image: var(--sui_select_scroll_up_arrow-background_image);
-  border-top-left-radius: var(--sui_select_scroll_up_arrow-border_radius);
-  border-top-right-radius: var(--sui_select_scroll_up_arrow-border_radius);
-  corner-shape: var(--sui_select_scroll_up_arrow-corner_shape);
+      svg:not(.sui-ignore) {
+        width: var(--sui_select_scroll_up_arrow__svg-size);
+        height: var(--sui_select_scroll_up_arrow__svg-size);
+        color: var(--sui_select_scroll_up_arrow__svg-color);
+      }
+    }
 
-  svg:not(.sui-ignore) {
-    width: var(--sui_select_scroll_up_arrow__svg-size);
-    height: var(--sui_select_scroll_up_arrow__svg-size);
-    color: var(--sui_select_scroll_up_arrow__svg-color);
-  }
-}
-
-/* 代入 */
-:scope {
-  /* 内容の大きさと角丸に追従させるため、要素起点で代入します。 */
-  --sui_select_scroll_up_arrow-size: calc(
-                                       var(--sui_select_popup-font_size)
-                                       * var(--sui_select_popup-line_height)
-                                     );
-  --sui_select_scroll_up_arrow-background_color: var(--sui_select_popup-background_color);
-  --sui_select_scroll_up_arrow-background_image: linear-gradient(
-                                                    to bottom,
-                                                    var(--sui_select_scroll_up_arrow-background_color) 60%,
-                                                    transparent
-                                                  );
-  --sui_select_scroll_up_arrow-border_radius: var(--sui_select_popup-border_radius);
-  --sui_select_scroll_up_arrow-corner_shape: var(--sui_select_popup-corner_shape);
-  --sui_select_scroll_up_arrow__svg-size: var(--sui_select_scroll_up_arrow-size);
-  --sui_select_scroll_up_arrow__svg-color: --sui-icon_color(
-                                             var(--sui_select_popup-color),
-                                             var(--sui_select_popup-background_color)
-                                           );
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      /* 内容の大きさと角丸に追従させるため、要素起点で代入します。 */
+      --sui_select_scroll_up_arrow-size: calc(
+        var(--sui_select_popup-font_size) * var(--sui_select_popup-line_height)
+      );
+      --sui_select_scroll_up_arrow-background_color: var(--sui_select_popup-background_color);
+      --sui_select_scroll_up_arrow-background_image: linear-gradient(
+        to bottom,
+        var(--sui_select_scroll_up_arrow-background_color) 60%,
+        transparent
+      );
+      --sui_select_scroll_up_arrow-border_radius: var(--sui_select_popup-border_radius);
+      --sui_select_scroll_up_arrow-corner_shape: var(--sui_select_popup-corner_shape);
+      --sui_select_scroll_up_arrow__svg-size: var(--sui_select_scroll_up_arrow-size);
+      --sui_select_scroll_up_arrow__svg-color: --sui-icon_color(
+        var(--sui_select_popup-color),
+        var(--sui_select_popup-background_color)
+      );
+    }
+  } /* @scope */
 } /* @layer */

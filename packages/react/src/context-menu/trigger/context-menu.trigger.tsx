@@ -32,7 +32,7 @@ export namespace ContextMenuTriggerProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.Trigger>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ContextMenuTriggerProps より:
+      // ContextMenuTriggerProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -59,7 +59,7 @@ export type IContextMenuTrigger = IComponent<ContextMenuTriggerProps>;
  *
  * `children` には表示する内容ではなく、トリガーとしてレンダリングする要素を渡します。
  */
-export const ContextMenuTrigger: IContextMenuTrigger = function SuiContextMenuTrigger(props) {
+export const ContextMenuTrigger: IContextMenuTrigger = (props) => {
   const ctx = useContextMenuContext();
   const { style, children, className, ...otherProps } = props;
 
@@ -67,7 +67,10 @@ export const ContextMenuTrigger: IContextMenuTrigger = function SuiContextMenuTr
     <ContextMenu.Trigger
       {...otherProps}
       {...proxyRenderProps<ContextMenu.Trigger.State, ContextMenuTriggerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -96,7 +99,6 @@ export const ContextMenuTrigger: IContextMenuTrigger = function SuiContextMenuTr
 };
 
 export { ContextMenuTrigger as Trigger };
-
 export namespace Trigger {
   export type State<TItem = any> = ContextMenuTriggerState<TItem>;
 

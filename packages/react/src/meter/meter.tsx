@@ -20,8 +20,7 @@ import {
   MeterIndicator,
 } from "./meter.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type MeterColor = MeterRootColor;
 
@@ -70,9 +69,7 @@ namespace MeterProps {
      */
     label?: React.ReactNode | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: MeterSlotProps | undefined;
 
     /**
@@ -98,13 +95,13 @@ export interface IUseMeterAPI {
    * {@link MeterAPI} を作成します。
    *
    * @param props {@link Meter} の props です。
+   *
    * @returns メーターの API です
    */
   (props: MeterProps): MeterAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Meter} を構成する各パーツの props を作成するための API です。
@@ -120,11 +117,15 @@ export class MeterAPI {
 
   /**
    * @param props {@link Meter} の props です。
+   *
    * @internal
    */
   public constructor(props: MeterProps) {
     const { label, value, slotProps = {}, ...rootProps } = props;
-    this.meterProps = { label, value: value ?? 0 };
+    this.meterProps = {
+      label,
+      value: value ?? 0,
+    };
     this.rootProps = rootProps;
     this.slotProps = slotProps;
   }
@@ -196,21 +197,18 @@ export class MeterAPI {
 /**
  * {@link MeterAPI} を作成するフックです。
  */
-export const useMeterAPI: IUseMeterAPI = function useSuiMeterAPI(props) {
-  return new MeterAPI(props);
-};
+export const useMeterAPI: IUseMeterAPI = (props) => new MeterAPI(props);
 
 export { MeterAPI as API, useMeterAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * 数値の範囲内にある現在値を表示するメーターコンポーネントです。
  *
  * 測定値や使用量など、既知の範囲に対する割合を示します。ラベルを指定すると現在値もあわせて表示されます。
  */
-export const Meter: IMeter = function SuiMeter(props) {
+export const Meter: IMeter = (props) => {
   const api = useMeterAPI(props);
   const labelProps = api.getLabelProps();
   const valueProps = api.getValueProps();

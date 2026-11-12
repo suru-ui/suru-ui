@@ -15,9 +15,7 @@ import {
   FileUploadContext,
 } from "./file-upload.root.context.js";
 
-/**
- * ファイルアップロードの配色です。
- */
+/** ファイルアップロードの配色です。 */
 export type FileUploadRootColor = FileUploadContextColor;
 
 /**
@@ -58,43 +56,27 @@ export type FileUploadRootVariant = FileUploadContextVariant;
  */
 export type FileUploadFileErrorReason = "invalid_type" | "max_files" | "min_size" | "max_size";
 
-/**
- * 検証で拒否されたファイルとその理由です。
- */
+/** 検証で拒否されたファイルとその理由です。 */
 export type FileUploadFileError = {
-  /**
-   * 拒否されたファイルです。
-   */
+  /** 拒否されたファイルです。 */
   readonly file: File;
 
-  /**
-   * 拒否された理由です。
-   */
+  /** 拒否された理由です。 */
   readonly reason: FileUploadFileErrorReason;
 };
 
-/**
- * ファイルが受け入れられたことを表すイベントの詳細です。
- */
+/** ファイルが受け入れられたことを表すイベントの詳細です。 */
 export type FileUploadAcceptEventDetails = {
-  /**
-   * 受け入れられたファイルのリストです。
-   */
+  /** 受け入れられたファイルのリストです。 */
   readonly files: readonly File[];
 };
 
-/**
- * ファイルが拒否されたことを表すイベントの詳細です。
- */
+/** ファイルが拒否されたことを表すイベントの詳細です。 */
 export type FileUploadRejectEventDetails = {
-  /**
-   * 今回の選択で受け入れられたファイルのリストです。
-   */
+  /** 今回の選択で受け入れられたファイルのリストです。 */
   readonly acceptedFiles: readonly File[];
 
-  /**
-   * 今回の選択で拒否されたファイルとその理由のリストです。
-   */
+  /** 今回の選択で拒否されたファイルとその理由のリストです。 */
   readonly rejectedFiles: readonly FileUploadFileError[];
 };
 
@@ -112,10 +94,10 @@ export namespace FileUploadRootProps {
      *
      * HTML の `accept` 属性と同じ形式の文字列、またはその配列を指定します。
      *
-     * - 文字列の例: `"image/png,.pdf"`
-     * - 配列の例: `["image/png", ".pdf"]`
+     * - 文字列の例 : `"image/png,.pdf"`
+     * - 配列の例 : `["image/png", ".pdf"]`
      *
-     * この指定はファイル選択ダイアログのフィルターとドラッグ&ドロップの検証に使われます。
+     * この指定はファイル選択ダイアログのフィルターとドラッグ & ドロップの検証に使われます。
      * 一致しないファイルは {@link FileUploadRootProps.onFileReject|onFileReject} へ報告されます。
      */
     accept?: string | readonly string[] | undefined;
@@ -127,9 +109,7 @@ export namespace FileUploadRootProps {
      */
     color?: FileUploadRootColor | undefined;
 
-    /**
-     * 非制御で初期表示するファイルのリストを指定します。
-     */
+    /** 非制御で初期表示するファイルのリストを指定します。 */
     defaultValue?: readonly File[] | undefined;
 
     /**
@@ -177,24 +157,16 @@ export namespace FileUploadRootProps {
      */
     multiple?: boolean | undefined;
 
-    /**
-     * フォーム送信時に使う入力項目の名前を指定します。
-     */
+    /** フォーム送信時に使う入力項目の名前を指定します。 */
     name?: string | undefined;
 
-    /**
-     * ファイルが検証に合格したときに呼ばれます。
-     */
+    /** ファイルが検証に合格したときに呼ばれます。 */
     onFileAccept?: ((details: FileUploadAcceptEventDetails) => void) | undefined;
 
-    /**
-     * ファイルが検証で拒否されたときに呼ばれます。
-     */
+    /** ファイルが検証で拒否されたときに呼ばれます。 */
     onFileReject?: ((details: FileUploadRejectEventDetails) => void) | undefined;
 
-    /**
-     * 選択済みファイルのリストが変わったときに呼ばれます。
-     */
+    /** 選択済みファイルのリストが変わったときに呼ばれます。 */
     onValueChange?: ((files: File[]) => void) | undefined;
 
     /**
@@ -218,9 +190,7 @@ export namespace FileUploadRootProps {
      */
     size?: FileUploadRootSize | undefined;
 
-    /**
-     * 制御されたファイルのリストを指定します。
-     */
+    /** 制御されたファイルのリストを指定します。 */
     value?: readonly File[] | undefined;
 
     /**
@@ -254,7 +224,7 @@ export type IFileUploadRoot = IComponent<FileUploadRootProps>;
  *
  * ファイルの選択状態を管理し、子パーツへ状態とスタイルを伝播します。
  */
-export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props) {
+export const FileUploadRoot: IFileUploadRoot = (props) => {
   const {
     name,
     size = "md",
@@ -268,14 +238,14 @@ export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props)
     maxFiles = Number.POSITIVE_INFINITY,
     multiple = false,
     required = false,
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
+    "data-scope": dataScope = "",
     maxFileSize = Number.POSITIVE_INFINITY,
     minFileSize = 0,
     defaultValue,
     onFileAccept,
     onFileReject,
     onValueChange,
-    // @ts-expect-error
-    "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
   const inputRef = React.useRef<HTMLInputElement | null>(null);
@@ -285,7 +255,6 @@ export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props)
     default: defaultValue ?? [],
     controlled: value,
   });
-
   const commit = React.useCallback(
     (nextFiles: readonly File[]) => {
       setFiles(nextFiles);
@@ -293,28 +262,23 @@ export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props)
     },
     [onValueChange, setFiles],
   );
-
   const setInputElement = React.useCallback((element: HTMLInputElement | null) => {
     inputRef.current = element;
   }, []);
-
   const open = React.useCallback(() => {
     if (!disabled) {
       inputRef.current?.click();
     }
   }, [disabled]);
-
   const clear = React.useCallback(() => {
     commit([]);
   }, [commit]);
-
   const remove = React.useCallback(
     (file: File) => {
       commit(files.filter((candidate) => candidate !== file));
     },
     [commit, files],
   );
-
   const selectFiles = React.useCallback(
     (incomingFiles: readonly File[]) => {
       const { accepted, rejected } = validateFiles(incomingFiles, files, {
@@ -324,13 +288,21 @@ export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props)
         maxFileSize,
         minFileSize,
       });
+
       if (rejected.length > 0) {
-        onFileReject?.({ acceptedFiles: accepted, rejectedFiles: rejected });
+        onFileReject?.({
+          acceptedFiles: accepted,
+          rejectedFiles: rejected,
+        });
       }
+
       if (accepted.length > 0) {
         const nextFiles = multiple ? [...files, ...accepted] : accepted;
         commit(nextFiles);
-        onFileAccept?.({ files: accepted });
+
+        onFileAccept?.({
+          files: accepted,
+        });
       }
     },
     [
@@ -345,15 +317,13 @@ export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props)
       onFileReject,
     ],
   );
-
   const renderState = React.useMemo<FileUploadRootState>(
     () => ({
       name,
       size,
       color,
       files,
-      accept:
-        typeof accept === "string" ? accept : accept === undefined ? undefined : accept.join(","),
+      accept: typeof accept === "string" || accept === undefined ? accept : accept.join(","),
       radius,
       variant,
       disabled,
@@ -362,12 +332,17 @@ export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props)
     }),
     [accept, color, disabled, files, multiple, name, radius, required, size, variant],
   );
-
   const ctx = React.useMemo<FileUploadContext>(
-    () => ({ ...renderState, open, clear, remove, selectFiles, setInputElement }),
+    () => ({
+      ...renderState,
+      open,
+      clear,
+      remove,
+      selectFiles,
+      setInputElement,
+    }),
     [clear, open, remove, renderState, selectFiles, setInputElement],
   );
-
   const element = useRender({
     props: [
       otherDivProps,
@@ -394,7 +369,6 @@ export const FileUploadRoot: IFileUploadRoot = function SuiFileUploadRoot(props)
 };
 
 export { FileUploadRoot as Root };
-
 export namespace Root {
   export type State = FileUploadRootState;
 

@@ -19,7 +19,7 @@ export namespace DrawerViewportProps {
     Pick<
       React.ComponentProps<typeof Drawer.Viewport>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DrawerViewportProps より:
+      // DrawerViewportProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -27,7 +27,7 @@ export namespace DrawerViewportProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Drawer.Viewport>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -46,7 +46,7 @@ export type IDrawerViewport = IComponent<DrawerViewportProps>;
  *
  * スクロール可能なオーバーレイを作り、ポップアップを配置します。
  */
-export const DrawerViewport: IDrawerViewport = function SuiDrawerViewport(props) {
+export const DrawerViewport: IDrawerViewport = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -67,7 +67,6 @@ export const DrawerViewport: IDrawerViewport = function SuiDrawerViewport(props)
 };
 
 export { DrawerViewport as Viewport };
-
 export namespace Viewport {
   export type State = DrawerViewportState;
 

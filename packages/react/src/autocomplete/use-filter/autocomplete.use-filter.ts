@@ -1,8 +1,6 @@
 import { Autocomplete } from "@base-ui/react/autocomplete";
 
-/**
- * 項目を検索文字列と照合するフィルターです。
- */
+/** 項目を検索文字列と照合するフィルターです。 */
 export type IAutocompleteFilter = ReturnType<typeof Autocomplete.useFilter>;
 
 /**
@@ -19,13 +17,8 @@ export interface IUseAutocompleteFilter {
   (options?: IUseAutocompleteFilterOptions): IAutocompleteFilter;
 }
 
-/**
- * 項目を検索文字列と照合するフィルター関数を作るフックです。
- */
-export const useAutocompleteFilter: IUseAutocompleteFilter = function useSuiAutocompleteFilter(
-  options,
-) {
-  return Autocomplete.useFilter(options);
-};
+/** 項目を検索文字列と照合するフィルター関数を作るフックです。 */
+export const useAutocompleteFilter: IUseAutocompleteFilter = (options) =>
+  Autocomplete.useFilter(options);
 
 export { useAutocompleteFilter as useFilter };

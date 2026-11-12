@@ -15,14 +15,10 @@ import {
   AlertDialogPopupContext,
 } from "./alert-dialog.popup.context.js";
 
-/**
- * アラートダイアログの角丸の大きさです。
- */
+/** アラートダイアログの角丸の大きさです。 */
 export type AlertDialogPopupRadius = AlertDialogPopupContextRadius;
 
-/**
- * アラートダイアログの大きさです。
- */
+/** アラートダイアログの大きさです。 */
 export type AlertDialogPopupSize = AlertDialogPopupContextSize;
 
 /**
@@ -58,7 +54,7 @@ export namespace AlertDialogPopupProps {
       Pick<
         React.ComponentProps<typeof AlertDialog.Popup>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // AlertDialogPopupProps より:
+        // AlertDialogPopupProps より :
         "initialFocus" | "finalFocus"
       >,
       keyof Render | keyof SuruUI
@@ -86,7 +82,7 @@ export type IAlertDialogPopup = IComponent<AlertDialogPopupProps>;
  *
  * 見た目はカードとして描画され、大きさや角丸や枠線はカードのルートから引き継ぎます。
  */
-export const AlertDialogPopup: IAlertDialogPopup = function SuiAlertDialogPopup(props) {
+export const AlertDialogPopup: IAlertDialogPopup = (props) => {
   const {
     size,
     style,
@@ -114,16 +110,20 @@ export const AlertDialogPopup: IAlertDialogPopup = function SuiAlertDialogPopup(
               htmlProps,
               cardRootProps,
               proxyRenderProps<Card.Root.State, AlertDialogPopupState>(
-                (cardState) => ({ ...popupState, ...cardState, variant }),
+                (cardState) => ({
+                  ...popupState,
+                  ...cardState,
+                  variant,
+                }),
                 {
                   style,
-                  render(htmlProps: {}, state) {
+                  render(currentHtmlProps: {}, state) {
                     return (
                       <AlertDialogPopupContext value={state}>
                         <RenderElement
                           state={state}
                           render={render}
-                          htmlProps={htmlProps}
+                          htmlProps={currentHtmlProps}
                           defaultTagName="div"
                         />
                       </AlertDialogPopupContext>
@@ -155,7 +155,6 @@ export const AlertDialogPopup: IAlertDialogPopup = function SuiAlertDialogPopup(
 };
 
 export { AlertDialogPopup as Popup };
-
 export namespace Popup {
   export type State = AlertDialogPopupState;
 

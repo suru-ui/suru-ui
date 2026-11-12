@@ -25,11 +25,10 @@ export type IUseSelectListContext = IUseContext<SelectListContext>;
 /**
  * {@link SelectListContext} を読み取るフックです。
  */
-export const useSelectListContext: IUseSelectListContext = function useSuiSelectListContext(
-  optional,
-): any {
+export const useSelectListContext: IUseSelectListContext = (optional): any => {
   const ctx = React.use(SelectListContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SelectListContext",
       providerName: "SelectList",

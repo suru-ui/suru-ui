@@ -29,8 +29,7 @@ import {
   ButtonCircularProgressFillRotation,
 } from "./button.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type ButtonColor = ButtonRootColor;
 
@@ -89,19 +88,13 @@ export type ButtonState = ButtonRootState;
 
 namespace ButtonProps {
   export type Button = {
-    /**
-     * ボタンの末尾に表示する内容です。
-     */
+    /** ボタンの末尾に表示する内容です。 */
     endAddons?: Iterable<React.ReactNode> | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: ButtonSlotProps | undefined;
 
-    /**
-     * ボタンの先頭に表示する内容です。
-     */
+    /** ボタンの先頭に表示する内容です。 */
     startAddons?: Iterable<React.ReactNode> | undefined;
   };
 
@@ -125,14 +118,15 @@ export interface IUseButtonAPI {
    * {@link ButtonAPI} を作成します。
    *
    * @param props {@link Button} の props です。
+   *
    * @returns ボタンの API です。
    */
   (props: ButtonProps): ButtonAPI;
 }
 
-// API
-// ---
+// API.
 
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- 未指定を表す一意なセンチネルです。
 const NONE = {} as never;
 
 /**
@@ -151,6 +145,7 @@ export class ButtonAPI {
 
   /**
    * @param props {@link Button} の props です。
+   *
    * @internal
    */
   public constructor(props: ButtonProps) {
@@ -163,9 +158,17 @@ export class ButtonAPI {
       indeterminate,
       ...rootProps
     } = props;
-    this.buttonProps = { endAddons, startAddons };
-    this.contentProps = { children };
-    this.circularProgressProps = { percentage, indeterminate };
+    this.buttonProps = {
+      endAddons,
+      startAddons,
+    };
+    this.contentProps = {
+      children,
+    };
+    this.circularProgressProps = {
+      percentage,
+      indeterminate,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -262,12 +265,14 @@ export class ButtonAPI {
    * ボタンの末尾に表示する {@link ButtonAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { endAddons: addons = [] } = this.buttonProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -279,12 +284,14 @@ export class ButtonAPI {
    * ボタンの先頭に表示する {@link ButtonAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { startAddons: addons = [] } = this.buttonProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -296,24 +303,19 @@ export class ButtonAPI {
 /**
  * {@link ButtonAPI} を作成するフックです。
  */
-export const useButtonAPI: IUseButtonAPI = function useSuiButtonAPI(props) {
-  return new ButtonAPI(props);
-};
+export const useButtonAPI: IUseButtonAPI = (props) => new ButtonAPI(props);
 
 export { ButtonAPI as API, useButtonAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IButton extends IComponent<ButtonProps> {
   readonly useContext: IUseButtonContext;
 }
 
-/**
- * 複数の主な外観と状態を持つクリック可能なボタンコンポーネントです。
- */
+/** 複数の主な外観と状態を持つクリック可能なボタンコンポーネントです。 */
 export const Button: IButton = /*#__PURE__*/ Object.assign(
-  function SuiButton(props: ButtonProps) {
+  (props: ButtonProps) => {
     const api = useButtonAPI(props);
 
     return (

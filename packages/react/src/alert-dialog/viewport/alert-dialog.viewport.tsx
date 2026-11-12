@@ -19,7 +19,7 @@ export namespace AlertDialogViewportProps {
     Pick<
       React.ComponentProps<typeof AlertDialog.Viewport>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DialogViewportProps より:
+      // DialogViewportProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -27,7 +27,7 @@ export namespace AlertDialogViewportProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof AlertDialog.Viewport>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -46,7 +46,7 @@ export type IAlertDialogViewport = IComponent<AlertDialogViewportProps>;
  *
  * スクロール可能なオーバーレイを作り、ポップアップを中央に配置します。
  */
-export const AlertDialogViewport: IAlertDialogViewport = function SuiAlertDialogViewport(props) {
+export const AlertDialogViewport: IAlertDialogViewport = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -67,7 +67,6 @@ export const AlertDialogViewport: IAlertDialogViewport = function SuiAlertDialog
 };
 
 export { AlertDialogViewport as Viewport };
-
 export namespace Viewport {
   export type State = AlertDialogViewportState;
 

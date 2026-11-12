@@ -3,7 +3,7 @@ import { TextFieldContext, useTextFieldContext } from "../root/text-field.root.c
 // TextFieldAddon は Context を変更・拡張しないため、親の TextFieldContext をそのまま使う。
 export {
   TextFieldContext as AddonContext,
-  useTextFieldContext as useAddonContext,
   TextFieldContext as TextFieldAddonContext,
+  useTextFieldContext as useAddonContext,
   useTextFieldContext as useTextFieldAddonContext,
 };

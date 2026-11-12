@@ -26,8 +26,7 @@ import {
   SliderIndicator,
 } from "./slider.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type SliderChangeEventDetails = SliderRootChangeEventDetails;
 
@@ -108,9 +107,7 @@ namespace SliderProps {
      */
     renderValue?: SliderValueProps["children"] | true | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: SliderSlotProps | undefined;
   };
 }
@@ -131,7 +128,9 @@ export interface IUseSliderAPI {
    * {@link SliderAPI} を作成します。
    *
    * @template TValue 値の型です。
+   *
    * @param props {@link Slider} の props です。
+   *
    * @returns スライダーの API です
    */
   <TValue extends number | readonly number[] = number | readonly number[]>(
@@ -139,8 +138,7 @@ export interface IUseSliderAPI {
   ): SliderAPI<TValue>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Slider} を構成する各パーツの props を作成するための API です。
@@ -156,11 +154,15 @@ export class SliderAPI<TValue extends number | readonly number[] = number | read
 
   /**
    * @param props {@link Slider} の props です。
+   *
    * @internal
    */
   public constructor(props: SliderProps<TValue>) {
     const { label, slotProps = {}, renderValue, ...rootProps } = props;
-    this.sliderProps = { label, renderValue };
+    this.sliderProps = {
+      label,
+      renderValue,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -220,10 +222,15 @@ export class SliderAPI<TValue extends number | readonly number[] = number | read
     const current = value ?? defaultValue;
     const thumbCount = Array.isArray(current) ? current.length : 1;
 
-    return Array.from({ length: thumbCount }, (_, index) => ({
-      ...props,
-      index,
-    }));
+    return Array.from(
+      {
+        length: thumbCount,
+      },
+      (_, index) => ({
+        ...props,
+        index,
+      }),
+    );
   }
 
   /**
@@ -258,14 +265,11 @@ export class SliderAPI<TValue extends number | readonly number[] = number | read
 /**
  * {@link SliderAPI} を作成するフックです。
  */
-export const useSliderAPI: IUseSliderAPI = function useSuiSliderAPI(props) {
-  return new SliderAPI(props);
-};
+export const useSliderAPI: IUseSliderAPI = (props) => new SliderAPI(props);
 
 export { SliderAPI as API, useSliderAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * スライダーを表示するコンポーネントです。
@@ -282,7 +286,7 @@ export interface ISlider extends IComponent<SliderProps> {
   ): IComponent.Return;
 }
 
-export const Slider: ISlider = function SuiSlider(props: SliderProps) {
+export const Slider: ISlider = (props: SliderProps) => {
   const api = useSliderAPI(props);
   const labelProps = api.getLabelProps();
   const valueProps = api.getValueProps();
@@ -294,8 +298,8 @@ export const Slider: ISlider = function SuiSlider(props: SliderProps) {
       <SliderControl {...api.getControlProps()}>
         <SliderTrack {...api.getTrackProps()}>
           <SliderIndicator {...api.getIndicatorProps()} />
-          {api.getThumbPropsList().map((thumbProps, index) => (
-            <SliderThumb key={index} {...thumbProps} />
+          {api.getThumbPropsList().map((thumbProps) => (
+            <SliderThumb key={thumbProps.index} {...thumbProps} />
           ))}
         </SliderTrack>
       </SliderControl>

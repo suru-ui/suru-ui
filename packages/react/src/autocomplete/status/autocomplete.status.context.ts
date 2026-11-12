@@ -25,18 +25,18 @@ export type IUseAutocompleteStatusContext = IUseContext<AutocompleteStatusContex
 /**
  * {@link AutocompleteStatusContext} を読み取るフックです。
  */
-export const useAutocompleteStatusContext: IUseAutocompleteStatusContext =
-  function useSuiAutocompleteStatusContext(optional): any {
-    const ctx = React.use(AutocompleteStatusContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompleteStatusContext",
-        providerName: "AutocompleteStatus",
-      });
-    }
+export const useAutocompleteStatusContext: IUseAutocompleteStatusContext = (optional): any => {
+  const ctx = React.use(AutocompleteStatusContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompleteStatusContext",
+      providerName: "AutocompleteStatus",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   AutocompleteStatusContext as StatusContext,

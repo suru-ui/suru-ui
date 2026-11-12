@@ -25,7 +25,7 @@ export namespace SelectGroupLabelProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.GroupLabel>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectGroupLabelProps より:
+      // SelectGroupLabelProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace SelectGroupLabelProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof BaseSelect.GroupLabel>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type SelectGroupLabelProps = SelectGroupLabelProps.Render &
 
 export type ISelectGroupLabel = IComponent<SelectGroupLabelProps>;
 
-/**
- * 選択肢グループの見出し要素です。
- */
-export const SelectGroupLabel: ISelectGroupLabel = function SuiSelectGroupLabel(props) {
+/** 選択肢グループの見出し要素です。 */
+export const SelectGroupLabel: ISelectGroupLabel = (props) => {
   const ctx = useSelectGroupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const SelectGroupLabel: ISelectGroupLabel = function SuiSelectGroupLabel(
     <BaseSelect.GroupLabel
       {...otherProps}
       {...proxyRenderProps<BaseSelect.GroupLabel.State, SelectGroupLabelState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -93,7 +94,6 @@ export const SelectGroupLabel: ISelectGroupLabel = function SuiSelectGroupLabel(
 };
 
 export { SelectGroupLabel as GroupLabel };
-
 export namespace GroupLabel {
   export type State<TValue = any> = SelectGroupLabelState<TValue>;
 

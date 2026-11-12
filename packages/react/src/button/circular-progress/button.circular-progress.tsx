@@ -48,12 +48,8 @@ export type ButtonCircularProgressProps = ButtonCircularProgressProps.Render &
 
 export type IButtonCircularProgress = IComponent<ButtonCircularProgressProps>;
 
-/**
- * 円形プログレスバーの SVG ルートコンポーネントです。
- */
-export const ButtonCircularProgress: IButtonCircularProgress = function SuiButtonCircularProgress(
-  props,
-) {
+/** 円形プログレスバーの SVG ルートコンポーネントです。 */
+export const ButtonCircularProgress: IButtonCircularProgress = (props) => {
   const {
     fill = "none",
     width = "100%",
@@ -65,7 +61,10 @@ export const ButtonCircularProgress: IButtonCircularProgress = function SuiButto
     ...otherSvgProps
   } = props;
   const ctx = React.useMemo<ButtonCircularProgressContext>(
-    () => ({ percentage, indeterminate }),
+    () => ({
+      percentage,
+      indeterminate,
+    }),
     [percentage, indeterminate],
   );
   const element = useRender({
@@ -91,7 +90,6 @@ export const ButtonCircularProgress: IButtonCircularProgress = function SuiButto
 };
 
 export { ButtonCircularProgress as CircularProgress };
-
 export namespace CircularProgress {
   export type State = ButtonCircularProgressState;
 

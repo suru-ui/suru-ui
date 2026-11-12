@@ -1,5 +1,5 @@
 import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { HoverCardPopup } from "../popup/hover-card.popup.jsx";
@@ -9,9 +9,7 @@ import { HoverCardRoot } from "../root/hover-card.root.jsx";
 import { HoverCardTrigger } from "./hover-card.trigger.jsx";
 import "../../../tests/src/_locators.js";
 
-/**
- * 開いた状態を検証できるよう、ホバーカードのパーツを直接組み立てます。
- */
+/** 開いた状態を検証できるよう、ホバーカードのパーツを直接組み立てます。 */
 function renderCard(trigger: React.ReactNode) {
   return render(
     <HoverCardRoot>
@@ -27,7 +25,7 @@ function renderCard(trigger: React.ReactNode) {
 
 describe("HoverCardTrigger", () => {
   test("指定した要素をそのまま描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderCard(
       <HoverCardTrigger>
         {(props) => (
@@ -38,7 +36,7 @@ describe("HoverCardTrigger", () => {
       </HoverCardTrigger>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByRole("link", { name: "利用規約" }).element();
     expect(trigger.tagName).toBe("A");
     expect(trigger.getAttribute("href")).toBe("#terms");
@@ -46,20 +44,20 @@ describe("HoverCardTrigger", () => {
   });
 
   test("要素を直接指定して描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderCard(
       <HoverCardTrigger>
         <a href="#help">ヘルプ</a>
       </HoverCardTrigger>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByRole("link", { name: "ヘルプ" }).element();
     expect(trigger.getAttribute("href")).toBe("#help");
   });
 
   test("描画関数へルートの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <HoverCardRoot size="lg" radius="sm" outlined>
         <HoverCardTrigger>
@@ -76,7 +74,7 @@ describe("HoverCardTrigger", () => {
       </HoverCardRoot>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByRole("link", { name: "利用規約" }).element();
     expect(trigger.getAttribute("data-probe")).toBe("lg/sm/true");
   });

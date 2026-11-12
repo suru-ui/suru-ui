@@ -1,61 +1,59 @@
 @layer sui.component {
-@scope (.sui_drawer_swipe_area) to ([data-scope]) {
+  @scope (.sui_drawer_swipe_area) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: fixed;
+      z-index: 1;
+      touch-action: none;
+    }
 
-/* 固定 */
-:scope {
-  position: fixed;
-  z-index: 1;
-  touch-action: none;
-}
+    /* 開くスワイプの方向とスワイプ領域を置く辺は逆になります。 */
+    :scope.sui_drawer_swipe_area-swipe_direction_down {
+      top: 0px;
+      right: 0px;
+      left: 0px;
+    }
 
-/* 開くスワイプの方向とスワイプ領域を置く辺は逆になります。 */
-:scope.sui_drawer_swipe_area-swipe_direction_down {
-  top: 0px;
-  right: 0px;
-  left: 0px;
-}
+    :scope.sui_drawer_swipe_area-swipe_direction_up {
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+    }
 
-:scope.sui_drawer_swipe_area-swipe_direction_up {
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-}
+    :scope.sui_drawer_swipe_area-swipe_direction_left {
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+    }
 
-:scope.sui_drawer_swipe_area-swipe_direction_left {
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-}
+    :scope.sui_drawer_swipe_area-swipe_direction_right {
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+    }
 
-:scope.sui_drawer_swipe_area-swipe_direction_right {
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-}
+    /* 変数 */
+    :scope {
+      --sui_drawer_swipe_area-width: ;
+      --sui_drawer_swipe_area-height: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_drawer_swipe_area-width: ;
-  --sui_drawer_swipe_area-height: ;
-}
+    /* 可変 */
+    :scope {
+      width: var(--sui_drawer_swipe_area-width);
+      height: var(--sui_drawer_swipe_area-height);
+    }
 
-/* 可変 */
-:scope {
-  width: var(--sui_drawer_swipe_area-width);
-  height: var(--sui_drawer_swipe_area-height);
-}
+    /* 代入 */
+    :scope {
+      --sui_drawer_swipe_area-width: auto;
+      --sui_drawer_swipe_area-height: --sui-space(4);
+    }
 
-/* 代入 */
-:scope {
-  --sui_drawer_swipe_area-width: auto;
-  --sui_drawer_swipe_area-height: --sui-space(4);
-}
-
-:scope.sui_drawer_swipe_area-swipe_direction_left,
-:scope.sui_drawer_swipe_area-swipe_direction_right {
-  --sui_drawer_swipe_area-width: --sui-space(4);
-  --sui_drawer_swipe_area-height: auto;
-}
-
-} /* @scope */
+    :scope.sui_drawer_swipe_area-swipe_direction_left,
+    :scope.sui_drawer_swipe_area-swipe_direction_right {
+      --sui_drawer_swipe_area-width: --sui-space(4);
+      --sui_drawer_swipe_area-height: auto;
+    }
+  } /* @scope */
 } /* @layer */

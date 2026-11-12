@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { NumberFieldGroup } from "../group/number-field.group.jsx";
@@ -9,7 +9,7 @@ import "../../../tests/src/_locators.js";
 
 describe("NumberFieldDecrement", () => {
   test("既定のアイコン付きでボタンを表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot defaultValue={5}>
         <NumberFieldGroup>
@@ -19,7 +19,7 @@ describe("NumberFieldDecrement", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const button = screen.getByRole("button", { name: "値を減らす" }).element();
     expect(button.tagName).toBe("BUTTON");
     expect(button.classList.contains("sui_number_field_stepper")).toBe(true);
@@ -28,7 +28,7 @@ describe("NumberFieldDecrement", () => {
   });
 
   test("指定した内容を表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot>
         <NumberFieldGroup>
@@ -38,12 +38,12 @@ describe("NumberFieldDecrement", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("button", { name: "値を減らす" }).element().textContent).toBe("減");
   });
 
   test("補助技術向けのラベルを上書きする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot>
         <NumberFieldGroup>
@@ -53,12 +53,12 @@ describe("NumberFieldDecrement", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("button", { name: "数量を減らす" }).query()).not.toBe(null);
   });
 
   test("render の関数へスタイル情報とボタンの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot size="lg" color="blue">
         <NumberFieldGroup>
@@ -75,7 +75,7 @@ describe("NumberFieldDecrement", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_number_field_decrement").element().getAttribute("data-probe"),
     ).toBe("lg/blue/false");

@@ -25,17 +25,17 @@ export type IUseMenuSeparatorContext = IUseContext<MenuSeparatorContext>;
 /**
  * {@link MenuSeparatorContext} を読み取るフックです。
  */
-export const useMenuSeparatorContext: IUseMenuSeparatorContext =
-  function useSuiMenuSeparatorContext(optional): any {
-    const ctx = React.use(MenuSeparatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "MenuSeparatorContext",
-        providerName: "MenuSeparator",
-      });
-    }
+export const useMenuSeparatorContext: IUseMenuSeparatorContext = (optional): any => {
+  const ctx = React.use(MenuSeparatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "MenuSeparatorContext",
+      providerName: "MenuSeparator",
+    });
+  }
+
+  return ctx;
+};
 
 export { MenuSeparatorContext as SeparatorContext, useMenuSeparatorContext as useSeparatorContext };

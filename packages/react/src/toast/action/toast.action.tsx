@@ -10,24 +10,16 @@ import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { ToastActionContext } from "./toast.action.context.js";
 
-/**
- * 通知のアクションの配色です。
- */
+/** 通知のアクションの配色です。 */
 export type ToastActionColor = Button.Root.Color;
 
-/**
- * 通知のアクションの角丸の大きさです。
- */
+/** 通知のアクションの角丸の大きさです。 */
 export type ToastActionRadius = Button.Root.Radius;
 
-/**
- * 通知のアクションの大きさです。
- */
+/** 通知のアクションの大きさです。 */
 export type ToastActionSize = Button.Root.Size;
 
-/**
- * 通知のアクションの主な外観です。
- */
+/** 通知のアクションの主な外観です。 */
 export type ToastActionVariant = Button.Root.Variant;
 
 /**
@@ -46,7 +38,7 @@ export namespace ToastActionProps {
       Pick<
         React.ComponentProps<typeof Toast.Action>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // ToastActionProps より:
+        // ToastActionProps より :
         never
       >,
       keyof Render | keyof SuruUI
@@ -69,10 +61,8 @@ export type ToastActionProps = ToastActionProps.Render &
 
 export type IToastAction = IComponent<ToastActionProps>;
 
-/**
- * 通知に設定されたアクションを実行するボタン要素です。
- */
-export const ToastAction: IToastAction = function SuiToastAction(props) {
+/** 通知に設定されたアクションを実行するボタン要素です。 */
+export const ToastAction: IToastAction = (props) => {
   const {
     size,
     thin,
@@ -120,15 +110,18 @@ export const ToastAction: IToastAction = function SuiToastAction(props) {
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, ToastActionState>(
-                (buttonState) => ({ ...toastState, ...buttonState }),
+                (buttonState) => ({
+                  ...toastState,
+                  ...buttonState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <ToastActionContext value={state}>
                       <RenderElement
                         state={state}
                         render={render}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="button"
                       />
                     </ToastActionContext>
@@ -159,7 +152,6 @@ export const ToastAction: IToastAction = function SuiToastAction(props) {
 };
 
 export { ToastAction as Action };
-
 export namespace Action {
   export type State = ToastActionState;
 

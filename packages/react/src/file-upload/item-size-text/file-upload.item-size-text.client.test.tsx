@@ -1,6 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { FileUploadItem } from "../item/file-upload.item.jsx";
@@ -25,7 +24,7 @@ describe("FileUploadItemSizeText", () => {
     [1536, "1.5 KB"],
     [1024 * 1024, "1 MB"],
   ] as const)("バイト数を桁に応じて表示する", async ([size, expected], { expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadItem file={createSizedFile(size)}>
@@ -34,14 +33,14 @@ describe("FileUploadItemSizeText", () => {
       </FileUploadRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_file_upload_item_size_text").element().textContent).toBe(
       expected,
     );
   });
 
   test("表示内容を差し替えられる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadItem file={createSizedFile(512)}>
@@ -50,14 +49,14 @@ describe("FileUploadItemSizeText", () => {
       </FileUploadRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_file_upload_item_size_text").element().textContent).toBe(
       "512 バイト",
     );
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadItem file={createSizedFile(512)}>
@@ -66,7 +65,7 @@ describe("FileUploadItemSizeText", () => {
       </FileUploadRoot>,
     );
 
-    // 検証
+    // 検証。
     const size = screen.getByClassName("sui_file_upload_item_size_text").element();
     expect(size.classList.contains("custom")).toBe(true);
     expect(size.classList.contains("sui_file_upload_item_size_text")).toBe(true);

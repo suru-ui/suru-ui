@@ -18,10 +18,7 @@ export namespace AlertIconProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -39,7 +36,7 @@ export type IAlertIcon = IComponent<AlertIconProps>;
  *
  * 子要素を省略すると、状態色の丸いインジケーターを表示します。
  */
-export const AlertIcon: IAlertIcon = function SuiAlertIcon(props) {
+export const AlertIcon: IAlertIcon = (props) => {
   const ctx = useAlertContext();
   const { "aria-hidden": ariaHidden = true, ...otherDivProps } = props;
 
@@ -67,7 +64,6 @@ export const AlertIcon: IAlertIcon = function SuiAlertIcon(props) {
 };
 
 export { AlertIcon as Icon };
-
 export namespace Icon {
   export type State = AlertIconState;
 

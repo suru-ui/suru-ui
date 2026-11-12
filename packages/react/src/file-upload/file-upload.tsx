@@ -30,8 +30,7 @@ import {
   FileUploadItemDeleteTrigger,
 } from "./file-upload.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type FileUploadColor = FileUploadRootColor;
 
@@ -62,9 +61,7 @@ export type FileUploadSlotProps = {
    */
   readonly item?: Omit<FileUploadItemProps, "children" | "file"> | undefined;
 
-  /**
-   * 選択済みファイルごとの {@link FileUploadItemDeleteTrigger} に渡す props です。
-   */
+  /** 選択済みファイルごとの {@link FileUploadItemDeleteTrigger} に渡す props です。 */
   readonly itemDeleteTrigger?: FileUploadItemDeleteTriggerProps | undefined;
 
   /**
@@ -72,14 +69,10 @@ export type FileUploadSlotProps = {
    */
   readonly itemGroup?: Omit<FileUploadItemGroupProps, "children"> | undefined;
 
-  /**
-   * 選択済みファイルごとの {@link FileUploadItemName} に渡す props です。
-   */
+  /** 選択済みファイルごとの {@link FileUploadItemName} に渡す props です。 */
   readonly itemName?: Omit<FileUploadItemNameProps, "children"> | undefined;
 
-  /**
-   * 選択済みファイルごとの {@link FileUploadItemSizeText} に渡す props です。
-   */
+  /** 選択済みファイルごとの {@link FileUploadItemSizeText} に渡す props です。 */
   readonly itemSizeText?: Omit<FileUploadItemSizeTextProps, "children"> | undefined;
 };
 
@@ -92,9 +85,7 @@ namespace FileUploadProps {
   export type Dropzone = Pick<FileUploadDropzoneProps, "children">;
 
   export type FileUpload = {
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: FileUploadSlotProps | undefined;
   };
 
@@ -115,13 +106,13 @@ export interface IUseFileUploadAPI {
    * {@link FileUploadAPI} を作成します。
    *
    * @param props {@link FileUpload} の props です。
+   *
    * @returns ファイルアップロードの API です
    */
   (props: FileUploadProps): FileUploadAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link FileUpload} を構成する各パーツの props などを作成するための API です。
@@ -135,11 +126,14 @@ export class FileUploadAPI {
 
   /**
    * @param props {@link FileUpload} の props です。
+   *
    * @internal
    */
   public constructor(props: FileUploadProps) {
     const { children, slotProps = {}, ...rootProps } = props;
-    this.dropzoneProps = { children };
+    this.dropzoneProps = {
+      children,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -232,21 +226,18 @@ export class FileUploadAPI {
 /**
  * {@link FileUploadAPI} を作成するフックです。
  */
-export const useFileUploadAPI: IUseFileUploadAPI = function useSuiFileUploadAPI(props) {
-  return new FileUploadAPI(props);
-};
+export const useFileUploadAPI: IUseFileUploadAPI = (props) => new FileUploadAPI(props);
 
 export { FileUploadAPI as API, useFileUploadAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * ファイルアップロードを表示するコンポーネントです。
  *
  * ドロップゾーンでのクリックとドラッグアンドドロップ、隠し input によるファイル選択を受け付けます。
  */
-export const FileUpload: IFileUpload = function SuiFileUpload(props) {
+export const FileUpload: IFileUpload = (props) => {
   const api = useFileUploadAPI(props);
   const itemGroupProps = api.getItemGroupProps();
 

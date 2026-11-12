@@ -5,6 +5,8 @@ import { preview, controls } from "../../.config/storybook/preview.js";
 import { Button } from "../button/index.js";
 import { Toast } from "./index.js";
 
+// oxlint-disable typescript/no-unsafe-type-assertion -- Storybook の args は緩い型で渡されるため。
+
 const COLORS: readonly Toast.Color[] = theme.COLORS;
 const RADII: readonly Toast.Radius[] = ["none", ...theme.SIZES];
 const SIZES: readonly Toast.Size[] = theme.SIZES;
@@ -54,22 +56,22 @@ const ctrl = controls(Toast.Provider, {
 });
 
 type Props = {
-  color: Toast.Color | undefined;
-  description: string;
-  limit: number;
-  outlined: boolean;
-  radius: Toast.Radius;
   size: Toast.Size;
-  timeout: number;
-  title: string;
   type: string | undefined;
+  color: Toast.Color | undefined;
+  limit: number;
+  title: string;
+  radius: Toast.Radius;
+  timeout: number;
   variant: Toast.Variant;
+  outlined: boolean;
+  description: string;
 };
 
 function CreateToastButton(props: {
-  description: string;
-  title: string;
   type: string | undefined;
+  title: string;
+  description: string;
 }) {
   const t = Toast.useClient();
   const countRef = React.useRef(0);

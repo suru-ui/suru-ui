@@ -21,18 +21,18 @@ export type IUsePaginationEllipsisContext = IUseContext<PaginationEllipsisContex
 /**
  * {@link PaginationEllipsisContext} を読み取るフックです。
  */
-export const usePaginationEllipsisContext: IUsePaginationEllipsisContext =
-  function useSuiPaginationEllipsisContext(optional): any {
-    const ctx = React.use(PaginationEllipsisContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "PaginationEllipsisContext",
-        providerName: "PaginationEllipsis",
-      });
-    }
+export const usePaginationEllipsisContext: IUsePaginationEllipsisContext = (optional): any => {
+  const ctx = React.use(PaginationEllipsisContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "PaginationEllipsisContext",
+      providerName: "PaginationEllipsis",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   PaginationEllipsisContext as EllipsisContext,

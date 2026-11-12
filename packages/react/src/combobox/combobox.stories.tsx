@@ -14,9 +14,9 @@ const VARIANTS: readonly Combobox.Variant[] = ["naked", "liquid"];
 const fruits = ["りんご", "ばなな", "ぶどう", "みかん", "いちご", "もも"];
 
 type DirectoryUser = {
-  readonly email: string;
   readonly id: string;
   readonly name: string;
+  readonly email: string;
   readonly title: string;
   readonly username: string;
 };
@@ -111,10 +111,13 @@ const directoryUsers: readonly DirectoryUser[] = [
 async function searchDirectoryUsers(
   query: string,
   filter: Combobox.IFilter,
-): Promise<{ error: string | null; users: DirectoryUser[] }> {
+): Promise<{
+  error: string | null;
+  users: DirectoryUser[];
+}> {
   // ネットワークの遅延を模擬します。
   await new Promise((resolve) => {
-    setTimeout(resolve, 1_000);
+    setTimeout(resolve, 1000);
   });
 
   // ネットワークエラーを模擬します (10% の確率、`will_error` と入力しても再現できます)。
@@ -125,14 +128,13 @@ async function searchDirectoryUsers(
     };
   }
 
-  const users = directoryUsers.filter((user) => {
-    return (
+  const users = directoryUsers.filter(
+    (user) =>
       filter.contains(user.name, query) ||
       filter.contains(user.username, query) ||
       filter.contains(user.email, query) ||
-      filter.contains(user.title, query)
-    );
-  });
+      filter.contains(user.title, query),
+  );
 
   return {
     error: null,
@@ -284,7 +286,7 @@ export const Colors = meta.story({
               color={color}
               items={fruits}
               className="w-[200px]"
-              defaultValue={props.multiple ? [fruits[0]] : fruits[0]}
+              defaultValue={props.multiple === true ? [fruits[0]] : fruits[0]}
             />
           </div>
         ))}
@@ -619,7 +621,7 @@ export const Labeled = meta.story({
     keepFilterOnSelect: false,
   }),
   render(props) {
-    if (props.inputInPopup) {
+    if (props.inputInPopup === true) {
       const { label, ...otherProps } = props;
 
       return (
@@ -629,15 +631,15 @@ export const Labeled = meta.story({
           className="w-[200px]"
         />
       );
-    } else {
-      const { label, disabled, ...otherProps } = props;
-
-      return (
-        <Field label={label} disabled={disabled}>
-          <Combobox {...otherProps} className="w-[200px]" />
-        </Field>
-      );
     }
+
+    const { label, disabled, ...otherProps } = props;
+
+    return (
+      <Field label={label} disabled={disabled}>
+        <Combobox {...otherProps} className="w-[200px]" />
+      </Field>
+    );
   },
 });
 
@@ -702,7 +704,7 @@ export const AsyncSearchSingle = meta.story({
         return "検索中…";
       }
 
-      if (error) {
+      if (error !== null && error !== "") {
         return error;
       }
 
@@ -718,7 +720,12 @@ export const AsyncSearchSingle = meta.story({
     }
 
     function getEmptyMessage() {
-      if (trimmedSearchValue === "" || isPending || searchResults.length > 0 || error) {
+      if (
+        trimmedSearchValue === "" ||
+        isPending ||
+        searchResults.length > 0 ||
+        (error !== null && error !== "")
+      ) {
         return null;
       }
 
@@ -736,11 +743,6 @@ export const AsyncSearchSingle = meta.story({
         status={status}
         className="w-[300px]"
         placeholder="例：山田"
-        onValueChange={(nextSelectedValue) => {
-          setSelectedValue(nextSelectedValue);
-          setSearchValue("");
-          setError(null);
-        }}
         itemLabelRenderer={(user: DirectoryUser) => (
           <span className="flex min-w-0 flex-col text-left">
             <span className="truncate font-medium">{user.name}</span>
@@ -751,16 +753,23 @@ export const AsyncSearchSingle = meta.story({
         )}
         itemToStringLabel={(user) => user.name}
         isItemEqualToValue={(item, value) => item.id === value.id}
+        onValueChange={(nextSelectedValue) => {
+          setSelectedValue(nextSelectedValue);
+          setSearchValue("");
+          setError(null);
+        }}
         onInputValueChange={(nextSearchValue, { reason }) => {
           setSearchValue(nextSearchValue);
 
           const controller = new AbortController();
+
           abortControllerRef.current?.abort();
           abortControllerRef.current = controller;
 
           if (nextSearchValue === "") {
             setSearchResults([]);
             setError(null);
+
             return;
           }
 
@@ -816,7 +825,6 @@ export const AsyncSearchMultiple = meta.story({
       }
 
       const merged = [...searchResults];
-
       selectedValues.forEach((user) => {
         if (!merged.some((result) => result.id === user.id)) {
           merged.push(user);
@@ -831,7 +839,7 @@ export const AsyncSearchMultiple = meta.story({
         return "検索中…";
       }
 
-      if (error) {
+      if (error !== null && error !== "") {
         return error;
       }
 
@@ -847,7 +855,12 @@ export const AsyncSearchMultiple = meta.story({
     }
 
     function getEmptyMessage() {
-      if (trimmedSearchValue === "" || isPending || searchResults.length > 0 || error) {
+      if (
+        trimmedSearchValue === "" ||
+        isPending ||
+        searchResults.length > 0 ||
+        (error !== null && error !== "")
+      ) {
         return null;
       }
 
@@ -866,6 +879,17 @@ export const AsyncSearchMultiple = meta.story({
         multiple
         className="w-[300px]"
         placeholder="例：山田"
+        chipLabelRenderer={(user: DirectoryUser) => user.name}
+        itemLabelRenderer={(user: DirectoryUser) => (
+          <span className="flex min-w-0 flex-col text-left">
+            <span className="truncate font-medium">{user.name}</span>
+            <span className="truncate text-xs opacity-70">
+              {user.email} ・ @{user.username} ・ {user.title}
+            </span>
+          </span>
+        )}
+        itemToStringLabel={(user) => user.name}
+        isItemEqualToValue={(item, value) => item.id === value.id}
         onValueChange={(nextSelectedValues) => {
           selectedValuesRef.current = nextSelectedValues;
           setSelectedValues(nextSelectedValues);
@@ -879,21 +903,11 @@ export const AsyncSearchMultiple = meta.story({
             setBlockStartStatus(true);
           }
         }}
-        chipLabelRenderer={(user: DirectoryUser) => user.name}
-        itemLabelRenderer={(user: DirectoryUser) => (
-          <span className="flex min-w-0 flex-col text-left">
-            <span className="truncate font-medium">{user.name}</span>
-            <span className="truncate text-xs opacity-70">
-              {user.email} ・ @{user.username} ・ {user.title}
-            </span>
-          </span>
-        )}
-        itemToStringLabel={(user) => user.name}
-        isItemEqualToValue={(item, value) => item.id === value.id}
         onInputValueChange={(nextSearchValue, { reason }) => {
           setSearchValue(nextSearchValue);
 
           const controller = new AbortController();
+
           abortControllerRef.current?.abort();
           abortControllerRef.current = controller;
 
@@ -901,6 +915,7 @@ export const AsyncSearchMultiple = meta.story({
             setSearchResults(selectedValuesRef.current);
             setError(null);
             setBlockStartStatus(false);
+
             return;
           }
 

@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "../progress.parts.js";
@@ -7,10 +7,10 @@ import "../../../tests/src/_locators.js";
 
 describe("ProgressRoot", () => {
   test("既定の修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ProgressRoot value={25} />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_progress").element();
     expect(root.classList.contains("sui_progress")).toBe(true);
     expect(root.classList.contains("sui_progress-size_md")).toBe(true);
@@ -21,7 +21,7 @@ describe("ProgressRoot", () => {
   });
 
   test("指定した大きさの修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ProgressRoot id="sm" size="sm" value={0} />
@@ -30,7 +30,7 @@ describe("ProgressRoot", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.container.querySelector("#sm")?.classList.contains("sui_progress-size_sm")).toBe(
       true,
     );
@@ -43,7 +43,7 @@ describe("ProgressRoot", () => {
   });
 
   test("指定した配色の修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ProgressRoot id="blue" color="blue" value={0} />
@@ -56,7 +56,7 @@ describe("ProgressRoot", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.container.querySelector("#blue")?.classList.contains("sui_progress-color_blue"),
     ).toBe(true);
@@ -81,7 +81,7 @@ describe("ProgressRoot", () => {
   });
 
   test("指定した角丸の修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ProgressRoot id="none" value={0} radius="none" />
@@ -92,7 +92,7 @@ describe("ProgressRoot", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.container.querySelector("#none")?.classList.contains("sui_progress-radius_none"),
     ).toBe(true);
@@ -111,7 +111,7 @@ describe("ProgressRoot", () => {
   });
 
   test("指定した外観と枠線の修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ProgressRoot id="naked" value={0} variant="naked" />
@@ -120,7 +120,7 @@ describe("ProgressRoot", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.container.querySelector("#naked")?.classList.contains("sui_progress-variant_naked"),
     ).toBe(true);
@@ -137,36 +137,36 @@ describe("ProgressRoot", () => {
     [100, "complete"],
     [null, "indeterminate"],
   ] as const)("状態 %s に応じた状態クラスを付ける", async ([value, status], { expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ProgressRoot value={value} />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName(`sui_progress-status_${status}`).query()).not.toBe(null);
   });
 
   test("スタイル起点として data-scope を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ProgressRoot value={25} />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_progress").element().getAttribute("data-scope")).toBe("");
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ProgressRoot value={25} className="custom" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_progress").element();
     expect(root.classList.contains("custom")).toBe(true);
     expect(root.classList.contains("sui_progress")).toBe(true);
   });
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ProgressRoot value={25} render={<section />} />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_progress").element().tagName).toBe("SECTION");
   });
 });

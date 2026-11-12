@@ -33,7 +33,7 @@ export type SelectRootChangeEventReason = BaseSelect.Root.ChangeEventReason;
  * @template TValue 項目の値の型です。
  */
 export type SelectRootItemMapping<TValue = any> = TValue extends string
-  ? { readonly [_ in TValue]: React.ReactNode }
+  ? Readonly<Record<TValue, React.ReactNode>>
   : never;
 
 /**
@@ -47,7 +47,6 @@ export type SelectRootLabeledItemObject<TValue = any> = Override<
   Omit<SelectItemProps, "children">,
   {
     readonly label: React.ReactNode;
-
     readonly value: TValue;
   }
 >;
@@ -69,14 +68,10 @@ export type SelectRootItem<TValue = any> = TValue | SelectRootLabeledItemObject<
 export type SelectRootItemObjectGroup<TValue = any> = Override<
   Omit<SelectGroupProps, "children">,
   {
-    /**
-     * グループに含まれる項目です。
-     */
+    /** グループに含まれる項目です。 */
     readonly items: SelectRootItemMapping<TValue> | readonly SelectRootItem<TValue>[];
 
-    /**
-     * グループの見出しです。
-     */
+    /** グループの見出しです。 */
     readonly label?: React.ReactNode | undefined;
   }
 >;
@@ -178,7 +173,7 @@ export namespace SelectRootProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Root<TValue, TMultiple>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectRootProps より:
+      // SelectRootProps より :
       | "children"
       | "inputRef"
       | "name"
@@ -245,7 +240,7 @@ export interface ISelectRoot extends IComponent<SelectRootProps> {
  *
  * それ自身は HTML 要素をレンダリングせず、スタイルと項目を子パーツへ伝播します。
  */
-export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootProps) {
+export const SelectRoot: ISelectRoot = (props: SelectRootProps) => {
   const {
     size = "md",
     items,
@@ -269,10 +264,12 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootP
     }),
     [items, outlined, radius, size, variant],
   );
+  /* oxlint-disable typescript/consistent-return -- Base UI の items は undefined を許容するため。 */
   const baseuiItems = React.useMemo(() => {
     if (!items) {
       return undefined;
     }
+
     if (!Array.isArray(items)) {
       return items;
     }
@@ -295,6 +292,9 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootP
       return item;
     });
   }, [items]);
+
+  /* oxlint-enable typescript/consistent-return */
+
   // Base UI の型情報によると `onValueChange` の第一引数に `value` が来るはずですが、実際には `items` の要素が来ます。
   // 型情報と実際の挙動を合わせるために、ハンドラーを修正します。
   const handleValueChange = React.useCallback<NonNullable<SelectRootProps["onValueChange"]>>(
@@ -346,7 +346,6 @@ export const SelectRoot: ISelectRoot = function SuiSelectRoot(props: SelectRootP
 };
 
 export { SelectRoot as Root };
-
 export namespace Root {
   export type State<TValue = any> = SelectRootState<TValue>;
 

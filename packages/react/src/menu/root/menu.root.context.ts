@@ -1,7 +1,7 @@
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import * as Button from "../../button/button.parts.js";
+import type * as Button from "../../button/button.parts.js";
 import { ContextMissingError } from "../../errors.js";
 import type { IUseContext } from "../../types.js";
 
@@ -39,47 +39,35 @@ export type MenuContextVariant = Button.Root.Variant;
  * @template TItem 項目の型です。
  */
 export type MenuContext<TItem = any> = {
-  /**
-   * メニューの現在の深さです。
-   */
+  /** メニューの現在の深さです。 */
   readonly depth: number;
 
-  /**
-   * メニューの項目です。
-   */
+  /** メニューの項目です。 */
   readonly items: readonly TItem[];
 
-  /**
-   * ポップアップに枠線を表示するかどうかです。
-   */
+  /** ポップアップに枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * ポップアップと項目の角丸です。
-   */
+  /** ポップアップと項目の角丸です。 */
   readonly radius: MenuContextRadius;
 
-  /**
-   * ポップアップと項目の大きさです。
-   */
+  /** ポップアップと項目の大きさです。 */
   readonly size: MenuContextSize;
 
-  /**
-   * 項目の主な外観です。
-   */
+  /** 項目の主な外観です。 */
   readonly variant: MenuContextVariant;
 };
 
-/**
- * メニューのスタイルを子要素へ伝播するコンテキストです。
- */
+/** メニューのスタイルを子要素へ伝播するコンテキストです。 */
 export const MenuContext: React.Context<MenuContext | null> =
   React.createContext<MenuContext | null>(null);
 
 export interface IUseMenuContext extends IUseContext<MenuContext> {
   /**
    * @template TItem 項目の型です。
+   *
    * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   *
    * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
    */
   <TItem = any>(optional?: false): MenuContext<TItem>;
@@ -89,9 +77,10 @@ export interface IUseMenuContext extends IUseContext<MenuContext> {
 /**
  * {@link MenuContext} を読み取るフックです。
  */
-export const useMenuContext: IUseMenuContext = function useSuiMenuContext(optional?: boolean): any {
+export const useMenuContext: IUseMenuContext = (optional?: boolean): any => {
   const ctx = React.use(MenuContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "MenuContext",
       providerName: "MenuRoot",
@@ -102,7 +91,6 @@ export const useMenuContext: IUseMenuContext = function useSuiMenuContext(option
 };
 
 export { MenuContext as Context, useMenuContext as useContext };
-
 export namespace Context {
   export type Radius = MenuContextRadius;
 

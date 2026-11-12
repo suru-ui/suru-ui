@@ -1,5 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "./card.parts.js";
@@ -14,7 +14,7 @@ import { CardTitle } from "./title/card.title.jsx";
 
 describe("CardRoot の配置", () => {
   test("ヘッダーのタイトルと操作要素を横に並べる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CardRoot>
         <CardHeader>
@@ -27,7 +27,7 @@ describe("CardRoot の配置", () => {
       </CardRoot>,
     );
 
-    // 検証
+    // 検証。
     const title = screen.getByText("定期レポート").element().getBoundingClientRect();
     const description = screen
       .getByText("毎週のスナップショットを共有します。")
@@ -40,7 +40,7 @@ describe("CardRoot の配置", () => {
   });
 
   test("大きさごとの余白と間隔を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <CardRoot id="sm" size="sm">
@@ -55,24 +55,29 @@ describe("CardRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm")!);
     expect(sm.gap).toBe("12px");
     expect(sm.paddingBlockStart).toBe("12px");
+
     const smContent = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#sm .sui_card_content")!,
     );
     expect(smContent.paddingInlineStart).toBe("12px");
+
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md")!);
     expect(md.gap).toBe("16px");
     expect(md.paddingBlockStart).toBe("16px");
+
     const mdContent = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#md .sui_card_content")!,
     );
     expect(mdContent.paddingInlineStart).toBe("16px");
+
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg")!);
     expect(lg.gap).toBe("20px");
     expect(lg.paddingBlockStart).toBe("20px");
+
     const lgContent = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#lg .sui_card_content")!,
     );
@@ -80,7 +85,7 @@ describe("CardRoot の配置", () => {
   });
 
   test("フッターがあるときは下端の余白を詰める", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <CardRoot id="plain">
@@ -93,9 +98,10 @@ describe("CardRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const plain = getComputedStyle(screen.container.querySelector<HTMLElement>("#plain")!);
     expect(plain.paddingBlockEnd).toBe("16px");
+
     const withFooter = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#with-footer")!,
     );
@@ -103,7 +109,7 @@ describe("CardRoot の配置", () => {
   });
 
   test("先頭の画像では上端の余白を詰める", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CardRoot id="with-image">
         <img alt="" />
@@ -111,13 +117,13 @@ describe("CardRoot の配置", () => {
       </CardRoot>,
     );
 
-    // 検証
+    // 検証。
     const root = getComputedStyle(screen.container.querySelector<HTMLElement>("#with-image")!);
     expect(root.paddingBlockStart).toBe("0px");
   });
 
   test("指定した角丸で切り抜く", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <CardRoot id="none" radius="none" />
@@ -127,19 +133,22 @@ describe("CardRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const none = getComputedStyle(screen.container.querySelector<HTMLElement>("#none")!);
     expect(none.borderTopLeftRadius).toBe("0px");
+
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm")!);
     expect(sm.borderTopLeftRadius).toBe("8px");
+
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md")!);
     expect(md.borderTopLeftRadius).toBe("12px");
+
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg")!);
     expect(lg.borderTopLeftRadius).toBe("16px");
   });
 
   test("枠線を表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <CardRoot id="plain" outlined={false} />
@@ -147,16 +156,17 @@ describe("CardRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const plain = getComputedStyle(screen.container.querySelector<HTMLElement>("#plain")!);
     expect(plain.borderTopWidth).toBe("0px");
+
     const outlined = getComputedStyle(screen.container.querySelector<HTMLElement>("#outlined")!);
     expect(Number.parseFloat(outlined.borderTopWidth)).toBeGreaterThan(0.5);
     expect(Number.parseFloat(outlined.borderTopWidth)).toBeLessThan(1.5);
   });
 
   test("フッターに区切り線と背景を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ backgroundColor: "var(--sui-canvas-2)" }}>背景の基準</span>
@@ -166,7 +176,7 @@ describe("CardRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByText("背景の基準").element());
     const footer = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#with-footer .sui_card_footer")!,
@@ -176,7 +186,7 @@ describe("CardRoot の配置", () => {
   });
 
   test("活字を大きさに追従させる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ color: "var(--sui-canvas_text-2)" }}>説明の基準</span>
@@ -201,7 +211,7 @@ describe("CardRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expectedDescription = getComputedStyle(screen.getByText("説明の基準").element());
     const expectedContent = getComputedStyle(screen.getByText("本文の基準").element());
     const smTitle = getComputedStyle(
@@ -209,20 +219,24 @@ describe("CardRoot の配置", () => {
     );
     expect(smTitle.fontSize).toBe("12px");
     expect(smTitle.fontWeight).toBe("700");
+
     const smDescription = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#sm .sui_card_description")!,
     );
     expect(smDescription.fontSize).toBe("12px");
     expect(smDescription.color).toBe(expectedDescription.color);
+
     const smContent = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#sm .sui_card_content")!,
     );
     expect(smContent.color).toBe(expectedContent.color);
+
     const mdTitle = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#md .sui_card_title")!,
     );
     expect(mdTitle.fontSize).toBe("14px");
     expect(mdTitle.fontWeight).toBe("700");
+
     const lgTitle = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#lg .sui_card_title")!,
     );
@@ -231,12 +245,12 @@ describe("CardRoot の配置", () => {
   });
 
   test("公開変数で余白を上書きできる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<CardRoot id="custom" />);
     const root = screen.container.querySelector<HTMLElement>("#custom")!;
     root.style.setProperty("--sui_card-padding_block_start", "40px");
 
-    // 検証
+    // 検証。
     expect(getComputedStyle(root).paddingBlockStart).toBe("40px");
   });
 });

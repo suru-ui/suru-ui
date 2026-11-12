@@ -23,7 +23,7 @@ export namespace PopoverViewportProps {
     Pick<
       React.ComponentProps<typeof Popover.Viewport>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PopoverViewportProps より:
+      // PopoverViewportProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace PopoverViewportProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Popover.Viewport>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -50,7 +50,7 @@ export type IPopoverViewport = IComponent<PopoverViewportProps>;
  *
  * 1 つのポップオーバーを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
-export const PopoverViewport: IPopoverViewport = function SuiPopoverViewport(props) {
+export const PopoverViewport: IPopoverViewport = (props) => {
   const ctx = usePopoverPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +58,10 @@ export const PopoverViewport: IPopoverViewport = function SuiPopoverViewport(pro
     <Popover.Viewport
       {...otherProps}
       {...proxyRenderProps<Popover.Viewport.State, PopoverViewportState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -97,7 +100,6 @@ export const PopoverViewport: IPopoverViewport = function SuiPopoverViewport(pro
 };
 
 export { PopoverViewport as Viewport };
-
 export namespace Viewport {
   export type State = PopoverViewportState;
 

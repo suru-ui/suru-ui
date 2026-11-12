@@ -1,29 +1,27 @@
 @layer sui.component {
-@scope (.sui_autocomplete_backdrop) to ([data-scope]) {
+  @scope (.sui_autocomplete_backdrop) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: fixed;
+      inset: 0px;
+    }
 
-/* 固定 */
-:scope {
-  position: fixed;
-  inset: 0px;
-}
+    /* 変数 */
+    :scope {
+      --sui_autocomplete_backdrop-background_color: ;
+      --sui_autocomplete_backdrop-filter: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_autocomplete_backdrop-background_color: ;
-  --sui_autocomplete_backdrop-filter: ;
-}
+    /* 可変 */
+    :scope {
+      background-color: var(--sui_autocomplete_backdrop-background_color);
+      filter: var(--sui_autocomplete_backdrop-filter);
+    }
 
-/* 可変 */
-:scope {
-  background-color: var(--sui_autocomplete_backdrop-background_color);
-  filter: var(--sui_autocomplete_backdrop-filter);
-}
-
-/* 代入 */
-:scope {
-  --sui_autocomplete_backdrop-background_color: var(--sui-backdrop-color);
-  --sui_autocomplete_backdrop-filter: blur(var(--sui-backdrop-blur));
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_autocomplete_backdrop-background_color: var(--sui-backdrop-color);
+      --sui_autocomplete_backdrop-filter: blur(var(--sui-backdrop-blur));
+    }
+  } /* @scope */
 } /* @layer */

@@ -10,6 +10,7 @@ export type TooltipHandle<TPayload = any> = Tooltip.Handle<TPayload>;
 export interface ICreateTooltipHandle {
   /**
    * @template TPayload トリガーが送信するデータの型です。
+   *
    * @returns ツールチップを制御するハンドルです。
    */
   <TPayload = any>(): TooltipHandle<TPayload>;
@@ -18,8 +19,6 @@ export interface ICreateTooltipHandle {
 /**
  * {@link TooltipHandle} を作成する関数です。
  */
-export const createTooltipHandle: ICreateTooltipHandle = function createSuiTooltipHandle() {
-  return Tooltip.createHandle();
-};
+export const createTooltipHandle: ICreateTooltipHandle = () => Tooltip.createHandle();
 
 export { type TooltipHandle as Handle, createTooltipHandle as createHandle };

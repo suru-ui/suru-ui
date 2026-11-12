@@ -26,11 +26,10 @@ export type IUseMenuItemContext = IUseContext<MenuItemContext>;
 /**
  * {@link MenuItemContext} を読み取るフックです。
  */
-export const useMenuItemContext: IUseMenuItemContext = function useSuiMenuItemContext(
-  optional,
-): any {
+export const useMenuItemContext: IUseMenuItemContext = (optional): any => {
   const ctx = React.use(MenuItemContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "MenuItemContext",
       providerName: "MenuItem",

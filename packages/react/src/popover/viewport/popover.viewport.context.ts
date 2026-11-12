@@ -21,18 +21,18 @@ export type IUsePopoverViewportContext = IUseContext<PopoverViewportContext>;
 /**
  * {@link PopoverViewportContext} を読み取るフックです。
  */
-export const usePopoverViewportContext: IUsePopoverViewportContext =
-  function useSuiPopoverViewportContext(optional): any {
-    const ctx = React.use(PopoverViewportContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "PopoverViewportContext",
-        providerName: "PopoverViewport",
-      });
-    }
+export const usePopoverViewportContext: IUsePopoverViewportContext = (optional): any => {
+  const ctx = React.use(PopoverViewportContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "PopoverViewportContext",
+      providerName: "PopoverViewport",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   PopoverViewportContext as ViewportContext,

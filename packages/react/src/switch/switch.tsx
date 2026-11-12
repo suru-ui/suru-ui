@@ -13,8 +13,7 @@ import {
   SwitchThumb,
 } from "./switch.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type SwitchChangeEventDetails = SwitchRootChangeEventDetails;
 
@@ -47,9 +46,7 @@ namespace SwitchProps {
   export type Root = Omit<SwitchRootProps, keyof Switch | keyof Thumb>;
 
   export type Switch = {
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: SwitchSlotProps | undefined;
   };
 
@@ -68,13 +65,13 @@ export interface IUseSwitchAPI {
    * {@link SwitchAPI} を作成します。
    *
    * @param props {@link Switch} の props です。
+   *
    * @returns スイッチの API です。
    */
   (props: SwitchProps): SwitchAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Switch} を構成する各パーツの props などを作成するための API です。
@@ -88,13 +85,16 @@ export class SwitchAPI {
 
   /**
    * @param props {@link Switch} の props です。
+   *
    * @internal
    */
   public constructor(props: SwitchProps) {
     const { children, slotProps = {}, ...rootProps } = props;
     this.slotProps = slotProps;
     this.rootProps = rootProps;
-    this.thumbProps = { children };
+    this.thumbProps = {
+      children,
+    };
   }
 
   /**
@@ -120,21 +120,18 @@ export class SwitchAPI {
 /**
  * {@link SwitchAPI} を作成するフックです。
  */
-export const useSwitchAPI: IUseSwitchAPI = function useSuiSwitchAPI(props) {
-  return new SwitchAPI(props);
-};
+export const useSwitchAPI: IUseSwitchAPI = (props) => new SwitchAPI(props);
 
 export { SwitchAPI as API, useSwitchAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * スイッチを表示するコンポーネントです。
  *
  * ラベルのテキストは `label` 要素で囲んで指定します。
  */
-export const Switch: ISwitch = function SuiSwitch(props) {
+export const Switch: ISwitch = (props) => {
   const api = useSwitchAPI(props);
 
   return (

@@ -18,10 +18,7 @@ export namespace ButtonContentProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"span", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"span", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type ButtonContentProps = ButtonContentProps.Render &
 
 export type IButtonContent = IComponent<ButtonContentProps>;
 
-/**
- * ボタンのコンテンツを表示するコンポーネントです。
- */
-export const ButtonContent: IButtonContent = function SuiButtonContent(props) {
+/** ボタンのコンテンツを表示するコンポーネントです。 */
+export const ButtonContent: IButtonContent = (props) => {
   const ctx = useButtonContext();
 
   return useRender({
@@ -64,7 +59,6 @@ export const ButtonContent: IButtonContent = function SuiButtonContent(props) {
 };
 
 export { ButtonContent as Content };
-
 export namespace Content {
   export type State = ButtonContentState;
 

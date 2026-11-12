@@ -1,251 +1,247 @@
 @layer sui.component {
-@scope (.sui_alert) to ([data-scope]) {
+  @scope (.sui_alert) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: grid;
+      border-style: solid;
 
-/* 固定 */
-:scope {
-  display: grid;
-  border-style: solid;
+      &:has(.sui_alert_icon) {
+        grid-template-columns: auto 1fr;
+      }
 
-  &:has(.sui_alert_icon) {
-    grid-template-columns: auto 1fr;
-  }
+      &.sui_alert-actions_position_side:has(.sui_alert_actions) {
+        grid-template-columns: 1fr auto;
 
-  &.sui_alert-actions_position_side:has(.sui_alert_actions) {
-    grid-template-columns: 1fr auto;
+        &:has(.sui_alert_icon) {
+          grid-template-columns: auto 1fr auto;
+        }
+      }
 
-    &:has(.sui_alert_icon) {
-      grid-template-columns: auto 1fr auto;
-    }
-  }
+      /* 説明文の横並びはタイトルと説明文の両方があるときだけ適用します。 */
+      &:is(
+          .sui_alert-description_position_side_start,
+          .sui_alert-description_position_side_end
+        ):has(.sui_alert_title):has(.sui_alert_description):is(
+          :not(.sui_alert-actions_position_side),
+          :not(:has(.sui_alert_actions))
+        ):not(:has(.sui_alert_icon)) {
+        grid-template-columns: auto 1fr;
+      }
 
-  /* 説明文の横並びはタイトルと説明文の両方があるときだけ適用します。 */
-  &:is(
-    .sui_alert-description_position_side_start,
-    .sui_alert-description_position_side_end
-  ):has(.sui_alert_title):has(.sui_alert_description):is(
-    :not(.sui_alert-actions_position_side),
-    :not(:has(.sui_alert_actions))
-  ):not(:has(.sui_alert_icon)) {
-    grid-template-columns: auto 1fr;
-  }
+      &:is(
+          .sui_alert-description_position_side_start,
+          .sui_alert-description_position_side_end
+        ):has(.sui_alert_title):has(.sui_alert_description):is(
+          :not(.sui_alert-actions_position_side),
+          :not(:has(.sui_alert_actions))
+        ):has(.sui_alert_icon) {
+        grid-template-columns: auto auto 1fr;
+      }
 
-  &:is(
-    .sui_alert-description_position_side_start,
-    .sui_alert-description_position_side_end
-  ):has(.sui_alert_title):has(.sui_alert_description):is(
-    :not(.sui_alert-actions_position_side),
-    :not(:has(.sui_alert_actions))
-  ):has(.sui_alert_icon) {
-    grid-template-columns: auto auto 1fr;
-  }
+      &:is(
+          .sui_alert-description_position_side_start,
+          .sui_alert-description_position_side_end
+        ):has(.sui_alert_title):has(.sui_alert_description):has(
+          .sui_alert_actions
+        ).sui_alert-actions_position_side:not(:has(.sui_alert_icon)) {
+        grid-template-columns: auto 1fr auto;
+      }
 
-  &:is(
-    .sui_alert-description_position_side_start,
-    .sui_alert-description_position_side_end
-  ):has(.sui_alert_title):has(.sui_alert_description):has(
-    .sui_alert_actions
-  ).sui_alert-actions_position_side:not(:has(.sui_alert_icon)) {
-    grid-template-columns: auto 1fr auto;
-  }
+      &:is(
+          .sui_alert-description_position_side_start,
+          .sui_alert-description_position_side_end
+        ):has(.sui_alert_title):has(.sui_alert_description):has(
+          .sui_alert_actions
+        ).sui_alert-actions_position_side:has(.sui_alert_icon) {
+        grid-template-columns: auto auto 1fr auto;
+      }
 
-  &:is(
-    .sui_alert-description_position_side_start,
-    .sui_alert-description_position_side_end
-  ):has(.sui_alert_title):has(.sui_alert_description):has(
-    .sui_alert_actions
-  ).sui_alert-actions_position_side:has(.sui_alert_icon) {
-    grid-template-columns: auto auto 1fr auto;
-  }
-
-  /* 説明文が1行になるときはアイコンをその行に置きます。 */
-  &:is(
-    .sui_alert-description_position_side_start,
-    .sui_alert-description_position_side_end
-  ) .sui_alert_icon {
-    grid-row: 1;
-  }
-}
-
-/* 変数 */
-:scope {
-  --sui_alert-row_gap: ;
-  --sui_alert-column_gap: ;
-  --sui_alert-padding_block: ;
-  --sui_alert-padding_inline: ;
-  --sui_alert-background_color: ;
-  --sui_alert-border_color: ;
-  --sui_alert-border_width: ;
-  --sui_alert-border_radius: ;
-  --sui_alert-corner_shape: ;
-}
-
-/* 可変 */
-:scope {
-  row-gap: var(--sui_alert-row_gap);
-  column-gap: var(--sui_alert-column_gap);
-  padding-block: var(--sui_alert-padding_block);
-  padding-inline: var(--sui_alert-padding_inline);
-  background-color: var(--sui_alert-background_color);
-  border-color: var(--_sui_alert-border_color, transparent);
-  border-width: var(--_sui_alert-border_width, 0px);
-  border-radius: var(--sui_alert-border_radius);
-  corner-shape: var(--sui_alert-corner_shape);
-}
-
-/* 代入 */
-:scope {
-  --sui_alert-border_width: --sui-border_width(1);
-
-  /* 余白と間隔は shadcn/ui の Alert を基準にします。 */
-  &.sui_alert-size_sm {
-    --sui_alert-row_gap: --sui-gap(0.5);
-    --sui_alert-column_gap: --sui-gap(1.5);
-    --sui_alert-padding_block: calc(--sui-space(1) - var(--_sui_alert-border_width, 0px));
-    --sui_alert-padding_inline: calc(--sui-space(2) - var(--_sui_alert-border_width, 0px));
-  }
-
-  &.sui_alert-size_md {
-    --sui_alert-row_gap: --sui-gap(0.5);
-    --sui_alert-column_gap: --sui-gap(2);
-    --sui_alert-padding_block: calc(--sui-space(1.5) - var(--_sui_alert-border_width, 0px));
-    --sui_alert-padding_inline: calc(--sui-space(2.5) - var(--_sui_alert-border_width, 0px));
-  }
-
-  &.sui_alert-size_lg {
-    --sui_alert-row_gap: --sui-gap(0.5);
-    --sui_alert-column_gap: --sui-gap(3);
-    --sui_alert-padding_block: calc(--sui-space(2.5) - var(--_sui_alert-border_width, 0px));
-    --sui_alert-padding_inline: calc(--sui-space(3.5) - var(--_sui_alert-border_width, 0px));
-  }
-
-  &.sui_alert-radius_none {
-    --sui_alert-border_radius: 0px;
-  }
-
-  &.sui_alert-radius_sm {
-    --sui_alert-border_radius: --sui-corner_radius(2);
-    --sui_alert-corner_shape: superellipse(var(--sui-superellipse));
-  }
-
-  &.sui_alert-radius_md {
-    --sui_alert-border_radius: --sui-corner_radius(3);
-    --sui_alert-corner_shape: superellipse(var(--sui-superellipse));
-  }
-
-  &.sui_alert-radius_lg {
-    --sui_alert-border_radius: --sui-corner_radius(4);
-    --sui_alert-corner_shape: superellipse(var(--sui-superellipse));
-  }
-
-  &.sui_alert-variant_muted {
-    --sui_alert-background_color: --sui-light-dark(var(--sui-canvas-1), var(--sui-canvas-2));
-    --sui_alert-border_color: var(--sui-border-1);
-  }
-
-  &.sui_alert-color_grey {
-    &.sui_alert-variant_naked {
-      --sui_alert-background_color: var(--sui-grey-naked-canvas-normal);
-      --sui_alert-border_color: var(--sui-grey-naked-border-normal);
+      /* 説明文が1行になるときはアイコンをその行に置きます。 */
+      &:is(.sui_alert-description_position_side_start, .sui_alert-description_position_side_end)
+        .sui_alert_icon {
+        grid-row: 1;
+      }
     }
 
-    &.sui_alert-variant_liquid {
-      --sui_alert-background_color: var(--sui-grey-liquid-canvas-normal);
-      --sui_alert-border_color: var(--sui-grey-liquid-border-normal);
-    }
-  }
-
-  &.sui_alert-color_blue {
-    &.sui_alert-variant_naked {
-      --sui_alert-background_color: var(--sui-blue-naked-canvas-normal);
-      --sui_alert-border_color: var(--sui-blue-naked-border-normal);
-    }
-
-    &.sui_alert-variant_liquid {
-      --sui_alert-background_color: var(--sui-blue-liquid-canvas-normal);
-      --sui_alert-border_color: var(--sui-blue-liquid-border-normal);
-    }
-  }
-
-  &.sui_alert-color_purple {
-    &.sui_alert-variant_naked {
-      --sui_alert-background_color: var(--sui-purple-naked-canvas-normal);
-      --sui_alert-border_color: var(--sui-purple-naked-border-normal);
+    /* 変数 */
+    :scope {
+      --sui_alert-row_gap: ;
+      --sui_alert-column_gap: ;
+      --sui_alert-padding_block: ;
+      --sui_alert-padding_inline: ;
+      --sui_alert-background_color: ;
+      --sui_alert-border_color: ;
+      --sui_alert-border_width: ;
+      --sui_alert-border_radius: ;
+      --sui_alert-corner_shape: ;
     }
 
-    &.sui_alert-variant_liquid {
-      --sui_alert-background_color: var(--sui-purple-liquid-canvas-normal);
-      --sui_alert-border_color: var(--sui-purple-liquid-border-normal);
-    }
-  }
-
-  &.sui_alert-color_magenta {
-    &.sui_alert-variant_naked {
-      --sui_alert-background_color: var(--sui-magenta-naked-canvas-normal);
-      --sui_alert-border_color: var(--sui-magenta-naked-border-normal);
-    }
-
-    &.sui_alert-variant_liquid {
-      --sui_alert-background_color: var(--sui-magenta-liquid-canvas-normal);
-      --sui_alert-border_color: var(--sui-magenta-liquid-border-normal);
-    }
-  }
-
-  &.sui_alert-color_red {
-    &.sui_alert-variant_naked {
-      --sui_alert-background_color: var(--sui-red-naked-canvas-normal);
-      --sui_alert-border_color: var(--sui-red-naked-border-normal);
+    /* 可変 */
+    :scope {
+      row-gap: var(--sui_alert-row_gap);
+      column-gap: var(--sui_alert-column_gap);
+      padding-block: var(--sui_alert-padding_block);
+      padding-inline: var(--sui_alert-padding_inline);
+      background-color: var(--sui_alert-background_color);
+      border-color: var(--_sui_alert-border_color, transparent);
+      border-width: var(--_sui_alert-border_width, 0px);
+      border-radius: var(--sui_alert-border_radius);
+      corner-shape: var(--sui_alert-corner_shape);
     }
 
-    &.sui_alert-variant_liquid {
-      --sui_alert-background_color: var(--sui-red-liquid-canvas-normal);
-      --sui_alert-border_color: var(--sui-red-liquid-border-normal);
+    /* 代入 */
+    :scope {
+      --sui_alert-border_width: --sui-border_width(1);
+
+      /* 余白と間隔は shadcn/ui の Alert を基準にします。 */
+      &.sui_alert-size_sm {
+        --sui_alert-row_gap: --sui-gap(0.5);
+        --sui_alert-column_gap: --sui-gap(1.5);
+        --sui_alert-padding_block: calc(--sui-space(1) - var(--_sui_alert-border_width, 0px));
+        --sui_alert-padding_inline: calc(--sui-space(2) - var(--_sui_alert-border_width, 0px));
+      }
+
+      &.sui_alert-size_md {
+        --sui_alert-row_gap: --sui-gap(0.5);
+        --sui_alert-column_gap: --sui-gap(2);
+        --sui_alert-padding_block: calc(--sui-space(1.5) - var(--_sui_alert-border_width, 0px));
+        --sui_alert-padding_inline: calc(--sui-space(2.5) - var(--_sui_alert-border_width, 0px));
+      }
+
+      &.sui_alert-size_lg {
+        --sui_alert-row_gap: --sui-gap(0.5);
+        --sui_alert-column_gap: --sui-gap(3);
+        --sui_alert-padding_block: calc(--sui-space(2.5) - var(--_sui_alert-border_width, 0px));
+        --sui_alert-padding_inline: calc(--sui-space(3.5) - var(--_sui_alert-border_width, 0px));
+      }
+
+      &.sui_alert-radius_none {
+        --sui_alert-border_radius: 0px;
+      }
+
+      &.sui_alert-radius_sm {
+        --sui_alert-border_radius: --sui-corner_radius(2);
+        --sui_alert-corner_shape: superellipse(var(--sui-superellipse));
+      }
+
+      &.sui_alert-radius_md {
+        --sui_alert-border_radius: --sui-corner_radius(3);
+        --sui_alert-corner_shape: superellipse(var(--sui-superellipse));
+      }
+
+      &.sui_alert-radius_lg {
+        --sui_alert-border_radius: --sui-corner_radius(4);
+        --sui_alert-corner_shape: superellipse(var(--sui-superellipse));
+      }
+
+      &.sui_alert-variant_muted {
+        --sui_alert-background_color: --sui-light-dark(var(--sui-canvas-1), var(--sui-canvas-2));
+        --sui_alert-border_color: var(--sui-border-1);
+      }
+
+      &.sui_alert-color_grey {
+        &.sui_alert-variant_naked {
+          --sui_alert-background_color: var(--sui-grey-naked-canvas-normal);
+          --sui_alert-border_color: var(--sui-grey-naked-border-normal);
+        }
+
+        &.sui_alert-variant_liquid {
+          --sui_alert-background_color: var(--sui-grey-liquid-canvas-normal);
+          --sui_alert-border_color: var(--sui-grey-liquid-border-normal);
+        }
+      }
+
+      &.sui_alert-color_blue {
+        &.sui_alert-variant_naked {
+          --sui_alert-background_color: var(--sui-blue-naked-canvas-normal);
+          --sui_alert-border_color: var(--sui-blue-naked-border-normal);
+        }
+
+        &.sui_alert-variant_liquid {
+          --sui_alert-background_color: var(--sui-blue-liquid-canvas-normal);
+          --sui_alert-border_color: var(--sui-blue-liquid-border-normal);
+        }
+      }
+
+      &.sui_alert-color_purple {
+        &.sui_alert-variant_naked {
+          --sui_alert-background_color: var(--sui-purple-naked-canvas-normal);
+          --sui_alert-border_color: var(--sui-purple-naked-border-normal);
+        }
+
+        &.sui_alert-variant_liquid {
+          --sui_alert-background_color: var(--sui-purple-liquid-canvas-normal);
+          --sui_alert-border_color: var(--sui-purple-liquid-border-normal);
+        }
+      }
+
+      &.sui_alert-color_magenta {
+        &.sui_alert-variant_naked {
+          --sui_alert-background_color: var(--sui-magenta-naked-canvas-normal);
+          --sui_alert-border_color: var(--sui-magenta-naked-border-normal);
+        }
+
+        &.sui_alert-variant_liquid {
+          --sui_alert-background_color: var(--sui-magenta-liquid-canvas-normal);
+          --sui_alert-border_color: var(--sui-magenta-liquid-border-normal);
+        }
+      }
+
+      &.sui_alert-color_red {
+        &.sui_alert-variant_naked {
+          --sui_alert-background_color: var(--sui-red-naked-canvas-normal);
+          --sui_alert-border_color: var(--sui-red-naked-border-normal);
+        }
+
+        &.sui_alert-variant_liquid {
+          --sui_alert-background_color: var(--sui-red-liquid-canvas-normal);
+          --sui_alert-border_color: var(--sui-red-liquid-border-normal);
+        }
+      }
+
+      &.sui_alert-color_orange {
+        &.sui_alert-variant_naked {
+          --sui_alert-background_color: var(--sui-orange-naked-canvas-normal);
+          --sui_alert-border_color: var(--sui-orange-naked-border-normal);
+        }
+
+        &.sui_alert-variant_liquid {
+          --sui_alert-background_color: var(--sui-orange-liquid-canvas-normal);
+          --sui_alert-border_color: var(--sui-orange-liquid-border-normal);
+        }
+      }
+
+      &.sui_alert-color_yellow {
+        &.sui_alert-variant_naked {
+          --sui_alert-background_color: var(--sui-yellow-naked-canvas-normal);
+          --sui_alert-border_color: var(--sui-yellow-naked-border-normal);
+        }
+
+        &.sui_alert-variant_liquid {
+          --sui_alert-background_color: var(--sui-yellow-liquid-canvas-normal);
+          --sui_alert-border_color: var(--sui-yellow-liquid-border-normal);
+        }
+      }
+
+      &.sui_alert-color_green {
+        &.sui_alert-variant_naked {
+          --sui_alert-background_color: var(--sui-green-naked-canvas-normal);
+          --sui_alert-border_color: var(--sui-green-naked-border-normal);
+        }
+
+        &.sui_alert-variant_liquid {
+          --sui_alert-background_color: var(--sui-green-liquid-canvas-normal);
+          --sui_alert-border_color: var(--sui-green-liquid-border-normal);
+        }
+      }
     }
-  }
 
-  &.sui_alert-color_orange {
-    &.sui_alert-variant_naked {
-      --sui_alert-background_color: var(--sui-orange-naked-canvas-normal);
-      --sui_alert-border_color: var(--sui-orange-naked-border-normal);
+    /* 変異 */
+    :scope {
+      &.sui_alert-outlined {
+        --_sui_alert-border_color: var(--sui_alert-border_color);
+        --_sui_alert-border_width: var(--sui_alert-border_width);
+      }
     }
-
-    &.sui_alert-variant_liquid {
-      --sui_alert-background_color: var(--sui-orange-liquid-canvas-normal);
-      --sui_alert-border_color: var(--sui-orange-liquid-border-normal);
-    }
-  }
-
-  &.sui_alert-color_yellow {
-    &.sui_alert-variant_naked {
-      --sui_alert-background_color: var(--sui-yellow-naked-canvas-normal);
-      --sui_alert-border_color: var(--sui-yellow-naked-border-normal);
-    }
-
-    &.sui_alert-variant_liquid {
-      --sui_alert-background_color: var(--sui-yellow-liquid-canvas-normal);
-      --sui_alert-border_color: var(--sui-yellow-liquid-border-normal);
-    }
-  }
-
-  &.sui_alert-color_green {
-    &.sui_alert-variant_naked {
-      --sui_alert-background_color: var(--sui-green-naked-canvas-normal);
-      --sui_alert-border_color: var(--sui-green-naked-border-normal);
-    }
-
-    &.sui_alert-variant_liquid {
-      --sui_alert-background_color: var(--sui-green-liquid-canvas-normal);
-      --sui_alert-border_color: var(--sui-green-liquid-border-normal);
-    }
-  }
-}
-
-/* 変異 */
-:scope {
-  &.sui_alert-outlined {
-    --_sui_alert-border_color: var(--sui_alert-border_color);
-    --_sui_alert-border_width: var(--sui_alert-border_width);
-  }
-}
-
-} /* @scope */
+  } /* @scope */
 } /* @layer */

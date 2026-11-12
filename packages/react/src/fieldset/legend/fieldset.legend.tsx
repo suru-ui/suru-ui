@@ -19,7 +19,7 @@ export namespace FieldsetLegendProps {
     Pick<
       React.ComponentProps<typeof Fieldset.Legend>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // FieldsetLegendProps より:
+      // FieldsetLegendProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -27,7 +27,7 @@ export namespace FieldsetLegendProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Fieldset.Legend>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -46,7 +46,7 @@ export type IFieldsetLegend = IComponent<FieldsetLegendProps>;
  *
  * グループの見出しを表示し、グループと自動的に関連付けられます。
  */
-export const FieldsetLegend: IFieldsetLegend = function SuiFieldsetLegend(props) {
+export const FieldsetLegend: IFieldsetLegend = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -62,7 +62,6 @@ export const FieldsetLegend: IFieldsetLegend = function SuiFieldsetLegend(props)
 };
 
 export { FieldsetLegend as Legend };
-
 export namespace Legend {
   export type State = FieldsetLegendState;
 

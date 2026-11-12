@@ -1,26 +1,24 @@
 @layer sui.component {
-@scope (.sui_drawer_indent_background) to ([data-scope]) {
+  @scope (.sui_drawer_indent_background) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: fixed;
+      inset: 0px;
+    }
 
-/* 固定 */
-:scope {
-  position: fixed;
-  inset: 0px;
-}
+    /* 変数 */
+    :scope {
+      --sui_drawer_indent_background-background_color: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_drawer_indent_background-background_color: ;
-}
+    /* 可変 */
+    :scope {
+      background-color: var(--sui_drawer_indent_background-background_color);
+    }
 
-/* 可変 */
-:scope {
-  background-color: var(--sui_drawer_indent_background-background_color);
-}
-
-/* 代入 */
-:scope {
-  --sui_drawer_indent_background-background_color: oklab(0 0 0 / 0.1);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_drawer_indent_background-background_color: oklab(0 0 0 / 0.1);
+    }
+  } /* @scope */
 } /* @layer */

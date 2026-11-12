@@ -1,51 +1,43 @@
 /* ポップアップは Card を継承しており、自身が data-scope を持つため、Card.Root の要素をスコープの始点にします。 */
 @layer sui.component {
-@scope (.sui_dialog_popup) to ([data-scope]) {
+  @scope (.sui_dialog_popup) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
-/* 固定 */
-:scope {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+    /* 変数 */
+    :scope {
+      --sui_dialog_popup-width-desktop: ;
+      --sui_dialog_popup-width-mobile: ;
+      --sui_dialog_popup-width: ;
+      --sui_dialog_popup-max_height: ;
+      --sui_dialog_popup-virtual_margin_block: ;
+      --sui_dialog_popup-virtual_margin_inline: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_dialog_popup-width-desktop: ;
-  --sui_dialog_popup-width-mobile: ;
-  --sui_dialog_popup-width: ;
-  --sui_dialog_popup-max_height: ;
-  --sui_dialog_popup-virtual_margin_block: ;
-  --sui_dialog_popup-virtual_margin_inline: ;
-}
+    /* 可変 */
+    :scope {
+      width: var(--sui_dialog_popup-width);
+      max-height: var(--sui_dialog_popup-max_height);
+    }
 
-/* 可変 */
-:scope {
-  width: var(--sui_dialog_popup-width);
-  max-height: var(--sui_dialog_popup-max_height);
-}
-
-/* 代入 */
-:scope {
-  --sui_dialog_popup-width-desktop: 448px;
-  --sui_dialog_popup-width-mobile: calc(
-                                       100vw
-                                       - var(--sui_dialog_popup-virtual_margin_inline)
-                                       * 2
-                                     );
-  --sui_dialog_popup-width: min(
-                                var(--sui_dialog_popup-width-desktop),
-                                var(--sui_dialog_popup-width-mobile)
-                              );
-  --sui_dialog_popup-max_height: calc(
-                                     100%
-                                     - var(--sui_dialog_popup-virtual_margin_block)
-                                     * 2
-                                   );
-  --sui_dialog_popup-virtual_margin_block: --sui-space(2);
-  --sui_dialog_popup-virtual_margin_inline: --sui-space(2);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_dialog_popup-width-desktop: 448px;
+      --sui_dialog_popup-width-mobile: calc(
+        100vw - var(--sui_dialog_popup-virtual_margin_inline) * 2
+      );
+      --sui_dialog_popup-width: min(
+        var(--sui_dialog_popup-width-desktop),
+        var(--sui_dialog_popup-width-mobile)
+      );
+      --sui_dialog_popup-max_height: calc(100% - var(--sui_dialog_popup-virtual_margin_block) * 2);
+      --sui_dialog_popup-virtual_margin_block: --sui-space(2);
+      --sui_dialog_popup-virtual_margin_inline: --sui-space(2);
+    }
+  } /* @scope */
 } /* @layer */

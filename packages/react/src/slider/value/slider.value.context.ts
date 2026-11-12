@@ -21,11 +21,10 @@ export type IUseSliderValueContext = IUseContext<SliderValueContext>;
 /**
  * {@link SliderValueContext} を読み取るフックです。
  */
-export const useSliderValueContext: IUseSliderValueContext = function useSuiSliderValueContext(
-  optional,
-): any {
+export const useSliderValueContext: IUseSliderValueContext = (optional): any => {
   const ctx = React.use(SliderValueContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SliderValueContext",
       providerName: "SliderValue",

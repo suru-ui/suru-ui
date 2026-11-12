@@ -17,16 +17,13 @@ export namespace FieldValidityProps {
     Pick<
       React.ComponentProps<typeof Field.Validity>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // FieldValidityProps より:
+      // FieldValidityProps より :
       "children"
     >,
-    keyof Render | keyof SuruUI
+    keyof Render
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Field.Validity>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Field.Validity>, keyof Render | keyof BaseUI>;
 }
 
 /**
@@ -44,12 +41,9 @@ export type IFieldValidity = IComponent<FieldValidityProps>;
  *
  * `children` には検証状態を受け取る関数を指定します。それ自身は HTML 要素をレンダリングしません。
  */
-export const FieldValidity: IFieldValidity = function SuiFieldValidity(props) {
-  return <Field.Validity {...props} />;
-};
+export const FieldValidity: IFieldValidity = (props) => <Field.Validity {...props} />;
 
 export { FieldValidity as Validity };
-
 export namespace Validity {
   export type State = FieldValidityState;
 

@@ -1,6 +1,6 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "../resizable.parts.js";
@@ -15,15 +15,18 @@ import "../../../tests/src/_locators.js";
  */
 function SizedGroup({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ width: 400, height: 100 }}>
+    <div
+      style={{
+        width: 400,
+        height: 100,
+      }}
+    >
       <ResizableRoot>{children}</ResizableRoot>
     </div>
   );
 }
 
-/**
- * ルートの幅に対するパネルの幅の割合を返します。
- */
+/** ルートの幅に対するパネルの幅の割合を返します。 */
 function getPanelRatios(container: Element): number[] {
   const root = container.querySelector<HTMLElement>(".sui_resizable")!;
   const rootWidth = root.getBoundingClientRect().width;
@@ -35,7 +38,7 @@ function getPanelRatios(container: Element): number[] {
 
 describe("ResizablePanel", () => {
   test("修飾クラスを付け、利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SizedGroup>
         <ResizablePanel className="custom" defaultSize={50}>
@@ -44,14 +47,14 @@ describe("ResizablePanel", () => {
       </SizedGroup>,
     );
 
-    // 検証
+    // 検証。
     const panel = screen.getByClassName("sui_resizable_panel").element();
     expect(panel.classList.contains("sui_resizable_panel")).toBe(true);
     expect(panel.classList.contains("custom")).toBe(true);
   });
 
   test("数値の defaultSize をパーセントとして扱う", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SizedGroup>
         <ResizablePanel defaultSize={25}>左</ResizablePanel>
@@ -60,14 +63,14 @@ describe("ResizablePanel", () => {
       </SizedGroup>,
     );
 
-    // 検証
+    // 検証。
     const [left, right] = getPanelRatios(screen.container);
     expect(left).toBeCloseTo(0.25, 1);
     expect(right).toBeCloseTo(0.75, 1);
   });
 
   test("size の変更を描画に反映する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <SizedGroup>
         <ResizablePanel defaultSize={50}>左</ResizablePanel>
@@ -76,7 +79,7 @@ describe("ResizablePanel", () => {
       </SizedGroup>,
     );
 
-    // 実行
+    // 実行。
     await screen.rerender(
       <SizedGroup>
         <ResizablePanel size={40}>左</ResizablePanel>
@@ -85,14 +88,14 @@ describe("ResizablePanel", () => {
       </SizedGroup>,
     );
 
-    // 検証
+    // 検証。
     const [left, right] = getPanelRatios(screen.container);
     expect(left).toBeCloseTo(0.4, 1);
     expect(right).toBeCloseTo(0.6, 1);
   });
 
   test("数値の minSize をパーセントとして扱う", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SizedGroup>
         <ResizablePanel minSize={30} defaultSize={10}>
@@ -103,14 +106,14 @@ describe("ResizablePanel", () => {
       </SizedGroup>,
     );
 
-    // 検証
+    // 検証。
     const [left] = getPanelRatios(screen.container);
     expect(left).toBeGreaterThanOrEqual(0.29);
     expect(left).toBeCloseTo(0.3, 1);
   });
 
   test("数値の maxSize をパーセントとして扱う", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SizedGroup>
         <ResizablePanel maxSize={40} defaultSize={80}>
@@ -121,15 +124,20 @@ describe("ResizablePanel", () => {
       </SizedGroup>,
     );
 
-    // 検証
+    // 検証。
     const [left] = getPanelRatios(screen.container);
     expect(left).toBeCloseTo(0.4, 1);
   });
 
   test("className と style を状態に応じて解決する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
-      <div style={{ width: 400, height: 100 }}>
+      <div
+        style={{
+          width: 400,
+          height: 100,
+        }}
+      >
         <ResizableRoot orientation="vertical">
           <ResizablePanel
             style={(state) => ({ opacity: state.orientation === "vertical" ? "0.5" : "1" })}
@@ -139,16 +147,21 @@ describe("ResizablePanel", () => {
       </div>,
     );
 
-    // 検証
+    // 検証。
     const panel = screen.getByClassName("sui_resizable_panel").element();
     expect(panel.classList.contains("custom-vertical")).toBe(true);
     expect(panel.style.opacity).toBe("0.5");
   });
 
   test("render の関数へ状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
-      <div style={{ width: 400, height: 100 }}>
+      <div
+        style={{
+          width: 400,
+          height: 100,
+        }}
+      >
         <ResizableRoot orientation="vertical">
           <ResizablePanel
             render={(props, state) => {
@@ -160,6 +173,7 @@ describe("ResizablePanel", () => {
                 defaultSize: _defaultSize,
                 ...rest
               } = props as Record<string, unknown>;
+
               return <section {...rest} data-probe={state.orientation} />;
             }}
           />
@@ -167,7 +181,7 @@ describe("ResizablePanel", () => {
       </div>,
     );
 
-    // 検証
+    // 検証。
     const panel = screen.getByClassName("sui_resizable_panel").element();
     expect(panel.tagName).toBe("SECTION");
     expect(panel.getAttribute("data-probe")).toBe("vertical");

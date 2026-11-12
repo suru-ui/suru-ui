@@ -1,29 +1,27 @@
 @layer sui.component {
-@scope (.sui_tabs_panel) to ([data-scope]) {
+  @scope (.sui_tabs_panel) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      min-width: 0px;
+      outline-style: none;
+    }
 
-/* 固定 */
-:scope {
-  min-width: 0px;
-  outline-style: none;
-}
+    /* 変数 */
+    :scope {
+      --sui_tabs_panel-padding_block: ;
+      --sui_tabs_panel-padding_inline: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_tabs_panel-padding_block: ;
-  --sui_tabs_panel-padding_inline: ;
-}
+    /* 可変 */
+    :scope {
+      padding-block: var(--sui_tabs_panel-padding_block);
+      padding-inline: var(--sui_tabs_panel-padding_inline);
+    }
 
-/* 可変 */
-:scope {
-  padding-block: var(--sui_tabs_panel-padding_block);
-  padding-inline: var(--sui_tabs_panel-padding_inline);
-}
-
-/* 代入 */
-:scope {
-  --sui_tabs_panel-padding_block: var(--sui_tabs-padding-around);
-  --sui_tabs_panel-padding_inline: var(--sui_tabs-padding-around);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_tabs_panel-padding_block: var(--sui_tabs-padding-around);
+      --sui_tabs_panel-padding_inline: var(--sui_tabs-padding-around);
+    }
+  } /* @scope */
 } /* @layer */

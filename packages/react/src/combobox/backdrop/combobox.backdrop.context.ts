@@ -25,18 +25,18 @@ export type IUseComboboxBackdropContext = IUseContext<ComboboxBackdropContext>;
 /**
  * {@link ComboboxBackdropContext} を読み取るフックです。
  */
-export const useComboboxBackdropContext: IUseComboboxBackdropContext =
-  function useSuiComboboxBackdropContext(optional): any {
-    const ctx = React.use(ComboboxBackdropContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ComboboxBackdropContext",
-        providerName: "ComboboxBackdrop",
-      });
-    }
+export const useComboboxBackdropContext: IUseComboboxBackdropContext = (optional): any => {
+  const ctx = React.use(ComboboxBackdropContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ComboboxBackdropContext",
+      providerName: "ComboboxBackdrop",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ComboboxBackdropContext as BackdropContext,

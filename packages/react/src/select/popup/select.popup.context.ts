@@ -25,11 +25,10 @@ export type IUseSelectPopupContext = IUseContext<SelectPopupContext>;
 /**
  * {@link SelectPopupContext} を読み取るフックです。
  */
-export const useSelectPopupContext: IUseSelectPopupContext = function useSuiSelectPopupContext(
-  optional,
-): any {
+export const useSelectPopupContext: IUseSelectPopupContext = (optional): any => {
   const ctx = React.use(SelectPopupContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SelectPopupContext",
       providerName: "SelectPopup",

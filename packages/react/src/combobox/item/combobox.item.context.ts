@@ -8,9 +8,7 @@ import type { GroupContext } from "../group/combobox.group.context.js";
 import type { ListContext } from "../list/combobox.list.context.js";
 
 type ItemContextValue<TItem> = {
-  /**
-   * 項目の値です。
-   */
+  /** 項目の値です。 */
   value: TItem | undefined;
 };
 
@@ -31,9 +29,7 @@ export type ComboboxItemContext<TItem = any> =
   // | ItemContext<GroupContext, TItem>
   ItemContext<ListContext<TItem> & GroupContext<TItem>, TItem>;
 
-/**
- * 項目の値を子要素へ伝播するコンテキストです。
- */
+/** 項目の値を子要素へ伝播するコンテキストです。 */
 export const ComboboxItemContext: React.Context<ComboboxItemContext | null> =
   React.createContext<ComboboxItemContext | null>(null);
 
@@ -41,7 +37,8 @@ function useSuiComboboxItemContext(optional?: false): ComboboxItemContext;
 function useSuiComboboxItemContext(optional?: boolean): ComboboxItemContext | null;
 function useSuiComboboxItemContext(optional?: boolean): ComboboxItemContext | null {
   const ctx = React.use(ComboboxItemContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "ComboboxItemContext",
       providerName: "ComboboxItem",

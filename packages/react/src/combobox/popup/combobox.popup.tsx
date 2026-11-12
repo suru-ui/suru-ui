@@ -51,7 +51,7 @@ export namespace ComboboxPopupProps {
     Pick<
       React.ComponentProps<typeof Combobox.Popup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxPopupProps より:
+      // ComboboxPopupProps より :
       "initialFocus" | "finalFocus"
     >,
     keyof Render | keyof SuruUI
@@ -73,10 +73,8 @@ export type ComboboxPopupProps = ComboboxPopupProps.Render &
 
 export type IComboboxPopup = IComponent<ComboboxPopupProps>;
 
-/**
- * 候補項目を表示するポップアップ要素です。
- */
-export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
+/** 候補項目を表示するポップアップ要素です。 */
+export const ComboboxPopup: IComboboxPopup = (props) => {
   const ctx = useComboboxPositionerContext();
   const {
     style,
@@ -91,7 +89,11 @@ export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
     <Combobox.Popup
       {...otherProps}
       {...proxyRenderProps<Combobox.Popup.State, ComboboxPopupState>(
-        (state) => ({ ...ctx, outlined, ...state }),
+        (state) => ({
+          ...ctx,
+          outlined,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -130,7 +132,6 @@ export const ComboboxPopup: IComboboxPopup = function SuiComboboxPopup(props) {
 };
 
 export { ComboboxPopup as Popup };
-
 export namespace Popup {
   export type State<TItem = any> = ComboboxPopupState<TItem>;
 

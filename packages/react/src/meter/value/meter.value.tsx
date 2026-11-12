@@ -9,15 +9,14 @@ import type { Override, IComponent } from "../../types.js";
 import { useMeterContext } from "../root/meter.root.context.js";
 import { MeterValueContext } from "./meter.value.context.js";
 
-/**
- * 値をレンダリングする関数のインターフェイスです。
- */
+/** 値をレンダリングする関数のインターフェイスです。 */
 export interface IMeterValueRenderer {
   /**
    * 値をレンダリングします。
    *
    * @param formattedValue 書式化された値です。
    * @param value 現在値です。
+   *
    * @returns レンダリングする内容です。
    */
   (formattedValue: string, value: number): React.ReactNode;
@@ -38,7 +37,7 @@ export namespace MeterValueProps {
       Pick<
         React.ComponentProps<typeof Meter.Value>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // MeterValueProps より:
+        // MeterValueProps より :
         "children"
       >,
       keyof Render | keyof SuruUI
@@ -64,40 +63,49 @@ export type MeterValueProps = MeterValueProps.Render &
 
 export type IMeterValue = IComponent<MeterValueProps>;
 
-/**
- * メーターの現在値を表示するコンポーネントです。
- */
-export const MeterValue: IMeterValue = function SuiMeterValue(props) {
+/** メーターの現在値を表示するコンポーネントです。 */
+export const MeterValue: IMeterValue = (props) => {
   const ctx = useMeterContext();
   const { style, render, children, className, ...otherProps } = props;
-  const renderer =
-    typeof children === "function" ? children : children != null ? () => children : undefined;
+  let renderer;
+
+  if (typeof children === "function") {
+    renderer = children;
+  } else if (children !== null && children !== undefined) {
+    renderer = (): React.ReactNode => children;
+  }
 
   return (
     <Meter.Value
       {...otherProps}
-      {...proxyRenderProps<Meter.Value.State, MeterValueState>((state) => ({ ...ctx, ...state }), {
-        style,
-        render: (htmlProps, state) => (
-          <MeterValueContext value={state}>
-            <RenderElement
-              state={state}
-              render={render}
-              htmlProps={htmlProps}
-              defaultTagName="span"
-            />
-          </MeterValueContext>
-        ),
-        className: cn<MeterValueState>(
-          className,
-          "sui_meter_value",
-          (state) => `sui_meter_value-size_${state.size}`,
-          (state) => `sui_meter_value-color_${state.color}`,
-          (state) => `sui_meter_value-radius_${state.radius}`,
-          (state) => `sui_meter_value-variant_${state.variant}`,
-          (state) => state.outlined && "sui_meter_value-outlined",
-        ),
-      })}
+      {...proxyRenderProps<Meter.Value.State, MeterValueState>(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <MeterValueContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="span"
+              />
+            </MeterValueContext>
+          ),
+          className: cn<MeterValueState>(
+            className,
+            "sui_meter_value",
+            (state) => `sui_meter_value-size_${state.size}`,
+            (state) => `sui_meter_value-color_${state.color}`,
+            (state) => `sui_meter_value-radius_${state.radius}`,
+            (state) => `sui_meter_value-variant_${state.variant}`,
+            (state) => state.outlined && "sui_meter_value-outlined",
+          ),
+        },
+      )}
     >
       {renderer}
     </Meter.Value>
@@ -105,7 +113,6 @@ export const MeterValue: IMeterValue = function SuiMeterValue(props) {
 };
 
 export { MeterValue as Value };
-
 export namespace Value {
   export type State = MeterValueState;
 

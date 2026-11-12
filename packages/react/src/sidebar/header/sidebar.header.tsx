@@ -16,10 +16,7 @@ export namespace SidebarHeaderProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -37,7 +34,7 @@ export type ISidebarHeader = IComponent<SidebarHeaderProps>;
  *
  * ブランドやワークスペースの切り替えなどを配置します。
  */
-export const SidebarHeader: ISidebarHeader = function SuiSidebarHeader(props) {
+export const SidebarHeader: ISidebarHeader = (props) => {
   const ctx = useSidebarContext();
 
   return useRender({
@@ -53,7 +50,6 @@ export const SidebarHeader: ISidebarHeader = function SuiSidebarHeader(props) {
 };
 
 export { SidebarHeader as Header };
-
 export namespace Header {
   export type State = SidebarHeaderState;
 

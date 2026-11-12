@@ -1,29 +1,41 @@
 import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { Tabs, TabsAPI, useTabsAPI } from "./tabs.jsx";
 import "../../tests/src/_locators.js";
 
 const items = [
-  { label: "概要", value: "overview", content: "概要の内容" },
-  { label: "プロジェクト", value: "projects", content: "プロジェクトの内容" },
-  { label: "アカウント", value: "account" },
+  {
+    label: "概要",
+    value: "overview",
+    content: "概要の内容",
+  },
+  {
+    label: "プロジェクト",
+    value: "projects",
+    content: "プロジェクトの内容",
+  },
+  {
+    label: "アカウント",
+    value: "account",
+  },
 ] as const;
-
 describe("Tabs", () => {
   test("項目を並べて既定の選択を反映する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Tabs items={[...items]} defaultValue="projects" />);
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("tablist").element().getAttribute("aria-label")).toBe("タブ");
+
     const tabs = screen.getByRole("tab").elements();
     expect(tabs.map((tab) => tab.textContent)).toStrictEqual([
       "概要",
       "プロジェクト",
       "アカウント",
     ]);
+
     expect(
       screen
         .getByRole("tab", { name: "プロジェクト" })
@@ -35,21 +47,27 @@ describe("Tabs", () => {
   });
 
   test("slotProps を各パーツへ渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Tabs
         items={[...items]}
         slotProps={{
           tab: { className: "custom-tab" },
-          list: { id: "views", "aria-label": "表示切り替え" },
-          panel: { className: "custom-panel", keepMounted: true },
+          list: {
+            id: "views",
+            "aria-label": "表示切り替え",
+          },
+          panel: {
+            className: "custom-panel",
+            keepMounted: true,
+          },
           indicator: { className: "custom-indicator" },
         }}
         defaultValue="overview"
       />,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("tablist", { name: "表示切り替え" }).element().id).toBe("views");
     expect(screen.container.querySelectorAll(".custom-tab").length).toBe(3);
     expect(screen.container.querySelectorAll(".custom-panel").length).toBe(2);
@@ -59,17 +77,24 @@ describe("Tabs", () => {
   });
 
   test("項目ごとの disabled をタブへ渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Tabs
         items={[
-          { label: "概要", value: "overview" },
-          { label: "プロジェクト", value: "projects", disabled: true },
+          {
+            label: "概要",
+            value: "overview",
+          },
+          {
+            label: "プロジェクト",
+            value: "projects",
+            disabled: true,
+          },
         ]}
       />,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen
         .getByRole("tab", { name: "プロジェクト" })
@@ -79,70 +104,85 @@ describe("Tabs", () => {
   });
 
   test("内容のない項目にはパネルを作らない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Tabs
         items={[
-          { label: "概要", value: "overview", content: "概要の内容" },
-          { label: "アカウント", value: "account" },
+          {
+            label: "概要",
+            value: "overview",
+            content: "概要の内容",
+          },
+          {
+            label: "アカウント",
+            value: "account",
+          },
         ]}
         defaultValue="overview"
       />,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("tab").elements().length).toBe(2);
     expect(screen.getByRole("tabpanel").elements().length).toBe(1);
   });
 
   test("プリミティブな項目も描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Tabs items={["overview", "projects"]} />);
 
-    // 検証
+    // 検証。
     const tabs = screen.getByRole("tab").elements();
     expect(tabs.map((tab) => tab.textContent)).toStrictEqual(["overview", "projects"]);
     expect(screen.getByRole("tabpanel").query()).toBe(null);
   });
 
   test("項目がないときはタブとパネルを描画しない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Tabs items={[]} />);
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("tab").query()).toBe(null);
     expect(screen.getByRole("tabpanel").query()).toBe(null);
     expect(screen.getByRole("tablist").query()).not.toBe(null);
   });
 });
-
 describe("TabsAPI", () => {
   test("getRootProps は items を引き継ぎ slotProps を含めない", ({ expect }) => {
-    // 準備と実行
-    const api = new TabsAPI({ items: [...items], slotProps: { list: { id: "views" } } });
+    // 準備と実行。
+    const api = new TabsAPI({
+      items: [...items],
+      slotProps: { list: { id: "views" } },
+    });
     const rootProps = api.getRootProps();
 
-    // 検証
+    // 検証。
     expect(rootProps.items).toStrictEqual([...items]);
     expect(rootProps).not.toHaveProperty("slotProps");
   });
 
   test("getListProps は slotProps と既定の children を返す", ({ expect }) => {
-    // 準備と実行
-    const api = new TabsAPI({ items: [...items], slotProps: { list: { id: "views" } } });
+    // 準備と実行。
+    const api = new TabsAPI({
+      items: [...items],
+      slotProps: { list: { id: "views" } },
+    });
     const listProps = api.getListProps();
 
-    // 検証
+    // 検証。
     expect(listProps.id).toBe("views");
     expect(React.isValidElement(listProps.children)).toBe(true);
   });
 
   test("getPanelPropsList は内容のある項目のパネルだけを返す", ({ expect }) => {
-    // 準備と実行
-    const api = new TabsAPI({ items: [...items], slotProps: { panel: { className: "custom" } } });
+    // 準備と実行。
+    const api = new TabsAPI({
+      items: [...items],
+      slotProps: { panel: { className: "custom" } },
+    });
     const panelPropsList = api.getPanelPropsList();
 
-    // 検証
+    // 検証。
     expect(panelPropsList.map((panelProps) => panelProps.value)).toStrictEqual([
       "overview",
       "projects",
@@ -152,14 +192,19 @@ describe("TabsAPI", () => {
   });
 
   test("getTabProps は slotProps と項目の props を統合する", ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const api = new TabsAPI({
       items: [...items],
-      slotProps: { tab: { id: "tab", className: "custom" } },
+      slotProps: {
+        tab: {
+          id: "tab",
+          className: "custom",
+        },
+      },
     });
     const props = api.getTabProps(items[0]);
 
-    // 検証
+    // 検証。
     expect(props.value).toBe("overview");
     expect(props.id).toBe("tab");
     expect(props.className).toBe("custom");
@@ -168,45 +213,45 @@ describe("TabsAPI", () => {
   });
 
   test("getTabProps はプリミティブを値にする", ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const api = new TabsAPI({});
 
-    // 検証
+    // 検証。
     expect(api.getTabProps("overview")).toStrictEqual({ value: "overview" });
   });
 
   test("getLabel は項目のラベルを返す", ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const api = new TabsAPI({ items: [...items] });
 
-    // 検証
+    // 検証。
     expect(api.getLabel(items[2])).toBe("アカウント");
   });
 
   test("getIndicatorProps は slotProps を返す", ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const api = new TabsAPI({
       items: [...items],
       slotProps: { indicator: { id: "indicator" } },
     });
 
-    // 検証
+    // 検証。
     expect(api.getIndicatorProps()).toStrictEqual({ id: "indicator" });
   });
 });
-
 describe("useTabsAPI", () => {
   test("API を作成する", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const api = useTabsAPI({ items: [...items] });
+
       return <span>{String(api.getRootProps().items?.length)}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(<Probe />);
 
-    // 検証
+    // 検証。
     expect(screen.getByText("3").query()?.textContent).toBe("3");
   });
 });

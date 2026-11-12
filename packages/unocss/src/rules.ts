@@ -14,22 +14,22 @@ import {
   SIZE_PROPERTIES,
   COLOR_PROPERTIES,
   INSET_PROPERTIES,
-  CONTAINER_PROPERTIES,
-  RADIUS_PROPERTIES,
   SPACE_PROPERTIES,
   TEXT_STYLE_VALUE,
   DEFAULT_NAMESPACE,
   DROP_SHADOW_VALUE,
+  RADIUS_PROPERTIES,
   BORDER_STYLE_VALUE,
   CORNER_SHAPE_VALUE,
   OUTLINE_PROPERTIES,
-  DROP_SHADOW_PROPERTIES,
-  NAMESPACED_SEPARATOR,
+  CONTAINER_PROPERTIES,
   DEFAULT_BORDER_LEVEL,
   DEFAULT_RADIUS_LEVEL,
+  NAMESPACED_SEPARATOR,
   BORDER_STYLE_PROPERTY,
   CORNER_SHAPE_PROPERTY,
   TEXT_STYLE_PROPERTIES,
+  DROP_SHADOW_PROPERTIES,
   UNNAMESPACED_SEPARATOR,
   BORDER_WIDTH_PROPERTIES,
 } from "./constants.js";
@@ -44,9 +44,7 @@ import {
   isDropShadowColor,
 } from "./tokens.js";
 
-/**
- * ルール生成のオプションです。
- */
+/** ルール生成のオプションです。 */
 export interface CreateRulesOptions {
   /**
    * ユーティリティー名に `sui` の名前空間を付けるかどうかです。
@@ -63,16 +61,12 @@ export interface CreateRulesOptions {
  *
  * @param properties ユーティリティーが設定する CSS プロパティーです。
  * @param values 正規表現がキャプチャーした値です。
- * @returns 生成する CSS エントリーです。`undefined` を返すとユーティリティーは生成されません。
+ *
+ * @returns 生成する CSS エントリーです。空の配列を返すとユーティリティーは生成されません。
  */
-type Resolver = (
-  properties: readonly string[],
-  ...values: (string | undefined)[]
-) => CSSEntry[] | undefined;
+type Resolver = (properties: readonly string[], ...values: (string | undefined)[]) => CSSEntry[];
 
-/**
- * 動的ルールの作成オプションです。
- */
+/** 動的ルールの作成オプションです。 */
 interface PropertyRuleOptions {
   /**
    * 先頭に `-` を付けた負の値を受け付けるかどうかです。
@@ -93,6 +87,7 @@ interface PropertyRuleOptions {
  * プリセットが提供する UnoCSS ルールの一覧を生成します。
  *
  * @param options 名前空間の有無です。
+ *
  * @returns ルールの一覧です。
  */
 export function createRules(options: CreateRulesOptions = {}): Rule[] {
@@ -122,7 +117,7 @@ function createColorRule(separator: string): Rule {
     COLOR_VALUE,
     (properties, token, opacity) => {
       if (token === undefined || !isColorToken(token)) {
-        return;
+        return [];
       }
 
       const color = colorTokenVar(token);
@@ -132,7 +127,7 @@ function createColorRule(separator: string): Rule {
       }
 
       if (Number(opacity) > MAX_OPACITY) {
-        return;
+        return [];
       }
 
       return toEntries(properties, `color-mix(in oklab, ${color} ${opacity}%, transparent)`);
@@ -157,7 +152,7 @@ function createGapRule(separator: string): Rule {
 function createSizeRule(separator: string): Rule {
   return createPropertyRule(SIZE_PROPERTIES, separator, ANY_VALUE, (properties, value) => {
     if (value === undefined) {
-      return;
+      return [];
     }
 
     if (isSize(value)) {
@@ -168,14 +163,14 @@ function createSizeRule(separator: string): Rule {
       return toEntries(properties, `--sui-space(${value})`);
     }
 
-    return;
+    return [];
   });
 }
 
 function createContainerRule(separator: string): Rule {
   return createPropertyRule(CONTAINER_PROPERTIES, separator, ANY_VALUE, (properties, value) => {
     if (value === undefined) {
-      return;
+      return [];
     }
 
     if (isContainerSize(value)) {
@@ -186,7 +181,7 @@ function createContainerRule(separator: string): Rule {
       return toEntries(properties, `--sui-space(${value})`);
     }
 
-    return;
+    return [];
   });
 }
 
@@ -242,11 +237,11 @@ function createDropShadowRule(separator: string): Rule {
     DROP_SHADOW_VALUE,
     (properties, color, size) => {
       if (size === undefined || !isDropShadowSize(size)) {
-        return;
+        return [];
       }
 
       if (color !== undefined && !isDropShadowColor(color)) {
-        return;
+        return [];
       }
 
       return toEntries(properties, `drop-shadow(${dropShadowVar(color, size)})`);
@@ -257,7 +252,7 @@ function createDropShadowRule(separator: string): Rule {
 function createFontFamilyRule(separator: string): Rule {
   return createPropertyRule(FONT_PROPERTIES, separator, ANY_VALUE, (properties, family) => {
     if (family === undefined || !isFontFamily(family)) {
-      return;
+      return [];
     }
 
     return toEntries(properties, `var(--sui-font-${family})`);
@@ -266,12 +261,12 @@ function createFontFamilyRule(separator: string): Rule {
 
 function createTextStyleRule(separator: string): Rule {
   return [
-    new RegExp(`^text${separator}${TEXT_STYLE_VALUE}$`),
+    new RegExp(`^text${separator}${TEXT_STYLE_VALUE}$`, "u"),
     (match) => {
       const style = match[1];
 
       if (style === undefined || !isTextStyle(style)) {
-        return;
+        return [];
       }
 
       return textStyleEntries(style);
@@ -287,6 +282,7 @@ function createTextStyleRule(separator: string): Rule {
  * @param value 値をキャプチャーするグループを含む正規表現のソースです。
  * @param resolve キャプチャーした値を CSS エントリーに変換する関数です。
  * @param options 値の受け付けに関するオプションです。
+ *
  * @returns 動的ルールです。
  */
 function createPropertyRule(
@@ -304,8 +300,9 @@ function createPropertyRule(
   const suffix = optional ? `(?:-${value})?` : value;
   const pattern = new RegExp(
     signed ? `^(-?)(${names})${scope}${suffix}$` : `^(${names})${scope}${suffix}$`,
+    "u",
   );
-  const canBeNegative = typeof negative === "function" ? negative : () => true;
+  const canBeNegative = typeof negative === "function" ? negative : (): boolean => true;
 
   return [
     pattern,
@@ -316,17 +313,17 @@ function createPropertyRule(
       const name = match[1 + offset];
 
       if (name === undefined) {
-        return;
+        return [];
       }
 
       if (sign === "-" && !canBeNegative(name)) {
-        return;
+        return [];
       }
 
       const cssProperties = properties[name];
 
       if (cssProperties === undefined) {
-        return;
+        return [];
       }
 
       const values = signed ? [sign, ...match.slice(2 + offset)] : match.slice(2 + offset);
@@ -340,12 +337,13 @@ function createPropertyRule(
  * 段階の数値を引数にした CSS 関数呼び出しを生成するリゾルバーを作成します。
  *
  * @param reference 呼び出す CSS 関数です。
+ *
  * @returns 段階の数値を `reference` の引数にした CSS 関数呼び出しを生成するリゾルバーです。
  */
 function scale(reference: string): Resolver {
   return (properties, level) => {
     if (level === undefined) {
-      return;
+      return [];
     }
 
     return toEntries(properties, `${reference}(${level})`);
@@ -356,12 +354,13 @@ function scale(reference: string): Resolver {
  * 符号を保持したまま段階の数値を引数にした CSS 関数呼び出しを生成するリゾルバーを作成します。
  *
  * @param reference 呼び出す CSS 関数です。
+ *
  * @returns 符号付きの段階の数値を `reference` の引数にした CSS 関数呼び出しを生成するリゾルバーです。
  */
 function signedScale(reference: string): Resolver {
   return (properties, sign, level) => {
     if (level === undefined) {
-      return;
+      return [];
     }
 
     return toEntries(properties, `${reference}(${sign ?? ""}${level})`);

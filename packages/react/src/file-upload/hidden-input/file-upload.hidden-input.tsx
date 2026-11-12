@@ -21,10 +21,7 @@ export namespace FileUploadHiddenInputProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"input", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"input", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -44,9 +41,7 @@ export type IFileUploadHiddenInput = IComponent<FileUploadHiddenInputProps>;
  *
  * {@link FileUploadRoot} の子として配置し、スクリーンリーダーとフォーム送信のために DOM に残ります。
  */
-export const FileUploadHiddenInput: IFileUploadHiddenInput = function SuiFileUploadHiddenInput(
-  props,
-) {
+export const FileUploadHiddenInput: IFileUploadHiddenInput = (props) => {
   const ctx = useFileUploadContext();
   const state = React.useMemo<FileUploadHiddenInputState>(
     () => ({
@@ -83,13 +78,13 @@ export const FileUploadHiddenInput: IFileUploadHiddenInput = function SuiFileUpl
         required: ctx.required,
         className: cn<FileUploadHiddenInputState>(
           "sui_file_upload_hidden_input",
-          (state) => `sui_file_upload_hidden_input-size_${state.size}`,
-          (state) => `sui_file_upload_hidden_input-color_${state.color}`,
-          (state) => `sui_file_upload_hidden_input-radius_${state.radius}`,
-          (state) => `sui_file_upload_hidden_input-variant_${state.variant}`,
-          (state) => state.disabled && "sui_file_upload_hidden_input-disabled",
-          (state) => state.multiple && "sui_file_upload_hidden_input-multiple",
-          (state) => state.required && "sui_file_upload_hidden_input-required",
+          (currentState) => `sui_file_upload_hidden_input-size_${currentState.size}`,
+          (currentState) => `sui_file_upload_hidden_input-color_${currentState.color}`,
+          (currentState) => `sui_file_upload_hidden_input-radius_${currentState.radius}`,
+          (currentState) => `sui_file_upload_hidden_input-variant_${currentState.variant}`,
+          (currentState) => currentState.disabled && "sui_file_upload_hidden_input-disabled",
+          (currentState) => currentState.multiple && "sui_file_upload_hidden_input-multiple",
+          (currentState) => currentState.required && "sui_file_upload_hidden_input-required",
         ),
       },
     ],
@@ -99,7 +94,6 @@ export const FileUploadHiddenInput: IFileUploadHiddenInput = function SuiFileUpl
 };
 
 export { FileUploadHiddenInput as HiddenInput };
-
 export namespace HiddenInput {
   export type State = FileUploadHiddenInputState;
 

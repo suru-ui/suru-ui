@@ -21,18 +21,18 @@ export type IUseMeterIndicatorContext = IUseContext<MeterIndicatorContext>;
 /**
  * {@link MeterIndicatorContext} を読み取るフックです。
  */
-export const useMeterIndicatorContext: IUseMeterIndicatorContext =
-  function useSuiMeterIndicatorContext(optional): any {
-    const ctx = React.use(MeterIndicatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "MeterIndicatorContext",
-        providerName: "MeterIndicator",
-      });
-    }
+export const useMeterIndicatorContext: IUseMeterIndicatorContext = (optional): any => {
+  const ctx = React.use(MeterIndicatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "MeterIndicatorContext",
+      providerName: "MeterIndicator",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   MeterIndicatorContext as IndicatorContext,

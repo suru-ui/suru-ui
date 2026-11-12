@@ -1,11 +1,9 @@
-import { vi, test, describe } from "vitest";
+import { vi, test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../errors.js";
-import "./sidebar.parts.js";
 import { FullSidebar } from "./_sidebar.jsx";
 import { Sidebar, SidebarAPI, useSidebarAPI } from "./sidebar.jsx";
-import "../../tests/src/_locators.js";
 import {
   SidebarRail,
   SidebarRoot,
@@ -20,13 +18,14 @@ import {
   useSidebarContext,
   SidebarGroupContent,
 } from "./sidebar.parts.js";
+import "../../tests/src/_locators.js";
 
 describe("Sidebar", () => {
   test("公開パーツをすべて描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar />);
 
-    // 検証
+    // 検証。
     for (const className of [
       "sui_sidebar_provider",
       "sui_sidebar",
@@ -45,10 +44,10 @@ describe("Sidebar", () => {
   });
 
   test("既定では展開状態で左辺に描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_sidebar").element();
     expect(root.classList.contains("sui_sidebar-side_left")).toBe(true);
     expect(root.classList.contains("sui_sidebar-variant_sidebar")).toBe(true);
@@ -60,7 +59,7 @@ describe("Sidebar", () => {
   });
 
   test("プロバイダーがないときはエラーを投げる", async ({ expect }) => {
-    // 準備と実行と検証
+    // 準備と実行と検証。
     await expect(
       render(
         <SidebarRoot>
@@ -71,10 +70,10 @@ describe("Sidebar", () => {
   });
 
   test("操作ボタンは状態と操作名を伝える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar />);
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("complementary").element().tagName).toBe("ASIDE");
     expect(screen.getByRole("main").element().tagName).toBe("MAIN");
 
@@ -89,13 +88,13 @@ describe("Sidebar", () => {
   });
 
   test("トリガーで折りたたむ", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(<FullSidebar />);
 
-    // 実行
+    // 実行。
     await screen.getByClassName("sui_sidebar_trigger").click();
 
-    // 検証
+    // 検証。
     await vi.waitFor(() => {
       expect(
         screen.getByClassName("sui_sidebar").element().classList.contains("sui_sidebar-collapsed"),
@@ -113,14 +112,13 @@ describe("Sidebar", () => {
   });
 
   test("レールでも開閉を切り替える", async ({ expect }) => {
-    // 準備
-    // offcanvas で折りたたむとレールが画面外へ隠れるため、アイコン折りたたみで検証します。
+    // 準備 offcanvas で折りたたむとレールが画面外へ隠れるため、アイコン折りたたみで検証します。
     const screen = await render(<FullSidebar collapsible="icon" />);
 
-    // 実行
+    // 実行。
     await screen.getByClassName("sui_sidebar_rail").click();
 
-    // 検証
+    // 検証。
     await vi.waitFor(() => {
       expect(
         screen
@@ -130,10 +128,10 @@ describe("Sidebar", () => {
       ).toBe(true);
     });
 
-    // 実行
+    // 実行。
     await screen.getByClassName("sui_sidebar_rail").click();
 
-    // 検証
+    // 検証。
     await vi.waitFor(() => {
       expect(
         screen
@@ -145,7 +143,7 @@ describe("Sidebar", () => {
   });
 
   test("collapsible が none のときはレールを描画せずトリガーを無効にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SidebarProvider>
         <SidebarRoot collapsible="none">
@@ -155,15 +153,16 @@ describe("Sidebar", () => {
       </SidebarProvider>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_sidebar_rail").query()).toBe(null);
+
     const trigger = screen.getByClassName("sui_sidebar_trigger").element();
     expect(trigger.hasAttribute("disabled")).toBe(true);
     expect(trigger.classList.contains("sui_sidebar_trigger-disabled")).toBe(true);
   });
 
   test("disabled を指定した操作ボタンは状態クラスを持つ", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SidebarProvider>
         <SidebarTrigger disabled />
@@ -173,7 +172,7 @@ describe("Sidebar", () => {
       </SidebarProvider>,
     );
 
-    // 検証
+    // 検証。
     for (const className of ["sui_sidebar_trigger", "sui_sidebar_rail"]) {
       const button = screen.getByClassName(className).element();
       expect(button.hasAttribute("disabled")).toBe(true);
@@ -182,24 +181,24 @@ describe("Sidebar", () => {
   });
 
   test("defaultOpen で初期状態を決める", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar defaultOpen={false} />);
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_sidebar").element().classList.contains("sui_sidebar-collapsed"),
     ).toBe(true);
   });
 
   test("制御された開閉状態に従う", async ({ expect }) => {
-    // 準備
+    // 準備。
     const onOpenChange = vi.fn<(open: boolean) => void>();
     const screen = await render(<FullSidebar open={false} onOpenChange={onOpenChange} />);
 
-    // 実行
+    // 実行。
     await screen.getByClassName("sui_sidebar_trigger").click();
 
-    // 検証
+    // 検証。
     expect(onOpenChange).toHaveBeenCalledTimes(1);
     expect(onOpenChange.mock.calls[0]?.[0]).toBe(true);
     expect(
@@ -208,14 +207,14 @@ describe("Sidebar", () => {
   });
 
   test("子要素を指定したトリガーは既定のアイコンとラベルを持たない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SidebarProvider>
         <SidebarTrigger>開閉</SidebarTrigger>
       </SidebarProvider>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByClassName("sui_sidebar_trigger").element();
     expect(trigger.textContent).toBe("開閉");
     expect(trigger.querySelector("svg")).toBe(null);
@@ -223,24 +222,24 @@ describe("Sidebar", () => {
   });
 
   test("既定のトリガーはアイコンを持つ", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SidebarProvider>
         <SidebarTrigger />
       </SidebarProvider>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_sidebar_trigger").element().querySelector("svg")).not.toBe(
       null,
     );
   });
 
   test("修飾をクラスへ反映する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar side="right" variant="floating" collapsible="icon" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_sidebar").element();
     expect(root.classList.contains("sui_sidebar-side_right")).toBe(true);
     expect(root.classList.contains("sui_sidebar-variant_floating")).toBe(true);
@@ -248,14 +247,14 @@ describe("Sidebar", () => {
   });
 
   test("render で別の要素に描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Sidebar defaultOpen>
         <Sidebar.Root render={<section />} />
       </Sidebar>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_sidebar").element();
     expect(root.tagName).toBe("SECTION");
     expect(screen.getByClassName("sui_sidebar_provider").element().querySelector("section")).toBe(
@@ -264,7 +263,7 @@ describe("Sidebar", () => {
   });
 
   test("render 関数で状態を受け取る", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Sidebar defaultOpen>
         <Sidebar.Root
@@ -273,14 +272,14 @@ describe("Sidebar", () => {
       </Sidebar>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_sidebar").element();
     expect(root.tagName).toBe("SECTION");
     expect(root.getAttribute("data-state")).toBe("expanded");
   });
 
   test("プロバイダーの render の関数へ状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SidebarProvider
         render={(renderProps, state) => (
@@ -290,14 +289,14 @@ describe("Sidebar", () => {
       />,
     );
 
-    // 検証
+    // 検証。
     const provider = screen.getByClassName("sui_sidebar_provider").element();
     expect(provider.tagName).toBe("SECTION");
     expect(provider.getAttribute("data-probe")).toBe("false/collapsed");
   });
 
   test("ルートの render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Sidebar defaultOpen>
         <Sidebar.Root
@@ -314,14 +313,14 @@ describe("Sidebar", () => {
       </Sidebar>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_sidebar").element();
     expect(root.tagName).toBe("SECTION");
     expect(root.getAttribute("data-probe")).toBe("icon/right/floating/expanded");
   });
 
   test("トリガーの render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SidebarProvider>
         <SidebarRoot side="right" variant="floating" collapsible="icon">
@@ -337,13 +336,13 @@ describe("Sidebar", () => {
       </SidebarProvider>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByClassName("sui_sidebar_trigger").element();
     expect(trigger.getAttribute("data-probe")).toBe("icon/right/floating/expanded");
   });
 
   test("レールの render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SidebarProvider>
         <SidebarRoot side="right" variant="floating" collapsible="icon">
@@ -359,13 +358,13 @@ describe("Sidebar", () => {
       </SidebarProvider>,
     );
 
-    // 検証
+    // 検証。
     const rail = screen.getByClassName("sui_sidebar_rail").element();
     expect(rail.getAttribute("data-probe")).toBe("icon/right/floating/expanded");
   });
 
   test("公開パーツとフックを静的メンバーに持つ", ({ expect }) => {
-    // 検証
+    // 検証。
     expect(Sidebar.Provider).toBe(SidebarProvider);
     expect(Sidebar.Root).toBe(SidebarRoot);
     expect(Sidebar.Header).toBe(SidebarHeader);
@@ -381,19 +380,19 @@ describe("Sidebar", () => {
   });
 
   test("slotProps.provider を Provider へ渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Sidebar id="provider" slotProps={{ provider: { "aria-label": "サイドバー" } }} />,
     );
 
-    // 検証
+    // 検証。
     const provider = screen.container.querySelector<HTMLElement>("#provider")!;
     expect(provider.classList.contains("sui_sidebar_provider")).toBe(true);
     expect(provider.getAttribute("aria-label")).toBe("サイドバー");
   });
 
   test("useSidebarAPI が Provider の props を作る", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const api = useSidebarAPI({
         id: "provider",
@@ -403,25 +402,25 @@ describe("Sidebar", () => {
       return <SidebarProvider {...api.getProviderProps()} />;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(<Probe />);
 
-    // 検証
+    // 検証。
     const provider = screen.container.querySelector<HTMLElement>("#provider")!;
     expect(provider.getAttribute("aria-label")).toBe("サイドバー");
   });
 
   test("API から Provider の props を取得できる", ({ expect }) => {
-    // 準備
+    // 準備。
     const api = new SidebarAPI({
       slotProps: { provider: { id: "provider" } },
       defaultOpen: false,
     });
 
-    // 実行
+    // 実行。
     const props = api.getProviderProps();
 
-    // 検証
+    // 検証。
     expect(props.defaultOpen).toBe(false);
     expect(props.id).toBe("provider");
   });

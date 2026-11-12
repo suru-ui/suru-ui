@@ -5,9 +5,7 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
 
-/**
- * ボタンの配色です。
- */
+/** ボタンの配色です。 */
 export type ButtonContextColor = Color;
 
 /**
@@ -49,54 +47,34 @@ export type ButtonContext = Readonly<
   Override<
     ButtonState,
     {
-      /**
-       * ボタンの配色です。
-       */
+      /** ボタンの配色です。 */
       readonly color: ButtonContextColor;
 
-      /**
-       * ボタンをメニューなどのリストアイテムとして使うかどうかです。
-       */
+      /** ボタンをメニューなどのリストアイテムとして使うかどうかです。 */
       readonly item: boolean;
 
-      /**
-       * ボタンの背景色を控えめにするかどうかです。
-       */
+      /** ボタンの背景色を控えめにするかどうかです。 */
       readonly muted: boolean;
 
-      /**
-       * ボタンに枠線を表示するかどうかです。
-       */
+      /** ボタンに枠線を表示するかどうかです。 */
       readonly outlined: boolean;
 
-      /**
-       * ボタンが保留状態かどうかです。
-       */
+      /** ボタンが保留状態かどうかです。 */
       readonly pending: boolean;
 
-      /**
-       * ボタンの角丸の大きさです。
-       */
+      /** ボタンの角丸の大きさです。 */
       readonly radius: ButtonContextRadius;
 
-      /**
-       * ボタンの大きさです。
-       */
+      /** ボタンの大きさです。 */
       readonly size: ButtonContextSize;
 
-      /**
-       * ボタンを正方形にするかどうかです。
-       */
+      /** ボタンを正方形にするかどうかです。 */
       readonly squared: boolean;
 
-      /**
-       * ボタンを上下に薄くするかどうかです。
-       */
+      /** ボタンを上下に薄くするかどうかです。 */
       readonly thin: boolean;
 
-      /**
-       * ボタンの主な外観です。
-       */
+      /** ボタンの主な外観です。 */
       readonly variant: ButtonContextVariant;
     }
   >
@@ -113,11 +91,10 @@ export type IUseButtonContext = IUseContext<ButtonContext>;
 /**
  * {@link ButtonContext} を読み取るフックです。
  */
-export const useButtonContext: IUseButtonContext = function useSuiButtonContext(
-  optional?: boolean,
-): any {
+export const useButtonContext: IUseButtonContext = (optional?: boolean): any => {
   const ctx = React.use(ButtonContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "ButtonContext",
       providerName: "ButtonRoot",
@@ -128,7 +105,6 @@ export const useButtonContext: IUseButtonContext = function useSuiButtonContext(
 };
 
 export { ButtonContext as Context, useButtonContext as useContext };
-
 export namespace Context {
   export type Color = ButtonContextColor;
 

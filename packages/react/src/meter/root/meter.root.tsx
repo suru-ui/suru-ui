@@ -13,9 +13,7 @@ import {
   MeterContext,
 } from "./meter.root.context.js";
 
-/**
- * メーターの配色です。
- */
+/** メーターの配色です。 */
 export type MeterRootColor = MeterContextColor;
 
 /**
@@ -95,7 +93,7 @@ export namespace MeterRootProps {
     Pick<
       React.ComponentProps<typeof Meter.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MeterRootProps より:
+      // MeterRootProps より :
       "aria-valuetext" | "format" | "getAriaValueText" | "locale" | "max" | "min" | "value"
     >,
     keyof Render | keyof SuruUI
@@ -117,10 +115,8 @@ export type MeterRootProps = MeterRootProps.Render &
 
 export type IMeterRoot = IComponent<MeterRootProps>;
 
-/**
- * メーターのルートコンポーネントです。
- */
-export const MeterRoot: IMeterRoot = function SuiMeterRoot(props) {
+/** メーターのルートコンポーネントです。 */
+export const MeterRoot: IMeterRoot = (props) => {
   const {
     size = "md",
     color = "grey",
@@ -130,12 +126,18 @@ export const MeterRoot: IMeterRoot = function SuiMeterRoot(props) {
     variant = "liquid",
     outlined = true,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const ctx = React.useMemo<MeterContext>(
-    () => ({ size, color, radius, variant, outlined }),
+    () => ({
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+    }),
     [size, color, radius, variant, outlined],
   );
 
@@ -143,19 +145,25 @@ export const MeterRoot: IMeterRoot = function SuiMeterRoot(props) {
     <MeterContext value={ctx}>
       <Meter.Root
         {...otherProps}
-        {...proxyRenderProps<Meter.Root.State, MeterRootState>((state) => ({ ...ctx, ...state }), {
-          style,
-          render,
-          className: cn<MeterRootState>(
-            className,
-            "sui_meter",
-            (state) => `sui_meter-size_${state.size}`,
-            (state) => `sui_meter-color_${state.color}`,
-            (state) => `sui_meter-radius_${state.radius}`,
-            (state) => `sui_meter-variant_${state.variant}`,
-            (state) => state.outlined && "sui_meter-outlined",
-          ),
-        })}
+        {...proxyRenderProps<Meter.Root.State, MeterRootState>(
+          (state) => ({
+            ...ctx,
+            ...state,
+          }),
+          {
+            style,
+            render,
+            className: cn<MeterRootState>(
+              className,
+              "sui_meter",
+              (state) => `sui_meter-size_${state.size}`,
+              (state) => `sui_meter-color_${state.color}`,
+              (state) => `sui_meter-radius_${state.radius}`,
+              (state) => `sui_meter-variant_${state.variant}`,
+              (state) => state.outlined && "sui_meter-outlined",
+            ),
+          },
+        )}
         data-scope={dataScope}
       />
     </MeterContext>
@@ -163,7 +171,6 @@ export const MeterRoot: IMeterRoot = function SuiMeterRoot(props) {
 };
 
 export { MeterRoot as Root };
-
 export namespace Root {
   export type State = MeterRootState;
 

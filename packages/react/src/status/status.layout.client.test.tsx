@@ -1,28 +1,26 @@
 import "@suru-ui/theme/suru.css";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "./status.parts.js";
 import "../../tests/src/_locators.js";
 import { Status } from "./status.jsx";
 
-/**
- * 指定した ID のルート配下にあるインジケーターを取得します。
- */
+/** 指定した ID のルート配下にあるインジケーターを取得します。 */
 function getIndicator(container: HTMLElement, id: string): HTMLElement {
   return container.querySelector<HTMLElement>(`#${id} .sui_status_indicator`)!;
 }
 
 describe("Status の配置", () => {
   test("点とラベルを横に並べて中央で揃える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Status id="status">
         <span id="label">オンライン</span>
       </Status>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.container.querySelector<HTMLElement>("#status")!;
     const dotRect = getIndicator(screen.container, "status").getBoundingClientRect();
     const labelRect = screen.container
@@ -35,7 +33,7 @@ describe("Status の配置", () => {
   });
 
   test("大きさごとの点の寸法を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <Status id="sm" size="sm" />
@@ -44,23 +42,25 @@ describe("Status の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const sm = getIndicator(screen.container, "sm").getBoundingClientRect();
     expect(sm.width).toBeCloseTo(7.8, 1);
     expect(sm.height).toBeCloseTo(7.8, 1);
+
     const md = getIndicator(screen.container, "md").getBoundingClientRect();
     expect(md.width).toBeCloseTo(9.6, 1);
     expect(md.height).toBeCloseTo(9.6, 1);
+
     const lg = getIndicator(screen.container, "lg").getBoundingClientRect();
     expect(lg.width).toBeCloseTo(10.8, 1);
     expect(lg.height).toBeCloseTo(10.8, 1);
   });
 
   test("点を円形にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Status id="status" />);
 
-    // 検証
+    // 検証。
     const indicator = getComputedStyle(getIndicator(screen.container, "status"));
     expect(Number.parseFloat(indicator.borderTopLeftRadius)).toBeCloseTo(
       Number.parseFloat(indicator.width) / 2,
@@ -69,12 +69,30 @@ describe("Status の配置", () => {
   });
 
   test("大きさごとの間隔を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
-        <span id="expected-sm" style={{ gap: "--sui-gap(2)", display: "flex" }} />
-        <span id="expected-md" style={{ gap: "--sui-gap(3)", display: "flex" }} />
-        <span id="expected-lg" style={{ gap: "--sui-gap(4)", display: "flex" }} />
+        <span
+          id="expected-sm"
+          style={{
+            gap: "--sui-gap(2)",
+            display: "flex",
+          }}
+        />
+        <span
+          id="expected-md"
+          style={{
+            gap: "--sui-gap(3)",
+            display: "flex",
+          }}
+        />
+        <span
+          id="expected-lg"
+          style={{
+            gap: "--sui-gap(4)",
+            display: "flex",
+          }}
+        />
         <Status id="sm" size="sm">
           <span>オンライン</span>
         </Status>
@@ -87,7 +105,7 @@ describe("Status の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     for (const size of ["sm", "md", "lg"] as const) {
       const expected = getComputedStyle(
         screen.container.querySelector<HTMLElement>(`#expected-${size}`)!,
@@ -99,7 +117,7 @@ describe("Status の配置", () => {
   });
 
   test("活字を大きさに追従させる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span
@@ -135,7 +153,7 @@ describe("Status の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     for (const size of ["sm", "md", "lg"] as const) {
       const expected = getComputedStyle(
         screen.container.querySelector<HTMLElement>(`#expected-${size}`)!,
@@ -149,7 +167,7 @@ describe("Status の配置", () => {
   });
 
   test("配色を点へ適用する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ backgroundColor: "var(--sui-grey-solid-canvas-normal)" }}>既定の基準</span>
@@ -159,7 +177,7 @@ describe("Status の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(getComputedStyle(getIndicator(screen.container, "grey")).backgroundColor).toBe(
       getComputedStyle(screen.getByText("既定の基準").element()).backgroundColor,
     );
@@ -169,7 +187,7 @@ describe("Status の配置", () => {
   });
 
   test("ラベルの色を文字へ適用する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ color: "var(--sui-canvas_text-1)" }}>基準</span>
@@ -177,14 +195,14 @@ describe("Status の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(getComputedStyle(screen.container.querySelector<HTMLElement>("#status")!).color).toBe(
       getComputedStyle(screen.getByText("基準").element()).color,
     );
   });
 
   test("リップルのアニメーションを疑似要素へ適用する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <Status id="plain" />
@@ -192,9 +210,10 @@ describe("Status の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const plain = getComputedStyle(getIndicator(screen.container, "plain"), "::after");
     expect(plain.animationName).toBe("none");
+
     const ping = getComputedStyle(getIndicator(screen.container, "ping"), "::after");
     expect(ping.animationName).toBe("sui_status-ping");
     expect(ping.animationDuration).toBe("1.5s");
@@ -204,7 +223,7 @@ describe("Status の配置", () => {
   });
 
   test("リップルを含む余白を確保する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <Status id="plain" />
@@ -215,37 +234,42 @@ describe("Status の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const plain = getComputedStyle(getIndicator(screen.container, "plain"));
     expect(plain.marginTop).toBe("0px");
+
     const ping = getComputedStyle(getIndicator(screen.container, "ping"));
     expect(ping.marginTop).toBe("0px");
+
     const contained = getComputedStyle(getIndicator(screen.container, "contained"));
     expect(Number.parseFloat(contained.marginTop)).toBeCloseTo(6, 1);
     expect(contained.marginTop).toBe(contained.marginBottom);
     expect(contained.marginLeft).toBe(contained.marginRight);
+
     const small = getComputedStyle(getIndicator(screen.container, "small"));
     expect(Number.parseFloat(small.marginTop)).toBeCloseTo(3.6, 1);
+
     const large = getComputedStyle(getIndicator(screen.container, "large"));
     expect(Number.parseFloat(large.marginTop)).toBeCloseTo(8.4, 1);
   });
 
   test("外部と内側の余白を持たない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Status />);
 
-    // 検証
+    // 検証。
     const root = getComputedStyle(screen.getByClassName("sui_status").element());
     expect(root.marginTop).toBe("0px");
     expect(root.marginInlineStart).toBe("0px");
     expect(root.paddingBlockStart).toBe("0px");
+
     const indicator = getComputedStyle(screen.getByClassName("sui_status_indicator").element());
     expect(indicator.marginTop).toBe("0px");
     expect(indicator.paddingBlockStart).toBe("0px");
   });
 
   test("公開変数で点の大きさと間隔を上書きできる", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <Status id="status">
         <span>オンライン</span>
@@ -253,11 +277,11 @@ describe("Status の配置", () => {
     );
     const root = screen.container.querySelector<HTMLElement>("#status")!;
 
-    // 実行
+    // 実行。
     root.style.setProperty("--sui_status_indicator-size", "24px");
     root.style.setProperty("--sui_status-gap", "24px");
 
-    // 検証
+    // 検証。
     expect(getIndicator(screen.container, "status").getBoundingClientRect().height).toBeCloseTo(
       24,
       1,

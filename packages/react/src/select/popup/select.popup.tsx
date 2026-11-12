@@ -25,7 +25,7 @@ export namespace SelectPopupProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Popup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectPopupProps より:
+      // SelectPopupProps より :
       "finalFocus"
     >,
     keyof Render | keyof SuruUI
@@ -47,10 +47,8 @@ export type SelectPopupProps = SelectPopupProps.Render &
 
 export type ISelectPopup = IComponent<SelectPopupProps>;
 
-/**
- * 選択項目を表示するポップアップ要素です。
- */
-export const SelectPopup: ISelectPopup = function SuiSelectPopup(props) {
+/** 選択項目を表示するポップアップ要素です。 */
+export const SelectPopup: ISelectPopup = (props) => {
   const ctx = useSelectPositionerContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const SelectPopup: ISelectPopup = function SuiSelectPopup(props) {
     <BaseSelect.Popup
       {...otherProps}
       {...proxyRenderProps<BaseSelect.Popup.State, SelectPopupState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -93,7 +94,6 @@ export const SelectPopup: ISelectPopup = function SuiSelectPopup(props) {
 };
 
 export { SelectPopup as Popup };
-
 export namespace Popup {
   export type State<TValue = any> = SelectPopupState<TValue>;
 

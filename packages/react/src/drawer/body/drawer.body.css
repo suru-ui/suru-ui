@@ -1,53 +1,51 @@
 @layer sui.component {
-@scope (.sui_drawer_body) to ([data-scope]) {
+  @scope (.sui_drawer_body) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      line-break: strict;
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
 
-/* 固定 */
-:scope {
-  position: relative;
-  flex: 1 1 auto;
-  min-height: 0px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  line-break: strict;
-  word-break: normal;
-  overflow-wrap: anywhere;
-}
+    /* 変数 */
+    :scope {
+      --sui_drawer_body-padding_block: ;
+      --sui_drawer_body-padding_inline: ;
+      --sui_drawer_body-font_family: ;
+      --sui_drawer_body-font_size: ;
+      --sui_drawer_body-font_weight: ;
+      --sui_drawer_body-line_height: ;
+      --sui_drawer_body-color: ;
+      --sui_drawer_body-letter_spacing: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_drawer_body-padding_block: ;
-  --sui_drawer_body-padding_inline: ;
-  --sui_drawer_body-font_family: ;
-  --sui_drawer_body-font_size: ;
-  --sui_drawer_body-font_weight: ;
-  --sui_drawer_body-line_height: ;
-  --sui_drawer_body-color: ;
-  --sui_drawer_body-letter_spacing: ;
-}
+    /* 可変 */
+    :scope {
+      padding-block: var(--sui_drawer_body-padding_block);
+      padding-inline: var(--sui_drawer_body-padding_inline);
+      font-family: var(--sui_drawer_body-font_family);
+      font-size: var(--sui_drawer_body-font_size);
+      font-weight: var(--sui_drawer_body-font_weight);
+      line-height: var(--sui_drawer_body-line_height);
+      color: var(--sui_drawer_body-color);
+      letter-spacing: var(--sui_drawer_body-letter_spacing);
+    }
 
-/* 可変 */
-:scope {
-  padding-block: var(--sui_drawer_body-padding_block);
-  padding-inline: var(--sui_drawer_body-padding_inline);
-  font-family: var(--sui_drawer_body-font_family);
-  font-size: var(--sui_drawer_body-font_size);
-  font-weight: var(--sui_drawer_body-font_weight);
-  line-height: var(--sui_drawer_body-line_height);
-  color: var(--sui_drawer_body-color);
-  letter-spacing: var(--sui_drawer_body-letter_spacing);
-}
-
-/* 代入 */
-:scope {
-  --sui_drawer_body-padding_block: --sui-space(4);
-  --sui_drawer_body-padding_inline: --sui-space(4);
-  --sui_drawer_body-font_family: var(--sui-font-sans);
-  --sui_drawer_body-font_size: var(--sui-text-std-md-n-font_size);
-  --sui_drawer_body-font_weight: var(--sui-text-std-md-n-font_weight);
-  --sui_drawer_body-line_height: var(--sui-text-std-md-n-line_height);
-  --sui_drawer_body-color: var(--sui-canvas_text-1);
-  --sui_drawer_body-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_drawer_body-padding_block: --sui-space(4);
+      --sui_drawer_body-padding_inline: --sui-space(4);
+      --sui_drawer_body-font_family: var(--sui-font-sans);
+      --sui_drawer_body-font_size: var(--sui-text-std-md-n-font_size);
+      --sui_drawer_body-font_weight: var(--sui-text-std-md-n-font_weight);
+      --sui_drawer_body-line_height: var(--sui-text-std-md-n-line_height);
+      --sui_drawer_body-color: var(--sui-canvas_text-1);
+      --sui_drawer_body-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+    }
+  } /* @scope */
 } /* @layer */

@@ -23,16 +23,13 @@ export namespace PopoverArrowProps {
     Pick<
       React.ComponentProps<typeof Popover.Arrow>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PopoverArrowProps より:
+      // PopoverArrowProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Popover.Arrow>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Popover.Arrow>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,10 +42,8 @@ export type PopoverArrowProps = PopoverArrowProps.Render &
 
 export type IPopoverArrow = IComponent<PopoverArrowProps>;
 
-/**
- * ポップアップとトリガーをつなぐ矢印要素です。
- */
-export const PopoverArrow: IPopoverArrow = function SuiPopoverArrow(props) {
+/** ポップアップとトリガーをつなぐ矢印要素です。 */
+export const PopoverArrow: IPopoverArrow = (props) => {
   const ctx = usePopoverPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +51,10 @@ export const PopoverArrow: IPopoverArrow = function SuiPopoverArrow(props) {
     <Popover.Arrow
       {...otherProps}
       {...proxyRenderProps<Popover.Arrow.State, PopoverArrowState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -92,7 +90,6 @@ export const PopoverArrow: IPopoverArrow = function SuiPopoverArrow(props) {
 };
 
 export { PopoverArrow as Arrow };
-
 export namespace Arrow {
   export type State = PopoverArrowState;
 

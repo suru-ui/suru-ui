@@ -1,12 +1,10 @@
 @layer sui.component {
-@scope (.sui_context_menu_portal) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
-
-} /* @scope */
+  @scope (.sui_context_menu_portal) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+    }
+  } /* @scope */
 } /* @layer */

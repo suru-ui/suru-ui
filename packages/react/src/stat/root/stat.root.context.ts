@@ -17,15 +17,11 @@ export type StatContextSize = Size;
  * {@link StatRoot} が提供する状態です。
  */
 export type StatContext = {
-  /**
-   * 統計の大きさです。
-   */
+  /** 統計の大きさです。 */
   readonly size: StatContextSize;
 };
 
-/**
- * 統計の見た目を子パーツへ伝播するコンテキストです。
- */
+/** 統計の見た目を子パーツへ伝播するコンテキストです。 */
 export const StatContext: React.Context<StatContext | null> =
   React.createContext<StatContext | null>(null);
 
@@ -34,9 +30,10 @@ export type IUseStatContext = IUseContext<StatContext>;
 /**
  * {@link StatContext} を読み取るフックです。
  */
-export const useStatContext: IUseStatContext = function useSuiStatContext(optional?: boolean): any {
+export const useStatContext: IUseStatContext = (optional?: boolean): any => {
   const ctx = React.use(StatContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "StatContext",
       providerName: "StatRoot",
@@ -47,7 +44,6 @@ export const useStatContext: IUseStatContext = function useSuiStatContext(option
 };
 
 export { StatContext as Context, useStatContext as useContext };
-
 export namespace Context {
   export type Size = StatContextSize;
 }

@@ -21,18 +21,18 @@ export type IUsePopoverDescriptionContext = IUseContext<PopoverDescriptionContex
 /**
  * {@link PopoverDescriptionContext} を読み取るフックです。
  */
-export const usePopoverDescriptionContext: IUsePopoverDescriptionContext =
-  function useSuiPopoverDescriptionContext(optional): any {
-    const ctx = React.use(PopoverDescriptionContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "PopoverDescriptionContext",
-        providerName: "PopoverDescription",
-      });
-    }
+export const usePopoverDescriptionContext: IUsePopoverDescriptionContext = (optional): any => {
+  const ctx = React.use(PopoverDescriptionContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "PopoverDescriptionContext",
+      providerName: "PopoverDescription",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   PopoverDescriptionContext as DescriptionContext,

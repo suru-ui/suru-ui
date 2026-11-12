@@ -25,17 +25,17 @@ export type IUseAutocompleteRowContext = IUseContext<AutocompleteRowContext>;
 /**
  * {@link AutocompleteRowContext} を読み取るフックです。
  */
-export const useAutocompleteRowContext: IUseAutocompleteRowContext =
-  function useSuiAutocompleteRowContext(optional): any {
-    const ctx = React.use(AutocompleteRowContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompleteRowContext",
-        providerName: "AutocompleteRow",
-      });
-    }
+export const useAutocompleteRowContext: IUseAutocompleteRowContext = (optional): any => {
+  const ctx = React.use(AutocompleteRowContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompleteRowContext",
+      providerName: "AutocompleteRow",
+    });
+  }
+
+  return ctx;
+};
 
 export { AutocompleteRowContext as RowContext, useAutocompleteRowContext as useRowContext };

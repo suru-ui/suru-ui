@@ -37,7 +37,7 @@ export namespace PasswordFieldInputProps {
     Pick<
       TextFieldInputProps.BaseUI,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PasswordFieldInputProps より:
+      // PasswordFieldInputProps より :
       keyof TextFieldInputProps.BaseUI
     >,
     keyof Render | keyof SuruUI
@@ -63,7 +63,7 @@ export type IPasswordFieldInput = IComponent<PasswordFieldInputProps>;
  *
  * 入力項目はコンテキストから読み取った表示状態で自動的に切り替わり、常に上書きされます。
  */
-export const PasswordFieldInput: IPasswordFieldInput = function SuiPasswordFieldInput(props) {
+export const PasswordFieldInput: IPasswordFieldInput = (props) => {
   const ctx = usePasswordFieldContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -73,7 +73,10 @@ export const PasswordFieldInput: IPasswordFieldInput = function SuiPasswordField
       {...otherProps}
       type={ctx.visible ? "text" : "password"}
       {...proxyRenderProps<TextFieldInputState, PasswordFieldInputState>(
-        (state) => ({ ...state, visible: ctx.visible }),
+        (state) => ({
+          ...state,
+          visible: ctx.visible,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -111,7 +114,6 @@ export const PasswordFieldInput: IPasswordFieldInput = function SuiPasswordField
 };
 
 export { PasswordFieldInput as Input };
-
 export namespace Input {
   export type State = PasswordFieldInputState;
 

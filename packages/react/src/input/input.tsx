@@ -12,8 +12,7 @@ import {
   InputRoot,
 } from "./input.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type InputChangeEventDetails = InputRootChangeEventDetails;
 
@@ -46,13 +45,13 @@ export interface IUseInputAPI {
    * {@link InputAPI} を作成します。
    *
    * @param props {@link Input} の props です。
+   *
    * @returns テキスト入力欄の API です
    */
   (props: InputProps): InputAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Input} を構成する各パーツの props を作成するための API です。
@@ -62,6 +61,7 @@ export class InputAPI {
 
   /**
    * @param props {@link Input} の props です。
+   *
    * @internal
    */
   public constructor(props: InputProps) {
@@ -79,19 +79,14 @@ export class InputAPI {
 /**
  * {@link InputAPI} を作成するフックです。
  */
-export const useInputAPI: IUseInputAPI = function useSuiInputAPI(props) {
-  return new InputAPI(props);
-};
+export const useInputAPI: IUseInputAPI = (props) => new InputAPI(props);
 
 export { InputAPI as API, useInputAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
-/**
- * テキスト入力欄を表示するコンポーネントです。
- */
-export const Input: IInput = function SuiInput(props) {
+/** テキスト入力欄を表示するコンポーネントです。 */
+export const Input: IInput = (props) => {
   const api = useInputAPI(props);
 
   return <InputRoot {...api.getRootProps()} />;

@@ -25,7 +25,7 @@ export namespace ContextMenuPositionerProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.Positioner>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // UseAnchorPositioningSharedParameters より:
+      // UseAnchorPositioningSharedParameters より :
       | "anchor"
       | "positionMethod"
       | "side"
@@ -58,12 +58,8 @@ export type ContextMenuPositionerProps = ContextMenuPositionerProps.Render &
 
 export type IContextMenuPositioner = IComponent<ContextMenuPositionerProps>;
 
-/**
- * ポップアップを右クリックまたは長押しした位置に合わせる要素です。
- */
-export const ContextMenuPositioner: IContextMenuPositioner = function SuiContextMenuPositioner(
-  props,
-) {
+/** ポップアップを右クリックまたは長押しした位置に合わせる要素です。 */
+export const ContextMenuPositioner: IContextMenuPositioner = (props) => {
   const ctx = useContextMenuPortalContext();
   const {
     // ルートメニューは上下優先、サブメニューは左右優先にします。
@@ -81,7 +77,10 @@ export const ContextMenuPositioner: IContextMenuPositioner = function SuiContext
       side={side}
       align={align}
       {...proxyRenderProps<ContextMenu.Positioner.State, ContextMenuPositionerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -104,7 +103,10 @@ export const ContextMenuPositioner: IContextMenuPositioner = function SuiContext
             (state) => state.open && "sui_context_menu_positioner-open",
             (state) => state.nested && "sui_context_menu_positioner-nested",
             (state) => state.anchorHidden && "sui_context_menu_positioner-anchor_hidden",
-            (state) => state.instant && "sui_context_menu_positioner-instant",
+            (state) =>
+              state.instant !== undefined &&
+              state.instant !== "" &&
+              "sui_context_menu_positioner-instant",
             (state) => `sui_context_menu_positioner-side_${state.side.replaceAll("-", "_")}`,
             (state) => `sui_context_menu_positioner-align_${state.align}`,
           ),
@@ -115,7 +117,6 @@ export const ContextMenuPositioner: IContextMenuPositioner = function SuiContext
 };
 
 export { ContextMenuPositioner as Positioner };
-
 export namespace Positioner {
   export type State<TItem = any> = ContextMenuPositionerState<TItem>;
 

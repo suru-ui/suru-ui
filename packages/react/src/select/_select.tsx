@@ -7,6 +7,7 @@ import type {
  * 値がラベル付き項目かどうかを判定します。
  *
  * @param item 判定する値です。
+ *
  * @returns ラベル付き項目の場合に `true` を返します。
  */
 export function isLabeledItemObject(item: unknown): item is SelectRootLabeledItemObject {
@@ -17,6 +18,7 @@ export function isLabeledItemObject(item: unknown): item is SelectRootLabeledIte
  * 値が項目グループかどうかを判定します。
  *
  * @param item 判定する値です。
+ *
  * @returns 項目グループの場合に `true` を返します。
  */
 export function isItemObjectGroup(item: unknown): item is SelectRootItemObjectGroup {

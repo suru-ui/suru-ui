@@ -1,6 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "./segments.parts.js";
@@ -12,14 +11,22 @@ import "../../tests/src/_locators.js";
 import { Segments } from "./segments.jsx";
 
 const items = [
-  { label: "日", value: "day" },
-  { label: "週", value: "week" },
-  { label: "月", value: "month" },
+  {
+    label: "日",
+    value: "day",
+  },
+  {
+    label: "週",
+    value: "week",
+  },
+  {
+    label: "月",
+    value: "month",
+  },
 ] as const;
-
 describe("Segments の配置", () => {
   test("公開パーツをすべて描画して余白を持たない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SegmentsRoot defaultValue="day">
         <SegmentsList>
@@ -30,7 +37,7 @@ describe("Segments の配置", () => {
       </SegmentsRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_segments").query()).not.toBe(null);
     expect(screen.getByRole("tablist").element().classList.contains("sui_segments_list")).toBe(
       true,
@@ -41,6 +48,7 @@ describe("Segments の配置", () => {
     const elements = screen.container.querySelectorAll<HTMLElement>(
       ".sui_segments, .sui_segments *",
     );
+
     for (const element of elements) {
       const style = getComputedStyle(element);
       expect(style.marginTop).toBe("0px");
@@ -49,13 +57,14 @@ describe("Segments の配置", () => {
   });
 
   test("項目を間隔を空けて横一列に並べる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Segments items={[...items]} defaultValue="day" />);
 
-    // 検証
+    // 検証。
     const list = getComputedStyle(screen.getByRole("tablist").element());
     expect(list.display).toBe("flex");
     expect(list.flexDirection).toBe("row");
+
     const day = screen.getByRole("tab", { name: "日" }).element().getBoundingClientRect();
     const week = screen.getByRole("tab", { name: "週" }).element().getBoundingClientRect();
     const month = screen.getByRole("tab", { name: "月" }).element().getBoundingClientRect();
@@ -65,14 +74,15 @@ describe("Segments の配置", () => {
   });
 
   test("縦方向では列に並べる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Segments items={[...items]} orientation="vertical" defaultValue="day" />,
     );
 
-    // 検証
+    // 検証。
     const list = getComputedStyle(screen.getByRole("tablist").element());
     expect(list.flexDirection).toBe("column");
+
     const day = screen.getByRole("tab", { name: "日" }).element().getBoundingClientRect();
     const week = screen.getByRole("tab", { name: "週" }).element().getBoundingClientRect();
     expect(week.top).toBeGreaterThanOrEqual(day.bottom);
@@ -80,7 +90,7 @@ describe("Segments の配置", () => {
   });
 
   test("大きさごとの間隔と余白を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <Segments id="sm" size="sm" items={[...items]} defaultValue="day" />
@@ -89,20 +99,22 @@ describe("Segments の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tablist]")!);
     expect(sm.columnGap).toBe("2px");
     expect(sm.paddingInlineStart).toBe("6px");
+
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tablist]")!);
     expect(md.columnGap).toBe("4px");
     expect(md.paddingInlineStart).toBe("6px");
+
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tablist]")!);
     expect(lg.columnGap).toBe("6px");
     expect(lg.paddingInlineStart).toBe("8px");
   });
 
   test("大きさごとの活字と最小高さを反映する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <Segments id="sm" size="sm" items={[...items]} defaultValue="day" />
@@ -111,20 +123,22 @@ describe("Segments の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
     expect(sm.fontSize).toBe("12px");
     expect(sm.minHeight).toBe("26px");
+
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
     expect(md.fontSize).toBe("14px");
     expect(md.minHeight).toBe("32px");
+
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
     expect(lg.fontSize).toBe("17px");
     expect(lg.minHeight).toBe("36px");
   });
 
   test("thin では項目の高さと上下の余白が小さくなる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <Segments id="plain" items={[...items]} defaultValue="day" />
@@ -132,10 +146,11 @@ describe("Segments の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const plain = screen.container.querySelector<HTMLElement>("#plain")!;
     const thin = screen.container.querySelector<HTMLElement>("#thin")!;
     expect(thin.classList.contains("sui_segments-thin")).toBe(true);
+
     const plainItem = screen.container.querySelector<HTMLElement>("#plain [role=tab]")!;
     const thinItem = screen.container.querySelector<HTMLElement>("#thin [role=tab]")!;
     expect(thinItem.classList.contains("sui_segments_item-thin")).toBe(true);
@@ -145,11 +160,12 @@ describe("Segments の配置", () => {
     expect(Number.parseFloat(getComputedStyle(thinItem).minHeight)).toBeLessThan(
       Number.parseFloat(getComputedStyle(plainItem).minHeight),
     );
+
     expect(thin.getBoundingClientRect().height).toBeLessThan(plain.getBoundingClientRect().height);
   });
 
   test("項目の左右の余白を大きさに合わせる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <Segments id="sm" size="sm" items={[...items]} defaultValue="day" />
@@ -158,17 +174,19 @@ describe("Segments の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
     expect(Number.parseFloat(sm.paddingInlineStart)).toBeCloseTo(6, 1);
+
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
     expect(Number.parseFloat(md.paddingInlineStart)).toBeCloseTo(10, 1);
+
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
     expect(Number.parseFloat(lg.paddingInlineStart)).toBeCloseTo(14, 1);
   });
 
   test("角丸を大きさに合わせる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <Segments id="sm" size="sm" items={[...items]} defaultValue="day" />
@@ -177,26 +195,28 @@ describe("Segments の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const sm = getComputedStyle(screen.container.querySelector<HTMLElement>("#sm [role=tab]")!);
     expect(sm.borderTopLeftRadius).toBe("4px");
+
     const md = getComputedStyle(screen.container.querySelector<HTMLElement>("#md [role=tab]")!);
     expect(md.borderTopLeftRadius).toBe("8px");
+
     const lg = getComputedStyle(screen.container.querySelector<HTMLElement>("#lg [role=tab]")!);
     expect(lg.borderTopLeftRadius).toBe("12px");
   });
 
   test("角丸 full では丸くする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Segments items={[...items]} radius="full" defaultValue="day" />);
 
-    // 検証
+    // 検証。
     const item = getComputedStyle(screen.getByRole("tab", { name: "日" }).element());
     expect(Number.parseFloat(item.borderTopLeftRadius)).toBeGreaterThanOrEqual(100);
   });
 
   test("選択中の項目の文字色を強調する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ color: "var(--sui-grey-solid-canvas_text-normal)" }}>基準</span>
@@ -204,16 +224,17 @@ describe("Segments の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByText("基準").element());
     const active = getComputedStyle(screen.getByRole("tab", { name: "週" }).element());
     expect(active.color).toBe(expected.color);
+
     const idle = getComputedStyle(screen.getByRole("tab", { name: "日" }).element());
     expect(idle.color).not.toBe(expected.color);
   });
 
   test("選択中の背景をインジケーターで描く", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ backgroundColor: "var(--sui-grey-solid-canvas-normal)" }}>基準</span>
@@ -221,27 +242,34 @@ describe("Segments の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByText("基準").element());
     const indicator = getComputedStyle(screen.getByClassName("sui_segments_indicator").element());
     expect(indicator.backgroundColor).toBe(expected.backgroundColor);
   });
 
   test("無効な項目を淡色にして操作不能にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ color: "var(--sui-disabled-naked-canvas_text)" }}>基準</span>
         <Segments
           items={[
-            { label: "日", value: "day" },
-            { label: "週", value: "week", disabled: true },
+            {
+              label: "日",
+              value: "day",
+            },
+            {
+              label: "週",
+              value: "week",
+              disabled: true,
+            },
           ]}
         />
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByText("基準").element());
     const disabled = getComputedStyle(screen.getByRole("tab", { name: "週" }).element());
     expect(disabled.color).toBe(expected.color);
@@ -249,21 +277,29 @@ describe("Segments の配置", () => {
   });
 
   test("通常の項目は hover で色を変える", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <>
         <Segments items={[...items]} defaultValue="day" />
-        <span style={{ display: "block", marginBlockStart: "48px" }}>待避</span>
+        <span
+          style={{
+            display: "block",
+            marginBlockStart: "48px",
+          }}
+        >
+          待避
+        </span>
       </>,
     );
     const tab = screen.getByRole("tab", { name: "月" });
     await screen.getByText("待避").hover();
+
     const before = getComputedStyle(tab.element()).color;
 
-    // 実行
+    // 実行。
     await tab.hover();
 
-    // 検証
+    // 検証。
     expect(getComputedStyle(tab.element()).color).not.toBe(before);
   });
 });

@@ -4,9 +4,7 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { IUseContext } from "../../types.js";
 
-/**
- * チェックボックスの配色です。
- */
+/** チェックボックスの配色です。 */
 export type CheckboxGroupContextColor = Color;
 
 /**
@@ -50,45 +48,29 @@ export type CheckboxGroupContextVariant = "naked" | "liquid";
  * {@link CheckboxGroupRoot} が子パーツへ提供するコンテキストです。
  */
 export type CheckboxGroupContext = {
-  /**
-   * チェックボックスの配色です。
-   */
+  /** チェックボックスの配色です。 */
   readonly color: CheckboxGroupContextColor;
 
-  /**
-   * グループ全体を無効にするかどうかです。
-   */
+  /** グループ全体を無効にするかどうかです。 */
   readonly disabled: boolean | undefined;
 
-  /**
-   * チェックボックス群の向きです。
-   */
+  /** チェックボックス群の向きです。 */
   readonly orientation: CheckboxGroupContextOrientation;
 
-  /**
-   * 枠線を表示するかどうかです。
-   */
+  /** 枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * チェックボックスの角丸です。
-   */
+  /** チェックボックスの角丸です。 */
   readonly radius: CheckboxGroupContextRadius;
 
-  /**
-   * チェックボックスの大きさです。
-   */
+  /** チェックボックスの大きさです。 */
   readonly size: CheckboxGroupContextSize;
 
-  /**
-   * チェックボックスの主な外観です。
-   */
+  /** チェックボックスの主な外観です。 */
   readonly variant: CheckboxGroupContextVariant;
 };
 
-/**
- * チェックボックスグループのスタイルを子要素へ伝播するコンテキストです。
- */
+/** チェックボックスグループのスタイルを子要素へ伝播するコンテキストです。 */
 export const CheckboxGroupContext: React.Context<CheckboxGroupContext | null> =
   React.createContext<CheckboxGroupContext | null>(null);
 
@@ -97,21 +79,20 @@ export type IUseCheckboxGroupContext = IUseContext<CheckboxGroupContext>;
 /**
  * {@link CheckboxGroupContext} を読み取るフックです。
  */
-export const useCheckboxGroupContext: IUseCheckboxGroupContext =
-  function useSuiCheckboxGroupContext(optional?: boolean): any {
-    const ctx = React.use(CheckboxGroupContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "CheckboxGroupContext",
-        providerName: "CheckboxGroupRoot",
-      });
-    }
+export const useCheckboxGroupContext: IUseCheckboxGroupContext = (optional?: boolean): any => {
+  const ctx = React.use(CheckboxGroupContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "CheckboxGroupContext",
+      providerName: "CheckboxGroupRoot",
+    });
+  }
+
+  return ctx;
+};
 
 export { CheckboxGroupContext as Context, useCheckboxGroupContext as useContext };
-
 export namespace Context {
   export type Color = CheckboxGroupContextColor;
 

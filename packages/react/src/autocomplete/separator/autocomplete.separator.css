@@ -1,60 +1,56 @@
 @layer sui.component {
-@scope (.sui_autocomplete_separator) to ([data-scope]) {
+  @scope (.sui_autocomplete_separator) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: block;
+    }
 
-/* 固定 */
-:scope {
-  display: block;
-}
+    /* 変数 */
+    :scope {
+      --sui_autocomplete_separator-height: ;
+      --sui_autocomplete_separator-margin_block: ;
+      --sui_autocomplete_separator-margin_inline: ;
+      --sui_autocomplete_separator-color: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_autocomplete_separator-height: ;
-  --sui_autocomplete_separator-margin_block: ;
-  --sui_autocomplete_separator-margin_inline: ;
-  --sui_autocomplete_separator-color: ;
-}
+    /* 可変 */
+    :scope {
+      height: var(--sui_autocomplete_separator-height);
+      margin-block: var(--sui_autocomplete_separator-margin_block);
+      margin-inline: var(--sui_autocomplete_separator-margin_inline);
+      background-color: var(--sui_autocomplete_separator-color);
+    }
 
-/* 可変 */
-:scope {
-  height: var(--sui_autocomplete_separator-height);
-  margin-block: var(--sui_autocomplete_separator-margin_block);
-  margin-inline: var(--sui_autocomplete_separator-margin_inline);
-  background-color: var(--sui_autocomplete_separator-color);
-}
+    /* 代入 */
+    :scope {
+      --sui_autocomplete_separator-height: --sui-border_width(1);
+      --sui_autocomplete_separator-margin_inline: --sui-space(0);
+      --sui_autocomplete_separator-color: var(--sui-border-1);
 
-/* 代入 */
-:scope {
-  --sui_autocomplete_separator-height: --sui-border_width(1);
-  --sui_autocomplete_separator-margin_inline: --sui-space(0);
-  --sui_autocomplete_separator-color: var(--sui-border-1);
+      &.sui_autocomplete_separator-size_sm {
+        --sui_autocomplete_separator-margin_block: --sui-space(2);
+      }
 
-  &.sui_autocomplete_separator-size_sm {
-    --sui_autocomplete_separator-margin_block: --sui-space(2);
-  }
+      &.sui_autocomplete_separator-size_md {
+        --sui_autocomplete_separator-margin_block: --sui-space(3);
+      }
 
-  &.sui_autocomplete_separator-size_md {
-    --sui_autocomplete_separator-margin_block: --sui-space(3);
-  }
-
-  &.sui_autocomplete_separator-size_lg {
-    --sui_autocomplete_separator-margin_block: --sui-space(3);
-  }
-}
-
-} /* @scope */
+      &.sui_autocomplete_separator-size_lg {
+        --sui_autocomplete_separator-margin_block: --sui-space(3);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* 末尾グループの位置に依存するため、グループ起点の別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_autocomplete_group) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  /* 末尾グループの区切り線は表示しません。 */
-  &:last-child .sui_autocomplete_separator:last-child {
-    display: none;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_autocomplete_group) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      /* 末尾グループの区切り線は表示しません。 */
+      &:last-child .sui_autocomplete_separator:last-child {
+        display: none;
+      }
+    }
+  } /* @scope */
 } /* @layer */

@@ -13,9 +13,7 @@ import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { AvatarRootContext } from "./avatar.root.context.js";
 
-/**
- * アバターの配色です。
- */
+/** アバターの配色です。 */
 export type AvatarRootColor = Color;
 
 /**
@@ -74,7 +72,7 @@ export namespace AvatarRootProps {
     Pick<
       React.ComponentProps<typeof Avatar.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AvatarRootProps より:
+      // AvatarRootProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -101,7 +99,7 @@ export type IAvatarRoot = IComponent<AvatarRootProps>;
  *
  * 画像の読み込み状態を管理し、大きさ・配色・角丸を子パーツへ伝播します。
  */
-export const AvatarRoot: IAvatarRoot = function SuiAvatarRoot(props) {
+export const AvatarRoot: IAvatarRoot = (props) => {
   const ctx = useAvatarGroupContext(true);
   const {
     size: sizeProp = "md",
@@ -110,7 +108,7 @@ export const AvatarRoot: IAvatarRoot = function SuiAvatarRoot(props) {
     radius: radiusProp,
     render,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -118,7 +116,12 @@ export const AvatarRoot: IAvatarRoot = function SuiAvatarRoot(props) {
   const color = colorProp ?? ctx?.color ?? "grey";
   const radius = radiusProp ?? ctx?.radius ?? "full";
   const styleState = React.useMemo(
-    () => ({ size, color, radius, reverse: ctx?.reverse ?? false }),
+    () => ({
+      size,
+      color,
+      radius,
+      reverse: ctx?.reverse ?? false,
+    }),
     [color, ctx, radius, size],
   );
 
@@ -126,7 +129,10 @@ export const AvatarRoot: IAvatarRoot = function SuiAvatarRoot(props) {
     <Avatar.Root
       {...otherProps}
       {...proxyRenderProps<Avatar.Root.State, AvatarRootState>(
-        (state) => ({ ...styleState, ...state }),
+        (state) => ({
+          ...styleState,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -156,7 +162,6 @@ export const AvatarRoot: IAvatarRoot = function SuiAvatarRoot(props) {
 };
 
 export { AvatarRoot as Root };
-
 export namespace Root {
   export type State = AvatarRootState;
 

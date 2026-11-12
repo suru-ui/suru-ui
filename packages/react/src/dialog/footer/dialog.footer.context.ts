@@ -21,11 +21,10 @@ export type IUseDialogFooterContext = IUseContext<DialogFooterContext>;
 /**
  * {@link DialogFooterContext} を読み取るフックです。
  */
-export const useDialogFooterContext: IUseDialogFooterContext = function useSuiDialogFooterContext(
-  optional,
-): any {
+export const useDialogFooterContext: IUseDialogFooterContext = (optional): any => {
   const ctx = React.use(DialogFooterContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "DialogFooterContext",
       providerName: "DialogFooter",

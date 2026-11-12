@@ -19,14 +19,10 @@ import {
   AccordionContext,
 } from "./accordion.root.context.js";
 
-/**
- * アコーディオンの項目の開閉状態を変更するイベントの詳細です。
- */
+/** アコーディオンの項目の開閉状態を変更するイベントの詳細です。 */
 export type AccordionRootChangeEventDetails = Accordion.Root.ChangeEventDetails;
 
-/**
- * アコーディオンの項目の開閉状態を変更する理由です。
- */
+/** アコーディオンの項目の開閉状態を変更する理由です。 */
 export type AccordionRootChangeEventReason = Accordion.Root.ChangeEventReason;
 
 /**
@@ -37,14 +33,10 @@ export type AccordionRootChangeEventReason = Accordion.Root.ChangeEventReason;
 export type AccordionRootItemObject = Override<
   AccordionItemProps,
   {
-    /**
-     * 項目のパネルに表示する内容です。
-     */
+    /** 項目のパネルに表示する内容です。 */
     readonly content: React.ReactNode;
 
-    /**
-     * 項目の見出しに表示するタイトルです。
-     */
+    /** 項目の見出しに表示するタイトルです。 */
     readonly title: React.ReactNode;
 
     /**
@@ -68,6 +60,7 @@ export interface IAccordionRootItemRenderer<TItem = any> {
    * @param item 現在の項目です。
    * @param index 項目のインデックスです。
    * @param items すべての項目です。
+   *
    * @returns レンダリングする内容です。
    */
   (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
@@ -153,7 +146,7 @@ export namespace AccordionRootProps {
     Pick<
       React.ComponentProps<typeof Accordion.Root<TValue>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AccordionRootProps より:
+      // AccordionRootProps より :
       | "value"
       | "defaultValue"
       | "disabled"
@@ -194,33 +187,31 @@ export interface IAccordionRoot extends IComponent<AccordionRootProps> {
   ): IComponent.Return;
 }
 
-/**
- * アコーディオンのルートコンポーネントです。
- */
-export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: AccordionRootProps) {
-  const defaultItemRenderer: IAccordionRootItemRenderer = (item, index) => {
-    switch (true) {
-      case isItemObject(item): {
-        const { title, content, itemProps } = decomposeItemObject(item);
+const defaultItemRenderer: IAccordionRootItemRenderer = (item, index) => {
+  switch (true) {
+    case isItemObject(item): {
+      const { title, content, itemProps } = decomposeItemObject(item);
 
-        return (
-          <AccordionItem {...itemProps} key={getItemKey(item) ?? index}>
-            <AccordionHeading>
-              <AccordionTrigger>
-                {title}
-                <AccordionIndicator />
-              </AccordionTrigger>
-            </AccordionHeading>
-            <AccordionContent>{content}</AccordionContent>
-          </AccordionItem>
-        );
-      }
-
-      default:
-        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
+      return (
+        <AccordionItem {...itemProps} key={getItemKey(item) ?? index}>
+          <AccordionHeading>
+            <AccordionTrigger>
+              {title}
+              <AccordionIndicator />
+            </AccordionTrigger>
+          </AccordionHeading>
+          <AccordionContent>{content}</AccordionContent>
+        </AccordionItem>
+      );
     }
-  };
 
+    default:
+      return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
+  }
+};
+
+/** アコーディオンのルートコンポーネントです。 */
+export const AccordionRoot: IAccordionRoot = (props: AccordionRootProps) => {
   const {
     size = "md",
     items = [],
@@ -230,12 +221,16 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
     children = defaultItemRenderer,
     className,
     separator = true,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const ctx = React.useMemo<AccordionContext>(
-    () => ({ size, radius, separator }),
+    () => ({
+      size,
+      radius,
+      separator,
+    }),
     [radius, separator, size],
   );
 
@@ -244,7 +239,10 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
       <Accordion.Root
         {...otherProps}
         {...proxyRenderProps<Accordion.Root.State, AccordionRootState>(
-          (state) => ({ ...ctx, ...state }),
+          (state) => ({
+            ...ctx,
+            ...state,
+          }),
           {
             style,
             render,
@@ -255,6 +253,7 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
               (state) => `sui_accordion-radius_${state.radius}`,
               (state) => state.separator && "sui_accordion-separator",
               (state) => state.disabled && "sui_accordion-disabled",
+              // oxlint-disable-next-line typescript/no-deprecated -- Base UI の orientation を後方互換のため使用します。
               (state) => `sui_accordion-orientation_${state.orientation}`,
             ),
           },
@@ -268,7 +267,6 @@ export const AccordionRoot: IAccordionRoot = function SuiAccordionRoot(props: Ac
 };
 
 export { AccordionRoot as Root };
-
 export namespace Root {
   export type State<TValue = any> = AccordionRootState<TValue>;
 

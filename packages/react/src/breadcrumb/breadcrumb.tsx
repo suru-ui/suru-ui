@@ -27,8 +27,7 @@ import { BreadcrumbEllipsis } from "./ellipsis/breadcrumb.ellipsis.jsx";
 import type { BreadcrumbContext } from "./root/breadcrumb.root.context.js";
 import { decomposeItemObject } from "./utils/breadcrumb.utils.js";
 
-// Types
-// -----
+// Types.
 
 export type BreadcrumbColor = BreadcrumbRootColor;
 
@@ -78,9 +77,7 @@ export type BreadcrumbSlotProps = {
 
 namespace BreadcrumbProps {
   export type Breadcrumb<TItem = any> = {
-    /**
-     * パンくずリストの項目です。
-     */
+    /** パンくずリストの項目です。 */
     items: readonly TItem[];
 
     /**
@@ -97,9 +94,7 @@ namespace BreadcrumbProps {
      */
     maxItems?: number | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: BreadcrumbSlotProps | undefined;
   };
 
@@ -122,14 +117,15 @@ export interface IUseBreadcrumbAPI {
    * {@link BreadcrumbAPI} を作成します。
    *
    * @template TItem 項目の型です。
+   *
    * @param props {@link Breadcrumb} の props です。
+   *
    * @returns パンくずリストの API です
    */
   <TItem = any>(props: BreadcrumbProps<TItem>): BreadcrumbAPI<TItem>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Breadcrumb} を構成する各パーツの props などを作成するための API です。
@@ -145,20 +141,9 @@ export class BreadcrumbAPI<TItem = any> {
 
   private readonly rootProps: BreadcrumbProps.Root<TItem>;
 
-  /**
-   * @param props {@link Breadcrumb} の props です。
-   * @internal
-   */
-  public constructor(props: BreadcrumbProps<TItem>) {
-    const { items, children, maxItems, slotProps = {}, ...rootProps } = props;
-    this.breadcrumbProps = { items, maxItems };
-    this.listProps = { children };
-    this.slotProps = slotProps;
-    this.rootProps = rootProps;
-  }
-
-  private defaultItemRenderer: IBreadcrumbItemRenderer = (item, index, items) => {
+  private readonly defaultItemRenderer: IBreadcrumbItemRenderer = (item, index, items) => {
     const layout = this.getCollapsedLayout(items.length);
+
     if (layout && index >= layout.hiddenStart && index < layout.hiddenEnd) {
       if (index !== layout.hiddenStart) {
         return null;
@@ -190,7 +175,7 @@ export class BreadcrumbAPI<TItem = any> {
     }
 
     switch (true) {
-      case isItemObject(item): {
+      case isItemObject(item):
         return (
           <React.Fragment key={getItemKey(item) ?? index}>
             {index > 0 && <BreadcrumbSeparator {...this.getSeparatorProps()} />}
@@ -199,7 +184,6 @@ export class BreadcrumbAPI<TItem = any> {
             </BreadcrumbItem>
           </React.Fragment>
         );
-      }
 
       default:
         return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
@@ -207,27 +191,30 @@ export class BreadcrumbAPI<TItem = any> {
   };
 
   /**
+   * @param props {@link Breadcrumb} の props です。
+   *
+   * @internal
+   */
+  public constructor(props: BreadcrumbProps<TItem>) {
+    const { items, children, maxItems, slotProps = {}, ...rootProps } = props;
+    this.breadcrumbProps = {
+      items,
+      maxItems,
+    };
+    this.listProps = {
+      children,
+    };
+    this.slotProps = slotProps;
+    this.rootProps = rootProps;
+  }
+
+  /**
    * 項目を省略する範囲を取得します。
    *
    * @param itemCount 項目数です。
+   *
    * @returns 省略する範囲です。省略しない場合は `null` を返します。
    */
-  private getCollapsedLayout(itemCount: number): { hiddenEnd: number; hiddenStart: number } | null {
-    const { maxItems } = this.breadcrumbProps;
-    if (maxItems === undefined) {
-      return null;
-    }
-
-    const limit = Math.max(3, Math.trunc(maxItems));
-    if (itemCount <= limit) {
-      return null;
-    }
-
-    const hiddenStart = 1;
-    const hiddenEnd = itemCount - (limit - 2);
-
-    return hiddenStart < hiddenEnd ? { hiddenEnd, hiddenStart } : null;
-  }
 
   /**
    * {@link BreadcrumbItem} に渡す props を取得します。
@@ -258,7 +245,14 @@ export class BreadcrumbAPI<TItem = any> {
     const { itemProps } = decomposeItemObject(item);
     const current = itemProps.current ?? index === this.breadcrumbProps.items.length - 1;
 
-    return mergeProps([props, itemProps, { current, children: this.getLabel(item) }]);
+    return mergeProps([
+      props,
+      itemProps,
+      {
+        current,
+        children: this.getLabel(item),
+      },
+    ]);
   }
 
   /**
@@ -292,26 +286,49 @@ export class BreadcrumbAPI<TItem = any> {
 
     return props;
   }
+
+  private getCollapsedLayout(itemCount: number): {
+    hiddenEnd: number;
+    hiddenStart: number;
+  } | null {
+    const { maxItems } = this.breadcrumbProps;
+
+    if (maxItems === undefined) {
+      return null;
+    }
+
+    const limit = Math.max(3, Math.trunc(maxItems));
+
+    if (itemCount <= limit) {
+      return null;
+    }
+
+    const hiddenStart = 1;
+    const hiddenEnd = itemCount - (limit - 2);
+
+    return hiddenStart < hiddenEnd
+      ? {
+          hiddenEnd,
+          hiddenStart,
+        }
+      : null;
+  }
 }
 
 /**
  * {@link BreadcrumbAPI} を作成するフックです。
  */
-export const useBreadcrumbAPI: IUseBreadcrumbAPI = function useSuiBreadcrumbAPI(props) {
-  return new BreadcrumbAPI(props);
-};
+export const useBreadcrumbAPI: IUseBreadcrumbAPI = (props) => new BreadcrumbAPI(props);
 
 export { BreadcrumbAPI as API, useBreadcrumbAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IBreadcrumb extends IComponent<BreadcrumbProps> {
   /**
    * @template TItem 項目の型です。
    */
   <TItem = any>(props: BreadcrumbProps<TItem>): IComponent.Return;
-
   readonly useContext: IUseBreadcrumbContext;
 }
 
@@ -322,7 +339,7 @@ export interface IBreadcrumb extends IComponent<BreadcrumbProps> {
  * {@link BreadcrumbProps.maxItems|maxItems} を指定すると、超過分を省略記号にまとめ、省略記号から項目を選択できます。
  */
 export const Breadcrumb: IBreadcrumb = Object.assign(
-  function SuiBreadcrumb(props: BreadcrumbProps) {
+  (props: BreadcrumbProps) => {
     const api = useBreadcrumbAPI(props);
 
     return (

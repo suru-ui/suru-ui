@@ -23,7 +23,7 @@ export namespace PopoverPopupProps {
     Pick<
       React.ComponentProps<typeof Popover.Popup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PopoverPopupProps より:
+      // PopoverPopupProps より :
       "initialFocus" | "finalFocus"
     >,
     keyof Render | keyof SuruUI
@@ -45,10 +45,8 @@ export type PopoverPopupProps = PopoverPopupProps.Render &
 
 export type IPopoverPopup = IComponent<PopoverPopupProps>;
 
-/**
- * ポップオーバーの内容を表示するポップアップ要素です。
- */
-export const PopoverPopup: IPopoverPopup = function SuiPopoverPopup(props) {
+/** ポップオーバーの内容を表示するポップアップ要素です。 */
+export const PopoverPopup: IPopoverPopup = (props) => {
   const ctx = usePopoverPositionerContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const PopoverPopup: IPopoverPopup = function SuiPopoverPopup(props) {
     <Popover.Popup
       {...otherProps}
       {...proxyRenderProps<Popover.Popup.State, PopoverPopupState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -91,7 +92,6 @@ export const PopoverPopup: IPopoverPopup = function SuiPopoverPopup(props) {
 };
 
 export { PopoverPopup as Popup };
-
 export namespace Popup {
   export type State = PopoverPopupState;
 

@@ -21,10 +21,7 @@ export namespace BreadcrumbSeparatorProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"li", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"li", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -37,10 +34,8 @@ export type BreadcrumbSeparatorProps = BreadcrumbSeparatorProps.Render &
 
 export type IBreadcrumbSeparator = IComponent<BreadcrumbSeparatorProps>;
 
-/**
- * パンくずの項目を区切るセパレーターコンポーネントです。
- */
-export const BreadcrumbSeparator: IBreadcrumbSeparator = function SuiBreadcrumbSeparator(props) {
+/** パンくずの項目を区切るセパレーターコンポーネントです。 */
+export const BreadcrumbSeparator: IBreadcrumbSeparator = (props) => {
   const ctx = useBreadcrumbContext();
   const {
     children = <ChevronRightIcon />,
@@ -67,7 +62,6 @@ export const BreadcrumbSeparator: IBreadcrumbSeparator = function SuiBreadcrumbS
 };
 
 export { BreadcrumbSeparator as Separator };
-
 export namespace Separator {
   export type State<TItem = any> = BreadcrumbSeparatorState<TItem>;
 

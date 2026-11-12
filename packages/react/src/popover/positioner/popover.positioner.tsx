@@ -23,7 +23,7 @@ export namespace PopoverPositionerProps {
     Pick<
       React.ComponentProps<typeof Popover.Positioner>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // UseAnchorPositioningSharedParameters より:
+      // UseAnchorPositioningSharedParameters より :
       | "anchor"
       | "positionMethod"
       | "side"
@@ -56,10 +56,8 @@ export type PopoverPositionerProps = PopoverPositionerProps.Render &
 
 export type IPopoverPositioner = IComponent<PopoverPositionerProps>;
 
-/**
- * トリガーを基準にポップアップを配置する要素です。
- */
-export const PopoverPositioner: IPopoverPositioner = function SuiPopoverPositioner(props) {
+/** トリガーを基準にポップアップを配置する要素です。 */
+export const PopoverPositioner: IPopoverPositioner = (props) => {
   const ctx = usePopoverPortalContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -67,7 +65,10 @@ export const PopoverPositioner: IPopoverPositioner = function SuiPopoverPosition
     <Popover.Positioner
       {...otherProps}
       {...proxyRenderProps<Popover.Positioner.State, PopoverPositionerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -88,7 +89,10 @@ export const PopoverPositioner: IPopoverPositioner = function SuiPopoverPosition
             (state) => state.outlined && "sui_popover_positioner-outlined",
             (state) => state.open && "sui_popover_positioner-open",
             (state) => state.anchorHidden && "sui_popover_positioner-anchor_hidden",
-            (state) => state.instant && "sui_popover_positioner-instant",
+            (state) =>
+              state.instant !== undefined &&
+              state.instant !== "" &&
+              "sui_popover_positioner-instant",
             (state) => `sui_popover_positioner-side_${state.side.replaceAll("-", "_")}`,
             (state) => `sui_popover_positioner-align_${state.align}`,
           ),
@@ -99,7 +103,6 @@ export const PopoverPositioner: IPopoverPositioner = function SuiPopoverPosition
 };
 
 export { PopoverPositioner as Positioner };
-
 export namespace Positioner {
   export type State = PopoverPositionerState;
 

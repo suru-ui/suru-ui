@@ -16,8 +16,7 @@ import {
   StatDescription,
 } from "./stat.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type StatDirection = StatTrendDirection;
 
@@ -57,29 +56,19 @@ namespace StatProps {
   export type Root = Omit<StatRootProps, "children" | keyof Stat>;
 
   export type Stat = {
-    /**
-     * 統計の補足説明です。
-     */
+    /** 統計の補足説明です。 */
     description?: StatDescriptionProps["children"] | undefined;
 
-    /**
-     * 統計のラベルです。
-     */
+    /** 統計のラベルです。 */
     label?: StatLabelProps["children"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: StatSlotProps | undefined;
 
-    /**
-     * 値の増減を示す内容です。
-     */
+    /** 値の増減を示す内容です。 */
     trend?: StatTrendProps["children"] | undefined;
 
-    /**
-     * 統計の値です。
-     */
+    /** 統計の値です。 */
     value?: StatValueProps["children"] | undefined;
   };
 }
@@ -96,13 +85,13 @@ export interface IUseStatAPI {
    * {@link StatAPI} を作成します。
    *
    * @param props {@link Stat} の props です。
+   *
    * @returns 統計の API です
    */
   (props: StatProps): StatAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Stat} を構成する各パーツの props を作成するための API です。
@@ -116,11 +105,17 @@ export class StatAPI {
 
   /**
    * @param props {@link Stat} の props です。
+   *
    * @internal
    */
   public constructor(props: StatProps) {
     const { label, trend, value, slotProps = {}, description, ...rootProps } = props;
-    this.statProps = { label, trend, value, description };
+    this.statProps = {
+      label,
+      trend,
+      value,
+      description,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -212,19 +207,14 @@ export class StatAPI {
 /**
  * {@link StatAPI} を作成するフックです。
  */
-export const useStatAPI: IUseStatAPI = function useSuiStatAPI(props) {
-  return new StatAPI(props);
-};
+export const useStatAPI: IUseStatAPI = (props) => new StatAPI(props);
 
 export { StatAPI as API, useStatAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
-/**
- * ラベルと値の組で統計を表示するコンポーネントです。
- */
-export const Stat: IStat = function SuiStat(props) {
+/** ラベルと値の組で統計を表示するコンポーネントです。 */
+export const Stat: IStat = (props) => {
   const api = useStatAPI(props);
   const labelProps = api.getLabelProps();
   const valueProps = api.getValueProps();

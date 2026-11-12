@@ -10,8 +10,7 @@ import {
   FormRoot,
 } from "./form.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type FormActions = FormRootActions;
 
@@ -40,14 +39,15 @@ export interface IUseFormAPI {
    * {@link FormAPI} を作成します。
    *
    * @template TValues フォームの入力値を表す型です。
+   *
    * @param props {@link Form} の props です。
+   *
    * @returns フォームの API です
    */
   <TValues extends FormValues = FormValues>(props: FormProps<TValues>): FormAPI<TValues>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Form} を構成する各パーツの props を作成するための API です。
@@ -59,6 +59,7 @@ export class FormAPI<TValues extends FormValues = FormValues> {
 
   /**
    * @param props {@link Form} の props です。
+   *
    * @internal
    */
   public constructor(props: FormProps<TValues>) {
@@ -76,16 +77,13 @@ export class FormAPI<TValues extends FormValues = FormValues> {
 /**
  * {@link FormAPI} を作成するフックです。
  */
-export const useFormAPI: IUseFormAPI = function useSuiFormAPI<TValues extends FormValues>(
+export const useFormAPI: IUseFormAPI = <TValues extends FormValues>(
   props: FormProps<TValues>,
-): FormAPI<TValues> {
-  return new FormAPI(props);
-};
+): FormAPI<TValues> => new FormAPI(props);
 
 export { FormAPI as API, useFormAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IForm extends IComponent<FormProps> {
   /**
@@ -99,7 +97,7 @@ export interface IForm extends IComponent<FormProps> {
  *
  * フィールドの検証状態をまとめ、送信時に値を集めます。
  */
-export const Form: IForm = function SuiForm(props: FormProps) {
+export const Form: IForm = (props: FormProps) => {
   const api = useFormAPI(props);
 
   return <FormRoot {...api.getRootProps()} />;

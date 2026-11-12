@@ -33,9 +33,7 @@ export type NumberFieldRootCommitEventDetails = NumberField.Root.CommitEventDeta
  */
 export type NumberFieldRootCommitEventReason = NumberField.Root.CommitEventReason;
 
-/**
- * 数値入力欄の配色です。
- */
+/** 数値入力欄の配色です。 */
 export type NumberFieldRootColor = NumberFieldContextColor;
 
 /**
@@ -93,7 +91,7 @@ export namespace NumberFieldRootProps {
     /**
      * 数値入力欄の角丸を指定します。
      *
-     * 既定値は {@link NumberFieldRootProps.size|size}
+     * 既定値は {@link NumberFieldRootProps.size|size}。
      */
     radius?: NumberFieldRootRadius | undefined;
 
@@ -116,7 +114,7 @@ export namespace NumberFieldRootProps {
     Pick<
       React.ComponentProps<typeof NumberField.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NumberFieldRootProps より:
+      // NumberFieldRootProps より :
       | "id"
       | "min"
       | "max"
@@ -158,10 +156,8 @@ export type NumberFieldRootProps = NumberFieldRootProps.Render &
 
 export type INumberFieldRoot = IComponent<NumberFieldRootProps>;
 
-/**
- * 数値入力欄のルートコンポーネントです。
- */
-export const NumberFieldRoot: INumberFieldRoot = function SuiNumberFieldRoot(props) {
+/** 数値入力欄のルートコンポーネントです。 */
+export const NumberFieldRoot: INumberFieldRoot = (props) => {
   const {
     size = "md",
     color = "grey",
@@ -171,12 +167,18 @@ export const NumberFieldRoot: INumberFieldRoot = function SuiNumberFieldRoot(pro
     variant = "naked",
     outlined = true,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const ctx = React.useMemo<NumberFieldContext>(
-    () => ({ size, color, radius, variant, outlined }),
+    () => ({
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+    }),
     [size, color, radius, variant, outlined],
   );
 
@@ -185,7 +187,10 @@ export const NumberFieldRoot: INumberFieldRoot = function SuiNumberFieldRoot(pro
       <NumberField.Root
         {...otherProps}
         {...proxyRenderProps<NumberField.Root.State, NumberFieldRootState>(
-          (state) => ({ ...ctx, ...state }),
+          (state) => ({
+            ...ctx,
+            ...state,
+          }),
           {
             style,
             render,
@@ -218,7 +223,6 @@ export const NumberFieldRoot: INumberFieldRoot = function SuiNumberFieldRoot(pro
 };
 
 export { NumberFieldRoot as Root };
-
 export namespace Root {
   export type State = NumberFieldRootState;
 

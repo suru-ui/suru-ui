@@ -15,9 +15,7 @@ import {
 export type FileUploadClearTriggerState = Override<
   FileUploadContextState,
   {
-    /**
-     * このボタンを無効にするかどうかです。
-     */
+    /** このボタンを無効にするかどうかです。 */
     readonly disabled: boolean;
   }
 >;
@@ -31,7 +29,7 @@ export namespace FileUploadClearTriggerProps {
 
   export type HTML = Omit<
     BaseUIComponentProps<"button", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,12 +45,8 @@ export type FileUploadClearTriggerProps = FileUploadClearTriggerProps.Render &
 
 export type IFileUploadClearTrigger = IComponent<FileUploadClearTriggerProps>;
 
-/**
- * 選択済みのファイルをすべて削除するボタンです。
- */
-export const FileUploadClearTrigger: IFileUploadClearTrigger = function SuiFileUploadClearTrigger(
-  props,
-) {
+/** 選択済みのファイルをすべて削除するボタンです。 */
+export const FileUploadClearTrigger: IFileUploadClearTrigger = (props) => {
   const ctx = useFileUploadContext();
   const { disabled: disabledProp, ...otherButtonProps } = props;
   const disabled = ctx.disabled || (disabledProp ?? false) || ctx.files.length === 0;
@@ -85,13 +79,13 @@ export const FileUploadClearTrigger: IFileUploadClearTrigger = function SuiFileU
         disabled,
         className: cn<FileUploadClearTriggerState>(
           "sui_file_upload_clear_trigger",
-          (state) => `sui_file_upload_clear_trigger-size_${state.size}`,
-          (state) => `sui_file_upload_clear_trigger-color_${state.color}`,
-          (state) => `sui_file_upload_clear_trigger-radius_${state.radius}`,
-          (state) => `sui_file_upload_clear_trigger-variant_${state.variant}`,
-          (state) => state.disabled && "sui_file_upload_clear_trigger-disabled",
-          (state) => state.multiple && "sui_file_upload_clear_trigger-multiple",
-          (state) => state.required && "sui_file_upload_clear_trigger-required",
+          (currentState) => `sui_file_upload_clear_trigger-size_${currentState.size}`,
+          (currentState) => `sui_file_upload_clear_trigger-color_${currentState.color}`,
+          (currentState) => `sui_file_upload_clear_trigger-radius_${currentState.radius}`,
+          (currentState) => `sui_file_upload_clear_trigger-variant_${currentState.variant}`,
+          (currentState) => currentState.disabled && "sui_file_upload_clear_trigger-disabled",
+          (currentState) => currentState.multiple && "sui_file_upload_clear_trigger-multiple",
+          (currentState) => currentState.required && "sui_file_upload_clear_trigger-required",
         ),
       },
     ],
@@ -101,7 +95,6 @@ export const FileUploadClearTrigger: IFileUploadClearTrigger = function SuiFileU
 };
 
 export { FileUploadClearTrigger as ClearTrigger };
-
 export namespace ClearTrigger {
   export type State = FileUploadClearTriggerState;
 

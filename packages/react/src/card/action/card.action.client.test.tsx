@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { CardHeader } from "../header/card.header.jsx";
@@ -8,7 +8,7 @@ import "../../../tests/src/_locators.js";
 
 describe("CardAction", () => {
   test("操作要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CardRoot>
         <CardAction>
@@ -17,39 +17,39 @@ describe("CardAction", () => {
       </CardRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_card_action").element().tagName).toBe("DIV");
     expect(screen.getByRole("button", { name: "設定" }).query()).not.toBe(null);
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CardRoot>
         <CardAction className="custom" />
       </CardRoot>,
     );
 
-    // 検証
+    // 検証。
     const action = screen.getByClassName("sui_card_action").element();
     expect(action.classList.contains("custom")).toBe(true);
     expect(action.classList.contains("sui_card_action")).toBe(true);
   });
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CardRoot>
         <CardAction render={<aside />} />
       </CardRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_card_action").element().tagName).toBe("ASIDE");
   });
 
   test("render の関数へ親パーツの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CardRoot size="lg" radius="sm" outlined>
         <CardHeader>
@@ -62,7 +62,7 @@ describe("CardAction", () => {
       </CardRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_card_action").element().getAttribute("data-probe")).toBe(
       "lg/sm/true",
     );

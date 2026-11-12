@@ -25,17 +25,17 @@ export type IUseAutocompleteGroupContext = IUseContext<AutocompleteGroupContext>
 /**
  * {@link AutocompleteGroupContext} を読み取るフックです。
  */
-export const useAutocompleteGroupContext: IUseAutocompleteGroupContext =
-  function useSuiAutocompleteGroupContext(optional): any {
-    const ctx = React.use(AutocompleteGroupContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompleteGroupContext",
-        providerName: "AutocompleteGroup",
-      });
-    }
+export const useAutocompleteGroupContext: IUseAutocompleteGroupContext = (optional): any => {
+  const ctx = React.use(AutocompleteGroupContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompleteGroupContext",
+      providerName: "AutocompleteGroup",
+    });
+  }
+
+  return ctx;
+};
 
 export { AutocompleteGroupContext as GroupContext, useAutocompleteGroupContext as useGroupContext };

@@ -1,91 +1,89 @@
 @layer sui.component {
-@scope (.sui_combobox_item_indicator) to ([data-scope]) {
+  @scope (.sui_combobox_item_indicator) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: relative;
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      align-self: center;
+      justify-content: center;
+      overflow: hidden;
+      white-space: nowrap;
 
-/* 固定 */
-:scope {
-  position: relative;
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  align-self: center;
-  justify-content: center;
-  overflow: hidden;
-  white-space: nowrap;
+      &:empty {
+        display: none;
+      }
+    }
 
-  &:empty {
-    display: none;
-  }
-}
+    /* 変数 */
+    :scope {
+      --sui_combobox_item_indicator-min_width: ;
+      --sui_combobox_item_indicator-virtual_padding_block: ;
+      --sui_combobox_item_indicator-font_family: ;
+      --sui_combobox_item_indicator-font_size: ;
+      --sui_combobox_item_indicator-font_weight: ;
+      --sui_combobox_item_indicator-color: ;
+      --sui_combobox_item_indicator-letter_spacing: ;
+      --sui_combobox_item_indicator__svg-size: ;
+      --sui_combobox_item_indicator__svg-color: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_combobox_item_indicator-min_width: ;
-  --sui_combobox_item_indicator-virtual_padding_block: ;
-  --sui_combobox_item_indicator-font_family: ;
-  --sui_combobox_item_indicator-font_size: ;
-  --sui_combobox_item_indicator-font_weight: ;
-  --sui_combobox_item_indicator-color: ;
-  --sui_combobox_item_indicator-letter_spacing: ;
-  --sui_combobox_item_indicator__svg-size: ;
-  --sui_combobox_item_indicator__svg-color: ;
-}
+    /* 可変 */
+    :scope {
+      min-width: var(--sui_combobox_item_indicator-min_width);
+      font-family: var(--sui_combobox_item_indicator-font_family);
+      font-size: var(--sui_combobox_item_indicator-font_size);
+      font-weight: var(--sui_combobox_item_indicator-font_weight);
+      line-height: var(--sui_combobox_item_indicator-line_height);
+      color: var(--sui_combobox_item_indicator-color);
+      letter-spacing: var(--sui_combobox_item_indicator-letter_spacing);
 
-/* 可変 */
-:scope {
-  min-width: var(--sui_combobox_item_indicator-min_width);
-  font-family: var(--sui_combobox_item_indicator-font_family);
-  font-size: var(--sui_combobox_item_indicator-font_size);
-  font-weight: var(--sui_combobox_item_indicator-font_weight);
-  line-height: var(--sui_combobox_item_indicator-line_height);
-  color: var(--sui_combobox_item_indicator-color);
-  letter-spacing: var(--sui_combobox_item_indicator-letter_spacing);
+      svg:not(.sui-ignore) {
+        width: var(--sui_combobox_item_indicator__svg-size);
+        height: var(--sui_combobox_item_indicator__svg-size);
+        color: var(--sui_combobox_item_indicator__svg-color);
+      }
+    }
 
-  svg:not(.sui-ignore) {
-    width: var(--sui_combobox_item_indicator__svg-size);
-    height: var(--sui_combobox_item_indicator__svg-size);
-    color: var(--sui_combobox_item_indicator__svg-color);
-  }
-}
+    /* 代入 */
+    :scope {
+      --sui_combobox_item_indicator-min_width: calc(
+        var(--sui_combobox_item_indicator__svg-size) +
+          var(--sui_combobox_item_indicator-virtual_padding_block) * 2
+      );
+      --sui_combobox_item_indicator-virtual_padding_block: --sui-space(0.5);
+      --sui_combobox_item_indicator-font_family: var(--sui-font-sans);
+      --sui_combobox_item_indicator-color: var(--sui-canvas_text-2);
+      --sui_combobox_item_indicator__svg-size: calc(
+        var(--sui_combobox_item_indicator-font_size) *
+          var(--sui_combobox_item_indicator-line_height)
+      );
+      --sui_combobox_item_indicator__svg-color: --sui-icon_color(
+        var(--sui_combobox_item_indicator-color),
+        var(--sui_combobox-background_color)
+      );
 
-/* 代入 */
-:scope {
-  --sui_combobox_item_indicator-min_width: calc(
-    var(--sui_combobox_item_indicator__svg-size)
-    + var(--sui_combobox_item_indicator-virtual_padding_block) * 2
-  );
-  --sui_combobox_item_indicator-virtual_padding_block: --sui-space(0.5);
-  --sui_combobox_item_indicator-font_family: var(--sui-font-sans);
-  --sui_combobox_item_indicator-color: var(--sui-canvas_text-2);
-  --sui_combobox_item_indicator__svg-size: calc(
-                                             var(--sui_combobox_item_indicator-font_size)
-                                             * var(--sui_combobox_item_indicator-line_height)
-                                           );
-  --sui_combobox_item_indicator__svg-color: --sui-icon_color(
-                                              var(--sui_combobox_item_indicator-color),
-                                              var(--sui_combobox-background_color)
-                                            );
+      &.sui_combobox_item_indicator-size_sm {
+        --sui_combobox_item_indicator-font_size: var(--sui-text-oln-sm-n-font_size);
+        --sui_combobox_item_indicator-font_weight: var(--sui-text-oln-sm-n-font_weight);
+        --sui_combobox_item_indicator-line_height: var(--sui-text-oln-sm-n-line_height);
+        --sui_combobox_item_indicator-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+      }
 
-  &.sui_combobox_item_indicator-size_sm {
-    --sui_combobox_item_indicator-font_size: var(--sui-text-oln-sm-n-font_size);
-    --sui_combobox_item_indicator-font_weight: var(--sui-text-oln-sm-n-font_weight);
-    --sui_combobox_item_indicator-line_height: var(--sui-text-oln-sm-n-line_height);
-    --sui_combobox_item_indicator-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
-  }
+      &.sui_combobox_item_indicator-size_md {
+        --sui_combobox_item_indicator-font_size: var(--sui-text-oln-md-n-font_size);
+        --sui_combobox_item_indicator-font_weight: var(--sui-text-oln-md-n-font_weight);
+        --sui_combobox_item_indicator-line_height: var(--sui-text-oln-md-n-line_height);
+        --sui_combobox_item_indicator-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
+      }
 
-  &.sui_combobox_item_indicator-size_md {
-    --sui_combobox_item_indicator-font_size: var(--sui-text-oln-md-n-font_size);
-    --sui_combobox_item_indicator-font_weight: var(--sui-text-oln-md-n-font_weight);
-    --sui_combobox_item_indicator-line_height: var(--sui-text-oln-md-n-line_height);
-    --sui_combobox_item_indicator-letter_spacing: var(--sui-text-oln-md-n-letter_spacing);
-  }
-
-  &.sui_combobox_item_indicator-size_lg {
-    --sui_combobox_item_indicator-font_size: var(--sui-text-oln-lg-n-font_size);
-    --sui_combobox_item_indicator-font_weight: var(--sui-text-oln-lg-n-font_weight);
-    --sui_combobox_item_indicator-line_height: var(--sui-text-oln-lg-n-line_height);
-    --sui_combobox_item_indicator-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
-  }
-}
-
-} /* @scope */
+      &.sui_combobox_item_indicator-size_lg {
+        --sui_combobox_item_indicator-font_size: var(--sui-text-oln-lg-n-font_size);
+        --sui_combobox_item_indicator-font_weight: var(--sui-text-oln-lg-n-font_weight);
+        --sui_combobox_item_indicator-line_height: var(--sui-text-oln-lg-n-line_height);
+        --sui_combobox_item_indicator-letter_spacing: var(--sui-text-oln-lg-n-letter_spacing);
+      }
+    }
+  } /* @scope */
 } /* @layer */

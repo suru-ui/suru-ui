@@ -25,17 +25,17 @@ export type IUseSelectTriggerContext = IUseContext<SelectTriggerContext>;
 /**
  * {@link SelectTriggerContext} を読み取るフックです。
  */
-export const useSelectTriggerContext: IUseSelectTriggerContext =
-  function useSuiSelectTriggerContext(optional): any {
-    const ctx = React.use(SelectTriggerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "SelectTriggerContext",
-        providerName: "SelectTrigger",
-      });
-    }
+export const useSelectTriggerContext: IUseSelectTriggerContext = (optional): any => {
+  const ctx = React.use(SelectTriggerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "SelectTriggerContext",
+      providerName: "SelectTrigger",
+    });
+  }
+
+  return ctx;
+};
 
 export { SelectTriggerContext as TriggerContext, useSelectTriggerContext as useTriggerContext };

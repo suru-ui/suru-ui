@@ -1,6 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "./switch.parts.js";
@@ -9,11 +8,12 @@ import "../../tests/src/_locators.js";
 
 describe("Switch の配置", () => {
   test("公開パーツをすべて描画して余白を持たない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Switch defaultChecked />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_switch_thumb").query()).not.toBe(null);
+
     for (const element of screen.container.querySelectorAll<HTMLElement>(
       ".sui_switch, .sui_switch *",
     )) {
@@ -24,7 +24,7 @@ describe("Switch の配置", () => {
   });
 
   test("大きさに応じた幅と高さを持つ", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span
@@ -57,15 +57,17 @@ describe("Switch の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const sm = screen.getByTestId("sm").element().getBoundingClientRect();
     const smReference = screen.getByTestId("sm-reference").element().getBoundingClientRect().width;
     expect(sm.height).toBeCloseTo(smReference, 1);
     expect(sm.width).toBeCloseTo(smReference * 1.75, 1);
+
     const md = screen.getByTestId("md").element().getBoundingClientRect();
     const mdReference = screen.getByTestId("md-reference").element().getBoundingClientRect().width;
     expect(md.height).toBeCloseTo(mdReference, 1);
     expect(md.width).toBeCloseTo(mdReference * 1.75, 1);
+
     const lg = screen.getByTestId("lg").element().getBoundingClientRect();
     const lgReference = screen.getByTestId("lg-reference").element().getBoundingClientRect().width;
     expect(lg.height).toBeCloseTo(lgReference, 1);
@@ -73,10 +75,10 @@ describe("Switch の配置", () => {
   });
 
   test("つまみを中央に配置する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Switch data-testid="root" />);
 
-    // 検証
+    // 検証。
     const rootElement = screen.getByTestId("root").element();
     const root = rootElement.getBoundingClientRect();
     const padding = Number.parseFloat(getComputedStyle(rootElement).paddingTop);
@@ -90,7 +92,7 @@ describe("Switch の配置", () => {
   });
 
   test("チェック時はつまみを右端へ移動する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <Switch data-testid="unchecked" />
@@ -98,7 +100,7 @@ describe("Switch の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const uncheckedElement = screen.getByTestId("unchecked").element();
     const padding = Number.parseFloat(getComputedStyle(uncheckedElement).paddingTop);
     const uncheckedRoot = uncheckedElement.getBoundingClientRect();
@@ -106,6 +108,7 @@ describe("Switch の配置", () => {
       .querySelector<HTMLElement>(".sui_switch_thumb")!
       .getBoundingClientRect();
     expect(uncheckedThumb.left).toBeCloseTo(uncheckedRoot.left + padding, 1);
+
     const checkedRoot = screen.getByTestId("checked").element().getBoundingClientRect();
     const checkedThumb = screen
       .getByTestId("checked")
@@ -116,10 +119,10 @@ describe("Switch の配置", () => {
   });
 
   test("角丸 full は高さの半分にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Switch size="lg" radius="full" data-testid="full" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByTestId("full").element();
     expect(Number.parseFloat(getComputedStyle(root).borderTopLeftRadius)).toBeCloseTo(
       root.getBoundingClientRect().height / 2,
@@ -128,7 +131,7 @@ describe("Switch の配置", () => {
   });
 
   test("つまみの角丸をレールの角丸から余白を引いた値にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const radii = ["none", "sm", "md", "lg", "full", "circle"] as const;
     const screen = await render(
       <>
@@ -138,7 +141,7 @@ describe("Switch の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     for (const radius of radii) {
       const root = screen.getByTestId(radius).element();
       const rootStyle = getComputedStyle(root);
@@ -153,10 +156,10 @@ describe("Switch の配置", () => {
   });
 
   test("角丸 circle は corner-shape を使わず高さの半分にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<Switch radius="circle" data-testid="circle" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByTestId("circle").element();
     const style = getComputedStyle(root);
     expect(style.getPropertyValue("--sui_switch-corner_shape").trim()).toBe("none");
@@ -164,6 +167,7 @@ describe("Switch の配置", () => {
       root.getBoundingClientRect().height / 2,
       1,
     );
+
     const thumb = root.querySelector<HTMLElement>(".sui_switch_thumb")!;
     expect(getComputedStyle(thumb).getPropertyValue("--sui_switch_thumb-corner_shape").trim()).toBe(
       "none",
@@ -171,7 +175,7 @@ describe("Switch の配置", () => {
   });
 
   test("枠線を表示しても大きさを変えない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ outline: "1px solid transparent" }} data-testid="reference" />
@@ -180,7 +184,7 @@ describe("Switch の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const plain = screen.getByTestId("plain").element();
     const outlined = screen.getByTestId("outlined").element();
     expect(getComputedStyle(plain, "::after").outlineWidth).toBe("0px");
@@ -195,21 +199,21 @@ describe("Switch の配置", () => {
   });
 
   test("フォーカス時に焦点リングを表示する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(<Switch />);
     const root = screen.getByClassName("sui_switch").element() as HTMLElement;
 
-    // 実行
+    // 実行。
     root.focus({ focusVisible: true });
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(root);
     expect(style.outlineStyle).toBe("solid");
     expect(Number.parseFloat(style.outlineWidth)).toBeGreaterThan(0);
   });
 
   test("チェック時は配色を背景に適用する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ backgroundColor: "var(--sui-blue-solid-canvas-normal)" }}>基準</span>
@@ -217,7 +221,7 @@ describe("Switch の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByText("基準").element()).backgroundColor;
     expect(getComputedStyle(screen.getByClassName("sui_switch").element()).backgroundColor).toBe(
       expected,
@@ -225,7 +229,7 @@ describe("Switch の配置", () => {
   });
 
   test("チェック状態でつまみの配色を切り替える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ backgroundColor: "var(--sui-canvas_text-1)" }}>未チェック</span>
@@ -235,7 +239,7 @@ describe("Switch の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const unchecked = screen
       .getByTestId("unchecked")
       .element()
@@ -243,6 +247,7 @@ describe("Switch の配置", () => {
     expect(getComputedStyle(unchecked).backgroundColor).toBe(
       getComputedStyle(screen.getByText("未チェック").element()).backgroundColor,
     );
+
     const checked = screen
       .getByTestId("checked")
       .element()
@@ -253,10 +258,15 @@ describe("Switch の配置", () => {
   });
 
   test("未チェックの hover で配色を変える", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <>
-        <span style={{ display: "block", backgroundColor: "var(--sui-grey-liquid-canvas-subtle)" }}>
+        <span
+          style={{
+            display: "block",
+            backgroundColor: "var(--sui-grey-liquid-canvas-subtle)",
+          }}
+        >
           基準
         </span>
         <Switch />
@@ -264,19 +274,24 @@ describe("Switch の配置", () => {
     );
     const root = screen.getByClassName("sui_switch");
 
-    // 実行
+    // 実行。
     await root.hover();
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByText("基準").element()).backgroundColor;
     await expect.poll(() => getComputedStyle(root.element()).backgroundColor).toBe(expected);
   });
 
   test("チェック済みの hover で配色を変える", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <>
-        <span style={{ display: "block", backgroundColor: "var(--sui-blue-solid-canvas-subtle)" }}>
+        <span
+          style={{
+            display: "block",
+            backgroundColor: "var(--sui-blue-solid-canvas-subtle)",
+          }}
+        >
           基準
         </span>
         <Switch color="blue" defaultChecked />
@@ -284,16 +299,16 @@ describe("Switch の配置", () => {
     );
     const root = screen.getByClassName("sui_switch");
 
-    // 実行
+    // 実行。
     await root.hover();
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByText("基準").element()).backgroundColor;
     await expect.poll(() => getComputedStyle(root.element()).backgroundColor).toBe(expected);
   });
 
   test("無効時は操作不能な配色にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ backgroundColor: "var(--sui-disabled-liquid-canvas)" }}>
@@ -307,12 +322,13 @@ describe("Switch の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const unchecked = getComputedStyle(screen.getByTestId("disabled").element());
     expect(unchecked.backgroundColor).toBe(
       getComputedStyle(screen.getByText("無効な未チェック").element()).backgroundColor,
     );
     expect(unchecked.cursor).toBe("not-allowed");
+
     const checked = getComputedStyle(screen.getByTestId("disabled-checked").element());
     expect(checked.backgroundColor).toBe(
       getComputedStyle(screen.getByText("無効なチェック済み").element()).backgroundColor,
@@ -320,20 +336,20 @@ describe("Switch の配置", () => {
   });
 
   test("無効時は hover で配色を変えない", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(<Switch disabled data-testid="disabled" />);
     const root = screen.getByTestId("disabled");
     const before = getComputedStyle(root.element()).backgroundColor;
 
-    // 実行
+    // 実行。
     await root.hover();
 
-    // 検証
+    // 検証。
     expect(getComputedStyle(root.element()).backgroundColor).toBe(before);
   });
 
   test("無効かつ outlined は variant に対応する枠線色にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span
@@ -349,12 +365,13 @@ describe("Switch の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const naked = getComputedStyle(screen.getByTestId("naked").element(), "::after");
     expect(naked.outlineColor).toBe(
       getComputedStyle(screen.getByTestId("naked-reference").element()).outlineColor,
     );
     expect(Number.parseFloat(naked.outlineWidth)).toBeGreaterThan(0);
+
     const liquid = getComputedStyle(screen.getByTestId("liquid").element(), "::after");
     expect(liquid.outlineColor).toBe(
       getComputedStyle(screen.getByTestId("liquid-reference").element()).outlineColor,
@@ -363,7 +380,7 @@ describe("Switch の配置", () => {
   });
 
   test("無効かつチェック済みの outlined は無効用の枠線色にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span
@@ -374,7 +391,7 @@ describe("Switch の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByTestId("reference").element()).outlineColor;
     const root = getComputedStyle(screen.getByTestId("outlined").element(), "::after");
     expect(root.outlineColor).toBe(expected);
@@ -382,12 +399,12 @@ describe("Switch の配置", () => {
   });
 
   test("無効かつ outlined でないチェック済みは枠線を表示しない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Switch disabled outlined={false} defaultChecked data-testid="checked" />,
     );
 
-    // 検証
+    // 検証。
     expect(getComputedStyle(screen.getByTestId("checked").element(), "::after").outlineWidth).toBe(
       "0px",
     );

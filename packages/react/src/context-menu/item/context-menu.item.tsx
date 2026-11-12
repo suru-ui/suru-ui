@@ -12,14 +12,10 @@ import type { Override, IComponent } from "../../types.js";
 import { useContextMenuContext } from "../root/context-menu.root.context.js";
 import { ContextMenuItemContext } from "./context-menu.item.context.js";
 
-/**
- * コンテキストメニューの操作項目の配色です。
- */
+/** コンテキストメニューの操作項目の配色です。 */
 export type ContextMenuItemColor = Button.Root.Color;
 
-/**
- * コンテキストメニューの操作項目の角丸です。
- */
+/** コンテキストメニューの操作項目の角丸です。 */
 export type ContextMenuItemRadius = Button.Root.Radius;
 
 /**
@@ -70,9 +66,9 @@ export namespace ContextMenuItemProps {
       Pick<
         React.ComponentProps<typeof ContextMenu.Item>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // NonNativeButtonProps より:
+        // NonNativeButtonProps より :
         | keyof NonNativeButtonProps
-        // MenuItemProps より:
+        // MenuItemProps より :
         | "onClick"
         | "disabled"
         | "label"
@@ -99,10 +95,8 @@ export type ContextMenuItemProps = ContextMenuItemProps.Render &
 
 export type IContextMenuItem = IComponent<ContextMenuItemProps>;
 
-/**
- * コンテキストメニューの操作項目です。
- */
-export const ContextMenuItem: IContextMenuItem = function SuiContextMenuItem(props) {
+/** コンテキストメニューの操作項目です。 */
+export const ContextMenuItem: IContextMenuItem = (props) => {
   const ctx = useContextMenuContext();
   const {
     id,
@@ -161,15 +155,19 @@ export const ContextMenuItem: IContextMenuItem = function SuiContextMenuItem(pro
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, ContextMenuItemState>(
-                (state) => ({ ...ctx, ...state, ...itemState }),
+                (state) => ({
+                  ...ctx,
+                  ...state,
+                  ...itemState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <ContextMenuItemContext value={state}>
                       <RenderElement
                         state={state}
                         render={render ?? <div />}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="div"
                       />
                     </ContextMenuItemContext>
@@ -195,7 +193,6 @@ export const ContextMenuItem: IContextMenuItem = function SuiContextMenuItem(pro
 };
 
 export { ContextMenuItem as Item };
-
 export namespace Item {
   export type State<TItem = any> = ContextMenuItemState<TItem>;
 

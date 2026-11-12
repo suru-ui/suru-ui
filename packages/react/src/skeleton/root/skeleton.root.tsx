@@ -80,21 +80,22 @@ export type SkeletonRootProps = SkeletonRootProps.Render &
 
 export type ISkeletonRoot = IComponent<SkeletonRootProps>;
 
-/**
- * スケルトンのルートコンポーネントです。
- */
-export const SkeletonRoot: ISkeletonRoot = function SuiSkeletonRoot(props) {
+/** スケルトンのルートコンポーネントです。 */
+export const SkeletonRoot: ISkeletonRoot = (props) => {
   const {
     radius = "md",
     overlay = false,
     animation = "pulse",
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherSpanProps
   } = props;
-
   const ctx = React.useMemo<SkeletonContext>(
-    () => ({ radius, overlay, animation }),
+    () => ({
+      radius,
+      overlay,
+      animation,
+    }),
     [radius, overlay, animation],
   );
   const element = useRender({
@@ -118,7 +119,6 @@ export const SkeletonRoot: ISkeletonRoot = function SuiSkeletonRoot(props) {
 };
 
 export { SkeletonRoot as Root };
-
 export namespace Root {
   export type State = SkeletonRootState;
 

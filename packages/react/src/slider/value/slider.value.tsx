@@ -9,15 +9,14 @@ import type { Override, IComponent } from "../../types.js";
 import { useSliderContext } from "../root/slider.root.context.js";
 import { SliderValueContext } from "./slider.value.context.js";
 
-/**
- * 値をレンダリングする関数のインターフェイスです。
- */
+/** 値をレンダリングする関数のインターフェイスです。 */
 export interface ISliderValueRenderer {
   /**
    * スライダーの現在値をレンダリングします。
    *
    * @param formattedValues 書式化された値の一覧です。
    * @param values 現在値の一覧です。
+   *
    * @returns レンダリングする内容です。
    */
   (formattedValues: readonly string[], values: readonly number[]): React.ReactNode;
@@ -38,7 +37,7 @@ export namespace SliderValueProps {
       Pick<
         React.ComponentProps<typeof Slider.Value>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // SliderValueProps より:
+        // SliderValueProps より :
         "children"
       >,
       keyof Render | keyof SuruUI
@@ -65,20 +64,26 @@ export type SliderValueProps = SliderValueProps.Render &
 
 export type ISliderValue = IComponent<SliderValueProps>;
 
-/**
- * スライダーの現在値を表示するコンポーネントです。
- */
-export const SliderValue: ISliderValue = function SuiSliderValue(props) {
+/** スライダーの現在値を表示するコンポーネントです。 */
+export const SliderValue: ISliderValue = (props) => {
   const ctx = useSliderContext();
   const { style, render, children, className, ...otherProps } = props;
-  const renderer =
-    typeof children === "function" ? children : children != null ? () => children : undefined;
+  let renderer;
+
+  if (typeof children === "function") {
+    renderer = children;
+  } else if (children !== null && children !== undefined) {
+    renderer = (): React.ReactNode => children;
+  }
 
   return (
     <Slider.Value
       {...otherProps}
       {...proxyRenderProps<Slider.Value.State, SliderValueState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (

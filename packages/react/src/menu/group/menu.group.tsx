@@ -25,16 +25,13 @@ export namespace MenuGroupProps {
     Pick<
       React.ComponentProps<typeof Menu.Group>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuGroupProps より:
+      // MenuGroupProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Menu.Group>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Menu.Group>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -47,52 +44,55 @@ export type MenuGroupProps = MenuGroupProps.Render &
 
 export type IMenuGroup = IComponent<MenuGroupProps>;
 
-/**
- * 関連するメニュー項目をまとめるグループ要素です。
- */
-export const MenuGroup: IMenuGroup = function SuiMenuGroup(props) {
+/** 関連するメニュー項目をまとめるグループ要素です。 */
+export const MenuGroup: IMenuGroup = (props) => {
   const ctx = usePopupContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
     <Menu.Group
       {...otherProps}
-      {...proxyRenderProps<Menu.Group.State, MenuGroupState>((state) => ({ ...ctx, ...state }), {
-        style,
-        render: (htmlProps, state) => (
-          <MenuGroupContext value={state}>
-            <RenderElement
-              state={state}
-              render={render}
-              htmlProps={htmlProps}
-              defaultTagName="div"
-            />
-          </MenuGroupContext>
-        ),
-        className: cn<MenuGroupState>(
-          className,
-          "sui_menu_group",
-          (state) => `sui_menu_group-size_${state.size}`,
-          (state) => `sui_menu_group-radius_${state.radius}`,
-          (state) => `sui_menu_group-variant_${state.variant}`,
-          (state) => state.outlined && "sui_menu_group-outlined",
-          (state) => state.open && "sui_menu_group-open",
-          (state) => state.anchorHidden && "sui_menu_group-anchor_hidden",
-          (state) => state.nested && "sui_menu_group-nested",
-          (state) => state.instant && "sui_menu_group-instant",
-          (state) => `sui_menu_group-side_${state.side.replaceAll("-", "_")}`,
-          (state) => `sui_menu_group-align_${state.align}`,
-          (state) =>
-            state.transitionStatus !== undefined &&
-            `sui_menu_group-transition_status_${state.transitionStatus}`,
-        ),
-      })}
+      {...proxyRenderProps<Menu.Group.State, MenuGroupState>(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <MenuGroupContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </MenuGroupContext>
+          ),
+          className: cn<MenuGroupState>(
+            className,
+            "sui_menu_group",
+            (state) => `sui_menu_group-size_${state.size}`,
+            (state) => `sui_menu_group-radius_${state.radius}`,
+            (state) => `sui_menu_group-variant_${state.variant}`,
+            (state) => state.outlined && "sui_menu_group-outlined",
+            (state) => state.open && "sui_menu_group-open",
+            (state) => state.anchorHidden && "sui_menu_group-anchor_hidden",
+            (state) => state.nested && "sui_menu_group-nested",
+            (state) => state.instant && "sui_menu_group-instant",
+            (state) => `sui_menu_group-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_menu_group-align_${state.align}`,
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_menu_group-transition_status_${state.transitionStatus}`,
+          ),
+        },
+      )}
     />
   );
 };
 
 export { MenuGroup as Group };
-
 export namespace Group {
   export type State<TItem = any> = MenuGroupState<TItem>;
 

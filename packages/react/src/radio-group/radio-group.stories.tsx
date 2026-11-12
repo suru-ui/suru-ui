@@ -47,12 +47,19 @@ const ctrl = controls(RadioGroup, {
   },
 });
 
-const Item = ({ value, children }: { children: React.ReactNode; value: string }) => (
-  <label className="flex items-center gap-2">
-    <Radio value={value} />
-    {children}
-  </label>
-);
+interface ItemProps {
+  value: string;
+  children: React.ReactNode;
+}
+
+function Item({ value, children }: ItemProps) {
+  return (
+    <label className="flex items-center gap-2">
+      <Radio value={value} />
+      {children}
+    </label>
+  );
+}
 
 export const Usage = meta.story({
   name: "使い方",

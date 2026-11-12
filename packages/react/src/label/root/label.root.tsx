@@ -10,9 +10,7 @@ import {
   LabelContext,
 } from "./label.root.context.js";
 
-/**
- * ラベルの配色です。
- */
+/** ラベルの配色です。 */
 export type LabelRootColor = LabelContextColor;
 
 /**
@@ -81,18 +79,21 @@ export type ILabelRoot = IComponent<LabelRootProps>;
  *
  * 大きさと配色の外観を自身のスタイルに集約します。
  */
-export const LabelRoot: ILabelRoot = function SuiLabelRoot(props) {
+export const LabelRoot: ILabelRoot = (props) => {
   const {
     size = "md",
     color = "grey",
     disabled = false,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherLabelProps
   } = props;
-
   const ctx = React.useMemo<LabelContext>(
-    () => ({ size, color, disabled }),
+    () => ({
+      size,
+      color,
+      disabled,
+    }),
     [size, color, disabled],
   );
   const element = useRender({
@@ -116,7 +117,6 @@ export const LabelRoot: ILabelRoot = function SuiLabelRoot(props) {
 };
 
 export { LabelRoot as Root };
-
 export namespace Root {
   export type State = LabelRootState;
 

@@ -17,15 +17,15 @@ export namespace TooltipGroupRootProps {
     Pick<
       React.ComponentProps<typeof Tooltip.Provider>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TooltipProviderProps より:
+      // TooltipProviderProps より :
       "children" | "delay" | "closeDelay" | "timeout"
     >,
-    keyof Render | keyof SuruUI
+    keyof Render
   >;
 
   export type HTML = Omit<
     React.ComponentProps<typeof Tooltip.Provider>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof BaseUI
   >;
 }
 
@@ -45,12 +45,9 @@ export type ITooltipGroupRoot = IComponent<TooltipGroupRootProps>;
  * 近接したツールチップを続けて表示するとき、先に表示したツールチップが閉じてから一定時間内であれば、次のツールチップをすぐに表示します。
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const TooltipGroupRoot: ITooltipGroupRoot = function SuiTooltipGroupRoot(props) {
-  return <Tooltip.Provider {...props} />;
-};
+export const TooltipGroupRoot: ITooltipGroupRoot = (props) => <Tooltip.Provider {...props} />;
 
 export { TooltipGroupRoot as Root };
-
 export namespace Root {
   export type State = TooltipGroupRootState;
 

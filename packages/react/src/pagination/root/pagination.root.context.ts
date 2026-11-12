@@ -18,14 +18,10 @@ export type PaginationRootChangeEventReason = "ellipsis" | "item" | "next" | "pr
  * {@link PaginationRoot} のページが変更されたイベントの詳細です。
  */
 export type PaginationRootChangeEventDetails = {
-  /**
-   * きっかけとなったイベントです。
-   */
+  /** きっかけとなったイベントです。 */
   readonly event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
 
-  /**
-   * ページが変更された理由です。
-   */
+  /** ページが変更された理由です。 */
   readonly reason: PaginationRootChangeEventReason;
 };
 
@@ -37,9 +33,7 @@ export type PaginationRootChangeEventDetails = {
  */
 export type PaginationGoToPage = (page: number, details: PaginationRootChangeEventDetails) => void;
 
-/**
- * ページネーションの配色です。
- */
+/** ページネーションの配色です。 */
 export type PaginationContextColor = Color;
 
 /**
@@ -66,39 +60,25 @@ export type PaginationContextSize = Size;
  * {@link PaginationRoot} が子パーツへ提供するコンテキストです。
  */
 export type PaginationContext = {
-  /**
-   * ページネーションの配色です。
-   */
+  /** ページネーションの配色です。 */
   readonly color: PaginationContextColor;
 
-  /**
-   * ページネーションが無効かどうかです。
-   */
+  /** ページネーションが無効かどうかです。 */
   readonly disabled: boolean;
 
-  /**
-   * 指定したページへ移動する関数です。
-   */
+  /** 指定したページへ移動する関数です。 */
   readonly goToPage: PaginationGoToPage;
 
-  /**
-   * 現在のページです。
-   */
+  /** 現在のページです。 */
   readonly page: number;
 
-  /**
-   * ページネーションの角丸です。
-   */
+  /** ページネーションの角丸です。 */
   readonly radius: PaginationContextRadius;
 
-  /**
-   * ページネーションの大きさです。
-   */
+  /** ページネーションの大きさです。 */
   readonly size: PaginationContextSize;
 
-  /**
-   * 1 以上の整数に丸め済みの総ページ数です。
-   */
+  /** 1 以上の整数に丸め済みの総ページ数です。 */
   readonly totalPages: number;
 };
 
@@ -113,11 +93,10 @@ export type IUsePaginationContext = IUseContext<PaginationContext>;
 /**
  * {@link PaginationContext} を読み取るフックです。
  */
-export const usePaginationContext: IUsePaginationContext = function useSuiPaginationContext(
-  optional?: boolean,
-): any {
+export const usePaginationContext: IUsePaginationContext = (optional?: boolean): any => {
   const ctx = React.use(PaginationContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "PaginationContext",
       providerName: "PaginationRoot",
@@ -128,7 +107,6 @@ export const usePaginationContext: IUsePaginationContext = function useSuiPagina
 };
 
 export { PaginationContext as Context, usePaginationContext as useContext };
-
 export namespace Context {
   export type Color = PaginationContextColor;
 

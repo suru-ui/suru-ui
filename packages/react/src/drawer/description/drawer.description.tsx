@@ -23,7 +23,7 @@ export namespace DrawerDescriptionProps {
     Pick<
       React.ComponentProps<typeof Drawer.Description>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DrawerDescriptionProps より:
+      // DrawerDescriptionProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace DrawerDescriptionProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Drawer.Description>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -45,10 +45,8 @@ export type DrawerDescriptionProps = DrawerDescriptionProps.Render &
 
 export type IDrawerDescription = IComponent<DrawerDescriptionProps>;
 
-/**
- * ドロワーの内容を表示するコンポーネントです。
- */
-export const DrawerDescription: IDrawerDescription = function SuiDrawerDescription(props) {
+/** ドロワーの内容を表示するコンポーネントです。 */
+export const DrawerDescription: IDrawerDescription = (props) => {
   const ctx = useDrawerHeaderContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const DrawerDescription: IDrawerDescription = function SuiDrawerDescripti
     <Drawer.Description
       {...otherProps}
       {...proxyRenderProps<Drawer.Description.State, DrawerDescriptionState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -90,7 +91,6 @@ export const DrawerDescription: IDrawerDescription = function SuiDrawerDescripti
 };
 
 export { DrawerDescription as Description };
-
 export namespace Description {
   export type State = DrawerDescriptionState;
 

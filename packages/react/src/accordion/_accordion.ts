@@ -15,6 +15,7 @@ export type $InferItemObjectValue<TItem> =
  * 項目が `title` と `content` を持つオブジェクトかどうかを判定します。
  *
  * @param item 判定する値です。
+ *
  * @returns `title` と `content` を持つオブジェクトの場合に `true` を返します。
  */
 export function isItemObject(item: unknown): item is AccordionRootItemObject {

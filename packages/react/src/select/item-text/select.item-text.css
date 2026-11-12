@@ -1,13 +1,11 @@
 @layer sui.component {
-@scope (.sui_select_item_text) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  flex: 1 1 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-} /* @scope */
+  @scope (.sui_select_item_text) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      flex: 1 1 auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  } /* @scope */
 } /* @layer */

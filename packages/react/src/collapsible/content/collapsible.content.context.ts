@@ -23,18 +23,18 @@ export type IUseCollapsibleContentContext = IUseContext<CollapsibleContentContex
 /**
  * {@link CollapsibleContentContext} を読み取るフックです。
  */
-export const useCollapsibleContentContext: IUseCollapsibleContentContext =
-  function useSuiCollapsibleContentContext(optional): any {
-    const ctx = React.use(CollapsibleContentContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "CollapsibleContentContext",
-        providerName: "CollapsibleContent",
-      });
-    }
+export const useCollapsibleContentContext: IUseCollapsibleContentContext = (optional): any => {
+  const ctx = React.use(CollapsibleContentContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "CollapsibleContentContext",
+      providerName: "CollapsibleContent",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   CollapsibleContentContext as ContentContext,

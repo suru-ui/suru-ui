@@ -9,9 +9,7 @@ import type { IComponent } from "../../types.js";
 import { useTabsContext } from "../root/tabs.root.context.js";
 import { TabsPanelContext } from "./tabs.panel.context.js";
 
-/**
- * Tabs のパネルのメタデータです。
- */
+/** Tabs のパネルのメタデータです。 */
 export type TabsPanelMetadata = BaseTabs.Panel.Metadata;
 
 /**
@@ -30,7 +28,7 @@ export namespace TabsPanelProps {
     Pick<
       React.ComponentProps<typeof BaseTabs.Panel>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TabsPanelProps より:
+      // TabsPanelProps より :
       "value" | "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -52,10 +50,8 @@ export type TabsPanelProps = TabsPanelProps.Render &
 
 export type ITabsPanel = IComponent<TabsPanelProps>;
 
-/**
- * アクティブな Tab に対応するコンテンツを表示するパネル要素です。
- */
-export const TabsPanel: ITabsPanel = function SuiTabsPanel(props) {
+/** アクティブな Tab に対応するコンテンツを表示するパネル要素です。 */
+export const TabsPanel: ITabsPanel = (props) => {
   const ctx = useTabsContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -63,7 +59,10 @@ export const TabsPanel: ITabsPanel = function SuiTabsPanel(props) {
     <BaseTabs.Panel
       {...otherProps}
       {...proxyRenderProps<BaseTabs.Panel.State, TabsPanelState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -98,7 +97,6 @@ export const TabsPanel: ITabsPanel = function SuiTabsPanel(props) {
 };
 
 export { TabsPanel as Panel };
-
 export namespace Panel {
   export type State<TItem = any> = TabsPanelState<TItem>;
 

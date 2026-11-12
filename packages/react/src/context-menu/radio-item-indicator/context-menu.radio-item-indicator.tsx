@@ -26,7 +26,7 @@ export namespace ContextMenuRadioItemIndicatorProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.RadioItemIndicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuRadioItemIndicatorProps より:
+      // MenuRadioItemIndicatorProps より :
       "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -48,21 +48,23 @@ export type ContextMenuRadioItemIndicatorProps = ContextMenuRadioItemIndicatorPr
 
 export type IContextMenuRadioItemIndicator = IComponent<ContextMenuRadioItemIndicatorProps>;
 
-/**
- * 選択されたラジオ項目を示す要素です。
- */
-export const ContextMenuRadioItemIndicator: IContextMenuRadioItemIndicator =
-  function SuiContextMenuRadioItemIndicator(props) {
-    const ctx = useContextMenuContext();
-    const { style, render, className, keepMounted = true, ...otherProps } = props;
+/** 選択されたラジオ項目を示す要素です。 */
+export const ContextMenuRadioItemIndicator: IContextMenuRadioItemIndicator = (props) => {
+  const ctx = useContextMenuContext();
+  const { style, render, className, keepMounted = true, ...otherProps } = props;
 
-    return (
-      <ContextMenu.RadioItemIndicator
-        {...otherProps}
-        {...proxyRenderProps<
-          ContextMenu.RadioItemIndicator.State,
-          ContextMenuRadioItemIndicatorState
-        >((state) => ({ ...ctx, ...state }), {
+  return (
+    <ContextMenu.RadioItemIndicator
+      {...otherProps}
+      {...proxyRenderProps<
+        ContextMenu.RadioItemIndicator.State,
+        ContextMenuRadioItemIndicatorState
+      >(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
           style,
           render: (htmlProps, state) => (
             <ContextMenuRadioItemIndicatorContext value={state}>
@@ -89,14 +91,14 @@ export const ContextMenuRadioItemIndicator: IContextMenuRadioItemIndicator =
               state.transitionStatus !== undefined &&
               `sui_context_menu_item_indicator-transition_status_${state.transitionStatus}`,
           ),
-        })}
-        keepMounted={keepMounted}
-      />
-    );
-  };
+        },
+      )}
+      keepMounted={keepMounted}
+    />
+  );
+};
 
 export { ContextMenuRadioItemIndicator as RadioItemIndicator };
-
 export namespace RadioItemIndicator {
   export type State<TItem = any> = ContextMenuRadioItemIndicatorState<TItem>;
 

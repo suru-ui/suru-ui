@@ -25,18 +25,18 @@ export type IUseComboboxTriggerLabelContext = IUseContext<ComboboxTriggerLabelCo
 /**
  * {@link ComboboxTriggerLabelContext} を読み取るフックです。
  */
-export const useComboboxTriggerLabelContext: IUseComboboxTriggerLabelContext =
-  function useSuiComboboxTriggerLabelContext(optional): any {
-    const ctx = React.use(ComboboxTriggerLabelContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ComboboxTriggerLabelContext",
-        providerName: "ComboboxTriggerLabel",
-      });
-    }
+export const useComboboxTriggerLabelContext: IUseComboboxTriggerLabelContext = (optional): any => {
+  const ctx = React.use(ComboboxTriggerLabelContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ComboboxTriggerLabelContext",
+      providerName: "ComboboxTriggerLabel",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ComboboxTriggerLabelContext as TriggerLabelContext,

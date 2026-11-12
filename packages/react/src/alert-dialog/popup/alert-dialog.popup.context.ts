@@ -2,7 +2,7 @@ import type { AlertDialog } from "@base-ui/react/alert-dialog";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import * as Card from "../../card/card.parts.js";
+import type * as Card from "../../card/card.parts.js";
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
 
@@ -39,36 +39,33 @@ export type AlertDialogPopupContextVariant = "default" | "stacked";
 export type AlertDialogPopupContext = Override<
   Override<AlertDialog.Popup.State, Card.Root.State>,
   {
-    /**
-     * アラートダイアログの主な外観です。
-     */
+    /** アラートダイアログの主な外観です。 */
     readonly variant: AlertDialogPopupContextVariant;
   }
 >;
 
-/**
- * アラートダイアログの修飾を子パーツへ伝播するコンテキストです。
- */
+/** アラートダイアログの修飾を子パーツへ伝播するコンテキストです。 */
 export const AlertDialogPopupContext: React.Context<AlertDialogPopupContext | null> =
   React.createContext<AlertDialogPopupContext | null>(null);
 
 export type IUseAlertDialogPopupContext = IUseContext<AlertDialogPopupContext>;
 
-export const useAlertDialogPopupContext: IUseAlertDialogPopupContext =
-  function useSuiAlertDialogPopupContext(optional?: boolean): any {
-    const ctx = React.use(AlertDialogPopupContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AlertDialogPopupContext",
-        providerName: "AlertDialogPopup",
-      });
-    }
+export const useAlertDialogPopupContext: IUseAlertDialogPopupContext = (
+  optional?: boolean,
+): any => {
+  const ctx = React.use(AlertDialogPopupContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AlertDialogPopupContext",
+      providerName: "AlertDialogPopup",
+    });
+  }
+
+  return ctx;
+};
 
 export { AlertDialogPopupContext as PopupContext, useAlertDialogPopupContext as usePopupContext };
-
 export namespace PopupContext {
   export type Radius = AlertDialogPopupContextRadius;
 

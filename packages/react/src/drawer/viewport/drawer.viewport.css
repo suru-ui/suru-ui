@@ -1,14 +1,12 @@
 @layer sui.component {
-@scope (.sui_drawer_viewport) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  position: fixed;
-  inset: 0px;
-  overflow: visible;
-  pointer-events: none;
-  user-select: none;
-}
-
-} /* @scope */
+  @scope (.sui_drawer_viewport) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: fixed;
+      inset: 0px;
+      overflow: visible;
+      pointer-events: none;
+      user-select: none;
+    }
+  } /* @scope */
 } /* @layer */

@@ -19,7 +19,7 @@ export namespace ScrollAreaContentProps {
     Pick<
       React.ComponentProps<typeof BaseScrollArea.Content>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ScrollAreaContentProps より:
+      // ScrollAreaContentProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -27,7 +27,7 @@ export namespace ScrollAreaContentProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof BaseScrollArea.Content>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -41,11 +41,10 @@ export type ScrollAreaContentProps = ScrollAreaContentProps.Render &
 
 export type IScrollAreaContent = IComponent<ScrollAreaContentProps>;
 
-/**
- * ビューポート内でスクロールされるコンテンツを保持する要素です。
- */
-export const ScrollAreaContent: IScrollAreaContent = function SuiScrollAreaContent(props) {
+/** ビューポート内でスクロールされるコンテンツを保持する要素です。 */
+export const ScrollAreaContent: IScrollAreaContent = (props) => {
   const { className, ...otherProps } = props;
+
   return (
     <BaseScrollArea.Content
       {...otherProps}
@@ -66,7 +65,6 @@ export const ScrollAreaContent: IScrollAreaContent = function SuiScrollAreaConte
 };
 
 export { ScrollAreaContent as Content };
-
 export namespace Content {
   export type State = ScrollAreaContentState;
 

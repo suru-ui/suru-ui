@@ -1,5 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "./avatar-group.parts.js";
@@ -11,7 +11,7 @@ import { AvatarGroupRoot } from "./root/avatar-group.root.jsx";
 
 describe("AvatarGroupRoot の配置", () => {
   test("アバターを横一列に重ねて並べる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AvatarGroupRoot aria-label="仲間">
         <AvatarRoot>一</AvatarRoot>
@@ -20,20 +20,22 @@ describe("AvatarGroupRoot の配置", () => {
       </AvatarGroupRoot>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_avatar_group").element();
     const style = getComputedStyle(root);
     expect(style.display).toBe("inline-flex");
     expect(style.alignItems).toBe("center");
+
     const avatars = [...screen.container.querySelectorAll<HTMLElement>(".sui_avatar")];
     expect(avatars.length).toBe(3);
+
     const top = avatars[0]!.getBoundingClientRect().top;
     expect(avatars[1]!.getBoundingClientRect().top).toBeCloseTo(top, 1);
     expect(avatars[2]!.getBoundingClientRect().top).toBeCloseTo(top, 1);
   });
 
   test("隣り合うアバターを互いに重ねる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AvatarGroupRoot aria-label="仲間">
         <AvatarRoot>一</AvatarRoot>
@@ -42,22 +44,24 @@ describe("AvatarGroupRoot の配置", () => {
       </AvatarGroupRoot>,
     );
 
-    // 検証
+    // 検証。
     const avatars = [...screen.container.querySelectorAll<HTMLElement>(".sui_avatar")];
     expect(getComputedStyle(avatars[0]!).marginInlineStart).toBe("0px");
+
     const overlap = Number.parseFloat(getComputedStyle(avatars[1]!).marginInlineStart);
     expect(overlap).toBeLessThan(0);
     expect(Number.parseFloat(getComputedStyle(avatars[2]!).marginInlineStart)).toBeCloseTo(
       overlap,
       1,
     );
+
     const first = avatars[0]!.getBoundingClientRect();
     const second = avatars[1]!.getBoundingClientRect();
     expect(first.right - second.left).toBeCloseTo(-overlap, 1);
   });
 
   test("reverse では逆側で重ねる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AvatarGroupRoot reverse aria-label="仲間">
         <AvatarRoot>一</AvatarRoot>
@@ -66,22 +70,24 @@ describe("AvatarGroupRoot の配置", () => {
       </AvatarGroupRoot>,
     );
 
-    // 検証
+    // 検証。
     const avatars = [...screen.container.querySelectorAll<HTMLElement>(".sui_avatar")];
     expect(getComputedStyle(avatars[2]!).marginInlineEnd).toBe("0px");
+
     const overlap = Number.parseFloat(getComputedStyle(avatars[0]!).marginInlineEnd);
     expect(overlap).toBeLessThan(0);
     expect(Number.parseFloat(getComputedStyle(avatars[1]!).marginInlineEnd)).toBeCloseTo(
       overlap,
       1,
     );
+
     const first = avatars[0]!.getBoundingClientRect();
     const second = avatars[1]!.getBoundingClientRect();
     expect(first.right - second.left).toBeCloseTo(-overlap, 1);
   });
 
   test.skipIf(!supportsSiblingIndex())("重なり順を前から後ろへ高くする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AvatarGroupRoot aria-label="仲間">
         <AvatarRoot>一</AvatarRoot>
@@ -90,7 +96,7 @@ describe("AvatarGroupRoot の配置", () => {
       </AvatarGroupRoot>,
     );
 
-    // 検証
+    // 検証。
     const zIndexes = [...screen.container.querySelectorAll<HTMLElement>(".sui_avatar")].map(
       (avatar) => getComputedStyle(avatar).zIndex,
     );
@@ -98,7 +104,7 @@ describe("AvatarGroupRoot の配置", () => {
   });
 
   test.skipIf(!supportsSiblingIndex())("reverse では重なり順を逆にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AvatarGroupRoot reverse aria-label="仲間">
         <AvatarRoot>一</AvatarRoot>
@@ -107,7 +113,7 @@ describe("AvatarGroupRoot の配置", () => {
       </AvatarGroupRoot>,
     );
 
-    // 検証
+    // 検証。
     const zIndexes = [...screen.container.querySelectorAll<HTMLElement>(".sui_avatar")].map(
       (avatar) => getComputedStyle(avatar).zIndex,
     );
@@ -115,7 +121,7 @@ describe("AvatarGroupRoot の配置", () => {
   });
 
   test("大きさをグループで上書きする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <AvatarRoot id="reference" size="lg" />
@@ -125,7 +131,7 @@ describe("AvatarGroupRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const reference = screen.container
       .querySelector<HTMLElement>("#reference")!
       .getBoundingClientRect();
@@ -138,7 +144,7 @@ describe("AvatarGroupRoot の配置", () => {
   });
 
   test("色を自動で割り当てる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span id="blue" style={{ backgroundColor: "var(--sui-blue-solid-canvas-normal)" }} />
@@ -150,7 +156,7 @@ describe("AvatarGroupRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const blue = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#blue")!,
     ).backgroundColor;
@@ -166,7 +172,7 @@ describe("AvatarGroupRoot の配置", () => {
   });
 
   test("指定した色を子のアバターへ伝える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span id="blue" style={{ backgroundColor: "var(--sui-blue-solid-canvas-normal)" }} />
@@ -178,7 +184,7 @@ describe("AvatarGroupRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const blue = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#blue")!,
     ).backgroundColor;
@@ -194,7 +200,7 @@ describe("AvatarGroupRoot の配置", () => {
   });
 
   test("枠線で重なりを区切る", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span id="canvas" style={{ backgroundColor: "var(--sui-canvas-1)" }} />
@@ -204,20 +210,21 @@ describe("AvatarGroupRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const shadow = getComputedStyle(screen.getByClassName("sui_avatar").element()).boxShadow;
     const canvas = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#canvas")!,
     ).backgroundColor;
     expect(shadow).not.toBe("none");
     expect(shadow).toContain(canvas);
-    const spread = /0px 0px 0px ([\d.]+)px/.exec(shadow)?.[1];
+
+    const spread = /0px 0px 0px (?<value>[\d.]+)px/u.exec(shadow)?.groups?.["value"];
     expect(spread).toBeDefined();
     expect(Number.parseFloat(spread!)).toBeCloseTo(3, 1);
   });
 
   test("角丸を子のアバターへ伝える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <AvatarRoot id="reference" radius="md" />
@@ -227,7 +234,7 @@ describe("AvatarGroupRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const reference = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#reference")!,
     ).borderTopLeftRadius;

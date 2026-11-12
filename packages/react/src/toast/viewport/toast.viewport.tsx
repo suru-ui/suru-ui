@@ -19,16 +19,13 @@ export namespace ToastViewportProps {
     Pick<
       React.ComponentProps<typeof Toast.Viewport>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ToastViewportProps より:
+      // ToastViewportProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Toast.Viewport>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Toast.Viewport>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -41,10 +38,8 @@ export type ToastViewportProps = ToastViewportProps.Render &
 
 export type IToastViewport = IComponent<ToastViewportProps>;
 
-/**
- * 通知を表示するビューポートコンポーネントです。
- */
-export const ToastViewport: IToastViewport = function SuiToastViewport(props) {
+/** 通知を表示するビューポートコンポーネントです。 */
+export const ToastViewport: IToastViewport = (props) => {
   const { className, "aria-label": ariaLabel = "通知", ...otherProps } = props;
 
   return (
@@ -61,7 +56,6 @@ export const ToastViewport: IToastViewport = function SuiToastViewport(props) {
 };
 
 export { ToastViewport as Viewport };
-
 export namespace Viewport {
   export type State = ToastViewportState;
 

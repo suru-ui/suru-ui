@@ -7,8 +7,7 @@ import {
   ImageRoot,
 } from "./image.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type ImageFit = ImageRootFit;
 
@@ -31,13 +30,13 @@ export interface IUseImageAPI {
    * {@link ImageAPI} を作成します。
    *
    * @param props {@link Image} の props です。
+   *
    * @returns 画像の API です
    */
   (props: ImageProps): ImageAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Image} を構成する各パーツの props を作成するための API です。
@@ -47,6 +46,7 @@ export class ImageAPI {
 
   /**
    * @param props {@link Image} の props です。
+   *
    * @internal
    */
   public constructor(props: ImageProps) {
@@ -64,21 +64,18 @@ export class ImageAPI {
 /**
  * {@link ImageAPI} を作成するフックです。
  */
-export const useImageAPI: IUseImageAPI = function useSuiImageAPI(props) {
-  return new ImageAPI(props);
-};
+export const useImageAPI: IUseImageAPI = (props) => new ImageAPI(props);
 
 export { ImageAPI as API, useImageAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * 画像を表示するコンポーネントです。
  *
  * 大きさは `width` と `height` または CSS で指定します。`fit` でコンテナーへのはめ込み方法を、`radius` で角丸を指定できます。
  */
-export const Image: IImage = function SuiImage(props) {
+export const Image: IImage = (props) => {
   const api = useImageAPI(props);
 
   return <ImageRoot {...api.getRootProps()} />;

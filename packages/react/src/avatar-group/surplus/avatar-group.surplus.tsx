@@ -32,10 +32,8 @@ export type AvatarGroupSurplusProps = AvatarGroupSurplusProps.Render &
 
 export type IAvatarGroupSurplus = IComponent<AvatarGroupSurplusProps>;
 
-/**
- * 余剰分のアバターの数などを表示するコンポーネントです。
- */
-export const AvatarGroupSurplus: IAvatarGroupSurplus = function SuiAvatarGroupSurplus(props) {
+/** 余剰分のアバターの数などを表示するコンポーネントです。 */
+export const AvatarGroupSurplus: IAvatarGroupSurplus = (props) => {
   const ctx = useAvatarGroupContext(true);
   const {
     size = ctx?.size ?? "md",
@@ -48,7 +46,6 @@ export const AvatarGroupSurplus: IAvatarGroupSurplus = function SuiAvatarGroupSu
 };
 
 export { AvatarGroupSurplus as Surplus };
-
 export namespace Surplus {
   export type State = AvatarGroupSurplusState;
 

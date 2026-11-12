@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { CardRoot } from "../root/card.root.jsx";
@@ -7,7 +7,7 @@ import "../../../tests/src/_locators.js";
 
 describe("CardFooter", () => {
   test("フッターとして描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CardRoot>
         <CardFooter>
@@ -16,39 +16,39 @@ describe("CardFooter", () => {
       </CardRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_card_footer").element().tagName).toBe("DIV");
     expect(screen.getByRole("button", { name: "保存" }).query()).not.toBe(null);
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CardRoot>
         <CardFooter className="custom" />
       </CardRoot>,
     );
 
-    // 検証
+    // 検証。
     const footer = screen.getByClassName("sui_card_footer").element();
     expect(footer.classList.contains("custom")).toBe(true);
     expect(footer.classList.contains("sui_card_footer")).toBe(true);
   });
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CardRoot>
         <CardFooter render={<footer />} />
       </CardRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_card_footer").element().tagName).toBe("FOOTER");
   });
 
   test("render の関数へルートの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <CardRoot size="lg" radius="sm" outlined>
         <CardFooter
@@ -59,7 +59,7 @@ describe("CardFooter", () => {
       </CardRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_card_footer").element().getAttribute("data-probe")).toBe(
       "lg/sm/true",
     );

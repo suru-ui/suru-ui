@@ -23,18 +23,18 @@ export type IUseHoverCardPositionerContext = IUseContext<HoverCardPositionerCont
 /**
  * {@link HoverCardPositionerContext} を読み取るフックです。
  */
-export const useHoverCardPositionerContext: IUseHoverCardPositionerContext =
-  function useSuiHoverCardPositionerContext(optional): any {
-    const ctx = React.use(HoverCardPositionerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "HoverCardPositionerContext",
-        providerName: "HoverCardPositioner",
-      });
-    }
+export const useHoverCardPositionerContext: IUseHoverCardPositionerContext = (optional): any => {
+  const ctx = React.use(HoverCardPositionerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "HoverCardPositionerContext",
+      providerName: "HoverCardPositioner",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   HoverCardPositionerContext as PositionerContext,

@@ -20,8 +20,7 @@ import {
   CardDescription,
 } from "./card.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type CardRadius = CardRootRadius;
 
@@ -71,34 +70,22 @@ export type CardState = CardRootState;
 
 namespace CardProps {
   export type Card = {
-    /**
-     * カードのヘッダー右上に表示する操作要素です。
-     */
+    /** カードのヘッダー右上に表示する操作要素です。 */
     action?: CardActionProps["children"] | undefined;
 
-    /**
-     * カードの本文です。
-     */
+    /** カードの本文です。 */
     children?: CardContentProps["children"] | undefined;
 
-    /**
-     * カードのタイトルを補足する説明です。
-     */
+    /** カードのタイトルを補足する説明です。 */
     description?: CardDescriptionProps["children"] | undefined;
 
-    /**
-     * カードの末尾に表示する操作や補足情報です。
-     */
+    /** カードの末尾に表示する操作や補足情報です。 */
     footer?: CardFooterProps["children"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: CardSlotProps | undefined;
 
-    /**
-     * カードのタイトルです。
-     */
+    /** カードのタイトルです。 */
     title?: CardTitleProps["children"] | undefined;
   };
 
@@ -115,13 +102,13 @@ export interface IUseCardAPI {
    * {@link CardAPI} を作成します。
    *
    * @param props {@link Card} の props です。
+   *
    * @returns カードの API です
    */
   (props: CardProps): CardAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Card} を構成する各パーツの props を作成するための API です。
@@ -135,11 +122,18 @@ export class CardAPI {
 
   /**
    * @param props {@link Card} の props です。
+   *
    * @internal
    */
   public constructor(props: CardProps) {
     const { title, action, footer, children, slotProps = {}, description, ...rootProps } = props;
-    this.cardProps = { title, action, footer, children, description };
+    this.cardProps = {
+      title,
+      action,
+      footer,
+      children,
+      description,
+    };
     this.rootProps = rootProps;
     this.slotProps = slotProps;
   }
@@ -234,7 +228,9 @@ export class CardAPI {
       isLikelyVisibleNode(description) ||
       isLikelyVisibleNode(action)
     ) {
-      return { ...props };
+      return {
+        ...props,
+      };
     }
 
     return null;
@@ -270,21 +266,16 @@ export class CardAPI {
 /**
  * {@link CardAPI} を作成するフックです。
  */
-export const useCardAPI: IUseCardAPI = function useSuiCardAPI(props) {
-  return new CardAPI(props);
-};
+export const useCardAPI: IUseCardAPI = (props) => new CardAPI(props);
 
 export { CardAPI as API, useCardAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export type ICard = IComponent<CardProps>;
 
-/**
- * 情報や操作をひとまとまりにして表示するコンポーネントです。
- */
-export const Card: ICard = function SuiCard(props: CardProps) {
+/** 情報や操作をひとまとまりにして表示するコンポーネントです。 */
+export const Card: ICard = (props: CardProps) => {
   const api = useCardAPI(props);
   const titleProps = api.getTitleProps();
   const descriptionProps = api.getDescriptionProps();

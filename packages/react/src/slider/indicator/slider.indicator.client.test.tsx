@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "../slider.parts.js";
@@ -10,7 +10,7 @@ import "../../../tests/src/_locators.js";
 
 describe("SliderIndicator", () => {
   test("インジケーターを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SliderRoot defaultValue={25}>
         <SliderControl>
@@ -21,14 +21,14 @@ describe("SliderIndicator", () => {
       </SliderRoot>,
     );
 
-    // 検証
+    // 検証。
     const indicator = screen.getByClassName("sui_slider_indicator").element();
     expect(indicator.tagName).toBe("DIV");
     expect(indicator.classList.contains("sui_slider_indicator")).toBe(true);
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SliderRoot defaultValue={25}>
         <SliderControl>
@@ -39,14 +39,14 @@ describe("SliderIndicator", () => {
       </SliderRoot>,
     );
 
-    // 検証
+    // 検証。
     const indicator = screen.getByClassName("sui_slider_indicator").element();
     expect(indicator.classList.contains("custom")).toBe(true);
     expect(indicator.classList.contains("sui_slider_indicator")).toBe(true);
   });
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SliderRoot defaultValue={25}>
         <SliderControl>
@@ -57,7 +57,7 @@ describe("SliderIndicator", () => {
       </SliderRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_slider_indicator").element().tagName).toBe("SECTION");
   });
 });

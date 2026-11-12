@@ -25,18 +25,20 @@ export type IUseContextMenuGroupLabelContext = IUseContext<ContextMenuGroupLabel
 /**
  * {@link ContextMenuGroupLabelContext} を読み取るフックです。
  */
-export const useContextMenuGroupLabelContext: IUseContextMenuGroupLabelContext =
-  function useSuiContextMenuGroupLabelContext(optional): any {
-    const ctx = React.use(ContextMenuGroupLabelContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ContextMenuGroupLabelContext",
-        providerName: "ContextMenuGroupLabel",
-      });
-    }
+export const useContextMenuGroupLabelContext: IUseContextMenuGroupLabelContext = (
+  optional,
+): any => {
+  const ctx = React.use(ContextMenuGroupLabelContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ContextMenuGroupLabelContext",
+      providerName: "ContextMenuGroupLabel",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ContextMenuGroupLabelContext as GroupLabelContext,

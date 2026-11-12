@@ -21,17 +21,17 @@ export type IUseSliderControlContext = IUseContext<SliderControlContext>;
 /**
  * {@link SliderControlContext} を読み取るフックです。
  */
-export const useSliderControlContext: IUseSliderControlContext =
-  function useSuiSliderControlContext(optional): any {
-    const ctx = React.use(SliderControlContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "SliderControlContext",
-        providerName: "SliderControl",
-      });
-    }
+export const useSliderControlContext: IUseSliderControlContext = (optional): any => {
+  const ctx = React.use(SliderControlContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "SliderControlContext",
+      providerName: "SliderControl",
+    });
+  }
+
+  return ctx;
+};
 
 export { SliderControlContext as ControlContext, useSliderControlContext as useControlContext };

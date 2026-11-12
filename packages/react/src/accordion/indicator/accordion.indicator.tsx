@@ -19,10 +19,7 @@ export namespace AccordionIndicatorProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"span", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"span", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -35,10 +32,8 @@ export type AccordionIndicatorProps = AccordionIndicatorProps.Render &
 
 export type IAccordionIndicator = IComponent<AccordionIndicatorProps>;
 
-/**
- * アコーディオンの展開状態を示すアイコンを表示するコンポーネントです。
- */
-export const AccordionIndicator: IAccordionIndicator = function SuiAccordionIndicator(props) {
+/** アコーディオンの展開状態を示すアイコンを表示するコンポーネントです。 */
+export const AccordionIndicator: IAccordionIndicator = (props) => {
   const ctx = useAccordionItemContext();
   const { children = <ChevronIcon />, ...otherSpanProps } = props;
 
@@ -49,6 +44,7 @@ export const AccordionIndicator: IAccordionIndicator = function SuiAccordionIndi
         children,
         className: cn<AccordionIndicatorState>(
           "sui_accordion_indicator",
+          // oxlint-disable-next-line typescript/no-deprecated -- Base UI の orientation を後方互換のため使用します。
           (state) => `sui_accordion_indicator-size_${state.size}`,
           (state) => `sui_accordion_indicator-radius_${state.radius}`,
           (state) => state.separator && "sui_accordion_indicator-separator",
@@ -56,6 +52,7 @@ export const AccordionIndicator: IAccordionIndicator = function SuiAccordionIndi
           (state) => state.open && "sui_accordion_indicator-open",
           (state) => state.hidden && "sui_accordion_indicator-hidden",
           (state) => `sui_accordion_indicator-index_${state.index}`,
+          // oxlint-disable-next-line typescript/no-deprecated -- Base UI の orientation を後方互換のため使用します。
           (state) => `sui_accordion_indicator-orientation_${state.orientation}`,
         ),
       },
@@ -66,7 +63,6 @@ export const AccordionIndicator: IAccordionIndicator = function SuiAccordionIndi
 };
 
 export { AccordionIndicator as Indicator };
-
 export namespace Indicator {
   export type State = AccordionIndicatorState;
 

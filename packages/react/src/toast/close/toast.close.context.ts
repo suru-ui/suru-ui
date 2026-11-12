@@ -21,11 +21,10 @@ export type IUseToastCloseContext = IUseContext<ToastCloseContext>;
 /**
  * {@link ToastCloseContext} を読み取るフックです。
  */
-export const useToastCloseContext: IUseToastCloseContext = function useSuiToastCloseContext(
-  optional,
-): any {
+export const useToastCloseContext: IUseToastCloseContext = (optional): any => {
   const ctx = React.use(ToastCloseContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "ToastCloseContext",
       providerName: "ToastClose",

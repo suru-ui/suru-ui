@@ -27,25 +27,17 @@ export type CardContextSize = Size;
  * {@link CardRoot} が子パーツへ提供する状態です。
  */
 export type CardContext = {
-  /**
-   * カードに枠線を表示するかどうかです。
-   */
+  /** カードに枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * カードの角丸の大きさです。
-   */
+  /** カードの角丸の大きさです。 */
   readonly radius: CardContextRadius;
 
-  /**
-   * カードの大きさです。
-   */
+  /** カードの大きさです。 */
   readonly size: CardContextSize;
 };
 
-/**
- * カードの見た目を子パーツへ伝播するコンテキストです。
- */
+/** カードの見た目を子パーツへ伝播するコンテキストです。 */
 export const CardContext: React.Context<CardContext | null> =
   React.createContext<CardContext | null>(null);
 
@@ -54,9 +46,10 @@ export type IUseCardContext = IUseContext<CardContext>;
 /**
  * {@link CardContext} を読み取るフックです。
  */
-export const useCardContext: IUseCardContext = function useSuiCardContext(optional?: boolean): any {
+export const useCardContext: IUseCardContext = (optional?: boolean): any => {
   const ctx = React.use(CardContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "CardContext",
       providerName: "CardRoot",
@@ -67,7 +60,6 @@ export const useCardContext: IUseCardContext = function useSuiCardContext(option
 };
 
 export { CardContext as Context, useCardContext as useContext };
-
 export namespace Context {
   export type Radius = CardContextRadius;
 

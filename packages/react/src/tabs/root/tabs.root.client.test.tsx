@@ -1,5 +1,4 @@
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { useTabsContext } from "./tabs.root.context.js";
@@ -8,10 +7,10 @@ import "../../../tests/src/_locators.js";
 
 describe("TabsRoot", () => {
   test("既定の修飾を付けた要素を表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<TabsRoot />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_tabs").element();
     expect(root.tagName).toBe("DIV");
     expect(root.classList.contains("sui_tabs-size_md")).toBe(true);
@@ -24,22 +23,22 @@ describe("TabsRoot", () => {
   });
 
   test("thin を修飾へ反映する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<TabsRoot thin />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_tabs").element().classList.contains("sui_tabs-thin")).toBe(
       true,
     );
   });
 
   test("大きさと角丸と外観を修飾へ反映する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TabsRoot size="sm" radius="lg" variant="segments" outlined activeVariant="solid" />,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_tabs").element();
     expect(root.classList.contains("sui_tabs-size_sm")).toBe(true);
     expect(root.classList.contains("sui_tabs-radius_lg")).toBe(true);
@@ -49,51 +48,52 @@ describe("TabsRoot", () => {
   });
 
   test("角丸を省略すると大きさに追従する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<TabsRoot size="lg" />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_tabs-radius_lg").query()).not.toBe(null);
   });
 
   test("縦方向を指定すると方向の修飾を切り替える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<TabsRoot orientation="vertical" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_tabs").element();
     expect(root.classList.contains("sui_tabs-orientation_vertical")).toBe(true);
     expect(root.classList.contains("sui_tabs-orientation_horizontal")).toBe(false);
   });
 
   test("項目を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useTabsContext();
+
       return <span>{String(ctx.items.length)}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <TabsRoot items={["overview", "projects"]}>
         <Probe />
       </TabsRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("2").query()?.textContent).toBe("2");
   });
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<TabsRoot render={<section />} />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_tabs").element().tagName).toBe("SECTION");
   });
 
   test("render と className と style の関数へ状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TabsRoot
         size="sm"
@@ -113,7 +113,7 @@ describe("TabsRoot", () => {
       />,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_tabs").element();
     expect(root.tagName).toBe("SECTION");
     expect(root.getAttribute("data-probe")).toBe("sm/lg/segments/solid/true/2");
@@ -122,10 +122,10 @@ describe("TabsRoot", () => {
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<TabsRoot className="custom" />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_tabs").element().classList.contains("custom")).toBe(true);
   });
 });

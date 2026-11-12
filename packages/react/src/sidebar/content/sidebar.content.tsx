@@ -16,10 +16,7 @@ export namespace SidebarContentProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -37,7 +34,7 @@ export type ISidebarContent = IComponent<SidebarContentProps>;
  *
  * {@link SidebarGroup} などの内容を配置します。
  */
-export const SidebarContent: ISidebarContent = function SuiSidebarContent(props) {
+export const SidebarContent: ISidebarContent = (props) => {
   const ctx = useSidebarContext();
 
   return useRender({
@@ -53,7 +50,6 @@ export const SidebarContent: ISidebarContent = function SuiSidebarContent(props)
 };
 
 export { SidebarContent as Content };
-
 export namespace Content {
   export type State = SidebarContentState;
 

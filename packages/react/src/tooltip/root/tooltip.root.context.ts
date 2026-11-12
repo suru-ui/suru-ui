@@ -27,25 +27,17 @@ export type TooltipContextSize = Size;
  * {@link TooltipRoot} が子パーツへ提供する状態です。
  */
 export type TooltipContext = {
-  /**
-   * ツールチップに枠線を表示するかどうかです。
-   */
+  /** ツールチップに枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * ツールチップの角丸の大きさです。
-   */
+  /** ツールチップの角丸の大きさです。 */
   readonly radius: TooltipContextRadius;
 
-  /**
-   * ツールチップの大きさです。
-   */
+  /** ツールチップの大きさです。 */
   readonly size: TooltipContextSize;
 };
 
-/**
- * ツールチップの見た目を子パーツへ伝播するコンテキストです。
- */
+/** ツールチップの見た目を子パーツへ伝播するコンテキストです。 */
 export const TooltipContext: React.Context<TooltipContext | null> =
   React.createContext<TooltipContext | null>(null);
 
@@ -54,11 +46,10 @@ export type IUseTooltipContext = IUseContext<TooltipContext>;
 /**
  * {@link TooltipContext} を読み取るフックです。
  */
-export const useTooltipContext: IUseTooltipContext = function useSuiTooltipContext(
-  optional?: boolean,
-): any {
+export const useTooltipContext: IUseTooltipContext = (optional?: boolean): any => {
   const ctx = React.use(TooltipContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "TooltipContext",
       providerName: "TooltipRoot",
@@ -69,7 +60,6 @@ export const useTooltipContext: IUseTooltipContext = function useSuiTooltipConte
 };
 
 export { TooltipContext as Context, useTooltipContext as useContext };
-
 export namespace Context {
   export type Radius = TooltipContextRadius;
 

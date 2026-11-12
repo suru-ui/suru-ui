@@ -25,17 +25,17 @@ export type IUseComboboxGroupContext = IUseContext<ComboboxGroupContext>;
 /**
  * {@link ComboboxGroupContext} を読み取るフックです。
  */
-export const useComboboxGroupContext: IUseComboboxGroupContext =
-  function useSuiComboboxGroupContext(optional): any {
-    const ctx = React.use(ComboboxGroupContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ComboboxGroupContext",
-        providerName: "ComboboxGroup",
-      });
-    }
+export const useComboboxGroupContext: IUseComboboxGroupContext = (optional): any => {
+  const ctx = React.use(ComboboxGroupContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ComboboxGroupContext",
+      providerName: "ComboboxGroup",
+    });
+  }
+
+  return ctx;
+};
 
 export { ComboboxGroupContext as GroupContext, useComboboxGroupContext as useGroupContext };

@@ -18,9 +18,7 @@ export namespace ComboboxInputDisplayProps {
   export type Render<TItem = any> = RenderProps<ComboboxInputDisplayState<TItem>>;
 
   export type SuruUI = {
-    /**
-     * `value` が空のときに代わりに表示する内容です。
-     */
+    /** `value` が空のときに代わりに表示する内容です。 */
     placeholder?: React.ReactNode | undefined;
 
     /**
@@ -54,7 +52,7 @@ export type IComboboxInputDisplay = IComponent<ComboboxInputDisplayProps>;
  *
  * {@link ComboboxInput} と同じ見た目を持つ描画専用の要素で、入力欄をポップアップの中に置く構成のトリガー内で使います。
  */
-export const ComboboxInputDisplay: IComboboxInputDisplay = function SuiComboboxInputDisplay(props) {
+export const ComboboxInputDisplay: IComboboxInputDisplay = (props) => {
   const ctx = useComboboxContext();
   const { value, placeholder, ...otherSpanProps } = props;
   const label = ctx.itemToStringLabel(value);
@@ -82,7 +80,6 @@ export const ComboboxInputDisplay: IComboboxInputDisplay = function SuiComboboxI
 };
 
 export { ComboboxInputDisplay as InputDisplay };
-
 export namespace InputDisplay {
   export type State<TItem = any> = ComboboxInputDisplayState<TItem>;
 

@@ -346,20 +346,28 @@ export const Controlled = meta.story({
   }),
   render(props) {
     const [value, setValue] = React.useState<number | null>(3);
+
     return (
       <div className="flex flex-col gap-2">
         <NumberField
           {...props}
           value={value}
           className="w-[320px]"
-          onValueChange={(next) => setValue(next)}
+          onValueChange={(next) => {
+            setValue(next);
+          }}
         />
         <span>
           入力値:
-          {value === null ? "(空)" : value}
+          {value ?? "(空)"}
         </span>
         <div>
-          <button type="button" onClick={() => setValue(null)}>
+          <button
+            type="button"
+            onClick={() => {
+              setValue(null);
+            }}
+          >
             クリア
           </button>
         </div>
@@ -414,7 +422,7 @@ export const EmptyAndLong = meta.story({
     return (
       <div className="flex w-[320px] flex-col gap-3">
         <NumberField {...props} placeholder="空の入力欄" />
-        <NumberField {...props} defaultValue={1234567890} />
+        <NumberField {...props} defaultValue={1_234_567_890} />
       </div>
     );
   },
@@ -503,7 +511,7 @@ export const WithField = meta.story({
             {...props}
             className="w-[320px]"
             startAddons={[<JapaneseYenIcon key={0} />]}
-            defaultValue={1000000}
+            defaultValue={1_000_000}
           />
         </Field>
       </div>
@@ -529,7 +537,12 @@ export const Required = meta.story({
   }),
   render(props) {
     return (
-      <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-3">
+      <form
+        className="flex flex-col gap-3"
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <Field label="数量" description="空のまま送信すると枠線が赤くなります。">
           <NumberField {...props} required className="w-[320px]" placeholder="1" />
         </Field>
@@ -582,15 +595,16 @@ export const QuantityForm = meta.story({
   }),
   render(props) {
     const [submitted, setSubmitted] = React.useState<number | null>(null);
+
     return (
       <form
+        className="flex w-[320px] flex-col gap-3"
         onSubmit={(event) => {
           event.preventDefault();
           const data = new FormData(event.currentTarget);
           const quantity = data.get("quantity");
           setSubmitted(typeof quantity === "string" ? Number(quantity) : null);
         }}
-        className="flex w-[320px] flex-col gap-3"
       >
         <Field label="数量" description="1 以上 10 以下で入力します。">
           <NumberField
@@ -628,6 +642,7 @@ export const CartItem = meta.story({
   render(props) {
     const unitPrice = 1200;
     const [quantity, setQuantity] = React.useState<number | null>(2);
+
     return (
       <div className="flex w-[320px] flex-col gap-2">
         <span>商品名: サンプル商品</span>
@@ -639,7 +654,9 @@ export const CartItem = meta.story({
           value={quantity}
           decrement
           increment
-          onValueChange={(next) => setQuantity(next)}
+          onValueChange={(next) => {
+            setQuantity(next);
+          }}
           aria-label="購入数量"
         />
         <span>

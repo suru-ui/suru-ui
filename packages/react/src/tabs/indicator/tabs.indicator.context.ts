@@ -25,17 +25,17 @@ export type IUseTabsIndicatorContext = IUseContext<TabsIndicatorContext>;
 /**
  * {@link TabsIndicatorContext} を読み取るフックです。
  */
-export const useTabsIndicatorContext: IUseTabsIndicatorContext =
-  function useSuiTabsIndicatorContext(optional): any {
-    const ctx = React.use(TabsIndicatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "TabsIndicatorContext",
-        providerName: "TabsIndicator",
-      });
-    }
+export const useTabsIndicatorContext: IUseTabsIndicatorContext = (optional): any => {
+  const ctx = React.use(TabsIndicatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "TabsIndicatorContext",
+      providerName: "TabsIndicator",
+    });
+  }
+
+  return ctx;
+};
 
 export { TabsIndicatorContext as IndicatorContext, useTabsIndicatorContext as useIndicatorContext };

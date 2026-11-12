@@ -49,6 +49,7 @@ export interface IContextMenuPopupItemRenderer<TItem = any> {
    * @param item 現在の項目です。
    * @param index 項目のインデックスです。
    * @param items すべての項目です。
+   *
    * @returns レンダリングする内容です。
    */
   (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
@@ -75,7 +76,7 @@ export namespace ContextMenuPopupProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.Popup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuPopupProps より:
+      // MenuPopupProps より :
       "id" | "finalFocus"
     >,
     keyof Render | keyof SuruUI
@@ -102,12 +103,8 @@ export interface IContextMenuPopup extends IComponent<ContextMenuPopupProps> {
   <TItem = any>(props: ContextMenuPopupProps<TItem>): IComponent.Return;
 }
 
-/**
- * コンテキストメニュー項目を表示するコンテンツ要素です。
- */
-export const ContextMenuPopup: IContextMenuPopup = function SuiContextMenuPopup(
-  props: ContextMenuPopupProps,
-) {
+/** コンテキストメニュー項目を表示するコンテンツ要素です。 */
+export const ContextMenuPopup: IContextMenuPopup = (props: ContextMenuPopupProps) => {
   const ctx = usePositionerContext();
   const { style, render, children = defaultItemRenderer, className, ...otherProps } = props;
 
@@ -115,7 +112,10 @@ export const ContextMenuPopup: IContextMenuPopup = function SuiContextMenuPopup(
     <ContextMenu.Popup
       {...otherProps}
       {...proxyRenderProps<ContextMenu.Popup.State, ContextMenuPopupState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -154,7 +154,6 @@ export const ContextMenuPopup: IContextMenuPopup = function SuiContextMenuPopup(
 };
 
 export { ContextMenuPopup as Popup };
-
 export namespace Popup {
   export type State<TItem = any> = ContextMenuPopupState<TItem>;
 

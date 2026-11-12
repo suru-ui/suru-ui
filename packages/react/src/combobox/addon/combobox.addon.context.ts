@@ -6,7 +6,7 @@ import {
 // ComboboxAddon は Context を変更・拡張しないため、親の ComboboxInputGroupContext をそのまま使う。
 export {
   InputGroupContext as AddonContext,
-  useInputGroupContext as useAddonContext,
   InputGroupContext as ComboboxAddonContext,
+  useInputGroupContext as useAddonContext,
   useInputGroupContext as useComboboxAddonContext,
 };

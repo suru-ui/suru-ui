@@ -14,19 +14,13 @@ import {
   RadioGroupContext,
 } from "./radio-group.root.context.js";
 
-/**
- * ラジオボタングループの選択状態が変更されたイベントの詳細です。
- */
+/** ラジオボタングループの選択状態が変更されたイベントの詳細です。 */
 export type RadioGroupRootChangeEventDetails = RadioGroup.ChangeEventDetails;
 
-/**
- * ラジオボタングループの選択状態が変更された理由です。
- */
+/** ラジオボタングループの選択状態が変更された理由です。 */
 export type RadioGroupRootChangeEventReason = RadioGroup.ChangeEventReason;
 
-/**
- * ラジオボタンの配色です。
- */
+/** ラジオボタンの配色です。 */
 export type RadioGroupRootColor = RadioGroupContextColor;
 
 /**
@@ -132,7 +126,7 @@ export namespace RadioGroupRootProps {
     Pick<
       React.ComponentProps<typeof RadioGroup<TValue>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // RadioGroupRootProps より:
+      // RadioGroupRootProps より :
       | "value"
       | "defaultValue"
       | "disabled"
@@ -162,9 +156,7 @@ export type RadioGroupRootProps<TValue = any> = RadioGroupRootProps.Render &
   RadioGroupRootProps.BaseUI<TValue> &
   RadioGroupRootProps.HTML<TValue>;
 
-/**
- * ラジオボタングループのルートコンポーネントです。
- */
+/** ラジオボタングループのルートコンポーネントです。 */
 export interface IRadioGroupRoot extends IComponent<RadioGroupRootProps> {
   /**
    * @template TValue 項目の値の型です。
@@ -172,9 +164,7 @@ export interface IRadioGroupRoot extends IComponent<RadioGroupRootProps> {
   <TValue = any>(props: RadioGroupRootProps<TValue>): IComponent.Return;
 }
 
-export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
-  props: RadioGroupRootProps,
-) {
+export const RadioGroupRoot: IRadioGroupRoot = (props: RadioGroupRootProps) => {
   const {
     size = "md",
     color = "grey",
@@ -185,9 +175,9 @@ export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
     disabled,
     outlined = true,
     className,
-    orientation = "vertical",
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
+    orientation = "vertical",
     ...otherProps
   } = props;
   const ctx = React.useMemo<RadioGroupContext>(
@@ -208,7 +198,10 @@ export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
       <RadioGroup
         {...otherProps}
         {...proxyRenderProps<RadioGroup.State, RadioGroupRootState>(
-          (state) => ({ ...ctx, ...state }),
+          (state) => ({
+            ...ctx,
+            ...state,
+          }),
           {
             style,
             render,
@@ -242,7 +235,6 @@ export const RadioGroupRoot: IRadioGroupRoot = function SuiRadioGroupRoot(
 };
 
 export { RadioGroupRoot as Root };
-
 export namespace Root {
   export type State = RadioGroupRootState;
 

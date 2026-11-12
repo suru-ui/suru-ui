@@ -20,11 +20,10 @@ export type IUseDrawerHeaderContext = IUseContext<DrawerHeaderContext>;
 /**
  * {@link DrawerHeaderContext} を読み取るフックです。
  */
-export const useDrawerHeaderContext: IUseDrawerHeaderContext = function useSuiDrawerHeaderContext(
-  optional,
-): any {
+export const useDrawerHeaderContext: IUseDrawerHeaderContext = (optional): any => {
   const ctx = React.use(DrawerHeaderContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "DrawerHeaderContext",
       providerName: "DrawerHeader",

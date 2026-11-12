@@ -1,12 +1,13 @@
 {
   "folders": [
-    {
-      "name": ".",
-      "path": ".",
-    },
+    { "name": ".", "path": "." },
     {
       "name": "core",
       "path": "packages/core",
+    },
+    {
+      "name": "react",
+      "path": "packages/react",
     },
     {
       "name": "theme",
@@ -16,14 +17,7 @@
       "name": "unocss",
       "path": "packages/unocss",
     },
-    {
-      "name": "react",
-      "path": "packages/react",
-    },
-    {
-      "name": "website",
-      "path": "website",
-    },
+    { "name": "website", "path": "website" },
   ],
   "settings": {
     // 一般
@@ -38,23 +32,15 @@
 
     // Oxc
 
-    "oxc.path.oxfmt": "./node_modules/.bin/oxfmt",
-    "oxc.path.oxlint": "./node_modules/.bin/oxlint",
-    "oxc.path.tsgolint": "./node_modules/.bin/tsgolint",
-
-    "oxc.fmt.configPath": "./.config/.oxfmtrc.json",
+    "oxc.disableNestedConfig": true,
+    "oxc.fmt.disableNestedConfig": true,
 
     "[javascript][typescript][typescriptreact][html][markdown][json][jsonc][yaml][toml]": {
       "editor.defaultFormatter": "oxc.oxc-vscode",
       "editor.formatOnSave": true,
-      "editor.codeActionsOnSave": {
-        "source.fixAll.oxc": "always",
-        "source.format.oxc": "always",
-      },
+      "editor.codeActionsOnSave": { "source.fixAll.oxc": "always", "source.format.oxc": "always" },
       "editor.tabSize": 2,
     },
-    "[astro][mdx]": {
-      "editor.tabSize": 2,
-    },
+    "[astro][mdx]": { "editor.tabSize": 2 },
   },
 }

@@ -229,7 +229,12 @@ export const LoginForm = meta.story({
   }),
   render(props) {
     return (
-      <form onSubmit={(event) => event.preventDefault()} className="flex max-w-80 flex-col gap-4">
+      <form
+        className="flex max-w-80 flex-col gap-4"
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <div className="flex flex-col gap-2">
           <Label {...props} htmlFor="label-login-email">
             メールアドレス
@@ -271,9 +276,13 @@ export const ClickToFocus = meta.story({
         <Label {...props} htmlFor="label-focus-input" />
         <Input
           id="label-focus-input"
-          onBlur={() => setFocused(false)}
-          onFocus={() => setFocused(true)}
           placeholder="ここに移動します"
+          onBlur={() => {
+            setFocused(false);
+          }}
+          onFocus={() => {
+            setFocused(true);
+          }}
         />
         <span className="text-sm opacity-70" aria-live="polite">
           {focused ? "入力欄に移動しました" : "ラベルを押してみます"}

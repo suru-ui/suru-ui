@@ -1,5 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "./resizable.parts.js";
@@ -10,9 +10,14 @@ import { ResizableRoot } from "./root/resizable.root.jsx";
 
 describe("Resizable の配置", () => {
   test("公開パーツをすべて描画して余白を持たない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
-      <div style={{ width: 400, height: 200 }}>
+      <div
+        style={{
+          width: 400,
+          height: 200,
+        }}
+      >
         <ResizableRoot>
           <ResizablePanel defaultSize={50}>左</ResizablePanel>
           <ResizableHandle />
@@ -21,11 +26,12 @@ describe("Resizable の配置", () => {
       </div>,
     );
 
-    // 検証
+    // 検証。
     const elements = screen.container.querySelectorAll<HTMLElement>(
       ".sui_resizable, .sui_resizable *",
     );
     expect(elements.length).toBeGreaterThanOrEqual(5);
+
     for (const element of elements) {
       const style = getComputedStyle(element);
       expect(style.marginTop).toBe("0px");
@@ -40,9 +46,14 @@ describe("Resizable の配置", () => {
   });
 
   test("横方向ではパネルとハンドルを隙間なく並べる", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
-      <div style={{ width: 400, height: 200 }}>
+      <div
+        style={{
+          width: 400,
+          height: 200,
+        }}
+      >
         <ResizableRoot>
           <ResizablePanel defaultSize={50}>左</ResizablePanel>
           <ResizableHandle />
@@ -55,14 +66,14 @@ describe("Resizable の配置", () => {
     const [left, right] = screen.container.querySelectorAll<HTMLElement>(".sui_resizable_panel");
     const handle = screen.getByRole("separator").element();
 
-    // 実行
+    // 実行。
     const wrapperRect = wrapper.getBoundingClientRect();
     const rootRect = root.getBoundingClientRect();
     const leftRect = left!.getBoundingClientRect();
     const handleRect = handle.getBoundingClientRect();
     const rightRect = right!.getBoundingClientRect();
 
-    // 検証
+    // 検証。
     expect(rootRect.width).toBeCloseTo(wrapperRect.width, 0);
     expect(rootRect.height).toBeCloseTo(wrapperRect.height, 0);
     expect(getComputedStyle(root).flexDirection).toBe("row");
@@ -76,9 +87,14 @@ describe("Resizable の配置", () => {
   });
 
   test("縦方向ではパネルとハンドルを隙間なく並べる", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
-      <div style={{ width: 400, height: 200 }}>
+      <div
+        style={{
+          width: 400,
+          height: 200,
+        }}
+      >
         <ResizableRoot orientation="vertical">
           <ResizablePanel defaultSize={50}>上</ResizablePanel>
           <ResizableHandle />
@@ -90,13 +106,13 @@ describe("Resizable の配置", () => {
     const [top, bottom] = screen.container.querySelectorAll<HTMLElement>(".sui_resizable_panel");
     const handle = screen.getByRole("separator").element();
 
-    // 実行
+    // 実行。
     const rootRect = root.getBoundingClientRect();
     const topRect = top!.getBoundingClientRect();
     const handleRect = handle.getBoundingClientRect();
     const bottomRect = bottom!.getBoundingClientRect();
 
-    // 検証
+    // 検証。
     expect(getComputedStyle(root).flexDirection).toBe("column");
     expect(topRect.top).toBeCloseTo(rootRect.top, 0);
     expect(topRect.bottom).toBeLessThanOrEqual(handleRect.top + 0.5);
@@ -108,9 +124,14 @@ describe("Resizable の配置", () => {
   });
 
   test("非表示のハンドルでもパネルを隙間なく並べる", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
-      <div style={{ width: 400, height: 200 }}>
+      <div
+        style={{
+          width: 400,
+          height: 200,
+        }}
+      >
         <ResizableRoot>
           <ResizablePanel defaultSize={50}>左</ResizablePanel>
           <ResizableHandle invisible />
@@ -120,18 +141,23 @@ describe("Resizable の配置", () => {
     );
     const [left, right] = screen.container.querySelectorAll<HTMLElement>(".sui_resizable_panel");
 
-    // 実行
+    // 実行。
     const leftRect = left!.getBoundingClientRect();
     const rightRect = right!.getBoundingClientRect();
 
-    // 検証
+    // 検証。
     expect(leftRect.right).toBeCloseTo(rightRect.left, 0);
   });
 
   test("defaultSize の割合を配置に反映する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
-      <div style={{ width: 400, height: 200 }}>
+      <div
+        style={{
+          width: 400,
+          height: 200,
+        }}
+      >
         <ResizableRoot>
           <ResizablePanel defaultSize={30}>左</ResizablePanel>
           <ResizableHandle />
@@ -140,7 +166,7 @@ describe("Resizable の配置", () => {
       </div>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_resizable").element();
     const [left, right] = screen.container.querySelectorAll<HTMLElement>(".sui_resizable_panel");
     const rootWidth = root.getBoundingClientRect().width;
@@ -149,9 +175,14 @@ describe("Resizable の配置", () => {
   });
 
   test("向きの変更を配置とクラスへ反映する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const renderGroup = (orientation: "horizontal" | "vertical") => (
-      <div style={{ width: 400, height: 200 }}>
+      <div
+        style={{
+          width: 400,
+          height: 200,
+        }}
+      >
         <ResizableRoot orientation={orientation}>
           <ResizablePanel defaultSize={50}>左</ResizablePanel>
           <ResizableHandle />
@@ -161,19 +192,24 @@ describe("Resizable の配置", () => {
     );
     const screen = await render(renderGroup("horizontal"));
 
-    // 実行
+    // 実行。
     await screen.rerender(renderGroup("vertical"));
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_resizable").element();
     expect(getComputedStyle(root).flexDirection).toBe("column");
     expect(root.classList.contains("sui_resizable-orientation_vertical")).toBe(true);
   });
 
   test("ハンドルに太さを持たせる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
-      <div style={{ width: 400, height: 200 }}>
+      <div
+        style={{
+          width: 400,
+          height: 200,
+        }}
+      >
         <ResizableRoot>
           <ResizablePanel defaultSize={50}>左</ResizablePanel>
           <ResizableHandle />
@@ -182,7 +218,7 @@ describe("Resizable の配置", () => {
       </div>,
     );
 
-    // 検証
+    // 検証。
     const handle = screen.getByRole("separator").element();
     expect(handle.getBoundingClientRect().width).toBeGreaterThan(0);
   });

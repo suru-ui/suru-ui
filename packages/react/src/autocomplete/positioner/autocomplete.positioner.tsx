@@ -25,7 +25,7 @@ export namespace AutocompletePositionerProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.Positioner>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // UseAnchorPositioningSharedParameters より:
+      // UseAnchorPositioningSharedParameters より :
       | "align"
       | "alignOffset"
       | "anchor"
@@ -58,12 +58,8 @@ export type AutocompletePositionerProps = AutocompletePositionerProps.Render &
 
 export type IAutocompletePositioner = IComponent<AutocompletePositionerProps>;
 
-/**
- * ポップアップを入力欄に位置合わせする要素です。
- */
-export const AutocompletePositioner: IAutocompletePositioner = function SuiAutocompletePositioner(
-  props,
-) {
+/** ポップアップを入力欄に位置合わせする要素です。 */
+export const AutocompletePositioner: IAutocompletePositioner = (props) => {
   const ctx = useAutocompletePortalContext();
   const {
     side = "bottom",
@@ -81,7 +77,10 @@ export const AutocompletePositioner: IAutocompletePositioner = function SuiAutoc
       side={side}
       align={align}
       {...proxyRenderProps<Autocomplete.Positioner.State, AutocompletePositionerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -116,7 +115,6 @@ export const AutocompletePositioner: IAutocompletePositioner = function SuiAutoc
 };
 
 export { AutocompletePositioner as Positioner };
-
 export namespace Positioner {
   export type State<TItem = any> = AutocompletePositionerState<TItem>;
 

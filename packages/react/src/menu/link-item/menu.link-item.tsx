@@ -11,14 +11,10 @@ import type { Override, IComponent } from "../../types.js";
 import { useMenuContext } from "../root/menu.root.context.js";
 import { MenuLinkItemContext } from "./menu.link-item.context.js";
 
-/**
- * メニューのリンク項目の配色です。
- */
+/** メニューのリンク項目の配色です。 */
 export type MenuLinkItemColor = Button.Root.Color;
 
-/**
- * メニューのリンク項目の角丸です。
- */
+/** メニューのリンク項目の角丸です。 */
 export type MenuLinkItemRadius = Button.Root.Radius;
 
 /**
@@ -78,7 +74,7 @@ export namespace MenuLinkItemProps {
       Pick<
         React.ComponentProps<typeof Menu.LinkItem>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // MenuLinkItemProps より:
+        // MenuLinkItemProps より :
         "label" | "id" | "closeOnClick"
       >,
       keyof Render | keyof SuruUI
@@ -101,10 +97,8 @@ export type MenuLinkItemProps = MenuLinkItemProps.Render &
 
 export type IMenuLinkItem = IComponent<MenuLinkItemProps>;
 
-/**
- * 別のページやセクションへ移動するメニュー項目です。
- */
-export const MenuLinkItem: IMenuLinkItem = function SuiMenuLinkItem(props) {
+/** 別のページやセクションへ移動するメニュー項目です。 */
+export const MenuLinkItem: IMenuLinkItem = (props) => {
   const ctx = useMenuContext();
   const {
     id,
@@ -160,16 +154,20 @@ export const MenuLinkItem: IMenuLinkItem = function SuiMenuLinkItem(props) {
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, MenuLinkItemState>(
-                (state) => ({ ...ctx, ...state, ...itemState }),
+                (state) => ({
+                  ...ctx,
+                  ...state,
+                  ...itemState,
+                }),
                 {
                   style,
                   // oxlint-disable-next-line jsx-a11y/anchor-has-content, jsx-a11y/anchor-is-valid
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <MenuLinkItemContext value={state}>
                       <RenderElement
                         state={state}
                         render={render}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="a"
                       />
                     </MenuLinkItemContext>
@@ -195,7 +193,6 @@ export const MenuLinkItem: IMenuLinkItem = function SuiMenuLinkItem(props) {
 };
 
 export { MenuLinkItem as LinkItem };
-
 export namespace LinkItem {
   export type State<TItem = any> = MenuLinkItemState<TItem>;
 

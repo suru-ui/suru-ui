@@ -14,9 +14,7 @@ import {
 import type { Override, IComponent } from "../../types.js";
 import { RadioRootContext } from "./radio.root.context.js";
 
-/**
- * ラジオボタンの配色です。
- */
+/** ラジオボタンの配色です。 */
 export type RadioRootColor = Color;
 
 /**
@@ -107,9 +105,9 @@ export namespace RadioRootProps {
     Pick<
       React.ComponentProps<typeof Radio.Root<TValue>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NonNativeButtonProps より:
+      // NonNativeButtonProps より :
       | keyof NonNativeButtonProps
-      // RadioRootProps より:
+      // RadioRootProps より :
       | "id"
       | "value"
       | "disabled"
@@ -146,10 +144,8 @@ export interface IRadioRoot extends IComponent<RadioRootProps> {
   <TValue = any>(props: RadioRootProps<TValue>): IComponent.Return;
 }
 
-/**
- * ラジオボタンのルートコンポーネントです。
- */
-export const RadioRoot: IRadioRoot = function SuiRadioRoot(props: RadioRootProps) {
+/** ラジオボタンのルートコンポーネントです。 */
+export const RadioRoot: IRadioRoot = (props: RadioRootProps) => {
   const ctx = useRadioGroupContext(true);
   const {
     size: sizeProp = "md",
@@ -161,7 +157,7 @@ export const RadioRoot: IRadioRoot = function SuiRadioRoot(props: RadioRootProps
     disabled: disabledProp,
     outlined: outlinedProp = true,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -170,10 +166,17 @@ export const RadioRoot: IRadioRoot = function SuiRadioRoot(props: RadioRootProps
   const radius = ctx?.radius ?? radiusProp;
   const variant = ctx?.variant ?? variantProp;
   const outlined = ctx?.outlined ?? outlinedProp;
-  const disabled = ctx?.disabled || disabledProp;
+  const disabled = ctx?.disabled ?? disabledProp;
   const orientation = ctx?.orientation ?? "vertical";
   const styleState = React.useMemo(
-    () => ({ size, color, radius, variant, outlined, orientation }),
+    () => ({
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+      orientation,
+    }),
     [color, orientation, outlined, radius, size, variant],
   );
 
@@ -182,7 +185,10 @@ export const RadioRoot: IRadioRoot = function SuiRadioRoot(props: RadioRootProps
       {...otherProps}
       disabled={disabled}
       {...proxyRenderProps<Radio.Root.State, RadioRootState>(
-        (state) => ({ ...styleState, ...state }),
+        (state) => ({
+          ...styleState,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -224,7 +230,6 @@ export const RadioRoot: IRadioRoot = function SuiRadioRoot(props: RadioRootProps
 };
 
 export { RadioRoot as Root };
-
 export namespace Root {
   export type State = RadioRootState;
 

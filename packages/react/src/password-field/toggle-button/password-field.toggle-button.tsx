@@ -16,9 +16,7 @@ import {
 export type PasswordFieldToggleButtonState = Override<
   PasswordFieldContextState,
   {
-    /**
-     * このボタンを無効にするかどうかです。
-     */
+    /** このボタンを無効にするかどうかです。 */
     readonly disabled: boolean;
   }
 >;
@@ -32,7 +30,7 @@ export namespace PasswordFieldToggleButtonProps {
 
   export type HTML = Omit<
     BaseUIComponentProps<"button", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -51,52 +49,53 @@ export type IPasswordFieldToggleButton = IComponent<PasswordFieldToggleButtonPro
  *
  * アイコン、既定のラベル、押下状態はコンテキストから読み取った表示状態で切り替わります。
  */
-export const PasswordFieldToggleButton: IPasswordFieldToggleButton =
-  function SuiPasswordFieldToggleButton(props) {
-    const ctx = usePasswordFieldContext();
-    const { visible, setVisible } = ctx;
-    const {
-      onClick,
-      children = visible ? <EyeOffIcon /> : <EyeIcon />,
-      disabled = false,
-      "aria-label": ariaLabel = visible ? "パスワードを隠す" : "パスワードを表示",
-      ...otherButtonProps
-    } = props;
-    const handleClick: NonNullable<PasswordFieldToggleButtonProps["onClick"]> = (evt) => {
-      onClick?.(evt);
-      if (!evt.defaultPrevented) {
-        setVisible(!visible);
-      }
-    };
-    const renderState = React.useMemo<PasswordFieldToggleButtonState>(
-      () => ({ visible, disabled }),
-      [disabled, visible],
-    );
-
-    return useRender({
-      props: [
-        otherButtonProps,
-        {
-          type: "button",
-          onClick: handleClick,
-          children,
-          disabled,
-          className: cn<PasswordFieldToggleButtonState>(
-            "sui_password_field_toggle",
-            (state) => state.disabled && "sui_password_field_toggle-disabled",
-            (state) => state.visible && "sui_password_field_toggle-visible",
-          ),
-          "aria-label": ariaLabel,
-          "aria-pressed": visible,
-        },
-      ],
-      state: renderState,
-      defaultTagName: "button",
-    });
+export const PasswordFieldToggleButton: IPasswordFieldToggleButton = (props) => {
+  const ctx = usePasswordFieldContext();
+  const { visible, setVisible } = ctx;
+  const {
+    onClick,
+    children = visible ? <EyeOffIcon /> : <EyeIcon />,
+    disabled = false,
+    "aria-label": ariaLabel = visible ? "パスワードを隠す" : "パスワードを表示",
+    ...otherButtonProps
+  } = props;
+  const handleClick: NonNullable<PasswordFieldToggleButtonProps["onClick"]> = (evt) => {
+    onClick?.(evt);
+    if (!evt.defaultPrevented) {
+      setVisible(!visible);
+    }
   };
+  const renderState = React.useMemo<PasswordFieldToggleButtonState>(
+    () => ({
+      visible,
+      disabled,
+    }),
+    [disabled, visible],
+  );
+
+  return useRender({
+    props: [
+      otherButtonProps,
+      {
+        type: "button",
+        onClick: handleClick,
+        children,
+        disabled,
+        className: cn<PasswordFieldToggleButtonState>(
+          "sui_password_field_toggle",
+          (state) => state.disabled && "sui_password_field_toggle-disabled",
+          (state) => state.visible && "sui_password_field_toggle-visible",
+        ),
+        "aria-label": ariaLabel,
+        "aria-pressed": visible,
+      },
+    ],
+    state: renderState,
+    defaultTagName: "button",
+  });
+};
 
 export { PasswordFieldToggleButton as ToggleButton };
-
 export namespace ToggleButton {
   export type State = PasswordFieldToggleButtonState;
 

@@ -9,9 +9,7 @@ import {
   useAlertDialogPopupContext,
 } from "../popup/alert-dialog.popup.context.js";
 
-/**
- * アラートダイアログのアイコンの配色です。
- */
+/** アラートダイアログのアイコンの配色です。 */
 export type AlertDialogIconColor = Color;
 
 /**
@@ -49,34 +47,22 @@ export type AlertDialogIconVariant = ColorTemplate;
 export type AlertDialogIconState = Override<
   AlertDialogPopupContext,
   {
-    /**
-     * アイコンの配色です。
-     */
+    /** アイコンの配色です。 */
     readonly color: AlertDialogIconColor;
 
-    /**
-     * アイコンの背景色を控えめにするかどうかです。
-     */
+    /** アイコンの背景色を控えめにするかどうかです。 */
     readonly muted: boolean;
 
-    /**
-     * アイコンに枠線を表示するかどうかです。
-     */
+    /** アイコンに枠線を表示するかどうかです。 */
     readonly outlined: boolean;
 
-    /**
-     * アイコンの角丸の大きさです。
-     */
+    /** アイコンの角丸の大きさです。 */
     readonly radius: AlertDialogIconRadius;
 
-    /**
-     * アイコンの大きさです。
-     */
+    /** アイコンの大きさです。 */
     readonly size: AlertDialogIconSize;
 
-    /**
-     * アイコンの主な外観です。
-     */
+    /** アイコンの主な外観です。 */
     readonly variant: AlertDialogIconVariant;
   }
 >;
@@ -146,10 +132,8 @@ export type AlertDialogIconProps = AlertDialogIconProps.Render &
 
 export type IAlertDialogIcon = IComponent<AlertDialogIconProps>;
 
-/**
- * アラートダイアログのアイコンコンポーネントです。
- */
-export const AlertDialogIcon: IAlertDialogIcon = function SuiAlertDialogIcon(props) {
+/** アラートダイアログのアイコンコンポーネントです。 */
+export const AlertDialogIcon: IAlertDialogIcon = (props) => {
   const ctx = useAlertDialogPopupContext();
   const {
     size = "md",
@@ -184,13 +168,20 @@ export const AlertDialogIcon: IAlertDialogIcon = function SuiAlertDialogIcon(pro
         "aria-hidden": ariaHidden,
       },
     ],
-    state: { ...ctx, size, color, muted, radius, variant, outlined },
+    state: {
+      ...ctx,
+      size,
+      color,
+      muted,
+      radius,
+      variant,
+      outlined,
+    },
     defaultTagName: "div",
   });
 };
 
 export { AlertDialogIcon as Icon };
-
 export namespace Icon {
   export type State = AlertDialogIconState;
 

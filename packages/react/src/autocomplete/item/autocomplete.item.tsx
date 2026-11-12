@@ -32,9 +32,9 @@ export namespace AutocompleteItemProps {
         Pick<
           React.ComponentProps<typeof Autocomplete.Item>,
           // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-          // NonNativeButtonProps より:
+          // NonNativeButtonProps より :
           | keyof NonNativeButtonProps
-          // AutocompleteItemProps より:
+          // AutocompleteItemProps より :
           | "children"
           | "onClick"
           | "index"
@@ -72,15 +72,11 @@ export interface IAutocompleteItem extends IComponent<AutocompleteItemProps> {
   <TValue = any>(props: AutocompleteItemProps<TValue>): IComponent.Return;
 }
 
-/**
- * リストの個々の項目要素です。
- */
-export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
-  props: AutocompleteItemProps,
-) {
+/** リストの個々の項目要素です。 */
+export const AutocompleteItem: IAutocompleteItem = (props: AutocompleteItemProps) => {
   const listCtx = useAutocompleteListContext();
   const groupCtx = useAutocompleteGroupContext(true);
-  const ctx = groupCtx || listCtx;
+  const ctx = groupCtx ?? listCtx;
   const {
     index,
     style,
@@ -135,15 +131,20 @@ export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, AutocompleteItemState>(
-                (buttonState) => ({ ...ctx, value, ...buttonState, ...itemState }),
+                (buttonState) => ({
+                  ...ctx,
+                  value,
+                  ...buttonState,
+                  ...itemState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <AutocompleteItemContext value={state}>
                       <RenderElement
                         state={state}
                         render={render}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="div"
                       />
                     </AutocompleteItemContext>
@@ -178,7 +179,6 @@ export const AutocompleteItem: IAutocompleteItem = function SuiAutocompleteItem(
 };
 
 export { AutocompleteItem as Item };
-
 export namespace Item {
   export type State<TValue = any> = AutocompleteItemState<TValue>;
 

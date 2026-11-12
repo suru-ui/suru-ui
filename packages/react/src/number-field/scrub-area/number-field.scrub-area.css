@@ -1,79 +1,75 @@
 @layer sui.component {
-@scope (.sui_number_field_scrub_area) to ([data-scope]) {
+  @scope (.sui_number_field_scrub_area) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      cursor: ew-resize;
+      user-select: none;
+    }
 
-/* 固定 */
-:scope {
-  cursor: ew-resize;
-  user-select: none;
-}
+    /* 変数 */
+    :scope {
+      --sui_number_field_scrub_area-font_family: ;
+      --sui_number_field_scrub_area-font_size: ;
+      --sui_number_field_scrub_area-font_weight: ;
+      --sui_number_field_scrub_area-line_height: ;
+      --sui_number_field_scrub_area-color: ;
+      --sui_number_field_scrub_area-letter_spacing: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_number_field_scrub_area-font_family: ;
-  --sui_number_field_scrub_area-font_size: ;
-  --sui_number_field_scrub_area-font_weight: ;
-  --sui_number_field_scrub_area-line_height: ;
-  --sui_number_field_scrub_area-color: ;
-  --sui_number_field_scrub_area-letter_spacing: ;
-}
+    /* 可変 */
+    :scope {
+      font-family: var(--sui_number_field_scrub_area-font_family);
+      font-size: var(--sui_number_field_scrub_area-font_size);
+      font-weight: var(--sui_number_field_scrub_area-font_weight);
+      line-height: var(--sui_number_field_scrub_area-line_height);
+      color: var(--sui_number_field_scrub_area-color);
+      letter-spacing: var(--sui_number_field_scrub_area-letter_spacing);
+    }
 
-/* 可変 */
-:scope {
-  font-family: var(--sui_number_field_scrub_area-font_family);
-  font-size: var(--sui_number_field_scrub_area-font_size);
-  font-weight: var(--sui_number_field_scrub_area-font_weight);
-  line-height: var(--sui_number_field_scrub_area-line_height);
-  color: var(--sui_number_field_scrub_area-color);
-  letter-spacing: var(--sui_number_field_scrub_area-letter_spacing);
-}
+    /* 代入 */
+    :scope {
+      --sui_number_field_scrub_area-font_family: var(--sui-font-sans);
+      --sui_number_field_scrub_area-color: var(--sui-canvas_text-1);
 
-/* 代入 */
-:scope {
-  --sui_number_field_scrub_area-font_family: var(--sui-font-sans);
-  --sui_number_field_scrub_area-color: var(--sui-canvas_text-1);
+      &.sui_number_field_scrub_area-size_sm {
+        --sui_number_field_scrub_area-font_size: var(--sui-text-dns-sm-b-font_size);
+        --sui_number_field_scrub_area-font_weight: var(--sui-text-dns-sm-b-font_weight);
+        --sui_number_field_scrub_area-line_height: var(--sui-text-dns-sm-b-line_height);
+        --sui_number_field_scrub_area-letter_spacing: var(--sui-text-dns-sm-b-letter_spacing);
+      }
 
-  &.sui_number_field_scrub_area-size_sm {
-    --sui_number_field_scrub_area-font_size: var(--sui-text-dns-sm-b-font_size);
-    --sui_number_field_scrub_area-font_weight: var(--sui-text-dns-sm-b-font_weight);
-    --sui_number_field_scrub_area-line_height: var(--sui-text-dns-sm-b-line_height);
-    --sui_number_field_scrub_area-letter_spacing: var(--sui-text-dns-sm-b-letter_spacing);
-  }
+      &.sui_number_field_scrub_area-size_md {
+        --sui_number_field_scrub_area-font_size: var(--sui-text-dns-sm-b-font_size);
+        --sui_number_field_scrub_area-font_weight: var(--sui-text-dns-sm-b-font_weight);
+        --sui_number_field_scrub_area-line_height: var(--sui-text-dns-sm-b-line_height);
+        --sui_number_field_scrub_area-letter_spacing: var(--sui-text-dns-sm-b-letter_spacing);
+      }
 
-  &.sui_number_field_scrub_area-size_md {
-    --sui_number_field_scrub_area-font_size: var(--sui-text-dns-sm-b-font_size);
-    --sui_number_field_scrub_area-font_weight: var(--sui-text-dns-sm-b-font_weight);
-    --sui_number_field_scrub_area-line_height: var(--sui-text-dns-sm-b-line_height);
-    --sui_number_field_scrub_area-letter_spacing: var(--sui-text-dns-sm-b-letter_spacing);
-  }
-
-  &.sui_number_field_scrub_area-size_lg {
-    --sui_number_field_scrub_area-font_size: var(--sui-text-dns-md-b-font_size);
-    --sui_number_field_scrub_area-font_weight: var(--sui-text-dns-md-b-font_weight);
-    --sui_number_field_scrub_area-line_height: var(--sui-text-dns-md-b-line_height);
-    --sui_number_field_scrub_area-letter_spacing: var(--sui-text-dns-md-b-letter_spacing);
-  }
-}
-
-} /* @scope */
+      &.sui_number_field_scrub_area-size_lg {
+        --sui_number_field_scrub_area-font_size: var(--sui-text-dns-md-b-font_size);
+        --sui_number_field_scrub_area-font_weight: var(--sui-text-dns-md-b-font_weight);
+        --sui_number_field_scrub_area-line_height: var(--sui-text-dns-md-b-line_height);
+        --sui_number_field_scrub_area-letter_spacing: var(--sui-text-dns-md-b-letter_spacing);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_number_field_scrub_area) to ([data-scope]) {
+  @scope (.sui_number_field_scrub_area) to ([data-scope]) {
+    :scope {
+      &.sui_number_field_scrub_area-disabled {
+        cursor: not-allowed;
+      }
 
-:scope {
-  &.sui_number_field_scrub_area-disabled {
-    cursor: not-allowed;
-  }
+      &.sui_number_field_scrub_area-disabled.sui_number_field_scrub_area-variant_naked {
+        color: var(--sui-disabled-naked-canvas_text);
+      }
 
-  &.sui_number_field_scrub_area-disabled.sui_number_field_scrub_area-variant_naked {
-    color: var(--sui-disabled-naked-canvas_text);
-  }
-
-  &.sui_number_field_scrub_area-disabled.sui_number_field_scrub_area-variant_liquid {
-    color: var(--sui-disabled-liquid-canvas_text);
-  }
-}
-
-} /* @scope */
+      &.sui_number_field_scrub_area-disabled.sui_number_field_scrub_area-variant_liquid {
+        color: var(--sui-disabled-liquid-canvas_text);
+      }
+    }
+  } /* @scope */
 } /* @layer */

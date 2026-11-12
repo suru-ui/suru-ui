@@ -25,7 +25,7 @@ export namespace MenuRadioItemIndicatorProps {
     Pick<
       React.ComponentProps<typeof Menu.RadioItemIndicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuRadioItemIndicatorProps より:
+      // MenuRadioItemIndicatorProps より :
       "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -47,12 +47,8 @@ export type MenuRadioItemIndicatorProps = MenuRadioItemIndicatorProps.Render &
 
 export type IMenuRadioItemIndicator = IComponent<MenuRadioItemIndicatorProps>;
 
-/**
- * 選択されたラジオ項目を示す要素です。
- */
-export const MenuRadioItemIndicator: IMenuRadioItemIndicator = function SuiMenuRadioItemIndicator(
-  props,
-) {
+/** 選択されたラジオ項目を示す要素です。 */
+export const MenuRadioItemIndicator: IMenuRadioItemIndicator = (props) => {
   const ctx = useMenuContext();
   const { style, render, className, keepMounted = true, ...otherProps } = props;
 
@@ -60,7 +56,10 @@ export const MenuRadioItemIndicator: IMenuRadioItemIndicator = function SuiMenuR
     <Menu.RadioItemIndicator
       {...otherProps}
       {...proxyRenderProps<Menu.RadioItemIndicator.State, MenuRadioItemIndicatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -96,7 +95,6 @@ export const MenuRadioItemIndicator: IMenuRadioItemIndicator = function SuiMenuR
 };
 
 export { MenuRadioItemIndicator as RadioItemIndicator };
-
 export namespace RadioItemIndicator {
   export type State<TItem = any> = MenuRadioItemIndicatorState<TItem>;
 

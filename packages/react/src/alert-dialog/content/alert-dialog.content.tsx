@@ -32,10 +32,8 @@ export type AlertDialogContentProps = AlertDialogContentProps.Render &
 
 export type IAlertDialogContent = IComponent<AlertDialogContentProps>;
 
-/**
- * アラートダイアログの本文を表示するコンポーネントです。
- */
-export const AlertDialogContent: IAlertDialogContent = function SuiAlertDialogContent(props) {
+/** アラートダイアログの本文を表示するコンポーネントです。 */
+export const AlertDialogContent: IAlertDialogContent = (props) => {
   const ctx = useAlertDialogPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -43,7 +41,10 @@ export const AlertDialogContent: IAlertDialogContent = function SuiAlertDialogCo
     <Card.Content
       {...otherProps}
       {...proxyRenderProps<Card.Content.State, AlertDialogContentState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -77,7 +78,6 @@ export const AlertDialogContent: IAlertDialogContent = function SuiAlertDialogCo
 };
 
 export { AlertDialogContent as Content };
-
 export namespace Content {
   export type State = AlertDialogContentState;
 

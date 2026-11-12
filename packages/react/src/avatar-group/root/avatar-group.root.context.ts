@@ -4,9 +4,7 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { IUseContext } from "../../types.js";
 
-/**
- * アバターの配色です。
- */
+/** アバターの配色です。 */
 export type AvatarGroupContextColor = Color;
 
 /**
@@ -34,30 +32,20 @@ export type AvatarGroupContextSize = Size;
  * {@link AvatarGroupRoot} が子パーツへ提供するコンテキストです。
  */
 export type AvatarGroupContext = {
-  /**
-   * アバターの背景配色です。
-   */
+  /** アバターの背景配色です。 */
   readonly color: AvatarGroupContextColor;
 
-  /**
-   * アバターの角丸です。
-   */
+  /** アバターの角丸です。 */
   readonly radius: AvatarGroupContextRadius;
 
-  /**
-   * アバターを逆順に重ねるかどうかです。
-   */
+  /** アバターを逆順に重ねるかどうかです。 */
   readonly reverse: boolean;
 
-  /**
-   * アバターの大きさです。
-   */
+  /** アバターの大きさです。 */
   readonly size: AvatarGroupContextSize;
 };
 
-/**
- * アバターグループのスタイルを子要素へ伝播するコンテキストです。
- */
+/** アバターグループのスタイルを子要素へ伝播するコンテキストです。 */
 export const AvatarGroupContext: React.Context<AvatarGroupContext | null> =
   React.createContext<AvatarGroupContext | null>(null);
 
@@ -66,11 +54,10 @@ export type IUseAvatarGroupContext = IUseContext<AvatarGroupContext>;
 /**
  * {@link AvatarGroupContext} を読み取るフックです。
  */
-export const useAvatarGroupContext: IUseAvatarGroupContext = function useSuiAvatarGroupContext(
-  optional?: boolean,
-): any {
+export const useAvatarGroupContext: IUseAvatarGroupContext = (optional?: boolean): any => {
   const ctx = React.use(AvatarGroupContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "AvatarGroupContext",
       providerName: "AvatarGroupRoot",
@@ -81,7 +68,6 @@ export const useAvatarGroupContext: IUseAvatarGroupContext = function useSuiAvat
 };
 
 export { AvatarGroupContext as Context, useAvatarGroupContext as useContext };
-
 export namespace Context {
   export type Color = AvatarGroupContextColor;
 

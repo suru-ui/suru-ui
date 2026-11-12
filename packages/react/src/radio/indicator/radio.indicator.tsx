@@ -19,7 +19,7 @@ export namespace RadioIndicatorProps {
     Pick<
       React.ComponentProps<typeof Radio.Indicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // RadioIndicatorProps より:
+      // RadioIndicatorProps より :
       "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -41,10 +41,8 @@ export type RadioIndicatorProps = RadioIndicatorProps.Render &
 
 export type IRadioIndicator = IComponent<RadioIndicatorProps>;
 
-/**
- * ラジオボタンのインジケーターコンポーネントです。
- */
-export const RadioIndicator: IRadioIndicator = function SuiRadioIndicator(props) {
+/** ラジオボタンのインジケーターコンポーネントです。 */
+export const RadioIndicator: IRadioIndicator = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -73,7 +71,6 @@ export const RadioIndicator: IRadioIndicator = function SuiRadioIndicator(props)
 };
 
 export { RadioIndicator as Indicator };
-
 export namespace Indicator {
   export type State = RadioIndicatorState;
 

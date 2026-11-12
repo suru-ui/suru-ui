@@ -24,7 +24,7 @@ export namespace MenuPortalProps {
     Pick<
       React.ComponentProps<typeof Menu.Portal>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuPortalProps より:
+      // MenuPortalProps より :
       "keepMounted" | "container"
     >,
     keyof Render | keyof SuruUI
@@ -51,13 +51,13 @@ export type IMenuPortal = IComponent<MenuPortalProps>;
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const MenuPortal: IMenuPortal = function SuiMenuPortal(props) {
+export const MenuPortal: IMenuPortal = (props) => {
   const ctx = useMenuContext();
   const {
     style,
     render,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -65,25 +65,30 @@ export const MenuPortal: IMenuPortal = function SuiMenuPortal(props) {
   return (
     <Menu.Portal
       {...otherProps}
-      {...proxyRenderProps<Menu.Portal.State, MenuPortalState>((state) => ({ ...ctx, ...state }), {
-        style,
-        render,
-        className: cn<MenuPortalState>(
-          className,
-          "sui_menu_portal",
-          (state) => `sui_menu_portal-size_${state.size}`,
-          (state) => `sui_menu_portal-radius_${state.radius}`,
-          (state) => `sui_menu_portal-variant_${state.variant}`,
-          (state) => state.outlined && "sui_menu_portal-outlined",
-        ),
-      })}
+      {...proxyRenderProps<Menu.Portal.State, MenuPortalState>(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
+          style,
+          render,
+          className: cn<MenuPortalState>(
+            className,
+            "sui_menu_portal",
+            (state) => `sui_menu_portal-size_${state.size}`,
+            (state) => `sui_menu_portal-radius_${state.radius}`,
+            (state) => `sui_menu_portal-variant_${state.variant}`,
+            (state) => state.outlined && "sui_menu_portal-outlined",
+          ),
+        },
+      )}
       data-scope={dataScope}
     />
   );
 };
 
 export { MenuPortal as Portal };
-
 export namespace Portal {
   export type State<TItem = any> = MenuPortalState<TItem>;
 

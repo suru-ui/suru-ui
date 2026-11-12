@@ -1,5 +1,5 @@
 import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../errors.js";
@@ -35,20 +35,20 @@ function renderPopover(children: React.ReactNode) {
 
 describe("PopoverTrigger", () => {
   test("トリガー要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <PopoverRoot>
         <PopoverTrigger>{(props) => <button {...props}>開く</button>}</PopoverTrigger>
       </PopoverRoot>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByRole("button", { name: "開く" }).element();
     expect(trigger.classList.contains("sui_popover_trigger")).toBe(true);
   });
 
   test("描画関数へルートの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <PopoverRoot size="lg" radius="sm" outlined>
         <PopoverTrigger>
@@ -61,7 +61,7 @@ describe("PopoverTrigger", () => {
       </PopoverRoot>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByRole("button", { name: "開く" }).element();
     expect(trigger.getAttribute("data-probe")).toBe("lg/sm/true");
   });
@@ -69,17 +69,17 @@ describe("PopoverTrigger", () => {
 
 describe("PopoverPortal", () => {
   test("ポータル要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderPopover("内容");
 
-    // 検証
+    // 検証。
     const portal = screen.getByClassName("sui_popover_portal").element();
     expect(portal.tagName).toBe("DIV");
     expect(portal.getAttribute("data-scope")).toBe("");
   });
 
   test("大きさと角丸と枠線をクラスにする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <PopoverRoot size="lg" radius="sm" outlined defaultOpen>
         <PopoverPortal>
@@ -90,7 +90,7 @@ describe("PopoverPortal", () => {
       </PopoverRoot>,
     );
 
-    // 検証
+    // 検証。
     const portal = screen.getByClassName("sui_popover_portal").element();
     expect(portal.classList.contains("sui_popover_portal-size_lg")).toBe(true);
     expect(portal.classList.contains("sui_popover_portal-radius_sm")).toBe(true);
@@ -98,7 +98,7 @@ describe("PopoverPortal", () => {
   });
 
   test("render の関数へルートの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <PopoverRoot size="lg" radius="sm" outlined defaultOpen>
         <PopoverPortal
@@ -113,46 +113,46 @@ describe("PopoverPortal", () => {
       </PopoverRoot>,
     );
 
-    // 検証
+    // 検証。
     const portal = screen.getByClassName("sui_popover_portal").element();
     expect(portal.tagName).toBe("DIV");
     expect(portal.getAttribute("data-probe")).toBe("lg/sm/true");
   });
 
   test("Root の外ではエラーを投げる", async ({ expect }) => {
-    // 実行と検証
+    // 実行と検証。
     await expect(render(<PopoverPortal />)).rejects.toThrow(ContextMissingError);
   });
 });
 
 describe("PopoverBackdrop", () => {
   test("指定しないときは表示しない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Popover trigger={<button>開く</button>} defaultOpen>
         内容
       </Popover>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_popover_backdrop").query()).toBe(null);
   });
 
   test("指定するとオーバーレイを表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Popover trigger={<button>開く</button>} backdrop defaultOpen>
         内容
       </Popover>,
     );
 
-    // 検証
+    // 検証。
     const backdrop = screen.getByClassName("sui_popover_backdrop").element();
     expect(backdrop.tagName).toBe("DIV");
   });
 
   test("直接組み立てても表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <PopoverRoot defaultOpen>
         <PopoverPortal>
@@ -164,24 +164,24 @@ describe("PopoverBackdrop", () => {
       </PopoverRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_popover_backdrop").element().id).toBe("backdrop");
   });
 });
 
 describe("PopoverPositioner", () => {
   test("配置コンテナーを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderPopover("内容");
 
-    // 検証
+    // 検証。
     const positioner = screen.getByClassName("sui_popover_positioner").element();
     expect(positioner.tagName).toBe("DIV");
     expect(positioner.classList.contains("sui_popover_positioner")).toBe(true);
   });
 
   test("render の関数へルートの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <PopoverRoot size="lg" radius="sm" outlined defaultOpen>
         <PopoverPortal>
@@ -196,7 +196,7 @@ describe("PopoverPositioner", () => {
       </PopoverRoot>,
     );
 
-    // 検証
+    // 検証。
     const positioner = screen.getByClassName("sui_popover_positioner").element();
     expect(positioner.getAttribute("data-probe")).toBe("lg/sm/true");
   });
@@ -204,34 +204,34 @@ describe("PopoverPositioner", () => {
 
 describe("PopoverPopup", () => {
   test("内容を表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Popover trigger={<button>開く</button>} defaultOpen>
         ポップオーバーの内容
       </Popover>,
     );
 
-    // 検証
+    // 検証。
     const content = screen.getByClassName("sui_popover_popup").element();
     expect(content.tagName).toBe("DIV");
     expect(content.textContent).toBe("ポップオーバーの内容");
   });
 
   test("指定したクラスを加える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Popover trigger={<button>開く</button>} className="custom-content" defaultOpen>
         内容
       </Popover>,
     );
 
-    // 検証
+    // 検証。
     const content = screen.getByClassName("sui_popover_popup").element();
     expect(content.classList.contains("custom-content")).toBe(true);
   });
 
   test("描画する要素を差し替える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Popover
         render={<section data-testid="section" />}
@@ -242,22 +242,22 @@ describe("PopoverPopup", () => {
       </Popover>,
     );
 
-    // 検証
+    // 検証。
     const content = screen.getByClassName("sui_popover_popup").element();
     expect(content.tagName).toBe("SECTION");
     expect(content.textContent).toBe("内容");
   });
 
   test("直接組み立てても描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderPopover("内容");
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_popover_popup").element().textContent).toBe("内容");
   });
 
   test("render の関数へルートと内容の状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <PopoverRoot size="lg" radius="sm" outlined defaultOpen>
         <PopoverPortal>
@@ -277,7 +277,7 @@ describe("PopoverPopup", () => {
       </PopoverRoot>,
     );
 
-    // 検証
+    // 検証。
     const content = screen.getByClassName("sui_popover_popup").element();
     expect(content.getAttribute("data-probe")).toBe("lg/sm/true/true");
   });
@@ -285,63 +285,67 @@ describe("PopoverPopup", () => {
 
 describe("PopoverArrow", () => {
   test("指定しないときは表示しない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Popover trigger={<button>開く</button>} defaultOpen>
         内容
       </Popover>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_popover_arrow").query()).toBe(null);
   });
 
   test("有効にすると矢印を表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Popover arrow trigger={<button>開く</button>} defaultOpen>
         内容
       </Popover>,
     );
 
-    // 検証
+    // 検証。
     const arrow = screen.getByClassName("sui_popover_arrow").element();
     expect(arrow.tagName).toBe("DIV");
   });
 
   test("配置された側のクラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Popover
         arrow
         trigger={<button>開く</button>}
-        slotProps={{ positioner: { side: "right", sideOffset: 8 } }}
+        slotProps={{
+          positioner: {
+            side: "right",
+            sideOffset: 8,
+          },
+        }}
         defaultOpen
       >
         内容
       </Popover>,
     );
 
-    // 検証
+    // 検証。
     const arrow = screen.getByClassName("sui_popover_arrow").element();
     const side = screen.getByClassName("sui_popover_positioner").element().dataset["side"];
     expect(arrow.classList.contains(`sui_popover_arrow-side_${side}`)).toBe(true);
   });
 
   test("直接組み立てても表示する", async ({ expect }) => {
-    // 準備と実行と検証
+    // 準備と実行と検証。
     const screen = await renderPopover(<PopoverArrow id="arrow" />);
-
     expect(screen.getByClassName("sui_popover_arrow").element().id).toBe("arrow");
   });
 });
 
 describe("PopoverTitle", () => {
   test("見出し要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderPopover(<PopoverTitle>見出し</PopoverTitle>);
 
-    // 検証
+    // 検証。
     const title = screen.getByText("見出し").element();
     expect(title.tagName).toBe("H2");
     expect(title.classList.contains("sui_popover_title")).toBe(true);
@@ -350,10 +354,10 @@ describe("PopoverTitle", () => {
 
 describe("PopoverDescription", () => {
   test("説明文要素として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderPopover(<PopoverDescription>説明</PopoverDescription>);
 
-    // 検証
+    // 検証。
     const description = screen.getByText("説明").element();
     expect(description.tagName).toBe("P");
     expect(description.classList.contains("sui_popover_description")).toBe(true);
@@ -362,20 +366,20 @@ describe("PopoverDescription", () => {
 
 describe("PopoverViewport", () => {
   test("内容の切り替え領域を描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderPopover(<PopoverViewport>内容</PopoverViewport>);
 
-    // 検証
+    // 検証。
     const viewport = screen.getByClassName("sui_popover_viewport").element();
     expect(viewport.tagName).toBe("DIV");
     expect(viewport.textContent).toBe("内容");
   });
 
   test("内容を縦に並べる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderPopover(<PopoverViewport>内容</PopoverViewport>);
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(screen.getByClassName("sui_popover_viewport").element());
     expect(style.display).toBe("flex");
     expect(style.flexDirection).toBe("column");

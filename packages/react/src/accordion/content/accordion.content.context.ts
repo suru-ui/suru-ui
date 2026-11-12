@@ -23,18 +23,18 @@ export type IUseAccordionContentContext = IUseContext<AccordionContentContext>;
 /**
  * {@link AccordionContentContext} を読み取るフックです。
  */
-export const useAccordionContentContext: IUseAccordionContentContext =
-  function useSuiAccordionContentContext(optional): any {
-    const ctx = React.use(AccordionContentContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AccordionContentContext",
-        providerName: "AccordionContent",
-      });
-    }
+export const useAccordionContentContext: IUseAccordionContentContext = (optional): any => {
+  const ctx = React.use(AccordionContentContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AccordionContentContext",
+      providerName: "AccordionContent",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   AccordionContentContext as ContentContext,

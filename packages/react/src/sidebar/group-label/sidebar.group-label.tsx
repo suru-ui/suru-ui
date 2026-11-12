@@ -16,10 +16,7 @@ export namespace SidebarGroupLabelProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -32,10 +29,8 @@ export type SidebarGroupLabelProps = SidebarGroupLabelProps.Render &
 
 export type ISidebarGroupLabel = IComponent<SidebarGroupLabelProps>;
 
-/**
- * グループのラベルです。
- */
-export const SidebarGroupLabel: ISidebarGroupLabel = function SuiSidebarGroupLabel(props) {
+/** グループのラベルです。 */
+export const SidebarGroupLabel: ISidebarGroupLabel = (props) => {
   const ctx = useSidebarContext();
 
   return useRender({
@@ -51,7 +46,6 @@ export const SidebarGroupLabel: ISidebarGroupLabel = function SuiSidebarGroupLab
 };
 
 export { SidebarGroupLabel as GroupLabel };
-
 export namespace GroupLabel {
   export type State = SidebarGroupLabelState;
 

@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Button } from "../button/index.js";
 import { CheckboxGroup } from "../checkbox-group/index.js";
@@ -42,7 +40,11 @@ export const Usage = meta.story({
   }),
   render(props) {
     return (
-      <Form onSubmit={(event) => event.preventDefault()}>
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <Fieldset {...props} className="w-80">
           <Field name="sui:company" label="会社名">
             <Input required placeholder="例: Suru UI 株式会社" />
@@ -65,7 +67,11 @@ export const Disabled = meta.story({
   }),
   render(props) {
     return (
-      <Form onSubmit={(event) => event.preventDefault()}>
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <Fieldset {...props} className="w-80">
           <Field name="sui:name" label="氏名">
             <Input placeholder="例: 山田 太郎" />
@@ -88,7 +94,11 @@ export const WithoutLegend = meta.story({
   }),
   render(props) {
     return (
-      <Form onSubmit={(event) => event.preventDefault()}>
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <Fieldset {...props} className="w-80">
           <Field name="sui:nickname" label="ニックネーム">
             <Input placeholder="例: すーるー" />
@@ -108,7 +118,11 @@ export const ContactForm = meta.story({
   }),
   render(props) {
     return (
-      <Form onSubmit={(event) => event.preventDefault()}>
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <Fieldset {...props} className="w-96">
           <Field name="sui:contactName" label="お名前">
             <TextField required placeholder="例: 山田 太郎" />
@@ -182,7 +196,11 @@ export const SlotProps = meta.story({
   }),
   render(props) {
     return (
-      <Form onSubmit={(event) => event.preventDefault()}>
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <Fieldset
           {...props}
           className="w-80 gap-6"
@@ -217,7 +235,11 @@ export const Parts = meta.story({
     const { disabled } = props;
 
     return (
-      <Form onSubmit={(event) => event.preventDefault()}>
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <FieldsetPartsRoot disabled={disabled} className="w-80">
           <FieldsetPartsLegend>パーツで組み立てる例</FieldsetPartsLegend>
           <Field name="sui:partsCompany" label="会社名">
@@ -244,7 +266,11 @@ export const WithAPI = meta.story({
     const legendProps = api.getLegendProps();
 
     return (
-      <Form onSubmit={(event) => event.preventDefault()}>
+      <Form
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <FieldsetPartsRoot {...api.getRootProps()} className="w-80">
           {legendProps && <FieldsetPartsLegend {...legendProps} />}
           <Field name="sui:apiName" label="氏名">

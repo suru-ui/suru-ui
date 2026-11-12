@@ -1,5 +1,5 @@
 import { ContextMenu } from "@base-ui/react/context-menu";
-import { Menu } from "@base-ui/react/menu";
+import type { Menu } from "@base-ui/react/menu";
 import * as React from "react";
 
 import type { Override, IComponent } from "../../types.js";
@@ -43,14 +43,10 @@ namespace ContextMenuRootLabeledItemObject {
   export type BaseUI = Omit<ContextMenuItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 項目のラベルです。
-     */
+    /** 項目のラベルです。 */
     readonly label: ContextMenuItemProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type?: "item" | undefined;
   };
 }
@@ -62,14 +58,10 @@ namespace ContextMenuRootLinkItemObject {
   export type BaseUI = Omit<ContextMenuLinkItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 項目のラベルです。
-     */
+    /** 項目のラベルです。 */
     readonly label: ContextMenuLinkItemProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type: "link";
   };
 }
@@ -81,14 +73,10 @@ namespace ContextMenuRootCheckboxItemObject {
   export type BaseUI = Omit<ContextMenuCheckboxItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 項目のラベルです。
-     */
+    /** 項目のラベルです。 */
     readonly label: ContextMenuCheckboxItemProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type: "checkbox";
   };
 }
@@ -100,14 +88,10 @@ namespace ContextMenuRootRadioItemObject {
   export type BaseUI = Omit<ContextMenuRadioItemProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 項目のラベルです。
-     */
+    /** 項目のラベルです。 */
     readonly label: ContextMenuRadioItemProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type?: "radio" | undefined;
   };
 }
@@ -120,14 +104,10 @@ namespace ContextMenuRootRadioItemObjectGroup {
   export type BaseUI = Omit<ContextMenuRadioGroupProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * ラジオ項目です。
-     */
+    /** ラジオ項目です。 */
     readonly items: readonly ContextMenuRootRadioItemObject[];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type: "radio-group";
   };
 }
@@ -140,19 +120,13 @@ namespace ContextMenuRootSubmenuItemObject {
   export type BaseUI = Omit<ContextMenuSubmenuRootProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 子項目です。
-     */
+    /** 子項目です。 */
     readonly items: readonly ContextMenuRootItemObject[];
 
-    /**
-     * 項目のラベルです。
-     */
+    /** 項目のラベルです。 */
     readonly label: ContextMenuSubmenuTriggerProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type: "submenu";
   };
 }
@@ -171,19 +145,13 @@ namespace ContextMenuRootItemObjectGroup {
   export type BaseUI = Omit<ContextMenuGroupProps, "children" | keyof SuruUI>;
 
   export type SuruUI = {
-    /**
-     * 子項目です。
-     */
+    /** 子項目です。 */
     readonly items: readonly ContextMenuRootGroupedItemObject[];
 
-    /**
-     * グループのラベルです。
-     */
+    /** グループのラベルです。 */
     readonly label?: ContextMenuGroupLabelProps["children"];
 
-    /**
-     * 項目の種類です。
-     */
+    /** 項目の種類です。 */
     readonly type?: "group" | undefined;
   };
 }
@@ -284,7 +252,7 @@ export namespace ContextMenuRootProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuRootProps より:
+      // MenuRootProps より :
       | "defaultOpen"
       | "loopFocus"
       | "highlightItemOnHover"
@@ -329,9 +297,7 @@ export interface IContextMenuRoot extends IComponent<ContextMenuRootProps> {
  * 開閉状態を管理し、各パーツをグループ化します。
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const ContextMenuRoot: IContextMenuRoot = function SuiContextMenuRoot(
-  props: ContextMenuRootProps,
-) {
+export const ContextMenuRoot: IContextMenuRoot = (props: ContextMenuRootProps) => {
   const {
     size = "md",
     items = [],
@@ -341,7 +307,14 @@ export const ContextMenuRoot: IContextMenuRoot = function SuiContextMenuRoot(
     ...otherProps
   } = props;
   const ctx = React.useMemo<ContextMenuContext>(
-    () => ({ size, depth: 1, items, radius, variant, outlined }),
+    () => ({
+      size,
+      depth: 1,
+      items,
+      radius,
+      variant,
+      outlined,
+    }),
     [size, items, radius, variant, outlined],
   );
 
@@ -353,7 +326,6 @@ export const ContextMenuRoot: IContextMenuRoot = function SuiContextMenuRoot(
 };
 
 export { ContextMenuRoot as Root };
-
 export namespace Root {
   export type State<TItem = any> = ContextMenuRootState<TItem>;
 

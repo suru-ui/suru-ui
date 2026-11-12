@@ -30,6 +30,7 @@ export interface IComboboxValueRenderer<
    *
    * @param selectedValue 現在の選択値です。
    * @param context コンボボックスのコンテキストです。
+   *
    * @returns レンダリングする内容です。
    */
   (
@@ -56,20 +57,17 @@ export namespace ComboboxValueProps {
       Pick<
         React.ComponentProps<typeof Combobox.Value>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // ComboboxValueProps より:
+        // ComboboxValueProps より :
         "children" | "placeholder"
       >,
-      keyof Render | keyof SuruUI
+      keyof Render
     >,
     {
       children?: React.ReactNode | IComboboxValueRenderer<TItem, TMultiple>;
     }
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Combobox.Value>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Combobox.Value>, keyof Render | keyof BaseUI>;
 }
 
 /**
@@ -101,7 +99,7 @@ export interface IComboboxValue extends IComponent<ComboboxValueProps> {
  *
  * これ自身は HTML 要素をレンダリングしません。
  */
-export const ComboboxValue: IComboboxValue = function SuiComboboxValue(props: ComboboxValueProps) {
+export const ComboboxValue: IComboboxValue = (props: ComboboxValueProps) => {
   const ctx = useComboboxContext();
   const { children, ...otherProps } = props;
 
@@ -113,7 +111,6 @@ export const ComboboxValue: IComboboxValue = function SuiComboboxValue(props: Co
 };
 
 export { ComboboxValue as Value };
-
 export namespace Value {
   export type State = ComboboxValueState;
 

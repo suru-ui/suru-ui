@@ -22,7 +22,7 @@ export namespace HoverCardPortalProps {
     Pick<
       React.ComponentProps<typeof PreviewCard.Portal>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PreviewCardPortalProps より:
+      // PreviewCardPortalProps より :
       "keepMounted" | "container"
     >,
     keyof Render | keyof SuruUI
@@ -49,13 +49,13 @@ export type IHoverCardPortal = IComponent<HoverCardPortalProps>;
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const HoverCardPortal: IHoverCardPortal = function SuiHoverCardPortal(props) {
+export const HoverCardPortal: IHoverCardPortal = (props) => {
   const ctx = useHoverCardContext();
   const {
     style,
     render,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -64,7 +64,10 @@ export const HoverCardPortal: IHoverCardPortal = function SuiHoverCardPortal(pro
     <PreviewCard.Portal
       {...otherProps}
       {...proxyRenderProps<PreviewCard.Portal.State, HoverCardPortalState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render,
@@ -83,7 +86,6 @@ export const HoverCardPortal: IHoverCardPortal = function SuiHoverCardPortal(pro
 };
 
 export { HoverCardPortal as Portal };
-
 export namespace Portal {
   export type State = HoverCardPortalState;
 

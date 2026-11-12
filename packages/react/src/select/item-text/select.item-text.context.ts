@@ -25,17 +25,17 @@ export type IUseSelectItemTextContext = IUseContext<SelectItemTextContext>;
 /**
  * {@link SelectItemTextContext} を読み取るフックです。
  */
-export const useSelectItemTextContext: IUseSelectItemTextContext =
-  function useSuiSelectItemTextContext(optional): any {
-    const ctx = React.use(SelectItemTextContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "SelectItemTextContext",
-        providerName: "SelectItemText",
-      });
-    }
+export const useSelectItemTextContext: IUseSelectItemTextContext = (optional): any => {
+  const ctx = React.use(SelectItemTextContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "SelectItemTextContext",
+      providerName: "SelectItemText",
+    });
+  }
+
+  return ctx;
+};
 
 export { SelectItemTextContext as ItemTextContext, useSelectItemTextContext as useItemTextContext };

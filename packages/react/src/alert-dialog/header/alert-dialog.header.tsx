@@ -32,10 +32,8 @@ export type AlertDialogHeaderProps = AlertDialogHeaderProps.Render &
 
 export type IAlertDialogHeader = IComponent<AlertDialogHeaderProps>;
 
-/**
- * アラートダイアログの見出し・説明・操作をまとめるコンポーネントです。
- */
-export const AlertDialogHeader: IAlertDialogHeader = function SuiAlertDialogHeader(props) {
+/** アラートダイアログの見出し・説明・操作をまとめるコンポーネントです。 */
+export const AlertDialogHeader: IAlertDialogHeader = (props) => {
   const ctx = useAlertDialogPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -43,7 +41,10 @@ export const AlertDialogHeader: IAlertDialogHeader = function SuiAlertDialogHead
     <Card.Header
       {...otherProps}
       {...proxyRenderProps<Card.Header.State, AlertDialogHeaderState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -77,7 +78,6 @@ export const AlertDialogHeader: IAlertDialogHeader = function SuiAlertDialogHead
 };
 
 export { AlertDialogHeader as Header };
-
 export namespace Header {
   export type State = AlertDialogHeaderState;
 

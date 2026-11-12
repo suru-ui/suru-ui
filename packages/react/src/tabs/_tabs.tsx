@@ -11,6 +11,7 @@ import { decomposeItemObject } from "./utils/tabs.utils.js";
  * 項目が `label` を持つオブジェクトかどうかを判定します。
  *
  * @param item 判定する値です。
+ *
  * @returns `label` が ReactNode であるオブジェクトの場合に `true` を返します。
  */
 export function isItemObject(item: unknown): item is TabsRootItemObject {
@@ -24,6 +25,7 @@ export function isItemObject(item: unknown): item is TabsRootItemObject {
  * 項目オブジェクト以外は `{ value: item }` を返します。
  *
  * @param item 項目です。
+ *
  * @returns タブの props です。
  */
 export function getTabsItemProps(item: unknown): Omit<TabsTabProps, "children"> {
@@ -40,6 +42,7 @@ export function getTabsItemProps(item: unknown): Omit<TabsTabProps, "children"> 
  * 項目のラベルを求めます。
  *
  * @param item 項目です。
+ *
  * @returns 表示するラベルです。
  */
 export function getTabsItemLabel(item: unknown): React.ReactNode {
@@ -50,6 +53,7 @@ export function getTabsItemLabel(item: unknown): React.ReactNode {
  * 項目に対応するパネルの内容を求めます。
  *
  * @param item 項目です。
+ *
  * @returns パネルに表示する内容です。項目オブジェクト以外は `undefined` を返します。
  */
 export function getTabsItemContent(item: unknown): React.ReactNode {
@@ -62,8 +66,10 @@ export function getTabsItemContent(item: unknown): React.ReactNode {
  * {@link TabsList} と合成の両方で同じ組み立てを使うために使用します。
  *
  * @template TItem 項目の型です。
+ *
  * @param getItemProps 項目から {@link TabsTab} の props を求める関数です。
  * @param getLabel 項目からラベルを求める関数です。
+ *
  * @returns 項目をレンダリングする関数です。
  */
 export function createItemRenderer<TItem = any>(

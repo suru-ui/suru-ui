@@ -1,152 +1,151 @@
 @layer sui.component {
-@scope (.sui_hover_card_popup) to ([data-scope]) {
+  @scope (.sui_hover_card_popup) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex-direction: column;
+      line-break: strict;
+      word-break: normal;
+      overflow-wrap: anywhere;
+      pointer-events: auto;
+      outline-style: solid;
+      border-style: solid;
+      transition:
+        opacity 150ms ease-out,
+        scale 150ms ease-out;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  flex-direction: column;
-  line-break: strict;
-  word-break: normal;
-  overflow-wrap: anywhere;
-  pointer-events: auto;
-  outline-style: solid;
-  border-style: solid;
-  transition: opacity 150ms ease-out,
-              scale   150ms ease-out;
-}
+    /* 変数 */
+    :scope {
+      --sui_hover_card_popup-gap: ;
+      --sui_hover_card_popup-width: ;
+      --sui_hover_card_popup-max_width: ;
+      --sui_hover_card_popup-max_height: ;
+      --sui_hover_card_popup-padding: ;
+      --sui_hover_card_popup-font_family: ;
+      --sui_hover_card_popup-font_size: ;
+      --sui_hover_card_popup-font_weight: ;
+      --sui_hover_card_popup-line_height: ;
+      --sui_hover_card_popup-color: ;
+      --sui_hover_card_popup-letter_spacing: ;
+      --sui_hover_card_popup-focusring_width: ;
+      --sui_hover_card_popup-outline_color: ;
+      --sui_hover_card_popup-outline_offset: ;
+      --sui_hover_card_popup-background_color: ;
+      --sui_hover_card_popup-border_color: ;
+      --sui_hover_card_popup-border_width: ;
+      --sui_hover_card_popup-border_radius: ;
+      --sui_hover_card_popup-corner_shape: ;
+      --sui_hover_card_popup-opacity: ;
+      --sui_hover_card_popup-transform_origin: ;
+      --sui_hover_card_popup-scale: ;
+      --sui_hover_card_popup-drop_shadow: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_hover_card_popup-gap: ;
-  --sui_hover_card_popup-width: ;
-  --sui_hover_card_popup-max_width: ;
-  --sui_hover_card_popup-max_height: ;
-  --sui_hover_card_popup-padding: ;
-  --sui_hover_card_popup-font_family: ;
-  --sui_hover_card_popup-font_size: ;
-  --sui_hover_card_popup-font_weight: ;
-  --sui_hover_card_popup-line_height: ;
-  --sui_hover_card_popup-color: ;
-  --sui_hover_card_popup-letter_spacing: ;
-  --sui_hover_card_popup-focusring_width: ;
-  --sui_hover_card_popup-outline_color: ;
-  --sui_hover_card_popup-outline_offset: ;
-  --sui_hover_card_popup-background_color: ;
-  --sui_hover_card_popup-border_color: ;
-  --sui_hover_card_popup-border_width: ;
-  --sui_hover_card_popup-border_radius: ;
-  --sui_hover_card_popup-corner_shape: ;
-  --sui_hover_card_popup-opacity: ;
-  --sui_hover_card_popup-transform_origin: ;
-  --sui_hover_card_popup-scale: ;
-  --sui_hover_card_popup-drop_shadow: ;
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_hover_card_popup-gap);
+      width: var(--sui_hover_card_popup-width);
+      max-width: var(--sui_hover_card_popup-max_width);
+      max-height: var(--sui_hover_card_popup-max_height);
+      padding: var(--sui_hover_card_popup-padding);
+      font-family: var(--sui_hover_card_popup-font_family);
+      font-size: var(--sui_hover_card_popup-font_size);
+      font-weight: var(--sui_hover_card_popup-font_weight);
+      line-height: var(--sui_hover_card_popup-line_height);
+      color: var(--sui_hover_card_popup-color);
+      letter-spacing: var(--sui_hover_card_popup-letter_spacing);
+      outline-width: var(--_sui_hover_card_popup-outline_width, 0px);
+      outline-color: var(--sui_hover_card_popup-outline_color);
+      outline-offset: var(--sui_hover_card_popup-outline_offset);
+      background-color: var(--sui_hover_card_popup-background_color);
+      border-color: var(--sui_hover_card_popup-border_color);
+      border-width: var(--_sui_hover_card_popup-border_width, 0px);
+      border-radius: var(--sui_hover_card_popup-border_radius);
+      corner-shape: var(--sui_hover_card_popup-corner_shape);
+      opacity: var(--_sui_hover_card_popup-opacity, var(--sui_hover_card_popup-opacity));
+      filter: drop-shadow(var(--sui_hover_card_popup-drop_shadow));
+      transform-origin: var(--sui_hover_card_popup-transform_origin);
+      scale: var(--_sui_hover_card_popup-scale, var(--sui_hover_card_popup-scale));
+    }
 
-/* 可変 */
-:scope {
-  gap: var(--sui_hover_card_popup-gap);
-  width: var(--sui_hover_card_popup-width);
-  max-width: var(--sui_hover_card_popup-max_width);
-  max-height: var(--sui_hover_card_popup-max_height);
-  padding: var(--sui_hover_card_popup-padding);
-  font-family: var(--sui_hover_card_popup-font_family);
-  font-size: var(--sui_hover_card_popup-font_size);
-  font-weight: var(--sui_hover_card_popup-font_weight);
-  line-height: var(--sui_hover_card_popup-line_height);
-  color: var(--sui_hover_card_popup-color);
-  letter-spacing: var(--sui_hover_card_popup-letter_spacing);
-  outline-width: var(--_sui_hover_card_popup-outline_width, 0px);
-  outline-color: var(--sui_hover_card_popup-outline_color);
-  outline-offset: var(--sui_hover_card_popup-outline_offset);
-  background-color: var(--sui_hover_card_popup-background_color);
-  border-color: var(--sui_hover_card_popup-border_color);
-  border-width: var(--_sui_hover_card_popup-border_width, 0px);
-  border-radius: var(--sui_hover_card_popup-border_radius);
-  corner-shape: var(--sui_hover_card_popup-corner_shape);
-  opacity: var(--_sui_hover_card_popup-opacity, var(--sui_hover_card_popup-opacity));
-  filter: drop-shadow(var(--sui_hover_card_popup-drop_shadow));
-  transform-origin: var(--sui_hover_card_popup-transform_origin);
-  scale: var(--_sui_hover_card_popup-scale, var(--sui_hover_card_popup-scale));
-}
+    /* 代入 */
+    :scope {
+      --sui_hover_card_popup-gap: --sui-gap(0.5);
+      --sui_hover_card_popup-max_width: var(--available-width);
+      --sui_hover_card_popup-max_height: var(--available-height);
+      --sui_hover_card_popup-font_family: var(--sui-font-sans);
+      --sui_hover_card_popup-font_size: var(--sui-text-std-md-n-font_size);
+      --sui_hover_card_popup-font_weight: var(--sui-text-std-md-n-font_weight);
+      --sui_hover_card_popup-line_height: var(--sui-text-std-md-n-line_height);
+      --sui_hover_card_popup-color: var(--sui-canvas_text-1);
+      --sui_hover_card_popup-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
+      --sui_hover_card_popup-focusring_width: var(--sui-focusring_width);
+      --sui_hover_card_popup-outline_color: var(--sui-focusring_color);
+      --sui_hover_card_popup-outline_offset: var(--sui-focusring_offset);
+      --sui_hover_card_popup-background_color: --sui-light-dark(
+        var(--sui-canvas-1),
+        var(--sui-canvas-2)
+      );
+      --sui_hover_card_popup-border_color: var(--sui-border-1);
+      --sui_hover_card_popup-border_width: --sui-border_width(1);
+      --sui_hover_card_popup-border_radius: --sui-corner_radius(3);
+      --sui_hover_card_popup-corner_shape: superellipse(var(--sui-superellipse));
+      --sui_hover_card_popup-opacity: 1;
+      --sui_hover_card_popup-transform_origin: var(--transform-origin);
+      --sui_hover_card_popup-scale: 1;
+      --sui_hover_card_popup-drop_shadow: var(--sui-drop_shadow-md);
 
-/* 代入 */
-:scope {
-  --sui_hover_card_popup-gap: --sui-gap(0.5);
-  --sui_hover_card_popup-max_width: var(--available-width);
-  --sui_hover_card_popup-max_height: var(--available-height);
-  --sui_hover_card_popup-font_family: var(--sui-font-sans);
-  --sui_hover_card_popup-font_size: var(--sui-text-std-md-n-font_size);
-  --sui_hover_card_popup-font_weight: var(--sui-text-std-md-n-font_weight);
-  --sui_hover_card_popup-line_height: var(--sui-text-std-md-n-line_height);
-  --sui_hover_card_popup-color: var(--sui-canvas_text-1);
-  --sui_hover_card_popup-letter_spacing: var(--sui-text-std-md-n-letter_spacing);
-  --sui_hover_card_popup-focusring_width: var(--sui-focusring_width);
-  --sui_hover_card_popup-outline_color: var(--sui-focusring_color);
-  --sui_hover_card_popup-outline_offset: var(--sui-focusring_offset);
-  --sui_hover_card_popup-background_color: --sui-light-dark(
-                                               var(--sui-canvas-1),
-                                               var(--sui-canvas-2)
-                                             );
-  --sui_hover_card_popup-border_color: var(--sui-border-1);
-  --sui_hover_card_popup-border_width: --sui-border_width(1);
-  --sui_hover_card_popup-border_radius: --sui-corner_radius(3);
-  --sui_hover_card_popup-corner_shape: superellipse(var(--sui-superellipse));
-  --sui_hover_card_popup-opacity: 1;
-  --sui_hover_card_popup-transform_origin: var(--transform-origin);
-  --sui_hover_card_popup-scale: 1;
-  --sui_hover_card_popup-drop_shadow: var(--sui-drop_shadow-md);
+      &.sui_hover_card_popup-size_sm {
+        --sui_hover_card_popup-width: calc(var(--sui_hover_card_popup-font_size) * 16);
+        --sui_hover_card_popup-padding: --sui-space(2);
+      }
 
-  &.sui_hover_card_popup-size_sm {
-    --sui_hover_card_popup-width: calc(var(--sui_hover_card_popup-font_size) * 16);
-    --sui_hover_card_popup-padding: --sui-space(2);
-  }
+      &.sui_hover_card_popup-size_md {
+        --sui_hover_card_popup-width: calc(var(--sui_hover_card_popup-font_size) * 20);
+        --sui_hover_card_popup-padding: --sui-space(3);
+      }
 
-  &.sui_hover_card_popup-size_md {
-    --sui_hover_card_popup-width: calc(var(--sui_hover_card_popup-font_size) * 20);
-    --sui_hover_card_popup-padding: --sui-space(3);
-  }
+      &.sui_hover_card_popup-size_lg {
+        --sui_hover_card_popup-width: calc(var(--sui_hover_card_popup-font_size) * 24);
+        --sui_hover_card_popup-padding: --sui-space(4);
+      }
 
-  &.sui_hover_card_popup-size_lg {
-    --sui_hover_card_popup-width: calc(var(--sui_hover_card_popup-font_size) * 24);
-    --sui_hover_card_popup-padding: --sui-space(4);
-  }
+      &.sui_hover_card_popup-radius_none {
+        --sui_hover_card_popup-border_radius: 0px;
+      }
 
-  &.sui_hover_card_popup-radius_none {
-    --sui_hover_card_popup-border_radius: 0px;
-  }
+      &.sui_hover_card_popup-radius_sm {
+        --sui_hover_card_popup-border_radius: --sui-corner_radius(2);
+        --sui_hover_card_popup-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_hover_card_popup-radius_sm {
-    --sui_hover_card_popup-border_radius: --sui-corner_radius(2);
-    --sui_hover_card_popup-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_hover_card_popup-radius_md {
+        --sui_hover_card_popup-border_radius: --sui-corner_radius(3);
+        --sui_hover_card_popup-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_hover_card_popup-radius_md {
-    --sui_hover_card_popup-border_radius: --sui-corner_radius(3);
-    --sui_hover_card_popup-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_hover_card_popup-radius_lg {
+        --sui_hover_card_popup-border_radius: --sui-corner_radius(4);
+        --sui_hover_card_popup-corner_shape: superellipse(var(--sui-superellipse));
+      }
+    }
 
-  &.sui_hover_card_popup-radius_lg {
-    --sui_hover_card_popup-border_radius: --sui-corner_radius(4);
-    --sui_hover_card_popup-corner_shape: superellipse(var(--sui-superellipse));
-  }
-}
+    /* 変異 */
+    :scope {
+      &.sui_hover_card_popup-outlined {
+        --_sui_hover_card_popup-border_width: var(--sui_hover_card_popup-border_width);
+      }
 
-/* 変異 */
-:scope {
-  &.sui_hover_card_popup-outlined {
-    --_sui_hover_card_popup-border_width: var(--sui_hover_card_popup-border_width);
-  }
+      &.sui_hover_card_popup-transition_status_starting,
+      &.sui_hover_card_popup-transition_status_ending {
+        --_sui_hover_card_popup-opacity: 0;
+        --_sui_hover_card_popup-scale: 0.98;
+      }
 
-  &.sui_hover_card_popup-transition_status_starting,
-  &.sui_hover_card_popup-transition_status_ending {
-    --_sui_hover_card_popup-opacity: 0;
-    --_sui_hover_card_popup-scale: 0.98;
-  }
-
-  &:focus-visible {
-    --_sui_hover_card_popup-outline_width: var(--sui_hover_card_popup-focusring_width);
-  }
-}
-
-} /* @scope */
+      &:focus-visible {
+        --_sui_hover_card_popup-outline_width: var(--sui_hover_card_popup-focusring_width);
+      }
+    }
+  } /* @scope */
 } /* @layer */

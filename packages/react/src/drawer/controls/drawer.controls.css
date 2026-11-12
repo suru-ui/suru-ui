@@ -1,46 +1,44 @@
 @layer sui.component {
-@scope (.sui_drawer_controls) to ([data-scope]) {
+  @scope (.sui_drawer_controls) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      z-index: 1;
+      display: flex;
+      justify-content: flex-end;
 
-/* 固定 */
-:scope {
-  z-index: 1;
-  display: flex;
-  justify-content: flex-end;
+      &.sui_drawer_controls-absolute {
+        position: absolute;
+      }
 
-  &.sui_drawer_controls-absolute {
-    position: absolute;
-  }
+      &.sui_drawer_controls-relative {
+        position: relative;
+      }
+    }
 
-  &.sui_drawer_controls-relative {
-    position: relative;
-  }
-}
+    /* 変数 */
+    :scope {
+      --sui_drawer_controls-gap: ;
+      --sui_drawer_controls-offset: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_drawer_controls-gap: ;
-  --sui_drawer_controls-offset: ;
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_drawer_controls-gap);
 
-/* 可変 */
-:scope {
-  gap: var(--sui_drawer_controls-gap);
+      &.sui_drawer_controls-absolute {
+        inset-block-start: var(--sui_drawer_controls-offset);
+        inset-inline-end: var(--sui_drawer_controls-offset);
+      }
 
-  &.sui_drawer_controls-absolute {
-    inset-block-start: var(--sui_drawer_controls-offset);
-    inset-inline-end: var(--sui_drawer_controls-offset);
-  }
+      &.sui_drawer_controls-relative {
+        margin-inline-start: auto;
+      }
+    }
 
-  &.sui_drawer_controls-relative {
-    margin-inline-start: auto;
-  }
-}
-
-/* 代入 */
-:scope {
-  --sui_drawer_controls-gap: --sui-gap(2);
-  --sui_drawer_controls-offset: --sui-space(4);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_drawer_controls-gap: --sui-gap(2);
+      --sui_drawer_controls-offset: --sui-space(4);
+    }
+  } /* @scope */
 } /* @layer */

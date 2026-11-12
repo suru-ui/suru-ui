@@ -21,11 +21,10 @@ export type IUseSliderTrackContext = IUseContext<SliderTrackContext>;
 /**
  * {@link SliderTrackContext} を読み取るフックです。
  */
-export const useSliderTrackContext: IUseSliderTrackContext = function useSuiSliderTrackContext(
-  optional,
-): any {
+export const useSliderTrackContext: IUseSliderTrackContext = (optional): any => {
   const ctx = React.use(SliderTrackContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SliderTrackContext",
       providerName: "SliderTrack",

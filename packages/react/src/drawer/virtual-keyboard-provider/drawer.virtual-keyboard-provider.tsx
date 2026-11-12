@@ -17,15 +17,15 @@ export namespace DrawerVirtualKeyboardProviderProps {
     Pick<
       React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DrawerVirtualKeyboardProviderProps より:
+      // DrawerVirtualKeyboardProviderProps より :
       "children"
     >,
-    keyof Render | keyof SuruUI
+    keyof Render
   >;
 
   export type HTML = Omit<
     React.ComponentProps<typeof Drawer.VirtualKeyboardProvider>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof BaseUI
   >;
 }
 
@@ -44,13 +44,11 @@ export type IDrawerVirtualKeyboardProvider = IComponent<DrawerVirtualKeyboardPro
  *
  * ボトムシート内にフォームを配置するときに使用します。
  */
-export const DrawerVirtualKeyboardProvider: IDrawerVirtualKeyboardProvider =
-  function SuiDrawerVirtualKeyboardProvider(props) {
-    return <Drawer.VirtualKeyboardProvider {...props} />;
-  };
+export const DrawerVirtualKeyboardProvider: IDrawerVirtualKeyboardProvider = (props) => (
+  <Drawer.VirtualKeyboardProvider {...props} />
+);
 
 export { DrawerVirtualKeyboardProvider as VirtualKeyboardProvider };
-
 export namespace VirtualKeyboardProvider {
   export type State = DrawerVirtualKeyboardProviderState;
 

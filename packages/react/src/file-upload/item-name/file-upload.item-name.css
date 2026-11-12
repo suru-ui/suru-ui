@@ -1,14 +1,12 @@
 @layer sui.component {
-@scope (.sui_file_upload_item_name) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  flex: 1;
-  min-width: 0px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-} /* @scope */
+  @scope (.sui_file_upload_item_name) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      flex: 1;
+      min-width: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  } /* @scope */
 } /* @layer */

@@ -17,16 +17,13 @@ export namespace ToastProviderProps {
     Pick<
       React.ComponentProps<typeof Toast.Provider>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ToastProviderProps より:
+      // ToastProviderProps より :
       "children" | "timeout" | "limit" | "toastManager"
     >,
-    keyof Render | keyof SuruUI
+    keyof Render
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Toast.Provider>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Toast.Provider>, keyof Render | keyof BaseUI>;
 }
 
 /**
@@ -44,12 +41,9 @@ export type IToastProvider = IComponent<ToastProviderProps>;
  *
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const ToastProvider: IToastProvider = function SuiToastProvider(props) {
-  return <Toast.Provider {...props} />;
-};
+export const ToastProvider: IToastProvider = (props) => <Toast.Provider {...props} />;
 
 export { ToastProvider as Provider };
-
 export namespace Provider {
   export type State = ToastProviderState;
 

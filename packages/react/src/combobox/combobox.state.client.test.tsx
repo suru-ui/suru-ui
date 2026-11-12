@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { ComboboxChip } from "./chip/combobox.chip.jsx";
@@ -13,10 +13,9 @@ import { ComboboxRoot } from "./root/combobox.root.jsx";
 import "../../tests/src/_locators.js";
 
 const fruits = ["りんご", "ばなな"];
-
 describe("Combobox の状態", () => {
   test("入力グループの render へスタイル情報と入力グループの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ComboboxRoot open size="lg" color="blue" items={fruits} radius="none" variant="naked">
         <ComboboxInputGroup
@@ -31,14 +30,14 @@ describe("Combobox の状態", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_combobox").element().getAttribute("data-probe")).toBe(
       "lg/blue/none/naked/true/true",
     );
   });
 
   test("入力グループの修飾をルートより優先する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ComboboxRoot size="lg" items={fruits} radius="none" variant="naked">
         <ComboboxInputGroup
@@ -56,14 +55,14 @@ describe("Combobox の状態", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_combobox").element().getAttribute("data-probe")).toBe(
       "sm/red/full/liquid",
     );
   });
 
   test("ポップアップの render へスタイル情報とポップアップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ComboboxRoot open size="lg" color="blue" items={fruits}>
         <ComboboxPortal>
@@ -82,14 +81,14 @@ describe("Combobox の状態", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_combobox_popup").element().getAttribute("data-probe")).toBe(
       "lg/blue/true/true",
     );
   });
 
   test("ポータルの render へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ComboboxRoot size="lg" items={fruits} radius="full" defaultOpen>
         <ComboboxPortal
@@ -102,14 +101,14 @@ describe("Combobox の状態", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_combobox_portal").element().getAttribute("data-probe")).toBe(
       "lg/full",
     );
   });
 
   test("リストの render へスタイル情報とリストの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ComboboxRoot open size="lg" color="blue" items={fruits} variant="naked">
         <ComboboxPortal>
@@ -129,14 +128,14 @@ describe("Combobox の状態", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_combobox_list").element().getAttribute("data-probe")).toBe(
       "lg/blue/naked/false",
     );
   });
 
   test("項目の render へスタイル情報と項目の状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ComboboxRoot size="lg" items={fruits} defaultOpen defaultValue="りんご">
         <ComboboxPortal>
@@ -164,14 +163,14 @@ describe("Combobox の状態", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_combobox_item").elements()[0]?.getAttribute("data-probe"),
     ).toBe("lg/grey/true/false");
   });
 
   test("チップの render へスタイル情報とチップの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ComboboxRoot size="lg" color="blue" items={fruits} multiple defaultValue={["りんご"]}>
         <ComboboxInputGroup>
@@ -193,7 +192,7 @@ describe("Combobox の状態", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_combobox_chip").element().getAttribute("data-probe")).toBe(
       "lg/blue/full/naked/true/false",
     );

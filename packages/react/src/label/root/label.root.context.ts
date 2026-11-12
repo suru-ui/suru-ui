@@ -4,9 +4,7 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { IUseContext } from "../../types.js";
 
-/**
- * ラベルの配色です。
- */
+/** ラベルの配色です。 */
 export type LabelContextColor = Color;
 
 /**
@@ -22,25 +20,17 @@ export type LabelContextSize = Size;
  * {@link LabelRoot} が提供する状態です。
  */
 export type LabelContext = {
-  /**
-   * ラベルの配色です。
-   */
+  /** ラベルの配色です。 */
   readonly color: LabelContextColor;
 
-  /**
-   * ラベルを無効にするかどうかです。
-   */
+  /** ラベルを無効にするかどうかです。 */
   readonly disabled: boolean;
 
-  /**
-   * ラベルの大きさです。
-   */
+  /** ラベルの大きさです。 */
   readonly size: LabelContextSize;
 };
 
-/**
- * ラベルの見た目を子孫へ伝播するコンテキストです。
- */
+/** ラベルの見た目を子孫へ伝播するコンテキストです。 */
 export const LabelContext: React.Context<LabelContext | null> =
   React.createContext<LabelContext | null>(null);
 
@@ -49,11 +39,10 @@ export type IUseLabelContext = IUseContext<LabelContext>;
 /**
  * {@link LabelContext} を読み取るフックです。
  */
-export const useLabelContext: IUseLabelContext = function useSuiLabelContext(
-  optional?: boolean,
-): any {
+export const useLabelContext: IUseLabelContext = (optional?: boolean): any => {
   const ctx = React.use(LabelContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "LabelContext",
       providerName: "LabelRoot",
@@ -64,7 +53,6 @@ export const useLabelContext: IUseLabelContext = function useSuiLabelContext(
 };
 
 export { LabelContext as Context, useLabelContext as useContext };
-
 export namespace Context {
   export type Color = LabelContextColor;
 

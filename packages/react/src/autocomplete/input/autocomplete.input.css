@@ -1,106 +1,102 @@
 @layer sui.component {
-@scope (.sui_autocomplete_input) to ([data-scope]) {
+  @scope (.sui_autocomplete_input) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: block;
+      flex: 1 1 auto;
+      width: 0px;
+      font-feature-settings: "palt";
+      white-space: nowrap;
+      touch-action: manipulation;
 
-/* 固定 */
-:scope {
-  display: block;
-  flex: 1 1 auto;
-  width: 0px;
-  font-feature-settings: "palt";
-  white-space: nowrap;
-  touch-action: manipulation;
+      &::placeholder {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
 
-  &::placeholder {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-}
+    /* 変数 */
+    :scope {
+      --sui_autocomplete_input-min_width: ;
+      --sui_autocomplete_input-height: ;
+      --sui_autocomplete_input-padding_inline: ;
+      --sui_autocomplete_input-font_family: ;
+      --sui_autocomplete_input-font_size: ;
+      --sui_autocomplete_input-font_weight: ;
+      --sui_autocomplete_input-line_height: ;
+      --sui_autocomplete_input-color: ;
+      --sui_autocomplete_input-placeholder-color: ;
+      --sui_autocomplete_input-letter_spacing: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_autocomplete_input-min_width: ;
-  --sui_autocomplete_input-height: ;
-  --sui_autocomplete_input-padding_inline: ;
-  --sui_autocomplete_input-font_family: ;
-  --sui_autocomplete_input-font_size: ;
-  --sui_autocomplete_input-font_weight: ;
-  --sui_autocomplete_input-line_height: ;
-  --sui_autocomplete_input-color: ;
-  --sui_autocomplete_input-placeholder-color: ;
-  --sui_autocomplete_input-letter_spacing: ;
-}
+    /* 可変 */
+    :scope {
+      min-width: var(--sui_autocomplete_input-min_width);
+      height: var(--sui_autocomplete_input-height);
+      padding-inline: var(--sui_autocomplete_input-padding_inline);
+      font-family: var(--sui_autocomplete_input-font_family);
+      font-size: var(--sui_autocomplete_input-font_size);
+      font-weight: var(--sui_autocomplete_input-font_weight);
+      line-height: var(--sui_autocomplete_input-line_height);
+      color: var(--sui_autocomplete_input-color);
+      letter-spacing: var(--sui_autocomplete_input-letter_spacing);
+      caret-color: var(--sui_autocomplete_input-color);
 
-/* 可変 */
-:scope {
-  min-width: var(--sui_autocomplete_input-min_width);
-  height: var(--sui_autocomplete_input-height);
-  padding-inline: var(--sui_autocomplete_input-padding_inline);
-  font-family: var(--sui_autocomplete_input-font_family);
-  font-size: var(--sui_autocomplete_input-font_size);
-  font-weight: var(--sui_autocomplete_input-font_weight);
-  line-height: var(--sui_autocomplete_input-line_height);
-  color: var(--sui_autocomplete_input-color);
-  letter-spacing: var(--sui_autocomplete_input-letter_spacing);
-  caret-color: var(--sui_autocomplete_input-color);
+      &::placeholder {
+        color: var(--sui_autocomplete_input-placeholder-color);
+      }
+    }
 
-  &::placeholder {
-    color: var(--sui_autocomplete_input-placeholder-color);
-  }
-}
+    /* 代入 */
+    :scope {
+      --sui_autocomplete_input-min_width: 5em;
+      --sui_autocomplete_input-height: var(--sui_autocomplete-button-size);
+      --sui_autocomplete_input-font_family: var(--sui_autocomplete-font_family);
+      --sui_autocomplete_input-font_size: var(--sui_autocomplete-font_size);
+      --sui_autocomplete_input-font_weight: var(--sui_autocomplete-font_weight);
+      --sui_autocomplete_input-line_height: var(--sui_autocomplete-line_height);
+      --sui_autocomplete_input-color: var(--sui_autocomplete-color);
+      --sui_autocomplete_input-placeholder-color: var(--sui_autocomplete-placeholder-color);
+      --sui_autocomplete_input-letter_spacing: var(--sui_autocomplete-letter_spacing);
 
-/* 代入 */
-:scope {
-  --sui_autocomplete_input-min_width: 5em;
-  --sui_autocomplete_input-height: var(--sui_autocomplete-button-size);
-  --sui_autocomplete_input-font_family: var(--sui_autocomplete-font_family);
-  --sui_autocomplete_input-font_size: var(--sui_autocomplete-font_size);
-  --sui_autocomplete_input-font_weight: var(--sui_autocomplete-font_weight);
-  --sui_autocomplete_input-line_height: var(--sui_autocomplete-line_height);
-  --sui_autocomplete_input-color: var(--sui_autocomplete-color);
-  --sui_autocomplete_input-placeholder-color: var(--sui_autocomplete-placeholder-color);
-  --sui_autocomplete_input-letter_spacing: var(--sui_autocomplete-letter_spacing);
+      &.sui_autocomplete_input-size_sm {
+        --sui_autocomplete_input-padding_inline: --sui-space(0.5);
+      }
 
-  &.sui_autocomplete_input-size_sm {
-    --sui_autocomplete_input-padding_inline: --sui-space(0.5);
-  }
+      &.sui_autocomplete_input-size_md {
+        --sui_autocomplete_input-padding_inline: --sui-space(1);
+      }
 
-  &.sui_autocomplete_input-size_md {
-    --sui_autocomplete_input-padding_inline: --sui-space(1);
-  }
-
-  &.sui_autocomplete_input-size_lg {
-    --sui_autocomplete_input-padding_inline: --sui-space(1.5);
-  }
-}
-
-} /* @scope */
+      &.sui_autocomplete_input-size_lg {
+        --sui_autocomplete_input-padding_inline: --sui-space(1.5);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_autocomplete) to ([data-scope]) {
+  @scope (.sui_autocomplete) to ([data-scope]) {
+    /* ルートの無効化状態に依存し、入力欄自身に等価なクラスが無いため、ルート起点の別ブロックにします。 */
+    :scope {
+      &.sui_autocomplete-disabled {
+        &.sui_autocomplete-variant_naked .sui_autocomplete_input {
+          color: var(--sui-disabled-naked-canvas_text);
 
-/* ルートの無効化状態に依存し、入力欄自身に等価なクラスが無いため、ルート起点の別ブロックにします。 */
-:scope {
-  &.sui_autocomplete-disabled {
-    &.sui_autocomplete-variant_naked .sui_autocomplete_input {
-      color: var(--sui-disabled-naked-canvas_text);
+          &::placeholder {
+            color: var(--sui-disabled-naked-canvas_text);
+          }
+        }
 
-      &::placeholder {
-        color: var(--sui-disabled-naked-canvas_text);
+        &.sui_autocomplete-variant_liquid .sui_autocomplete_input {
+          color: var(--sui-disabled-liquid-canvas_text);
+
+          &::placeholder {
+            color: var(--sui-disabled-liquid-canvas_text);
+          }
+        }
       }
     }
-
-    &.sui_autocomplete-variant_liquid .sui_autocomplete_input {
-      color: var(--sui-disabled-liquid-canvas_text);
-
-      &::placeholder {
-        color: var(--sui-disabled-liquid-canvas_text);
-      }
-    }
-  }
-}
-
-} /* @scope */
+  } /* @scope */
 } /* @layer */

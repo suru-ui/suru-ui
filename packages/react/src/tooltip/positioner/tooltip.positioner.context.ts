@@ -21,18 +21,18 @@ export type IUseTooltipPositionerContext = IUseContext<TooltipPositionerContext>
 /**
  * {@link TooltipPositionerContext} を読み取るフックです。
  */
-export const useTooltipPositionerContext: IUseTooltipPositionerContext =
-  function useSuiTooltipPositionerContext(optional): any {
-    const ctx = React.use(TooltipPositionerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "TooltipPositionerContext",
-        providerName: "TooltipPositioner",
-      });
-    }
+export const useTooltipPositionerContext: IUseTooltipPositionerContext = (optional): any => {
+  const ctx = React.use(TooltipPositionerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "TooltipPositionerContext",
+      providerName: "TooltipPositioner",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   TooltipPositionerContext as PositionerContext,

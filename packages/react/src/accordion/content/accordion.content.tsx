@@ -23,10 +23,10 @@ export namespace AccordionContentProps {
     Pick<
       React.ComponentProps<typeof Accordion.Panel>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // Pick<AccordionRoot.Props, 'hiddenUntilFound' | 'keepMounted'> より:
+      // Pick<AccordionRoot.Props, 'hiddenUntilFound' | 'keepMounted'> より :
       | "hiddenUntilFound"
       | "keepMounted"
-      // AccordionPanelProps より:
+      // AccordionPanelProps より :
       | never
     >,
     keyof Render | keyof SuruUI
@@ -48,10 +48,8 @@ export type AccordionContentProps = AccordionContentProps.Render &
 
 export type IAccordionContent = IComponent<AccordionContentProps>;
 
-/**
- * アコーディオンのパネルコンポーネントです。
- */
-export const AccordionContent: IAccordionContent = function SuiAccordionContent(props) {
+/** アコーディオンのパネルコンポーネントです。 */
+export const AccordionContent: IAccordionContent = (props) => {
   const ctx = useAccordionItemContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -59,7 +57,10 @@ export const AccordionContent: IAccordionContent = function SuiAccordionContent(
     <Accordion.Panel
       {...otherProps}
       {...proxyRenderProps<Accordion.Panel.State, AccordionContentState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -78,6 +79,7 @@ export const AccordionContent: IAccordionContent = function SuiAccordionContent(
             (state) =>
               state.transitionStatus !== undefined &&
               `sui_accordion_content-transition_status_${state.transitionStatus}`,
+            // oxlint-disable-next-line typescript/no-deprecated -- Base UI の orientation を後方互換のため使用します。
             (state) => `sui_accordion_content-size_${state.size}`,
             (state) => `sui_accordion_content-radius_${state.radius}`,
             (state) => state.separator && "sui_accordion_content-separator",
@@ -85,6 +87,7 @@ export const AccordionContent: IAccordionContent = function SuiAccordionContent(
             (state) => state.open && "sui_accordion_content-open",
             (state) => state.hidden && "sui_accordion_content-hidden",
             (state) => `sui_accordion_content-index_${state.index}`,
+            // oxlint-disable-next-line typescript/no-deprecated -- Base UI の orientation を後方互換のため使用します。
             (state) => `sui_accordion_content-orientation_${state.orientation}`,
           ),
         },
@@ -94,7 +97,6 @@ export const AccordionContent: IAccordionContent = function SuiAccordionContent(
 };
 
 export { AccordionContent as Content };
-
 export namespace Content {
   export type State = AccordionContentState;
 

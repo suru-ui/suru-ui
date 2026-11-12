@@ -25,7 +25,7 @@ export namespace ContextMenuBackdropProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.Backdrop>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuBackdropProps より:
+      // MenuBackdropProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace ContextMenuBackdropProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof ContextMenu.Backdrop>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type ContextMenuBackdropProps = ContextMenuBackdropProps.Render &
 
 export type IContextMenuBackdrop = IComponent<ContextMenuBackdropProps>;
 
-/**
- * コンテキストメニューの背後に表示されるオーバーレイ要素です。
- */
-export const ContextMenuBackdrop: IContextMenuBackdrop = function SuiContextMenuBackdrop(props) {
+/** コンテキストメニューの背後に表示されるオーバーレイ要素です。 */
+export const ContextMenuBackdrop: IContextMenuBackdrop = (props) => {
   const ctx = useContextMenuContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const ContextMenuBackdrop: IContextMenuBackdrop = function SuiContextMenu
     <ContextMenu.Backdrop
       {...otherProps}
       {...proxyRenderProps<ContextMenu.Backdrop.State, ContextMenuBackdropState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -90,7 +91,6 @@ export const ContextMenuBackdrop: IContextMenuBackdrop = function SuiContextMenu
 };
 
 export { ContextMenuBackdrop as Backdrop };
-
 export namespace Backdrop {
   export type State<TItem = any> = ContextMenuBackdropState<TItem>;
 

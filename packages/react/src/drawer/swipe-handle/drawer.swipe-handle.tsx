@@ -17,10 +17,7 @@ export namespace DrawerSwipeHandleProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -38,7 +35,7 @@ export type IDrawerSwipeHandle = IComponent<DrawerSwipeHandleProps>;
  *
  * `DrawerPopup` の子として、`DrawerContent` より前に配置します。
  */
-export const DrawerSwipeHandle: IDrawerSwipeHandle = function SuiDrawerSwipeHandle(props) {
+export const DrawerSwipeHandle: IDrawerSwipeHandle = (props) => {
   const ctx = useDrawerPopupContext();
   const element = useRender({
     props: [
@@ -64,7 +61,6 @@ export const DrawerSwipeHandle: IDrawerSwipeHandle = function SuiDrawerSwipeHand
 };
 
 export { DrawerSwipeHandle as SwipeHandle };
-
 export namespace SwipeHandle {
   export type State = DrawerSwipeHandleState;
 

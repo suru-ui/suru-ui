@@ -12,9 +12,7 @@ export type PaginationItemContext = Readonly<
   Override<
     Override<PaginationContext, Button.Root.State>,
     {
-      /**
-       * 現在のページかどうかです。
-       */
+      /** 現在のページかどうかです。 */
       readonly selected: boolean;
     }
   >
@@ -31,17 +29,17 @@ export type IUsePaginationItemContext = IUseContext<PaginationItemContext>;
 /**
  * {@link PaginationItemContext} を読み取るフックです。
  */
-export const usePaginationItemContext: IUsePaginationItemContext =
-  function useSuiPaginationItemContext(optional): any {
-    const ctx = React.use(PaginationItemContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "PaginationItemContext",
-        providerName: "PaginationItem",
-      });
-    }
+export const usePaginationItemContext: IUsePaginationItemContext = (optional): any => {
+  const ctx = React.use(PaginationItemContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "PaginationItemContext",
+      providerName: "PaginationItem",
+    });
+  }
+
+  return ctx;
+};
 
 export { PaginationItemContext as ItemContext, usePaginationItemContext as useItemContext };

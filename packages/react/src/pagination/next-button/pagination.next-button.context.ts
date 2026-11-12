@@ -21,18 +21,18 @@ export type IUsePaginationNextButtonContext = IUseContext<PaginationNextButtonCo
 /**
  * {@link PaginationNextButtonContext} を読み取るフックです。
  */
-export const usePaginationNextButtonContext: IUsePaginationNextButtonContext =
-  function useSuiPaginationNextButtonContext(optional): any {
-    const ctx = React.use(PaginationNextButtonContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "PaginationNextButtonContext",
-        providerName: "PaginationNextButton",
-      });
-    }
+export const usePaginationNextButtonContext: IUsePaginationNextButtonContext = (optional): any => {
+  const ctx = React.use(PaginationNextButtonContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "PaginationNextButtonContext",
+      providerName: "PaginationNextButton",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   PaginationNextButtonContext as NextButtonContext,

@@ -82,7 +82,7 @@ export namespace PopoverRootProps {
     Pick<
       React.ComponentProps<typeof Popover.Root<TPayload>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PopoverRootProps より:
+      // PopoverRootProps より :
       | "defaultOpen"
       | "open"
       | "onOpenChange"
@@ -127,12 +127,14 @@ export interface IPopoverRoot extends IComponent<PopoverRootProps> {
  *
  * ポップオーバーの開閉状態を管理し、各パーツをグループ化します。それ自身は HTML 要素をレンダリングしません。
  */
-export const PopoverRoot: IPopoverRoot = function SuiPopoverRoot<TPayload>(
-  props: PopoverRootProps<TPayload>,
-) {
+export const PopoverRoot: IPopoverRoot = <TPayload,>(props: PopoverRootProps<TPayload>) => {
   const { size = "md", handle, radius = size, outlined = true, ...otherProps } = props;
   const ctx = React.useMemo<PopoverContext>(
-    () => ({ size, radius, outlined }),
+    () => ({
+      size,
+      radius,
+      outlined,
+    }),
     [size, radius, outlined],
   );
 
@@ -144,7 +146,6 @@ export const PopoverRoot: IPopoverRoot = function SuiPopoverRoot<TPayload>(
 };
 
 export { PopoverRoot as Root };
-
 export namespace Root {
   export type State = PopoverRootState;
 

@@ -27,7 +27,7 @@ export namespace AlertDialogDescriptionProps {
       Pick<
         React.ComponentProps<typeof AlertDialog.Description>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // AlertDialogDescriptionProps より:
+        // AlertDialogDescriptionProps より :
         never
       >,
       keyof Render | keyof SuruUI
@@ -36,7 +36,7 @@ export namespace AlertDialogDescriptionProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof AlertDialog.Description>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -55,9 +55,7 @@ export type IAlertDialogDescription = IComponent<AlertDialogDescriptionProps>;
  *
  * 見た目はカードの説明文として描画され、ポップアップの説明に関連付けます。
  */
-export const AlertDialogDescription: IAlertDialogDescription = function SuiAlertDialogDescription(
-  props,
-) {
+export const AlertDialogDescription: IAlertDialogDescription = (props) => {
   const ctx = useAlertDialogPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -69,15 +67,18 @@ export const AlertDialogDescription: IAlertDialogDescription = function SuiAlert
           {...mergeProps<typeof Card.Description>([
             htmlProps,
             proxyRenderProps<Card.Description.State, AlertDialogDescriptionState>(
-              (state) => ({ ...ctx, ...state }),
+              (state) => ({
+                ...ctx,
+                ...state,
+              }),
               {
                 style,
-                render: (htmlProps, state) => (
+                render: (currentHtmlProps, state) => (
                   <AlertDialogDescriptionContext value={state}>
                     <RenderElement
                       state={state}
                       render={render}
-                      htmlProps={htmlProps}
+                      htmlProps={currentHtmlProps}
                       defaultTagName="p"
                     />
                   </AlertDialogDescriptionContext>
@@ -107,7 +108,6 @@ export const AlertDialogDescription: IAlertDialogDescription = function SuiAlert
 };
 
 export { AlertDialogDescription as Description };
-
 export namespace Description {
   export type State = AlertDialogDescriptionState;
 

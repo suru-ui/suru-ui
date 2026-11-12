@@ -26,6 +26,7 @@ export interface IBreadcrumbListItemRenderer<TItem = any> {
    * @param item 現在の項目です。
    * @param index 項目のインデックスです。
    * @param items すべての項目です。
+   *
    * @returns レンダリングする内容です。
    */
   (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
@@ -73,12 +74,8 @@ export interface IBreadcrumbList extends IComponent<BreadcrumbListProps> {
   <TItem = any>(props: BreadcrumbListProps<TItem>): IComponent.Return;
 }
 
-/**
- * パンくずの項目を並べるリストコンポーネントです。
- */
-export const BreadcrumbList: IBreadcrumbList = function SuiBreadcrumbList(
-  props: BreadcrumbListProps,
-) {
+/** パンくずの項目を並べるリストコンポーネントです。 */
+export const BreadcrumbList: IBreadcrumbList = (props: BreadcrumbListProps) => {
   const ctx = useBreadcrumbContext();
   const { children = defaultListItemRenderer, ...otherOlProps } = props;
   const items = ctx.items;
@@ -91,8 +88,8 @@ export const BreadcrumbList: IBreadcrumbList = function SuiBreadcrumbList(
         children: typeof children === "function" ? items.map(children) : children,
         className: cn<BreadcrumbListState>(
           "sui_breadcrumb_list",
-          (state) => `sui_breadcrumb_list-size_${state.size}`,
-          (state) => `sui_breadcrumb_list-color_${state.color}`,
+          (currentState) => `sui_breadcrumb_list-size_${currentState.size}`,
+          (currentState) => `sui_breadcrumb_list-color_${currentState.color}`,
         ),
       },
     ],
@@ -100,7 +97,6 @@ export const BreadcrumbList: IBreadcrumbList = function SuiBreadcrumbList(
     defaultTagName: "ol",
   });
 };
-
 const defaultListItemRenderer: IBreadcrumbListItemRenderer = (item, index, items) => {
   switch (true) {
     case isItemObject(item): {
@@ -125,7 +121,6 @@ const defaultListItemRenderer: IBreadcrumbListItemRenderer = (item, index, items
 };
 
 export { BreadcrumbList as List };
-
 export namespace List {
   export type State<TItem = any> = BreadcrumbListState<TItem>;
 

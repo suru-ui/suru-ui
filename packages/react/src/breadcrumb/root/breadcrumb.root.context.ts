@@ -4,9 +4,7 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { IUseContext } from "../../types.js";
 
-/**
- * パンくずリストの配色です。
- */
+/** パンくずリストの配色です。 */
 export type BreadcrumbContextColor = Color;
 
 /**
@@ -31,27 +29,23 @@ export type BreadcrumbContext<TItem = any> = {
    */
   readonly color: BreadcrumbContextColor;
 
-  /**
-   * パンくずリストの項目です。
-   */
+  /** パンくずリストの項目です。 */
   readonly items: readonly TItem[];
 
-  /**
-   * パンくずリストの大きさです。
-   */
+  /** パンくずリストの大きさです。 */
   readonly size: BreadcrumbContextSize;
 };
 
-/**
- * パンくずリストのスタイルと項目を子パーツへ伝播するコンテキストです。
- */
+/** パンくずリストのスタイルと項目を子パーツへ伝播するコンテキストです。 */
 export const BreadcrumbContext: React.Context<BreadcrumbContext | null> =
   React.createContext<BreadcrumbContext | null>(null);
 
 export interface IUseBreadcrumbContext extends IUseContext<BreadcrumbContext> {
   /**
    * @template TItem 項目の型です。
+   *
    * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   *
    * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
    */
   <TItem = any>(optional?: false): BreadcrumbContext<TItem>;
@@ -61,11 +55,10 @@ export interface IUseBreadcrumbContext extends IUseContext<BreadcrumbContext> {
 /**
  * {@link BreadcrumbContext} を読み取るフックです。
  */
-export const useBreadcrumbContext: IUseBreadcrumbContext = function useSuiBreadcrumbContext(
-  optional?: boolean,
-): any {
+export const useBreadcrumbContext: IUseBreadcrumbContext = (optional?: boolean): any => {
   const ctx = React.use(BreadcrumbContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "BreadcrumbContext",
       providerName: "BreadcrumbRoot",
@@ -76,7 +69,6 @@ export const useBreadcrumbContext: IUseBreadcrumbContext = function useSuiBreadc
 };
 
 export { BreadcrumbContext as Context, useBreadcrumbContext as useContext };
-
 export namespace Context {
   export type Color = BreadcrumbContextColor;
 

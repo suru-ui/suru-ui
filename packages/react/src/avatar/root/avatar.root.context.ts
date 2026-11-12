@@ -20,11 +20,10 @@ export type IUseAvatarRootContext = IUseContext<AvatarRootContext>;
 /**
  * {@link AvatarRootContext} を読み取るフックです。
  */
-export const useAvatarRootContext: IUseAvatarRootContext = function useSuiAvatarRootContext(
-  optional,
-): any {
+export const useAvatarRootContext: IUseAvatarRootContext = (optional): any => {
   const ctx = React.use(AvatarRootContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "AvatarRootContext",
       providerName: "AvatarRoot",

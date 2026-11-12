@@ -18,10 +18,7 @@ export namespace StatDescriptionProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"dd", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"dd", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -39,7 +36,7 @@ export type IStatDescription = IComponent<StatDescriptionProps>;
  *
  * `dd` 要素を描画します。
  */
-export const StatDescription: IStatDescription = function SuiStatDescription(props) {
+export const StatDescription: IStatDescription = (props) => {
   const ctx = useStatContext();
 
   return useRender({
@@ -58,7 +55,6 @@ export const StatDescription: IStatDescription = function SuiStatDescription(pro
 };
 
 export { StatDescription as Description };
-
 export namespace Description {
   export type State = StatDescriptionState;
 

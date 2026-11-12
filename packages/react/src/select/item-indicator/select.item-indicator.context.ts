@@ -25,18 +25,18 @@ export type IUseSelectItemIndicatorContext = IUseContext<SelectItemIndicatorCont
 /**
  * {@link SelectItemIndicatorContext} を読み取るフックです。
  */
-export const useSelectItemIndicatorContext: IUseSelectItemIndicatorContext =
-  function useSuiSelectItemIndicatorContext(optional): any {
-    const ctx = React.use(SelectItemIndicatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "SelectItemIndicatorContext",
-        providerName: "SelectItemIndicator",
-      });
-    }
+export const useSelectItemIndicatorContext: IUseSelectItemIndicatorContext = (optional): any => {
+  const ctx = React.use(SelectItemIndicatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "SelectItemIndicatorContext",
+      providerName: "SelectItemIndicator",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   SelectItemIndicatorContext as ItemIndicatorContext,

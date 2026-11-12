@@ -38,9 +38,7 @@ export type ComboboxRootHighlightEventDetails = Combobox.Root.HighlightEventDeta
  */
 export type ComboboxRootHighlightEventReason = Combobox.Root.HighlightEventReason;
 
-/**
- * コンボボックスの配色です。
- */
+/** コンボボックスの配色です。 */
 export type ComboboxRootColor = ComboboxContextColor;
 
 /**
@@ -53,14 +51,10 @@ export type ComboboxRootColor = ComboboxContextColor;
 export type ComboboxRootLabeledItemObject<TValue = any> = Override<
   Omit<ComboboxItemProps<TValue>, "children">,
   {
-    /**
-     * 表示ラベルです。
-     */
+    /** 表示ラベルです。 */
     readonly label: React.ReactNode;
 
-    /**
-     * 選択値です。
-     */
+    /** 選択値です。 */
     readonly value: TValue;
   }
 >;
@@ -73,14 +67,10 @@ export type ComboboxRootLabeledItemObject<TValue = any> = Override<
 export type ComboboxRootItemGroupObject<TValue = any> = Override<
   ComboboxGroupProps<TValue>,
   {
-    /**
-     * グループに含まれる項目です。
-     */
+    /** グループに含まれる項目です。 */
     items: readonly (TValue | ComboboxRootLabeledItemObject<TValue>)[];
 
-    /**
-     * グループのラベルです。
-     */
+    /** グループのラベルです。 */
     label?: React.ReactNode | undefined;
   }
 >;
@@ -168,7 +158,7 @@ export namespace ComboboxRootProps {
     Pick<
       React.ComponentProps<typeof Combobox.Root<TItem, TMultiple>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AriaCombobox.Props より:
+      // AriaCombobox.Props より :
       | "children"
       | "name"
       | "form"
@@ -193,7 +183,7 @@ export namespace ComboboxRootProps {
       | "modal"
       | "limit"
       | "locale"
-      // ComboboxRootProps より:
+      // ComboboxRootProps より :
       | "multiple"
       | "autoComplete"
       | "autoHighlight"
@@ -247,7 +237,7 @@ export interface IComboboxRoot extends IComponent<ComboboxRootProps> {
  *
  * 選択状態とポップアップの開閉状態を管理し、スタイルを子パーツへ伝播します。これ自身は HTML 要素をレンダリングしません。
  */
-export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: ComboboxRootProps) {
+export const ComboboxRoot: IComboboxRoot = (props: ComboboxRootProps) => {
   const {
     size = "md",
     color = "grey",
@@ -293,7 +283,6 @@ export const ComboboxRoot: IComboboxRoot = function SuiComboboxRoot(props: Combo
 };
 
 export { ComboboxRoot as Root };
-
 export namespace Root {
   export type State<TItem = any> = ComboboxRootState<TItem>;
 

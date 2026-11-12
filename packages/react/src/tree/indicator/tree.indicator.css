@@ -1,48 +1,44 @@
 /* 項目は ButtonRoot 経由で描画され、ButtonRoot が data-scope を持つため、下限なしのブロックにします。 */
 @layer sui.component {
-@scope (.sui_tree_item_indicator) {
+  @scope (.sui_tree_item_indicator) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-/* 固定 */
-:scope {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+      &.sui_tree_item_indicator-hidden {
+        visibility: hidden;
+      }
+    }
 
-  &.sui_tree_item_indicator-hidden {
-    visibility: hidden;
-  }
-}
+    /* 変数 */
+    :scope {
+      --sui_tree_item_indicator-rotate-closed: ;
+      --sui_tree_item_indicator-rotate-open: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_tree_item_indicator-rotate-closed: ;
-  --sui_tree_item_indicator-rotate-open: ;
-}
+    /* 可変 */
+    :scope {
+      rotate: var(--_sui_tree_item_indicator-rotate, var(--sui_tree_item_indicator-rotate-closed));
+    }
 
-/* 可変 */
-:scope {
-  rotate: var(--_sui_tree_item_indicator-rotate, var(--sui_tree_item_indicator-rotate-closed));
-}
-
-/* 代入 */
-:scope {
-  --sui_tree_item_indicator-rotate-closed: 0deg;
-  --sui_tree_item_indicator-rotate-open: 90deg;
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_tree_item_indicator-rotate-closed: 0deg;
+      --sui_tree_item_indicator-rotate-open: 90deg;
+    }
+  } /* @scope */
 } /* @layer */
 
 /* 展開状態は項目にのみあり、インジケーター自身に等価な状態クラスが無いため、項目起点の別ブロックに残します。 */
 @layer sui.component {
-@scope (.sui_tree_item) {
-
-/* 変異 */
-:scope {
-  &.sui_tree_item-expanded .sui_tree_item_indicator {
-    --_sui_tree_item_indicator-rotate: var(--sui_tree_item_indicator-rotate-open);
-  }
-}
-
-} /* @scope */
+  @scope (.sui_tree_item) {
+    /* 変異 */
+    :scope {
+      &.sui_tree_item-expanded .sui_tree_item_indicator {
+        --_sui_tree_item_indicator-rotate: var(--sui_tree_item_indicator-rotate-open);
+      }
+    }
+  } /* @scope */
 } /* @layer */

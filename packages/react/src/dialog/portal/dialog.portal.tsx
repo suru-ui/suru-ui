@@ -19,7 +19,7 @@ export namespace DialogPortalProps {
     Pick<
       React.ComponentProps<typeof Dialog.Portal>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DialogPortalProps より:
+      // DialogPortalProps より :
       "keepMounted" | "container"
     >,
     keyof Render | keyof SuruUI
@@ -46,10 +46,10 @@ export type IDialogPortal = IComponent<DialogPortalProps>;
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const DialogPortal: IDialogPortal = function SuiDialogPortal(props) {
+export const DialogPortal: IDialogPortal = (props) => {
   const {
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -64,7 +64,6 @@ export const DialogPortal: IDialogPortal = function SuiDialogPortal(props) {
 };
 
 export { DialogPortal as Portal };
-
 export namespace Portal {
   export type State = DialogPortalState;
 

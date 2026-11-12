@@ -1,0 +1,14 @@
+{
+  "extends": ["@tsconfig/strictest"],
+  "include": ["./global.d.ts", "../src/**/*"],
+  "compilerOptions": {
+    "types": [],
+    "lib": ["DOM", "ESNext"],
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "target": "es2020",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "erasableSyntaxOnly": true
+  }
+}

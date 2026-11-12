@@ -18,10 +18,7 @@ export namespace DrawerFooterProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type DrawerFooterProps = DrawerFooterProps.Render &
 
 export type IDrawerFooter = IComponent<DrawerFooterProps>;
 
-/**
- * ドロワーのフッターコンポーネントです。
- */
-export const DrawerFooter: IDrawerFooter = function SuiDrawerFooter(props) {
+/** ドロワーのフッターコンポーネントです。 */
+export const DrawerFooter: IDrawerFooter = (props) => {
   const ctx = useDrawerContentContext();
   const element = useRender({
     props: [
@@ -66,7 +61,6 @@ export const DrawerFooter: IDrawerFooter = function SuiDrawerFooter(props) {
 };
 
 export { DrawerFooter as Footer };
-
 export namespace Footer {
   export type State = DrawerFooterState;
 

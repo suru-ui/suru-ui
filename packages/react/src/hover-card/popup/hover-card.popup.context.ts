@@ -21,17 +21,17 @@ export type IUseHoverCardPopupContext = IUseContext<HoverCardPopupContext>;
 /**
  * {@link HoverCardPopupContext} を読み取るフックです。
  */
-export const useHoverCardPopupContext: IUseHoverCardPopupContext =
-  function useSuiHoverCardPopupContext(optional): any {
-    const ctx = React.use(HoverCardPopupContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "HoverCardPopupContext",
-        providerName: "HoverCardPopup",
-      });
-    }
+export const useHoverCardPopupContext: IUseHoverCardPopupContext = (optional): any => {
+  const ctx = React.use(HoverCardPopupContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "HoverCardPopupContext",
+      providerName: "HoverCardPopup",
+    });
+  }
+
+  return ctx;
+};
 
 export { HoverCardPopupContext as PopupContext, useHoverCardPopupContext as usePopupContext };

@@ -20,10 +20,7 @@ export namespace BreadcrumbItemProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"li", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"li", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -36,10 +33,8 @@ export type BreadcrumbItemProps = BreadcrumbItemProps.Render &
 
 export type IBreadcrumbItem = IComponent<BreadcrumbItemProps>;
 
-/**
- * パンくずの項目コンポーネントです。
- */
-export const BreadcrumbItem: IBreadcrumbItem = function SuiBreadcrumbItem(props) {
+/** パンくずの項目コンポーネントです。 */
+export const BreadcrumbItem: IBreadcrumbItem = (props) => {
   const ctx = useBreadcrumbContext();
 
   return useRender({
@@ -59,7 +54,6 @@ export const BreadcrumbItem: IBreadcrumbItem = function SuiBreadcrumbItem(props)
 };
 
 export { BreadcrumbItem as Item };
-
 export namespace Item {
   export type State<TItem = any> = BreadcrumbItemState<TItem>;
 

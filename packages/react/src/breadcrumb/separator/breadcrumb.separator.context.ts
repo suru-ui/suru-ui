@@ -3,7 +3,7 @@ import { BreadcrumbContext, useBreadcrumbContext } from "../root/breadcrumb.root
 // BreadcrumbSeparator は Context を変更・拡張しないため、親の BreadcrumbContext をそのまま使う。
 export {
   BreadcrumbContext as SeparatorContext,
-  useBreadcrumbContext as useSeparatorContext,
   BreadcrumbContext as BreadcrumbSeparatorContext,
+  useBreadcrumbContext as useSeparatorContext,
   useBreadcrumbContext as useBreadcrumbSeparatorContext,
 };

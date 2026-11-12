@@ -23,7 +23,7 @@ export namespace NumberFieldInputProps {
     Pick<
       React.ComponentProps<typeof NumberField.Input>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NumberFieldInputProps より:
+      // NumberFieldInputProps より :
       "aria-roledescription"
     >,
     keyof Render | keyof SuruUI
@@ -45,10 +45,8 @@ export type NumberFieldInputProps = NumberFieldInputProps.Render &
 
 export type INumberFieldInput = IComponent<NumberFieldInputProps>;
 
-/**
- * 数値の入力欄です。
- */
-export const NumberFieldInput: INumberFieldInput = function SuiNumberFieldInput(props) {
+/** 数値の入力欄です。 */
+export const NumberFieldInput: INumberFieldInput = (props) => {
   const ctx = useNumberFieldGroupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const NumberFieldInput: INumberFieldInput = function SuiNumberFieldInput(
     <NumberField.Input
       {...otherProps}
       {...proxyRenderProps<NumberField.Input.State, NumberFieldInputState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -96,7 +97,6 @@ export const NumberFieldInput: INumberFieldInput = function SuiNumberFieldInput(
 };
 
 export { NumberFieldInput as Input };
-
 export namespace Input {
   export type State = NumberFieldInputState;
 

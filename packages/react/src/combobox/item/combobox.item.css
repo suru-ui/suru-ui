@@ -1,42 +1,40 @@
 @layer sui.component {
-@scope (.sui_combobox_item) to ([data-scope]) {
+  @scope (.sui_combobox_item) to ([data-scope]) {
+    /* 変数 */
+    :scope {
+      --sui_combobox_item-margin_inline: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_combobox_item-margin_inline: ;
-}
+    /* 可変 */
+    :scope {
+      margin-inline: var(--sui_combobox_item-margin_inline);
 
-/* 可変 */
-:scope {
-  margin-inline: var(--sui_combobox_item-margin_inline);
+      &:first-child {
+        margin-block-start: var(--sui_combobox_popup-virtual_padding_block);
+      }
 
-  &:first-child {
-    margin-block-start: var(--sui_combobox_popup-virtual_padding_block);
-  }
+      &:last-child {
+        margin-block-end: var(--sui_combobox_popup-virtual_padding_block);
+      }
+    }
 
-  &:last-child {
-    margin-block-end: var(--sui_combobox_popup-virtual_padding_block);
-  }
-}
+    /* 代入 */
+    :scope {
+      &.sui_combobox_item-size_xs {
+        --sui_combobox_item-margin_inline: --sui-space(calc(1.5 / 2));
+      }
 
-/* 代入 */
-:scope {
-  &.sui_combobox_item-size_xs {
-    --sui_combobox_item-margin_inline: --sui-space(calc(1.5 / 2));
-  }
+      &.sui_combobox_item-size_sm {
+        --sui_combobox_item-margin_inline: --sui-space(calc(1.5 / 2));
+      }
 
-  &.sui_combobox_item-size_sm {
-    --sui_combobox_item-margin_inline: --sui-space(calc(1.5 / 2));
-  }
+      &.sui_combobox_item-size_md {
+        --sui_combobox_item-margin_inline: --sui-space(calc(2.5 / 2));
+      }
 
-  &.sui_combobox_item-size_md {
-    --sui_combobox_item-margin_inline: --sui-space(calc(2.5 / 2));
-  }
-
-  &.sui_combobox_item-size_lg {
-    --sui_combobox_item-margin_inline: --sui-space(calc(3.5 / 2));
-  }
-}
-
-} /* @scope */
+      &.sui_combobox_item-size_lg {
+        --sui_combobox_item-margin_inline: --sui-space(calc(3.5 / 2));
+      }
+    }
+  } /* @scope */
 } /* @layer */

@@ -23,18 +23,18 @@ export type IUseHoverCardViewportContext = IUseContext<HoverCardViewportContext>
 /**
  * {@link HoverCardViewportContext} を読み取るフックです。
  */
-export const useHoverCardViewportContext: IUseHoverCardViewportContext =
-  function useSuiHoverCardViewportContext(optional): any {
-    const ctx = React.use(HoverCardViewportContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "HoverCardViewportContext",
-        providerName: "HoverCardViewport",
-      });
-    }
+export const useHoverCardViewportContext: IUseHoverCardViewportContext = (optional): any => {
+  const ctx = React.use(HoverCardViewportContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "HoverCardViewportContext",
+      providerName: "HoverCardViewport",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   HoverCardViewportContext as ViewportContext,

@@ -29,7 +29,7 @@ export namespace FieldRootProps {
     Pick<
       React.ComponentProps<typeof Field.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // FieldRootProps より:
+      // FieldRootProps より :
       | "disabled"
       | "name"
       | "validate"
@@ -64,10 +64,10 @@ export type IFieldRoot = IComponent<FieldRootProps>;
  *
  * ラベル、入力欄、エラーメッセージ、説明文をグループ化し、検証状態を管理します。
  */
-export const FieldRoot: IFieldRoot = function SuiFieldRoot(props) {
+export const FieldRoot: IFieldRoot = (props) => {
   const {
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -93,7 +93,6 @@ export const FieldRoot: IFieldRoot = function SuiFieldRoot(props) {
 };
 
 export { FieldRoot as Root };
-
 export namespace Root {
   export type State = FieldRootState;
 

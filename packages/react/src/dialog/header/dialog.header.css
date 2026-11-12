@@ -1,16 +1,14 @@
 @layer sui.component {
-@scope (.sui_dialog_header) to ([data-scope]) {
+  @scope (.sui_dialog_header) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      flex-shrink: 0;
 
-/* 固定 */
-:scope {
-  flex-shrink: 0;
-
-  &.sui_dialog_header-variant_stacked {
-    /* 操作はヘッダーの外へ重ねるため、残る操作列の間隔を消して見出しを中央に寄せます。 */
-    column-gap: 0px;
-    text-align: center;
-  }
-}
-
-} /* @scope */
+      &.sui_dialog_header-variant_stacked {
+        /* 操作はヘッダーの外へ重ねるため、残る操作列の間隔を消して見出しを中央に寄せます。 */
+        column-gap: 0px;
+        text-align: center;
+      }
+    }
+  } /* @scope */
 } /* @layer */

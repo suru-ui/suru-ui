@@ -5,8 +5,7 @@ import {
   TooltipGroupRoot,
 } from "./tooltip-group.parts.js";
 
-// Types
-// -----
+// Types.
 
 /**
  * {@link TooltipGroup} が持つ状態です。
@@ -25,13 +24,13 @@ export interface IUseTooltipGroupAPI {
    * {@link TooltipGroupAPI} を作成します。
    *
    * @param props {@link TooltipGroup} の props です。
+   *
    * @returns ツールチップグループの API です
    */
   (props: TooltipGroupProps): TooltipGroupAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link TooltipGroup} を構成する各パーツの props を作成するための API です。
@@ -41,6 +40,7 @@ export class TooltipGroupAPI {
 
   /**
    * @param props {@link TooltipGroup} の props です。
+   *
    * @internal
    */
   public constructor(props: TooltipGroupProps) {
@@ -58,21 +58,18 @@ export class TooltipGroupAPI {
 /**
  * {@link TooltipGroupAPI} を作成するフックです。
  */
-export const useTooltipGroupAPI: IUseTooltipGroupAPI = function useSuiTooltipGroupAPI(props) {
-  return new TooltipGroupAPI(props);
-};
+export const useTooltipGroupAPI: IUseTooltipGroupAPI = (props) => new TooltipGroupAPI(props);
 
 export { TooltipGroupAPI as API, useTooltipGroupAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * 複数のツールチップで開閉の遅延を共有するグループです。
  *
  * 近接したツールチップを続けて表示するとき、先に表示したツールチップが閉じてから一定時間内であれば、次のツールチップをすぐに表示します。それ自身は HTML 要素をレンダリングしません。
  */
-export const TooltipGroup: ITooltipGroup = function SuiTooltipGroup(props) {
+export const TooltipGroup: ITooltipGroup = (props) => {
   const api = useTooltipGroupAPI(props);
 
   return <TooltipGroupRoot {...api.getRootProps()} />;

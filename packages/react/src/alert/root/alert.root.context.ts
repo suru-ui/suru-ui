@@ -23,9 +23,7 @@ export type AlertContextActionsPosition = "bottom" | "side";
  */
 export type AlertContextDescriptionPosition = "bottom" | "side-start" | "side-end";
 
-/**
- * アラートの配色です。
- */
+/** アラートの配色です。 */
 export type AlertContextColor = Color;
 
 /**
@@ -60,45 +58,29 @@ export type AlertContextVariant = "muted" | "naked" | "liquid";
  * {@link AlertRoot} が提供する状態です。
  */
 export type AlertContext = {
-  /**
-   * アラートのアクションの配置です。
-   */
+  /** アラートのアクションの配置です。 */
   readonly actionsPosition: AlertContextActionsPosition;
 
-  /**
-   * アラートの色です。
-   */
+  /** アラートの色です。 */
   readonly color: AlertContextColor;
 
-  /**
-   * タイトルに対する説明文の配置です。
-   */
+  /** タイトルに対する説明文の配置です。 */
   readonly descriptionPosition: AlertContextDescriptionPosition;
 
-  /**
-   * 枠線を表示するかどうかです。
-   */
+  /** 枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * アラートの角丸の大きさです。
-   */
+  /** アラートの角丸の大きさです。 */
   readonly radius: AlertContextRadius;
 
-  /**
-   * アラートの大きさです。
-   */
+  /** アラートの大きさです。 */
   readonly size: AlertContextSize;
 
-  /**
-   * アラートの主な外観です。
-   */
+  /** アラートの主な外観です。 */
   readonly variant: AlertContextVariant;
 };
 
-/**
- * アラートの見た目を子パーツへ伝播するコンテキストです。
- */
+/** アラートの見た目を子パーツへ伝播するコンテキストです。 */
 export const AlertContext: React.Context<AlertContext | null> =
   React.createContext<AlertContext | null>(null);
 
@@ -107,11 +89,10 @@ export type IUseAlertContext = IUseContext<AlertContext>;
 /**
  * {@link AlertContext} を読み取るフックです。
  */
-export const useAlertContext: IUseAlertContext = function useSuiAlertContext(
-  optional?: boolean,
-): any {
+export const useAlertContext: IUseAlertContext = (optional?: boolean): any => {
   const ctx = React.use(AlertContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "AlertContext",
       providerName: "AlertRoot",
@@ -122,7 +103,6 @@ export const useAlertContext: IUseAlertContext = function useSuiAlertContext(
 };
 
 export { AlertContext as Context, useAlertContext as useContext };
-
 export namespace Context {
   export type ActionsPosition = AlertContextActionsPosition;
 

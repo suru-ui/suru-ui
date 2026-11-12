@@ -1,0 +1,28 @@
+[tasks.test]
+run = [{ task = "test:server" }, { task = "test:client" }, { task = "test:check" }]
+env = { CI = 1 }
+
+[tasks."test:server"]
+run = "pnpm exec vp test --config ./.config/vite.server.config.ts"
+
+[tasks."test:client"]
+run = "pnpm exec vp test --config ./.config/vite.client.config.ts"
+
+[tasks."test:coverage"]
+run = [{ task = "test:coverage:server" }, { task = "test:coverage:client" }]
+env = { CI = 1 }
+
+[tasks."test:coverage:server"]
+run = "pnpm exec vp test run --coverage --config ./.config/vite.server.config.ts"
+
+[tasks."test:coverage:client"]
+run = "pnpm exec vp test run --coverage --config ./.config/vite.client.config.ts"
+
+[tasks."test:check"]
+run = "pnpm exec vp check"
+
+[tasks.check]
+run = "pnpm exec vp check --fix"
+
+[tasks.update]
+run = []

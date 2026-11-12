@@ -23,9 +23,7 @@ export type TextareaRootChangeEventDetails = Input.ChangeEventDetails;
  */
 export type TextareaRootChangeEventReason = Input.ChangeEventReason;
 
-/**
- * テキストエリアの配色です。
- */
+/** テキストエリアの配色です。 */
 export type TextareaRootColor = TextareaContextColor;
 
 /**
@@ -82,7 +80,7 @@ export namespace TextareaRootProps {
     /**
      * テキストエリアの角丸を指定します。
      *
-     * 既定値は {@link TextareaRootProps.size|size}
+     * 既定値は {@link TextareaRootProps.size|size}。
      */
     radius?: TextareaRootRadius | undefined;
 
@@ -112,7 +110,7 @@ export namespace TextareaRootProps {
     Pick<
       React.ComponentProps<typeof Input>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // InputProps より:
+      // InputProps より :
       "value" | "defaultValue" | "onValueChange"
     >,
     keyof Render | keyof SuruUI
@@ -135,10 +133,8 @@ export type TextareaRootProps = TextareaRootProps.Render &
 
 export type ITextareaRoot = IComponent<TextareaRootProps>;
 
-/**
- * テキストエリアのルートコンポーネントです。
- */
-export const TextareaRoot: ITextareaRoot = function SuiTextareaRoot(props) {
+/** テキストエリアのルートコンポーネントです。 */
+export const TextareaRoot: ITextareaRoot = (props) => {
   const {
     size = "md",
     color = "grey",
@@ -148,12 +144,18 @@ export const TextareaRoot: ITextareaRoot = function SuiTextareaRoot(props) {
     variant = "naked",
     outlined = true,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const ctx = React.useMemo<TextareaContext>(
-    () => ({ size, color, radius, variant, outlined }),
+    () => ({
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+    }),
     [size, color, radius, variant, outlined],
   );
 
@@ -161,27 +163,33 @@ export const TextareaRoot: ITextareaRoot = function SuiTextareaRoot(props) {
     <TextareaContext value={ctx}>
       <Input
         {...otherProps}
-        {...proxyRenderProps<Input.State, TextareaRootState>((state) => ({ ...ctx, ...state }), {
-          style,
-          render,
-          className: cn<TextareaRootState>(
-            className,
-            "sui_textarea",
-            (state) => `sui_textarea-size_${state.size}`,
-            (state) => `sui_textarea-color_${state.color}`,
-            (state) => `sui_textarea-radius_${state.radius}`,
-            (state) => `sui_textarea-variant_${state.variant}`,
-            (state) => state.outlined && "sui_textarea-outlined",
-            (state) => state.valid === true && "sui_textarea-valid",
-            (state) => state.valid === false && "sui_textarea-invalid",
-            (state) => state.valid === null && "sui_textarea-unverified",
-            (state) => state.disabled && "sui_textarea-disabled",
-            (state) => state.touched && "sui_textarea-touched",
-            (state) => state.dirty && "sui_textarea-dirty",
-            (state) => state.filled && "sui_textarea-filled",
-            (state) => state.focused && "sui_textarea-focused",
-          ),
-        })}
+        {...proxyRenderProps<Input.State, TextareaRootState>(
+          (state) => ({
+            ...ctx,
+            ...state,
+          }),
+          {
+            style,
+            render,
+            className: cn<TextareaRootState>(
+              className,
+              "sui_textarea",
+              (state) => `sui_textarea-size_${state.size}`,
+              (state) => `sui_textarea-color_${state.color}`,
+              (state) => `sui_textarea-radius_${state.radius}`,
+              (state) => `sui_textarea-variant_${state.variant}`,
+              (state) => state.outlined && "sui_textarea-outlined",
+              (state) => state.valid === true && "sui_textarea-valid",
+              (state) => state.valid === false && "sui_textarea-invalid",
+              (state) => state.valid === null && "sui_textarea-unverified",
+              (state) => state.disabled && "sui_textarea-disabled",
+              (state) => state.touched && "sui_textarea-touched",
+              (state) => state.dirty && "sui_textarea-dirty",
+              (state) => state.filled && "sui_textarea-filled",
+              (state) => state.focused && "sui_textarea-focused",
+            ),
+          },
+        )}
         data-scope={dataScope}
       />
     </TextareaContext>
@@ -189,7 +197,6 @@ export const TextareaRoot: ITextareaRoot = function SuiTextareaRoot(props) {
 };
 
 export { TextareaRoot as Root };
-
 export namespace Root {
   export type State = TextareaRootState;
 

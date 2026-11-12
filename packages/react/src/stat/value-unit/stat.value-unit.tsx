@@ -18,10 +18,7 @@ export namespace StatValueUnitProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"span", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"span", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -39,7 +36,7 @@ export type IStatValueUnit = IComponent<StatValueUnitProps>;
  *
  * `span` 要素を描画し、{@link StatValue} の子として使用します。
  */
-export const StatValueUnit: IStatValueUnit = function SuiStatValueUnit(props) {
+export const StatValueUnit: IStatValueUnit = (props) => {
   const ctx = useStatContext();
 
   return useRender({
@@ -58,7 +55,6 @@ export const StatValueUnit: IStatValueUnit = function SuiStatValueUnit(props) {
 };
 
 export { StatValueUnit as ValueUnit };
-
 export namespace ValueUnit {
   export type State = StatValueUnitState;
 

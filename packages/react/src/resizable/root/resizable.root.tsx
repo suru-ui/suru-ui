@@ -35,7 +35,7 @@ export namespace ResizableRootProps {
     Pick<
       React.ComponentProps<typeof ExternalGroup>,
       // [注意] 必ず react-resizable-panels の型を確認してから取り出すプロパティーを決めます。
-      // GroupProps より:
+      // GroupProps より :
       | "defaultLayout"
       | "disableCursor"
       | "disabled"
@@ -82,27 +82,35 @@ const DEFAULT_RESIZE_TARGET_MINIMUM_SIZE = {
  *
  * 子要素には {@link ResizablePanel} と {@link ResizableHandle} を交互に配置します。
  */
-export const ResizableRoot: IResizableRoot = function SuiResizableRoot(props) {
+export const ResizableRoot: IResizableRoot = (props) => {
   const {
     render = <ExternalGroup />,
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
+    "data-scope": dataScope = "",
     orientation = "horizontal",
     resizeTargetMinimumSize = DEFAULT_RESIZE_TARGET_MINIMUM_SIZE,
-    // @ts-expect-error
-    "data-scope": dataScope = "",
     ...otherProps
   } = props;
-  const ctx = React.useMemo<ResizableContext>(() => ({ orientation }), [orientation]);
+  const ctx = React.useMemo<ResizableContext>(
+    () => ({
+      orientation,
+    }),
+    [orientation],
+  );
   const element = useRender({
     props: [
-      { ...otherProps, render },
+      {
+        ...otherProps,
+        render,
+      },
       {
         className: cn<ResizableRootState>(
           "sui_resizable",
           (state) => `sui_resizable-orientation_${state.orientation}`,
         ),
+        "data-scope": dataScope,
         orientation,
         resizeTargetMinimumSize,
-        "data-scope": dataScope,
       },
     ],
     state: ctx,
@@ -113,7 +121,6 @@ export const ResizableRoot: IResizableRoot = function SuiResizableRoot(props) {
 };
 
 export { ResizableRoot as Root };
-
 export namespace Root {
   export type State = ResizableRootState;
 

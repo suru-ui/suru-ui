@@ -25,11 +25,10 @@ export type IUseComboboxListContext = IUseContext<ComboboxListContext>;
 /**
  * {@link ComboboxListContext} を読み取るフックです。
  */
-export const useComboboxListContext: IUseComboboxListContext = function useSuiComboboxListContext(
-  optional,
-): any {
+export const useComboboxListContext: IUseComboboxListContext = (optional): any => {
   const ctx = React.use(ComboboxListContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "ComboboxListContext",
       providerName: "ComboboxList",

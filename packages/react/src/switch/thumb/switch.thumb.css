@@ -1,128 +1,121 @@
 @layer sui.component {
-@scope (.sui_switch_thumb) to ([data-scope]) {
+  @scope (.sui_switch_thumb) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: block;
+      box-shadow:
+        0 3px 8px rgb(0 0 0 / 0.15),
+        0 1px 1px rgb(0 0 0 / 0.16);
+      transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1);
+    }
 
-/* 固定 */
-:scope {
-  display: block;
-  box-shadow: 0 3px 8px rgb(0 0 0 / 0.15),
-              0 1px 1px rgb(0 0 0 / 0.16);
-  transition: transform 200ms cubic-bezier(0.32, 0.72, 0, 1);
-}
+    /* 可変 */
+    :scope {
+      width: var(--sui_switch_thumb-size);
+      height: var(--sui_switch_thumb-size);
+      background-color: var(
+        --_sui_switch_thumb-background_color,
+        var(--sui_switch_thumb-background_color)
+      );
+      border-radius: var(--sui_switch_thumb-border_radius);
+      corner-shape: var(--sui_switch_thumb-corner_shape);
+      transform: translateX(var(--_sui_switch_thumb-translate_x, 0px));
+    }
 
-/* 可変 */
-:scope {
-  width: var(--sui_switch_thumb-size);
-  height: var(--sui_switch_thumb-size);
-  background-color: var(--_sui_switch_thumb-background_color,
-                      var(--sui_switch_thumb-background_color)
-                    );
-  border-radius: var(--sui_switch_thumb-border_radius);
-  corner-shape: var(--sui_switch_thumb-corner_shape);
-  transform: translateX(var(--_sui_switch_thumb-translate_x, 0px));
-}
-
-/* 変異 */
-:scope {
-  &.sui_switch_thumb-checked {
-    --_sui_switch_thumb-background_color: var(--sui_switch_thumb-background_color-checked);
-    --_sui_switch_thumb-translate_x: var(--sui_switch_thumb-translate_x-checked);
-  }
-}
-
-} /* @scope */
+    /* 変異 */
+    :scope {
+      &.sui_switch_thumb-checked {
+        --_sui_switch_thumb-background_color: var(--sui_switch_thumb-background_color-checked);
+        --_sui_switch_thumb-translate_x: var(--sui_switch_thumb-translate_x-checked);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* 大きさと角丸の指定はルートの修飾クラスに依存し、つまみ自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_switch) to ([data-scope]) {
+  @scope (.sui_switch) to ([data-scope]) {
+    /* 変数 */
+    :scope {
+      --sui_switch_thumb-size: ;
+      --sui_switch_thumb-background_color: ;
+      --sui_switch_thumb-background_color-checked: ;
+      --sui_switch_thumb-border_radius: ;
+      --sui_switch_thumb-corner_shape: ;
+      --sui_switch_thumb-translate_x-checked: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_switch_thumb-size: ;
-  --sui_switch_thumb-background_color: ;
-  --sui_switch_thumb-background_color-checked: ;
-  --sui_switch_thumb-border_radius: ;
-  --sui_switch_thumb-corner_shape: ;
-  --sui_switch_thumb-translate_x-checked: ;
-}
+    /* 代入 */
+    :scope {
+      --sui_switch_thumb-size: calc(var(--sui_switch-height) - var(--sui_switch-padding) * 2);
+      --sui_switch_thumb-background_color: var(--sui-canvas_text-1);
+      --sui_switch_thumb-background_color-checked: var(--sui-canvas-1);
+      /* レールとつまみの角丸を同心にするため、レールの角丸から内側の余白を引きます。 */
+      --sui_switch_thumb-border_radius: max(
+        0px,
+        calc(var(--sui_switch-border_radius) - var(--sui_switch-padding))
+      );
+      --sui_switch_thumb-translate_x-checked: calc(
+        var(--sui_switch-width) - var(--sui_switch-height)
+      );
 
-/* 代入 */
-:scope {
-  --sui_switch_thumb-size: calc(var(--sui_switch-height) - var(--sui_switch-padding) * 2);
-  --sui_switch_thumb-background_color: var(--sui-canvas_text-1);
-  --sui_switch_thumb-background_color-checked: var(--sui-canvas-1);
-  /* レールとつまみの角丸を同心にするため、レールの角丸から内側の余白を引きます。 */
-  --sui_switch_thumb-border_radius: max(
-                                               0px,
-                                               calc(
-                                                 var(--sui_switch-border_radius)
-                                                 - var(--sui_switch-padding)
-                                               )
-                                             );
-  --sui_switch_thumb-translate_x-checked: calc(var(--sui_switch-width) - var(--sui_switch-height));
+      &.sui_switch-radius_none {
+        --sui_switch_thumb-border_radius: 0px;
+      }
 
-  &.sui_switch-radius_none {
-    --sui_switch_thumb-border_radius: 0px;
-  }
+      &.sui_switch-radius_sm {
+        --sui_switch_thumb-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_switch-radius_sm {
-    --sui_switch_thumb-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_switch-radius_md {
+        --sui_switch_thumb-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_switch-radius_md {
-    --sui_switch_thumb-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_switch-radius_lg {
+        --sui_switch_thumb-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_switch-radius_lg {
-    --sui_switch_thumb-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_switch-radius_full {
+        --sui_switch_thumb-corner_shape: none;
+      }
 
-  &.sui_switch-radius_full {
-    --sui_switch_thumb-corner_shape: none;
-  }
-
-  &.sui_switch-radius_circle {
-    --sui_switch_thumb-corner_shape: none;
-  }
-}
-
-} /* @scope */
+      &.sui_switch-radius_circle {
+        --sui_switch_thumb-corner_shape: none;
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_switch_thumb) to ([data-scope]) {
+  @scope (.sui_switch_thumb) to ([data-scope]) {
+    :scope {
+      &.sui_switch_thumb-disabled {
+        cursor: not-allowed;
+        box-shadow: none;
+      }
 
-:scope {
-  &.sui_switch_thumb-disabled {
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-
-  &.sui_switch_thumb-disabled.sui_switch_thumb-checked {
-    background-color: var(--sui-disabled-solid-canvas_text);
-  }
-}
-
-} /* @scope */
+      &.sui_switch_thumb-disabled.sui_switch_thumb-checked {
+        background-color: var(--sui-disabled-solid-canvas_text);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 /* 配色の指定はルートのバリアントに依存し、つまみ自身にはバリアントの修飾クラスが無いため、ルート起点の別ブロックにします。 */
 @layer sui.important {
-@scope (.sui_switch) to ([data-scope]) {
+  @scope (.sui_switch) to ([data-scope]) {
+    :scope {
+      &.sui_switch-disabled:not(.sui_switch-checked) {
+        &.sui_switch-variant_naked .sui_switch_thumb {
+          background-color: var(--sui-disabled-naked-canvas_text);
+        }
 
-:scope {
-  &.sui_switch-disabled:not(.sui_switch-checked) {
-    &.sui_switch-variant_naked .sui_switch_thumb {
-      background-color: var(--sui-disabled-naked-canvas_text);
+        &.sui_switch-variant_liquid .sui_switch_thumb {
+          background-color: var(--sui-disabled-liquid-canvas_text);
+        }
+      }
     }
-
-    &.sui_switch-variant_liquid .sui_switch_thumb {
-      background-color: var(--sui-disabled-liquid-canvas_text);
-    }
-  }
-}
-
-} /* @scope */
+  } /* @scope */
 } /* @layer */

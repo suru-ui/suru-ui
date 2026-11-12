@@ -21,17 +21,17 @@ export type IUseTextFieldInputContext = IUseContext<TextFieldInputContext>;
 /**
  * {@link TextFieldInputContext} を読み取るフックです。
  */
-export const useTextFieldInputContext: IUseTextFieldInputContext =
-  function useSuiTextFieldInputContext(optional): any {
-    const ctx = React.use(TextFieldInputContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "TextFieldInputContext",
-        providerName: "TextFieldInput",
-      });
-    }
+export const useTextFieldInputContext: IUseTextFieldInputContext = (optional): any => {
+  const ctx = React.use(TextFieldInputContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "TextFieldInputContext",
+      providerName: "TextFieldInput",
+    });
+  }
+
+  return ctx;
+};
 
 export { TextFieldInputContext as InputContext, useTextFieldInputContext as useInputContext };

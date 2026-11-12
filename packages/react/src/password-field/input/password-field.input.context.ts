@@ -23,18 +23,18 @@ export type IUsePasswordFieldInputContext = IUseContext<PasswordFieldInputContex
 /**
  * {@link PasswordFieldInputContext} を読み取るフックです。
  */
-export const usePasswordFieldInputContext: IUsePasswordFieldInputContext =
-  function useSuiPasswordFieldInputContext(optional): any {
-    const ctx = React.use(PasswordFieldInputContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "PasswordFieldInputContext",
-        providerName: "PasswordFieldInput",
-      });
-    }
+export const usePasswordFieldInputContext: IUsePasswordFieldInputContext = (optional): any => {
+  const ctx = React.use(PasswordFieldInputContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "PasswordFieldInputContext",
+      providerName: "PasswordFieldInput",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   PasswordFieldInputContext as InputContext,

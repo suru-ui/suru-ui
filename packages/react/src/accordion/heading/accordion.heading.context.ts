@@ -23,18 +23,18 @@ export type IUseAccordionHeadingContext = IUseContext<AccordionHeadingContext>;
 /**
  * {@link AccordionHeadingContext} を読み取るフックです。
  */
-export const useAccordionHeadingContext: IUseAccordionHeadingContext =
-  function useSuiAccordionHeadingContext(optional): any {
-    const ctx = React.use(AccordionHeadingContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AccordionHeadingContext",
-        providerName: "AccordionHeading",
-      });
-    }
+export const useAccordionHeadingContext: IUseAccordionHeadingContext = (optional): any => {
+  const ctx = React.use(AccordionHeadingContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AccordionHeadingContext",
+      providerName: "AccordionHeading",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   AccordionHeadingContext as HeadingContext,

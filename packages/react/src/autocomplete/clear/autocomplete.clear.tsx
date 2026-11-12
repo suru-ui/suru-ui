@@ -27,9 +27,9 @@ export namespace AutocompleteClearProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.Clear>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // ComboboxClearProps より:
+      // ComboboxClearProps より :
       | "disabled"
       | "keepMounted"
     >,
@@ -57,7 +57,7 @@ export type IAutocompleteClear = IComponent<AutocompleteClearProps>;
  *
  * 入力値があるときだけ表示されます。
  */
-export const AutocompleteClear: IAutocompleteClear = function SuiAutocompleteClear(props) {
+export const AutocompleteClear: IAutocompleteClear = (props) => {
   const ctx = useAutocompleteAddonContext();
   const {
     style,
@@ -72,7 +72,10 @@ export const AutocompleteClear: IAutocompleteClear = function SuiAutocompleteCle
     <Autocomplete.Clear
       {...otherProps}
       {...proxyRenderProps<Autocomplete.Clear.State, AutocompleteClearState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -122,7 +125,6 @@ export const AutocompleteClear: IAutocompleteClear = function SuiAutocompleteCle
 };
 
 export { AutocompleteClear as Clear };
-
 export namespace Clear {
   export type State<TItem = any> = AutocompleteClearState<TItem>;
 

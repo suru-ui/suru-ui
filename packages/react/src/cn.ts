@@ -4,9 +4,7 @@ type BaseUIClassName<TState> = BaseUIComponentProps<any, TState>["className"];
 
 type Falsy = 0 | null | false | undefined;
 
-/**
- * 文字列または falsy な値をとるクラス名です。
- */
+/** 文字列または falsy な値をとるクラス名です。 */
 export type PrimitiveClassName = string | Falsy;
 
 /**
@@ -44,9 +42,7 @@ export type ClassName<TState> = PrimitiveClassName | ClassNameFunction<TState>;
  * ```
  */
 function cn(...classNames: PrimitiveClassName[]): string | undefined;
-
 function cn<TState>(...classNames: ClassName<TState>[]): BaseUIClassName<TState>;
-
 function cn<TState>(...classNames: ClassName<TState>[]): BaseUIClassName<TState> {
   const parts: Exclude<ClassName<TState>, Falsy>[] = [];
   let classNameBuffer = "";
@@ -61,7 +57,7 @@ function cn<TState>(...classNames: ClassName<TState>[]): BaseUIClassName<TState>
 
   for (let i = 0, n = classNames.length, part; i < n; i++) {
     part = classNames[i];
-    if (!part) {
+    if (part === undefined || part === null || part === false || part === 0) {
       continue;
     }
 
@@ -89,17 +85,11 @@ function cn<TState>(...classNames: ClassName<TState>[]): BaseUIClassName<TState>
 
   return function className(state) {
     let result = "";
-    for (
-      let i = 0,
-        n = parts.length,
-        part: Exclude<ClassName<TState>, Falsy>,
-        temp: string,
-        returns: unknown;
-      i < n;
-      i++
-    ) {
-      part = parts[i]!;
-      temp = "";
+
+    for (const part of parts) {
+      let temp = "";
+      let returns: unknown;
+
       switch (typeof part) {
         case "string":
           temp = part;

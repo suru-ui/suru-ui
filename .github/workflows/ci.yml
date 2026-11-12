@@ -10,20 +10,26 @@ defaults:
   run:
     shell: bash -euo pipefail {0}
 
+permissions:
+  contents: read
+
 jobs:
-  test:
-    strategy:
-      fail-fast: false
-      matrix:
-        package:
-          - name: "core"
-            directory: "packages/core"
-          - name: "theme"
-            directory: "packages/theme"
-          - name: "react"
-            directory: "packages/react"
-          - name: "unocss"
-            directory: "packages/unocss"
+  setup:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - name: "チェックアウト"
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: "テスト matrix を生成"
+        id: matrix
+        run: |
+          matrix="$(node scripts/list-ci-matrix.mjs)"
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+
+  check:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -33,109 +39,64 @@ jobs:
       - name: "mise をセットアップ"
         uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3.6.3
 
+      - name: "pnpm のストアパスを取得"
+        id: pnpm-store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: "pnpm のキャッシュを復元"
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.pnpm-store.outputs.path }}
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
+      - name: "依存関係をインストール"
+        run: pnpm install --frozen-lockfile
+
+      - name: "ルートの検証"
+        run: mise run test:check
+
+  test:
+    needs: setup
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    # ブラウザーはコンテナーに同梱されているため、playwright install（apt 実行）を行わない。
+    # タグの版は scripts/update-playwright-image.mjs が catalog に合わせて更新する。
+    container:
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+    steps:
+      - name: "チェックアウト"
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: "HOME の所有権を修正"
+        # GitHub はコンテナー内の HOME を /github/home に上書きする。
+        # 所有者が実行ユーザーと異なると Firefox が起動できないため、最初に揃える。
+        run: chown -R "$(id -u):$(id -g)" "$HOME"
+
+      - name: "mise をセットアップ"
+        uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3.6.3
+
+      - name: "pnpm のストアパスを取得"
+        id: pnpm-store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: "pnpm のキャッシュを復元"
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.pnpm-store.outputs.path }}
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
       - name: "依存関係をインストール（ルート）"
-        run: pnpm i
+        run: pnpm install --frozen-lockfile
 
       - name: "内部依存パッケージのビルド"
-        run: |
-          root_dir="$(pwd)"
-          target_dir="${{ matrix.package.directory }}"
-
-          # 内部パッケージの推移的依存をトポロジカル順（依存先→依存元）で列挙する。
-          # 従来は直接依存のみを workspaces 定義順でビルドしていたため、
-          # 推移的依存のビルド漏れ（例: unikvs → allow-repair → passthrough）や
-          # 順序逆転（例: passthrough より後に testing）が起きていた。
-          mapfile -t ordered_dep_dirs < <(
-            ROOT_DIR="$root_dir" TARGET_DIR="$target_dir" python3 - <<'PY'
-          import glob
-          import json
-          import os
-          import pathlib
-
-          root = pathlib.Path(os.environ["ROOT_DIR"])
-          target_rel = os.environ["TARGET_DIR"]
-
-          with open(root / "package.json") as f:
-              workspaces = json.load(f)["workspaces"]
-
-          # workspaces の "pkg/*" 形式も展開できるよう、ディレクトリ列に正規化する
-          dirs: list[str] = []
-          for ws in workspaces:
-              if ws.endswith("/*"):
-                  base = ws[:-2]
-                  dirs.extend(
-                      sorted(
-                          str(pathlib.Path(p).relative_to(root))
-                          for p in glob.glob(str(root / base / "*"))
-                          if (pathlib.Path(p) / "package.json").is_file()
-                      )
-                  )
-              else:
-                  dirs.append(ws)
-
-          name_to_dir: dict[str, str] = {}
-          for d in dirs:
-              pj = root / d / "package.json"
-              if not pj.is_file():
-                  continue
-              with open(pj) as f:
-                  name_to_dir[json.load(f)["name"]] = d
-
-          dir_to_name = {v: k for k, v in name_to_dir.items()}
-          target_name = dir_to_name[target_rel]
-
-          def direct_internal_deps(pkg_name: str) -> list[str]:
-              with open(root / name_to_dir[pkg_name] / "package.json") as f:
-                  pkg = json.load(f)
-              deps: set[str] = set()
-              for key in (
-                  "dependencies",
-                  "devDependencies",
-                  "peerDependencies",
-                  "optionalDependencies",
-              ):
-                  deps.update((pkg.get(key) or {}).keys())
-              return sorted(d for d in deps if d in name_to_dir)
-
-          # DFS の post-order で推移閉包を収集すれば、依存先が先になる
-          visited: set[str] = set()
-          visiting: set[str] = set()
-          order: list[str] = []
-
-          def visit(name: str) -> None:
-              if name in visited:
-                  return
-              if name in visiting:
-                  raise ValueError(f"circular dependency detected at {name}")
-              visiting.add(name)
-              for dep in direct_internal_deps(name):
-                  visit(dep)
-              visiting.remove(name)
-              visited.add(name)
-              order.append(name)
-
-          visit(target_name)
-          order.pop()  # 自分自身を除く
-
-          for name in order:
-              print(name_to_dir[name])
-          PY
-          )
-
-          for rel_path in ${ordered_dep_dirs[@]+"${ordered_dep_dirs[@]}"}; do
-            [ -n "$rel_path" ] || continue
-            dep_name=$(jq -r .name "${root_dir}/${rel_path}/package.json")
-            echo "${rel_path} で内部依存パッケージ ${dep_name} をビルドします"
-            (cd "${root_dir}/${rel_path}" && npm run build)
-            echo
-          done
-
-      - name: "依存関係をインストール（パッケージ）"
-        run: |
-          if grep -q "playwright" package.json; then
-            npx playwright install --with-deps
-          fi
-        working-directory: ${{ matrix.package.directory }}
+        run: node scripts/ci/build-dependencies.mjs "${{ matrix.package.directory }}"
 
       - name: "テスト準備"
         run: |
@@ -145,11 +106,15 @@ jobs:
         working-directory: ${{ matrix.package.directory }}
 
       - name: "ビルド"
-        run: npm run build
+        run: pnpm run build
         working-directory: ${{ matrix.package.directory }}
 
-      - name: "テスト"
-        run: mise run test
+      - name: "パッケージの検証"
+        run: mise run test:check
+        working-directory: ${{ matrix.package.directory }}
+
+      - name: "テストとカバレッジ"
+        run: mise run test:coverage
         working-directory: ${{ matrix.package.directory }}
 
       - name: "カバレッジをアップロード"
@@ -158,10 +123,13 @@ jobs:
         with:
           name: coverage-${{ matrix.package.name }}
           path: ${{ matrix.package.directory }}/coverage
-          if-no-files-found: ignore
+          if-no-files-found: error
           retention-days: 7
 
   package:
+    needs:
+      - check
+      - test
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -171,24 +139,24 @@ jobs:
       - name: "mise をセットアップ"
         uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3.6.3
 
+      - name: "pnpm のストアパスを取得"
+        id: pnpm-store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: "pnpm のキャッシュを復元"
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.pnpm-store.outputs.path }}
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+
       - name: "依存関係をインストール"
-        run: pnpm i
+        run: pnpm install --frozen-lockfile
 
       - name: "ビルド"
-        run: npm run build --workspaces
+        run: pnpm --filter './packages/**' run build
 
       - name: "パッケージ検証"
-        run: |
-          for pkg in $(jq -r '.workspaces[]' package.json); do
-            if [ ! -f "$pkg/package.json" ]; then
-              continue
-            fi
-
-            if [ "$(jq -r .private "$pkg/package.json")" = "true" ]; then
-              continue
-            fi
-
-            file=$(npm pack "./$pkg" --pack-destination "$RUNNER_TEMP" 2>/dev/null | tail -n 1)
-            npx publint "$RUNNER_TEMP/$file"
-            npx attw --profile esm-only "$RUNNER_TEMP/$file"
-          done
+        run: node scripts/ci/verify-packages.mjs
+        env:
+          RUNNER_TEMP: ${{ runner.temp }}

@@ -36,6 +36,7 @@ export interface IContextMenuRadioGroupItemRenderer<TItem = any> {
    * @param item 現在の項目です。
    * @param index 項目のインデックスです。
    * @param items すべての項目です。
+   *
    * @returns レンダリングする内容です。
    */
   (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
@@ -57,9 +58,7 @@ export namespace ContextMenuRadioGroupProps {
      */
     children?: React.ReactNode | IContextMenuRadioGroupItemRenderer<TItem>;
 
-    /**
-     * ラジオ項目です。
-     */
+    /** ラジオ項目です。 */
     items?: readonly TItem[] | undefined;
   };
 
@@ -67,7 +66,7 @@ export namespace ContextMenuRadioGroupProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.RadioGroup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuRadioGroupProps より:
+      // MenuRadioGroupProps より :
       "value" | "defaultValue" | "onValueChange" | "disabled"
     >,
     keyof Render | keyof SuruUI
@@ -94,12 +93,10 @@ export interface IContextMenuRadioGroup extends IComponent<ContextMenuRadioGroup
   <TItem = any>(props: ContextMenuRadioGroupProps<TItem>): IComponent.Return;
 }
 
-/**
- * ラジオ項目をまとめるグループ要素です。
- */
-export const ContextMenuRadioGroup: IContextMenuRadioGroup = function SuiContextMenuRadioGroup(
+/** ラジオ項目をまとめるグループ要素です。 */
+export const ContextMenuRadioGroup: IContextMenuRadioGroup = (
   props: ContextMenuRadioGroupProps,
-) {
+) => {
   const ctx = useContextMenuContext();
   const { items, style, render, children = defaultItemRenderer, className, ...otherProps } = props;
 
@@ -107,7 +104,10 @@ export const ContextMenuRadioGroup: IContextMenuRadioGroup = function SuiContext
     <ContextMenu.RadioGroup
       {...otherProps}
       {...proxyRenderProps<ContextMenu.RadioGroup.State, ContextMenuRadioGroupState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -138,7 +138,6 @@ export const ContextMenuRadioGroup: IContextMenuRadioGroup = function SuiContext
 };
 
 export { ContextMenuRadioGroup as RadioGroup };
-
 export namespace RadioGroup {
   export type State<TItem = any> = ContextMenuRadioGroupState<TItem>;
 

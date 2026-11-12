@@ -20,9 +20,7 @@ export namespace ComboboxGroupProps {
   export type Render<TItem = any> = RenderProps<ComboboxGroupState<TItem>>;
 
   export type SuruUI<TItem = any> = {
-    /**
-     * グループに含まれる項目です。
-     */
+    /** グループに含まれる項目です。 */
     items?: readonly TItem[] | undefined;
   };
 
@@ -30,7 +28,7 @@ export namespace ComboboxGroupProps {
     Pick<
       React.ComponentProps<typeof Combobox.Group>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxGroupProps より:
+      // ComboboxGroupProps より :
       "items"
     >,
     keyof Render | keyof SuruUI
@@ -54,10 +52,8 @@ export type ComboboxGroupProps<TItem = any> = ComboboxGroupProps.Render<TItem> &
 
 export type IComboboxGroup = IComponent<ComboboxGroupProps>;
 
-/**
- * 関連する候補項目をまとめるグループ要素です。
- */
-export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
+/** 関連する候補項目をまとめるグループ要素です。 */
+export const ComboboxGroup: IComboboxGroup = (props) => {
   const ctx = useComboboxListContext();
   const { items, style, render, className, ...otherProps } = props;
 
@@ -65,7 +61,11 @@ export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
     <Combobox.Group
       {...otherProps}
       {...proxyRenderProps<Combobox.Group.State, ComboboxGroupState>(
-        (state) => ({ ...ctx, items, ...state }),
+        (state) => ({
+          ...ctx,
+          items,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -104,7 +104,6 @@ export const ComboboxGroup: IComboboxGroup = function SuiComboboxGroup(props) {
 };
 
 export { ComboboxGroup as Group };
-
 export namespace Group {
   export type State<TItem = any> = ComboboxGroupState<TItem>;
 

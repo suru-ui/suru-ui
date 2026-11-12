@@ -1,4 +1,4 @@
-// TODO(tai-kun): いつか複合コンポーネントの方に組み込む
+// NOTE(tai-kun): いつか複合コンポーネントの方に組み込みます。
 
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
@@ -28,7 +28,7 @@ export namespace ComboboxSeparatorProps {
     Pick<
       React.ComponentProps<typeof Combobox.Separator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxSeparatorProps より:
+      // ComboboxSeparatorProps より :
       "orientation"
     >,
     keyof Render | keyof SuruUI
@@ -50,20 +50,21 @@ export type ComboboxSeparatorProps = ComboboxSeparatorProps.Render &
 
 export type IComboboxSeparator = IComponent<ComboboxSeparatorProps>;
 
-/**
- * 項目やグループを区切る要素です。
- */
-export const ComboboxSeparator: IComboboxSeparator = function SuiComboboxSeparator(props) {
+/** 項目やグループを区切る要素です。 */
+export const ComboboxSeparator: IComboboxSeparator = (props) => {
   const listCtx = useComboboxListContext();
   const groupCtx = useComboboxGroupContext(true);
-  const ctx = groupCtx || listCtx;
+  const ctx = groupCtx ?? listCtx;
   const { style, render, className, ...otherProps } = props;
 
   return (
     <Combobox.Separator
       {...otherProps}
       {...proxyRenderProps<Combobox.Separator.State, ComboboxSeparatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -102,7 +103,6 @@ export const ComboboxSeparator: IComboboxSeparator = function SuiComboboxSeparat
 };
 
 export { ComboboxSeparator as Separator };
-
 export namespace Separator {
   export type State<TItem = any> = ComboboxSeparatorState<TItem>;
 

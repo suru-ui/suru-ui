@@ -16,10 +16,7 @@ export namespace SidebarFooterProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -37,7 +34,7 @@ export type ISidebarFooter = IComponent<SidebarFooterProps>;
  *
  * ユーザーメニューなどを配置します。
  */
-export const SidebarFooter: ISidebarFooter = function SuiSidebarFooter(props) {
+export const SidebarFooter: ISidebarFooter = (props) => {
   const ctx = useSidebarContext();
 
   return useRender({
@@ -53,7 +50,6 @@ export const SidebarFooter: ISidebarFooter = function SuiSidebarFooter(props) {
 };
 
 export { SidebarFooter as Footer };
-
 export namespace Footer {
   export type State = SidebarFooterState;
 

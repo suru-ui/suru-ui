@@ -23,7 +23,7 @@ export namespace HoverCardPopupProps {
     Pick<
       React.ComponentProps<typeof PreviewCard.Popup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PreviewCardPopupProps より:
+      // PreviewCardPopupProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace HoverCardPopupProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof PreviewCard.Popup>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -45,10 +45,8 @@ export type HoverCardPopupProps = HoverCardPopupProps.Render &
 
 export type IHoverCardPopup = IComponent<HoverCardPopupProps>;
 
-/**
- * ホバーカードの内容を表示するポップアップ要素です。
- */
-export const HoverCardPopup: IHoverCardPopup = function SuiHoverCardPopup(props) {
+/** ホバーカードの内容を表示するポップアップ要素です。 */
+export const HoverCardPopup: IHoverCardPopup = (props) => {
   const ctx = usePositionerContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const HoverCardPopup: IHoverCardPopup = function SuiHoverCardPopup(props)
     <PreviewCard.Popup
       {...otherProps}
       {...proxyRenderProps<PreviewCard.Popup.State, HoverCardPopupState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -90,7 +91,6 @@ export const HoverCardPopup: IHoverCardPopup = function SuiHoverCardPopup(props)
 };
 
 export { HoverCardPopup as Popup };
-
 export namespace Popup {
   export type State = HoverCardPopupState;
 

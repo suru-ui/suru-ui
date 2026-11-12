@@ -23,16 +23,13 @@ export namespace DrawerTitleProps {
     Pick<
       React.ComponentProps<typeof Drawer.Title>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DrawerTitleProps より:
+      // DrawerTitleProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Drawer.Title>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Drawer.Title>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,10 +42,8 @@ export type DrawerTitleProps = DrawerTitleProps.Render &
 
 export type IDrawerTitle = IComponent<DrawerTitleProps>;
 
-/**
- * ドロワーの見出しを表示するコンポーネントです。
- */
-export const DrawerTitle: IDrawerTitle = function SuiDrawerTitle(props) {
+/** ドロワーの見出しを表示するコンポーネントです。 */
+export const DrawerTitle: IDrawerTitle = (props) => {
   const ctx = useDrawerHeaderContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +51,10 @@ export const DrawerTitle: IDrawerTitle = function SuiDrawerTitle(props) {
     <Drawer.Title
       {...otherProps}
       {...proxyRenderProps<Drawer.Title.State, DrawerTitleState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -90,7 +88,6 @@ export const DrawerTitle: IDrawerTitle = function SuiDrawerTitle(props) {
 };
 
 export { DrawerTitle as Title };
-
 export namespace Title {
   export type State = DrawerTitleState;
 

@@ -1,5 +1,5 @@
 {
-  "extends": ["@tsconfig/node24", "@tsconfig/strictest"],
+  "extends": "./tsconfig.base.json",
   "include": ["./global.d.ts", "../src/**/*"],
   "exclude": [
     "../src/**/*.stories.tsx",
@@ -8,17 +8,7 @@
     "../tests/**/*"
   ],
   "compilerOptions": {
-    "types": ["node"],
-    "lib": ["DOM", "ESNext"],
-    "jsx": "preserve",
-    "noEmit": false,
-    "rootDir": "..",
-    "outDir": "../dist",
     "declaration": true,
-    "declarationMap": true,
-    "target": "es2020",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "erasableSyntaxOnly": true
+    "isolatedDeclarations": true
   }
 }

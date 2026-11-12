@@ -23,7 +23,7 @@ export namespace NumberFieldScrubAreaProps {
     Pick<
       React.ComponentProps<typeof NumberField.ScrubArea>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NumberFieldScrubAreaProps より:
+      // NumberFieldScrubAreaProps より :
       "direction" | "pixelSensitivity" | "teleportDistance"
     >,
     keyof Render | keyof SuruUI
@@ -45,10 +45,8 @@ export type NumberFieldScrubAreaProps = NumberFieldScrubAreaProps.Render &
 
 export type INumberFieldScrubArea = IComponent<NumberFieldScrubAreaProps>;
 
-/**
- * ドラッグで値を変更できる領域を提供するコンポーネントです。
- */
-export const NumberFieldScrubArea: INumberFieldScrubArea = function SuiNumberFieldScrubArea(props) {
+/** ドラッグで値を変更できる領域を提供するコンポーネントです。 */
+export const NumberFieldScrubArea: INumberFieldScrubArea = (props) => {
   const ctx = useNumberFieldContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const NumberFieldScrubArea: INumberFieldScrubArea = function SuiNumberFie
     <NumberField.ScrubArea
       {...otherProps}
       {...proxyRenderProps<NumberField.ScrubArea.State, NumberFieldScrubAreaState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -96,7 +97,6 @@ export const NumberFieldScrubArea: INumberFieldScrubArea = function SuiNumberFie
 };
 
 export { NumberFieldScrubArea as ScrubArea };
-
 export namespace ScrubArea {
   export type State = NumberFieldScrubAreaState;
 

@@ -1,39 +1,35 @@
 @layer sui.component {
-@scope (.sui_fieldset) to ([data-scope]) {
+  @scope (.sui_fieldset) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex-direction: column;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  flex-direction: column;
-}
+    /* 変数 */
+    :scope {
+      --sui_fieldset-gap: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_fieldset-gap: ;
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_fieldset-gap);
+    }
 
-/* 可変 */
-:scope {
-  gap: var(--sui_fieldset-gap);
-}
-
-/* 代入 */
-:scope {
-  --sui_fieldset-gap: --sui-gap(2);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_fieldset-gap: --sui-gap(2);
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_fieldset) to ([data-scope]) {
-
-:scope {
-  &.sui_fieldset-disabled {
-    cursor: not-allowed;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_fieldset) to ([data-scope]) {
+    :scope {
+      &.sui_fieldset-disabled {
+        cursor: not-allowed;
+      }
+    }
+  } /* @scope */
 } /* @layer */

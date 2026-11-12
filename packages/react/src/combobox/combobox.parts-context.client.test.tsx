@@ -1,5 +1,4 @@
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { useComboboxArrowContext } from "./arrow/combobox.arrow.context.jsx";
@@ -48,16 +47,16 @@ import { ComboboxTrigger } from "./trigger/combobox.trigger.jsx";
 import "../../tests/src/_locators.js";
 
 const fruits = ["りんご", "ばなな"];
-
 describe("Combobox のパーツコンテキスト", () => {
   test("入力欄の状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxInputContext();
+
       return <span>{`${ctx.size}/${String(ctx.open)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxInputGroup>
@@ -66,18 +65,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/true").query()?.textContent).toBe("lg/true");
   });
 
   test("チップコンテナーの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxChipsContext();
+
       return <span>{`${ctx.size}/${String(ctx.multiple)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxInputGroup>
@@ -86,18 +86,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/false").query()?.textContent).toBe("lg/false");
   });
 
   test("チップの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxChipContext();
+
       return <span>{`${ctx.size}/${ctx.variant}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxInputGroup>
@@ -108,18 +109,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/solid").query()?.textContent).toBe("lg/solid");
   });
 
   test("チップ削除ボタンの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxChipRemoveContext();
+
       return <span>{`${ctx.size}/${ctx.radius}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxInputGroup>
@@ -132,18 +134,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/lg").query()?.textContent).toBe("lg/lg");
   });
 
   test("消去ボタンの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxClearContext();
+
       return <span>{`${ctx.size}/${String(ctx.open)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits} defaultValue="りんご">
         <ComboboxInputGroup>
@@ -152,18 +155,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/true").query()?.textContent).toBe("lg/true");
   });
 
   test("アイコンの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxIconContext();
+
       return <span>{`${ctx.size}/${String(ctx.multiple)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxInputGroup>
@@ -172,72 +176,76 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/false").query()?.textContent).toBe("lg/false");
   });
 
   test("トリガーの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxTriggerContext();
+
       return <span>{`${ctx.size}/${String(ctx.open)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxTrigger>{() => <Probe />}</ComboboxTrigger>
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/true").query()?.textContent).toBe("lg/true");
   });
 
   test("トリガーラベルの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxTriggerLabelContext();
+
       return <span>{`${ctx.size}/${String(ctx.disabled)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxTriggerLabel render={() => <Probe />} />
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/false").query()?.textContent).toBe("lg/false");
   });
 
   test("ポータルの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxPortalContext();
+
       return <span>{`${ctx.size}/${ctx.radius}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxPortal render={() => <Probe />} />
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/lg").query()?.textContent).toBe("lg/lg");
   });
 
   test("背景の状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxBackdropContext();
+
       return <span>{`${ctx.size}/${String(ctx.open)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxPortal>
@@ -246,18 +254,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/true").query()?.textContent).toBe("lg/true");
   });
 
   test("位置決めの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxPositionerContext();
+
       return <span>{`${ctx.size}/${ctx.side}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxPortal>
@@ -266,18 +275,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/bottom").query()?.textContent).toBe("lg/bottom");
   });
 
   test("ポップアップの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxPopupContext();
+
       return <span>{`${ctx.size}/${String(ctx.open)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxPortal>
@@ -288,18 +298,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/true").query()?.textContent).toBe("lg/true");
   });
 
   test("矢印の状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxArrowContext();
+
       return <span>{`${ctx.size}/${String(ctx.open)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxPortal>
@@ -312,18 +323,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/true").query()?.textContent).toBe("lg/true");
   });
 
   test("状態読み上げの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxStatusContext();
+
       return <span>{`${ctx.size}/${String(ctx.multiple)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxPortal>
@@ -336,18 +348,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/false").query()?.textContent).toBe("lg/false");
   });
 
   test("空表示の状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxEmptyContext();
+
       return <span>{`${ctx.size}/${String(ctx.multiple)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={[]}>
         <ComboboxPortal>
@@ -360,18 +373,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/false").query()?.textContent).toBe("lg/false");
   });
 
   test("リストの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxListContext();
+
       return <span>{`${ctx.size}/${String(ctx.empty)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxPortal>
@@ -384,18 +398,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/false").query()?.textContent).toBe("lg/false");
   });
 
   test("グループの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxGroupContext();
+
       return <span>{`${ctx.size}/${ctx.items?.length}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxPortal>
@@ -410,18 +425,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/2").query()?.textContent).toBe("lg/2");
   });
 
   test("グループ見出しの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxGroupLabelContext();
+
       return <span>{`${ctx.size}/${String(ctx.multiple)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxPortal>
@@ -438,18 +454,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/false").query()?.textContent).toBe("lg/false");
   });
 
   test("区切り線の状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxSeparatorContext();
+
       return <span>{`${ctx.size}/${String(ctx.multiple)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits}>
         <ComboboxPortal>
@@ -466,18 +483,19 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/false").query()?.textContent).toBe("lg/false");
   });
 
   test("項目インジケーターの状態を子孫へ伝える", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useComboboxItemIndicatorContext();
+
       return <span>{`${ctx.size}/${String(ctx.multiple)}`}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <ComboboxRoot open size="lg" items={fruits} defaultValue="りんご">
         <ComboboxPortal>
@@ -494,7 +512,7 @@ describe("Combobox のパーツコンテキスト", () => {
       </ComboboxRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/false").query()?.textContent).toBe("lg/false");
   });
 });

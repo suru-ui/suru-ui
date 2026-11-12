@@ -21,11 +21,10 @@ export type IUseDialogHeaderContext = IUseContext<DialogHeaderContext>;
 /**
  * {@link DialogHeaderContext} を読み取るフックです。
  */
-export const useDialogHeaderContext: IUseDialogHeaderContext = function useSuiDialogHeaderContext(
-  optional,
-): any {
+export const useDialogHeaderContext: IUseDialogHeaderContext = (optional): any => {
   const ctx = React.use(DialogHeaderContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "DialogHeaderContext",
       providerName: "DialogHeader",

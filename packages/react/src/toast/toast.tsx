@@ -40,8 +40,7 @@ import {
   createToastManager,
 } from "./toast.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type ToastColor = ToastContentColor;
 
@@ -119,19 +118,13 @@ namespace ToastProps {
      */
     close?: ToastCloseProps["children"] | undefined;
 
-    /**
-     * 通知の説明文です。
-     */
+    /** 通知の説明文です。 */
     description?: ToastDescriptionProps["children"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: ToastSlotProps | undefined;
 
-    /**
-     * 通知の見出しです。
-     */
+    /** 通知の見出しです。 */
     title?: ToastTitleProps["children"] | undefined;
   };
 }
@@ -180,9 +173,7 @@ namespace ToastListProps {
      */
     children?: React.ReactNode | IToastListRenderer<TData> | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: ToastListSlotProps | undefined;
   };
 
@@ -202,7 +193,9 @@ export interface IUseToastAPI {
    * {@link ToastAPI} を作成します。
    *
    * @template TData 通知に含める追加データの型です。
+   *
    * @param props {@link Toast} の props です。
+   *
    * @returns トーストの API です
    */
   <TData extends object = any>(props: ToastProps<TData>): ToastAPI<TData>;
@@ -213,14 +206,15 @@ export interface IUseToastListAPI {
    * {@link ToastListAPI} を作成します。
    *
    * @template TData 通知に含める追加データの型です。
+   *
    * @param props {@link ToastList} の props です。
+   *
    * @returns トースト一覧の API です
    */
   <TData extends object = any>(props: ToastListProps<TData>): ToastListAPI<TData>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Toast} を構成する各パーツの props を作成するための API です。
@@ -238,6 +232,7 @@ export class ToastAPI<TData extends object = any> {
 
   /**
    * @param props {@link Toast} の props です。
+   *
    * @internal
    */
   public constructor(props: ToastProps<TData>) {
@@ -256,7 +251,12 @@ export class ToastAPI<TData extends object = any> {
       descriptionPosition,
       ...rootProps
     } = props;
-    this.toastProps = { close, title, action, description };
+    this.toastProps = {
+      close,
+      title,
+      action,
+      description,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
     this.contentProps = {
@@ -288,6 +288,7 @@ export class ToastAPI<TData extends object = any> {
         size,
       };
     }
+
     if (isLikelyVisibleNode(toastAction)) {
       return {
         ...props,
@@ -364,6 +365,7 @@ export class ToastAPI<TData extends object = any> {
         children: toast.description,
       };
     }
+
     if (isLikelyVisibleNode(toastDescription)) {
       return {
         ...props,
@@ -397,6 +399,7 @@ export class ToastAPI<TData extends object = any> {
         children: toast.title,
       };
     }
+
     if (isLikelyVisibleNode(toastTitle)) {
       return {
         ...props,
@@ -411,11 +414,8 @@ export class ToastAPI<TData extends object = any> {
 /**
  * {@link ToastAPI} を作成するフックです。
  */
-export const useToastAPI: IUseToastAPI = function useSuiToastAPI<TData extends object = any>(
-  props: ToastProps<TData>,
-) {
-  return new ToastAPI(props);
-};
+export const useToastAPI: IUseToastAPI = <TData extends object = any>(props: ToastProps<TData>) =>
+  new ToastAPI(props);
 
 export { ToastAPI as API, useToastAPI as useAPI };
 
@@ -436,6 +436,7 @@ export class ToastListAPI<TData extends object = any> {
   /**
    * @param props {@link ToastList} の props です。
    * @param toasts 表示する通知の一覧です。
+   *
    * @internal
    */
   public constructor(props: ToastListProps<TData>, toasts: readonly ToastToastObject<TData>[]) {
@@ -443,6 +444,7 @@ export class ToastListAPI<TData extends object = any> {
     this.children = children;
     this.slotProps = slotProps;
     this.portalProps = portalProps;
+
     this.toasts = toasts;
   }
 
@@ -475,9 +477,9 @@ export class ToastListAPI<TData extends object = any> {
 /**
  * {@link ToastListAPI} を作成するフックです。
  */
-export const useToastListAPI: IUseToastListAPI = function useSuiToastListAPI<
-  TData extends object = any,
->(props: ToastListProps<TData>) {
+export const useToastListAPI: IUseToastListAPI = <TData extends object = any>(
+  props: ToastListProps<TData>,
+) => {
   const { toasts } = useToastClient<TData>();
 
   return new ToastListAPI(props, toasts);
@@ -485,8 +487,7 @@ export const useToastListAPI: IUseToastListAPI = function useSuiToastListAPI<
 
 export { ToastListAPI as ListAPI, useToastListAPI as useListAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IToastList extends IComponent<ToastListProps> {
   /**
@@ -495,10 +496,8 @@ export interface IToastList extends IComponent<ToastListProps> {
   <TData extends object = any>(props: ToastListProps<TData>): IComponent.Return;
 }
 
-/**
- * 通知一覧を描画するコンポーネントです。
- */
-const ToastList: IToastList = function SuiToastList(props: ToastListProps) {
+/** 通知一覧を描画するコンポーネントです。 */
+const ToastList: IToastList = (props: ToastListProps) => {
   const api = useToastListAPI(props);
 
   return (
@@ -513,21 +512,15 @@ export interface IToast extends IComponent<ToastProps> {
    * @template TData 通知に含める追加データの型です。
    */
   <TData extends object = any>(props: ToastProps<TData>): IComponent.Return;
-
   readonly List: IToastList;
-
   readonly Provider: IToastProvider;
-
   readonly createManager: <TData extends object = any>() => IToastManager<TData>;
-
   readonly useClient: <TData extends object = any>() => IToastClient<TData>;
 }
 
-/**
- * 個別の通知を表示するコンポーネントです。
- */
+/** 個別の通知を表示するコンポーネントです。 */
 export const Toast: IToast = /*#__PURE__*/ Object.assign(
-  function SuiToast(props: ToastProps) {
+  (props: ToastProps) => {
     const api = useToastAPI(props);
     const titleProps = api.getTitleProps();
     const descriptionProps = api.getDescriptionProps();
@@ -610,11 +603,12 @@ export namespace Toast {
  * 通知の種類をアラートの配色に変換します。
  *
  * @param type 通知の種類です。
+ *
  * @returns アラートの配色です
  */
 function toAlertColor(type: string | undefined): AlertRootColor {
   switch (type?.toLowerCase()) {
-    // 成功
+    // 成功。
     case "ok":
     case "done":
     case "okay":
@@ -626,14 +620,14 @@ function toAlertColor(type: string | undefined): AlertRootColor {
     case "successful":
       return "green";
 
-    // 警告
+    // 警告。
     case "warn":
     case "caution":
     case "warning":
     case "attention":
       return "yellow";
 
-    // エラー・重大な問題
+    // エラー・重大な問題。
     case "err":
     case "crit":
     case "fail":
@@ -649,7 +643,7 @@ function toAlertColor(type: string | undefined): AlertRootColor {
     case "emergency":
       return "red";
 
-    // 情報
+    // 情報。
     case "info":
     case "notice":
     case "message":

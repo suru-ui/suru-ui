@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { ContextMissingError } from "../errors.js";
@@ -12,10 +12,10 @@ import "../../tests/src/_locators.js";
 
 describe("TextFieldRoot", () => {
   test("既定の修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<TextFieldRoot />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_text_field").element();
     expect(root.tagName).toBe("DIV");
     expect(root.classList.contains("sui_text_field-size_md")).toBe(true);
@@ -26,10 +26,10 @@ describe("TextFieldRoot", () => {
   });
 
   test("指定した大きさと配色と角丸と外観のクラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<TextFieldRoot size="lg" color="blue" variant="naked" outlined />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_text_field").element();
     expect(root.classList.contains("sui_text_field-size_lg")).toBe(true);
     expect(root.classList.contains("sui_text_field-color_blue")).toBe(true);
@@ -39,7 +39,7 @@ describe("TextFieldRoot", () => {
   });
 
   test("角丸を指定しないときは大きさに追従させる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <div id="sm">
@@ -51,7 +51,7 @@ describe("TextFieldRoot", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.container
         .querySelector("#sm .sui_text_field")
@@ -65,33 +65,33 @@ describe("TextFieldRoot", () => {
   });
 
   test("スタイル起点として data-scope を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<TextFieldRoot />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_text_field").element().getAttribute("data-scope")).toBe("");
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<TextFieldRoot className="custom" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_text_field").element();
     expect(root.classList.contains("custom")).toBe(true);
     expect(root.classList.contains("sui_text_field")).toBe(true);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<TextFieldRoot render={<section />} />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_text_field").element().tagName).toBe("SECTION");
   });
 
   test("render の関数へ状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot
         size="lg"
@@ -108,14 +108,14 @@ describe("TextFieldRoot", () => {
       />,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_text_field").element();
     expect(root.tagName).toBe("SECTION");
     expect(root.getAttribute("data-probe")).toBe("lg/blue/none/naked/true");
   });
 
   test("className の関数へ状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot
         size="lg"
@@ -124,7 +124,7 @@ describe("TextFieldRoot", () => {
       />,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen
         .getByClassName("sui_text_field")
@@ -136,14 +136,14 @@ describe("TextFieldRoot", () => {
 
 describe("TextFieldInput", () => {
   test("既定では text の入力欄を表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot>
         <TextFieldInput aria-label="名前" />
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const input = screen.getByRole("textbox", { name: "名前" }).element() as HTMLInputElement;
     expect(input.tagName).toBe("INPUT");
     expect(input.type).toBe("text");
@@ -151,28 +151,28 @@ describe("TextFieldInput", () => {
   });
 
   test("指定した入力項目を表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot>
         <TextFieldInput type="email" aria-label="メール" />
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(
       (screen.getByRole("textbox", { name: "メール" }).element() as HTMLInputElement).type,
     ).toBe("email");
   });
 
   test("利用者の props を入力欄へ渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot>
         <TextFieldInput name="name" required placeholder="田中 太郎" autoComplete="off" />
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const input = screen.getByRole("textbox").element() as HTMLInputElement;
     expect(input.name).toBe("name");
     expect(input.placeholder).toBe("田中 太郎");
@@ -181,20 +181,20 @@ describe("TextFieldInput", () => {
   });
 
   test("無効時は状態クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot>
         <TextFieldInput disabled aria-label="名前" />
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const input = screen.getByRole("textbox", { name: "名前" }).element();
     expect(input.classList.contains("sui_text_field_input-disabled")).toBe(true);
   });
 
   test("Field の検証状態をクラスへ反映する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <TextFieldRoot>
@@ -210,7 +210,7 @@ describe("TextFieldInput", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen
         .getByRole("textbox", { name: "不正" })
@@ -226,35 +226,35 @@ describe("TextFieldInput", () => {
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot>
         <TextFieldInput className="custom" aria-label="名前" />
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const input = screen.getByRole("textbox", { name: "名前" }).element();
     expect(input.classList.contains("custom")).toBe(true);
     expect(input.classList.contains("sui_text_field_input")).toBe(true);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot>
         <TextFieldInput render={<textarea />} aria-label="名前" />
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const input = screen.getByRole("textbox", { name: "名前" }).element();
     expect(input.tagName).toBe("TEXTAREA");
     expect(input.classList.contains("sui_text_field_input")).toBe(true);
   });
 
   test("render の関数へスタイル情報と入力欄の状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot size="lg" color="blue" outlined>
         <TextFieldInput
@@ -270,7 +270,7 @@ describe("TextFieldInput", () => {
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_text_field_input").element().getAttribute("data-probe")).toBe(
       "lg/blue/true/true",
     );
@@ -279,49 +279,49 @@ describe("TextFieldInput", () => {
 
 describe("TextFieldAddon", () => {
   test("span で表示して修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot>
         <TextFieldAddon>🔒</TextFieldAddon>
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const addon = screen.getByText("🔒").element();
     expect(addon.tagName).toBe("SPAN");
     expect(addon.classList.contains("sui_text_field_addon")).toBe(true);
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot>
         <TextFieldAddon className="custom">🔒</TextFieldAddon>
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const addon = screen.getByText("🔒").element();
     expect(addon.classList.contains("custom")).toBe(true);
     expect(addon.classList.contains("sui_text_field_addon")).toBe(true);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot>
         <TextFieldAddon render={<b />}>🔒</TextFieldAddon>
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const addon = screen.getByText("🔒").element();
     expect(addon.tagName).toBe("B");
     expect(addon.classList.contains("sui_text_field_addon")).toBe(true);
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TextFieldRoot size="lg" color="blue">
         <TextFieldAddon
@@ -332,7 +332,7 @@ describe("TextFieldAddon", () => {
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_text_field_addon").element().getAttribute("data-probe")).toBe(
       "lg/blue",
     );
@@ -341,7 +341,7 @@ describe("TextFieldAddon", () => {
 
 describe("useTextFieldContext", () => {
   test("提供された値を返す", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useTextFieldContext();
 
@@ -350,47 +350,48 @@ describe("useTextFieldContext", () => {
       );
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <TextFieldRoot size="lg" color="blue" radius="full" variant="naked" outlined>
         <Probe />
       </TextFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("lg/blue/full/naked/true").query()?.textContent).toBe(
       "lg/blue/full/naked/true",
     );
   });
 
   test("提供がないときはエラーを投げる", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       useTextFieldContext();
+
       return null;
     }
 
-    // 実行と検証
+    // 実行と検証。
     await expect(render(<Probe />)).rejects.toThrow(ContextMissingError);
   });
 
   test("任意指定では提供がないときに null を返す", async ({ expect }) => {
-    // 準備
+    // 準備。
     function Probe() {
       const ctx = useTextFieldContext(true);
 
       return <span>{ctx === null ? "なし" : "あり"}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(<Probe />);
 
-    // 検証
+    // 検証。
     expect(screen.getByText("なし").query()?.textContent).toBe("なし");
   });
 
   test("直接提供した値を返す", async ({ expect }) => {
-    // 準備
+    // 準備。
     const provided = {
       size: "md",
       color: "grey",
@@ -398,20 +399,21 @@ describe("useTextFieldContext", () => {
       variant: "liquid",
       outlined: false,
     } as const;
+
     function Probe() {
       const ctx = useTextFieldContext();
 
       return <span>{ctx === provided ? "同一" : "別物"}</span>;
     }
 
-    // 実行
+    // 実行。
     const screen = await render(
       <TextFieldContext value={provided}>
         <Probe />
       </TextFieldContext>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("同一").query()?.textContent).toBe("同一");
   });
 });

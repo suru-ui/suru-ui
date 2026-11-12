@@ -71,6 +71,7 @@ export function isItemObjectGroup(item: unknown): item is ContextMenuRootItemObj
  *
  * @param state 項目の状態です。
  * @param variant チェック状態のときの外観です。
+ *
  * @returns 適用する外観です。
  */
 export function getItemVariant(state: object, variant: Button.Root.Variant): Button.Root.Variant {

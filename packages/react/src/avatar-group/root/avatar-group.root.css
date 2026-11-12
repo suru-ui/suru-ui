@@ -1,12 +1,10 @@
 @layer sui.component {
-@scope (.sui_avatar_group) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  display: inline-flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-} /* @scope */
+  @scope (.sui_avatar_group) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: inline-flex;
+      align-items: center;
+      overflow: hidden;
+    }
+  } /* @scope */
 } /* @layer */

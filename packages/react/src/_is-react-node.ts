@@ -1,8 +1,7 @@
 import * as React from "react";
 
 export default function isReactNode(node: unknown): node is React.ReactNode {
-  const n = node as React.ReactNode;
-  switch (typeof n) {
+  switch (typeof node) {
     case "bigint":
     case "number":
     case "string":
@@ -12,16 +11,13 @@ export default function isReactNode(node: unknown): node is React.ReactNode {
 
     case "object":
       switch (true) {
-        case n === null:
-        case React.isValidElement(n):
-        case n instanceof Promise:
-        case isIterable(n):
+        case node === null:
+        case React.isValidElement(node):
+        case node instanceof Promise:
+        case isIterable(node):
           return true;
       }
   }
-
-  // ReactNode をすべて検証しているか、型レベルで確認するためのアサーションです。
-  n satisfies never;
 
   return false;
 }

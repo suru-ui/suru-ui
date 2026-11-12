@@ -11,19 +11,13 @@ import { getSelectAction } from "../_tree.jsx";
 import { useTreeContext } from "../root/tree.root.context.js";
 import { TreeItemContext } from "./tree.item.context.js";
 
-/**
- * ツリーの項目の配色です。
- */
+/** ツリーの項目の配色です。 */
 export type TreeItemColor = Button.Root.Color;
 
-/**
- * ツリーの項目の角丸です。
- */
+/** ツリーの項目の角丸です。 */
 export type TreeItemRadius = Button.Root.Radius;
 
-/**
- * ツリーの項目の大きさです。
- */
+/** ツリーの項目の大きさです。 */
 export type TreeItemSize = Size;
 
 /**
@@ -133,7 +127,7 @@ export namespace TreeItemProps {
     Pick<
       Button.ButtonRootProps.BaseUI,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ButtonRootProps より:
+      // ButtonRootProps より :
       keyof Button.ButtonRootProps.BaseUI
     >,
     keyof Render | keyof SuruUI
@@ -152,10 +146,8 @@ export type TreeItemProps = TreeItemProps.Render &
 
 export type ITreeItem = IComponent<TreeItemProps>;
 
-/**
- * ツリーの項目要素です。
- */
-export const TreeItem: ITreeItem = function SuiTreeItem(props) {
+/** ツリーの項目要素です。 */
+export const TreeItem: ITreeItem = (props) => {
   const ctx = useTreeContext();
   const {
     id: itemId,
@@ -180,7 +172,6 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
     nativeButton = false,
     ...otherProps
   } = props;
-
   const domId = ctx.getItemId(itemId);
   const expanded = ctx.expanded.has(itemId);
   const selected = ctx.selected.has(itemId);
@@ -199,16 +190,14 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
     }),
     [color, ctx.activeId, disabled, expanded, muted, outlined, radius, selected, size, variant],
   );
-
-  const levelStyle = (state: TreeItemState): React.CSSProperties => {
+  const levelStyle = (currentState: TreeItemState): React.CSSProperties => {
     const result: React.CSSProperties = {};
-    Object.assign(result, typeof style === "function" ? style(state) : style, {
+    Object.assign(result, typeof style === "function" ? style(currentState) : style, {
       "--sui_tree_item-level": level,
     });
 
     return result;
   };
-
   const handleClick: NonNullable<TreeItemProps["onClick"]> = (event) => {
     onClickProp?.(event);
     if (disabled || event.defaultPrevented) {
@@ -223,6 +212,7 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
     if (hasItems && !event.shiftKey && !event.ctrlKey && !event.metaKey) {
       ctx.toggleExpansion(itemId, event);
     }
+
     ctx.select(itemId, getSelectAction(event), event);
   };
 
@@ -231,10 +221,10 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
       {...otherProps}
       {...proxyRenderProps<Button.Root.State, TreeItemState>(state, {
         style: levelStyle,
-        render: (htmlProps, state) => (
-          <TreeItemContext value={state}>
+        render: (htmlProps, currentState) => (
+          <TreeItemContext value={currentState}>
             <RenderElement
-              state={state}
+              state={currentState}
               render={render}
               htmlProps={htmlProps}
               defaultTagName="div"
@@ -244,15 +234,15 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
         className: cn<TreeItemState>(
           className,
           "sui_tree_item",
-          (state) => state.expanded && "sui_tree_item-expanded",
-          (state) => state.selected && "sui_tree_item-selected",
-          (state) => state.disabled && "sui_tree_item-disabled",
-          (state) => `sui_tree_item-size_${state.size}`,
-          (state) => `sui_tree_item-color_${state.color}`,
-          (state) => `sui_tree_item-radius_${state.radius}`,
-          (state) => `sui_tree_item-variant_${state.variant}`,
-          (state) => state.outlined && "sui_tree_item-outlined",
-          (state) => state.muted && "sui_tree_item-muted",
+          (currentState) => currentState.expanded && "sui_tree_item-expanded",
+          (currentState) => currentState.selected && "sui_tree_item-selected",
+          (currentState) => currentState.disabled && "sui_tree_item-disabled",
+          (currentState) => `sui_tree_item-size_${currentState.size}`,
+          (currentState) => `sui_tree_item-color_${currentState.color}`,
+          (currentState) => `sui_tree_item-radius_${currentState.radius}`,
+          (currentState) => `sui_tree_item-variant_${currentState.variant}`,
+          (currentState) => currentState.outlined && "sui_tree_item-outlined",
+          (currentState) => currentState.muted && "sui_tree_item-muted",
         ),
       })}
       id={domId}
@@ -280,7 +270,6 @@ export const TreeItem: ITreeItem = function SuiTreeItem(props) {
 };
 
 export { TreeItem as Item };
-
 export namespace Item {
   export type State = TreeItemState;
 

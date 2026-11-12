@@ -18,10 +18,7 @@ export namespace CardFooterProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type CardFooterProps = CardFooterProps.Render &
 
 export type ICardFooter = IComponent<CardFooterProps>;
 
-/**
- * カードの操作や補足情報を末尾に配置するコンポーネントです。
- */
-export const CardFooter: ICardFooter = function SuiCardFooter(props) {
+/** カードの操作や補足情報を末尾に配置するコンポーネントです。 */
+export const CardFooter: ICardFooter = (props) => {
   const ctx = useCardContext();
 
   return useRender({
@@ -58,7 +53,6 @@ export const CardFooter: ICardFooter = function SuiCardFooter(props) {
 };
 
 export { CardFooter as Footer };
-
 export namespace Footer {
   export type State = CardFooterState;
 

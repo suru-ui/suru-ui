@@ -46,9 +46,9 @@ export namespace ComboboxChipRemoveProps {
     Pick<
       React.ComponentProps<typeof Combobox.ChipRemove>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // ComboboxChipRemoveProps より:
+      // ComboboxChipRemoveProps より :
       | never
     >,
     keyof Render | keyof SuruUI
@@ -70,10 +70,8 @@ export type ComboboxChipRemoveProps = ComboboxChipRemoveProps.Render &
 
 export type IComboboxChipRemove = IComponent<ComboboxChipRemoveProps>;
 
-/**
- * チップを選択値から削除するボタン要素です。
- */
-export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipRemove(props) {
+/** チップを選択値から削除するボタン要素です。 */
+export const ComboboxChipRemove: IComboboxChipRemove = (props) => {
   const ctx = useComboboxChipContext();
   const label = ctx.itemToStringLabel(ctx.value);
   const {
@@ -90,7 +88,11 @@ export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipR
     <Combobox.ChipRemove
       {...otherProps}
       {...proxyRenderProps<Combobox.ChipRemove.State, ComboboxChipRemoveState>(
-        (state) => ({ ...ctx, radius, ...state }),
+        (state) => ({
+          ...ctx,
+          radius,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -138,7 +140,6 @@ export const ComboboxChipRemove: IComboboxChipRemove = function SuiComboboxChipR
 };
 
 export { ComboboxChipRemove as ChipRemove };
-
 export namespace ChipRemove {
   export type State<TItem = any> = ComboboxChipRemoveState<TItem>;
 

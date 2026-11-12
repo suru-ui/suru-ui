@@ -25,11 +25,10 @@ export type IUseSegmentsListContext = IUseContext<SegmentsListContext>;
 /**
  * {@link SegmentsListContext} を読み取るフックです。
  */
-export const useSegmentsListContext: IUseSegmentsListContext = function useSuiSegmentsListContext(
-  optional,
-): any {
+export const useSegmentsListContext: IUseSegmentsListContext = (optional): any => {
   const ctx = React.use(SegmentsListContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SegmentsListContext",
       providerName: "SegmentsList",

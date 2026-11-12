@@ -62,7 +62,7 @@ export namespace PaginationEllipsisProps {
     Pick<
       Button.ButtonRootProps.BaseUI,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PaginationEllipsisProps より:
+      // PaginationEllipsisProps より :
       keyof Button.ButtonRootProps.BaseUI
     >,
     keyof Render | keyof SuruUI
@@ -89,7 +89,7 @@ export type IPaginationEllipsis = IComponent<PaginationEllipsisProps>;
  *
  * 押下するとポップアップが開き、入力欄でページを絞り込み、選択肢から移動先のページを選べます。大きさ・角丸は {@link PaginationRoot} から引き継ぎます。
  */
-export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEllipsis(props) {
+export const PaginationEllipsis: IPaginationEllipsis = (props) => {
   const ctx = usePaginationContext();
   const {
     end,
@@ -115,7 +115,9 @@ export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEll
   const items = React.useMemo(
     () =>
       Array.from(
-        { length: resolvedEnd - resolvedStart + 1 },
+        {
+          length: resolvedEnd - resolvedStart + 1,
+        },
         (_, index): number => resolvedStart + index,
       ),
     [resolvedEnd, resolvedStart],
@@ -133,7 +135,10 @@ export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEll
             key={page}
             value={page}
             onClick={(event) => {
-              ctx.goToPage(page, { event, reason: "ellipsis" });
+              ctx.goToPage(page, {
+                event,
+                reason: "ellipsis",
+              });
             }}
           >
             {page}
@@ -168,7 +173,10 @@ export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEll
             {...htmlProps}
             {...otherButtonProps}
             {...proxyRenderProps<Button.Root.State, PaginationEllipsisState>(
-              (buttonState) => ({ ...ctx, ...buttonState }),
+              (buttonState) => ({
+                ...ctx,
+                ...buttonState,
+              }),
               {
                 style,
                 render: (buttonProps, state) => (
@@ -230,7 +238,6 @@ export const PaginationEllipsis: IPaginationEllipsis = function SuiPaginationEll
 };
 
 export { PaginationEllipsis as Ellipsis };
-
 export namespace Ellipsis {
   export type State = PaginationEllipsisState;
 

@@ -6,9 +6,7 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
 
-/**
- * トグルボタンの配色です。
- */
+/** トグルボタンの配色です。 */
 export type ToggleButtonContextColor = Color;
 
 /**
@@ -56,29 +54,19 @@ export type ToggleButtonContext = Readonly<
        */
       readonly color: ToggleButtonContextColor;
 
-      /**
-       * トグルボタンに枠線を表示するかどうかです。
-       */
+      /** トグルボタンに枠線を表示するかどうかです。 */
       readonly outlined: boolean;
 
-      /**
-       * トグルボタンが保留状態かどうかです。
-       */
+      /** トグルボタンが保留状態かどうかです。 */
       readonly pending: boolean;
 
-      /**
-       * トグルボタンの角丸の大きさです。
-       */
+      /** トグルボタンの角丸の大きさです。 */
       readonly radius: ToggleButtonContextRadius;
 
-      /**
-       * トグルボタンの大きさです。
-       */
+      /** トグルボタンの大きさです。 */
       readonly size: ToggleButtonContextSize;
 
-      /**
-       * トグルボタンを正方形にするかどうかです。
-       */
+      /** トグルボタンを正方形にするかどうかです。 */
       readonly squared: boolean;
 
       /**
@@ -102,11 +90,10 @@ export type IUseToggleButtonContext = IUseContext<ToggleButtonContext>;
 /**
  * {@link ToggleButtonContext} を読み取るフックです。
  */
-export const useToggleButtonContext: IUseToggleButtonContext = function useSuiToggleButtonContext(
-  optional?: boolean,
-): any {
+export const useToggleButtonContext: IUseToggleButtonContext = (optional?: boolean): any => {
   const ctx = React.use(ToggleButtonContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "ToggleButtonContext",
       providerName: "ToggleButtonRoot",
@@ -117,7 +104,6 @@ export const useToggleButtonContext: IUseToggleButtonContext = function useSuiTo
 };
 
 export { ToggleButtonContext as Context, useToggleButtonContext as useContext };
-
 export namespace Context {
   export type Color = ToggleButtonContextColor;
 

@@ -1,56 +1,55 @@
 @layer sui.component {
-@scope (.sui_slider_control) to ([data-scope]) {
+  @scope (.sui_slider_control) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      grid-column: 1 / -1;
+      touch-action: none;
+      user-select: none;
+    }
 
-/* 固定 */
-:scope {
-  grid-column: 1 / -1;
-  touch-action: none;
-  user-select: none;
-}
+    /* 変数 */
+    :scope {
+      --sui_slider_control-width: ;
+      --sui_slider_control-padding_block: ;
+      --sui_slider_control-padding_inline: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_slider_control-width: ;
-  --sui_slider_control-padding_block: ;
-  --sui_slider_control-padding_inline: ;
-}
+    /* 可変 */
+    :scope {
+      width: var(--_sui_slider_control-width, var(--sui_slider_control-width));
+      padding-block: var(
+        --_sui_slider_control-padding_block,
+        var(--sui_slider_control-padding_block)
+      );
+      padding-inline: var(--sui_slider_control-padding_inline);
+    }
 
-/* 可変 */
-:scope {
-  width: var(--_sui_slider_control-width, var(--sui_slider_control-width));
-  padding-block: var(--_sui_slider_control-padding_block,
-                   var(--sui_slider_control-padding_block)
-                 );
-  padding-inline: var(--sui_slider_control-padding_inline);
-}
+    /* 代入 */
+    :scope {
+      --sui_slider_control-width: 100%;
+      --sui_slider_control-padding_block: calc(var(--sui_slider_thumb-size) / 2);
+      --sui_slider_control-padding_inline: calc(var(--sui_slider_thumb-size) / 2);
+    }
 
-/* 代入 */
-:scope {
-  --sui_slider_control-width: 100%;
-  --sui_slider_control-padding_block: calc(var(--sui_slider_thumb-size) / 2);
-  --sui_slider_control-padding_inline: calc(var(--sui_slider_thumb-size) / 2);
-}
-
-/* 変異 */
-:scope {
-  &.sui_slider_control-orientation_vertical {
-    --_sui_slider_control-width: calc(var(--sui_slider_track-size) + var(--sui_slider_thumb-size));
-    --_sui_slider_control-padding_block: 0px;
-  }
-}
-
-} /* @scope */
+    /* 変異 */
+    :scope {
+      &.sui_slider_control-orientation_vertical {
+        --_sui_slider_control-width: calc(
+          var(--sui_slider_track-size) + var(--sui_slider_thumb-size)
+        );
+        --_sui_slider_control-padding_block: 0px;
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_slider_control) to ([data-scope]) {
-
-:scope {
-  &.sui_slider_control-disabled {
-    cursor: not-allowed;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_slider_control) to ([data-scope]) {
+    :scope {
+      &.sui_slider_control-disabled {
+        cursor: not-allowed;
+      }
+    }
+  } /* @scope */
 } /* @layer */

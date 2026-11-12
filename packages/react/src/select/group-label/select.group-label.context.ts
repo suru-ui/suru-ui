@@ -25,18 +25,18 @@ export type IUseSelectGroupLabelContext = IUseContext<SelectGroupLabelContext>;
 /**
  * {@link SelectGroupLabelContext} を読み取るフックです。
  */
-export const useSelectGroupLabelContext: IUseSelectGroupLabelContext =
-  function useSuiSelectGroupLabelContext(optional): any {
-    const ctx = React.use(SelectGroupLabelContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "SelectGroupLabelContext",
-        providerName: "SelectGroupLabel",
-      });
-    }
+export const useSelectGroupLabelContext: IUseSelectGroupLabelContext = (optional): any => {
+  const ctx = React.use(SelectGroupLabelContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "SelectGroupLabelContext",
+      providerName: "SelectGroupLabel",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   SelectGroupLabelContext as GroupLabelContext,

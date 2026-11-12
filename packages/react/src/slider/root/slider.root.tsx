@@ -33,9 +33,7 @@ export type SliderRootCommitEventDetails = Slider.Root.CommitEventDetails;
  */
 export type SliderRootCommitEventReason = Slider.Root.CommitEventReason;
 
-/**
- * スライダーの配色です。
- */
+/** スライダーの配色です。 */
 export type SliderRootColor = SliderContextColor;
 
 /**
@@ -115,7 +113,7 @@ export namespace SliderRootProps {
     Pick<
       React.ComponentProps<typeof Slider.Root<TValue>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SliderRootProps より:
+      // SliderRootProps より :
       | "defaultValue"
       | "disabled"
       | "format"
@@ -167,10 +165,8 @@ export interface ISliderRoot extends IComponent<SliderRootProps> {
   ): IComponent.Return;
 }
 
-/**
- * スライダーのルートです。
- */
-export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootProps) {
+/** スライダーのルートです。 */
+export const SliderRoot: ISliderRoot = (props: SliderRootProps) => {
   const {
     size = "md",
     color = "grey",
@@ -180,12 +176,18 @@ export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootP
     variant = "liquid",
     outlined = true,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const ctx = React.useMemo<SliderContext>(
-    () => ({ size, color, radius, variant, outlined }),
+    () => ({
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+    }),
     [size, color, radius, variant, outlined],
   );
 
@@ -194,7 +196,10 @@ export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootP
       <Slider.Root
         {...otherProps}
         {...proxyRenderProps<Slider.Root.State, SliderRootState>(
-          (state) => ({ ...ctx, ...state }),
+          (state) => ({
+            ...ctx,
+            ...state,
+          }),
           {
             style,
             render,
@@ -229,7 +234,6 @@ export const SliderRoot: ISliderRoot = function SuiSliderRoot(props: SliderRootP
 };
 
 export { SliderRoot as Root };
-
 export namespace Root {
   export type State = SliderRootState;
 

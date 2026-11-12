@@ -25,18 +25,18 @@ export type IUseAutocompleteBackdropContext = IUseContext<AutocompleteBackdropCo
 /**
  * {@link AutocompleteBackdropContext} を読み取るフックです。
  */
-export const useAutocompleteBackdropContext: IUseAutocompleteBackdropContext =
-  function useSuiAutocompleteBackdropContext(optional): any {
-    const ctx = React.use(AutocompleteBackdropContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompleteBackdropContext",
-        providerName: "AutocompleteBackdrop",
-      });
-    }
+export const useAutocompleteBackdropContext: IUseAutocompleteBackdropContext = (optional): any => {
+  const ctx = React.use(AutocompleteBackdropContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompleteBackdropContext",
+      providerName: "AutocompleteBackdrop",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   AutocompleteBackdropContext as BackdropContext,

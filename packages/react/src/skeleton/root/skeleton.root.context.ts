@@ -27,25 +27,17 @@ export type SkeletonContextAnimation = "pulse" | "shine" | "none";
  * {@link SkeletonRoot} が提供する状態です。
  */
 export type SkeletonContext = {
-  /**
-   * スケルトンのアニメーションです。
-   */
+  /** スケルトンのアニメーションです。 */
   readonly animation: SkeletonContextAnimation;
 
-  /**
-   * コンテンツに重ねて表示するかどうかです。
-   */
+  /** コンテンツに重ねて表示するかどうかです。 */
   readonly overlay: boolean;
 
-  /**
-   * スケルトンの角丸の大きさです。
-   */
+  /** スケルトンの角丸の大きさです。 */
   readonly radius: SkeletonContextRadius;
 };
 
-/**
- * スケルトンの見た目を子孫へ伝播するコンテキストです。
- */
+/** スケルトンの見た目を子孫へ伝播するコンテキストです。 */
 export const SkeletonContext: React.Context<SkeletonContext | null> =
   React.createContext<SkeletonContext | null>(null);
 
@@ -54,11 +46,10 @@ export type IUseSkeletonContext = IUseContext<SkeletonContext>;
 /**
  * {@link SkeletonContext} を読み取るフックです。
  */
-export const useSkeletonContext: IUseSkeletonContext = function useSuiSkeletonContext(
-  optional?: boolean,
-): any {
+export const useSkeletonContext: IUseSkeletonContext = (optional?: boolean): any => {
   const ctx = React.use(SkeletonContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SkeletonContext",
       providerName: "SkeletonRoot",
@@ -69,7 +60,6 @@ export const useSkeletonContext: IUseSkeletonContext = function useSuiSkeletonCo
 };
 
 export { SkeletonContext as Context, useSkeletonContext as useContext };
-
 export namespace Context {
   export type Animation = SkeletonContextAnimation;
 

@@ -25,7 +25,7 @@ export namespace SelectArrowProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Arrow>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectArrowProps より:
+      // SelectArrowProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace SelectArrowProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof BaseSelect.Arrow>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type SelectArrowProps = SelectArrowProps.Render &
 
 export type ISelectArrow = IComponent<SelectArrowProps>;
 
-/**
- * ポップアップとトリガーをつなぐ矢印要素です。
- */
-export const SelectArrow: ISelectArrow = function SuiSelectArrow(props) {
+/** ポップアップとトリガーをつなぐ矢印要素です。 */
+export const SelectArrow: ISelectArrow = (props) => {
   const ctx = useSelectPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const SelectArrow: ISelectArrow = function SuiSelectArrow(props) {
     <BaseSelect.Arrow
       {...otherProps}
       {...proxyRenderProps<BaseSelect.Arrow.State, SelectArrowState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -94,7 +95,6 @@ export const SelectArrow: ISelectArrow = function SuiSelectArrow(props) {
 };
 
 export { SelectArrow as Arrow };
-
 export namespace Arrow {
   export type State<TValue = any> = SelectArrowState<TValue>;
 

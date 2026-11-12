@@ -25,17 +25,17 @@ export type IUseComboboxStatusContext = IUseContext<ComboboxStatusContext>;
 /**
  * {@link ComboboxStatusContext} を読み取るフックです。
  */
-export const useComboboxStatusContext: IUseComboboxStatusContext =
-  function useSuiComboboxStatusContext(optional): any {
-    const ctx = React.use(ComboboxStatusContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ComboboxStatusContext",
-        providerName: "ComboboxStatus",
-      });
-    }
+export const useComboboxStatusContext: IUseComboboxStatusContext = (optional): any => {
+  const ctx = React.use(ComboboxStatusContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ComboboxStatusContext",
+      providerName: "ComboboxStatus",
+    });
+  }
+
+  return ctx;
+};
 
 export { ComboboxStatusContext as StatusContext, useComboboxStatusContext as useStatusContext };

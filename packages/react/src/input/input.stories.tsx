@@ -276,15 +276,48 @@ export const Types = meta.story({
   }),
   render(props) {
     const items = [
-      { type: "email", label: "email", placeholder: "taro@example.com" },
-      { type: "password", label: "password", placeholder: "パスワード" },
-      { type: "search", label: "search", placeholder: "検索キーワード" },
-      { type: "tel", label: "tel", placeholder: "090-1234-5678" },
-      { type: "url", label: "url", placeholder: "https://example.com" },
-      { type: "number", label: "number", placeholder: "123" },
-      { type: "date", label: "date", placeholder: undefined },
-      { type: "time", label: "time", placeholder: undefined },
+      {
+        type: "email",
+        label: "email",
+        placeholder: "taro@example.com",
+      },
+      {
+        type: "password",
+        label: "password",
+        placeholder: "パスワード",
+      },
+      {
+        type: "search",
+        label: "search",
+        placeholder: "検索キーワード",
+      },
+      {
+        type: "tel",
+        label: "tel",
+        placeholder: "090-1234-5678",
+      },
+      {
+        type: "url",
+        label: "url",
+        placeholder: "https://example.com",
+      },
+      {
+        type: "number",
+        label: "number",
+        placeholder: "123",
+      },
+      {
+        type: "date",
+        label: "date",
+        placeholder: undefined,
+      },
+      {
+        type: "time",
+        label: "time",
+        placeholder: undefined,
+      },
     ] as const;
+
     return (
       <div className="flex flex-col gap-3">
         {items.map((item) => (
@@ -311,6 +344,7 @@ export const Controlled = meta.story({
   }),
   render(props) {
     const [value, setValue] = React.useState("田中 太郎");
+
     return (
       <div className="flex flex-col gap-2">
         <Input {...props} value={value} className="w-64" onValueChange={setValue} />
@@ -319,7 +353,12 @@ export const Controlled = meta.story({
           {value === "" ? "(空)" : value}
         </span>
         <div>
-          <button type="button" onClick={() => setValue("")}>
+          <button
+            type="button"
+            onClick={() => {
+              setValue("");
+            }}
+          >
             クリア
           </button>
         </div>
@@ -408,7 +447,12 @@ export const Required = meta.story({
   }),
   render(props) {
     return (
-      <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-3">
+      <form
+        className="flex flex-col gap-3"
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <Field label="氏名" description="空のまま送信すると枠線が赤くなります。">
           <Input {...props} required className="w-64" minLength={2} placeholder="田中 太郎" />
         </Field>
@@ -432,15 +476,16 @@ export const LoginForm = meta.story({
   }),
   render(props) {
     const [submitted, setSubmitted] = React.useState<string | null>(null);
+
     return (
       <form
+        className="flex w-64 flex-col gap-3"
         onSubmit={(event) => {
           event.preventDefault();
           const data = new FormData(event.currentTarget);
           const email = data.get("email");
           setSubmitted(typeof email === "string" ? email : "");
         }}
-        className="flex w-64 flex-col gap-3"
       >
         <Field label="メールアドレス">
           <Input
@@ -481,9 +526,15 @@ export const Search = meta.story({
   }),
   render(props) {
     const [query, setQuery] = React.useState("");
+
     return (
       <search>
-        <form onSubmit={(event) => event.preventDefault()} className="flex w-80 gap-2">
+        <form
+          className="flex w-80 gap-2"
+          onSubmit={(event) => {
+            event.preventDefault();
+          }}
+        >
           <Input
             {...props}
             type="search"

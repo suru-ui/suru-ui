@@ -23,18 +23,18 @@ export type IUseNumberFieldScrubAreaContext = IUseContext<NumberFieldScrubAreaCo
 /**
  * {@link NumberFieldScrubAreaContext} を読み取るフックです。
  */
-export const useNumberFieldScrubAreaContext: IUseNumberFieldScrubAreaContext =
-  function useSuiNumberFieldScrubAreaContext(optional): any {
-    const ctx = React.use(NumberFieldScrubAreaContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "NumberFieldScrubAreaContext",
-        providerName: "NumberFieldScrubArea",
-      });
-    }
+export const useNumberFieldScrubAreaContext: IUseNumberFieldScrubAreaContext = (optional): any => {
+  const ctx = React.use(NumberFieldScrubAreaContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "NumberFieldScrubAreaContext",
+      providerName: "NumberFieldScrubArea",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   NumberFieldScrubAreaContext as ScrubAreaContext,

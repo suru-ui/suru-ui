@@ -39,9 +39,9 @@ export namespace PopoverTriggerProps {
     Pick<
       React.ComponentProps<typeof Popover.Trigger<TPayload>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // PopoverTriggerProps より:
+      // PopoverTriggerProps より :
       | "payload"
       | "id"
       | "openOnHover"
@@ -82,9 +82,9 @@ export interface IPopoverTrigger extends IComponent<PopoverTriggerProps> {
  *
  * 子要素は何にもラップされず、そのまま Base UI の `render` プロパティーに渡されます。
  */
-export const PopoverTrigger: IPopoverTrigger = function SuiPopoverTrigger<TPayload>(
+export const PopoverTrigger: IPopoverTrigger = <TPayload,>(
   props: PopoverTriggerProps<TPayload>,
-) {
+) => {
   const ctx = usePopoverContext(true);
   const { style, handle, children, className, ...otherProps } = props;
 
@@ -93,7 +93,13 @@ export const PopoverTrigger: IPopoverTrigger = function SuiPopoverTrigger<TPaylo
       {...otherProps}
       handle={handle}
       {...proxyRenderProps<Popover.Trigger.State, PopoverTriggerState>(
-        (state) => ({ size: "md", radius: "md", outlined: false, ...ctx, ...state }),
+        (state) => ({
+          size: "md",
+          radius: "md",
+          outlined: false,
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -122,7 +128,6 @@ export const PopoverTrigger: IPopoverTrigger = function SuiPopoverTrigger<TPaylo
 };
 
 export { PopoverTrigger as Trigger };
-
 export namespace Trigger {
   export type State = PopoverTriggerState;
 

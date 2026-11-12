@@ -10,6 +10,7 @@ export type HoverCardHandle<TPayload = any> = PreviewCard.Handle<TPayload>;
 export interface ICreateHoverCardHandle {
   /**
    * @template TPayload トリガーが送信するデータの型です。
+   *
    * @returns ホバーカードを制御するハンドルです。
    */
   <TPayload = any>(): HoverCardHandle<TPayload>;
@@ -18,8 +19,6 @@ export interface ICreateHoverCardHandle {
 /**
  * {@link HoverCardHandle} を作成する関数です。
  */
-export const createHoverCardHandle: ICreateHoverCardHandle = function createSuiHoverCardHandle() {
-  return PreviewCard.createHandle();
-};
+export const createHoverCardHandle: ICreateHoverCardHandle = () => PreviewCard.createHandle();
 
 export { type HoverCardHandle as Handle, createHoverCardHandle as createHandle };

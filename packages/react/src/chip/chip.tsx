@@ -9,8 +9,7 @@ import {
   ChipRoot,
 } from "./chip.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type ChipColor = ChipRootColor;
 
@@ -37,13 +36,13 @@ export interface IUseChipAPI {
    * {@link ChipAPI} を作成します。
    *
    * @param props {@link Chip} の props です。
+   *
    * @returns チップの API です
    */
   (props: ChipProps): ChipAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Chip} を構成する各パーツの props を作成するための API です。
@@ -53,6 +52,7 @@ export class ChipAPI {
 
   /**
    * @param props {@link Chip} の props です。
+   *
    * @internal
    */
   public constructor(props: ChipProps) {
@@ -70,19 +70,14 @@ export class ChipAPI {
 /**
  * {@link ChipAPI} を作成するフックです。
  */
-export const useChipAPI: IUseChipAPI = function useSuiChipAPI(props) {
-  return new ChipAPI(props);
-};
+export const useChipAPI: IUseChipAPI = (props) => new ChipAPI(props);
 
 export { ChipAPI as API, useChipAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
-/**
- * 短いラベルや属性を表示するチップコンポーネントです。
- */
-export const Chip: IChip = function SuiChip(props) {
+/** 短いラベルや属性を表示するチップコンポーネントです。 */
+export const Chip: IChip = (props) => {
   const api = useChipAPI(props);
 
   return <ChipRoot {...api.getRootProps()} />;

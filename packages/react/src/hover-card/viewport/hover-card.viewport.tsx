@@ -23,7 +23,7 @@ export namespace HoverCardViewportProps {
     Pick<
       React.ComponentProps<typeof PreviewCard.Viewport>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PreviewCardViewportProps より:
+      // PreviewCardViewportProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace HoverCardViewportProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof PreviewCard.Viewport>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -50,7 +50,7 @@ export type IHoverCardViewport = IComponent<HoverCardViewportProps>;
  *
  * 1 つのホバーカードを複数のトリガーで共有し、内容をトリガーごとに変える場合に使います。
  */
-export const HoverCardViewport: IHoverCardViewport = function SuiHoverCardViewport(props) {
+export const HoverCardViewport: IHoverCardViewport = (props) => {
   const ctx = useHoverCardContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +58,10 @@ export const HoverCardViewport: IHoverCardViewport = function SuiHoverCardViewpo
     <PreviewCard.Viewport
       {...otherProps}
       {...proxyRenderProps<PreviewCard.Viewport.State, HoverCardViewportState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -90,7 +93,6 @@ export const HoverCardViewport: IHoverCardViewport = function SuiHoverCardViewpo
 };
 
 export { HoverCardViewport as Viewport };
-
 export namespace Viewport {
   export type State = HoverCardViewportState;
 

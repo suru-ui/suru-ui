@@ -9,19 +9,16 @@ import type { IUseContext } from "../../types.js";
  */
 export type DrawerPopupContext = Drawer.Popup.State;
 
-/**
- * ドロワーの修飾を子パーツへ伝播するコンテキストです。
- */
+/** ドロワーの修飾を子パーツへ伝播するコンテキストです。 */
 export const DrawerPopupContext: React.Context<DrawerPopupContext | null> =
   React.createContext<DrawerPopupContext | null>(null);
 
 export type IUseDrawerPopupContext = IUseContext<DrawerPopupContext>;
 
-export const useDrawerPopupContext: IUseDrawerPopupContext = function useSuiDrawerPopupContext(
-  optional?: boolean,
-): any {
+export const useDrawerPopupContext: IUseDrawerPopupContext = (optional?: boolean): any => {
   const ctx = React.use(DrawerPopupContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "DrawerPopupContext",
       providerName: "DrawerPopup",

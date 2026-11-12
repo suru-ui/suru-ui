@@ -25,7 +25,7 @@ export namespace SelectBackdropProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Backdrop>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectBackdropProps より:
+      // SelectBackdropProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace SelectBackdropProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof BaseSelect.Backdrop>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type SelectBackdropProps = SelectBackdropProps.Render &
 
 export type ISelectBackdrop = IComponent<SelectBackdropProps>;
 
-/**
- * ポップアップの背後に表示される要素です。
- */
-export const SelectBackdrop: ISelectBackdrop = function SuiSelectBackdrop(props) {
+/** ポップアップの背後に表示される要素です。 */
+export const SelectBackdrop: ISelectBackdrop = (props) => {
   const ctx = useSelectPortalContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const SelectBackdrop: ISelectBackdrop = function SuiSelectBackdrop(props)
     <BaseSelect.Backdrop
       {...otherProps}
       {...proxyRenderProps<BaseSelect.Backdrop.State, SelectBackdropState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -90,7 +91,6 @@ export const SelectBackdrop: ISelectBackdrop = function SuiSelectBackdrop(props)
 };
 
 export { SelectBackdrop as Backdrop };
-
 export namespace Backdrop {
   export type State<TValue = any> = SelectBackdropState<TValue>;
 

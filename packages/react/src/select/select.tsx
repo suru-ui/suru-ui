@@ -64,8 +64,7 @@ import {
   SelectScrollDownArrow,
 } from "./select.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type SelectActions = SelectRootActions;
 
@@ -207,9 +206,7 @@ namespace SelectProps {
      */
     children?: React.ReactNode | ISelectListItemRenderer<TValue> | undefined;
 
-    /**
-     * トリガーの上に表示するラベルです。
-     */
+    /** トリガーの上に表示するラベルです。 */
     label?: React.ReactNode | undefined;
 
     /**
@@ -219,9 +216,7 @@ namespace SelectProps {
      */
     placeholder?: React.ReactNode | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: SelectSlotProps<TValue> | undefined;
   };
 
@@ -245,7 +240,9 @@ export interface IUseSelectAPI {
    *
    * @template TValue 項目の値の型です。
    * @template TMultiple 複数選択を有効にするかどうかです。
+   *
    * @param props {@link Select} の props です。
+   *
    * @returns セレクトの API です。
    */
   <TValue = any, const TMultiple extends boolean | undefined = undefined>(
@@ -253,8 +250,7 @@ export interface IUseSelectAPI {
   ): SelectAPI<TValue, TMultiple>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Select} を構成する各パーツの props を作成するための API です。
@@ -271,8 +267,38 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
 
   private readonly triggerProps: SelectProps.Trigger;
 
+  private readonly defaultListItemRenderer: ISelectListItemRenderer<TValue> = (
+    item,
+    index,
+    items,
+  ) => {
+    if ("items" in item) {
+      const groupProps = this.getGroupProps(item);
+      const groupLabelProps = this.getGroupLabelProps(item);
+      const separatorProps = this.getSeparatorProps(index, items);
+
+      return (
+        <React.Fragment key={getItemKey(item) ?? index}>
+          <SelectGroup {...groupProps}>
+            {groupLabelProps && <SelectGroupLabel {...groupLabelProps} />}
+            {this.getGroupedItems(item).map(this.defaultListItemRenderer)}
+          </SelectGroup>
+          {separatorProps && <SelectSeparator {...separatorProps} />}
+        </React.Fragment>
+      );
+    }
+
+    return (
+      <SelectItem {...this.getItemProps(item)} key={getItemKey(item) ?? index}>
+        <SelectItemText {...this.getItemTextProps(item)} />
+        <SelectItemIndicator {...this.getItemIndicatorProps()} />
+      </SelectItem>
+    );
+  };
+
   /**
    * @param props {@link Select} の props です。
+   *
    * @internal
    */
   public constructor(props: SelectProps<TValue, TMultiple>) {
@@ -314,7 +340,12 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
       onOpenChangeComplete,
       ...triggerProps
     } = rootAndTriggerProps;
-    this.selectProps = { label, backdrop, children, placeholder };
+    this.selectProps = {
+      label,
+      backdrop,
+      children,
+      placeholder,
+    };
     this.slotProps = slotProps;
     this.rootProps = {
       id,
@@ -348,31 +379,6 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
     this.triggerProps = triggerProps;
   }
 
-  private defaultListItemRenderer: ISelectListItemRenderer<TValue> = (item, index, items) => {
-    if ("items" in item) {
-      const groupProps = this.getGroupProps(item);
-      const groupLabelProps = this.getGroupLabelProps(item);
-      const separatorProps = this.getSeparatorProps(index, items);
-
-      return (
-        <React.Fragment key={getItemKey(item) ?? index}>
-          <SelectGroup {...groupProps}>
-            {groupLabelProps && <SelectGroupLabel {...groupLabelProps} />}
-            {this.getGroupedItems(item).map(this.defaultListItemRenderer)}
-          </SelectGroup>
-          {separatorProps && <SelectSeparator {...separatorProps} />}
-        </React.Fragment>
-      );
-    }
-
-    return (
-      <SelectItem {...this.getItemProps(item)} key={getItemKey(item) ?? index}>
-        <SelectItemText {...this.getItemTextProps(item)} />
-        <SelectItemIndicator {...this.getItemIndicatorProps()} />
-      </SelectItem>
-    );
-  };
-
   /**
    * {@link SelectArrow} に渡す props を取得します。
    */
@@ -391,8 +397,8 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
     const { backdrop } = this.selectProps;
     const { backdrop: props } = this.slotProps;
 
-    if (backdrop || props) {
-      return props || {};
+    if (backdrop === true || props !== undefined) {
+      return props ?? {};
     }
 
     return null;
@@ -417,6 +423,7 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
   public getGroupLabelProps(item: SelectListItemObjectGroup<TValue>): SelectGroupLabelProps | null {
     const { groupLabel: baseProps = {} } = this.slotProps;
     const { label } = item;
+
     if (isLikelyVisibleNode(label)) {
       return {
         ...baseProps,
@@ -512,6 +519,7 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
   public getLabelProps(): SelectLabelProps | null {
     const { label } = this.selectProps;
     const { label: props = {} } = this.slotProps;
+
     if (isLikelyVisibleNode(label)) {
       return {
         ...props,
@@ -590,7 +598,16 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
    */
   public getScrollUpArrowProps(): SelectScrollUpArrowProps {
     const { scrollUpArrow: props = {} } = this.slotProps;
-    const { children = <ChevronIcon style={{ rotate: "180deg" }} />, ...otherProps } = props;
+    const {
+      children = (
+        <ChevronIcon
+          style={{
+            rotate: "180deg",
+          }}
+        />
+      ),
+      ...otherProps
+    } = props;
 
     return {
       ...otherProps,
@@ -638,17 +655,13 @@ export class SelectAPI<TValue = any, TMultiple extends boolean | undefined = boo
 /**
  * {@link SelectAPI} を作成するフックです。
  */
-export const useSelectAPI: IUseSelectAPI = function useSuiSelectAPI<
-  TValue,
-  TMultiple extends boolean | undefined,
->(props: SelectProps<TValue, TMultiple>) {
-  return new SelectAPI(props);
-};
+export const useSelectAPI: IUseSelectAPI = <TValue, TMultiple extends boolean | undefined>(
+  props: SelectProps<TValue, TMultiple>,
+) => new SelectAPI(props);
 
 export { SelectAPI as API, useSelectAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface ISelect extends IComponent<SelectProps> {
   /**
@@ -658,7 +671,6 @@ export interface ISelect extends IComponent<SelectProps> {
   <TValue = any, const TMultiple extends boolean | undefined = false>(
     props: SelectProps<TValue, TMultiple>,
   ): IComponent.Return;
-
   readonly useContext: IUseSelectContext;
 }
 
@@ -668,7 +680,7 @@ export interface ISelect extends IComponent<SelectProps> {
  * `multiple` を指定すると複数の値を選択できます。項目が多く、入力による絞り込みが必要な場合は {@link Combobox} を使用してください。
  */
 export const Select: ISelect = /*#__PURE__*/ Object.assign(
-  function SuiSelect(props: SelectProps) {
+  (props: SelectProps) => {
     const api = useSelectAPI(props);
     const labelProps = api.getLabelProps();
     const backdropProps = api.getBackdropProps();

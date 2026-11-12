@@ -4,59 +4,39 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { IUseContext } from "../../types.js";
 
-/**
- * メーターの配色です。
- */
+/** メーターの配色です。 */
 export type MeterContextColor = Color;
 
-/**
- * メーターの角丸の大きさです。
- */
+/** メーターの角丸の大きさです。 */
 export type MeterContextRadius = "none" | Size | "full";
 
-/**
- * メーターの大きさです。
- */
+/** メーターの大きさです。 */
 export type MeterContextSize = Size;
 
-/**
- * メーターの主な外観です。
- */
+/** メーターの主な外観です。 */
 export type MeterContextVariant = "naked" | "liquid";
 
 /**
  * {@link MeterRoot} が子パーツへ提供するスタイルです。
  */
 export type MeterContext = {
-  /**
-   * メーターの配色です。
-   */
+  /** メーターの配色です。 */
   readonly color: MeterContextColor;
 
-  /**
-   * 枠線を表示するかどうかです。
-   */
+  /** 枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * メーターの角丸の大きさです。
-   */
+  /** メーターの角丸の大きさです。 */
   readonly radius: MeterContextRadius;
 
-  /**
-   * メーターの大きさです。
-   */
+  /** メーターの大きさです。 */
   readonly size: MeterContextSize;
 
-  /**
-   * メーターの主な外観です。
-   */
+  /** メーターの主な外観です。 */
   readonly variant: MeterContextVariant;
 };
 
-/**
- * Meter のスタイルを子パーツへ伝播するコンテキストです。
- */
+/** Meter のスタイルを子パーツへ伝播するコンテキストです。 */
 export const MeterContext: React.Context<MeterContext | null> =
   React.createContext<MeterContext | null>(null);
 
@@ -65,11 +45,10 @@ export type IUseMeterContext = IUseContext<MeterContext>;
 /**
  * {@link MeterContext} を読み取るフックです。
  */
-export const useMeterContext: IUseMeterContext = function useSuiMeterContext(
-  optional?: boolean,
-): any {
+export const useMeterContext: IUseMeterContext = (optional?: boolean): any => {
   const ctx = React.use(MeterContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "MeterContext",
       providerName: "MeterRoot",
@@ -80,7 +59,6 @@ export const useMeterContext: IUseMeterContext = function useSuiMeterContext(
 };
 
 export { MeterContext as Context, useMeterContext as useContext };
-
 export namespace Context {
   export type Color = MeterContextColor;
 

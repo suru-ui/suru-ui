@@ -42,7 +42,13 @@ export const Usage = meta.story({
   render(props) {
     return (
       <div className="w-[320px]">
-        <Image {...props} style={{ width: "100%", height: 180 }} />
+        <Image
+          {...props}
+          style={{
+            width: "100%",
+            height: 180,
+          }}
+        />
       </div>
     );
   },
@@ -61,7 +67,14 @@ export const Radii = meta.story({
         {RADII.map((radius) => (
           <div key={radius} className="flex flex-col items-center gap-1">
             <span>{radius}</span>
-            <Image {...props} style={{ width: 120, height: 80 }} radius={radius} />
+            <Image
+              {...props}
+              style={{
+                width: 120,
+                height: 80,
+              }}
+              radius={radius}
+            />
           </div>
         ))}
       </div>
@@ -82,7 +95,14 @@ export const Fit = meta.story({
         {FITS.map((fit) => (
           <div key={fit} className="flex flex-col items-center gap-1">
             <span>{fit}</span>
-            <Image {...props} fit={fit} style={{ width: 120, height: 80 }} />
+            <Image
+              {...props}
+              fit={fit}
+              style={{
+                width: 120,
+                height: 80,
+              }}
+            />
           </div>
         ))}
       </div>
@@ -103,7 +123,13 @@ export const Orientation = meta.story({
       <div className="flex w-[640px] justify-center flex-wrap gap-4">
         <div className="flex flex-col items-center gap-1">
           <span>横長枠に縦長画像</span>
-          <Image {...props} style={{ width: 200, height: 120 }} />
+          <Image
+            {...props}
+            style={{
+              width: 200,
+              height: 120,
+            }}
+          />
         </div>
         <div className="flex flex-col items-center gap-1">
           <span>縦長枠に横長画像</span>
@@ -111,7 +137,10 @@ export const Orientation = meta.story({
             {...props}
             alt="風景写真"
             src={LANDSCAPE_IMAGE}
-            style={{ width: 120, height: 200 }}
+            style={{
+              width: 120,
+              height: 200,
+            }}
           />
         </div>
       </div>
@@ -133,7 +162,13 @@ export const Circle = meta.story({
         {[96, 64, 40].map((size) => (
           <div key={size} className="flex flex-col items-center gap-1">
             <span>{size}px</span>
-            <Image {...props} style={{ width: size, height: size }} />
+            <Image
+              {...props}
+              style={{
+                width: size,
+                height: size,
+              }}
+            />
           </div>
         ))}
       </div>
@@ -152,8 +187,24 @@ export const Loading = meta.story({
   render(props) {
     return (
       <div className="flex w-[640px] flex-col gap-4">
-        <Image {...props} style={{ width: "100%", height: 240 }} loading="lazy" decoding="async" />
-        <Image {...props} style={{ width: "100%", height: 240 }} loading="lazy" decoding="async" />
+        <Image
+          {...props}
+          style={{
+            width: "100%",
+            height: 240,
+          }}
+          loading="lazy"
+          decoding="async"
+        />
+        <Image
+          {...props}
+          style={{
+            width: "100%",
+            height: 240,
+          }}
+          loading="lazy"
+          decoding="async"
+        />
       </div>
     );
   },
@@ -171,11 +222,26 @@ export const AlternativeText = meta.story({
       <div className="flex w-[640px] justify-center flex-wrap gap-4">
         <div className="flex flex-col items-center gap-1">
           <span>内容を伝える alt</span>
-          <Image {...props} alt="夕焼けに染まる山並み" style={{ width: 200, height: 120 }} />
+          <Image
+            {...props}
+            alt="夕焼けに染まる山並み"
+            style={{
+              width: 200,
+              height: 120,
+            }}
+          />
         </div>
         <div className="flex flex-col items-center gap-1">
           <span>装飾画像の空 alt</span>
-          <Image {...props} alt="" style={{ width: 200, height: 120 }} aria-hidden="true" />
+          <Image
+            {...props}
+            alt=""
+            style={{
+              width: 200,
+              height: 120,
+            }}
+            aria-hidden="true"
+          />
         </div>
       </div>
     );
@@ -194,7 +260,13 @@ export const WithAspectRatio = meta.story({
     return (
       <div className="w-[480px]">
         <AspectRatio ratio={16 / 9}>
-          <Image {...props} style={{ width: "100%", height: "100%" }} />
+          <Image
+            {...props}
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          />
         </AspectRatio>
       </div>
     );
@@ -209,10 +281,22 @@ export const Gallery = meta.story({
   }),
   render(props) {
     const items = [
-      { alt: "ギャラリー画像1", src: "https://picsum.photos/seed/suru-gallery-1/400/300" },
-      { alt: "ギャラリー画像2", src: "https://picsum.photos/seed/suru-gallery-2/400/300" },
-      { alt: "ギャラリー画像3", src: "https://picsum.photos/seed/suru-gallery-3/400/300" },
-      { alt: "ギャラリー画像4", src: "https://picsum.photos/seed/suru-gallery-4/400/300" },
+      {
+        alt: "ギャラリー画像1",
+        src: "https://picsum.photos/seed/suru-gallery-1/400/300",
+      },
+      {
+        alt: "ギャラリー画像2",
+        src: "https://picsum.photos/seed/suru-gallery-2/400/300",
+      },
+      {
+        alt: "ギャラリー画像3",
+        src: "https://picsum.photos/seed/suru-gallery-3/400/300",
+      },
+      {
+        alt: "ギャラリー画像4",
+        src: "https://picsum.photos/seed/suru-gallery-4/400/300",
+      },
     ];
 
     return (
@@ -223,7 +307,10 @@ export const Gallery = meta.story({
             {...props}
             key={item.src}
             src={item.src}
-            style={{ width: "100%", height: 160 }}
+            style={{
+              width: "100%",
+              height: 160,
+            }}
           />
         ))}
       </div>
@@ -242,7 +329,14 @@ export const Card = meta.story({
   render(props) {
     return (
       <div className="w-[320px] overflow-hidden rounded-xl border-1 border-solid border-(--sui-canvas_text-3)">
-        <Image {...props} style={{ width: "100%", height: 180 }} radius="none" />
+        <Image
+          {...props}
+          style={{
+            width: "100%",
+            height: 180,
+          }}
+          radius="none"
+        />
         <div className="flex flex-col gap-1 p-4">
           <span className="text-base font-bold">山並みの風景</span>
           <span className="text-sm text-(--sui-canvas_text-2)">

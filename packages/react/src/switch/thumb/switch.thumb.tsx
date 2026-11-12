@@ -23,16 +23,13 @@ export namespace SwitchThumbProps {
     Pick<
       React.ComponentProps<typeof Switch.Thumb>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SwitchThumbProps より:
+      // SwitchThumbProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Switch.Thumb>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Switch.Thumb>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -50,7 +47,7 @@ export type ISwitchThumb = IComponent<SwitchThumbProps>;
  *
  * オンとオフの状態を示し、選択状態に応じて移動します。
  */
-export const SwitchThumb: ISwitchThumb = function SuiSwitchThumb(props) {
+export const SwitchThumb: ISwitchThumb = (props) => {
   const ctx = useSwitchContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +55,10 @@ export const SwitchThumb: ISwitchThumb = function SuiSwitchThumb(props) {
     <Switch.Thumb
       {...otherProps}
       {...proxyRenderProps<Switch.Thumb.State, SwitchThumbState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -98,7 +98,6 @@ export const SwitchThumb: ISwitchThumb = function SuiSwitchThumb(props) {
 };
 
 export { SwitchThumb as Thumb };
-
 export namespace Thumb {
   export type State = SwitchThumbState;
 

@@ -46,52 +46,38 @@ export type TabsContextVariant = "segments" | "line";
  * @template TItem 項目の型です。
  */
 export type TabsContext<TItem = any> = {
-  /**
-   * 選択中のタブの主な外観です。
-   */
+  /** 選択中のタブの主な外観です。 */
   readonly activeVariant: TabsContextActiveVariant;
 
-  /**
-   * タブに表示する項目の一覧です。
-   */
+  /** タブに表示する項目の一覧です。 */
   readonly items: readonly TItem[];
 
-  /**
-   * Tabs の枠線を表示するかどうかです。
-   */
+  /** Tabs の枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * Tabs の角丸です。
-   */
+  /** Tabs の角丸です。 */
   readonly radius: TabsContextRadius;
 
-  /**
-   * Tabs の大きさです。
-   */
+  /** Tabs の大きさです。 */
   readonly size: TabsContextSize;
 
-  /**
-   * 上下の余白を半分にして高さを薄くするかどうかです。
-   */
+  /** 上下の余白を半分にして高さを薄くするかどうかです。 */
   readonly thin: boolean;
 
-  /**
-   * Tabs の主な外観です。
-   */
+  /** Tabs の主な外観です。 */
   readonly variant: TabsContextVariant;
 };
 
-/**
- * タブの項目を子パーツへ伝播するコンテキストです。
- */
+/** タブの項目を子パーツへ伝播するコンテキストです。 */
 export const TabsContext: React.Context<TabsContext | null> =
   React.createContext<TabsContext | null>(null);
 
 export interface IUseTabsContext extends IUseContext<TabsContext> {
   /**
    * @template TItem 項目の型です。
+   *
    * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   *
    * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
    */
   <TItem = any>(optional?: false): TabsContext<TItem>;
@@ -101,9 +87,10 @@ export interface IUseTabsContext extends IUseContext<TabsContext> {
 /**
  * {@link TabsContext} を読み取るフックです。
  */
-export const useTabsContext: IUseTabsContext = function useSuiTabsContext(optional?: boolean): any {
+export const useTabsContext: IUseTabsContext = (optional?: boolean): any => {
   const ctx = React.use(TabsContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "TabsContext",
       providerName: "TabsRoot",
@@ -114,7 +101,6 @@ export const useTabsContext: IUseTabsContext = function useSuiTabsContext(option
 };
 
 export { TabsContext as Context, useTabsContext as useContext };
-
 export namespace Context {
   export type ActiveVariant = TabsContextActiveVariant;
 

@@ -26,7 +26,7 @@ export namespace ContextMenuCheckboxItemIndicatorProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.CheckboxItemIndicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuCheckboxItemIndicatorProps より:
+      // MenuCheckboxItemIndicatorProps より :
       "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -48,21 +48,23 @@ export type ContextMenuCheckboxItemIndicatorProps = ContextMenuCheckboxItemIndic
 
 export type IContextMenuCheckboxItemIndicator = IComponent<ContextMenuCheckboxItemIndicatorProps>;
 
-/**
- * チェックされた項目を示す要素です。
- */
-export const ContextMenuCheckboxItemIndicator: IContextMenuCheckboxItemIndicator =
-  function SuiContextMenuCheckboxItemIndicator(props) {
-    const ctx = useContextMenuContext();
-    const { style, render, className, ...otherProps } = props;
+/** チェックされた項目を示す要素です。 */
+export const ContextMenuCheckboxItemIndicator: IContextMenuCheckboxItemIndicator = (props) => {
+  const ctx = useContextMenuContext();
+  const { style, render, className, ...otherProps } = props;
 
-    return (
-      <ContextMenu.CheckboxItemIndicator
-        {...otherProps}
-        {...proxyRenderProps<
-          ContextMenu.CheckboxItemIndicator.State,
-          ContextMenuCheckboxItemIndicatorState
-        >((state) => ({ ...ctx, ...state }), {
+  return (
+    <ContextMenu.CheckboxItemIndicator
+      {...otherProps}
+      {...proxyRenderProps<
+        ContextMenu.CheckboxItemIndicator.State,
+        ContextMenuCheckboxItemIndicatorState
+      >(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
           style,
           render: (htmlProps, state) => (
             <ContextMenuCheckboxItemIndicatorContext value={state}>
@@ -89,13 +91,13 @@ export const ContextMenuCheckboxItemIndicator: IContextMenuCheckboxItemIndicator
               state.transitionStatus !== undefined &&
               `sui_context_menu_item_indicator-transition_status_${state.transitionStatus}`,
           ),
-        })}
-      />
-    );
-  };
+        },
+      )}
+    />
+  );
+};
 
 export { ContextMenuCheckboxItemIndicator as CheckboxItemIndicator };
-
 export namespace CheckboxItemIndicator {
   export type State<TItem = any> = ContextMenuCheckboxItemIndicatorState<TItem>;
 

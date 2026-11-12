@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { IComponent } from "../types.js";
 import { type IUsePaginationState, usePaginationState } from "./_pagination.js";
 import {
@@ -24,8 +22,7 @@ import {
   PaginationPreviousButton,
 } from "./pagination.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type PaginationColor = PaginationRootColor;
 
@@ -42,30 +39,20 @@ export type PaginationChangeEventDetails = PaginationRootChangeEventDetails;
  */
 export type PaginationItemObject =
   | {
-      /**
-       * 項目のページ番号です。
-       */
+      /** 項目のページ番号です。 */
       readonly page: number;
 
-      /**
-       * 項目の種類です。
-       */
+      /** 項目の種類です。 */
       readonly type: "item";
     }
   | {
-      /**
-       * 省略範囲の終了ページです。
-       */
+      /** 省略範囲の終了ページです。 */
       readonly end: number;
 
-      /**
-       * 省略範囲の開始ページです。
-       */
+      /** 省略範囲の開始ページです。 */
       readonly start: number;
 
-      /**
-       * 項目の種類です。
-       */
+      /** 項目の種類です。 */
       readonly type: "ellipsis";
     };
 
@@ -123,9 +110,7 @@ namespace PaginationProps {
      */
     siblingCount?: number | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: PaginationSlotProps | undefined;
   };
 
@@ -146,13 +131,13 @@ export interface IUsePaginationAPI {
    * {@link PaginationAPI} を作成します。
    *
    * @param props {@link Pagination} の props です。
+   *
    * @returns ページネーションの API です
    */
   (props: PaginationProps): PaginationAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Pagination} を構成する各パーツの props などを作成するための API です。
@@ -171,6 +156,7 @@ export class PaginationAPI {
   /**
    * @param props {@link Pagination} の props です。
    * @param state ページネーションの状態です。
+   *
    * @internal
    */
   public constructor(props: PaginationProps, state: IUsePaginationState) {
@@ -194,6 +180,7 @@ export class PaginationAPI {
     );
     this.rootProps = rootProps;
     this.slotProps = slotProps;
+
     this.state = state;
   }
 
@@ -229,9 +216,7 @@ export class PaginationAPI {
     };
   }
 
-  /**
-   * 表示する項目の一覧を取得します。
-   */
+  /** 表示する項目の一覧を取得します。 */
   public getItems(): PaginationItemObject[] {
     return this.items;
   }
@@ -272,7 +257,7 @@ export class PaginationAPI {
 /**
  * {@link PaginationAPI} を作成するフックです。
  */
-export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(props) {
+export const usePaginationAPI: IUsePaginationAPI = (props) => {
   const state = usePaginationState({
     page: props.page,
     disabled: props.disabled,
@@ -286,8 +271,7 @@ export const usePaginationAPI: IUsePaginationAPI = function useSuiPaginationAPI(
 
 export { PaginationAPI as API, usePaginationAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * ページ移動を行うページネーションコンポーネントです。
@@ -295,7 +279,7 @@ export { PaginationAPI as API, usePaginationAPI as useAPI };
  * 総ページ数から表示する項目を組み立て、前後の移動ボタンとページ番号ボタンを並べます。省略記号（…）を押下するとポップアップが開き、入力欄でページを絞り込んで移動先を選べます。
  */
 export const Pagination: IPagination = Object.assign(
-  function SuiPagination(props: PaginationProps) {
+  (props: PaginationProps) => {
     const api = usePaginationAPI(props);
 
     return (
@@ -353,6 +337,7 @@ export namespace Pagination {
  * @param page 現在のページです。
  * @param siblingCount 現在のページの前後に表示するページ数です。
  * @param boundaryCount 先頭と末尾に常に表示するページ数です。
+ *
  * @returns 表示する項目の一覧です。
  */
 function getPaginationItems(
@@ -379,18 +364,28 @@ function getPaginationItems(
     pages.add(i);
   }
 
-  const sorted = [...pages].sort((a, b) => a - b);
+  const sorted = [...pages].toSorted((a, b) => a - b);
   const items: PaginationItemObject[] = [];
   let previous = 0;
 
   for (const current of sorted) {
     if (current - previous > 2) {
-      items.push({ end: current - 1, type: "ellipsis", start: previous + 1 });
+      items.push({
+        end: current - 1,
+        type: "ellipsis",
+        start: previous + 1,
+      });
     } else if (current - previous === 2) {
-      items.push({ page: previous + 1, type: "item" });
+      items.push({
+        page: previous + 1,
+        type: "item",
+      });
     }
 
-    items.push({ page: current, type: "item" });
+    items.push({
+      page: current,
+      type: "item",
+    });
     previous = current;
   }
 

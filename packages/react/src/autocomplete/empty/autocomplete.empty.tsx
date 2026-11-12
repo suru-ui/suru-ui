@@ -25,7 +25,7 @@ export namespace AutocompleteEmptyProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.Empty>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AutocompleteEmptyProps より:
+      // AutocompleteEmptyProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace AutocompleteEmptyProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Autocomplete.Empty>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -52,7 +52,7 @@ export type IAutocompleteEmpty = IComponent<AutocompleteEmptyProps>;
  *
  * この要素自体は常に DOM に残します。表示内容の切り替えは children で行います。
  */
-export const AutocompleteEmpty: IAutocompleteEmpty = function SuiAutocompleteEmpty(props) {
+export const AutocompleteEmpty: IAutocompleteEmpty = (props) => {
   const ctx = useAutocompletePopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -60,7 +60,10 @@ export const AutocompleteEmpty: IAutocompleteEmpty = function SuiAutocompleteEmp
     <Autocomplete.Empty
       {...otherProps}
       {...proxyRenderProps<Autocomplete.Empty.State, AutocompleteEmptyState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -97,7 +100,6 @@ export const AutocompleteEmpty: IAutocompleteEmpty = function SuiAutocompleteEmp
 };
 
 export { AutocompleteEmpty as Empty };
-
 export namespace Empty {
   export type State<TItem = any> = AutocompleteEmptyState<TItem>;
 

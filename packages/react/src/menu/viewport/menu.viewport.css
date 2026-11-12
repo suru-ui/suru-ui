@@ -1,27 +1,25 @@
 @layer sui.component {
-@scope (.sui_menu_viewport) to ([data-scope]) {
+  @scope (.sui_menu_viewport) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
+    /* 変数 */
+    :scope {
+      --sui_menu_viewport-gap: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_menu_viewport-gap: ;
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_menu_viewport-gap);
+    }
 
-/* 可変 */
-:scope {
-  gap: var(--sui_menu_viewport-gap);
-}
-
-/* 代入 */
-:scope {
-  --sui_menu_viewport-gap: --sui-gap(1);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_menu_viewport-gap: --sui-gap(1);
+    }
+  } /* @scope */
 } /* @layer */

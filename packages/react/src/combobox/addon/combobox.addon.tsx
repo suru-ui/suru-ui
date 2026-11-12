@@ -20,10 +20,7 @@ export namespace ComboboxAddonProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"span", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"span", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -41,7 +38,7 @@ export type IComboboxAddon = IComponent<ComboboxAddonProps>;
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
-export const ComboboxAddon: IComboboxAddon = function SuiComboboxAddon(props) {
+export const ComboboxAddon: IComboboxAddon = (props) => {
   const ctx = useInputGroupContext();
 
   return useRender({
@@ -80,7 +77,6 @@ export const ComboboxAddon: IComboboxAddon = function SuiComboboxAddon(props) {
 };
 
 export { ComboboxAddon as Addon };
-
 export namespace Addon {
   export type State<TItem = any> = ComboboxAddonState<TItem>;
 

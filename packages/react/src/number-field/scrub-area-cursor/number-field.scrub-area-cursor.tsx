@@ -23,7 +23,7 @@ export namespace NumberFieldScrubAreaCursorProps {
     Pick<
       React.ComponentProps<typeof NumberField.ScrubAreaCursor>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NumberFieldScrubAreaCursorProps より:
+      // NumberFieldScrubAreaCursorProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace NumberFieldScrubAreaCursorProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof NumberField.ScrubAreaCursor>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -45,59 +45,58 @@ export type NumberFieldScrubAreaCursorProps = NumberFieldScrubAreaCursorProps.Re
 
 export type INumberFieldScrubAreaCursor = IComponent<NumberFieldScrubAreaCursorProps>;
 
-/**
- * スクラブ中にネイティブカーソルの代わりに表示する要素です。
- */
-export const NumberFieldScrubAreaCursor: INumberFieldScrubAreaCursor =
-  function SuiNumberFieldScrubAreaCursor(props) {
-    const ctx = useNumberFieldScrubAreaContext();
-    const { style, render, className, ...otherProps } = props;
+/** スクラブ中にネイティブカーソルの代わりに表示する要素です。 */
+export const NumberFieldScrubAreaCursor: INumberFieldScrubAreaCursor = (props) => {
+  const ctx = useNumberFieldScrubAreaContext();
+  const { style, render, className, ...otherProps } = props;
 
-    return (
-      <NumberField.ScrubAreaCursor
-        {...otherProps}
-        {...proxyRenderProps<NumberField.ScrubAreaCursor.State, NumberFieldScrubAreaCursorState>(
-          (state) => ({ ...ctx, ...state }),
-          {
-            style,
-            render: (htmlProps, state) => (
-              <NumberFieldScrubAreaCursorContext value={state}>
-                <RenderElement
-                  state={state}
-                  render={render}
-                  htmlProps={htmlProps}
-                  defaultTagName="span"
-                />
-              </NumberFieldScrubAreaCursorContext>
-            ),
-            className: cn<NumberFieldScrubAreaCursorState>(
-              className,
-              "sui_number_field_scrub_area_cursor",
-              (state) => `sui_number_field_scrub_area_cursor-size_${state.size}`,
-              (state) => `sui_number_field_scrub_area_cursor-color_${state.color}`,
-              (state) => `sui_number_field_scrub_area_cursor-radius_${state.radius}`,
-              (state) => `sui_number_field_scrub_area_cursor-variant_${state.variant}`,
-              (state) => state.outlined && "sui_number_field_scrub_area_cursor-outlined",
-              (state) => state.disabled && "sui_number_field_scrub_area_cursor-disabled",
-              (state) => state.readOnly && "sui_number_field_scrub_area_cursor-readonly",
-              (state) => state.required && "sui_number_field_scrub_area_cursor-required",
-              (state) => state.scrubbing && "sui_number_field_scrub_area_cursor-scrubbing",
-              (state) => state.touched && "sui_number_field_scrub_area_cursor-touched",
-              (state) => state.dirty && "sui_number_field_scrub_area_cursor-dirty",
-              (state) => state.filled && "sui_number_field_scrub_area_cursor-filled",
-              (state) => state.focused && "sui_number_field_scrub_area_cursor-focused",
-              (state) => state.valid === false && "sui_number_field_scrub_area_cursor-invalid",
-              (state) => state.valid === true && "sui_number_field_scrub_area_cursor-valid",
-              (state) => state.valid === null && "sui_number_field_scrub_area_cursor-unverified",
-            ),
-          },
-        )}
-      />
-    );
-  };
+  return (
+    <NumberField.ScrubAreaCursor
+      {...otherProps}
+      {...proxyRenderProps<NumberField.ScrubAreaCursor.State, NumberFieldScrubAreaCursorState>(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <NumberFieldScrubAreaCursorContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="span"
+              />
+            </NumberFieldScrubAreaCursorContext>
+          ),
+          className: cn<NumberFieldScrubAreaCursorState>(
+            className,
+            "sui_number_field_scrub_area_cursor",
+            (state) => `sui_number_field_scrub_area_cursor-size_${state.size}`,
+            (state) => `sui_number_field_scrub_area_cursor-color_${state.color}`,
+            (state) => `sui_number_field_scrub_area_cursor-radius_${state.radius}`,
+            (state) => `sui_number_field_scrub_area_cursor-variant_${state.variant}`,
+            (state) => state.outlined && "sui_number_field_scrub_area_cursor-outlined",
+            (state) => state.disabled && "sui_number_field_scrub_area_cursor-disabled",
+            (state) => state.readOnly && "sui_number_field_scrub_area_cursor-readonly",
+            (state) => state.required && "sui_number_field_scrub_area_cursor-required",
+            (state) => state.scrubbing && "sui_number_field_scrub_area_cursor-scrubbing",
+            (state) => state.touched && "sui_number_field_scrub_area_cursor-touched",
+            (state) => state.dirty && "sui_number_field_scrub_area_cursor-dirty",
+            (state) => state.filled && "sui_number_field_scrub_area_cursor-filled",
+            (state) => state.focused && "sui_number_field_scrub_area_cursor-focused",
+            (state) => state.valid === false && "sui_number_field_scrub_area_cursor-invalid",
+            (state) => state.valid === true && "sui_number_field_scrub_area_cursor-valid",
+            (state) => state.valid === null && "sui_number_field_scrub_area_cursor-unverified",
+          ),
+        },
+      )}
+    />
+  );
+};
 
 export { NumberFieldScrubAreaCursor as ScrubAreaCursor };
-
 export namespace ScrubAreaCursor {
   export type State = NumberFieldScrubAreaCursorState;
 

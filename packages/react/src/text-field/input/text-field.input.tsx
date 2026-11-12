@@ -50,7 +50,7 @@ export namespace TextFieldInputProps {
     Pick<
       React.ComponentProps<typeof BaseInput>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // InputProps より:
+      // InputProps より :
       "value" | "defaultValue" | "onValueChange"
     >,
     keyof Render | keyof SuruUI
@@ -72,10 +72,8 @@ export type TextFieldInputProps = TextFieldInputProps.Render &
 
 export type ITextFieldInput = IComponent<TextFieldInputProps>;
 
-/**
- * 文字入力欄の入力欄です。
- */
-export const TextFieldInput: ITextFieldInput = function SuiTextFieldInput(props) {
+/** 文字入力欄の入力欄です。 */
+export const TextFieldInput: ITextFieldInput = (props) => {
   const ctx = useTextFieldContext();
   const { type = "text", style, render, className, ...otherProps } = props;
   const renderState = ctx;
@@ -84,7 +82,10 @@ export const TextFieldInput: ITextFieldInput = function SuiTextFieldInput(props)
     <BaseInput
       {...otherProps}
       {...proxyRenderProps<BaseInput.State, TextFieldInputState>(
-        (inputState) => ({ ...renderState, ...inputState }),
+        (inputState) => ({
+          ...renderState,
+          ...inputState,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -122,7 +123,6 @@ export const TextFieldInput: ITextFieldInput = function SuiTextFieldInput(props)
 };
 
 export { TextFieldInput as Input };
-
 export namespace Input {
   export type State = TextFieldInputState;
 

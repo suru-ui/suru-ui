@@ -47,7 +47,7 @@ export type ITextFieldAddon = IComponent<TextFieldAddonProps>;
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
-export const TextFieldAddon: ITextFieldAddon = function SuiTextFieldAddon(props) {
+export const TextFieldAddon: ITextFieldAddon = (props) => {
   const ctx = useTextFieldContext();
   const { disableFocusOnClick = false, ...otherSpanProps } = props;
   const state = ctx;
@@ -58,11 +58,11 @@ export const TextFieldAddon: ITextFieldAddon = function SuiTextFieldAddon(props)
       {
         className: cn<TextFieldAddonState>(
           "sui_text_field_addon",
-          (state) => `sui_text_field_addon-size_${state.size}`,
-          (state) => `sui_text_field_addon-color_${state.color}`,
-          (state) => `sui_text_field_addon-radius_${state.radius}`,
-          (state) => `sui_text_field_addon-variant_${state.variant}`,
-          (state) => state.outlined && "sui_text_field_addon-outlined",
+          (currentState) => `sui_text_field_addon-size_${currentState.size}`,
+          (currentState) => `sui_text_field_addon-color_${currentState.color}`,
+          (currentState) => `sui_text_field_addon-radius_${currentState.radius}`,
+          (currentState) => `sui_text_field_addon-variant_${currentState.variant}`,
+          (currentState) => currentState.outlined && "sui_text_field_addon-outlined",
         ),
         [DISABLE_FOCUS_ON_CLICK_DATA]: disableFocusOnClick ? "true" : undefined,
       },
@@ -73,7 +73,6 @@ export const TextFieldAddon: ITextFieldAddon = function SuiTextFieldAddon(props)
 };
 
 export { TextFieldAddon as Addon };
-
 export namespace Addon {
   export type State = TextFieldAddonState;
 

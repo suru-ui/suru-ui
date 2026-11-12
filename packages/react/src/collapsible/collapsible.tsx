@@ -15,8 +15,7 @@ import {
   CollapsibleIndicator,
 } from "./collapsible.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type CollapsibleChangeEventDetails = CollapsibleRootChangeEventDetails;
 
@@ -46,14 +45,10 @@ export type CollapsibleState = CollapsibleRootState;
 
 namespace CollapsibleProps {
   export type Collapsible = {
-    /**
-     * コンテンツに表示する内容です。
-     */
+    /** コンテンツに表示する内容です。 */
     children?: CollapsibleContentProps["children"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: CollapsibleSlotProps | undefined;
 
     /**
@@ -77,13 +72,13 @@ export interface IUseCollapsibleAPI {
    * {@link CollapsibleAPI} を作成します。
    *
    * @param props {@link Collapsible} の props です。
+   *
    * @returns コラプシブルの API です
    */
   (props: CollapsibleProps): CollapsibleAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Collapsible} を構成する各パーツの props などを作成するための API です。
@@ -97,11 +92,15 @@ export class CollapsibleAPI {
 
   /**
    * @param props {@link Collapsible} の props です。
+   *
    * @internal
    */
   public constructor(props: CollapsibleProps) {
     const { trigger, children, slotProps = {}, ...rootProps } = props;
-    this.collapsibleProps = { trigger, children };
+    this.collapsibleProps = {
+      trigger,
+      children,
+    };
     this.rootProps = rootProps;
     this.slotProps = slotProps;
   }
@@ -155,24 +154,19 @@ export class CollapsibleAPI {
 /**
  * {@link CollapsibleAPI} を作成するフックです。
  */
-export const useCollapsibleAPI: IUseCollapsibleAPI = function useSuiCollapsibleAPI(props) {
-  return new CollapsibleAPI(props);
-};
+export const useCollapsibleAPI: IUseCollapsibleAPI = (props) => new CollapsibleAPI(props);
 
 export { CollapsibleAPI as API, useCollapsibleAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface ICollapsible extends IComponent<CollapsibleProps> {
   readonly Indicator: ICollapsibleIndicator;
 }
 
-/**
- * コラプシブルを表示するコンポーネントです。
- */
+/** コラプシブルを表示するコンポーネントです。 */
 export const Collapsible: ICollapsible = /*#__PURE__*/ Object.assign(
-  function SuiCollapsible(props: CollapsibleProps) {
+  (props: CollapsibleProps) => {
     const api = useCollapsibleAPI(props);
     const triggerProps = api.getTriggerProps();
     const contentProps = api.getContentProps();

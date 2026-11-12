@@ -27,25 +27,17 @@ export type AccordionContextSize = Size;
  * {@link AccordionRoot} が子パーツへ提供する状態です。
  */
 export type AccordionContext = {
-  /**
-   * アコーディオンの角丸の大きさです。
-   */
+  /** アコーディオンの角丸の大きさです。 */
   readonly radius: AccordionContextRadius;
 
-  /**
-   * アコーディオンが隣接する項目の区切り線を表示するかどうかです。
-   */
+  /** アコーディオンが隣接する項目の区切り線を表示するかどうかです。 */
   readonly separator: boolean;
 
-  /**
-   * アコーディオンの大きさです。
-   */
+  /** アコーディオンの大きさです。 */
   readonly size: AccordionContextSize;
 };
 
-/**
- * アコーディオンの見た目を子パーツへ伝播するコンテキストです。
- */
+/** アコーディオンの見た目を子パーツへ伝播するコンテキストです。 */
 export const AccordionContext: React.Context<AccordionContext | null> =
   React.createContext<AccordionContext | null>(null);
 
@@ -54,11 +46,10 @@ export type IUseAccordionContext = IUseContext<AccordionContext>;
 /**
  * {@link AccordionContext} を読み取るフックです。
  */
-export const useAccordionContext: IUseAccordionContext = function useSuiAccordionContext(
-  optional?: boolean,
-): any {
+export const useAccordionContext: IUseAccordionContext = (optional?: boolean): any => {
   const ctx = React.use(AccordionContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "AccordionContext",
       providerName: "AccordionRoot",
@@ -69,7 +60,6 @@ export const useAccordionContext: IUseAccordionContext = function useSuiAccordio
 };
 
 export { AccordionContext as Context, useAccordionContext as useContext };
-
 export namespace Context {
   export type Radius = AccordionContextRadius;
 

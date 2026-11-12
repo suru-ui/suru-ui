@@ -27,7 +27,7 @@ export namespace ComboboxPortalProps {
     Pick<
       React.ComponentProps<typeof Combobox.Portal>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxPortalProps より:
+      // ComboboxPortalProps より :
       "keepMounted" | "container"
     >,
     keyof Render | keyof SuruUI
@@ -54,13 +54,13 @@ export type IComboboxPortal = IComponent<ComboboxPortalProps>;
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const ComboboxPortal: IComboboxPortal = function SuiComboboxPortal(props) {
+export const ComboboxPortal: IComboboxPortal = (props) => {
   const ctx = useComboboxContext();
   const {
     style,
     render,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -69,7 +69,10 @@ export const ComboboxPortal: IComboboxPortal = function SuiComboboxPortal(props)
     <Combobox.Portal
       {...otherProps}
       {...proxyRenderProps<Combobox.Portal.State, ComboboxPortalState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render,
@@ -91,7 +94,6 @@ export const ComboboxPortal: IComboboxPortal = function SuiComboboxPortal(props)
 };
 
 export { ComboboxPortal as Portal };
-
 export namespace Portal {
   export type State<TItem = any> = ComboboxPortalState<TItem>;
 

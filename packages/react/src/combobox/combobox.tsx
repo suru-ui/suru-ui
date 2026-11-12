@@ -60,6 +60,7 @@ import {
   type ComboboxItemLabelProps,
   type ComboboxSeparatorProps,
   type IComboboxFilteredItems,
+  type IComboboxValueRenderer,
   type ComboboxChipRemoveProps,
   type ComboboxCollectionProps,
   type ComboboxGroupLabelProps,
@@ -67,12 +68,15 @@ import {
   type ComboboxPositionerProps,
   type IUseComboboxItemContext,
   type ComboboxInputDisplayProps,
+  type IComboboxListItemRenderer,
   type IUseComboboxFilteredItems,
   type ComboboxItemIndicatorProps,
+  type IComboboxItemLabelRenderer,
   type ComboboxRootItemGroupObject,
   type ComboboxRootChangeEventReason,
   type ComboboxRootLabeledItemObject,
   type ComboboxRootChangeEventDetails,
+  type IComboboxCollectionItemRenderer,
   type ComboboxRootHighlightEventReason,
   type ComboboxRootHighlightEventDetails,
   ComboboxChip,
@@ -105,16 +109,11 @@ import {
   ComboboxInputDisplay,
   ComboboxTriggerLabel,
   ComboboxItemIndicator,
-  IComboboxValueRenderer,
   useComboboxItemContext,
   useComboboxFilteredItems,
-  IComboboxListItemRenderer,
-  IComboboxItemLabelRenderer,
-  IComboboxCollectionItemRenderer,
 } from "./combobox.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type ComboboxActions = ComboboxRootActions;
 
@@ -228,9 +227,7 @@ export type ComboboxSlotProps<
    */
   readonly input?: ComboboxInputProps | undefined;
 
-  /**
-   * ポップアップ内の {@link ComboboxInputGroup} に渡す props です。
-   */
+  /** ポップアップ内の {@link ComboboxInputGroup} に渡す props です。 */
   readonly inputGroupInPopup?: Omit<ComboboxInputGroupProps, "children"> | undefined;
 
   /**
@@ -334,14 +331,10 @@ namespace ComboboxProps {
      */
     chipLabelRenderer?: IComboboxItemLabelRenderer<TItem> | undefined;
 
-    /**
-     * リストが空のときだけ表示する内容です。
-     */
+    /** リストが空のときだけ表示する内容です。 */
     empty?: React.ReactNode | undefined;
 
-    /**
-     * 入力欄の末尾に表示する内容です。
-     */
+    /** 入力欄の末尾に表示する内容です。 */
     endAddons?: Iterable<React.ReactNode> | undefined;
 
     /**
@@ -370,14 +363,10 @@ namespace ComboboxProps {
      */
     keepFilterOnSelect?: boolean | undefined;
 
-    /**
-     * トリガーまたは入力欄の上に表示するラベルです。
-     */
+    /** トリガーまたは入力欄の上に表示するラベルです。 */
     label?: React.ReactNode | undefined;
 
-    /**
-     * 値未選択時の代替文字列です。
-     */
+    /** 値未選択時の代替文字列です。 */
     // ComboboxValue と ComboboxInput と ComboboxInputDisplay の placeholder で使用する可能性があるので、string 型のみを受け入れます。
     placeholder?: string | undefined;
 
@@ -390,19 +379,13 @@ namespace ComboboxProps {
      */
     separator?: boolean | undefined;
 
-    /**
-     * 各パーツに個別のpropsを渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: ComboboxSlotProps<TItem, TMultiple> | undefined;
 
-    /**
-     * 入力欄の先頭に表示する内容です。
-     */
+    /** 入力欄の先頭に表示する内容です。 */
     startAddons?: Iterable<React.ReactNode> | undefined;
 
-    /**
-     * 非同期検索などの状態を読み上げる内容です。
-     */
+    /** 非同期検索などの状態を読み上げる内容です。 */
     status?: React.ReactNode | undefined;
   };
 
@@ -433,9 +416,7 @@ export type ComboboxProps<
  * @template TItem 項目の型です。
  */
 export type ComboboxListPropsOptions<TItem = any> = {
-  /**
-   * 項目の既定レンダラーです。
-   */
+  /** 項目の既定レンダラーです。 */
   readonly defaultItemRenderer?: IComboboxListItemRenderer<TItem> | undefined;
 };
 
@@ -449,9 +430,7 @@ export type ComboboxValuePropsOptions<
   TItem = any,
   TMultiple extends boolean | undefined = boolean | undefined,
 > = {
-  /**
-   * 選択値の既定レンダラーです。
-   */
+  /** 選択値の既定レンダラーです。 */
   readonly defaultRenderer?: IComboboxValueRenderer<TItem, TMultiple> | undefined;
 };
 
@@ -461,7 +440,9 @@ export interface IUseComboboxAPI {
    *
    * @template TItem 項目の型です。
    * @template TMultiple 複数選択を有効にするかどうかです。
+   *
    * @param props {@link Combobox} の props です。
+   *
    * @returns コンボボックスの API です
    */
   <TItem = any, const TMultiple extends boolean | undefined = undefined>(
@@ -469,9 +450,9 @@ export interface IUseComboboxAPI {
   ): ComboboxAPI<TItem, TMultiple>;
 }
 
-// API
-// ---
+// API.
 
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- 未指定を表す一意なセンチネルです。
 const NONE = {} as never;
 
 /**
@@ -491,8 +472,82 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
 
   private readonly inputGroupProps: ComboboxProps.InputGroup;
 
+  private readonly defaultValueRenderer: IComboboxValueRenderer = (selectedValue, ctx) => {
+    if (this.isInputInPopup()) {
+      if (ctx.multiple) {
+        const items: readonly any[] = selectedValue ?? [];
+
+        return (
+          <ComboboxChips {...this.getChipsProps()}>
+            {items.map((item, index) => (
+              <ComboboxChip {...this.getChipProps(item)} key={getItemKey(item) ?? index}>
+                <ComboboxItemLabel {...this.getChipLabelProps()} />
+                <ComboboxChipRemove {...this.getChipRemoveProps()} />
+              </ComboboxChip>
+            ))}
+            <ComboboxInputDisplay {...this.getInputDisplayProps()} />
+          </ComboboxChips>
+        );
+      }
+
+      return <ComboboxInputDisplay {...this.getInputDisplayProps(selectedValue)} />;
+    }
+
+    if (ctx.multiple) {
+      const items: readonly any[] = selectedValue ?? [];
+
+      return (
+        <ComboboxChips {...this.getChipsProps()}>
+          {items.map((item, index) => (
+            <ComboboxChip {...this.getChipProps(item)} key={getItemKey(item) ?? index}>
+              <ComboboxItemLabel {...this.getChipLabelProps()} />
+              <ComboboxChipRemove {...this.getChipRemoveProps()} />
+            </ComboboxChip>
+          ))}
+          <ComboboxInput {...this.getInputProps()} />
+        </ComboboxChips>
+      );
+    }
+
+    return <ComboboxInput {...this.getInputProps()} />;
+  };
+
+  private readonly defaultCollectionItemRenderer: IComboboxCollectionItemRenderer = (
+    item,
+    index,
+  ) => {
+    switch (true) {
+      case isItemGroup<ComboboxItemGroupObject<TItem>>(item): {
+        const groupLabelProps = this.getGroupLabelProps(item);
+        const separatorProps = this.getSeparatorProps();
+
+        return (
+          <ComboboxGroup {...this.getGroupProps(item)} key={getItemKey(item) ?? index}>
+            {groupLabelProps && <ComboboxGroupLabel {...groupLabelProps} />}
+            <ComboboxCollection {...this.getCollectionProps()} />
+            {separatorProps && <ComboboxSeparator {...separatorProps} />}
+          </ComboboxGroup>
+        );
+      }
+
+      case isPrimitiveItem(item):
+      case isLabeledItem(item):
+      case !isReactNode(item):
+        return (
+          <ComboboxItem {...this.getItemProps(item)} key={getItemKey(item) ?? index}>
+            <ComboboxItemLabel {...this.getItemLabelProps()} />
+            <ComboboxItemIndicator {...this.getItemIndicatorProps()} />
+          </ComboboxItem>
+        );
+
+      default:
+        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
+    }
+  };
+
   /**
    * @param props {@link Combobox} の props です。
+   *
    * @internal
    */
   public constructor(props: ComboboxProps<TItem, TMultiple>) {
@@ -619,76 +674,6 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
     this.inputGroupProps = inputGroupProps;
   }
 
-  private defaultValueRenderer: IComboboxValueRenderer = (selectedValue, ctx) => {
-    if (this.isInputInPopup()) {
-      if (ctx.multiple) {
-        const items: readonly any[] = selectedValue ?? [];
-
-        return (
-          <ComboboxChips {...this.getChipsProps()}>
-            {items.map((item, index) => (
-              <ComboboxChip {...this.getChipProps(item)} key={getItemKey(item) ?? index}>
-                <ComboboxItemLabel {...this.getChipLabelProps()} />
-                <ComboboxChipRemove {...this.getChipRemoveProps()} />
-              </ComboboxChip>
-            ))}
-            <ComboboxInputDisplay {...this.getInputDisplayProps()} />
-          </ComboboxChips>
-        );
-      }
-
-      return <ComboboxInputDisplay {...this.getInputDisplayProps(selectedValue)} />;
-    } else {
-      if (ctx.multiple) {
-        const items: readonly any[] = selectedValue ?? [];
-
-        return (
-          <ComboboxChips {...this.getChipsProps()}>
-            {items.map((item, index) => (
-              <ComboboxChip {...this.getChipProps(item)} key={getItemKey(item) ?? index}>
-                <ComboboxItemLabel {...this.getChipLabelProps()} />
-                <ComboboxChipRemove {...this.getChipRemoveProps()} />
-              </ComboboxChip>
-            ))}
-            <ComboboxInput {...this.getInputProps()} />
-          </ComboboxChips>
-        );
-      }
-
-      return <ComboboxInput {...this.getInputProps()} />;
-    }
-  };
-
-  private defaultCollectionItemRenderer: IComboboxCollectionItemRenderer = (item, index) => {
-    switch (true) {
-      case isItemGroup<ComboboxItemGroupObject<TItem>>(item): {
-        const groupLabelProps = this.getGroupLabelProps(item);
-        const separatorProps = this.getSeparatorProps();
-
-        return (
-          <ComboboxGroup {...this.getGroupProps(item)} key={getItemKey(item) ?? index}>
-            {groupLabelProps && <ComboboxGroupLabel {...groupLabelProps} />}
-            <ComboboxCollection {...this.getCollectionProps()} />
-            {separatorProps && <ComboboxSeparator {...separatorProps} />}
-          </ComboboxGroup>
-        );
-      }
-
-      case isPrimitiveItem(item):
-      case isLabeledItem(item):
-      case !isReactNode(item):
-        return (
-          <ComboboxItem {...this.getItemProps(item)} key={getItemKey(item) ?? index}>
-            <ComboboxItemLabel {...this.getItemLabelProps()} />
-            <ComboboxItemIndicator {...this.getItemIndicatorProps()} />
-          </ComboboxItem>
-        );
-
-      default:
-        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
-    }
-  };
-
   public isInputInPopup(): boolean {
     return this.comboboxProps.inputInPopup ?? false;
   }
@@ -721,7 +706,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
     const { arrow: props } = this.slotProps;
 
     if (arrow || props) {
-      return props || {};
+      return props ?? {};
     }
 
     return null;
@@ -737,15 +722,13 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
     const { backdrop: props } = this.slotProps;
 
     if (backdrop || props) {
-      return props || {};
+      return props ?? {};
     }
 
     return null;
   }
 
-  /**
-   * チップ内の {@link ComboboxItemLabel} に渡す props を取得します。
-   */
+  /** チップ内の {@link ComboboxItemLabel} に渡す props を取得します。 */
   public getChipLabelProps(): ComboboxItemLabelProps<TItem> {
     const { chipLabelRenderer } = this.comboboxProps;
 
@@ -758,6 +741,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    * {@link ComboboxChip} に渡す props を取得します。
    *
    * @template TItem 項目の型です。
+   *
    * @param item 項目です。
    */
   // `value` だとこのメソッドの使い方が分かりづらくなるので `item` という変数名にします。
@@ -857,8 +841,15 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
 
     if (item) {
       const { label, ...otherProps } = item;
+
       if (isLikelyVisibleNode(label)) {
-        return mergeProps([baseProps, otherProps, { children: label }]);
+        return mergeProps([
+          baseProps,
+          otherProps,
+          {
+            children: label,
+          },
+        ]);
       }
 
       return null;
@@ -872,17 +863,19 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    *
    * @template TItem 項目の型です。
    * @template TValue 項目の値の型です。
+   *
    * @param item グループの項目です。
    */
   public getGroupProps<TItem = any>(): ComboboxGroupProps<TItem>;
   public getGroupProps<TValue = any>(
     item: ComboboxItemGroupObject<TValue>,
   ): ComboboxGroupProps<TValue | ComboboxLabeledItemObject<TValue>>;
-  public getGroupProps(item?: ComboboxItemGroupObject) {
+  public getGroupProps(item?: ComboboxItemGroupObject): ComboboxGroupProps {
     const { group: baseProps = {} } = this.slotProps;
 
     if (item) {
       const { label: _label, ...otherProps } = item;
+
       return mergeProps([baseProps, otherProps]);
     }
 
@@ -905,9 +898,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
     return this.inputGroupProps;
   }
 
-  /**
-   * ポップアップ内の {@link ComboboxInputGroup} に渡す props を取得します。
-   */
+  /** ポップアップ内の {@link ComboboxInputGroup} に渡す props を取得します。 */
   public getInputGroupInPopupProps(): Omit<ComboboxInputGroupProps, "children"> {
     const { inputGroupInPopup: props = {} } = this.slotProps;
 
@@ -937,9 +928,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
     return props;
   }
 
-  /**
-   * 候補リストの項目内の {@link ComboboxItemLabel} に渡す props を取得します。
-   */
+  /** 候補リストの項目内の {@link ComboboxItemLabel} に渡す props を取得します。 */
   public getItemLabelProps(): ComboboxItemLabelProps<TItem> {
     const { itemLabelRenderer } = this.comboboxProps;
 
@@ -952,29 +941,39 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    * {@link ComboboxItem} に渡す props を取得します。
    *
    * @template TItem 項目の型です。
+   *
    * @param item 項目です。
    */
   // `value` だとこのメソッドの使い方が分かりづらくなるので `item` という変数名にします。
   public getItemProps<TItem = any>(item?: TItem): ComboboxItemProps<TItem> {
     const { item: baseProps = {} } = this.slotProps;
 
+    if (item === undefined) {
+      return baseProps;
+    }
+
     switch (true) {
       case isLabeledItem<ComboboxRootLabeledItemObject<TItem>>(item): {
         const { label: _label, ...otherProps } = item;
-        return mergeProps([baseProps, otherProps, { value: item }]);
+
+        return mergeProps([
+          baseProps,
+          otherProps,
+          {
+            value: item,
+          },
+        ]);
       }
 
       default:
         return {
           ...baseProps,
-          value: item!,
+          value: item,
         };
     }
   }
 
-  /**
-   * ラベルとして表示する内容を取得します。
-   */
+  /** ラベルとして表示する内容を取得します。 */
   public getLabel(): React.ReactNode {
     const { label } = this.comboboxProps;
 
@@ -1055,9 +1054,10 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
     } = this.rootProps;
     let handleOpenChange = onOpenChange;
     let handleInputValueChange = onInputValueChange;
-    if (multiple && keepFilterOnSelect) {
+
+    if (multiple === true && keepFilterOnSelect) {
       if (this.isInputInPopup()) {
-        handleOpenChange = (open, eventDetails) => {
+        handleOpenChange = (open, eventDetails): void => {
           if (!open && eventDetails.reason === "item-press") {
             eventDetails.cancel();
           }
@@ -1065,8 +1065,8 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
           onOpenChange?.(open, eventDetails);
         };
       } else {
-        handleInputValueChange = (value, eventDetails) => {
-          if (eventDetails.isItemPress) {
+        handleInputValueChange = (value, eventDetails): void => {
+          if (eventDetails.isItemPress === true) {
             eventDetails.cancel();
           }
 
@@ -1091,7 +1091,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
   public getScrollAreaProps(): Omit<ScrollAreaRootProps, "children"> {
     const { scrollArea: props = {} } = this.slotProps;
     const {
-      // @ts-expect-error
+      // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
       "data-scope": dataScope = null,
       ...otherProps
     } = props;
@@ -1123,7 +1123,7 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
     const { separator: props } = this.slotProps;
 
     if (separator || props) {
-      return props || {};
+      return props ?? {};
     }
 
     return null;
@@ -1187,12 +1187,14 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    * 入力欄の末尾に表示する {@link ComboboxAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { endAddons: addons = [] } = this.comboboxProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -1204,12 +1206,14 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
    * 入力欄の先頭に表示する {@link ComboboxAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { startAddons: addons = [] } = this.comboboxProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -1221,17 +1225,13 @@ export class ComboboxAPI<TItem = any, TMultiple extends boolean | undefined = bo
 /**
  * {@link ComboboxAPI} を作成するフックです。
  */
-export const useComboboxAPI: IUseComboboxAPI = function useSuiComboboxAPI<
-  TItem,
-  TMultiple extends boolean | undefined,
->(props: ComboboxProps<TItem, TMultiple>) {
-  return new ComboboxAPI(props);
-};
+export const useComboboxAPI: IUseComboboxAPI = <TItem, TMultiple extends boolean | undefined>(
+  props: ComboboxProps<TItem, TMultiple>,
+) => new ComboboxAPI(props);
 
 export { ComboboxAPI as API, useComboboxAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface ICombobox extends IComponent<ComboboxProps> {
   /**
@@ -1241,23 +1241,16 @@ export interface ICombobox extends IComponent<ComboboxProps> {
   <TItem = any, const TMultiple extends boolean | undefined = false>(
     props: ComboboxProps<TItem, TMultiple>,
   ): IComponent.Return;
-
   readonly TriggerLabel: IComboboxTriggerLabel;
-
   readonly useContext: IUseComboboxContext;
-
   readonly useFilter: IUseComboboxFilter;
-
   readonly useFilteredItems: IUseComboboxFilteredItems;
-
   readonly useItemContext: IUseComboboxItemContext;
 }
 
-/**
- * 入力欄で候補を絞り込み、定義済みの項目を選択するコンポーネントです。
- */
+/** 入力欄で候補を絞り込み、定義済みの項目を選択するコンポーネントです。 */
 export const Combobox: ICombobox = /*#__PURE__*/ Object.assign(
-  function SuiCombobox(props: ComboboxProps) {
+  (props: ComboboxProps) => {
     const api = useComboboxAPI(props);
     const arrowProps = api.getArrowProps();
     const backdropProps = api.getBackdropProps();

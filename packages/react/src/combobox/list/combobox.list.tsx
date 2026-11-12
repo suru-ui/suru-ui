@@ -37,7 +37,7 @@ export namespace ComboboxListProps {
       Pick<
         React.ComponentProps<typeof Combobox.List>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // ComboboxListProps より:
+        // ComboboxListProps より :
         "children"
       >,
       keyof Render | keyof SuruUI
@@ -71,15 +71,14 @@ export interface IComboboxList extends IComponent<ComboboxListProps> {
   <TItem = any>(props: ComboboxListProps<TItem>): IComponent.Return;
 }
 
-/**
- * 候補項目のリストを表示するコンテナー要素です。
- */
-export const ComboboxList: IComboboxList = function SuiComboboxList(props: ComboboxListProps) {
+/** 候補項目のリストを表示するコンテナー要素です。 */
+export const ComboboxList: IComboboxList = (props: ComboboxListProps) => {
   const ctx = useComboboxPopupContext();
   const {
     style,
     render,
-    children = <ComboboxCollection />, // 既定値は ComboboxCollection の defaultItemRenderer になります。
+    children = <ComboboxCollection />,
+    // 既定値は ComboboxCollection の defaultItemRenderer になります。
     className,
     ...otherProps
   } = props;
@@ -88,7 +87,10 @@ export const ComboboxList: IComboboxList = function SuiComboboxList(props: Combo
     <Combobox.List
       {...otherProps}
       {...proxyRenderProps<Combobox.List.State, ComboboxListState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -128,7 +130,6 @@ export const ComboboxList: IComboboxList = function SuiComboboxList(props: Combo
 };
 
 export { ComboboxList as List };
-
 export namespace List {
   export type State<TItem = any> = ComboboxListState<TItem>;
 

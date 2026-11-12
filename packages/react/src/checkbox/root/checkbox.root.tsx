@@ -14,19 +14,13 @@ import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { CheckboxRootContext } from "./checkbox.root.context.js";
 
-/**
- * チェックボックスの選択状態が変更されたイベントの詳細です。
- */
+/** チェックボックスの選択状態が変更されたイベントの詳細です。 */
 export type CheckboxRootChangeEventDetails = Checkbox.Root.ChangeEventDetails;
 
-/**
- * チェックボックスの選択状態が変更された理由です。
- */
+/** チェックボックスの選択状態が変更された理由です。 */
 export type CheckboxRootChangeEventReason = Checkbox.Root.ChangeEventReason;
 
-/**
- * チェックボックスの配色です。
- */
+/** チェックボックスの配色です。 */
 export type CheckboxRootColor = Color;
 
 /**
@@ -117,9 +111,9 @@ export namespace CheckboxRootProps {
     Pick<
       React.ComponentProps<typeof Checkbox.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NonNativeButtonProps より:
+      // NonNativeButtonProps より :
       | keyof NonNativeButtonProps
-      // CheckboxRootProps より:
+      // CheckboxRootProps より :
       | "id"
       | "name"
       | "form"
@@ -154,10 +148,8 @@ export type CheckboxRootProps = CheckboxRootProps.Render &
 
 export type ICheckboxRoot = IComponent<CheckboxRootProps>;
 
-/**
- * チェックボックスのルートコンポーネントです。
- */
-export const CheckboxRoot: ICheckboxRoot = function SuiCheckboxRoot(props) {
+/** チェックボックスのルートコンポーネントです。 */
+export const CheckboxRoot: ICheckboxRoot = (props) => {
   const ctx = useCheckboxGroupContext(true);
   const {
     size: sizeProp = "md",
@@ -169,7 +161,7 @@ export const CheckboxRoot: ICheckboxRoot = function SuiCheckboxRoot(props) {
     disabled: disabledProp,
     outlined: outlinedProp = true,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -178,10 +170,17 @@ export const CheckboxRoot: ICheckboxRoot = function SuiCheckboxRoot(props) {
   const radius = ctx?.radius ?? radiusProp;
   const variant = ctx?.variant ?? variantProp;
   const outlined = ctx?.outlined ?? outlinedProp;
-  const disabled = ctx?.disabled || disabledProp;
+  const disabled = ctx?.disabled ?? disabledProp;
   const orientation = ctx?.orientation ?? "vertical";
   const styleState = React.useMemo(
-    () => ({ size, color, radius, variant, outlined, orientation }),
+    () => ({
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+      orientation,
+    }),
     [color, orientation, outlined, radius, size, variant],
   );
 
@@ -190,7 +189,10 @@ export const CheckboxRoot: ICheckboxRoot = function SuiCheckboxRoot(props) {
       {...otherProps}
       disabled={disabled}
       {...proxyRenderProps<Checkbox.Root.State, CheckboxRootState>(
-        (state) => ({ ...styleState, ...state }),
+        (state) => ({
+          ...styleState,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -233,7 +235,6 @@ export const CheckboxRoot: ICheckboxRoot = function SuiCheckboxRoot(props) {
 };
 
 export { CheckboxRoot as Root };
-
 export namespace Root {
   export type State = CheckboxRootState;
 

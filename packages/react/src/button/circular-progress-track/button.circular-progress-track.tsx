@@ -20,7 +20,7 @@ export namespace ButtonCircularProgressTrackProps {
 
   export type HTML = Omit<
     BaseUIComponentProps<"circle", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -34,44 +34,40 @@ export type ButtonCircularProgressTrackProps = ButtonCircularProgressTrackProps.
 
 export type IButtonCircularProgressTrack = IComponent<ButtonCircularProgressTrackProps>;
 
-/**
- * 円形プログレスバーのトラック（背景の円弧）を描画するコンポーネントです。
- */
-export const ButtonCircularProgressTrack: IButtonCircularProgressTrack =
-  function SuiButtonCircularProgressTrack(props) {
-    const ctx = useButtonCircularProgressContext();
-    const {
-      r,
-      cx = "50%",
-      cy = "50%",
-      stroke = "currentColor",
-      strokeWidth = 4,
-      ...otherCircleProps
-    } = props;
-    const strokeWidthCss = typeof strokeWidth === "number" ? strokeWidth + "px" : strokeWidth;
+/** 円形プログレスバーのトラック（背景の円弧）を描画するコンポーネントです。 */
+export const ButtonCircularProgressTrack: IButtonCircularProgressTrack = (props) => {
+  const ctx = useButtonCircularProgressContext();
+  const {
+    r,
+    cx = "50%",
+    cy = "50%",
+    stroke = "currentColor",
+    strokeWidth = 4,
+    ...otherCircleProps
+  } = props;
+  const strokeWidthCss = typeof strokeWidth === "number" ? `${strokeWidth}px` : strokeWidth;
 
-    return useRender({
-      props: [
-        otherCircleProps,
-        {
-          r: r ?? `calc(50% - ${strokeWidthCss} / 2)`,
-          cx,
-          cy,
-          stroke,
-          className: cn<ButtonCircularProgressTrackState>(
-            "sui_button_circular_progress_track",
-            (state) => state.indeterminate && "sui_button_circular_progress_track-indeterminate",
-          ),
-          strokeWidth: strokeWidthCss,
-        },
-      ],
-      state: ctx,
-      defaultTagName: "circle",
-    });
-  };
+  return useRender({
+    props: [
+      otherCircleProps,
+      {
+        r: r ?? `calc(50% - ${strokeWidthCss} / 2)`,
+        cx,
+        cy,
+        stroke,
+        className: cn<ButtonCircularProgressTrackState>(
+          "sui_button_circular_progress_track",
+          (state) => state.indeterminate && "sui_button_circular_progress_track-indeterminate",
+        ),
+        strokeWidth: strokeWidthCss,
+      },
+    ],
+    state: ctx,
+    defaultTagName: "circle",
+  });
+};
 
 export { ButtonCircularProgressTrack as CircularProgressTrack };
-
 export namespace CircularProgressTrack {
   export type State = ButtonCircularProgressTrackState;
 

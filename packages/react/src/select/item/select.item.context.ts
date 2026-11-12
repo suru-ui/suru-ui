@@ -30,11 +30,10 @@ export type IUseSelectItemContext = IUseContext<SelectItemContext>;
 /**
  * {@link SelectItemContext} を読み取るフックです。
  */
-export const useSelectItemContext: IUseSelectItemContext = function useSuiSelectItemContext(
-  optional,
-): any {
+export const useSelectItemContext: IUseSelectItemContext = (optional): any => {
   const ctx = React.use(SelectItemContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SelectItemContext",
       providerName: "SelectItem",

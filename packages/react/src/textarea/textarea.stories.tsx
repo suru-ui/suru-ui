@@ -291,6 +291,7 @@ export const Controlled = meta.story({
   }),
   render(props) {
     const [value, setValue] = React.useState("初期の問い合わせ内容");
+
     return (
       <div className="flex flex-col gap-2">
         <Textarea {...props} value={value} className="w-64" onValueChange={setValue} />
@@ -299,7 +300,12 @@ export const Controlled = meta.story({
           {value === "" ? "(空)" : value}
         </span>
         <div>
-          <button type="button" onClick={() => setValue("")}>
+          <button
+            type="button"
+            onClick={() => {
+              setValue("");
+            }}
+          >
             クリア
           </button>
         </div>
@@ -388,7 +394,12 @@ export const Required = meta.story({
   }),
   render(props) {
     return (
-      <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-3">
+      <form
+        className="flex flex-col gap-3"
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <Field label="問い合わせ内容" description="空のまま送信すると枠線が赤くなります。">
           <Textarea {...props} required className="w-64" minLength={10} placeholder="10文字以上" />
         </Field>
@@ -412,15 +423,16 @@ export const ContactForm = meta.story({
   }),
   render(props) {
     const [submitted, setSubmitted] = React.useState<string | null>(null);
+
     return (
       <form
+        className="flex w-64 flex-col gap-3"
         onSubmit={(event) => {
           event.preventDefault();
           const data = new FormData(event.currentTarget);
           const message = data.get("message");
           setSubmitted(typeof message === "string" ? message : "");
         }}
-        className="flex w-64 flex-col gap-3"
       >
         <Field label="問い合わせ内容">
           <Textarea {...props} name="message" rows={4} placeholder="問い合わせ内容" />

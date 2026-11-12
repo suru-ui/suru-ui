@@ -11,14 +11,10 @@ import type { Override, IComponent } from "../../types.js";
 import { useContextMenuContext } from "../root/context-menu.root.context.js";
 import { ContextMenuLinkItemContext } from "./context-menu.link-item.context.js";
 
-/**
- * コンテキストメニューのリンク項目の配色です。
- */
+/** コンテキストメニューのリンク項目の配色です。 */
 export type ContextMenuLinkItemColor = Button.Root.Color;
 
-/**
- * コンテキストメニューのリンク項目の角丸です。
- */
+/** コンテキストメニューのリンク項目の角丸です。 */
 export type ContextMenuLinkItemRadius = Button.Root.Radius;
 
 /**
@@ -78,7 +74,7 @@ export namespace ContextMenuLinkItemProps {
       Pick<
         React.ComponentProps<typeof ContextMenu.LinkItem>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // MenuLinkItemProps より:
+        // MenuLinkItemProps より :
         "label" | "id" | "closeOnClick"
       >,
       keyof Render | keyof SuruUI
@@ -101,10 +97,8 @@ export type ContextMenuLinkItemProps = ContextMenuLinkItemProps.Render &
 
 export type IContextMenuLinkItem = IComponent<ContextMenuLinkItemProps>;
 
-/**
- * 別のページやセクションへ移動するコンテキストメニュー項目です。
- */
-export const ContextMenuLinkItem: IContextMenuLinkItem = function SuiContextMenuLinkItem(props) {
+/** 別のページやセクションへ移動するコンテキストメニュー項目です。 */
+export const ContextMenuLinkItem: IContextMenuLinkItem = (props) => {
   const ctx = useContextMenuContext();
   const {
     id,
@@ -160,15 +154,19 @@ export const ContextMenuLinkItem: IContextMenuLinkItem = function SuiContextMenu
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, ContextMenuLinkItemState>(
-                (state) => ({ ...ctx, ...state, ...itemState }),
+                (state) => ({
+                  ...ctx,
+                  ...state,
+                  ...itemState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <ContextMenuLinkItemContext value={state}>
                       <RenderElement
                         state={state}
                         render={render}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="a"
                       />
                     </ContextMenuLinkItemContext>
@@ -194,7 +192,6 @@ export const ContextMenuLinkItem: IContextMenuLinkItem = function SuiContextMenu
 };
 
 export { ContextMenuLinkItem as LinkItem };
-
 export namespace LinkItem {
   export type State<TItem = any> = ContextMenuLinkItemState<TItem>;
 

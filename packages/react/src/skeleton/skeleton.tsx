@@ -7,8 +7,7 @@ import {
   SkeletonRoot,
 } from "./skeleton.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type SkeletonRadius = SkeletonRootRadius;
 
@@ -31,13 +30,13 @@ export interface IUseSkeletonAPI {
    * {@link SkeletonAPI} を作成します。
    *
    * @param props {@link Skeleton} の props です。
+   *
    * @returns スケルトンの API です
    */
   (props: SkeletonProps): SkeletonAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Skeleton} を構成する各パーツの props を作成するための API です。
@@ -47,6 +46,7 @@ export class SkeletonAPI {
 
   /**
    * @param props {@link Skeleton} の props です。
+   *
    * @internal
    */
   public constructor(props: SkeletonProps) {
@@ -64,21 +64,18 @@ export class SkeletonAPI {
 /**
  * {@link SkeletonAPI} を作成するフックです。
  */
-export const useSkeletonAPI: IUseSkeletonAPI = function useSuiSkeletonAPI(props) {
-  return new SkeletonAPI(props);
-};
+export const useSkeletonAPI: IUseSkeletonAPI = (props) => new SkeletonAPI(props);
 
 export { SkeletonAPI as API, useSkeletonAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * コンテンツの読み込み中を表すプレースホルダーコンポーネントです。
  *
  * 大きさは `className` や `style` などで指定します。
  */
-export const Skeleton: ISkeleton = function SuiSkeleton(props) {
+export const Skeleton: ISkeleton = (props) => {
   const api = useSkeletonAPI(props);
 
   return <SkeletonRoot {...api.getRootProps()} />;

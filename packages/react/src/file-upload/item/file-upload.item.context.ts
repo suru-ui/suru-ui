@@ -11,9 +11,7 @@ export type FileUploadItemContext = Readonly<
   Override<
     FileUploadContextState,
     {
-      /**
-       * 表示対象のファイルです。
-       */
+      /** 表示対象のファイルです。 */
       readonly file: File;
     }
   >
@@ -29,7 +27,8 @@ function useSuiFileUploadItemContext(optional?: false): FileUploadItemContext;
 function useSuiFileUploadItemContext(optional?: boolean): FileUploadItemContext | null;
 function useSuiFileUploadItemContext(optional?: boolean): FileUploadItemContext | null {
   const ctx = React.use(FileUploadItemContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "FileUploadItemContext",
       providerName: "FileUploadItem",

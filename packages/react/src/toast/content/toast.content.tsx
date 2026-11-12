@@ -10,24 +10,16 @@ import cn from "../../cn.js";
 import type { Override, IComponent } from "../../types.js";
 import { ToastContentContext } from "./toast.content.context.js";
 
-/**
- * 通知の配色です。
- */
+/** 通知の配色です。 */
 export type ToastContentColor = Alert.Root.Color;
 
-/**
- * 通知の角丸の大きさです。
- */
+/** 通知の角丸の大きさです。 */
 export type ToastContentRadius = Alert.Root.Radius;
 
-/**
- * 通知の大きさです。
- */
+/** 通知の大きさです。 */
 export type ToastContentSize = Alert.Root.Size;
 
-/**
- * 通知の主な外観です。
- */
+/** 通知の主な外観です。 */
 export type ToastContentVariant = Alert.Root.Variant;
 
 /**
@@ -46,7 +38,7 @@ export namespace ToastContentProps {
       Pick<
         React.ComponentProps<typeof Toast.Content>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // ToastContentProps より:
+        // ToastContentProps より :
         never
       >,
       keyof Render | keyof SuruUI
@@ -74,7 +66,7 @@ export type IToastContent = IComponent<ToastContentProps>;
  *
  * 見た目はアラートとして描画され、大きさや配色は最上位の見た目として集約します。
  */
-export const ToastContent: IToastContent = function SuiToastContent(props) {
+export const ToastContent: IToastContent = (props) => {
   const {
     size,
     color,
@@ -109,15 +101,18 @@ export const ToastContent: IToastContent = function SuiToastContent(props) {
               htmlProps,
               alertRootProps,
               proxyRenderProps<Alert.Root.State, ToastContentState>(
-                (alertState) => ({ ...toastState, ...alertState }),
+                (alertState) => ({
+                  ...toastState,
+                  ...alertState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <ToastContentContext value={state}>
                       <RenderElement
                         state={state}
                         render={render}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="div"
                       />
                     </ToastContentContext>
@@ -147,7 +142,6 @@ export const ToastContent: IToastContent = function SuiToastContent(props) {
 };
 
 export { ToastContent as Content };
-
 export namespace Content {
   export type State = ToastContentState;
 

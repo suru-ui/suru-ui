@@ -14,14 +14,10 @@ import {
   SegmentsContext,
 } from "./segments.root.context.js";
 
-/**
- * Segments のアクティブなセグメントが変更されるイベントの詳細です。
- */
+/** Segments のアクティブなセグメントが変更されるイベントの詳細です。 */
 export type SegmentsRootChangeEventDetails = BaseTabs.Root.ChangeEventDetails;
 
-/**
- * Segments のアクティブなセグメントを変更する理由です。
- */
+/** Segments のアクティブなセグメントを変更する理由です。 */
 export type SegmentsRootChangeEventReason = BaseTabs.Root.ChangeEventReason;
 
 /**
@@ -32,9 +28,7 @@ export type SegmentsRootChangeEventReason = BaseTabs.Root.ChangeEventReason;
 export type SegmentsRootItemObject = Override<
   Omit<SegmentsItemProps, "children">,
   {
-    /**
-     * 項目に表示するラベルです。
-     */
+    /** 項目に表示するラベルです。 */
     readonly label: React.ReactNode;
   }
 >;
@@ -51,6 +45,7 @@ export interface ISegmentsRootItemRenderer<TItem = any> {
    * @param item 現在の項目です。
    * @param index 項目のインデックスです。
    * @param items すべての項目です。
+   *
    * @returns レンダリングする内容です。
    */
   (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
@@ -65,9 +60,7 @@ export interface ISegmentsRootItemRenderer<TItem = any> {
  */
 export type SegmentsRootActiveVariant = SegmentsContextActiveVariant;
 
-/**
- * Segments の配色です。
- */
+/** Segments の配色です。 */
 export type SegmentsRootColor = SegmentsContextColor;
 
 /**
@@ -156,7 +149,7 @@ export namespace SegmentsRootProps {
     Pick<
       React.ComponentProps<typeof BaseTabs.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TabsRootProps より:
+      // TabsRootProps より :
       "value" | "defaultValue" | "orientation" | "onValueChange"
     >,
     keyof Render | keyof SuruUI
@@ -192,7 +185,7 @@ export interface ISegmentsRoot extends IComponent<SegmentsRootProps> {
  *
  * `items` は子孫の {@link SegmentsList} へコンテキスト経由で渡されます。
  */
-export const SegmentsRoot: ISegmentsRoot = function SuiSegmentsRoot(props: SegmentsRootProps) {
+export const SegmentsRoot: ISegmentsRoot = (props: SegmentsRootProps) => {
   const {
     size = "md",
     thin = false,
@@ -202,13 +195,20 @@ export const SegmentsRoot: ISegmentsRoot = function SuiSegmentsRoot(props: Segme
     radius = size,
     render,
     className,
-    activeVariant = "solid",
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
+    activeVariant = "solid",
     ...otherProps
   } = props;
   const ctx = React.useMemo<SegmentsContext>(
-    () => ({ size, thin, color, items, radius, activeVariant }),
+    () => ({
+      size,
+      thin,
+      color,
+      items,
+      radius,
+      activeVariant,
+    }),
     [activeVariant, color, items, radius, size, thin],
   );
 
@@ -217,7 +217,10 @@ export const SegmentsRoot: ISegmentsRoot = function SuiSegmentsRoot(props: Segme
       <BaseTabs.Root
         {...otherProps}
         {...proxyRenderProps<BaseTabs.Root.State, SegmentsRootState>(
-          (state) => ({ ...ctx, ...state }),
+          (state) => ({
+            ...ctx,
+            ...state,
+          }),
           {
             style,
             render,
@@ -241,7 +244,6 @@ export const SegmentsRoot: ISegmentsRoot = function SuiSegmentsRoot(props: Segme
 };
 
 export { SegmentsRoot as Root };
-
 export namespace Root {
   export type State<TItem = any> = SegmentsRootState<TItem>;
 

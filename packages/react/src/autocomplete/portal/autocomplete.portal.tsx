@@ -27,7 +27,7 @@ export namespace AutocompletePortalProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.Portal>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AutocompletePortalProps より:
+      // AutocompletePortalProps より :
       "container" | "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -54,13 +54,13 @@ export type IAutocompletePortal = IComponent<AutocompletePortalProps>;
  *
  * 既定では ポップアップを `<body>` の末尾に配置します。
  */
-export const AutocompletePortal: IAutocompletePortal = function SuiAutocompletePortal(props) {
+export const AutocompletePortal: IAutocompletePortal = (props) => {
   const ctx = useAutocompleteContext();
   const {
     style,
     render,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -69,7 +69,10 @@ export const AutocompletePortal: IAutocompletePortal = function SuiAutocompleteP
     <Autocomplete.Portal
       {...otherProps}
       {...proxyRenderProps<Autocomplete.Portal.State, AutocompletePortalState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render,
@@ -90,7 +93,6 @@ export const AutocompletePortal: IAutocompletePortal = function SuiAutocompleteP
 };
 
 export { AutocompletePortal as Portal };
-
 export namespace Portal {
   export type State<TItem = any> = AutocompletePortalState<TItem>;
 

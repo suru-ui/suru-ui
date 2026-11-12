@@ -21,11 +21,10 @@ export type IUseDrawerTitleContext = IUseContext<DrawerTitleContext>;
 /**
  * {@link DrawerTitleContext} を読み取るフックです。
  */
-export const useDrawerTitleContext: IUseDrawerTitleContext = function useSuiDrawerTitleContext(
-  optional,
-): any {
+export const useDrawerTitleContext: IUseDrawerTitleContext = (optional): any => {
   const ctx = React.use(DrawerTitleContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "DrawerTitleContext",
       providerName: "DrawerTitle",

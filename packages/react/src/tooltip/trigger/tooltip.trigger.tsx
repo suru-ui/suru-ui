@@ -46,7 +46,7 @@ export namespace TooltipTriggerProps {
       React.ComponentProps<typeof Tooltip.Trigger<TPayload>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
       // `handle` は SuruUI、`closeOnClick` は `keepOpenOnClick` で制御するため除きます。
-      // TooltipTriggerProps より:
+      // TooltipTriggerProps より :
       "payload" | "delay" | "closeDelay" | "disabled"
     >,
     keyof Render | keyof SuruUI
@@ -84,9 +84,9 @@ export interface ITooltipTrigger extends IComponent<TooltipTriggerProps> {
  *
  * 子要素は何にもラップされず、そのまま Base UI の `render` プロパティーに渡されます。
  */
-export const TooltipTrigger: ITooltipTrigger = function SuiTooltipTrigger<TPayload>(
+export const TooltipTrigger: ITooltipTrigger = <TPayload,>(
   props: TooltipTriggerProps<TPayload>,
-) {
+) => {
   const ctx = useTooltipContext(true);
   const { style, handle, children, className, keepOpenOnClick = false, ...otherProps } = props;
 
@@ -95,7 +95,13 @@ export const TooltipTrigger: ITooltipTrigger = function SuiTooltipTrigger<TPaylo
       {...otherProps}
       handle={handle}
       {...proxyRenderProps<Tooltip.Trigger.State, TooltipTriggerState>(
-        (state) => ({ size: "md", radius: "md", outlined: false, ...ctx, ...state }),
+        (state) => ({
+          size: "md",
+          radius: "md",
+          outlined: false,
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -124,7 +130,6 @@ export const TooltipTrigger: ITooltipTrigger = function SuiTooltipTrigger<TPaylo
 };
 
 export { TooltipTrigger as Trigger };
-
 export namespace Trigger {
   export type State = TooltipTriggerState;
 

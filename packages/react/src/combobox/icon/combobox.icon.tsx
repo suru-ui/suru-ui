@@ -26,16 +26,13 @@ export namespace ComboboxIconProps {
     Pick<
       React.ComponentProps<typeof Combobox.Icon>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxIconProps より:
+      // ComboboxIconProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Combobox.Icon>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Combobox.Icon>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -48,10 +45,8 @@ export type ComboboxIconProps = ComboboxIconProps.Render &
 
 export type IComboboxIcon = IComponent<ComboboxIconProps>;
 
-/**
- * トリガーの操作を示すアイコンのラッパー要素です。
- */
-export const ComboboxIcon: IComboboxIcon = function SuiComboboxIcon(props) {
+/** トリガーの操作を示すアイコンのラッパー要素です。 */
+export const ComboboxIcon: IComboboxIcon = (props) => {
   const ctx = useComboboxAddonContext();
   const { style, render, children = <ChevronIcon />, className, ...otherProps } = props;
 
@@ -59,7 +54,10 @@ export const ComboboxIcon: IComboboxIcon = function SuiComboboxIcon(props) {
     <Combobox.Icon
       {...otherProps}
       {...proxyRenderProps<Combobox.Icon.State, ComboboxIconState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -106,7 +104,6 @@ export const ComboboxIcon: IComboboxIcon = function SuiComboboxIcon(props) {
 };
 
 export { ComboboxIcon as Icon };
-
 export namespace Icon {
   export type State<TItem = any> = ComboboxIconState<TItem>;
 

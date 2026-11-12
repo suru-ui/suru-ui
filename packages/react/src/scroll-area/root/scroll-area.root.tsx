@@ -13,9 +13,7 @@ import { ScrollAreaRootContext } from "./scroll-area.root.context.js";
  */
 export type ScrollAreaRootState = Override<
   {
-    /**
-     * スクロールバーを常に表示するかどうかです。
-     */
+    /** スクロールバーを常に表示するかどうかです。 */
     readonly alwaysShowScrollbar: boolean;
   },
   BaseScrollArea.Root.State
@@ -39,7 +37,7 @@ export namespace ScrollAreaRootProps {
     Pick<
       React.ComponentProps<typeof BaseScrollArea.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ScrollAreaRootProps より:
+      // ScrollAreaRootProps より :
       "overflowEdgeThreshold"
     >,
     keyof Render | keyof SuruUI
@@ -61,26 +59,32 @@ export type ScrollAreaRootProps = ScrollAreaRootProps.Render &
 
 export type IScrollAreaRoot = IComponent<ScrollAreaRootProps>;
 
-/**
- * スクロール領域の各パーツをまとめるルート要素です。
- */
-export const ScrollAreaRoot: IScrollAreaRoot = function SuiScrollAreaRoot(props) {
+/** スクロール領域の各パーツをまとめるルート要素です。 */
+export const ScrollAreaRoot: IScrollAreaRoot = (props) => {
   const {
     style,
     render,
     className,
-    alwaysShowScrollbar = false,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
+    alwaysShowScrollbar = false,
     ...otherProps
   } = props;
-  const styleState = React.useMemo(() => ({ alwaysShowScrollbar }), [alwaysShowScrollbar]);
+  const styleState = React.useMemo(
+    () => ({
+      alwaysShowScrollbar,
+    }),
+    [alwaysShowScrollbar],
+  );
 
   return (
     <BaseScrollArea.Root
       {...otherProps}
       {...proxyRenderProps<BaseScrollArea.Root.State, ScrollAreaRootState>(
-        (state) => ({ ...styleState, ...state }),
+        (state) => ({
+          ...styleState,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -114,7 +118,6 @@ export const ScrollAreaRoot: IScrollAreaRoot = function SuiScrollAreaRoot(props)
 };
 
 export { ScrollAreaRoot as Root };
-
 export namespace Root {
   export type State = ScrollAreaRootState;
 

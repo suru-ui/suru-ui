@@ -18,10 +18,7 @@ export namespace AlertDescriptionProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type AlertDescriptionProps = AlertDescriptionProps.Render &
 
 export type IAlertDescription = IComponent<AlertDescriptionProps>;
 
-/**
- * アラートの説明文を表示するコンポーネントです。
- */
-export const AlertDescription: IAlertDescription = function SuiAlertDescription(props) {
+/** アラートの説明文を表示するコンポーネントです。 */
+export const AlertDescription: IAlertDescription = (props) => {
   const ctx = useAlertContext();
 
   return useRender({
@@ -63,7 +58,6 @@ export const AlertDescription: IAlertDescription = function SuiAlertDescription(
 };
 
 export { AlertDescription as Description };
-
 export namespace Description {
   export type State = AlertDescriptionState;
 

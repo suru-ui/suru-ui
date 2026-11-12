@@ -1,5 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "../switch.parts.js";
@@ -8,10 +8,10 @@ import "../../../tests/src/_locators.js";
 
 describe("SwitchRoot", () => {
   test("既定の修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<SwitchRoot />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_switch").element();
     expect(root.classList.contains("sui_switch")).toBe(true);
     expect(root.classList.contains("sui_switch-size_md")).toBe(true);
@@ -22,12 +22,12 @@ describe("SwitchRoot", () => {
   });
 
   test("指定した修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <SwitchRoot size="sm" color="blue" radius="lg" variant="naked" outlined />,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_switch").element();
     expect(root.classList.contains("sui_switch-size_sm")).toBe(true);
     expect(root.classList.contains("sui_switch-color_blue")).toBe(true);
@@ -37,24 +37,24 @@ describe("SwitchRoot", () => {
   });
 
   test("スコープの始点になる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<SwitchRoot />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_switch").element().getAttribute("data-scope")).toBe("");
   });
 
   test("チェック状態を状態クラスへ反映する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<SwitchRoot defaultChecked />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_switch").element();
     expect(root.classList.contains("sui_switch-checked")).toBe(true);
   });
 
   test("読み取り専用と必須の状態クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <SwitchRoot readOnly data-testid="readonly" />
@@ -62,7 +62,7 @@ describe("SwitchRoot", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByTestId("readonly").element().classList.contains("sui_switch-readonly")).toBe(
       true,
     );
@@ -72,19 +72,19 @@ describe("SwitchRoot", () => {
   });
 
   test("無効時は状態クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<SwitchRoot disabled />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_switch").element();
     expect(root.classList.contains("sui_switch-disabled")).toBe(true);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<SwitchRoot render={<div />} />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_switch").element().tagName).toBe("DIV");
   });
 });

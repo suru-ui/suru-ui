@@ -41,14 +41,13 @@ import {
   DialogBackdrop,
   DialogViewport,
   DialogDescription,
-  DialogCloseTrigger,
   createDialogHandle,
+  DialogCloseTrigger,
   DialogToggleTrigger,
   useDialogPopupContext,
 } from "./dialog.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type DialogActions = DialogRootActions;
 
@@ -144,19 +143,13 @@ namespace DialogProps {
      */
     action?: DialogActionProps["children"] | undefined;
 
-    /**
-     * ダイアログの本文です。
-     */
+    /** ダイアログの本文です。 */
     children?: DialogContentProps["children"] | undefined;
 
-    /**
-     * ダイアログを閉じるボタンです。
-     */
+    /** ダイアログを閉じるボタンです。 */
     close?: DialogCloseTriggerProps["children"] | undefined;
 
-    /**
-     * ダイアログの説明文です。
-     */
+    /** ダイアログの説明文です。 */
     description?: DialogDescriptionProps["children"] | undefined;
 
     /**
@@ -166,9 +159,7 @@ namespace DialogProps {
      */
     footer?: DialogFooterProps["children"] | undefined;
 
-    /**
-     * 閉じるボタンがクリックされたときに呼ばれるコールバックです。
-     */
+    /** 閉じるボタンがクリックされたときに呼ばれるコールバックです。 */
     onClose?: DialogCloseTriggerProps["onClick"] | undefined;
 
     /**
@@ -178,14 +169,10 @@ namespace DialogProps {
      */
     showCloseIconButton?: boolean | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: DialogSlotProps<TPayload> | undefined;
 
-    /**
-     * ダイアログの見出しです。
-     */
+    /** ダイアログの見出しです。 */
     title?: DialogTitleProps["children"] | undefined;
 
     /**
@@ -216,16 +203,17 @@ export interface IUseDialogAPI {
    * {@link DialogAPI} を作成します。
    *
    * @template TPayload トリガーが送信するデータの型です。
+   *
    * @param props {@link Dialog} の props です。
+   *
    * @returns ダイアログの API です
    */
   <TPayload = any>(props: DialogProps<TPayload>): DialogAPI<TPayload>;
 }
 
-// API
-// ---
+// API.
 
-function CloseIconButton() {
+function CloseIconButton(): React.ReactElement {
   const ctx = useDialogPopupContext();
 
   return (
@@ -255,9 +243,17 @@ export class DialogAPI<TPayload = any> {
 
   /**
    * @param props {@link Dialog} の props です。
+   *
    * @internal
    */
-  public constructor(props: Override<DialogProps<TPayload>, { handle: DialogHandle<TPayload> }>) {
+  public constructor(
+    props: Override<
+      DialogProps<TPayload>,
+      {
+        handle: DialogHandle<TPayload>;
+      }
+    >,
+  ) {
     const {
       open,
       close,
@@ -306,7 +302,12 @@ export class DialogAPI<TPayload = any> {
       disablePointerDismissal,
     };
     this.popupProps = popupProps;
-    this.contentProps = "children" in props ? { children } : null;
+    this.contentProps =
+      "children" in props
+        ? {
+            children,
+          }
+        : null;
   }
 
   /**
@@ -318,7 +319,7 @@ export class DialogAPI<TPayload = any> {
     const { action: props = {} } = this.slotProps;
     const { action, showCloseIconButton } = this.dialogProps;
 
-    if (showCloseIconButton || isLikelyVisibleNode(action)) {
+    if (showCloseIconButton === true || isLikelyVisibleNode(action)) {
       return {
         ...props,
         children: action === undefined ? <CloseIconButton /> : action,
@@ -432,7 +433,7 @@ export class DialogAPI<TPayload = any> {
     const { title, action, description, showCloseIconButton } = this.dialogProps;
 
     if (
-      showCloseIconButton ||
+      showCloseIconButton === true ||
       isLikelyVisibleNode(title) ||
       isLikelyVisibleNode(action) ||
       isLikelyVisibleNode(description)
@@ -519,33 +520,31 @@ export class DialogAPI<TPayload = any> {
 /**
  * {@link DialogAPI} を作成するフックです。
  */
-export const useDialogAPI: IUseDialogAPI = function useSuiDialogAPI<TPayload>(
-  props: DialogProps<TPayload>,
-) {
+export const useDialogAPI: IUseDialogAPI = <TPayload,>(props: DialogProps<TPayload>) => {
   const { handle: handleProp, ...otherProps } = props;
-  const handle = React.useMemo(() => handleProp || createDialogHandle<TPayload>(), [handleProp]);
+  const handle = React.useMemo(() => handleProp ?? createDialogHandle<TPayload>(), [handleProp]);
 
-  return new DialogAPI({ ...otherProps, handle });
+  return new DialogAPI({
+    ...otherProps,
+    handle,
+  });
 };
 
 export { DialogAPI as API, useDialogAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IDialog extends IComponent<DialogProps> {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    */
   <TPayload = any>(props: DialogProps<TPayload>): IComponent.Return;
-
   readonly ToggleTrigger: IDialogToggleTrigger;
 
   /**
    * {@link DialogHandle} を作成する関数です。
    */
   readonly createHandle: ICreateDialogHandle;
-
   readonly usePopupContext: IUseDialogPopupContext;
 }
 
@@ -555,7 +554,7 @@ export interface IDialog extends IComponent<DialogProps> {
  * 構成を細かく制御する場合は、{@link DialogRoot|Root} を直接組み立てます。
  */
 export const Dialog: IDialog = /*#__PURE__*/ Object.assign(
-  function SuiDialog(props: DialogProps) {
+  (props: DialogProps) => {
     const api = useDialogAPI(props);
     const toggleTriggerProps = api.getToggleTriggerProps();
     const popupProps = api.getPopupProps();

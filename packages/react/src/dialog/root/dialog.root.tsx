@@ -3,19 +3,13 @@ import * as React from "react";
 
 import type { IComponent } from "../../types.js";
 
-/**
- * ダイアログを命令的に操作するためのオブジェクトです。
- */
+/** ダイアログを命令的に操作するためのオブジェクトです。 */
 export type DialogRootActions = Dialog.Root.Actions;
 
-/**
- * ダイアログの開閉状態を変更するイベントの詳細です。
- */
+/** ダイアログの開閉状態を変更するイベントの詳細です。 */
 export type DialogRootChangeEventDetails = Dialog.Root.ChangeEventDetails;
 
-/**
- * ダイアログの開閉状態を変更する理由です。
- */
+/** ダイアログの開閉状態を変更する理由です。 */
 export type DialogRootChangeEventReason = Dialog.Root.ChangeEventReason;
 
 /**
@@ -32,7 +26,7 @@ export namespace DialogRootProps {
     Pick<
       React.ComponentProps<typeof Dialog.Root<TPayload>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DialogRootProps より:
+      // DialogRootProps より :
       | "open"
       | "defaultOpen"
       | "modal"
@@ -45,12 +39,12 @@ export namespace DialogRootProps {
       | "triggerId"
       | "defaultTriggerId"
     >,
-    keyof Render | keyof SuruUI
+    keyof Render
   >;
 
   export type HTML<TPayload = any> = Omit<
     React.ComponentProps<typeof Dialog.Root<TPayload>>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof BaseUI
   >;
 }
 
@@ -76,12 +70,9 @@ export interface IDialogRoot extends IComponent<DialogRootProps> {
  *
  * ダイアログの開閉状態を管理し、各パーツをグループ化します。それ自身は HTML 要素をレンダリングしません。
  */
-export const DialogRoot: IDialogRoot = function SuiDialogRoot(props: DialogRootProps) {
-  return <Dialog.Root {...props} />;
-};
+export const DialogRoot: IDialogRoot = (props: DialogRootProps) => <Dialog.Root {...props} />;
 
 export { DialogRoot as Root };
-
 export namespace Root {
   export type State = DialogRootState;
 

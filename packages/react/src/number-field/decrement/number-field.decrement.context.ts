@@ -23,18 +23,18 @@ export type IUseNumberFieldDecrementContext = IUseContext<NumberFieldDecrementCo
 /**
  * {@link NumberFieldDecrementContext} を読み取るフックです。
  */
-export const useNumberFieldDecrementContext: IUseNumberFieldDecrementContext =
-  function useSuiNumberFieldDecrementContext(optional): any {
-    const ctx = React.use(NumberFieldDecrementContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "NumberFieldDecrementContext",
-        providerName: "NumberFieldDecrement",
-      });
-    }
+export const useNumberFieldDecrementContext: IUseNumberFieldDecrementContext = (optional): any => {
+  const ctx = React.use(NumberFieldDecrementContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "NumberFieldDecrementContext",
+      providerName: "NumberFieldDecrement",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   NumberFieldDecrementContext as DecrementContext,

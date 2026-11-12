@@ -20,11 +20,10 @@ export type IUseRadioRootContext = IUseContext<RadioRootContext>;
 /**
  * {@link RadioRootContext} を読み取るフックです。
  */
-export const useRadioRootContext: IUseRadioRootContext = function useSuiRadioRootContext(
-  optional,
-): any {
+export const useRadioRootContext: IUseRadioRootContext = (optional): any => {
   const ctx = React.use(RadioRootContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "RadioRootContext",
       providerName: "RadioRoot",

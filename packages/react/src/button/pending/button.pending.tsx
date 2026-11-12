@@ -53,7 +53,7 @@ export type IButtonPending = IComponent<ButtonPendingProps>;
  *
  * 保留中のみ有効になります。
  */
-export const ButtonPending: IButtonPending = function SuiButtonPending(props) {
+export const ButtonPending: IButtonPending = (props) => {
   const ctx = useButtonContext();
   const { overlay = false, keepMounted = false, ...otherSpanProps } = props;
 
@@ -86,7 +86,6 @@ export const ButtonPending: IButtonPending = function SuiButtonPending(props) {
 };
 
 export { ButtonPending as Pending };
-
 export namespace Pending {
   export type State = ButtonPendingState;
 

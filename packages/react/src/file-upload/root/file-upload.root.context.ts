@@ -4,9 +4,7 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
 
-/**
- * ファイルアップロードの配色です。
- */
+/** ファイルアップロードの配色です。 */
 export type FileUploadContextColor = Color;
 
 /**
@@ -41,54 +39,34 @@ export type FileUploadContextVariant = "naked" | "liquid";
  * {@link FileUploadRoot} が子パーツへ提供する状態です。
  */
 export type FileUploadContextState = {
-  /**
-   * 選択できるファイルの種類です。
-   */
+  /** 選択できるファイルの種類です。 */
   readonly accept: string | undefined;
 
-  /**
-   * ファイルアップロードの配色です。
-   */
+  /** ファイルアップロードの配色です。 */
   readonly color: FileUploadContextColor;
 
-  /**
-   * ファイルアップロード全体を無効にするかどうかです。
-   */
+  /** ファイルアップロード全体を無効にするかどうかです。 */
   readonly disabled: boolean;
 
-  /**
-   * 選択済みのファイルのリストです。
-   */
+  /** 選択済みのファイルのリストです。 */
   readonly files: readonly File[];
 
-  /**
-   * 複数のファイルを選択できるかどうかです。
-   */
+  /** 複数のファイルを選択できるかどうかです。 */
   readonly multiple: boolean;
 
-  /**
-   * フォーム送信時に使う入力項目の名前です。
-   */
+  /** フォーム送信時に使う入力項目の名前です。 */
   readonly name: string | undefined;
 
-  /**
-   * ファイルアップロードの角丸です。
-   */
+  /** ファイルアップロードの角丸です。 */
   readonly radius: FileUploadContextRadius;
 
-  /**
-   * 必須入力かどうかです。
-   */
+  /** 必須入力かどうかです。 */
   readonly required: boolean;
 
-  /**
-   * ファイルアップロードの大きさです。
-   */
+  /** ファイルアップロードの大きさです。 */
   readonly size: FileUploadContextSize;
 
-  /**
-   * ファイルアップロードの主な外観です。
-   */
+  /** ファイルアップロードの主な外観です。 */
   readonly variant: FileUploadContextVariant;
 };
 
@@ -99,19 +77,13 @@ export type FileUploadContext = Readonly<
   Override<
     FileUploadContextState,
     {
-      /**
-       * すべての選択済みファイルを削除します。
-       */
+      /** すべての選択済みファイルを削除します。 */
       readonly clear: () => void;
 
-      /**
-       * ファイル選択ダイアログを開きます。
-       */
+      /** ファイル選択ダイアログを開きます。 */
       readonly open: () => void;
 
-      /**
-       * 指定したファイルを選択済みリストから削除します。
-       */
+      /** 指定したファイルを選択済みリストから削除します。 */
       readonly remove: (file: File) => void;
 
       /**
@@ -132,9 +104,7 @@ export type FileUploadContext = Readonly<
   >
 >;
 
-/**
- * ファイルアップロードの状態と操作を子要素へ伝播するコンテキストです。
- */
+/** ファイルアップロードの状態と操作を子要素へ伝播するコンテキストです。 */
 export const FileUploadContext: React.Context<FileUploadContext | null> =
   React.createContext<FileUploadContext | null>(null);
 
@@ -143,11 +113,10 @@ export type IUseFileUploadContext = IUseContext<FileUploadContext>;
 /**
  * {@link FileUploadContext} を読み取るフックです。
  */
-export const useFileUploadContext: IUseFileUploadContext = function useSuiFileUploadContext(
-  optional?: boolean,
-): any {
+export const useFileUploadContext: IUseFileUploadContext = (optional?: boolean): any => {
   const ctx = React.use(FileUploadContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "FileUploadContext",
       providerName: "FileUploadRoot",
@@ -158,7 +127,6 @@ export const useFileUploadContext: IUseFileUploadContext = function useSuiFileUp
 };
 
 export { FileUploadContext as Context, useFileUploadContext as useContext };
-
 export namespace Context {
   export type Color = FileUploadContextColor;
 

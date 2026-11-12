@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { AccordionContent } from "./content/accordion.content.jsx";
@@ -11,7 +11,7 @@ import "../../tests/src/_locators.js";
 
 describe("Accordion の状態", () => {
   test("ルートの render と className と style へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AccordionRoot
         size="lg"
@@ -25,7 +25,7 @@ describe("Accordion の状態", () => {
       />,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_accordion").element();
     expect(root.getAttribute("data-probe")).toBe("lg/none/true");
     expect(root.classList.contains("probe-size_lg")).toBe(true);
@@ -33,7 +33,7 @@ describe("Accordion の状態", () => {
   });
 
   test("項目の render へスタイル情報と項目の状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AccordionRoot size="lg" radius="none" separator defaultValue={["a"]}>
         <AccordionItem
@@ -53,14 +53,14 @@ describe("Accordion の状態", () => {
       </AccordionRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_accordion_item").element().getAttribute("data-probe")).toBe(
       "lg/none/true/true",
     );
   });
 
   test("見出しの render へスタイル情報と項目の状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AccordionRoot size="lg" radius="none" separator defaultValue={["a"]}>
         <AccordionItem value="a">
@@ -77,14 +77,14 @@ describe("Accordion の状態", () => {
       </AccordionRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_accordion_heading").element().getAttribute("data-probe"),
     ).toBe("lg/true");
   });
 
   test("トリガーの render へスタイル情報とトリガーの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AccordionRoot size="lg" radius="none" separator defaultValue={["a"]}>
         <AccordionItem value="a">
@@ -106,14 +106,14 @@ describe("Accordion の状態", () => {
       </AccordionRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_accordion_trigger").element().getAttribute("data-probe"),
     ).toBe("lg/true/true");
   });
 
   test("インジケーターの render へスタイル情報と項目の状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AccordionRoot size="lg" radius="none" separator defaultValue={["a"]}>
         <AccordionItem value="a">
@@ -132,14 +132,14 @@ describe("Accordion の状態", () => {
       </AccordionRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_accordion_indicator").element().getAttribute("data-probe"),
     ).toBe("lg/true");
   });
 
   test("内容の render へスタイル情報と項目の状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <AccordionRoot size="lg" radius="none" separator defaultValue={["a"]}>
         <AccordionItem value="a">
@@ -157,7 +157,7 @@ describe("Accordion の状態", () => {
       </AccordionRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_accordion_content").element().getAttribute("data-probe"),
     ).toBe("lg/none/true");

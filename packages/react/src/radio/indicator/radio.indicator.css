@@ -1,125 +1,119 @@
 @layer sui.component {
-@scope (.sui_radio_indicator) to ([data-scope]) {
+  @scope (.sui_radio_indicator) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      align-items: center;
+      justify-content: center;
+    }
 
-/* 固定 */
-:scope {
-  align-items: center;
-  justify-content: center;
-}
+    /* 可変 */
+    :scope {
+      display: var(--_sui_radio_indicator-display, var(--sui_radio_indicator-display));
+      width: var(--sui_radio_indicator-size);
+      height: var(--sui_radio_indicator-size);
+      color: var(--sui_radio_indicator-color);
+      background-color: var(--sui_radio_indicator-color);
+      border-radius: var(--sui_radio_indicator-border_radius);
+      corner-shape: var(--sui_radio_indicator-corner_shape);
 
-/* 可変 */
-:scope {
-  display: var(--_sui_radio_indicator-display, var(--sui_radio_indicator-display));
-  width: var(--sui_radio_indicator-size);
-  height: var(--sui_radio_indicator-size);
-  color: var(--sui_radio_indicator-color);
-  background-color: var(--sui_radio_indicator-color);
-  border-radius: var(--sui_radio_indicator-border_radius);
-  corner-shape: var(--sui_radio_indicator-corner_shape);
+      svg:not(.sui-ignore) {
+        width: var(--sui_radio_indicator__svg-size);
+        height: var(--sui_radio_indicator__svg-size);
+        color: var(--sui_radio_indicator__svg-color);
+      }
+    }
 
-  svg:not(.sui-ignore) {
-    width: var(--sui_radio_indicator__svg-size);
-    height: var(--sui_radio_indicator__svg-size);
-    color: var(--sui_radio_indicator__svg-color);
-  }
-}
-
-/* 変異 */
-:scope {
-  &.sui_radio_indicator-checked {
-    --_sui_radio_indicator-display: flex;
-  }
-}
-
-} /* @scope */
+    /* 変異 */
+    :scope {
+      &.sui_radio_indicator-checked {
+        --_sui_radio_indicator-display: flex;
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* 配色とサイズの指定はルートの修飾クラスに依存し、インジケーター自身には対応するクラスが無いため、ルート起点の別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_radio) to ([data-scope]) {
+  @scope (.sui_radio) to ([data-scope]) {
+    /* 変数 */
+    :scope {
+      --sui_radio_indicator-display: ;
+      --sui_radio_indicator-size: ;
+      --sui_radio_indicator-color: ;
+      --sui_radio_indicator-border_radius: ;
+      --sui_radio_indicator-corner_shape: ;
+      --sui_radio_indicator__svg-size: ;
+      --sui_radio_indicator__svg-color: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_radio_indicator-display: ;
-  --sui_radio_indicator-size: ;
-  --sui_radio_indicator-color: ;
-  --sui_radio_indicator-border_radius: ;
-  --sui_radio_indicator-corner_shape: ;
-  --sui_radio_indicator__svg-size: ;
-  --sui_radio_indicator__svg-color: ;
-}
+    /* 代入 */
+    :scope {
+      --sui_radio_indicator-display: none;
+      --sui_radio_indicator-border_radius: calc(var(--sui_radio-size) / 2);
+      --sui_radio_indicator-corner_shape: none;
+      --sui_radio_indicator__svg-size: 75%;
+      --sui_radio_indicator__svg-color: var(--sui_radio_indicator-color);
 
-/* 代入 */
-:scope {
-  --sui_radio_indicator-display: none;
-  --sui_radio_indicator-border_radius: calc(var(--sui_radio-size) / 2);
-  --sui_radio_indicator-corner_shape: none;
-  --sui_radio_indicator__svg-size: 75%;
-  --sui_radio_indicator__svg-color: var(--sui_radio_indicator-color);
+      &.sui_radio-color_grey {
+        --sui_radio_indicator-color: var(--sui-grey-solid-canvas_text-normal);
+      }
 
-  &.sui_radio-color_grey {
-    --sui_radio_indicator-color: var(--sui-grey-solid-canvas_text-normal);
-  }
+      &.sui_radio-color_blue {
+        --sui_radio_indicator-color: var(--sui-blue-solid-canvas_text-normal);
+      }
 
-  &.sui_radio-color_blue {
-    --sui_radio_indicator-color: var(--sui-blue-solid-canvas_text-normal);
-  }
+      &.sui_radio-color_purple {
+        --sui_radio_indicator-color: var(--sui-purple-solid-canvas_text-normal);
+      }
 
-  &.sui_radio-color_purple {
-    --sui_radio_indicator-color: var(--sui-purple-solid-canvas_text-normal);
-  }
+      &.sui_radio-color_magenta {
+        --sui_radio_indicator-color: var(--sui-magenta-solid-canvas_text-normal);
+      }
 
-  &.sui_radio-color_magenta {
-    --sui_radio_indicator-color: var(--sui-magenta-solid-canvas_text-normal);
-  }
+      &.sui_radio-color_red {
+        --sui_radio_indicator-color: var(--sui-red-solid-canvas_text-normal);
+      }
 
-  &.sui_radio-color_red {
-    --sui_radio_indicator-color: var(--sui-red-solid-canvas_text-normal);
-  }
+      &.sui_radio-color_orange {
+        --sui_radio_indicator-color: var(--sui-orange-solid-canvas_text-normal);
+      }
 
-  &.sui_radio-color_orange {
-    --sui_radio_indicator-color: var(--sui-orange-solid-canvas_text-normal);
-  }
+      &.sui_radio-color_yellow {
+        --sui_radio_indicator-color: var(--sui-yellow-solid-canvas_text-normal);
+      }
 
-  &.sui_radio-color_yellow {
-    --sui_radio_indicator-color: var(--sui-yellow-solid-canvas_text-normal);
-  }
+      &.sui_radio-color_green {
+        --sui_radio_indicator-color: var(--sui-green-solid-canvas_text-normal);
+      }
 
-  &.sui_radio-color_green {
-    --sui_radio_indicator-color: var(--sui-green-solid-canvas_text-normal);
-  }
+      &.sui_radio-size_sm {
+        --sui_radio_indicator-size: calc(var(--sui_radio-size) * --sui-light-dark(0.42, 0.53));
+      }
 
-  &.sui_radio-size_sm {
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * --sui-light-dark(0.42, 0.53));
-  }
+      &.sui_radio-size_md {
+        --sui_radio_indicator-size: calc(var(--sui_radio-size) * --sui-light-dark(0.42, 0.53));
+      }
 
-  &.sui_radio-size_md {
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * --sui-light-dark(0.42, 0.53));
-  }
-
-  &.sui_radio-size_lg {
-    --sui_radio_indicator-size: calc(var(--sui_radio-size) * --sui-light-dark(0.42, 0.53));
-  }
-}
-
-} /* @scope */
+      &.sui_radio-size_lg {
+        --sui_radio_indicator-size: calc(var(--sui_radio-size) * --sui-light-dark(0.42, 0.53));
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 @layer sui.important {
-@scope (.sui_radio_indicator) to ([data-scope]) {
+  @scope (.sui_radio_indicator) to ([data-scope]) {
+    :scope {
+      &.sui_radio_indicator-disabled {
+        color: var(--sui-disabled-solid-canvas_text);
+        cursor: not-allowed;
+        background-color: var(--sui-disabled-solid-canvas_text);
 
-:scope {
-  &.sui_radio_indicator-disabled {
-    color: var(--sui-disabled-solid-canvas_text);
-    cursor: not-allowed;
-    background-color: var(--sui-disabled-solid-canvas_text);
-
-    svg:not(.sui-ignore) {
-      color: var(--sui-disabled-solid-canvas_text);
+        svg:not(.sui-ignore) {
+          color: var(--sui-disabled-solid-canvas_text);
+        }
+      }
     }
-  }
-}
-
-} /* @scope */
+  } /* @scope */
 } /* @layer */

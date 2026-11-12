@@ -19,7 +19,7 @@ export namespace FieldDescriptionProps {
     Pick<
       React.ComponentProps<typeof Field.Description>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // FieldDescriptionProps より:
+      // FieldDescriptionProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -27,7 +27,7 @@ export namespace FieldDescriptionProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Field.Description>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -46,7 +46,7 @@ export type IFieldDescription = IComponent<FieldDescriptionProps>;
  *
  * 入力欄の補助情報を表示します。
  */
-export const FieldDescription: IFieldDescription = function SuiFieldDescription(props) {
+export const FieldDescription: IFieldDescription = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -69,7 +69,6 @@ export const FieldDescription: IFieldDescription = function SuiFieldDescription(
 };
 
 export { FieldDescription as Description };
-
 export namespace Description {
   export type State = FieldDescriptionState;
 

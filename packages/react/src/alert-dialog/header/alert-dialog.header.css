@@ -1,67 +1,69 @@
 @layer sui.component {
-@scope (.sui_alert_dialog_header) to ([data-scope]) {
+  @scope (.sui_alert_dialog_header) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      flex-shrink: 0;
 
-/* 固定 */
-:scope {
-  flex-shrink: 0;
+      &.sui_alert_dialog_header-variant_stacked {
+        /* 操作はヘッダーの外へ重ねるため、残る操作列の間隔を消して見出しを中央に寄せます。 */
+        column-gap: 0px;
+        text-align: center;
+      }
 
-  &.sui_alert_dialog_header-variant_stacked {
-    /* 操作はヘッダーの外へ重ねるため、残る操作列の間隔を消して見出しを中央に寄せます。 */
-    column-gap: 0px;
-    text-align: center;
-  }
+      &:has(.sui_alert_dialog_icon) {
+        grid-template-columns: auto 1fr;
+      }
 
-  &:has(.sui_alert_dialog_icon) {
-    grid-template-columns: auto 1fr;
-  }
+      &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_action) {
+        grid-template-columns: auto 1fr auto;
+      }
 
-  &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_action) {
-    grid-template-columns: auto 1fr auto;
-  }
+      /* 見出しと説明の2行にアイコンをまたがらせるため、行を明示します。 */
+      &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(
+          .sui_alert_dialog_description
+        ) {
+        grid-template-rows: auto auto;
+      }
 
-  /* 見出しと説明の2行にアイコンをまたがらせるため、行を明示します。 */
-  &:has(.sui_alert_dialog_icon):has(.sui_alert_dialog_title):has(.sui_alert_dialog_description) {
-    grid-template-rows: auto auto;
-  }
+      &:has(.sui_alert_dialog_icon) .sui_alert_dialog_icon {
+        grid-row: 1 / -1;
+        grid-column: 1;
+      }
 
-  &:has(.sui_alert_dialog_icon) .sui_alert_dialog_icon {
-    grid-row: 1 / -1;
-    grid-column: 1;
-  }
+      &:has(.sui_alert_dialog_icon) .sui_alert_dialog_title {
+        grid-column: 2;
+      }
 
-  &:has(.sui_alert_dialog_icon) .sui_alert_dialog_title {
-    grid-column: 2;
-  }
+      &:has(.sui_alert_dialog_icon) .sui_alert_dialog_description {
+        grid-column: 2;
+      }
 
-  &:has(.sui_alert_dialog_icon) .sui_alert_dialog_description {
-    grid-column: 2;
-  }
+      &:has(.sui_alert_dialog_icon) .sui_alert_dialog_action {
+        grid-column: 3;
+      }
 
-  &:has(.sui_alert_dialog_icon) .sui_alert_dialog_action {
-    grid-column: 3;
-  }
+      /* 積み上げ式ではアイコンを見出しの上へ並べます。 */
+      &.sui_alert_dialog_header-variant_stacked:has(.sui_alert_dialog_icon) {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
 
-  /* 積み上げ式ではアイコンを見出しの上へ並べます。 */
-  &.sui_alert_dialog_header-variant_stacked:has(.sui_alert_dialog_icon) {
-    grid-template-columns: 1fr;
-    justify-items: center;
-  }
+      &.sui_alert_dialog_header-variant_stacked .sui_alert_dialog_icon {
+        grid-row: 1;
+        grid-column: 1;
+      }
 
-  &.sui_alert_dialog_header-variant_stacked .sui_alert_dialog_icon {
-    grid-row: 1;
-    grid-column: 1;
-  }
+      &.sui_alert_dialog_header-variant_stacked:has(.sui_alert_dialog_icon)
+        .sui_alert_dialog_title {
+        grid-row: 2;
+        grid-column: 1;
+      }
 
-  &.sui_alert_dialog_header-variant_stacked:has(.sui_alert_dialog_icon) .sui_alert_dialog_title {
-    grid-row: 2;
-    grid-column: 1;
-  }
-
-  &.sui_alert_dialog_header-variant_stacked:has(.sui_alert_dialog_icon) .sui_alert_dialog_description {
-    grid-row: 3;
-    grid-column: 1;
-  }
-}
-
-} /* @scope */
+      &.sui_alert_dialog_header-variant_stacked:has(.sui_alert_dialog_icon)
+        .sui_alert_dialog_description {
+        grid-row: 3;
+        grid-column: 1;
+      }
+    }
+  } /* @scope */
 } /* @layer */

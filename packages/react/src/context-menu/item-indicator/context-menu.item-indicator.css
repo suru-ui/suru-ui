@@ -1,35 +1,33 @@
 @layer sui.component {
-@scope (.sui_context_menu_item_indicator) to ([data-scope]) {
+  @scope (.sui_context_menu_item_indicator) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: contents;
+    }
 
-/* 固定 */
-:scope {
-  display: contents;
-}
+    /* 変数 */
+    :scope {
+      --sui_context_menu_item_indicator-visibility: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_context_menu_item_indicator-visibility: ;
-}
+    /* 可変 */
+    :scope {
+      visibility: var(
+        --_sui_context_menu_item_indicator-visibility,
+        var(--sui_context_menu_item_indicator-visibility)
+      );
+    }
 
-/* 可変 */
-:scope {
-  visibility: var(
-              --_sui_context_menu_item_indicator-visibility,
-              var(--sui_context_menu_item_indicator-visibility)
-            );
-}
+    /* 代入 */
+    :scope {
+      --sui_context_menu_item_indicator-visibility: visible;
+    }
 
-/* 代入 */
-:scope {
-  --sui_context_menu_item_indicator-visibility: visible;
-}
-
-/* 変異 */
-:scope {
-  &.sui_context_menu_item_indicator-unchecked {
-    --_sui_context_menu_item_indicator-visibility: hidden;
-  }
-}
-
-} /* @scope */
+    /* 変異 */
+    :scope {
+      &.sui_context_menu_item_indicator-unchecked {
+        --_sui_context_menu_item_indicator-visibility: hidden;
+      }
+    }
+  } /* @scope */
 } /* @layer */

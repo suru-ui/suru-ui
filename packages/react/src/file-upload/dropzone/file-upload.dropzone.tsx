@@ -15,14 +15,10 @@ import {
 export type FileUploadDropzoneState = Override<
   FileUploadContextState,
   {
-    /**
-     * このドロップゾーンを無効にするかどうかです。
-     */
+    /** このドロップゾーンを無効にするかどうかです。 */
     readonly disabled: boolean;
 
-    /**
-     * ファイルがドラッグされているかどうかです。
-     */
+    /** ファイルがドラッグされているかどうかです。 */
     readonly dragging: boolean;
   }
 >;
@@ -36,7 +32,7 @@ export namespace FileUploadDropzoneProps {
 
   export type HTML = Omit<
     BaseUIComponentProps<"button", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -53,13 +49,11 @@ export type FileUploadDropzoneProps = FileUploadDropzoneProps.Render &
 
 export type IFileUploadDropzone = IComponent<FileUploadDropzoneProps>;
 
-/**
- * ドラッグ&ドロップを受け付ける領域です。
- */
-export const FileUploadDropzone: IFileUploadDropzone = function SuiFileUploadDropzone(props) {
+/** ドラッグ & ドロップを受け付ける領域です。 */
+export const FileUploadDropzone: IFileUploadDropzone = (props) => {
   const ctx = useFileUploadContext();
   const { disabled: disabledProp, ...otherButtonProps } = props;
-  const disabled = ctx.disabled || disabledProp || false;
+  const disabled = (ctx.disabled || disabledProp) ?? false;
   const [dragging, setDragging] = React.useState(false);
   const state = React.useMemo<FileUploadDropzoneState>(
     () => ({
@@ -99,14 +93,14 @@ export const FileUploadDropzone: IFileUploadDropzone = function SuiFileUploadDro
         disabled,
         className: cn<FileUploadDropzoneState>(
           "sui_file_upload_dropzone",
-          (state) => state.dragging && "sui_file_upload_dropzone-dragover",
-          (state) => `sui_file_upload_dropzone-size_${state.size}`,
-          (state) => `sui_file_upload_dropzone-color_${state.color}`,
-          (state) => `sui_file_upload_dropzone-radius_${state.radius}`,
-          (state) => `sui_file_upload_dropzone-variant_${state.variant}`,
-          (state) => state.disabled && "sui_file_upload_dropzone-disabled",
-          (state) => state.multiple && "sui_file_upload_dropzone-multiple",
-          (state) => state.required && "sui_file_upload_dropzone-required",
+          (currentState) => currentState.dragging && "sui_file_upload_dropzone-dragover",
+          (currentState) => `sui_file_upload_dropzone-size_${currentState.size}`,
+          (currentState) => `sui_file_upload_dropzone-color_${currentState.color}`,
+          (currentState) => `sui_file_upload_dropzone-radius_${currentState.radius}`,
+          (currentState) => `sui_file_upload_dropzone-variant_${currentState.variant}`,
+          (currentState) => currentState.disabled && "sui_file_upload_dropzone-disabled",
+          (currentState) => currentState.multiple && "sui_file_upload_dropzone-multiple",
+          (currentState) => currentState.required && "sui_file_upload_dropzone-required",
         ),
         onDragOver(event: React.DragEvent<HTMLButtonElement>) {
           event.preventDefault();
@@ -128,7 +122,6 @@ export const FileUploadDropzone: IFileUploadDropzone = function SuiFileUploadDro
 };
 
 export { FileUploadDropzone as Dropzone };
-
 export namespace Dropzone {
   export type State = FileUploadDropzoneState;
 

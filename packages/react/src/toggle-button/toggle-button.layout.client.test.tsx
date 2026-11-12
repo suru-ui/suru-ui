@@ -1,5 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "./toggle-button.parts.js";
@@ -15,7 +15,7 @@ import { ToggleButtonRoot } from "./root/toggle-button.root.jsx";
 
 describe("ToggleButtonRoot の配置", () => {
   test("公開パーツをすべて描画して余白を持たない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ToggleButtonRoot pending>
         <ToggleButtonContent>切り替え</ToggleButtonContent>
@@ -30,7 +30,7 @@ describe("ToggleButtonRoot の配置", () => {
       </ToggleButtonRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_button_content").query()).not.toBe(null);
     expect(screen.getByClassName("sui_button_pending").query()).not.toBe(null);
     expect(screen.getByClassName("sui_button_circular_progress").query()).not.toBe(null);
@@ -39,6 +39,7 @@ describe("ToggleButtonRoot の配置", () => {
     expect(screen.getByClassName("sui_button_circular_progress_fill_rotation").query()).not.toBe(
       null,
     );
+
     for (const element of screen.container.querySelectorAll<HTMLElement>(".sui_button *")) {
       const style = getComputedStyle(element);
       expect(style.marginTop).toBe("0px");
@@ -47,23 +48,35 @@ describe("ToggleButtonRoot の配置", () => {
   });
 
   test("大きさに応じた最小の高さを持つ", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span
-          style={{ height: "var(--sui-size-xs)", display: "block" }}
+          style={{
+            height: "var(--sui-size-xs)",
+            display: "block",
+          }}
           data-testid="xs-reference"
         />
         <span
-          style={{ height: "var(--sui-size-sm)", display: "block" }}
+          style={{
+            height: "var(--sui-size-sm)",
+            display: "block",
+          }}
           data-testid="sm-reference"
         />
         <span
-          style={{ height: "var(--sui-size-md)", display: "block" }}
+          style={{
+            height: "var(--sui-size-md)",
+            display: "block",
+          }}
           data-testid="md-reference"
         />
         <span
-          style={{ height: "var(--sui-size-lg)", display: "block" }}
+          style={{
+            height: "var(--sui-size-lg)",
+            display: "block",
+          }}
           data-testid="lg-reference"
         />
         <ToggleButtonRoot size="xs" data-testid="xs" />
@@ -73,7 +86,7 @@ describe("ToggleButtonRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     for (const size of ["xs", "sm", "md", "lg"] as const) {
       const height = screen.getByTestId(size).element().getBoundingClientRect().height;
       const reference = screen
@@ -85,19 +98,19 @@ describe("ToggleButtonRoot の配置", () => {
   });
 
   test("正方形では幅と高さを揃える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ToggleButtonRoot squared />);
 
-    // 検証
+    // 検証。
     const { width, height } = screen.getByClassName("sui_button").element().getBoundingClientRect();
     expect(width).toBeCloseTo(height, 1);
   });
 
   test("角丸 full は高さの半分にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ToggleButtonRoot radius="full" />);
 
-    // 検証
+    // 検証。
     const button = screen.getByClassName("sui_button").element();
     expect(Number.parseFloat(getComputedStyle(button).borderTopLeftRadius)).toBeCloseTo(
       button.getBoundingClientRect().height / 2,
@@ -106,7 +119,7 @@ describe("ToggleButtonRoot の配置", () => {
   });
 
   test("内容を中央に配置する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ToggleButtonRoot>
         <ToggleButtonContent>
@@ -115,12 +128,13 @@ describe("ToggleButtonRoot の配置", () => {
       </ToggleButtonRoot>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_button").element();
     const rootStyle = getComputedStyle(root);
     expect(rootStyle.display).toBe("inline-flex");
     expect(rootStyle.alignItems).toBe("center");
     expect(rootStyle.justifyContent).toBe("center");
+
     const content = screen.getByClassName("sui_button_content").element();
     const contentRect = content.getBoundingClientRect();
     const textRect = screen.getByText("切り替え").element().getBoundingClientRect();
@@ -135,7 +149,7 @@ describe("ToggleButtonRoot の配置", () => {
   });
 
   test("Button と同じ余白と行の高さを持つ", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ButtonRoot size="md" data-testid="button">
@@ -147,7 +161,7 @@ describe("ToggleButtonRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const button = getComputedStyle(screen.getByTestId("button").element());
     const toggle = getComputedStyle(screen.getByTestId("toggle").element());
     expect(toggle.paddingInlineStart).toBe(button.paddingInlineStart);
@@ -159,7 +173,7 @@ describe("ToggleButtonRoot の配置", () => {
   });
 
   test("保留中はオーバーレイで内容を隠す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ToggleButtonRoot pending>
         <ToggleButtonContent>切り替え</ToggleButtonContent>
@@ -172,12 +186,14 @@ describe("ToggleButtonRoot の配置", () => {
       </ToggleButtonRoot>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_button").element();
     const content = screen.getByClassName("sui_button_content").element();
     expect(getComputedStyle(content).visibility).toBe("hidden");
+
     const pending = screen.getByClassName("sui_button_pending").element();
     expect(getComputedStyle(pending).position).toBe("absolute");
+
     const rootRect = root.getBoundingClientRect();
     const progressRect = screen
       .getByClassName("sui_button_circular_progress")
@@ -194,7 +210,7 @@ describe("ToggleButtonRoot の配置", () => {
   });
 
   test("枠線を表示しても高さを変えない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ToggleButtonRoot data-testid="plain" />
@@ -202,7 +218,7 @@ describe("ToggleButtonRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByTestId("outlined").element().getBoundingClientRect().height).toBeCloseTo(
       screen.getByTestId("plain").element().getBoundingClientRect().height,
       1,
@@ -210,31 +226,32 @@ describe("ToggleButtonRoot の配置", () => {
   });
 
   test("outlined では枠線を表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ToggleButtonRoot outlined />);
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(screen.getByClassName("sui_button").element());
     expect(style.borderTopStyle).toBe("solid");
     expect(Number.parseFloat(style.borderTopWidth)).toBeGreaterThan(0);
   });
 
   test("通常のトグルボタンはフォーカス時に焦点リングを表示する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(<ToggleButtonRoot>切り替え</ToggleButtonRoot>);
     const button = screen.getByClassName("sui_button").element();
 
-    // 実行
+    // 実行。
     button.focus({ focusVisible: true });
 
-    // 検証
+    // 検証。
     expect(button.classList.contains("sui_button-item")).toBe(false);
+
     const style = getComputedStyle(button);
     expect(Number.parseFloat(style.outlineWidth)).toBeGreaterThan(0);
   });
 
   test("押下状態でないときは grey の liquid 配色を背景へ適用する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span style={{ backgroundColor: "var(--sui-grey-liquid-canvas-normal)" }}>基準</span>
@@ -242,14 +259,14 @@ describe("ToggleButtonRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByText("基準").element()).backgroundColor;
     const button = getComputedStyle(screen.getByClassName("sui_button").element());
     expect(button.backgroundColor).toBe(expected);
   });
 
   test("押下状態では solid の配色を背景と文字へ適用する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span
@@ -266,7 +283,7 @@ describe("ToggleButtonRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByText("基準").element());
     const button = getComputedStyle(screen.getByClassName("sui_button").element());
     expect(button.color).toBe(expected.color);

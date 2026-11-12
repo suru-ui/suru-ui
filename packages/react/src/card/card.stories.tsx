@@ -135,7 +135,10 @@ export const WithImage = meta.story({
             alt="イベントのカバー画像"
             fit="cover"
             src={LANDSCAPE_IMAGE}
-            style={{ width: "100%", height: 180 }}
+            style={{
+              width: "100%",
+              height: 180,
+            }}
           />
           <CardPartsHeader>
             <CardPartsTitle>{props.title}</CardPartsTitle>

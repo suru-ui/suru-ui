@@ -1,56 +1,50 @@
 /* アイコンは 2 つのパスクラスで構成され共通の基底クラスが無いため、ルート起点の別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_checkbox) to ([data-scope]) {
+  @scope (.sui_checkbox) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      .sui_checkbox_icon-check,
+      .sui_checkbox_icon-dash {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
 
-/* 固定 */
-:scope {
-  .sui_checkbox_icon-check,
-  .sui_checkbox_icon-dash {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
+    /* 変数 */
+    :scope {
+      --sui_checkbox_icon-check-display: ;
+      --sui_checkbox_icon-dash-display: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_checkbox_icon-check-display: ;
-  --sui_checkbox_icon-dash-display: ;
-}
+    /* 可変 */
+    :scope {
+      .sui_checkbox_icon-check {
+        display: var(--_sui_checkbox_icon-check-display, var(--sui_checkbox_icon-check-display));
+      }
 
-/* 可変 */
-:scope {
-  .sui_checkbox_icon-check {
-    display: var(--_sui_checkbox_icon-check-display,
-               var(--sui_checkbox_icon-check-display)
-             );
-  }
+      .sui_checkbox_icon-dash {
+        display: var(--_sui_checkbox_icon-dash-display, var(--sui_checkbox_icon-dash-display));
+      }
+    }
 
-  .sui_checkbox_icon-dash {
-    display: var(--_sui_checkbox_icon-dash-display,
-               var(--sui_checkbox_icon-dash-display)
-             );
-  }
-}
+    /* 代入 */
+    :scope {
+      --sui_checkbox_icon-check-display: none;
+      --sui_checkbox_icon-dash-display: none;
+    }
 
-/* 代入 */
-:scope {
-  --sui_checkbox_icon-check-display: none;
-  --sui_checkbox_icon-dash-display: none;
-}
+    /* 変異 */
+    :scope {
+      &.sui_checkbox-checked {
+        --_sui_checkbox_icon-check-display: inline;
+        --_sui_checkbox_icon-dash-display: none;
+      }
 
-/* 変異 */
-:scope {
-  &.sui_checkbox-checked {
-    --_sui_checkbox_icon-check-display: inline;
-    --_sui_checkbox_icon-dash-display: none;
-  }
-
-  &.sui_checkbox-indeterminate {
-    --_sui_checkbox_icon-check-display: none;
-    --_sui_checkbox_icon-dash-display: inline;
-  }
-}
-
-} /* @scope */
+      &.sui_checkbox-indeterminate {
+        --_sui_checkbox_icon-check-display: none;
+        --_sui_checkbox_icon-dash-display: inline;
+      }
+    }
+  } /* @scope */
 } /* @layer */

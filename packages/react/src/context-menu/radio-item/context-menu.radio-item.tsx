@@ -13,14 +13,10 @@ import { getItemVariant } from "../_context-menu.utils.jsx";
 import { useContextMenuContext } from "../root/context-menu.root.context.js";
 import { ContextMenuRadioItemContext } from "./context-menu.radio-item.context.js";
 
-/**
- * ラジオ項目の配色です。
- */
+/** ラジオ項目の配色です。 */
 export type ContextMenuRadioItemColor = Button.Root.Color;
 
-/**
- * ラジオ項目の角丸です。
- */
+/** ラジオ項目の角丸です。 */
 export type ContextMenuRadioItemRadius = Button.Root.Radius;
 
 /**
@@ -73,9 +69,9 @@ export namespace ContextMenuRadioItemProps {
       Pick<
         React.ComponentProps<typeof ContextMenu.RadioItem>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // NonNativeButtonProps より:
+        // NonNativeButtonProps より :
         | keyof NonNativeButtonProps
-        // MenuRadioItemProps より:
+        // MenuRadioItemProps より :
         | "value"
         | "onClick"
         | "disabled"
@@ -103,10 +99,8 @@ export type ContextMenuRadioItemProps = ContextMenuRadioItemProps.Render &
 
 export type IContextMenuRadioItem = IComponent<ContextMenuRadioItemProps>;
 
-/**
- * ラジオグループ内のコンテキストメニュー項目です。
- */
-export const ContextMenuRadioItem: IContextMenuRadioItem = function SuiContextMenuRadioItem(props) {
+/** ラジオグループ内のコンテキストメニュー項目です。 */
+export const ContextMenuRadioItem: IContextMenuRadioItem = (props) => {
   const ctx = useContextMenuContext();
   const {
     id,
@@ -164,15 +158,19 @@ export const ContextMenuRadioItem: IContextMenuRadioItem = function SuiContextMe
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, ContextMenuRadioItemState>(
-                (state) => ({ ...ctx, ...state, ...itemState }),
+                (state) => ({
+                  ...ctx,
+                  ...state,
+                  ...itemState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <ContextMenuRadioItemContext value={state}>
                       <RenderElement
                         state={state}
                         render={render ?? <div />}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="div"
                       />
                     </ContextMenuRadioItemContext>
@@ -200,7 +198,6 @@ export const ContextMenuRadioItem: IContextMenuRadioItem = function SuiContextMe
 };
 
 export { ContextMenuRadioItem as RadioItem };
-
 export namespace RadioItem {
   export type State<TItem = any> = ContextMenuRadioItemState<TItem>;
 

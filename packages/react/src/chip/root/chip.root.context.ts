@@ -4,9 +4,7 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { IUseContext } from "../../types.js";
 
-/**
- * チップの配色です。
- */
+/** チップの配色です。 */
 export type ChipContextColor = Color;
 
 /**
@@ -43,35 +41,23 @@ export type ChipContextVariant = ColorTemplate;
  * {@link ChipRoot} が提供する状態です。
  */
 export type ChipContext = {
-  /**
-   * チップの色です。
-   */
+  /** チップの色です。 */
   readonly color: ChipContextColor;
 
-  /**
-   * チップに枠線を表示するかどうかです。
-   */
+  /** チップに枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * チップの角丸の大きさです。
-   */
+  /** チップの角丸の大きさです。 */
   readonly radius: ChipContextRadius;
 
-  /**
-   * チップの大きさです。
-   */
+  /** チップの大きさです。 */
   readonly size: ChipContextSize;
 
-  /**
-   * チップの主な外観です。
-   */
+  /** チップの主な外観です。 */
   readonly variant: ChipContextVariant;
 };
 
-/**
- * チップの見た目を子孫へ伝播するコンテキストです。
- */
+/** チップの見た目を子孫へ伝播するコンテキストです。 */
 export const ChipContext: React.Context<ChipContext | null> =
   React.createContext<ChipContext | null>(null);
 
@@ -80,9 +66,10 @@ export type IUseChipContext = IUseContext<ChipContext>;
 /**
  * {@link ChipContext} を読み取るフックです。
  */
-export const useChipContext: IUseChipContext = function useSuiChipContext(optional?: boolean): any {
+export const useChipContext: IUseChipContext = (optional?: boolean): any => {
   const ctx = React.use(ChipContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "ChipContext",
       providerName: "ChipRoot",
@@ -93,7 +80,6 @@ export const useChipContext: IUseChipContext = function useSuiChipContext(option
 };
 
 export { ChipContext as Context, useChipContext as useContext };
-
 export namespace Context {
   export type Color = ChipContextColor;
 

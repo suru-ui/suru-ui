@@ -41,29 +41,50 @@ type NavItem = {
 };
 
 const PLATFORM_NAV: readonly NavItem[] = [
-  { href: "#dashboard", icon: LayoutDashboardIcon, label: "ダッシュボード", active: true },
-  { href: "#projects", icon: FolderKanbanIcon, label: "プロジェクト" },
-  { href: "#members", icon: UsersIcon, label: "メンバー" },
+  {
+    href: "#dashboard",
+    icon: LayoutDashboardIcon,
+    label: "ダッシュボード",
+    active: true,
+  },
+  {
+    href: "#projects",
+    icon: FolderKanbanIcon,
+    label: "プロジェクト",
+  },
+  {
+    href: "#members",
+    icon: UsersIcon,
+    label: "メンバー",
+  },
 ];
 
 const ACCOUNT_NAV: readonly NavItem[] = [
-  { href: "#settings", icon: SettingsIcon, label: "設定" },
-  { href: "#security", icon: ShieldCheckIcon, label: "セキュリティー" },
-  { href: "#help", icon: CircleHelpIcon, label: "ヘルプ" },
+  {
+    href: "#settings",
+    icon: SettingsIcon,
+    label: "設定",
+  },
+  {
+    href: "#security",
+    icon: ShieldCheckIcon,
+    label: "セキュリティー",
+  },
+  {
+    href: "#help",
+    icon: CircleHelpIcon,
+    label: "ヘルプ",
+  },
 ];
 
-/**
- * アイコン折りたたみ中かどうかを返します。
- */
+/** アイコン折りたたみ中かどうかを返します。 */
 function useIconOnly(): boolean {
   const ctx = Sidebar.useContext();
 
   return ctx.collapsible === "icon" && ctx.state === "collapsed";
 }
 
-/**
- * サイドバーの項目です。アイコン折りたたみ中はラベルを読み上げ用に残します。
- */
+/** サイドバーの項目です。アイコン折りたたみ中はラベルを読み上げ用に残します。 */
 function NavLink({ href, icon: Icon, label, active }: NavItem) {
   const iconOnly = useIconOnly();
 
@@ -74,11 +95,11 @@ function NavLink({ href, icon: Icon, label, active }: NavItem) {
       className={cn(
         "flex h-8 items-center gap-2 rounded-md px-2 text-sm transition-colors",
         iconOnly && "justify-center px-0",
-        active
+        active === true
           ? "bg-canvas-2 font-medium text-canvas_text-1"
           : "text-canvas_text-2 hover:bg-canvas-2 hover:text-canvas_text-1",
       )}
-      aria-current={active ? "page" : undefined}
+      aria-current={active === true ? "page" : undefined}
     >
       <Icon className="size-4 shrink-0" />
       <span className={iconOnly ? "sr-only" : "truncate"}>{label}</span>
@@ -86,9 +107,7 @@ function NavLink({ href, icon: Icon, label, active }: NavItem) {
   );
 }
 
-/**
- * 関連する項目をまとめたグループです。
- */
+/** 関連する項目をまとめたグループです。 */
 function NavGroup({
   items,
   label,
@@ -110,9 +129,7 @@ function NavGroup({
   );
 }
 
-/**
- * ワークスペースを切り替えるメニューです。
- */
+/** ワークスペースを切り替えるメニューです。 */
 function WorkspaceSwitcher() {
   const iconOnly = useIconOnly();
 
@@ -146,16 +163,21 @@ function WorkspaceSwitcher() {
   );
 }
 
-/**
- * ログイン中のユーザーを表示するメニューです。
- */
+/** ログイン中のユーザーを表示するメニューです。 */
 function UserMenu() {
   const iconOnly = useIconOnly();
 
   return (
     <Menu
       size="sm"
-      items={[{ label: "アカウント" }, { label: "請求" }, { color: "red", label: "ログアウト" }]}
+      items={[
+        { label: "アカウント" },
+        { label: "請求" },
+        {
+          color: "red",
+          label: "ログアウト",
+        },
+      ]}
       trigger={
         <button
           type="button"
@@ -182,34 +204,59 @@ function UserMenu() {
   );
 }
 
-/**
- * メインコンテンツの上部に表示するツールバーです。
- */
+/** メインコンテンツの上部に表示するツールバーです。 */
 function InsetHeader() {
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b border-border-1 px-4">
       <Sidebar.Trigger />
       <span className="h-4 w-px bg-border-1" />
-      <Breadcrumb items={[{ href: "#", label: "ホーム" }, { label: "ダッシュボード" }]} />
+      <Breadcrumb
+        items={[
+          {
+            href: "#",
+            label: "ホーム",
+          },
+          { label: "ダッシュボード" },
+        ]}
+      />
     </header>
   );
 }
 
 const STATS = [
-  { label: "進行中", value: "12" },
-  { label: "レビュー待ち", value: "4" },
-  { label: "完了", value: "38" },
+  {
+    label: "進行中",
+    value: "12",
+  },
+  {
+    label: "レビュー待ち",
+    value: "4",
+  },
+  {
+    label: "完了",
+    value: "38",
+  },
 ] as const;
 
 const ACTIVITIES = [
-  { time: "5分前", actor: "鈴木 花子", action: "「デザインシステム」を更新しました" },
-  { time: "1時間前", actor: "佐藤 次郎", action: "「モバイルアプリ」にコメントしました" },
-  { time: "昨日", actor: "田中 太郎", action: "「Web サイト」を完了にしました" },
+  {
+    time: "5分前",
+    actor: "鈴木 花子",
+    action: "「デザインシステム」を更新しました",
+  },
+  {
+    time: "1時間前",
+    actor: "佐藤 次郎",
+    action: "「モバイルアプリ」にコメントしました",
+  },
+  {
+    time: "昨日",
+    actor: "田中 太郎",
+    action: "「Web サイト」を完了にしました",
+  },
 ] as const;
 
-/**
- * サイドバーの横に表示するダッシュボードの内容です。
- */
+/** サイドバーの横に表示するダッシュボードの内容です。 */
 function DashboardContent() {
   return (
     <div className="flex-1 overflow-auto p-4">
@@ -270,16 +317,14 @@ function DashboardContent() {
 }
 
 type AppSidebarProps = Pick<SidebarProps, "defaultOpen" | "onOpenChange" | "open"> & {
+  readonly side?: SidebarSide | undefined;
+  readonly header?: React.ReactNode | undefined;
+  readonly variant?: SidebarVariant | undefined;
   readonly className?: string | undefined;
   readonly collapsible?: SidebarCollapsible | undefined;
-  readonly header?: React.ReactNode | undefined;
-  readonly side?: SidebarSide | undefined;
-  readonly variant?: SidebarVariant | undefined;
 };
 
-/**
- * 実際のアプリケーションに近い構成のサイドバーです。
- */
+/** 実際のアプリケーションに近い構成のサイドバーです。 */
 function AppSidebar({
   open,
   side = "left",
@@ -435,14 +480,12 @@ export const Closed = meta.story({
   },
 });
 
-/**
- * `useSidebar` 相当のフックを使って独自の開閉ボタンを描画します。
- */
+/** `useSidebar` 相当のフックを使って独自の開閉ボタンを描画します。 */
 function CustomTriggerButton() {
   const { open, toggle } = Sidebar.useContext();
 
   return (
-    <Button size="sm" onClick={toggle} variant="liquid">
+    <Button size="sm" variant="liquid" onClick={toggle}>
       <PanelLeftIcon />
       {open ? "サイドバーを閉じる" : "サイドバーを開く"}
     </Button>

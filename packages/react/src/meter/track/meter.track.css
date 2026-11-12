@@ -1,100 +1,96 @@
 @layer sui.component {
-@scope (.sui_meter_track) to ([data-scope]) {
+  @scope (.sui_meter_track) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: relative;
+      grid-column: 1 / -1;
+      width: 100%;
+      overflow: hidden;
+      border-style: solid;
+    }
 
-/* 固定 */
-:scope {
-  position: relative;
-  grid-column: 1 / -1;
-  width: 100%;
-  overflow: hidden;
-  border-style: solid;
-}
-
-/* 可変 */
-:scope {
-  height: var(--sui_meter_track-height);
-  background-color: var(--sui_meter_track-background_color);
-  border-color: var(--_sui_meter_track-border_color, transparent);
-  border-width: var(--_sui_meter_track-border_width, 0px);
-  border-radius: var(--sui_meter_track-border_radius);
-  corner-shape: var(--sui_meter_track-corner_shape);
-}
-
-} /* @scope */
+    /* 可変 */
+    :scope {
+      height: var(--sui_meter_track-height);
+      background-color: var(--sui_meter_track-background_color);
+      border-color: var(--_sui_meter_track-border_color, transparent);
+      border-width: var(--_sui_meter_track-border_width, 0px);
+      border-radius: var(--sui_meter_track-border_radius);
+      corner-shape: var(--sui_meter_track-corner_shape);
+    }
+  } /* @scope */
 } /* @layer */
 
 /* 寸法・角丸・配色の代入はルートの size・radius・variant 修飾クラスに依存し、outlined の変異もルートに依存しトラック自身には対応するクラスが無いため、空宣言・代入・変異をまとめてルート起点の別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_meter) to ([data-scope]) {
+  @scope (.sui_meter) to ([data-scope]) {
+    /* 変数 */
+    :scope {
+      --sui_meter_track-height: ;
+      --sui_meter_track-background_color: ;
+      --sui_meter_track-border_color: ;
+      --sui_meter_track-border_width: ;
+      --sui_meter_track-border_radius: ;
+      --sui_meter_track-corner_shape: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_meter_track-height: ;
-  --sui_meter_track-background_color: ;
-  --sui_meter_track-border_color: ;
-  --sui_meter_track-border_width: ;
-  --sui_meter_track-border_radius: ;
-  --sui_meter_track-corner_shape: ;
-}
+    /* 代入 */
+    :scope {
+      --sui_meter_track-border_width: --sui-border_width(1);
 
-/* 代入 */
-:scope {
-  --sui_meter_track-border_width: --sui-border_width(1);
+      &.sui_meter-size_sm {
+        --sui_meter_track-height: --sui-border_width(3);
+      }
 
-  &.sui_meter-size_sm {
-    --sui_meter_track-height: --sui-border_width(3);
-  }
+      &.sui_meter-size_md {
+        --sui_meter_track-height: --sui-border_width(5);
+      }
 
-  &.sui_meter-size_md {
-    --sui_meter_track-height: --sui-border_width(5);
-  }
+      &.sui_meter-size_lg {
+        --sui_meter_track-height: --sui-border_width(7);
+      }
 
-  &.sui_meter-size_lg {
-    --sui_meter_track-height: --sui-border_width(7);
-  }
+      &.sui_meter-radius_none {
+        --sui_meter_track-border_radius: 0px;
+      }
 
-  &.sui_meter-radius_none {
-    --sui_meter_track-border_radius: 0px;
-  }
+      &.sui_meter-radius_sm {
+        --sui_meter_track-border_radius: --sui-corner_radius(1);
+        --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_meter-radius_sm {
-    --sui_meter_track-border_radius: --sui-corner_radius(1);
-    --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_meter-radius_md {
+        --sui_meter_track-border_radius: --sui-corner_radius(2);
+        --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_meter-radius_md {
-    --sui_meter_track-border_radius: --sui-corner_radius(2);
-    --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_meter-radius_lg {
+        --sui_meter_track-border_radius: --sui-corner_radius(3);
+        --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_meter-radius_lg {
-    --sui_meter_track-border_radius: --sui-corner_radius(3);
-    --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_meter-radius_full {
+        --sui_meter_track-border_radius: calc(var(--sui_meter_track-height) / 2);
+        --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_meter-radius_full {
-    --sui_meter_track-border_radius: calc(var(--sui_meter_track-height) / 2);
-    --sui_meter_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_meter-variant_naked {
+        --sui_meter_track-background_color: var(--sui-grey-naked-canvas-normal);
+        --sui_meter_track-border_color: var(--sui-border-1);
+      }
 
-  &.sui_meter-variant_naked {
-    --sui_meter_track-background_color: var(--sui-grey-naked-canvas-normal);
-    --sui_meter_track-border_color: var(--sui-border-1);
-  }
+      &.sui_meter-variant_liquid {
+        --sui_meter_track-background_color: var(--sui-grey-liquid-canvas-normal);
+        --sui_meter_track-border_color: var(--sui-border-1);
+      }
+    }
 
-  &.sui_meter-variant_liquid {
-    --sui_meter_track-background_color: var(--sui-grey-liquid-canvas-normal);
-    --sui_meter_track-border_color: var(--sui-border-1);
-  }
-}
-
-/* 変異 */
-:scope {
-  &.sui_meter-outlined .sui_meter_track {
-    --_sui_meter_track-border_color: var(--sui_meter_track-border_color);
-    --_sui_meter_track-border_width: var(--sui_meter_track-border_width);
-  }
-}
-
-} /* @scope */
+    /* 変異 */
+    :scope {
+      &.sui_meter-outlined .sui_meter_track {
+        --_sui_meter_track-border_color: var(--sui_meter_track-border_color);
+        --_sui_meter_track-border_width: var(--sui_meter_track-border_width);
+      }
+    }
+  } /* @scope */
 } /* @layer */

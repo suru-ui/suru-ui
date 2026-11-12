@@ -7,8 +7,7 @@ import {
   LabelRoot,
 } from "./label.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type LabelColor = LabelRootColor;
 
@@ -31,13 +30,13 @@ export interface IUseLabelAPI {
    * {@link LabelAPI} を作成します。
    *
    * @param props {@link Label} の props です。
+   *
    * @returns ラベルの API です
    */
   (props: LabelProps): LabelAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Label} を構成する各パーツの props を作成するための API です。
@@ -47,6 +46,7 @@ export class LabelAPI {
 
   /**
    * @param props {@link Label} の props です。
+   *
    * @internal
    */
   public constructor(props: LabelProps) {
@@ -64,21 +64,18 @@ export class LabelAPI {
 /**
  * {@link LabelAPI} を作成するフックです。
  */
-export const useLabelAPI: IUseLabelAPI = function useSuiLabelAPI(props) {
-  return new LabelAPI(props);
-};
+export const useLabelAPI: IUseLabelAPI = (props) => new LabelAPI(props);
 
 export { LabelAPI as API, useLabelAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * フォームコントロールに紐付けるラベルを表示するコンポーネントです。
  *
  * `htmlFor` でコントロールの `id` を指定するか、コントロールを子要素として配置します。
  */
-export const Label: ILabel = function SuiLabel(props) {
+export const Label: ILabel = (props) => {
   const api = useLabelAPI(props);
 
   return <LabelRoot {...api.getRootProps()} />;

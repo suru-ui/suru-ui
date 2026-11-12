@@ -19,7 +19,7 @@ export namespace ScrollAreaViewportProps {
     Pick<
       React.ComponentProps<typeof BaseScrollArea.Viewport>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ScrollAreaViewportProps より:
+      // ScrollAreaViewportProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -27,7 +27,7 @@ export namespace ScrollAreaViewportProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof BaseScrollArea.Viewport>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -41,11 +41,10 @@ export type ScrollAreaViewportProps = ScrollAreaViewportProps.Render &
 
 export type IScrollAreaViewport = IComponent<ScrollAreaViewportProps>;
 
-/**
- * コンテンツをクリップし、スクロール操作を受け付けるビューポート要素です。
- */
-export const ScrollAreaViewport: IScrollAreaViewport = function SuiScrollAreaViewport(props) {
+/** コンテンツをクリップし、スクロール操作を受け付けるビューポート要素です。 */
+export const ScrollAreaViewport: IScrollAreaViewport = (props) => {
   const { className, ...otherProps } = props;
+
   return (
     <BaseScrollArea.Viewport
       {...otherProps}
@@ -66,7 +65,6 @@ export const ScrollAreaViewport: IScrollAreaViewport = function SuiScrollAreaVie
 };
 
 export { ScrollAreaViewport as Viewport };
-
 export namespace Viewport {
   export type State = ScrollAreaViewportState;
 

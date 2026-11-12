@@ -21,18 +21,18 @@ export type IUsePopoverPositionerContext = IUseContext<PopoverPositionerContext>
 /**
  * {@link PopoverPositionerContext} を読み取るフックです。
  */
-export const usePopoverPositionerContext: IUsePopoverPositionerContext =
-  function useSuiPopoverPositionerContext(optional): any {
-    const ctx = React.use(PopoverPositionerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "PopoverPositionerContext",
-        providerName: "PopoverPositioner",
-      });
-    }
+export const usePopoverPositionerContext: IUsePopoverPositionerContext = (optional): any => {
+  const ctx = React.use(PopoverPositionerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "PopoverPositionerContext",
+      providerName: "PopoverPositioner",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   PopoverPositionerContext as PositionerContext,

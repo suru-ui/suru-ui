@@ -293,6 +293,7 @@ export const ControlledVisibility = meta.story({
   render(props) {
     const [value, setValue] = React.useState("secret123");
     const [visible, setVisible] = React.useState(false);
+
     return (
       <div className="flex flex-col gap-2">
         <PasswordField
@@ -300,15 +301,27 @@ export const ControlledVisibility = meta.story({
           value={value}
           visible={visible}
           className="w-[320px]"
-          onValueChange={(next) => setValue(next)}
+          onValueChange={(next) => {
+            setValue(next);
+          }}
           onVisibleChange={setVisible}
         />
         <span>{visible ? "表示中" : "非表示中"}</span>
         <div className="flex gap-2">
-          <button type="button" onClick={() => setVisible((prev) => !prev)}>
+          <button
+            type="button"
+            onClick={() => {
+              setVisible((prev) => !prev);
+            }}
+          >
             表示を切り替える
           </button>
-          <button type="button" onClick={() => setValue("")}>
+          <button
+            type="button"
+            onClick={() => {
+              setValue("");
+            }}
+          >
             クリア
           </button>
         </div>
@@ -435,7 +448,12 @@ export const Required = meta.story({
   }),
   render(props) {
     return (
-      <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-3">
+      <form
+        className="flex flex-col gap-3"
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <Field label="パスワード" description="空のまま送信すると枠線が赤くなります。">
           <PasswordField {...props} required className="w-[320px]" />
         </Field>
@@ -490,15 +508,16 @@ export const LoginForm = meta.story({
   }),
   render(props) {
     const [submitted, setSubmitted] = React.useState<string | null>(null);
+
     return (
       <form
+        className="flex w-[320px] flex-col gap-3"
         onSubmit={(event) => {
           event.preventDefault();
           const data = new FormData(event.currentTarget);
           const password = data.get("password");
           setSubmitted(typeof password === "string" ? password : null);
         }}
-        className="flex w-[320px] flex-col gap-3"
       >
         <Field label="パスワード" description="8 文字以上で入力します。">
           <PasswordField

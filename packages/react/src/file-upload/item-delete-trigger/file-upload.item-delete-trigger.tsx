@@ -14,9 +14,7 @@ import { useFileUploadContext } from "../root/file-upload.root.context.js";
 export type FileUploadItemDeleteTriggerState = Override<
   FileUploadItemState,
   {
-    /**
-     * このボタンを無効にするかどうかです。
-     */
+    /** このボタンを無効にするかどうかです。 */
     readonly disabled: boolean;
   }
 >;
@@ -30,7 +28,7 @@ export namespace FileUploadItemDeleteTriggerProps {
 
   export type HTML = Omit<
     BaseUIComponentProps<"button", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -46,63 +44,59 @@ export type FileUploadItemDeleteTriggerProps = FileUploadItemDeleteTriggerProps.
 
 export type IFileUploadItemDeleteTrigger = IComponent<FileUploadItemDeleteTriggerProps>;
 
-/**
- * 対象のファイルを選択済みリストから削除するボタンです。
- */
-export const FileUploadItemDeleteTrigger: IFileUploadItemDeleteTrigger =
-  function SuiFileUploadItemDeleteTrigger(props) {
-    const ctx = useFileUploadContext();
-    const itemCtx = useFileUploadItemContext();
-    const { file } = itemCtx;
-    const { disabled: disabledProp, ...otherButtonProps } = props;
-    const disabled = ctx.disabled || (disabledProp ?? false);
-    const state = React.useMemo<FileUploadItemDeleteTriggerState>(
-      () => ({
-        file: itemCtx.file,
-        name: itemCtx.name,
-        size: itemCtx.size,
-        color: itemCtx.color,
-        files: itemCtx.files,
-        accept: itemCtx.accept,
-        radius: itemCtx.radius,
-        variant: itemCtx.variant,
-        disabled,
-        multiple: itemCtx.multiple,
-        required: itemCtx.required,
-      }),
-      [disabled, itemCtx],
-    );
+/** 対象のファイルを選択済みリストから削除するボタンです。 */
+export const FileUploadItemDeleteTrigger: IFileUploadItemDeleteTrigger = (props) => {
+  const ctx = useFileUploadContext();
+  const itemCtx = useFileUploadItemContext();
+  const { file } = itemCtx;
+  const { disabled: disabledProp, ...otherButtonProps } = props;
+  const disabled = ctx.disabled || (disabledProp ?? false);
+  const state = React.useMemo<FileUploadItemDeleteTriggerState>(
+    () => ({
+      file: itemCtx.file,
+      name: itemCtx.name,
+      size: itemCtx.size,
+      color: itemCtx.color,
+      files: itemCtx.files,
+      accept: itemCtx.accept,
+      radius: itemCtx.radius,
+      variant: itemCtx.variant,
+      disabled,
+      multiple: itemCtx.multiple,
+      required: itemCtx.required,
+    }),
+    [disabled, itemCtx],
+  );
 
-    return useRender({
-      props: [
-        otherButtonProps,
-        {
-          type: "button",
-          onClick() {
-            if (!disabled) {
-              ctx.remove(file);
-            }
-          },
-          disabled,
-          className: cn<FileUploadItemDeleteTriggerState>(
-            "sui_file_upload_item_delete_trigger",
-            (state) => `sui_file_upload_item_delete_trigger-size_${state.size}`,
-            (state) => `sui_file_upload_item_delete_trigger-color_${state.color}`,
-            (state) => `sui_file_upload_item_delete_trigger-radius_${state.radius}`,
-            (state) => `sui_file_upload_item_delete_trigger-variant_${state.variant}`,
-            (state) => state.disabled && "sui_file_upload_item_delete_trigger-disabled",
-            (state) => state.multiple && "sui_file_upload_item_delete_trigger-multiple",
-            (state) => state.required && "sui_file_upload_item_delete_trigger-required",
-          ),
+  return useRender({
+    props: [
+      otherButtonProps,
+      {
+        type: "button",
+        onClick() {
+          if (!disabled) {
+            ctx.remove(file);
+          }
         },
-      ],
-      state,
-      defaultTagName: "button",
-    });
-  };
+        disabled,
+        className: cn<FileUploadItemDeleteTriggerState>(
+          "sui_file_upload_item_delete_trigger",
+          (currentState) => `sui_file_upload_item_delete_trigger-size_${currentState.size}`,
+          (currentState) => `sui_file_upload_item_delete_trigger-color_${currentState.color}`,
+          (currentState) => `sui_file_upload_item_delete_trigger-radius_${currentState.radius}`,
+          (currentState) => `sui_file_upload_item_delete_trigger-variant_${currentState.variant}`,
+          (currentState) => currentState.disabled && "sui_file_upload_item_delete_trigger-disabled",
+          (currentState) => currentState.multiple && "sui_file_upload_item_delete_trigger-multiple",
+          (currentState) => currentState.required && "sui_file_upload_item_delete_trigger-required",
+        ),
+      },
+    ],
+    state,
+    defaultTagName: "button",
+  });
+};
 
 export { FileUploadItemDeleteTrigger as ItemDeleteTrigger };
-
 export namespace ItemDeleteTrigger {
   export type State = FileUploadItemDeleteTriggerState;
 

@@ -1,5 +1,4 @@
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { TabsList } from "../list/tabs.list.jsx";
@@ -9,7 +8,7 @@ import "../../../tests/src/_locators.js";
 
 describe("TabsTab", () => {
   test("タブとして描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TabsRoot>
         <TabsList>
@@ -18,14 +17,14 @@ describe("TabsTab", () => {
       </TabsRoot>,
     );
 
-    // 検証
+    // 検証。
     const tab = screen.getByRole("tab").element();
     expect(tab.tagName).toBe("BUTTON");
     expect(tab.classList.contains("sui_tabs_tab")).toBe(true);
   });
 
   test("選択中のタブに状態クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TabsRoot defaultValue="projects">
         <TabsList>
@@ -35,7 +34,7 @@ describe("TabsTab", () => {
       </TabsRoot>,
     );
 
-    // 検証
+    // 検証。
     const active = screen.getByRole("tab", { name: "プロジェクト" }).element();
     expect(active.classList.contains("sui_tabs_tab-active")).toBe(true);
     expect(
@@ -44,7 +43,7 @@ describe("TabsTab", () => {
   });
 
   test("無効なタブに状態クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TabsRoot>
         <TabsList>
@@ -55,13 +54,13 @@ describe("TabsTab", () => {
       </TabsRoot>,
     );
 
-    // 検証
+    // 検証。
     const tab = screen.getByRole("tab", { name: "概要" }).element();
     expect(tab.classList.contains("sui_tabs_tab-disabled")).toBe(true);
   });
 
   test("render に指定した要素へ描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TabsRoot>
         <TabsList>
@@ -72,12 +71,12 @@ describe("TabsTab", () => {
       </TabsRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("tab").element().tagName).toBe("SPAN");
   });
 
   test("render と className の関数へスタイル情報とタブの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TabsRoot size="lg" defaultValue="overview">
         <TabsList>
@@ -95,7 +94,7 @@ describe("TabsTab", () => {
       </TabsRoot>,
     );
 
-    // 検証
+    // 検証。
     const tab = screen.getByRole("tab").element();
     expect(tab.tagName).toBe("SPAN");
     expect(tab.getAttribute("data-probe")).toBe("lg/true/false");

@@ -25,11 +25,10 @@ export type IUseSelectArrowContext = IUseContext<SelectArrowContext>;
 /**
  * {@link SelectArrowContext} を読み取るフックです。
  */
-export const useSelectArrowContext: IUseSelectArrowContext = function useSuiSelectArrowContext(
-  optional,
-): any {
+export const useSelectArrowContext: IUseSelectArrowContext = (optional): any => {
   const ctx = React.use(SelectArrowContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SelectArrowContext",
       providerName: "SelectArrow",

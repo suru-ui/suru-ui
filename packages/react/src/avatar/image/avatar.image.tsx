@@ -19,7 +19,7 @@ export namespace AvatarImageProps {
     Pick<
       React.ComponentProps<typeof Avatar.Image>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AvatarImageProps より:
+      // AvatarImageProps より :
       "onLoadingStatusChange"
     >,
     keyof Render | keyof SuruUI
@@ -46,7 +46,7 @@ export type IAvatarImage = IComponent<AvatarImageProps>;
  *
  * 画像の読み込みに失敗すると、{@link AvatarFallback} を表示します。
  */
-export const AvatarImage: IAvatarImage = function SuiAvatarImage(props) {
+export const AvatarImage: IAvatarImage = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -65,7 +65,6 @@ export const AvatarImage: IAvatarImage = function SuiAvatarImage(props) {
 };
 
 export { AvatarImage as Image };
-
 export namespace Image {
   export type State = AvatarImageState;
 

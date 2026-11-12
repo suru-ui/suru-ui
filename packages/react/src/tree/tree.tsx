@@ -23,8 +23,7 @@ import {
 } from "./tree.parts.js";
 import { decomposeItemObject } from "./utils/tree.utils.js";
 
-// Types
-// -----
+// Types.
 
 export type TreeColor = TreeRootColor;
 
@@ -68,9 +67,7 @@ namespace TreeProps {
   export type Root = Omit<TreeRootProps, keyof Tree>;
 
   export type Tree = {
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: TreeSlotProps | undefined;
   };
 }
@@ -87,13 +84,13 @@ export interface IUseTreeAPI {
    * {@link TreeAPI} を作成します。
    *
    * @param props {@link Tree} の props です。
+   *
    * @returns ツリーの API です
    */
   (props: TreeProps): TreeAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Tree} を構成する各パーツの props などを作成するための API です。
@@ -102,16 +99,6 @@ export class TreeAPI {
   private readonly rootProps: TreeProps.Root;
 
   private readonly slotProps: TreeSlotProps;
-
-  /**
-   * @param props {@link Tree} の props です。
-   * @internal
-   */
-  public constructor(props: TreeProps) {
-    const { slotProps = {}, ...rootProps } = props;
-    this.rootProps = rootProps;
-    this.slotProps = slotProps;
-  }
 
   private readonly defaultItemRenderer: ITreeItemRenderer = (node, level, posInSet, setSize) => {
     switch (true) {
@@ -132,6 +119,17 @@ export class TreeAPI {
         );
     }
   };
+
+  /**
+   * @param props {@link Tree} の props です。
+   *
+   * @internal
+   */
+  public constructor(props: TreeProps) {
+    const { slotProps = {}, ...rootProps } = props;
+    this.rootProps = rootProps;
+    this.slotProps = slotProps;
+  }
 
   /**
    * {@link TreeItemIndicator} に渡す props を取得します。
@@ -179,7 +177,10 @@ export class TreeAPI {
       ...mergeProps([
         props,
         itemProps,
-        { disabled: itemProps.disabled || props.disabled, hasItems },
+        {
+          disabled: itemProps.disabled ?? props.disabled,
+          hasItems,
+        },
       ]),
       id,
       level,
@@ -204,21 +205,18 @@ export class TreeAPI {
 /**
  * {@link TreeAPI} を作成するフックです。
  */
-export const useTreeAPI: IUseTreeAPI = function useSuiTreeAPI(props) {
-  return new TreeAPI(props);
-};
+export const useTreeAPI: IUseTreeAPI = (props) => new TreeAPI(props);
 
 export { TreeAPI as API, useTreeAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * 階層的な項目の一覧を表示するツリーです。
  *
  * WAI-ARIA tree パターンに従い、キーボード操作と選択と展開の状態は {@link TreeRoot} が管理します。展開されているノードだけが描画されます。
  */
-export const Tree: ITree = function SuiTree(props) {
+export const Tree: ITree = (props) => {
   const api = useTreeAPI(props);
 
   return <TreeRoot {...api.getRootProps()} />;

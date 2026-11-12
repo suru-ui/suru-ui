@@ -1,4 +1,4 @@
-import { test, describe, expectTypeOf } from "vitest";
+import { test, describe, expectTypeOf } from "vite-plus/test";
 
 import type {
   ResizableRootProps,

@@ -1,6 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "../field.parts.js";
@@ -11,7 +10,7 @@ import "../../../tests/src/_locators.js";
 
 describe("FieldItem", () => {
   test("項目としてグループ化する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FieldRoot>
         <FieldItem>
@@ -20,14 +19,14 @@ describe("FieldItem", () => {
       </FieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const item = screen.getByClassName("sui_field_item").element();
     expect(item.tagName).toBe("DIV");
     expect(item.querySelector(".sui_field_control")).not.toBe(null);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FieldRoot>
         <FieldItem render={<section />}>
@@ -36,7 +35,7 @@ describe("FieldItem", () => {
       </FieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const item = screen.getByClassName("sui_field_item").element();
     expect(item.tagName).toBe("SECTION");
   });

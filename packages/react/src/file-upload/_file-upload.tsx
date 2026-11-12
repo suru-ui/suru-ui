@@ -6,12 +6,13 @@ export const SIZE_UNITS = ["B", "KB", "MB", "GB", "TB"] as const;
 export function formatFileSize(bytes: number): string {
   let value = bytes;
   let unitIndex = 0;
+
   while (value >= 1024 && unitIndex < SIZE_UNITS.length - 1) {
     value /= 1024;
     unitIndex += 1;
   }
 
-  const formattedValue = unitIndex === 0 ? String(value) : value.toFixed(1).replace(/\.0$/, "");
+  const formattedValue = unitIndex === 0 ? String(value) : value.toFixed(1).replace(/\.0$/u, "");
 
   return `${formattedValue} ${SIZE_UNITS[unitIndex]}`;
 }
@@ -52,10 +53,10 @@ export function validateFiles(
   currentFiles: readonly File[],
   options: {
     readonly accept: string | readonly string[] | undefined;
-    readonly maxFileSize: number;
     readonly maxFiles: number;
-    readonly minFileSize: number;
     readonly multiple: boolean;
+    readonly maxFileSize: number;
+    readonly minFileSize: number;
   },
 ): {
   accepted: File[];
@@ -68,22 +69,34 @@ export function validateFiles(
 
   for (const file of incomingFiles) {
     if (!isFileAcceptable(file, options.accept)) {
-      rejected.push({ file, reason: "invalid_type" });
+      rejected.push({
+        file,
+        reason: "invalid_type",
+      });
       continue;
     }
 
     if (file.size < options.minFileSize) {
-      rejected.push({ file, reason: "min_size" });
+      rejected.push({
+        file,
+        reason: "min_size",
+      });
       continue;
     }
 
     if (file.size > options.maxFileSize) {
-      rejected.push({ file, reason: "max_size" });
+      rejected.push({
+        file,
+        reason: "max_size",
+      });
       continue;
     }
 
     if (remaining <= 0) {
-      rejected.push({ file, reason: "max_files" });
+      rejected.push({
+        file,
+        reason: "max_files",
+      });
       continue;
     }
 
@@ -95,5 +108,8 @@ export function validateFiles(
     }
   }
 
-  return { accepted, rejected };
+  return {
+    accepted,
+    rejected,
+  };
 }

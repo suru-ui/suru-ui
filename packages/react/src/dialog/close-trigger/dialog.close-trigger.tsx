@@ -15,9 +15,7 @@ export namespace DialogCloseTriggerProps {
   export type Render = Omit<RenderProps<DialogCloseTriggerState>, "render">;
 
   export type SuruUI = {
-    /**
-     * ボタンとして描画する関数です。
-     */
+    /** ボタンとして描画する関数です。 */
     children: NonNullable<RenderProps<DialogCloseTriggerState>["render"]>;
   };
 
@@ -25,9 +23,9 @@ export namespace DialogCloseTriggerProps {
     Pick<
       React.ComponentProps<typeof Dialog.Close>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // DialogCloseProps より:
+      // DialogCloseProps より :
       | never
     >,
     keyof Render | keyof SuruUI
@@ -49,10 +47,8 @@ export type DialogCloseTriggerProps = DialogCloseTriggerProps.Render &
 
 export type IDialogCloseTrigger = IComponent<DialogCloseTriggerProps>;
 
-/**
- * ダイアログを閉じるボタンコンポーネントです。
- */
-export const DialogCloseTrigger: IDialogCloseTrigger = function SuiDialogCloseTrigger(props) {
+/** ダイアログを閉じるボタンコンポーネントです。 */
+export const DialogCloseTrigger: IDialogCloseTrigger = (props) => {
   const { children, className, ...otherProps } = props;
 
   return (
@@ -69,7 +65,6 @@ export const DialogCloseTrigger: IDialogCloseTrigger = function SuiDialogCloseTr
 };
 
 export { DialogCloseTrigger as CloseTrigger };
-
 export namespace CloseTrigger {
   export type State = DialogCloseTriggerState;
 

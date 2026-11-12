@@ -21,9 +21,7 @@ export type CollapsibleContext = Readonly<
   Override<
     Collapsible.Root.State,
     {
-      /**
-       * コラプシブルの大きさです。
-       */
+      /** コラプシブルの大きさです。 */
       readonly size: CollapsibleContextSize;
     }
   >
@@ -40,11 +38,10 @@ export type IUseCollapsibleContext = IUseContext<CollapsibleContext>;
 /**
  * {@link CollapsibleContext} を読み取るフックです。
  */
-export const useCollapsibleContext: IUseCollapsibleContext = function useSuiCollapsibleContext(
-  optional,
-): any {
+export const useCollapsibleContext: IUseCollapsibleContext = (optional): any => {
   const ctx = React.use(CollapsibleContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "CollapsibleContext",
       providerName: "CollapsibleRoot",
@@ -55,7 +52,6 @@ export const useCollapsibleContext: IUseCollapsibleContext = function useSuiColl
 };
 
 export { CollapsibleContext as Context, useCollapsibleContext as useContext };
-
 export namespace Context {
   export type Size = CollapsibleContextSize;
 }

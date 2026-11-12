@@ -24,7 +24,7 @@ export namespace NumberFieldGroupProps {
     Pick<
       React.ComponentProps<typeof NumberField.Group>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NumberFieldGroupProps より:
+      // NumberFieldGroupProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -32,7 +32,7 @@ export namespace NumberFieldGroupProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof NumberField.Group>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -46,10 +46,8 @@ export type NumberFieldGroupProps = NumberFieldGroupProps.Render &
 
 export type INumberFieldGroup = IComponent<NumberFieldGroupProps>;
 
-/**
- * 入力欄と増減ボタンをまとめるグループ要素です。
- */
-export const NumberFieldGroup: INumberFieldGroup = function SuiNumberFieldGroup(props) {
+/** 入力欄と増減ボタンをまとめるグループ要素です。 */
+export const NumberFieldGroup: INumberFieldGroup = (props) => {
   const ctx = useNumberFieldContext();
   const { style, render, onClick, className, ...otherProps } = props;
   const handleClick: NonNullable<NumberFieldGroupProps["onClick"]> = (evt) => {
@@ -66,6 +64,7 @@ export const NumberFieldGroup: INumberFieldGroup = function SuiNumberFieldGroup(
     }
 
     const input = evt.currentTarget.querySelector<HTMLInputElement>(".sui_number_field_input");
+
     if (input !== null && !input.disabled) {
       input.focus();
     }
@@ -76,7 +75,10 @@ export const NumberFieldGroup: INumberFieldGroup = function SuiNumberFieldGroup(
       {...otherProps}
       onClick={handleClick}
       {...proxyRenderProps<NumberField.Group.State, NumberFieldGroupState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -116,7 +118,6 @@ export const NumberFieldGroup: INumberFieldGroup = function SuiNumberFieldGroup(
 };
 
 export { NumberFieldGroup as Group };
-
 export namespace Group {
   export type State = NumberFieldGroupState;
 

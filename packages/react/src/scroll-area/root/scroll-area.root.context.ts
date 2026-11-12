@@ -20,17 +20,17 @@ export type IUseScrollAreaRootContext = IUseContext<ScrollAreaRootContext>;
 /**
  * {@link ScrollAreaRootContext} を読み取るフックです。
  */
-export const useScrollAreaRootContext: IUseScrollAreaRootContext =
-  function useSuiScrollAreaRootContext(optional): any {
-    const ctx = React.use(ScrollAreaRootContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ScrollAreaRootContext",
-        providerName: "ScrollAreaRoot",
-      });
-    }
+export const useScrollAreaRootContext: IUseScrollAreaRootContext = (optional): any => {
+  const ctx = React.use(ScrollAreaRootContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ScrollAreaRootContext",
+      providerName: "ScrollAreaRoot",
+    });
+  }
+
+  return ctx;
+};
 
 export { ScrollAreaRootContext as RootContext, useScrollAreaRootContext as useRootContext };

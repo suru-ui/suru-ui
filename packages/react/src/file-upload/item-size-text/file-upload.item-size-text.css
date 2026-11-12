@@ -1,35 +1,33 @@
 @layer sui.component {
-@scope (.sui_file_upload_item_size_text) to ([data-scope]) {
+  @scope (.sui_file_upload_item_size_text) to ([data-scope]) {
+    /* 変数 */
+    :scope {
+      --sui_file_upload_item_size_text-font_family: ;
+      --sui_file_upload_item_size_text-font_size: ;
+      --sui_file_upload_item_size_text-font_weight: ;
+      --sui_file_upload_item_size_text-line_height: ;
+      --sui_file_upload_item_size_text-color: ;
+      --sui_file_upload_item_size_text-letter_spacing: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_file_upload_item_size_text-font_family: ;
-  --sui_file_upload_item_size_text-font_size: ;
-  --sui_file_upload_item_size_text-font_weight: ;
-  --sui_file_upload_item_size_text-line_height: ;
-  --sui_file_upload_item_size_text-color: ;
-  --sui_file_upload_item_size_text-letter_spacing: ;
-}
+    /* 可変 */
+    :scope {
+      font-family: var(--sui_file_upload_item_size_text-font_family);
+      font-size: var(--sui_file_upload_item_size_text-font_size);
+      font-weight: var(--sui_file_upload_item_size_text-font_weight);
+      line-height: var(--sui_file_upload_item_size_text-line_height);
+      color: var(--sui_file_upload_item_size_text-color);
+      letter-spacing: var(--sui_file_upload_item_size_text-letter_spacing);
+    }
 
-/* 可変 */
-:scope {
-  font-family: var(--sui_file_upload_item_size_text-font_family);
-  font-size: var(--sui_file_upload_item_size_text-font_size);
-  font-weight: var(--sui_file_upload_item_size_text-font_weight);
-  line-height: var(--sui_file_upload_item_size_text-line_height);
-  color: var(--sui_file_upload_item_size_text-color);
-  letter-spacing: var(--sui_file_upload_item_size_text-letter_spacing);
-}
-
-/* 代入 */
-:scope {
-  --sui_file_upload_item_size_text-font_family: var(--sui-font-sans);
-  --sui_file_upload_item_size_text-font_size: var(--sui-text-oln-sm-n-font_size);
-  --sui_file_upload_item_size_text-font_weight: var(--sui-text-oln-sm-n-font_weight);
-  --sui_file_upload_item_size_text-line_height: var(--sui-text-oln-sm-n-line_height);
-  --sui_file_upload_item_size_text-color: var(--sui-canvas_text-2);
-  --sui_file_upload_item_size_text-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_file_upload_item_size_text-font_family: var(--sui-font-sans);
+      --sui_file_upload_item_size_text-font_size: var(--sui-text-oln-sm-n-font_size);
+      --sui_file_upload_item_size_text-font_weight: var(--sui-text-oln-sm-n-font_weight);
+      --sui_file_upload_item_size_text-line_height: var(--sui-text-oln-sm-n-line_height);
+      --sui_file_upload_item_size_text-color: var(--sui-canvas_text-2);
+      --sui_file_upload_item_size_text-letter_spacing: var(--sui-text-oln-sm-n-letter_spacing);
+    }
+  } /* @scope */
 } /* @layer */

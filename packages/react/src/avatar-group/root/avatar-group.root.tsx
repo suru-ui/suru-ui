@@ -121,7 +121,7 @@ const colors = /*#__PURE__*/ COLORS.filter((color) => color !== "grey");
  *
  * 大きさ・色・角丸をコンテキストで子のアバターへ伝播します。
  */
-export const AvatarGroupRoot: IAvatarGroupRoot = function SuiAvatarGroupRoot(props) {
+export const AvatarGroupRoot: IAvatarGroupRoot = (props) => {
   const {
     size = "md",
     color = "auto",
@@ -129,12 +129,17 @@ export const AvatarGroupRoot: IAvatarGroupRoot = function SuiAvatarGroupRoot(pro
     reverse = false,
     children: childrenProp,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
   const ctx = React.useMemo<AvatarGroupRootState>(
-    () => ({ size, color, radius, reverse }),
+    () => ({
+      size,
+      color,
+      radius,
+      reverse,
+    }),
     [size, color, radius, reverse],
   );
   const children = React.Children.map(childrenProp, (child, i) => {
@@ -177,7 +182,6 @@ export const AvatarGroupRoot: IAvatarGroupRoot = function SuiAvatarGroupRoot(pro
 };
 
 export { AvatarGroupRoot as Root };
-
 export namespace Root {
   export type State = AvatarGroupRootState;
 

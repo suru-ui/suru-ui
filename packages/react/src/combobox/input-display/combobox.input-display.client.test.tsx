@@ -1,5 +1,5 @@
 import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { defaultItemToStringLabel } from "../../_item.js";
@@ -25,45 +25,46 @@ function Provider(props: {
     outlined: false,
     itemToStringLabel: props.itemToStringLabel ?? defaultItemToStringLabel,
   };
+
   return <ComboboxContextValue value={ctx}>{props.children}</ComboboxContextValue>;
 }
 
 describe("ComboboxInputDisplay", () => {
   test("値を表示ラベルに変換する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Provider>
         <ComboboxInputDisplay value="りんご" placeholder="選択" />
       </Provider>,
     );
 
-    // 検証
+    // 検証。
     const display = screen.getByText("りんご").query();
     expect(display?.textContent).toBe("りんご");
   });
 
   test("値が空のときは代替文字列を表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Provider>
         <ComboboxInputDisplay placeholder="選択" />
       </Provider>,
     );
 
-    // 検証
+    // 検証。
     const display = screen.getByText("選択").query();
     expect(display?.textContent).toBe("選択");
   });
 
   test("変換関数を指定できる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Provider itemToStringLabel={(item) => `果物:${item}`}>
         <ComboboxInputDisplay value="りんご" />
       </Provider>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByText("果物:りんご").query()?.textContent).toBe("果物:りんご");
   });
 });

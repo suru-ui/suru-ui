@@ -49,6 +49,7 @@ export interface IMenuPopupItemRenderer<TItem = any> {
    * @param item 現在の項目です。
    * @param index 項目のインデックスです。
    * @param items すべての項目です。
+   *
    * @returns レンダリングする内容です。
    */
   (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
@@ -75,7 +76,7 @@ export namespace MenuPopupProps {
     Pick<
       React.ComponentProps<typeof Menu.Popup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuPopupProps より:
+      // MenuPopupProps より :
       "id" | "finalFocus"
     >,
     keyof Render | keyof SuruUI
@@ -102,46 +103,50 @@ export interface IMenuPopup extends IComponent<MenuPopupProps> {
   <TItem = any>(props: MenuPopupProps<TItem>): IComponent.Return;
 }
 
-/**
- * メニュー項目を表示するコンテンツ要素です。
- */
-export const MenuPopup: IMenuPopup = function SuiMenuPopup(props: MenuPopupProps) {
+/** メニュー項目を表示するコンテンツ要素です。 */
+export const MenuPopup: IMenuPopup = (props: MenuPopupProps) => {
   const ctx = usePositionerContext();
   const { style, render, children = defaultItemRenderer, className, ...otherProps } = props;
 
   return (
     <Menu.Popup
       {...otherProps}
-      {...proxyRenderProps<Menu.Popup.State, MenuPopupState>((state) => ({ ...ctx, ...state }), {
-        style,
-        render: (htmlProps, state) => (
-          <MenuPopupContext value={state}>
-            <RenderElement
-              state={state}
-              render={render}
-              htmlProps={htmlProps}
-              defaultTagName="div"
-            />
-          </MenuPopupContext>
-        ),
-        className: cn<MenuPopupState>(
-          className,
-          "sui_menu_popup",
-          (state) =>
-            state.transitionStatus !== undefined &&
-            `sui_menu_popup-transition_status_${state.transitionStatus}`,
-          (state) => `sui_menu_popup-size_${state.size}`,
-          (state) => `sui_menu_popup-radius_${state.radius}`,
-          (state) => `sui_menu_popup-variant_${state.variant}`,
-          (state) => state.outlined && "sui_menu_popup-outlined",
-          (state) => state.open && "sui_menu_popup-open",
-          (state) => state.anchorHidden && "sui_menu_popup-anchor_hidden",
-          (state) => state.nested && "sui_menu_popup-nested",
-          (state) => state.instant && "sui_menu_popup-instant",
-          (state) => `sui_menu_popup-side_${state.side.replaceAll("-", "_")}`,
-          (state) => `sui_menu_popup-align_${state.align}`,
-        ),
-      })}
+      {...proxyRenderProps<Menu.Popup.State, MenuPopupState>(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <MenuPopupContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="div"
+              />
+            </MenuPopupContext>
+          ),
+          className: cn<MenuPopupState>(
+            className,
+            "sui_menu_popup",
+            (state) =>
+              state.transitionStatus !== undefined &&
+              `sui_menu_popup-transition_status_${state.transitionStatus}`,
+            (state) => `sui_menu_popup-size_${state.size}`,
+            (state) => `sui_menu_popup-radius_${state.radius}`,
+            (state) => `sui_menu_popup-variant_${state.variant}`,
+            (state) => state.outlined && "sui_menu_popup-outlined",
+            (state) => state.open && "sui_menu_popup-open",
+            (state) => state.anchorHidden && "sui_menu_popup-anchor_hidden",
+            (state) => state.nested && "sui_menu_popup-nested",
+            (state) => state.instant && "sui_menu_popup-instant",
+            (state) => `sui_menu_popup-side_${state.side.replaceAll("-", "_")}`,
+            (state) => `sui_menu_popup-align_${state.align}`,
+          ),
+        },
+      )}
     >
       {typeof children === "function" ? ctx.items.map(children) : children}
     </Menu.Popup>
@@ -149,7 +154,6 @@ export const MenuPopup: IMenuPopup = function SuiMenuPopup(props: MenuPopupProps
 };
 
 export { MenuPopup as Popup };
-
 export namespace Popup {
   export type State<TItem = any> = MenuPopupState<TItem>;
 

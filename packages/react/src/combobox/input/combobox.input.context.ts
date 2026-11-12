@@ -25,17 +25,17 @@ export type IUseComboboxInputContext = IUseContext<ComboboxInputContext>;
 /**
  * {@link ComboboxInputContext} を読み取るフックです。
  */
-export const useComboboxInputContext: IUseComboboxInputContext =
-  function useSuiComboboxInputContext(optional): any {
-    const ctx = React.use(ComboboxInputContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ComboboxInputContext",
-        providerName: "ComboboxInput",
-      });
-    }
+export const useComboboxInputContext: IUseComboboxInputContext = (optional): any => {
+  const ctx = React.use(ComboboxInputContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ComboboxInputContext",
+      providerName: "ComboboxInput",
+    });
+  }
+
+  return ctx;
+};
 
 export { ComboboxInputContext as InputContext, useComboboxInputContext as useInputContext };

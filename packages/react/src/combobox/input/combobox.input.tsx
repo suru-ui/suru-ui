@@ -25,7 +25,7 @@ export namespace ComboboxInputProps {
     Pick<
       React.ComponentProps<typeof Combobox.Input>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxInputProps より:
+      // ComboboxInputProps より :
       "disabled"
     >,
     keyof Render | keyof SuruUI
@@ -47,10 +47,8 @@ export type ComboboxInputProps = ComboboxInputProps.Render &
 
 export type IComboboxInput = IComponent<ComboboxInputProps>;
 
-/**
- * 候補を検索するテキスト入力欄です。
- */
-export const ComboboxInput: IComboboxInput = function SuiComboboxInput(props) {
+/** 候補を検索するテキスト入力欄です。 */
+export const ComboboxInput: IComboboxInput = (props) => {
   const ctx = useComboboxInputGroupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const ComboboxInput: IComboboxInput = function SuiComboboxInput(props) {
     <Combobox.Input
       {...otherProps}
       {...proxyRenderProps<Combobox.Input.State, ComboboxInputState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -103,7 +104,6 @@ export const ComboboxInput: IComboboxInput = function SuiComboboxInput(props) {
 };
 
 export { ComboboxInput as Input };
-
 export namespace Input {
   export type State<TItem = any> = ComboboxInputState<TItem>;
 

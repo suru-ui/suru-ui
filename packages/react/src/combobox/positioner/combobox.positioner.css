@@ -1,10 +1,8 @@
 @layer sui.component {
-@scope (.sui_combobox_positioner) to ([data-scope]) {
-
-/* 固定 */
-:scope {
-  z-index: 100;
-}
-
-} /* @scope */
+  @scope (.sui_combobox_positioner) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      z-index: 100;
+    }
+  } /* @scope */
 } /* @layer */

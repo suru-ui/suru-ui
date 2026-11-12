@@ -6,6 +6,7 @@ import type { MenubarRootItemObject } from "./root/menubar.root.jsx";
  * メニューバーの項目であるオブジェクトかどうかを判定します。
  *
  * @param item 判定する値です。
+ *
  * @returns メニューバーの項目である場合に `true` を返します。
  */
 export function isItemObject(item: unknown): item is MenubarRootItemObject {

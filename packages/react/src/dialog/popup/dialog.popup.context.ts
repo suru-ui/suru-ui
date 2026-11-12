@@ -2,7 +2,7 @@ import type { Dialog } from "@base-ui/react/dialog";
 import type { Size } from "@suru-ui/theme";
 import * as React from "react";
 
-import * as Card from "../../card/card.parts.js";
+import type * as Card from "../../card/card.parts.js";
 import { ContextMissingError } from "../../errors.js";
 import type { Override, IUseContext } from "../../types.js";
 
@@ -39,26 +39,21 @@ export type DialogPopupContextVariant = "default" | "stacked";
 export type DialogPopupContext = Override<
   Override<Dialog.Popup.State, Card.Root.State>,
   {
-    /**
-     * ダイアログの主な外観です。
-     */
+    /** ダイアログの主な外観です。 */
     readonly variant: DialogPopupContextVariant;
   }
 >;
 
-/**
- * ダイアログの修飾を子パーツへ伝播するコンテキストです。
- */
+/** ダイアログの修飾を子パーツへ伝播するコンテキストです。 */
 export const DialogPopupContext: React.Context<DialogPopupContext | null> =
   React.createContext<DialogPopupContext | null>(null);
 
 export type IUseDialogPopupContext = IUseContext<DialogPopupContext>;
 
-export const useDialogPopupContext: IUseDialogPopupContext = function useSuiDialogPopupContext(
-  optional?: boolean,
-): any {
+export const useDialogPopupContext: IUseDialogPopupContext = (optional?: boolean): any => {
   const ctx = React.use(DialogPopupContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "DialogPopupContext",
       providerName: "DialogPopup",
@@ -69,7 +64,6 @@ export const useDialogPopupContext: IUseDialogPopupContext = function useSuiDial
 };
 
 export { DialogPopupContext as PopupContext, useDialogPopupContext as usePopupContext };
-
 export namespace PopupContext {
   export type Radius = DialogPopupContextRadius;
 

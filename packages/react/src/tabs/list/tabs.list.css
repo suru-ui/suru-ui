@@ -1,117 +1,115 @@
 @layer sui.component {
-@scope (.sui_tabs_list) to ([data-scope]) {
+  @scope (.sui_tabs_list) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: relative;
+      display: flex;
+      flex-shrink: 0;
 
-/* 固定 */
-:scope {
-  position: relative;
-  display: flex;
-  flex-shrink: 0;
+      &.sui_tabs_list-orientation_horizontal {
+        flex-direction: row;
+        border-block-end-style: solid;
+      }
 
-  &.sui_tabs_list-orientation_horizontal {
-    flex-direction: row;
-    border-block-end-style: solid;
-  }
+      &.sui_tabs_list-orientation_vertical {
+        flex-direction: column;
+        border-inline-end-style: solid;
+      }
+    }
 
-  &.sui_tabs_list-orientation_vertical {
-    flex-direction: column;
-    border-inline-end-style: solid;
-  }
-}
+    /* 変数 */
+    :scope {
+      --sui_tabs_list-gap: ;
+      --sui_tabs_list-padding_block_start: ;
+      --sui_tabs_list-padding_block_end: ;
+      --sui_tabs_list-padding_inline_start: ;
+      --sui_tabs_list-padding_inline_end: ;
+      --sui_tabs_list-background_color: ;
+      --sui_tabs_list-border_color: ;
+      --sui_tabs_list-border_width: ;
+      --sui_tabs_list-border_radius: ;
+      --sui_tabs_list-corner_shape: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_tabs_list-gap: ;
-  --sui_tabs_list-padding_block_start: ;
-  --sui_tabs_list-padding_block_end: ;
-  --sui_tabs_list-padding_inline_start: ;
-  --sui_tabs_list-padding_inline_end: ;
-  --sui_tabs_list-background_color: ;
-  --sui_tabs_list-border_color: ;
-  --sui_tabs_list-border_width: ;
-  --sui_tabs_list-border_radius: ;
-  --sui_tabs_list-corner_shape: ;
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_tabs_list-gap);
+      padding-block-start: var(--sui_tabs_list-padding_block_start);
+      padding-block-end: var(--sui_tabs_list-padding_block_end);
+      padding-inline-start: var(--sui_tabs_list-padding_inline_start);
+      padding-inline-end: var(--sui_tabs_list-padding_inline_end);
+      background-color: var(--sui_tabs_list-background_color);
+      border-radius: var(--sui_tabs_list-border_radius);
+      corner-shape: var(--sui_tabs_list-corner_shape);
 
-/* 可変 */
-:scope {
-  gap: var(--sui_tabs_list-gap);
-  padding-block-start: var(--sui_tabs_list-padding_block_start);
-  padding-block-end: var(--sui_tabs_list-padding_block_end);
-  padding-inline-start: var(--sui_tabs_list-padding_inline_start);
-  padding-inline-end: var(--sui_tabs_list-padding_inline_end);
-  background-color: var(--sui_tabs_list-background_color);
-  border-radius: var(--sui_tabs_list-border_radius);
-  corner-shape: var(--sui_tabs_list-corner_shape);
+      &.sui_tabs_list-orientation_horizontal {
+        border-block-end-color: var(--sui_tabs_list-border_color);
+        border-block-end-width: var(--sui_tabs_list-border_width);
+      }
 
-  &.sui_tabs_list-orientation_horizontal {
-    border-block-end-color: var(--sui_tabs_list-border_color);
-    border-block-end-width: var(--sui_tabs_list-border_width);
-  }
+      &.sui_tabs_list-orientation_vertical {
+        border-inline-end-color: var(--sui_tabs_list-border_color);
+        border-inline-end-width: var(--sui_tabs_list-border_width);
+      }
+    }
 
-  &.sui_tabs_list-orientation_vertical {
-    border-inline-end-color: var(--sui_tabs_list-border_color);
-    border-inline-end-width: var(--sui_tabs_list-border_width);
-  }
-}
+    /* 代入 */
+    :scope {
+      --sui_tabs_list-border_color: var(--sui-grey-naked-border-normal);
+      --sui_tabs_list-border_width: --sui-border_width(1);
 
-/* 代入 */
-:scope {
-  --sui_tabs_list-border_color: var(--sui-grey-naked-border-normal);
-  --sui_tabs_list-border_width: --sui-border_width(1);
+      &.sui_tabs_list-size_sm {
+        --sui_tabs_list-gap: --sui-gap(0.5);
+      }
 
-  &.sui_tabs_list-size_sm {
-    --sui_tabs_list-gap: --sui-gap(0.5);
-  }
+      &.sui_tabs_list-size_md {
+        --sui_tabs_list-gap: --sui-gap(1);
+      }
 
-  &.sui_tabs_list-size_md {
-    --sui_tabs_list-gap: --sui-gap(1);
-  }
+      &.sui_tabs_list-size_lg {
+        --sui_tabs_list-gap: --sui-gap(1.5);
+      }
 
-  &.sui_tabs_list-size_lg {
-    --sui_tabs_list-gap: --sui-gap(1.5);
-  }
+      &.sui_tabs_list-variant_segments {
+        --sui_tabs_list-padding_block_start: var(--sui_tabs-padding-around);
+        --sui_tabs_list-padding_block_end: var(--sui_tabs-padding-around);
+        --sui_tabs_list-padding_inline_start: var(--sui_tabs-padding-around);
+        --sui_tabs_list-padding_inline_end: var(--sui_tabs-padding-around);
+        --sui_tabs_list-background_color: var(--sui-grey-naked-canvas-subtle);
+        --sui_tabs_list-border_width: 0px;
+        --sui_tabs_list-border_radius: var(--sui_tabs-border_radius);
+        --sui_tabs_list-corner_shape: var(--sui_tabs-corner_shape);
+      }
 
-  &.sui_tabs_list-variant_segments {
-    --sui_tabs_list-padding_block_start: var(--sui_tabs-padding-around);
-    --sui_tabs_list-padding_block_end: var(--sui_tabs-padding-around);
-    --sui_tabs_list-padding_inline_start: var(--sui_tabs-padding-around);
-    --sui_tabs_list-padding_inline_end: var(--sui_tabs-padding-around);
-    --sui_tabs_list-background_color: var(--sui-grey-naked-canvas-subtle);
-    --sui_tabs_list-border_width: 0px;
-    --sui_tabs_list-border_radius: var(--sui_tabs-border_radius);
-    --sui_tabs_list-corner_shape: var(--sui_tabs-corner_shape);
-  }
+      &.sui_tabs_list-orientation_horizontal.sui_tabs_list-variant_line {
+        --sui_tabs_list-padding_block_start: var(--sui_tabs-padding-around);
+        --sui_tabs_list-padding_block_end: 0px;
+        --sui_tabs_list-padding_inline_start: var(--sui_tabs-padding-around);
+        --sui_tabs_list-padding_inline_end: var(--sui_tabs-padding-around);
+        --sui_tabs_list-background_color: transparent;
+        --sui_tabs_list-border_radius: 0px;
+      }
 
-  &.sui_tabs_list-orientation_horizontal.sui_tabs_list-variant_line {
-    --sui_tabs_list-padding_block_start: var(--sui_tabs-padding-around);
-    --sui_tabs_list-padding_block_end: 0px;
-    --sui_tabs_list-padding_inline_start: var(--sui_tabs-padding-around);
-    --sui_tabs_list-padding_inline_end: var(--sui_tabs-padding-around);
-    --sui_tabs_list-background_color: transparent;
-    --sui_tabs_list-border_radius: 0px;
-  }
+      &.sui_tabs_list-orientation_vertical.sui_tabs_list-variant_line {
+        --sui_tabs_list-padding_block_start: var(--sui_tabs-padding-around);
+        --sui_tabs_list-padding_block_end: var(--sui_tabs-padding-around);
+        --sui_tabs_list-padding_inline_start: var(--sui_tabs-padding-around);
+        --sui_tabs_list-padding_inline_end: 0px;
+        --sui_tabs_list-background_color: transparent;
+        --sui_tabs_list-border_radius: 0px;
+      }
 
-  &.sui_tabs_list-orientation_vertical.sui_tabs_list-variant_line {
-    --sui_tabs_list-padding_block_start: var(--sui_tabs-padding-around);
-    --sui_tabs_list-padding_block_end: var(--sui_tabs-padding-around);
-    --sui_tabs_list-padding_inline_start: var(--sui_tabs-padding-around);
-    --sui_tabs_list-padding_inline_end: 0px;
-    --sui_tabs_list-background_color: transparent;
-    --sui_tabs_list-border_radius: 0px;
-  }
+      &.sui_tabs_list-variant_segments.sui_tabs_list-size_sm {
+        --sui_tabs_list-gap: --sui-gap(0.5);
+      }
 
-  &.sui_tabs_list-variant_segments.sui_tabs_list-size_sm {
-    --sui_tabs_list-gap: --sui-gap(0.5);
-  }
+      &.sui_tabs_list-variant_segments.sui_tabs_list-size_md {
+        --sui_tabs_list-gap: --sui-gap(1);
+      }
 
-  &.sui_tabs_list-variant_segments.sui_tabs_list-size_md {
-    --sui_tabs_list-gap: --sui-gap(1);
-  }
-
-  &.sui_tabs_list-variant_segments.sui_tabs_list-size_lg {
-    --sui_tabs_list-gap: --sui-gap(1.5);
-  }
-}
-
-} /* @scope */
+      &.sui_tabs_list-variant_segments.sui_tabs_list-size_lg {
+        --sui_tabs_list-gap: --sui-gap(1.5);
+      }
+    }
+  } /* @scope */
 } /* @layer */

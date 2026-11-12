@@ -15,9 +15,7 @@ export type ResizableContextOrientation = "horizontal" | "vertical";
  * {@link ResizableRoot} が子パーツへ提供するコンテキストの型です。
  */
 export type ResizableContext = {
-  /**
-   * パネル群の向きです。
-   */
+  /** パネル群の向きです。 */
   readonly orientation: ResizableContextOrientation;
 };
 
@@ -32,11 +30,10 @@ export type IUseResizableContext = IUseContext<ResizableContext>;
 /**
  * {@link ResizableContext} を読み取るフックです。
  */
-export const useResizableContext: IUseResizableContext = function useSuiResizableContext(
-  optional?: boolean,
-): any {
+export const useResizableContext: IUseResizableContext = (optional?: boolean): any => {
   const ctx = React.use(ResizableContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "ResizableContext",
       providerName: "ResizableRoot",
@@ -47,7 +44,6 @@ export const useResizableContext: IUseResizableContext = function useSuiResizabl
 };
 
 export { ResizableContext as Context, useResizableContext as useContext };
-
 export namespace Context {
   export type Orientation = ResizableContextOrientation;
 }

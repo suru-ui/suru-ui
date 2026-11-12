@@ -25,7 +25,7 @@ export namespace SelectGroupProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Group>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectGroupProps より:
+      // SelectGroupProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace SelectGroupProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof BaseSelect.Group>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type SelectGroupProps = SelectGroupProps.Render &
 
 export type ISelectGroup = IComponent<SelectGroupProps>;
 
-/**
- * 関連する選択肢をまとめるグループ要素です。
- */
-export const SelectGroup: ISelectGroup = function SuiSelectGroup(props) {
+/** 関連する選択肢をまとめるグループ要素です。 */
+export const SelectGroup: ISelectGroup = (props) => {
   const ctx = useSelectListContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const SelectGroup: ISelectGroup = function SuiSelectGroup(props) {
     <BaseSelect.Group
       {...otherProps}
       {...proxyRenderProps<BaseSelect.Group.State, SelectGroupState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -93,7 +94,6 @@ export const SelectGroup: ISelectGroup = function SuiSelectGroup(props) {
 };
 
 export { SelectGroup as Group };
-
 export namespace Group {
   export type State<TValue = any> = SelectGroupState<TValue>;
 

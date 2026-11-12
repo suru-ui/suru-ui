@@ -49,8 +49,7 @@ import {
   useAlertDialogPopupContext,
 } from "./alert-dialog.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type AlertDialogActions = AlertDialogRootActions;
 
@@ -152,19 +151,13 @@ namespace AlertDialogProps {
      */
     action?: AlertDialogActionProps["children"] | undefined;
 
-    /**
-     * 中止してアラートダイアログを閉じるボタンです。
-     */
+    /** 中止してアラートダイアログを閉じるボタンです。 */
     cancel?: AlertDialogCloseTriggerProps["children"] | undefined;
 
-    /**
-     * 確認してアラートダイアログを閉じるボタンです。
-     */
+    /** 確認してアラートダイアログを閉じるボタンです。 */
     confirm?: AlertDialogCloseTriggerProps["children"] | undefined;
 
-    /**
-     * アラートダイアログの説明文です。
-     */
+    /** アラートダイアログの説明文です。 */
     description?: AlertDialogDescriptionProps["children"] | undefined;
 
     /**
@@ -174,19 +167,13 @@ namespace AlertDialogProps {
      */
     footer?: AlertDialogFooterProps["children"] | undefined;
 
-    /**
-     * アラートのアイコンです。
-     */
+    /** アラートのアイコンです。 */
     icon?: AlertDialogIconProps["children"] | undefined;
 
-    /**
-     * 中止ボタンがクリックされたときに呼ばれるコールバックです。
-     */
+    /** 中止ボタンがクリックされたときに呼ばれるコールバックです。 */
     onCancel?: AlertDialogCloseTriggerProps["onClick"] | undefined;
 
-    /**
-     * 確認ボタンがクリックされたときに呼ばれるコールバックです。
-     */
+    /** 確認ボタンがクリックされたときに呼ばれるコールバックです。 */
     onConfirm?: AlertDialogCloseTriggerProps["onClick"] | undefined;
 
     /**
@@ -196,14 +183,10 @@ namespace AlertDialogProps {
      */
     showCancelIconButton?: boolean | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: AlertDialogSlotProps<TPayload> | undefined;
 
-    /**
-     * アラートダイアログの見出しです。
-     */
+    /** アラートダイアログの見出しです。 */
     title?: AlertDialogTitleProps["children"] | undefined;
 
     /**
@@ -239,16 +222,17 @@ export interface IUseAlertDialogAPI {
    * {@link AlertDialogAPI} を作成します。
    *
    * @template TPayload トリガーが送信するデータの型です。
+   *
    * @param props {@link AlertDialog} の props です。
+   *
    * @returns アラートダイアログの API です
    */
   <TPayload = any>(props: AlertDialogProps<TPayload>): AlertDialogAPI<TPayload>;
 }
 
-// API
-// ---
+// API.
 
-function CancelIconButton() {
+function CancelIconButton(): React.ReactElement {
   const ctx = useAlertDialogPopupContext();
 
   return (
@@ -280,10 +264,16 @@ export class AlertDialogAPI<TPayload = any> {
 
   /**
    * @param props {@link AlertDialog} の props です。
+   *
    * @internal
    */
   public constructor(
-    props: Override<AlertDialogProps<TPayload>, { handle: AlertDialogHandle<TPayload> }>,
+    props: Override<
+      AlertDialogProps<TPayload>,
+      {
+        handle: AlertDialogHandle<TPayload>;
+      }
+    >,
   ) {
     const {
       icon,
@@ -334,7 +324,12 @@ export class AlertDialogAPI<TPayload = any> {
       onOpenChangeComplete,
     };
     this.popupProps = popupProps;
-    this.contentProps = "children" in props ? { children } : null;
+    this.contentProps =
+      "children" in props
+        ? {
+            children,
+          }
+        : null;
   }
 
   /**
@@ -346,7 +341,7 @@ export class AlertDialogAPI<TPayload = any> {
     const { action: props = {} } = this.slotProps;
     const { action, showCancelIconButton } = this.alertDialogProps;
 
-    if (showCancelIconButton || isLikelyVisibleNode(action)) {
+    if (showCancelIconButton === true || isLikelyVisibleNode(action)) {
       return {
         ...props,
         children: action === undefined ? <CancelIconButton /> : action,
@@ -489,7 +484,7 @@ export class AlertDialogAPI<TPayload = any> {
     const { icon, title, action, description, showCancelIconButton } = this.alertDialogProps;
 
     if (
-      showCancelIconButton ||
+      showCancelIconButton === true ||
       isLikelyVisibleNode(icon) ||
       isLikelyVisibleNode(title) ||
       isLikelyVisibleNode(action) ||
@@ -596,36 +591,36 @@ export class AlertDialogAPI<TPayload = any> {
 /**
  * {@link AlertDialogAPI} を作成するフックです。
  */
-export const useAlertDialogAPI: IUseAlertDialogAPI = function useSuiAlertDialogAPI<TPayload>(
+export const useAlertDialogAPI: IUseAlertDialogAPI = <TPayload,>(
   props: AlertDialogProps<TPayload>,
-) {
+) => {
   const { handle: handleProp, ...otherProps } = props;
   const handle = React.useMemo(
-    () => handleProp || createAlertDialogHandle<TPayload>(),
+    () => handleProp ?? createAlertDialogHandle<TPayload>(),
     [handleProp],
   );
 
-  return new AlertDialogAPI({ ...otherProps, handle });
+  return new AlertDialogAPI({
+    ...otherProps,
+    handle,
+  });
 };
 
 export { AlertDialogAPI as API, useAlertDialogAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IAlertDialog extends IComponent<AlertDialogProps> {
   /**
    * @template TPayload トリガーが送信するデータの型です。
    */
   <TPayload = any>(props: AlertDialogProps<TPayload>): IComponent.Return;
-
   readonly ToggleTrigger: IAlertDialogToggleTrigger;
 
   /**
    * {@link AlertDialogHandle} を作成する関数です。
    */
   readonly createHandle: ICreateAlertDialogHandle;
-
   readonly usePopupContext: IUseAlertDialogPopupContext;
 }
 
@@ -635,7 +630,7 @@ export interface IAlertDialog extends IComponent<AlertDialogProps> {
  * 構成を細かく制御する場合は、{@link AlertDialogRoot|Root} を直接組み立てます。
  */
 export const AlertDialog: IAlertDialog = /*#__PURE__*/ Object.assign(
-  function SuiAlertDialog(props: AlertDialogProps) {
+  (props: AlertDialogProps) => {
     const api = useAlertDialogAPI(props);
     const toggleTriggerProps = api.getToggleTriggerProps();
     const popupProps = api.getPopupProps();

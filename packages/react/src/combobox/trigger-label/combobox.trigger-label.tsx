@@ -25,16 +25,13 @@ export namespace ComboboxTriggerLabelProps {
     Pick<
       React.ComponentProps<typeof Combobox.Label>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxTriggerLabelProps より:
+      // ComboboxTriggerLabelProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Combobox.Label>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Combobox.Label>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -47,10 +44,8 @@ export type ComboboxTriggerLabelProps = ComboboxTriggerLabelProps.Render &
 
 export type IComboboxTriggerLabel = IComponent<ComboboxTriggerLabelProps>;
 
-/**
- * トリガーに対応する表示ラベルです。
- */
-export const ComboboxTriggerLabel: IComboboxTriggerLabel = function SuiComboboxTriggerLabel(props) {
+/** トリガーに対応する表示ラベルです。 */
+export const ComboboxTriggerLabel: IComboboxTriggerLabel = (props) => {
   const ctx = useComboboxContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +53,10 @@ export const ComboboxTriggerLabel: IComboboxTriggerLabel = function SuiComboboxT
     <Combobox.Label
       {...otherProps}
       {...proxyRenderProps<Combobox.Label.State, ComboboxTriggerLabelState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -96,7 +94,6 @@ export const ComboboxTriggerLabel: IComboboxTriggerLabel = function SuiComboboxT
 };
 
 export { ComboboxTriggerLabel as TriggerLabel };
-
 export namespace TriggerLabel {
   export type State<TItem = any> = ComboboxTriggerLabelState<TItem>;
 

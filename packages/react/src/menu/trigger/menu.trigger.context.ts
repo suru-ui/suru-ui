@@ -25,11 +25,10 @@ export type IUseMenuTriggerContext = IUseContext<MenuTriggerContext>;
 /**
  * {@link MenuTriggerContext} を読み取るフックです。
  */
-export const useMenuTriggerContext: IUseMenuTriggerContext = function useSuiMenuTriggerContext(
-  optional,
-): any {
+export const useMenuTriggerContext: IUseMenuTriggerContext = (optional): any => {
   const ctx = React.use(MenuTriggerContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "MenuTriggerContext",
       providerName: "MenuTrigger",

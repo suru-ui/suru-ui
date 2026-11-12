@@ -15,9 +15,7 @@ export namespace AlertDialogToggleTriggerProps {
   export type Render = Omit<RenderProps<AlertDialogToggleTriggerState>, "render">;
 
   export type SuruUI<TPayload = any> = {
-    /**
-     * ボタンとしてレンダリングする要素です。
-     */
+    /** ボタンとしてレンダリングする要素です。 */
     children: NonNullable<React.ComponentProps<typeof AlertDialog.Trigger<TPayload>>["render"]>;
   };
 
@@ -25,9 +23,9 @@ export namespace AlertDialogToggleTriggerProps {
     Pick<
       React.ComponentProps<typeof AlertDialog.Trigger<TPayload>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // AlertDialogTriggerProps より:
+      // AlertDialogTriggerProps より :
       | "handle"
       | "payload"
       | "id"
@@ -53,30 +51,26 @@ export type AlertDialogToggleTriggerProps<TPayload = any> = AlertDialogToggleTri
 
 export type IAlertDialogToggleTrigger = IComponent<AlertDialogToggleTriggerProps>;
 
-/**
- * アラートダイアログを開くボタンコンポーネントです。
- */
-export const AlertDialogToggleTrigger: IAlertDialogToggleTrigger =
-  function SuiAlertDialogToggleTrigger(props) {
-    const { handle, children, className, ...otherProps } = props;
+/** アラートダイアログを開くボタンコンポーネントです。 */
+export const AlertDialogToggleTrigger: IAlertDialogToggleTrigger = (props) => {
+  const { handle, children, className, ...otherProps } = props;
 
-    return (
-      <AlertDialog.Trigger
-        {...otherProps}
-        handle={handle}
-        render={children}
-        className={cn<AlertDialogToggleTriggerState>(
-          className,
-          "sui_alert_dialog_trigger",
-          (state) => state.disabled && "sui_alert_dialog_trigger-disabled",
-          (state) => state.open && "sui_alert_dialog_trigger-open",
-        )}
-      />
-    );
-  };
+  return (
+    <AlertDialog.Trigger
+      {...otherProps}
+      handle={handle}
+      render={children}
+      className={cn<AlertDialogToggleTriggerState>(
+        className,
+        "sui_alert_dialog_trigger",
+        (state) => state.disabled && "sui_alert_dialog_trigger-disabled",
+        (state) => state.open && "sui_alert_dialog_trigger-open",
+      )}
+    />
+  );
+};
 
 export { AlertDialogToggleTrigger as ToggleTrigger };
-
 export namespace ToggleTrigger {
   export type State = AlertDialogToggleTriggerState;
 

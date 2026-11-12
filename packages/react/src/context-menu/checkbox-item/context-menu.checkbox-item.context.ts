@@ -26,18 +26,20 @@ export type IUseContextMenuCheckboxItemContext = IUseContext<ContextMenuCheckbox
 /**
  * {@link ContextMenuCheckboxItemContext} を読み取るフックです。
  */
-export const useContextMenuCheckboxItemContext: IUseContextMenuCheckboxItemContext =
-  function useSuiContextMenuCheckboxItemContext(optional): any {
-    const ctx = React.use(ContextMenuCheckboxItemContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ContextMenuCheckboxItemContext",
-        providerName: "ContextMenuCheckboxItem",
-      });
-    }
+export const useContextMenuCheckboxItemContext: IUseContextMenuCheckboxItemContext = (
+  optional,
+): any => {
+  const ctx = React.use(ContextMenuCheckboxItemContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ContextMenuCheckboxItemContext",
+      providerName: "ContextMenuCheckboxItem",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ContextMenuCheckboxItemContext as CheckboxItemContext,

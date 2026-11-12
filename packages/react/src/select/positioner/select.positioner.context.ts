@@ -25,18 +25,18 @@ export type IUseSelectPositionerContext = IUseContext<SelectPositionerContext>;
 /**
  * {@link SelectPositionerContext} を読み取るフックです。
  */
-export const useSelectPositionerContext: IUseSelectPositionerContext =
-  function useSuiSelectPositionerContext(optional): any {
-    const ctx = React.use(SelectPositionerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "SelectPositionerContext",
-        providerName: "SelectPositioner",
-      });
-    }
+export const useSelectPositionerContext: IUseSelectPositionerContext = (optional): any => {
+  const ctx = React.use(SelectPositionerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "SelectPositionerContext",
+      providerName: "SelectPositioner",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   SelectPositionerContext as PositionerContext,

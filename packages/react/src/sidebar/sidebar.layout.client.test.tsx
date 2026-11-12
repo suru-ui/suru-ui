@@ -1,5 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import { vi, test, describe } from "vitest";
+import { vi, test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { FullSidebar } from "./_sidebar.jsx";
@@ -14,7 +14,9 @@ function resolveLength(value: string): number {
   const probe = document.createElement("div");
   probe.style.width = value;
   document.body.append(probe);
+
   const width = Number.parseFloat(getComputedStyle(probe).width);
+
   probe.remove();
 
   return width;
@@ -22,14 +24,15 @@ function resolveLength(value: string): number {
 
 describe("Sidebar の配置", () => {
   test("公開パーツをすべて描画して余白を持たない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar />);
 
-    // 検証
+    // 検証。
     const elements = screen.container.querySelectorAll<HTMLElement>(
       ".sui_sidebar_provider, .sui_sidebar, .sui_sidebar_header, .sui_sidebar_content, .sui_sidebar_group, .sui_sidebar_group_label, .sui_sidebar_group_content, .sui_sidebar_footer, .sui_sidebar_rail, .sui_sidebar_inset, .sui_sidebar_trigger",
     );
     expect(elements.length).toBe(11);
+
     for (const element of elements) {
       const style = getComputedStyle(element);
       expect(style.marginTop).toBe("0px");
@@ -40,10 +43,10 @@ describe("Sidebar の配置", () => {
   });
 
   test("プロバイダーはサイドバーと本文を横並びにする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar />);
 
-    // 検証
+    // 検証。
     const provider = screen.getByClassName("sui_sidebar_provider").element();
     const root = screen.getByClassName("sui_sidebar").element();
     const inset = screen.getByClassName("sui_sidebar_inset").element();
@@ -55,54 +58,54 @@ describe("Sidebar の配置", () => {
   });
 
   test("既定では 16rem の幅を持ち折りたたみで 0 にする", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(<FullSidebar />);
     const root = screen.getByClassName("sui_sidebar").element();
 
-    // 検証
+    // 検証。
     expect(root.getBoundingClientRect().width).toBeCloseTo(256, 0);
 
-    // 実行
+    // 実行。
     await screen.getByClassName("sui_sidebar_trigger").click();
 
-    // 検証
+    // 検証。
     await vi.waitFor(() => {
       expect(root.getBoundingClientRect().width).toBeCloseTo(0, 0);
     });
   });
 
   test("icon 折りたたみでは 3rem の幅を残す", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(<FullSidebar collapsible="icon" />);
     const root = screen.getByClassName("sui_sidebar").element();
 
-    // 実行
+    // 実行。
     await screen.getByClassName("sui_sidebar_trigger").click();
 
-    // 検証
+    // 検証。
     await vi.waitFor(() => {
       expect(root.getBoundingClientRect().width).toBeCloseTo(48, 0);
     });
   });
 
   test("右辺では本文をサイドバーの反対側に置く", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar side="right" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_sidebar").element();
     const inset = screen.getByClassName("sui_sidebar_inset").element();
     expect(inset.getBoundingClientRect().right).toBeCloseTo(root.getBoundingClientRect().left, 0);
   });
 
   test("修飾の変更をクラスと配置へ反映する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(<FullSidebar collapsible="icon" />);
 
-    // 実行
+    // 実行。
     await screen.rerender(<FullSidebar side="right" variant="floating" collapsible="icon" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_sidebar").element();
     expect(root.classList.contains("sui_sidebar-side_right")).toBe(true);
     expect(root.classList.contains("sui_sidebar-variant_floating")).toBe(true);
@@ -115,44 +118,44 @@ describe("Sidebar の配置", () => {
   });
 
   test("公開変数で幅を上書きできる", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(<FullSidebar />);
     const root = screen.getByClassName("sui_sidebar").element();
 
-    // 実行
+    // 実行。
     root.style.setProperty("--sui_sidebar-width", "20rem");
 
-    // 検証
+    // 検証。
     await vi.waitFor(() => {
       expect(root.getBoundingClientRect().width).toBeCloseTo(320, 0);
     });
   });
 
   test("左辺では内側の辺に枠線を描く", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar />);
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(screen.getByClassName("sui_sidebar").element());
     expect(Number.parseFloat(style.borderRightWidth)).toBeGreaterThan(0);
     expect(Number.parseFloat(style.borderLeftWidth)).toBe(0);
   });
 
   test("右辺では反対側の辺に枠線を描く", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar side="right" />);
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(screen.getByClassName("sui_sidebar").element());
     expect(Number.parseFloat(style.borderLeftWidth)).toBeGreaterThan(0);
     expect(Number.parseFloat(style.borderRightWidth)).toBe(0);
   });
 
   test("floating では余白と角丸を持つ", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar variant="floating" />);
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(screen.getByClassName("sui_sidebar").element());
     const margin = resolveLength("--sui-space(1)");
     expect(Number.parseFloat(style.marginTop)).toBeCloseTo(margin, 0);
@@ -161,10 +164,10 @@ describe("Sidebar の配置", () => {
   });
 
   test("各領域がテーマの余白を持つ", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar />);
 
-    // 検証
+    // 検証。
     const header = getComputedStyle(screen.getByClassName("sui_sidebar_header").element());
     expect(Number.parseFloat(header.paddingTop)).toBeCloseTo(resolveLength("--sui-space(2)"), 0);
     expect(Number.parseFloat(header.paddingLeft)).toBeCloseTo(resolveLength("--sui-space(2)"), 0);
@@ -197,10 +200,10 @@ describe("Sidebar の配置", () => {
   });
 
   test("inset バリアントでは本文を押し込む", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar variant="inset" />);
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(screen.getByClassName("sui_sidebar_inset").element());
     const margin = resolveLength("--sui-space(1)");
     expect(Number.parseFloat(style.marginTop)).toBeCloseTo(margin, 0);
@@ -210,8 +213,7 @@ describe("Sidebar の配置", () => {
   });
 
   test("トリガーは 32px の正方形にする", async ({ expect }) => {
-    // 準備と実行
-    // フレックスアイテムでは inline-flex が flex へ解決されるため、ブロック内で描画します。
+    // 準備と実行フレックスアイテムでは inline-flex が flex へ解決されるため、ブロック内で描画します。
     const screen = await render(
       <SidebarProvider>
         <div>
@@ -220,7 +222,7 @@ describe("Sidebar の配置", () => {
       </SidebarProvider>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByClassName("sui_sidebar_trigger").element();
     const style = getComputedStyle(trigger);
     const rect = trigger.getBoundingClientRect();
@@ -232,10 +234,10 @@ describe("Sidebar の配置", () => {
   });
 
   test("レールは左辺の内側の端に重なる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_sidebar").element();
     const rail = screen.getByClassName("sui_sidebar_rail").element();
     const rootRect = root.getBoundingClientRect();
@@ -252,10 +254,10 @@ describe("Sidebar の配置", () => {
   });
 
   test("レールは右辺では反対の端に重なる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<FullSidebar side="right" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_sidebar").element();
     const rail = screen.getByClassName("sui_sidebar_rail").element();
     const rootRect = root.getBoundingClientRect();

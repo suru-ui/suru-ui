@@ -25,7 +25,7 @@ export namespace ComboboxPositionerProps {
     Pick<
       React.ComponentProps<typeof Combobox.Positioner>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // UseAnchorPositioningSharedParameters より:
+      // UseAnchorPositioningSharedParameters より :
       | "anchor"
       | "positionMethod"
       | "side"
@@ -58,10 +58,8 @@ export type ComboboxPositionerProps = ComboboxPositionerProps.Render &
 
 export type IComboboxPositioner = IComponent<ComboboxPositionerProps>;
 
-/**
- * ポップアップを入力欄へ位置合わせする要素です。
- */
-export const ComboboxPositioner: IComboboxPositioner = function SuiComboboxPositioner(props) {
+/** ポップアップを入力欄へ位置合わせする要素です。 */
+export const ComboboxPositioner: IComboboxPositioner = (props) => {
   const ctx = useComboboxPortalContext();
   const {
     side = "bottom",
@@ -79,7 +77,10 @@ export const ComboboxPositioner: IComboboxPositioner = function SuiComboboxPosit
       side={side}
       align={align}
       {...proxyRenderProps<Combobox.Positioner.State, ComboboxPositionerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -115,7 +116,6 @@ export const ComboboxPositioner: IComboboxPositioner = function SuiComboboxPosit
 };
 
 export { ComboboxPositioner as Positioner };
-
 export namespace Positioner {
   export type State<TItem = any> = ComboboxPositionerState<TItem>;
 

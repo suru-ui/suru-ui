@@ -35,14 +35,10 @@ import { useBreadcrumbContext } from "../root/breadcrumb.root.context.js";
  * @template TItem 項目の型です。
  */
 type BreadcrumbEllipsisItem<TItem = any> = {
-  /**
-   * 項目の元のインデックスです。
-   */
+  /** 項目の元のインデックスです。 */
   readonly index: number;
 
-  /**
-   * 項目です。
-   */
+  /** 項目です。 */
   readonly item: TItem;
 };
 
@@ -52,9 +48,7 @@ type BreadcrumbEllipsisItem<TItem = any> = {
  * @template TItem 項目の型です。
  */
 export type BreadcrumbEllipsisProps<TItem = any> = {
-  /**
-   * 項目の表示内容を取得します。
-   */
+  /** 項目の表示内容を取得します。 */
   readonly getItemLabel: (item: TItem) => React.ReactNode;
 
   /**
@@ -64,9 +58,7 @@ export type BreadcrumbEllipsisProps<TItem = any> = {
    */
   readonly getItemLinkProps: (item: TItem, index: number) => BreadcrumbLinkProps | null;
 
-  /**
-   * 省略された項目の一覧です。
-   */
+  /** 省略された項目の一覧です。 */
   readonly items: readonly BreadcrumbEllipsisItem<TItem>[];
 };
 
@@ -83,9 +75,9 @@ export interface IBreadcrumbEllipsis extends IComponent<BreadcrumbEllipsisProps>
  * `Combobox` の合成 API でパーツを組み立て、トリガーだけを省略記号のボタンに差し替えます。
  * 検索用の入力欄はポップアップの中に配置します。
  */
-export const BreadcrumbEllipsis: IBreadcrumbEllipsis = function SuiBreadcrumbEllipsis<TItem>(
+export const BreadcrumbEllipsis: IBreadcrumbEllipsis = <TItem,>(
   props: BreadcrumbEllipsisProps<TItem>,
-) {
+) => {
   const ctx = useBreadcrumbContext();
   const { items, getItemLabel, getItemLinkProps } = props;
   const api = useComboboxAPI<BreadcrumbEllipsisItem<TItem>>({
@@ -127,8 +119,8 @@ export const BreadcrumbEllipsis: IBreadcrumbEllipsis = function SuiBreadcrumbEll
       },
       trigger: {
         className: `sui_breadcrumb_ellipsis sui_breadcrumb_ellipsis-size_${ctx.size}`,
-        nativeButton: true,
         "aria-label": "省略された項目を表示",
+        nativeButton: true,
       },
     },
     placeholder: "項目を検索",

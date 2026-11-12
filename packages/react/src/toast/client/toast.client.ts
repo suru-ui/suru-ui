@@ -13,6 +13,7 @@ export type IToastClient<TData extends object = any> = UseToastManagerReturnValu
  * {@link Provider} の配下で、通知一覧と追加、更新、削除の操作を取得します。
  *
  * @template TData 通知に含める追加データの型です。
+ *
  * @returns 通知一覧と通知を操作する関数です。
  */
 export function useToastClient<TData extends object = any>(): IToastClient<TData> {

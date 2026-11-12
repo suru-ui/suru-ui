@@ -23,9 +23,7 @@ export type InputRootChangeEventDetails = Input.ChangeEventDetails;
  */
 export type InputRootChangeEventReason = Input.ChangeEventReason;
 
-/**
- * テキスト入力欄の配色です。
- */
+/** テキスト入力欄の配色です。 */
 export type InputRootColor = InputContextColor;
 
 /**
@@ -93,7 +91,7 @@ export namespace InputRootProps {
     /**
      * テキスト入力欄の角丸を指定します。
      *
-     * 既定値は {@link InputRootProps.size|size}
+     * 既定値は {@link InputRootProps.size|size}。
      */
     radius?: InputRootRadius | undefined;
 
@@ -123,7 +121,7 @@ export namespace InputRootProps {
     Pick<
       React.ComponentProps<typeof Input>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // InputProps より:
+      // InputProps より :
       "value" | "defaultValue" | "onValueChange"
     >,
     keyof Render | keyof SuruUI
@@ -145,10 +143,8 @@ export type InputRootProps = InputRootProps.Render &
 
 export type IInputRoot = IComponent<InputRootProps>;
 
-/**
- * テキスト入力欄のルートコンポーネントです。
- */
-export const InputRoot: IInputRoot = function SuiInputRoot(props) {
+/** テキスト入力欄のルートコンポーネントです。 */
+export const InputRoot: IInputRoot = (props) => {
   const {
     size = "md",
     type = "text",
@@ -159,12 +155,18 @@ export const InputRoot: IInputRoot = function SuiInputRoot(props) {
     variant = "naked",
     outlined = true,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const ctx = React.useMemo<InputContext>(
-    () => ({ size, color, radius, variant, outlined }),
+    () => ({
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+    }),
     [size, color, radius, variant, outlined],
   );
 
@@ -173,27 +175,33 @@ export const InputRoot: IInputRoot = function SuiInputRoot(props) {
       <Input
         {...otherProps}
         type={type}
-        {...proxyRenderProps<Input.State, InputRootState>((state) => ({ ...ctx, ...state }), {
-          style,
-          render,
-          className: cn<InputRootState>(
-            className,
-            "sui_input",
-            (state) => `sui_input-size_${state.size}`,
-            (state) => `sui_input-color_${state.color}`,
-            (state) => `sui_input-radius_${state.radius}`,
-            (state) => `sui_input-variant_${state.variant}`,
-            (state) => state.outlined && "sui_input-outlined",
-            (state) => state.valid === true && "sui_input-valid",
-            (state) => state.valid === false && "sui_input-invalid",
-            (state) => state.valid === null && "sui_input-unverified",
-            (state) => state.disabled && "sui_input-disabled",
-            (state) => state.touched && "sui_input-touched",
-            (state) => state.dirty && "sui_input-dirty",
-            (state) => state.filled && "sui_input-filled",
-            (state) => state.focused && "sui_input-focused",
-          ),
-        })}
+        {...proxyRenderProps<Input.State, InputRootState>(
+          (state) => ({
+            ...ctx,
+            ...state,
+          }),
+          {
+            style,
+            render,
+            className: cn<InputRootState>(
+              className,
+              "sui_input",
+              (state) => `sui_input-size_${state.size}`,
+              (state) => `sui_input-color_${state.color}`,
+              (state) => `sui_input-radius_${state.radius}`,
+              (state) => `sui_input-variant_${state.variant}`,
+              (state) => state.outlined && "sui_input-outlined",
+              (state) => state.valid === true && "sui_input-valid",
+              (state) => state.valid === false && "sui_input-invalid",
+              (state) => state.valid === null && "sui_input-unverified",
+              (state) => state.disabled && "sui_input-disabled",
+              (state) => state.touched && "sui_input-touched",
+              (state) => state.dirty && "sui_input-dirty",
+              (state) => state.filled && "sui_input-filled",
+              (state) => state.focused && "sui_input-focused",
+            ),
+          },
+        )}
         data-scope={dataScope}
       />
     </InputContext>
@@ -201,7 +209,6 @@ export const InputRoot: IInputRoot = function SuiInputRoot(props) {
 };
 
 export { InputRoot as Root };
-
 export namespace Root {
   export type State = InputRootState;
 

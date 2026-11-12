@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { FieldRoot } from "../../field/root/field.root.jsx";
@@ -9,7 +9,7 @@ import "../../../tests/src/_locators.js";
 
 describe("NumberFieldInput", () => {
   test("入力欄に修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot defaultValue={1}>
         <NumberFieldGroup>
@@ -18,7 +18,7 @@ describe("NumberFieldInput", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const input = screen.getByRole("textbox").element();
     expect(input.tagName).toBe("INPUT");
     expect(input.classList.contains("sui_number_field_input")).toBe(true);
@@ -26,7 +26,7 @@ describe("NumberFieldInput", () => {
   });
 
   test("利用者の props を入力欄へ渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot>
         <NumberFieldGroup>
@@ -35,7 +35,7 @@ describe("NumberFieldInput", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const input = screen.getByRole("textbox").element() as HTMLInputElement;
     expect(input.name).toBe("quantity");
     expect(input.placeholder).toBe("数量");
@@ -44,7 +44,7 @@ describe("NumberFieldInput", () => {
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot>
         <NumberFieldGroup>
@@ -53,14 +53,14 @@ describe("NumberFieldInput", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const input = screen.getByRole("textbox").element();
     expect(input.classList.contains("custom")).toBe(true);
     expect(input.classList.contains("sui_number_field_input")).toBe(true);
   });
 
   test("Field の検証状態をクラスへ反映する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <FieldRoot invalid>
@@ -80,14 +80,14 @@ describe("NumberFieldInput", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const inputs = screen.container.querySelectorAll<HTMLElement>(".sui_number_field_input");
     expect(inputs[0]?.classList.contains("sui_number_field_input-invalid")).toBe(true);
     expect(inputs[1]?.classList.contains("sui_number_field_input-unverified")).toBe(true);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot>
         <NumberFieldGroup>
@@ -96,14 +96,14 @@ describe("NumberFieldInput", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const input = screen.getByRole("textbox").element();
     expect(input.tagName).toBe("TEXTAREA");
     expect(input.classList.contains("sui_number_field_input")).toBe(true);
   });
 
   test("render の関数へスタイル情報と入力欄の状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot size="lg" color="blue" outlined>
         <NumberFieldGroup>
@@ -119,7 +119,7 @@ describe("NumberFieldInput", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_number_field_input").element().getAttribute("data-probe"),
     ).toBe("lg/blue/true/true");

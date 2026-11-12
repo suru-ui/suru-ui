@@ -23,16 +23,13 @@ export namespace TooltipPopupProps {
     Pick<
       React.ComponentProps<typeof Tooltip.Popup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TooltipPopupProps より:
+      // TooltipPopupProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Tooltip.Popup>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Tooltip.Popup>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,10 +42,8 @@ export type TooltipPopupProps = TooltipPopupProps.Render &
 
 export type ITooltipPopup = IComponent<TooltipPopupProps>;
 
-/**
- * ツールチップの内容を表示するポップアップ要素です。
- */
-export const TooltipPopup: ITooltipPopup = function SuiTooltipPopup(props) {
+/** ツールチップの内容を表示するポップアップ要素です。 */
+export const TooltipPopup: ITooltipPopup = (props) => {
   const ctx = useTooltipPositionerContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -57,7 +52,10 @@ export const TooltipPopup: ITooltipPopup = function SuiTooltipPopup(props) {
       role="tooltip"
       {...otherProps}
       {...proxyRenderProps<Tooltip.Popup.State, TooltipPopupState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -92,7 +90,6 @@ export const TooltipPopup: ITooltipPopup = function SuiTooltipPopup(props) {
 };
 
 export { TooltipPopup as Popup };
-
 export namespace Popup {
   export type State = TooltipPopupState;
 

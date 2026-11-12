@@ -1,4 +1,4 @@
-// TODO(tai-kun): いつか複合コンポーネントの方に組み込む
+// NOTE(tai-kun): いつか複合コンポーネントの方に組み込みます。
 
 import { Autocomplete } from "@base-ui/react/autocomplete";
 import * as React from "react";
@@ -28,7 +28,7 @@ export namespace AutocompleteSeparatorProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.Separator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AutocompleteSeparatorProps より:
+      // AutocompleteSeparatorProps より :
       "orientation"
     >,
     keyof Render | keyof SuruUI
@@ -50,22 +50,21 @@ export type AutocompleteSeparatorProps = AutocompleteSeparatorProps.Render &
 
 export type IAutocompleteSeparator = IComponent<AutocompleteSeparatorProps>;
 
-/**
- * 項目やグループを区切る要素です。
- */
-export const AutocompleteSeparator: IAutocompleteSeparator = function SuiAutocompleteSeparator(
-  props,
-) {
+/** 項目やグループを区切る要素です。 */
+export const AutocompleteSeparator: IAutocompleteSeparator = (props) => {
   const listCtx = useAutocompleteListContext();
   const groupCtx = useAutocompleteGroupContext(true);
-  const ctx = groupCtx || listCtx;
+  const ctx = groupCtx ?? listCtx;
   const { style, render, className, ...otherProps } = props;
 
   return (
     <Autocomplete.Separator
       {...otherProps}
       {...proxyRenderProps<Autocomplete.Separator.State, AutocompleteSeparatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -103,7 +102,6 @@ export const AutocompleteSeparator: IAutocompleteSeparator = function SuiAutocom
 };
 
 export { AutocompleteSeparator as Separator };
-
 export namespace Separator {
   export type State<TItem = any> = AutocompleteSeparatorState<TItem>;
 

@@ -10,6 +10,7 @@ export type PopoverHandle<TPayload = any> = Popover.Handle<TPayload>;
 export interface ICreatePopoverHandle {
   /**
    * @template TPayload トリガーが送信するデータの型です。
+   *
    * @returns ポップオーバーを制御するハンドルです。
    */
   <TPayload = any>(): PopoverHandle<TPayload>;
@@ -18,8 +19,6 @@ export interface ICreatePopoverHandle {
 /**
  * {@link PopoverHandle} を作成する関数です。
  */
-export const createPopoverHandle: ICreatePopoverHandle = function createSuiPopoverHandle() {
-  return Popover.createHandle();
-};
+export const createPopoverHandle: ICreatePopoverHandle = () => Popover.createHandle();
 
 export { type PopoverHandle as Handle, createPopoverHandle as createHandle };

@@ -14,8 +14,7 @@ import {
   MenubarRoot,
 } from "./menubar.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type MenubarItemObject = MenubarRootItemObject;
 
@@ -42,9 +41,7 @@ export type MenubarSlotProps = {
 
 namespace MenubarProps {
   export type Menubar = {
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: MenubarSlotProps | undefined;
   };
 
@@ -63,14 +60,15 @@ export interface IUseMenubarAPI {
    * {@link MenubarAPI} を作成します。
    *
    * @template TItem 項目の型です。
+   *
    * @param props {@link Menubar} の props です。
+   *
    * @returns メニューバーの API です。
    */
   <TItem = any>(props: MenubarProps<TItem>): MenubarAPI<TItem>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Menubar} を構成する各パーツの props などを作成するための API です。
@@ -82,16 +80,6 @@ export class MenubarAPI<TItem = any> {
 
   private readonly slotProps: MenubarSlotProps;
 
-  /**
-   * @param props {@link Menubar} の props です。
-   * @internal
-   */
-  public constructor(props: MenubarProps<TItem>) {
-    const { slotProps = {}, ...rootProps } = props;
-    this.rootProps = rootProps;
-    this.slotProps = slotProps;
-  }
-
   private readonly defaultItemRenderer: IMenubarItemRenderer = (item, index) => {
     switch (true) {
       case isItemObject(item):
@@ -101,6 +89,17 @@ export class MenubarAPI<TItem = any> {
         return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
     }
   };
+
+  /**
+   * @param props {@link Menubar} の props です。
+   *
+   * @internal
+   */
+  public constructor(props: MenubarProps<TItem>) {
+    const { slotProps = {}, ...rootProps } = props;
+    this.rootProps = rootProps;
+    this.slotProps = slotProps;
+  }
 
   /**
    * {@link Menu} に渡す props を取得します。
@@ -140,14 +139,11 @@ export class MenubarAPI<TItem = any> {
 /**
  * {@link MenubarAPI} を作成するフックです。
  */
-export const useMenubarAPI: IUseMenubarAPI = function useSuiMenubarAPI(props) {
-  return new MenubarAPI(props);
-};
+export const useMenubarAPI: IUseMenubarAPI = (props) => new MenubarAPI(props);
 
 export { MenubarAPI as API, useMenubarAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IMenubar extends IComponent<MenubarProps> {
   /**
@@ -156,10 +152,8 @@ export interface IMenubar extends IComponent<MenubarProps> {
   <TItem = any>(props: MenubarProps<TItem>): IComponent.Return;
 }
 
-/**
- * メニューを横または縦に並べるコンポーネントです。
- */
-export const Menubar: IMenubar = function SuiMenubar(props: MenubarProps) {
+/** メニューを横または縦に並べるコンポーネントです。 */
+export const Menubar: IMenubar = (props: MenubarProps) => {
   const api = useMenubarAPI(props);
 
   return <MenubarRoot {...api.getRootProps()} />;

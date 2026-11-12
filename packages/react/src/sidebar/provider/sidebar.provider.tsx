@@ -25,14 +25,10 @@ export namespace SidebarProviderProps {
      */
     defaultOpen?: boolean | undefined;
 
-    /**
-     * サイドバーの開閉状態が変化したときに呼ばれます。
-     */
+    /** サイドバーの開閉状態が変化したときに呼ばれます。 */
     onOpenChange?: ((open: boolean) => void) | undefined;
 
-    /**
-     * サイドバーが開いているかどうかを制御します。
-     */
+    /** サイドバーが開いているかどうかを制御します。 */
     open?: boolean | undefined;
   };
 
@@ -59,13 +55,13 @@ export type ISidebarProvider = IComponent<SidebarProviderProps>;
  *
  * 子要素には {@link SidebarRoot}、{@link SidebarTrigger}、{@link SidebarInset} を配置します。
  */
-export const SidebarProvider: ISidebarProvider = function SuiSidebarProvider(props) {
+export const SidebarProvider: ISidebarProvider = (props) => {
   const {
     open: openProp,
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
+    "data-scope": dataScope = "",
     defaultOpen = true,
     onOpenChange,
-    // @ts-expect-error
-    "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
   const [open, setOpenState] = useControlled<boolean>({
@@ -76,7 +72,9 @@ export const SidebarProvider: ISidebarProvider = function SuiSidebarProvider(pro
   });
   const state = open ? "expanded" : "collapsed";
   const openRef = React.useRef(open);
+  // oxlint-disable-next-line react/refs -- 最新値をコールバックから参照するための更新です。
   openRef.current = open;
+
   const setOpen = React.useCallback(
     (nextOpen: boolean) => {
       openRef.current = nextOpen;
@@ -88,20 +86,30 @@ export const SidebarProvider: ISidebarProvider = function SuiSidebarProvider(pro
   const toggle = React.useCallback(() => {
     setOpen(openProp === undefined ? !openRef.current : !openProp);
   }, [openProp, setOpen]);
-  const renderState = React.useMemo<SidebarProviderState>(() => ({ open, state }), [open, state]);
+  const renderState = React.useMemo<SidebarProviderState>(
+    () => ({
+      open,
+      state,
+    }),
+    [open, state],
+  );
   const ctx = React.useMemo<SidebarContext>(
-    () => ({ open, state, toggle, setOpen }),
+    () => ({
+      open,
+      state,
+      toggle,
+      setOpen,
+    }),
     [open, setOpen, state, toggle],
   );
-
   const element = useRender({
     props: [
       otherDivProps,
       {
         className: cn<SidebarProviderState>(
           "sui_sidebar_provider",
-          (state) => `sui_sidebar_provider-${state.state}`,
-          (state) => state.open && "sui_sidebar_provider-open",
+          (currentState) => `sui_sidebar_provider-${currentState.state}`,
+          (currentState) => currentState.open && "sui_sidebar_provider-open",
         ),
         "data-scope": dataScope,
       },
@@ -114,7 +122,6 @@ export const SidebarProvider: ISidebarProvider = function SuiSidebarProvider(pro
 };
 
 export { SidebarProvider as Provider };
-
 export namespace Provider {
   export type State = SidebarProviderState;
 

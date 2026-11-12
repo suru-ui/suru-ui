@@ -26,8 +26,7 @@ import {
   ToggleButtonCircularProgressFillRotation,
 } from "./toggle-button.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type ToggleButtonChangeEventDetails = ToggleButtonRootChangeEventDetails;
 
@@ -91,9 +90,7 @@ namespace ToggleButtonProps {
   export type Root = Omit<ToggleButtonRootProps, keyof ToggleButton>;
 
   export type ToggleButton = {
-    /**
-     * トグルボタンの内容です。
-     */
+    /** トグルボタンの内容です。 */
     children?: ToggleButtonContentProps["children"] | undefined;
 
     /**
@@ -110,9 +107,7 @@ namespace ToggleButtonProps {
      */
     percentage?: ToggleButtonCircularProgressProps["percentage"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: ToggleButtonSlotProps | undefined;
   };
 }
@@ -127,13 +122,13 @@ export interface IUseToggleButtonAPI {
    * {@link ToggleButtonAPI} を作成します。
    *
    * @param props {@link ToggleButton} の props です。
+   *
    * @returns トグルボタンの API です。
    */
   (props: ToggleButtonProps): ToggleButtonAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link ToggleButton} を構成する各パーツの props などを作成するための API です。
@@ -147,11 +142,16 @@ export class ToggleButtonAPI {
 
   /**
    * @param props {@link ToggleButton} の props です。
+   *
    * @internal
    */
   public constructor(props: ToggleButtonProps) {
     const { children, slotProps = {}, percentage, indeterminate, ...rootProps } = props;
-    this.toggleButtonProps = { children, percentage, indeterminate };
+    this.toggleButtonProps = {
+      children,
+      percentage,
+      indeterminate,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -233,24 +233,19 @@ export class ToggleButtonAPI {
 /**
  * {@link ToggleButtonAPI} を作成するフックです。
  */
-export const useToggleButtonAPI: IUseToggleButtonAPI = function useSuiToggleButtonAPI(props) {
-  return new ToggleButtonAPI(props);
-};
+export const useToggleButtonAPI: IUseToggleButtonAPI = (props) => new ToggleButtonAPI(props);
 
 export { ToggleButtonAPI as API, useToggleButtonAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IToggleButton extends IComponent<ToggleButtonProps> {
   readonly useContext: IUseToggleButtonContext;
 }
 
-/**
- * 押すたびに押下状態を切り替えるボタンコンポーネントです。
- */
+/** 押すたびに押下状態を切り替えるボタンコンポーネントです。 */
 export const ToggleButton: IToggleButton = /*#__PURE__*/ Object.assign(
-  function SuiToggleButton(props: ToggleButtonProps) {
+  (props: ToggleButtonProps) => {
     const api = useToggleButtonAPI(props);
 
     return (

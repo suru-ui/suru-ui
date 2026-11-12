@@ -14,14 +14,10 @@ import {
   TabsContext,
 } from "./tabs.root.context.js";
 
-/**
- * Tabs のアクティブなタブが変更されるイベントの詳細です。
- */
+/** Tabs のアクティブなタブが変更されるイベントの詳細です。 */
 export type TabsRootChangeEventDetails = BaseTabs.Root.ChangeEventDetails;
 
-/**
- * Tabs のアクティブなタブを変更する理由です。
- */
+/** Tabs のアクティブなタブを変更する理由です。 */
 export type TabsRootChangeEventReason = BaseTabs.Root.ChangeEventReason;
 
 /**
@@ -32,9 +28,7 @@ export type TabsRootChangeEventReason = BaseTabs.Root.ChangeEventReason;
 export type TabsRootItemObject = Override<
   Omit<TabsTabProps, "children">,
   {
-    /**
-     * タブに表示するラベルです。
-     */
+    /** タブに表示するラベルです。 */
     readonly label: React.ReactNode;
 
     /**
@@ -58,6 +52,7 @@ export interface ITabsRootItemRenderer<TItem = any> {
    * @param item 現在の項目です。
    * @param index 項目のインデックスです。
    * @param items すべての項目です。
+   *
    * @returns レンダリングする内容です。
    */
   (item: TItem, index: number, items: readonly TItem[]): React.ReactNode;
@@ -173,7 +168,7 @@ export namespace TabsRootProps {
     Pick<
       React.ComponentProps<typeof BaseTabs.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TabsRootProps より:
+      // TabsRootProps より :
       "value" | "defaultValue" | "orientation" | "onValueChange"
     >,
     keyof Render | keyof SuruUI
@@ -208,7 +203,7 @@ export interface ITabsRoot extends IComponent<TabsRootProps> {
  * 各タブと対応するパネルをグループ化します。
  * `items` は子孫の {@link TabsList} へコンテキスト経由で渡されます。
  */
-export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
+export const TabsRoot: ITabsRoot = (props: TabsRootProps) => {
   const {
     size = "md",
     thin = false,
@@ -219,13 +214,21 @@ export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
     variant = "line",
     outlined = true,
     className,
-    activeVariant = "liquid",
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
+    activeVariant = "liquid",
     ...otherProps
   } = props;
   const ctx = React.useMemo<TabsContext>(
-    () => ({ size, thin, items, radius, variant, outlined, activeVariant }),
+    () => ({
+      size,
+      thin,
+      items,
+      radius,
+      variant,
+      outlined,
+      activeVariant,
+    }),
     [activeVariant, items, outlined, radius, size, thin, variant],
   );
 
@@ -234,7 +237,10 @@ export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
       <BaseTabs.Root
         {...otherProps}
         {...proxyRenderProps<BaseTabs.Root.State, TabsRootState>(
-          (state) => ({ ...ctx, ...state }),
+          (state) => ({
+            ...ctx,
+            ...state,
+          }),
           {
             style,
             render,
@@ -259,7 +265,6 @@ export const TabsRoot: ITabsRoot = function SuiTabsRoot(props: TabsRootProps) {
 };
 
 export { TabsRoot as Root };
-
 export namespace Root {
   export type State<TItem = any> = TabsRootState<TItem>;
 

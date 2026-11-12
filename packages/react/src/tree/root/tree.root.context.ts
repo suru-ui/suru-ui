@@ -18,49 +18,31 @@ export type TreeSelectAction = "only" | "toggle" | "range" | "add-range";
  * {@link TreeRoot} が子パーツへ提供する状態です。
  */
 export type TreeContextState = {
-  /**
-   * キーボードフォーカスの対象になっているノードの識別子です。
-   */
+  /** キーボードフォーカスの対象になっているノードの識別子です。 */
   readonly activeId: string | null;
 
-  /**
-   * 項目の配色です。
-   */
+  /** 項目の配色です。 */
   readonly color: TreeRootColor;
 
-  /**
-   * 展開されているノードの識別子の集合です。
-   */
+  /** 展開されているノードの識別子の集合です。 */
   readonly expanded: ReadonlySet<string>;
 
-  /**
-   * 項目の背景色を控えめにするかどうかです。
-   */
+  /** 項目の背景色を控えめにするかどうかです。 */
   readonly muted: boolean;
 
-  /**
-   * 項目に枠線を表示するかどうかです。
-   */
+  /** 項目に枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * 項目の角丸です。
-   */
+  /** 項目の角丸です。 */
   readonly radius: TreeRootRadius;
 
-  /**
-   * 選択されているノードの識別子の集合です。
-   */
+  /** 選択されているノードの識別子の集合です。 */
   readonly selected: ReadonlySet<string>;
 
-  /**
-   * 項目の大きさです。
-   */
+  /** 項目の大きさです。 */
   readonly size: TreeRootSize;
 
-  /**
-   * 項目の主な外観です。
-   */
+  /** 項目の主な外観です。 */
   readonly variant: TreeRootVariant;
 };
 
@@ -71,9 +53,7 @@ export type TreeContext = Readonly<
   Override<
     TreeContextState,
     {
-      /**
-       * ツリーのルート要素へフォーカスを移動する関数です。
-       */
+      /** ツリーのルート要素へフォーカスを移動する関数です。 */
       readonly focus: () => void;
 
       /**
@@ -125,9 +105,10 @@ export type IUseTreeContext = IUseContext<TreeContext>;
 /**
  * {@link TreeContext} を読み取るフックです。
  */
-export const useTreeContext: IUseTreeContext = function useSuiTreeContext(optional?: boolean): any {
+export const useTreeContext: IUseTreeContext = (optional?: boolean): any => {
   const ctx = React.use(TreeContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "TreeContext",
       providerName: "TreeRoot",
@@ -138,7 +119,6 @@ export const useTreeContext: IUseTreeContext = function useSuiTreeContext(option
 };
 
 export { TreeContext as Context, useTreeContext as useContext };
-
 export namespace Context {
   export type Color = TreeRootColor;
 

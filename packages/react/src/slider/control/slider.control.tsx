@@ -23,16 +23,13 @@ export namespace SliderControlProps {
     Pick<
       React.ComponentProps<typeof Slider.Control>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SliderControlProps より:
+      // SliderControlProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Slider.Control>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Slider.Control>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,10 +42,8 @@ export type SliderControlProps = SliderControlProps.Render &
 
 export type ISliderControl = IComponent<SliderControlProps>;
 
-/**
- * スライダーの操作領域コンポーネントです。
- */
-export const SliderControl: ISliderControl = function SuiSliderControl(props) {
+/** スライダーの操作領域コンポーネントです。 */
+export const SliderControl: ISliderControl = (props) => {
   const ctx = useSliderContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +51,10 @@ export const SliderControl: ISliderControl = function SuiSliderControl(props) {
     <Slider.Control
       {...otherProps}
       {...proxyRenderProps<Slider.Control.State, SliderControlState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (

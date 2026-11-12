@@ -1,5 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "./stat.parts.js";
@@ -9,21 +9,19 @@ import { StatTrend } from "./trend/stat.trend.jsx";
 import "../../tests/src/_locators.js";
 import { StatValueUnit } from "./value-unit/stat.value-unit.jsx";
 
-/**
- * ルート配下のパーツをクラス名で取得します。
- */
+/** ルート配下のパーツをクラス名で取得します。 */
 function getPart(container: HTMLElement, id: string, className: string): HTMLElement {
   return container.querySelector<HTMLElement>(`#${id} .${className}`)!;
 }
 
 describe("Stat の配置", () => {
   test("外部の余白を持たない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Stat label="閲覧者数" trend="+200 (20 %)" value="1,200" description="先月より" />,
     );
 
-    // 検証
+    // 検証。
     for (const selector of [
       ".sui_stat",
       ".sui_stat_label",
@@ -39,7 +37,7 @@ describe("Stat の配置", () => {
   });
 
   test("パーツを左揃えで縦に並べる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <Stat
         id="stat"
@@ -51,7 +49,7 @@ describe("Stat の配置", () => {
       />,
     );
 
-    // 検証
+    // 検証。
     const rootRect = screen.container.querySelector<HTMLElement>("#stat")!.getBoundingClientRect();
     const labelRect = getPart(screen.container, "stat", "sui_stat_label").getBoundingClientRect();
     const valueRect = getPart(screen.container, "stat", "sui_stat_value").getBoundingClientRect();
@@ -72,7 +70,7 @@ describe("Stat の配置", () => {
   });
 
   test("ラベルとトレンドと説明の活字を大きさに追従させる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span id="expected-sm" style={{ fontSize: "var(--sui-text-oln-sm-n-font_size)" }} />
@@ -83,11 +81,12 @@ describe("Stat の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = {
       md: getComputedStyle(screen.container.querySelector<HTMLElement>("#expected-md")!).fontSize,
       sm: getComputedStyle(screen.container.querySelector<HTMLElement>("#expected-sm")!).fontSize,
     };
+
     for (const [id, token] of [
       ["sm", "sm"],
       ["md", "sm"],
@@ -102,7 +101,7 @@ describe("Stat の配置", () => {
   });
 
   test("値と単位の活字を大きさに追従させる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span id="expected-value-sm" style={{ fontSize: "var(--sui-text-std-lg-b-font_size)" }} />
@@ -141,7 +140,7 @@ describe("Stat の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     for (const [id, valueToken, unitToken] of [
       ["sm", "expected-value-sm", "expected-unit-sm"],
       ["md", "expected-value-md", "expected-unit-md"],
@@ -157,7 +156,7 @@ describe("Stat の配置", () => {
   });
 
   test("値を強調して桁を揃える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span id="expected-weight" style={{ fontWeight: "var(--sui-text-std-xl-b-font_weight)" }} />
@@ -165,7 +164,7 @@ describe("Stat の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const value = getComputedStyle(getPart(screen.container, "stat", "sui_stat_value"));
     expect(value.fontWeight).toBe(
       getComputedStyle(screen.container.querySelector<HTMLElement>("#expected-weight")!).fontWeight,
@@ -174,7 +173,7 @@ describe("Stat の配置", () => {
   });
 
   test("トレンドの方向で色を変える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span id="expected-up" style={{ color: "var(--sui-green-naked-canvas_text-normal)" }} />
@@ -192,7 +191,7 @@ describe("Stat の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     for (const direction of ["up", "flat", "down"] as const) {
       expect(getComputedStyle(getPart(screen.container, direction, "sui_stat_trend")).color).toBe(
         getComputedStyle(screen.container.querySelector<HTMLElement>(`#expected-${direction}`)!)
@@ -202,7 +201,7 @@ describe("Stat の配置", () => {
   });
 
   test("トレンドのアイコンを活字の高さと方向の色に合わせる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span
@@ -224,7 +223,7 @@ describe("Stat の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expectedSize = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#expected-size")!,
     );
@@ -237,15 +236,21 @@ describe("Stat の配置", () => {
   });
 
   test("ルートとトレンドに間隔を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
-        <span id="expected" style={{ gap: "--sui-gap(2)", display: "block" }} />
+        <span
+          id="expected"
+          style={{
+            gap: "--sui-gap(2)",
+            display: "block",
+          }}
+        />
         <Stat id="stat" label="閲覧者数" trend="+200 (20 %)" value="1,200" description="先月より" />
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#expected")!,
     ).gap;
@@ -258,10 +263,16 @@ describe("Stat の配置", () => {
   });
 
   test("単位に左右の余白を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
-        <span id="expected" style={{ display: "block", paddingInline: "--sui-space(0.5)" }} />
+        <span
+          id="expected"
+          style={{
+            display: "block",
+            paddingInline: "--sui-space(0.5)",
+          }}
+        />
         <Stat
           id="stat"
           value={
@@ -273,7 +284,7 @@ describe("Stat の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(
       screen.container.querySelector<HTMLElement>("#expected")!,
     ).paddingInline;
@@ -283,21 +294,21 @@ describe("Stat の配置", () => {
   });
 
   test("公開変数でルートの間隔を上書きできる", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <Stat id="stat" label="閲覧者数" trend="+200" value="1,200" description="先月より" />,
     );
     const root = screen.container.querySelector<HTMLElement>("#stat")!;
 
-    // 実行
+    // 実行。
     root.style.setProperty("--sui_stat-gap", "24px");
 
-    // 検証
+    // 検証。
     expect(getComputedStyle(root).rowGap).toBe("24px");
   });
 
   test("公開変数でトレンドの色を上書きできる", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <StatRoot id="trend">
         <StatTrend direction="up">12</StatTrend>
@@ -305,10 +316,10 @@ describe("Stat の配置", () => {
     );
     const trend = getPart(screen.container, "trend", "sui_stat_trend");
 
-    // 実行
+    // 実行。
     trend.style.setProperty("--sui_stat_trend-color", "rgb(255, 0, 255)");
 
-    // 検証
+    // 検証。
     expect(getComputedStyle(trend).color).toBe("rgb(255, 0, 255)");
   });
 });

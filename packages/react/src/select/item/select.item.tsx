@@ -31,9 +31,9 @@ export namespace SelectItemProps {
       Pick<
         React.ComponentProps<typeof BaseSelect.Item>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // NonNativeButtonProps より:
+        // NonNativeButtonProps より :
         | keyof NonNativeButtonProps
-        // SelectItemProps より:
+        // SelectItemProps より :
         | "children"
         | "label"
         | "onClick"
@@ -60,13 +60,11 @@ export type SelectItemProps = SelectItemProps.Render &
 
 export type ISelectItem = IComponent<SelectItemProps>;
 
-/**
- * 選択肢の個々の項目です。
- */
-export const SelectItem: ISelectItem = function SuiSelectItem(props) {
+/** 選択肢の個々の項目です。 */
+export const SelectItem: ISelectItem = (props) => {
   const listCtx = useSelectListContext();
   const groupCtx = useSelectGroupContext(true);
-  const ctx = groupCtx || listCtx;
+  const ctx = groupCtx ?? listCtx;
   const {
     label,
     style,
@@ -121,15 +119,19 @@ export const SelectItem: ISelectItem = function SuiSelectItem(props) {
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, SelectItemState>(
-                (state) => ({ ...ctx, ...state, ...itemState }),
+                (state) => ({
+                  ...ctx,
+                  ...state,
+                  ...itemState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <SelectItemContext value={state}>
                       <RenderElement
                         state={state}
                         render={render}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="div"
                       />
                     </SelectItemContext>
@@ -163,7 +165,6 @@ export const SelectItem: ISelectItem = function SuiSelectItem(props) {
 };
 
 export { SelectItem as Item };
-
 export namespace Item {
   export type State<TValue = any> = SelectItemState<TValue>;
 

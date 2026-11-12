@@ -25,17 +25,17 @@ export type IUseComboboxChipsContext = IUseContext<ComboboxChipsContext>;
 /**
  * {@link ComboboxChipsContext} を読み取るフックです。
  */
-export const useComboboxChipsContext: IUseComboboxChipsContext =
-  function useSuiComboboxChipsContext(optional): any {
-    const ctx = React.use(ComboboxChipsContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ComboboxChipsContext",
-        providerName: "ComboboxChips",
-      });
-    }
+export const useComboboxChipsContext: IUseComboboxChipsContext = (optional): any => {
+  const ctx = React.use(ComboboxChipsContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ComboboxChipsContext",
+      providerName: "ComboboxChips",
+    });
+  }
+
+  return ctx;
+};
 
 export { ComboboxChipsContext as ChipsContext, useComboboxChipsContext as useChipsContext };

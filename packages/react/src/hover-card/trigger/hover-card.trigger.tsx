@@ -38,7 +38,7 @@ export namespace HoverCardTriggerProps {
     Pick<
       React.ComponentProps<typeof PreviewCard.Trigger<TPayload>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PreviewCardTriggerProps より:
+      // PreviewCardTriggerProps より :
       "payload" | "delay" | "closeDelay"
     >,
     keyof Render | keyof SuruUI
@@ -76,9 +76,9 @@ export interface IHoverCardTrigger extends IComponent<HoverCardTriggerProps> {
  * 要素にマウスカーソルを重ねると、遅延の後にホバーカードが開きます。
  * 子要素は何にもラップされず、そのまま Base UI の `render` プロパティーに渡されます。
  */
-export const HoverCardTrigger: IHoverCardTrigger = function SuiHoverCardTrigger<TPayload>(
+export const HoverCardTrigger: IHoverCardTrigger = <TPayload,>(
   props: HoverCardTriggerProps<TPayload>,
-) {
+) => {
   const ctx = useHoverCardContext(true);
   const { style, handle, children, className, ...otherProps } = props;
 
@@ -87,7 +87,13 @@ export const HoverCardTrigger: IHoverCardTrigger = function SuiHoverCardTrigger<
       {...otherProps}
       handle={handle}
       {...proxyRenderProps<PreviewCard.Trigger.State, HoverCardTriggerState>(
-        (state) => ({ size: "md", radius: "md", outlined: false, ...ctx, ...state }),
+        (state) => ({
+          size: "md",
+          radius: "md",
+          outlined: false,
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -115,7 +121,6 @@ export const HoverCardTrigger: IHoverCardTrigger = function SuiHoverCardTrigger<
 };
 
 export { HoverCardTrigger as Trigger };
-
 export namespace Trigger {
   export type State = HoverCardTriggerState;
 

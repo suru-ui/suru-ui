@@ -19,7 +19,7 @@ export namespace DialogViewportProps {
     Pick<
       React.ComponentProps<typeof Dialog.Viewport>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DialogViewportProps より:
+      // DialogViewportProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -27,7 +27,7 @@ export namespace DialogViewportProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Dialog.Viewport>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -46,7 +46,7 @@ export type IDialogViewport = IComponent<DialogViewportProps>;
  *
  * スクロール可能なオーバーレイを作り、ポップアップを中央に配置します。
  */
-export const DialogViewport: IDialogViewport = function SuiDialogViewport(props) {
+export const DialogViewport: IDialogViewport = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -67,7 +67,6 @@ export const DialogViewport: IDialogViewport = function SuiDialogViewport(props)
 };
 
 export { DialogViewport as Viewport };
-
 export namespace Viewport {
   export type State = DialogViewportState;
 

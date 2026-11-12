@@ -25,17 +25,17 @@ export type IUseAutocompleteListContext = IUseContext<AutocompleteListContext>;
 /**
  * {@link AutocompleteListContext} を読み取るフックです。
  */
-export const useAutocompleteListContext: IUseAutocompleteListContext =
-  function useSuiAutocompleteListContext(optional): any {
-    const ctx = React.use(AutocompleteListContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompleteListContext",
-        providerName: "AutocompleteList",
-      });
-    }
+export const useAutocompleteListContext: IUseAutocompleteListContext = (optional): any => {
+  const ctx = React.use(AutocompleteListContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompleteListContext",
+      providerName: "AutocompleteList",
+    });
+  }
+
+  return ctx;
+};
 
 export { AutocompleteListContext as ListContext, useAutocompleteListContext as useListContext };

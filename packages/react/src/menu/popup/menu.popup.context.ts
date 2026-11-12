@@ -25,11 +25,10 @@ export type IUseMenuPopupContext = IUseContext<MenuPopupContext>;
 /**
  * {@link MenuPopupContext} を読み取るフックです。
  */
-export const useMenuPopupContext: IUseMenuPopupContext = function useSuiMenuPopupContext(
-  optional,
-): any {
+export const useMenuPopupContext: IUseMenuPopupContext = (optional): any => {
   const ctx = React.use(MenuPopupContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "MenuPopupContext",
       providerName: "MenuPopup",

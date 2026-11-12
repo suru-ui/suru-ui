@@ -37,7 +37,7 @@ export namespace AutocompleteListProps {
       Pick<
         React.ComponentProps<typeof Autocomplete.List>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // AutocompleteListProps より:
+        // AutocompleteListProps より :
         "children"
       >,
       keyof Render | keyof SuruUI
@@ -71,12 +71,8 @@ export interface IAutocompleteList extends IComponent<AutocompleteListProps> {
   <TItem = any>(props: AutocompleteListProps<TItem>): IComponent.Return;
 }
 
-/**
- * 検索結果のリストを表示するコンテナー要素です。
- */
-export const AutocompleteList: IAutocompleteList = function SuiAutocompleteList(
-  props: AutocompleteListProps,
-) {
+/** 検索結果のリストを表示するコンテナー要素です。 */
+export const AutocompleteList: IAutocompleteList = (props: AutocompleteListProps) => {
   const ctx = useAutocompletePopupContext();
   const {
     style,
@@ -91,7 +87,10 @@ export const AutocompleteList: IAutocompleteList = function SuiAutocompleteList(
     <Autocomplete.List
       {...otherProps}
       {...proxyRenderProps<Autocomplete.List.State, AutocompleteListState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -130,7 +129,6 @@ export const AutocompleteList: IAutocompleteList = function SuiAutocompleteList(
 };
 
 export { AutocompleteList as List };
-
 export namespace List {
   export type State<TItem = any> = AutocompleteListState<TItem>;
 

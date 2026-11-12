@@ -47,54 +47,50 @@ export type ButtonCircularProgressFillProps = ButtonCircularProgressFillProps.Re
 
 export type IButtonCircularProgressFill = IComponent<ButtonCircularProgressFillProps>;
 
-/**
- * 円形プログレスバーのフィル（進捗を表す円弧）を描画するコンポーネントです。
- */
-export const ButtonCircularProgressFill: IButtonCircularProgressFill =
-  function SuiButtonCircularProgressFill(props) {
-    const ctx = useButtonCircularProgressContext();
-    const {
-      r,
-      cx = "50%",
-      cy = "50%",
-      stroke = "currentColor",
-      pathLength = "100",
-      strokeWidth = 4,
-      strokeLinecap = "round",
-      strokeDasharray = "100 200",
-      strokeDashoffset = (state) =>
-        100 - (state.indeterminate || state.percentage === undefined ? 25 : state.percentage),
-      ...otherCircleProps
-    } = props;
-    const strokeWidthCss = typeof strokeWidth === "number" ? strokeWidth + "px" : strokeWidth;
+/** 円形プログレスバーのフィル（進捗を表す円弧）を描画するコンポーネントです。 */
+export const ButtonCircularProgressFill: IButtonCircularProgressFill = (props) => {
+  const ctx = useButtonCircularProgressContext();
+  const {
+    r,
+    cx = "50%",
+    cy = "50%",
+    stroke = "currentColor",
+    pathLength = "100",
+    strokeWidth = 4,
+    strokeLinecap = "round",
+    strokeDasharray = "100 200",
+    strokeDashoffset = (state): number =>
+      100 - (state.indeterminate || state.percentage === undefined ? 25 : state.percentage),
+    ...otherCircleProps
+  } = props;
+  const strokeWidthCss = typeof strokeWidth === "number" ? `${strokeWidth}px` : strokeWidth;
 
-    return useRender({
-      props: [
-        otherCircleProps,
-        {
-          r: r ?? `calc(50% - ${strokeWidthCss} / 2)`,
-          cx,
-          cy,
-          stroke,
-          className: cn<ButtonCircularProgressFillState>(
-            "sui_button_circular_progress_fill",
-            (state) => state.indeterminate && "sui_button_circular_progress_fill-indeterminate",
-          ),
-          pathLength,
-          strokeWidth: strokeWidthCss,
-          strokeLinecap,
-          strokeDasharray,
-          strokeDashoffset:
-            typeof strokeDashoffset === "function" ? strokeDashoffset(ctx) : strokeDashoffset,
-        },
-      ],
-      state: ctx,
-      defaultTagName: "circle",
-    });
-  };
+  return useRender({
+    props: [
+      otherCircleProps,
+      {
+        r: r ?? `calc(50% - ${strokeWidthCss} / 2)`,
+        cx,
+        cy,
+        stroke,
+        className: cn<ButtonCircularProgressFillState>(
+          "sui_button_circular_progress_fill",
+          (state) => state.indeterminate && "sui_button_circular_progress_fill-indeterminate",
+        ),
+        pathLength,
+        strokeWidth: strokeWidthCss,
+        strokeLinecap,
+        strokeDasharray,
+        strokeDashoffset:
+          typeof strokeDashoffset === "function" ? strokeDashoffset(ctx) : strokeDashoffset,
+      },
+    ],
+    state: ctx,
+    defaultTagName: "circle",
+  });
+};
 
 export { ButtonCircularProgressFill as CircularProgressFill };
-
 export namespace CircularProgressFill {
   export type State = ButtonCircularProgressFillState;
 

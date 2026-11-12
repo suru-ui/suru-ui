@@ -75,8 +75,7 @@ import {
   MenuCheckboxItemIndicator,
 } from "./menu.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type MenuActions = MenuRootActions;
 
@@ -236,9 +235,7 @@ namespace MenuProps {
      */
     radioIndicator?: React.ReactNode;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: MenuSlotProps | undefined;
 
     /**
@@ -266,14 +263,15 @@ export interface IUseMenuAPI {
    * {@link MenuAPI} を作成します。
    *
    * @template TItem 項目の型です。
+   *
    * @param props {@link Menu} の props です。
+   *
    * @returns メニューの API です。
    */
   <TItem = any>(props: MenuProps<TItem>): MenuAPI<TItem>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Menu} を構成する各パーツの props を作成するための API です。
@@ -292,66 +290,6 @@ export class MenuAPI<TItem = any> {
   private readonly slotProps: MenuSlotProps;
 
   private readonly trigger: MenuTriggerProps["children"] | undefined;
-
-  /**
-   * @param props {@link Menu} の props です。
-   * @internal
-   */
-  public constructor(props: MenuProps<TItem>) {
-    const {
-      open,
-      size,
-      items,
-      modal,
-      handle,
-      radius,
-      trigger,
-      variant,
-      disabled,
-      outlined,
-      loopFocus,
-      slotProps = {},
-      triggerId,
-      actionsRef,
-      defaultOpen,
-      orientation,
-      onOpenChange,
-      radioIndicator = <DotIcon />,
-      closeParentOnEsc,
-      defaultTriggerId,
-      checkboxIndicator = <CheckIcon />,
-      highlightItemOnHover,
-      onOpenChangeComplete,
-      ...popupProps
-    } = props;
-
-    this.checkboxIndicator = checkboxIndicator;
-    this.popupProps = popupProps;
-    this.radioIndicator = radioIndicator;
-    this.rootProps = {
-      open,
-      size,
-      items,
-      modal,
-      handle,
-      radius,
-      variant,
-      disabled,
-      outlined,
-      loopFocus,
-      triggerId,
-      actionsRef,
-      defaultOpen,
-      orientation,
-      onOpenChange,
-      closeParentOnEsc,
-      defaultTriggerId,
-      highlightItemOnHover,
-      onOpenChangeComplete,
-    };
-    this.slotProps = slotProps;
-    this.trigger = trigger;
-  }
 
   private readonly defaultPopupItemRenderer: IMenuPopupItemRenderer = (item, index, items) => {
     switch (true) {
@@ -438,6 +376,66 @@ export class MenuAPI<TItem = any> {
   };
 
   /**
+   * @param props {@link Menu} の props です。
+   *
+   * @internal
+   */
+  public constructor(props: MenuProps<TItem>) {
+    const {
+      open,
+      size,
+      items,
+      modal,
+      handle,
+      radius,
+      trigger,
+      variant,
+      disabled,
+      outlined,
+      loopFocus,
+      slotProps = {},
+      triggerId,
+      actionsRef,
+      defaultOpen,
+      orientation,
+      onOpenChange,
+      radioIndicator = <DotIcon />,
+      closeParentOnEsc,
+      defaultTriggerId,
+      checkboxIndicator = <CheckIcon />,
+      highlightItemOnHover,
+      onOpenChangeComplete,
+      ...popupProps
+    } = props;
+    this.checkboxIndicator = checkboxIndicator;
+    this.popupProps = popupProps;
+    this.radioIndicator = radioIndicator;
+    this.rootProps = {
+      open,
+      size,
+      items,
+      modal,
+      handle,
+      radius,
+      variant,
+      disabled,
+      outlined,
+      loopFocus,
+      triggerId,
+      actionsRef,
+      defaultOpen,
+      orientation,
+      onOpenChange,
+      closeParentOnEsc,
+      defaultTriggerId,
+      highlightItemOnHover,
+      onOpenChangeComplete,
+    };
+    this.slotProps = slotProps;
+    this.trigger = trigger;
+  }
+
+  /**
    * {@link MenuBackdrop} に渡す props を取得します。
    */
   public getBackdropProps(): Omit<MenuBackdropProps, "children"> {
@@ -510,6 +508,7 @@ export class MenuAPI<TItem = any> {
     }
 
     const { label } = item;
+
     if (isLikelyVisibleNode(label)) {
       return {
         ...props,
@@ -746,29 +745,23 @@ export class MenuAPI<TItem = any> {
 /**
  * {@link MenuAPI} を作成するフックです。
  */
-export const useMenuAPI: IUseMenuAPI = function useSuiMenuAPI(props) {
-  return new MenuAPI(props);
-};
+export const useMenuAPI: IUseMenuAPI = (props) => new MenuAPI(props);
 
 export { type MenuAPI as API, useMenuAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IMenu extends IComponent<MenuProps> {
   /**
    * @template TItem 項目の型です。
    */
   <TItem = any>(props: MenuProps<TItem>): IComponent.Return;
-
   readonly useContext: IUseMenuContext;
 }
 
-/**
- * メニューを表示するコンポーネントです。
- */
+/** メニューを表示するコンポーネントです。 */
 export const Menu: IMenu = /*#__PURE__*/ Object.assign(
-  function SuiMenu(props: MenuProps) {
+  (props: MenuProps) => {
     const api = useMenuAPI(props);
     const triggerProps = api.getTriggerProps();
 

@@ -21,18 +21,18 @@ export type IUsePopoverBackdropContext = IUseContext<PopoverBackdropContext>;
 /**
  * {@link PopoverBackdropContext} を読み取るフックです。
  */
-export const usePopoverBackdropContext: IUsePopoverBackdropContext =
-  function useSuiPopoverBackdropContext(optional): any {
-    const ctx = React.use(PopoverBackdropContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "PopoverBackdropContext",
-        providerName: "PopoverBackdrop",
-      });
-    }
+export const usePopoverBackdropContext: IUsePopoverBackdropContext = (optional): any => {
+  const ctx = React.use(PopoverBackdropContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "PopoverBackdropContext",
+      providerName: "PopoverBackdrop",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   PopoverBackdropContext as BackdropContext,

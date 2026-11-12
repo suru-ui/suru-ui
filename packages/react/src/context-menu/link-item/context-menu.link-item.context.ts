@@ -26,18 +26,18 @@ export type IUseContextMenuLinkItemContext = IUseContext<ContextMenuLinkItemCont
 /**
  * {@link ContextMenuLinkItemContext} を読み取るフックです。
  */
-export const useContextMenuLinkItemContext: IUseContextMenuLinkItemContext =
-  function useSuiContextMenuLinkItemContext(optional): any {
-    const ctx = React.use(ContextMenuLinkItemContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ContextMenuLinkItemContext",
-        providerName: "ContextMenuLinkItem",
-      });
-    }
+export const useContextMenuLinkItemContext: IUseContextMenuLinkItemContext = (optional): any => {
+  const ctx = React.use(ContextMenuLinkItemContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ContextMenuLinkItemContext",
+      providerName: "ContextMenuLinkItem",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ContextMenuLinkItemContext as LinkItemContext,

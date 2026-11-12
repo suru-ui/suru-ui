@@ -16,9 +16,7 @@ export namespace FileUploadItemProps {
   export type Render = RenderProps<FileUploadItemState>;
 
   export type SuruUI = {
-    /**
-     * 表示するファイルを指定します。
-     */
+    /** 表示するファイルを指定します。 */
     readonly file: File;
   };
 
@@ -45,7 +43,7 @@ export type IFileUploadItem = IComponent<FileUploadItemProps>;
  *
  * 子パーツへファイルとルートの状態を伝播します。
  */
-export const FileUploadItem: IFileUploadItem = function SuiFileUploadItem(props) {
+export const FileUploadItem: IFileUploadItem = (props) => {
   const ctx = useFileUploadContext();
   const { file, ...otherLiProps } = props;
   const state = React.useMemo<FileUploadItemState>(
@@ -70,13 +68,13 @@ export const FileUploadItem: IFileUploadItem = function SuiFileUploadItem(props)
       {
         className: cn<FileUploadItemState>(
           "sui_file_upload_item",
-          (state) => `sui_file_upload_item-size_${state.size}`,
-          (state) => `sui_file_upload_item-color_${state.color}`,
-          (state) => `sui_file_upload_item-radius_${state.radius}`,
-          (state) => `sui_file_upload_item-variant_${state.variant}`,
-          (state) => state.disabled && "sui_file_upload_item-disabled",
-          (state) => state.multiple && "sui_file_upload_item-multiple",
-          (state) => state.required && "sui_file_upload_item-required",
+          (currentState) => `sui_file_upload_item-size_${currentState.size}`,
+          (currentState) => `sui_file_upload_item-color_${currentState.color}`,
+          (currentState) => `sui_file_upload_item-radius_${currentState.radius}`,
+          (currentState) => `sui_file_upload_item-variant_${currentState.variant}`,
+          (currentState) => currentState.disabled && "sui_file_upload_item-disabled",
+          (currentState) => currentState.multiple && "sui_file_upload_item-multiple",
+          (currentState) => currentState.required && "sui_file_upload_item-required",
         ),
       },
     ],
@@ -88,7 +86,6 @@ export const FileUploadItem: IFileUploadItem = function SuiFileUploadItem(props)
 };
 
 export { FileUploadItem as Item };
-
 export namespace Item {
   export type State = FileUploadItemState;
 

@@ -14,6 +14,7 @@ export interface IComboboxItemLabelRenderer<TItem = any> {
    *
    * @param item 表示する項目の値です。
    * @param context コンテクストです。
+   *
    * @returns レンダリングする内容です。
    */
   (
@@ -66,12 +67,11 @@ export interface IComboboxItemLabel extends IComponent<ComboboxItemLabelProps> {
  *
  * 直近の {@link ComboboxItem} または {@link ComboboxChip} の `value` を表示します。
  */
-export const ComboboxItemLabel: IComboboxItemLabel = function SuiComboboxItemLabel(
-  props: ComboboxItemLabelProps,
-) {
+export const ComboboxItemLabel: IComboboxItemLabel = (props: ComboboxItemLabelProps) => {
   const chipCtx = useComboboxChipContext(true);
   const itemCtx = useComboboxItemContext(true);
-  const ctx = chipCtx || itemCtx;
+  const ctx = chipCtx ?? itemCtx;
+
   if (!ctx) {
     throw new ContextMissingError({
       contextName: "(ComboboxChipContext | ComboboxItemContext)",
@@ -85,7 +85,6 @@ export const ComboboxItemLabel: IComboboxItemLabel = function SuiComboboxItemLab
 };
 
 export { ComboboxItemLabel as ItemLabel };
-
 export namespace ItemLabel {
   export type State = ComboboxItemLabelState;
 

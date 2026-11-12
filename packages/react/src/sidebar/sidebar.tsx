@@ -42,8 +42,7 @@ import {
   SidebarGroupContent,
 } from "./sidebar.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type SidebarCollapsible = SidebarRootCollapsible;
 
@@ -70,9 +69,7 @@ namespace SidebarProps {
   export type Provider = Omit<SidebarProviderProps, keyof Sidebar>;
 
   export type Sidebar = {
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: SidebarSlotProps | undefined;
   };
 }
@@ -87,13 +84,13 @@ export interface IUseSidebarAPI {
    * {@link SidebarAPI} を作成します。
    *
    * @param props {@link Sidebar} の props です。
+   *
    * @returns サイドバーの API です
    */
   (props: SidebarProps): SidebarAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Sidebar} を構成する各パーツの props を作成するための API です。
@@ -105,6 +102,7 @@ export class SidebarAPI {
 
   /**
    * @param props {@link Sidebar} の props です。
+   *
    * @internal
    */
   public constructor(props: SidebarProps) {
@@ -129,75 +127,50 @@ export class SidebarAPI {
 /**
  * {@link SidebarAPI} を作成するフックです。
  */
-export const useSidebarAPI: IUseSidebarAPI = function useSuiSidebarAPI(props) {
-  return new SidebarAPI(props);
-};
+export const useSidebarAPI: IUseSidebarAPI = (props) => new SidebarAPI(props);
 
 export { SidebarAPI as API, useSidebarAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * サイドバーを表示するコンポーネントです。
  *
- * 呼び出しは {@link Sidebar.Provider} と同じです。子要素には
- * {@link Sidebar.Root}、{@link Sidebar.Trigger}、{@link Sidebar.Inset} を配置します。
+ * 呼び出しは {@link Sidebar.Provider} と同じです。
+ * 子要素には {@link Sidebar.Root}、{@link Sidebar.Trigger}、{@link Sidebar.Inset} を配置します。
  */
 export interface ISidebar extends IComponent<SidebarProps> {
-  /**
-   * サイドバーのスクロール領域です。
-   */
+  /** サイドバーのスクロール領域です。 */
   readonly Content: IComponent<SidebarContentProps>;
 
-  /**
-   * サイドバー下部に固定される領域です。
-   */
+  /** サイドバー下部に固定される領域です。 */
   readonly Footer: IComponent<SidebarFooterProps>;
 
-  /**
-   * サイドバー内のセクションです。
-   */
+  /** サイドバー内のセクションです。 */
   readonly Group: IComponent<SidebarGroupProps>;
 
-  /**
-   * グループの内容です。
-   */
+  /** グループの内容です。 */
   readonly GroupContent: IComponent<SidebarGroupContentProps>;
 
-  /**
-   * グループのラベルです。
-   */
+  /** グループのラベルです。 */
   readonly GroupLabel: IComponent<SidebarGroupLabelProps>;
 
-  /**
-   * サイドバー上部に固定される領域です。
-   */
+  /** サイドバー上部に固定される領域です。 */
   readonly Header: IComponent<SidebarHeaderProps>;
 
-  /**
-   * メインコンテンツの領域です。
-   */
+  /** メインコンテンツの領域です。 */
   readonly Inset: IComponent<SidebarInsetProps>;
 
-  /**
-   * サイドバーとその内容を包むルート要素です。
-   */
+  /** サイドバーとその内容を包むルート要素です。 */
   readonly Provider: IComponent<SidebarProviderProps>;
 
-  /**
-   * サイドバーの内側の端で開閉を切り替える細い帯です。
-   */
+  /** サイドバーの内側の端で開閉を切り替える細い帯です。 */
   readonly Rail: IComponent<SidebarRailProps>;
 
-  /**
-   * サイドバー本体の要素です。
-   */
+  /** サイドバー本体の要素です。 */
   readonly Root: IComponent<SidebarRootProps>;
 
-  /**
-   * サイドバーの開閉を切り替えるボタンです。
-   */
+  /** サイドバーの開閉を切り替えるボタンです。 */
   readonly Trigger: IComponent<SidebarTriggerProps>;
 
   /**
@@ -207,7 +180,7 @@ export interface ISidebar extends IComponent<SidebarProps> {
 }
 
 export const Sidebar: ISidebar = /*#__PURE__*/ Object.assign(
-  function SuiSidebar(props: SidebarProps) {
+  (props: SidebarProps) => {
     const api = useSidebarAPI(props);
 
     return <SidebarProvider {...api.getProviderProps()} />;

@@ -26,11 +26,14 @@ export default function RenderElement<TState extends State>(
   return typeof render === "function" ? (
     render(htmlProps, state)
   ) : (
-    <RenderStatelessElement element={render || <DefaultTag />} htmlProps={htmlProps} />
+    <RenderStatelessElement element={render ?? <DefaultTag />} htmlProps={htmlProps} />
   );
 }
 
-function RenderStatelessElement(props: { element: React.ReactElement<any>; htmlProps: HTMLProps }) {
+function RenderStatelessElement(props: {
+  element: React.ReactElement<any>;
+  htmlProps: HTMLProps;
+}): React.ReactElement {
   const { element, htmlProps } = props;
   const ref = useMergedRefs(htmlProps.ref, getReactElementRef(element));
   const mergedProps = mergeProps([htmlProps, element.props]);

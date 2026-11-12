@@ -25,7 +25,7 @@ export namespace AutocompleteRowProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.Row>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AutocompleteRowProps より:
+      // AutocompleteRowProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace AutocompleteRowProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Autocomplete.Row>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -52,7 +52,7 @@ export type IAutocompleteRow = IComponent<AutocompleteRowProps>;
  *
  * {@link Root} の `grid` プロパティーと一緒に使います。
  */
-export const AutocompleteRow: IAutocompleteRow = function SuiAutocompleteRow(props) {
+export const AutocompleteRow: IAutocompleteRow = (props) => {
   const ctx = useAutocompleteListContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -60,7 +60,10 @@ export const AutocompleteRow: IAutocompleteRow = function SuiAutocompleteRow(pro
     <Autocomplete.Row
       {...otherProps}
       {...proxyRenderProps<Autocomplete.Row.State, AutocompleteRowState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -97,7 +100,6 @@ export const AutocompleteRow: IAutocompleteRow = function SuiAutocompleteRow(pro
 };
 
 export { AutocompleteRow as Row };
-
 export namespace Row {
   export type State<TItem = any> = AutocompleteRowState<TItem>;
 

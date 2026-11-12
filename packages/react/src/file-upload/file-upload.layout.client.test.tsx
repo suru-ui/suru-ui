@@ -1,6 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { FileUploadDropzone } from "./dropzone/file-upload.dropzone.jsx";
@@ -14,24 +13,23 @@ import { FileUploadRoot } from "./root/file-upload.root.jsx";
 
 const textFile = new File(["hello"], "hello.txt", { type: "text/plain" });
 const anotherFile = new File(["world!"], "world.txt", { type: "text/plain" });
-
 describe("ファイルアップロードの配置", () => {
   test("ルートを縦並びにする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadDropzone />
       </FileUploadRoot>,
     );
 
-    // 検証
+    // 検証。
     const root = getComputedStyle(screen.getByClassName("sui_file_upload").element());
     expect(root.display).toBe("flex");
     expect(root.flexDirection).toBe("column");
   });
 
   test("ルートの間隔を大きさに合わせる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot size="sm">
         <FileUploadDropzone>選ぶ</FileUploadDropzone>
@@ -41,8 +39,9 @@ describe("ファイルアップロードの配置", () => {
     const rootElement = screen.getByClassName("sui_file_upload").element();
     const gap = Number.parseFloat(getComputedStyle(rootElement).rowGap);
 
-    // 検証
+    // 検証。
     expect(gap).toBeGreaterThan(0);
+
     const dropzone = screen
       .getByClassName("sui_file_upload_dropzone")
       .element()
@@ -52,9 +51,9 @@ describe("ファイルアップロードの配置", () => {
   });
 
   test("大きさが大きいほど間隔を広げる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
-      <React.Fragment>
+      <>
         <FileUploadRoot size="sm">
           <FileUploadDropzone>小</FileUploadDropzone>
           <span>小の補足</span>
@@ -63,9 +62,9 @@ describe("ファイルアップロードの配置", () => {
           <FileUploadDropzone>大</FileUploadDropzone>
           <span>大の補足</span>
         </FileUploadRoot>
-      </React.Fragment>,
+      </>,
     );
-    // 検証
+    // 検証。
     const small = Number.parseFloat(
       getComputedStyle(screen.getByClassName("sui_file_upload").nth(0).element()).rowGap,
     );
@@ -76,14 +75,14 @@ describe("ファイルアップロードの配置", () => {
   });
 
   test("ドロップゾーンの中身を中央に置く", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadDropzone>選ぶ</FileUploadDropzone>
       </FileUploadRoot>,
     );
 
-    // 検証
+    // 検証。
     const dropzone = getComputedStyle(screen.getByClassName("sui_file_upload_dropzone").element());
     expect(dropzone.display).toBe("flex");
     expect(dropzone.alignItems).toBe("center");
@@ -91,14 +90,14 @@ describe("ファイルアップロードの配置", () => {
   });
 
   test("ドロップゾーンに枠線と余白を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadDropzone>選ぶ</FileUploadDropzone>
       </FileUploadRoot>,
     );
 
-    // 検証
+    // 検証。
     const dropzone = getComputedStyle(screen.getByClassName("sui_file_upload_dropzone").element());
     expect(dropzone.borderTopStyle).toBe("solid");
     expect(Number.parseFloat(dropzone.borderTopWidth)).toBeGreaterThan(0);
@@ -106,18 +105,18 @@ describe("ファイルアップロードの配置", () => {
   });
 
   test("大きさに応じて縦幅を変える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
-      <React.Fragment>
+      <>
         <FileUploadRoot size="sm">
           <FileUploadDropzone>小</FileUploadDropzone>
         </FileUploadRoot>
         <FileUploadRoot size="lg">
           <FileUploadDropzone>大</FileUploadDropzone>
         </FileUploadRoot>
-      </React.Fragment>,
+      </>,
     );
-    // 検証
+    // 検証。
     const small = Number.parseFloat(
       getComputedStyle(screen.getByClassName("sui_file_upload_dropzone").nth(0).element())
         .minHeight,
@@ -130,18 +129,18 @@ describe("ファイルアップロードの配置", () => {
   });
 
   test("角丸を指定に合わせて変える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
-      <React.Fragment>
+      <>
         <FileUploadRoot radius="sm">
           <FileUploadDropzone>小</FileUploadDropzone>
         </FileUploadRoot>
         <FileUploadRoot radius="full">
           <FileUploadDropzone>丸</FileUploadDropzone>
         </FileUploadRoot>
-      </React.Fragment>,
+      </>,
     );
-    // 検証
+    // 検証。
     const small = Number.parseFloat(
       getComputedStyle(screen.getByClassName("sui_file_upload_dropzone").nth(0).element())
         .borderTopLeftRadius,
@@ -154,18 +153,18 @@ describe("ファイルアップロードの配置", () => {
   });
 
   test("外観によって背景色を変える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
-      <React.Fragment>
+      <>
         <FileUploadRoot variant="naked">
           <FileUploadDropzone>素</FileUploadDropzone>
         </FileUploadRoot>
         <FileUploadRoot variant="liquid">
           <FileUploadDropzone>淡</FileUploadDropzone>
         </FileUploadRoot>
-      </React.Fragment>,
+      </>,
     );
-    // 検証
+    // 検証。
     const naked = getComputedStyle(
       screen.getByClassName("sui_file_upload_dropzone").nth(0).element(),
     ).backgroundColor;
@@ -177,7 +176,7 @@ describe("ファイルアップロードの配置", () => {
   });
 
   test("一覧の余白を消す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadItemGroup>
@@ -188,7 +187,7 @@ describe("ファイルアップロードの配置", () => {
       </FileUploadRoot>,
     );
 
-    // 検証
+    // 検証。
     const group = getComputedStyle(screen.getByClassName("sui_file_upload_item_group").element());
     expect(group.paddingTop).toBe("0px");
     expect(group.paddingBottom).toBe("0px");
@@ -200,7 +199,7 @@ describe("ファイルアップロードの配置", () => {
   });
 
   test("一覧項目の間隔を空ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadItemGroup>
@@ -216,8 +215,9 @@ describe("ファイルアップロードの配置", () => {
     const groupElement = screen.getByClassName("sui_file_upload_item_group").element();
     const gap = Number.parseFloat(getComputedStyle(groupElement).rowGap);
 
-    // 検証
+    // 検証。
     expect(gap).toBeGreaterThan(0);
+
     const first = screen
       .getByClassName("sui_file_upload_item")
       .nth(0)
@@ -232,7 +232,7 @@ describe("ファイルアップロードの配置", () => {
   });
 
   test("ファイル名を省略表示にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <FileUploadRoot>
         <FileUploadItem file={textFile}>
@@ -242,7 +242,7 @@ describe("ファイルアップロードの配置", () => {
       </FileUploadRoot>,
     );
 
-    // 検証
+    // 検証。
     const name = getComputedStyle(screen.getByClassName("sui_file_upload_item_name").element());
     expect(name.overflow).toBe("hidden");
     expect(name.textOverflow).toBe("ellipsis");
@@ -252,18 +252,18 @@ describe("ファイルアップロードの配置", () => {
   });
 
   test("無効状態で操作不可の見た目にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
-      <React.Fragment>
+      <>
         <FileUploadRoot variant="liquid">
           <FileUploadDropzone>有効</FileUploadDropzone>
         </FileUploadRoot>
         <FileUploadRoot variant="liquid" disabled>
           <FileUploadDropzone>無効</FileUploadDropzone>
         </FileUploadRoot>
-      </React.Fragment>,
+      </>,
     );
-    // 検証
+    // 検証。
     const enabled = getComputedStyle(
       screen.getByClassName("sui_file_upload_dropzone").nth(0).element(),
     );
@@ -275,18 +275,18 @@ describe("ファイルアップロードの配置", () => {
   });
 
   test("無効状態でも外観に応じた背景色にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
-      <React.Fragment>
+      <>
         <FileUploadRoot variant="naked" disabled>
           <FileUploadDropzone>素</FileUploadDropzone>
         </FileUploadRoot>
         <FileUploadRoot variant="liquid" disabled>
           <FileUploadDropzone>淡</FileUploadDropzone>
         </FileUploadRoot>
-      </React.Fragment>,
+      </>,
     );
-    // 検証
+    // 検証。
     const naked = getComputedStyle(
       screen.getByClassName("sui_file_upload_dropzone").nth(0).element(),
     ).backgroundColor;

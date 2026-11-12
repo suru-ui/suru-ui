@@ -18,10 +18,7 @@ export namespace AlertTitleProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type AlertTitleProps = AlertTitleProps.Render &
 
 export type IAlertTitle = IComponent<AlertTitleProps>;
 
-/**
- * アラートのタイトルを表示するコンポーネントです。
- */
-export const AlertTitle: IAlertTitle = function SuiAlertTitle(props) {
+/** アラートのタイトルを表示するコンポーネントです。 */
+export const AlertTitle: IAlertTitle = (props) => {
   const ctx = useAlertContext();
 
   return useRender({
@@ -63,7 +58,6 @@ export const AlertTitle: IAlertTitle = function SuiAlertTitle(props) {
 };
 
 export { AlertTitle as Title };
-
 export namespace Title {
   export type State = AlertTitleState;
 

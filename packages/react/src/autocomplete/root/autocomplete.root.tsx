@@ -38,9 +38,7 @@ export type AutocompleteRootHighlightEventDetails = Autocomplete.Root.HighlightE
  */
 export type AutocompleteRootHighlightEventReason = Autocomplete.Root.HighlightEventReason;
 
-/**
- * オートコンプリートの配色です。
- */
+/** オートコンプリートの配色です。 */
 export type AutocompleteRootColor = AutocompleteContextColor;
 
 /**
@@ -53,14 +51,10 @@ export type AutocompleteRootColor = AutocompleteContextColor;
 export type AutocompleteRootLabeledItemObject<TValue = any> = Override<
   Omit<AutocompleteItemProps, "children">,
   {
-    /**
-     * 表示ラベルです。
-     */
+    /** 表示ラベルです。 */
     readonly label: React.ReactNode;
 
-    /**
-     * 選択値です。
-     */
+    /** 選択値です。 */
     readonly value: TValue;
   }
 >;
@@ -73,14 +67,10 @@ export type AutocompleteRootLabeledItemObject<TValue = any> = Override<
 export type AutocompleteRootItemGroupObject<TValue = any> = Override<
   AutocompleteGroupProps<TValue>,
   {
-    /**
-     * グループに含まれる項目です。
-     */
+    /** グループに含まれる項目です。 */
     items: readonly (TValue | AutocompleteRootLabeledItemObject<TValue>)[];
 
-    /**
-     * グループのラベルです。
-     */
+    /** グループのラベルです。 */
     label?: React.ReactNode | undefined;
   }
 >;
@@ -169,7 +159,7 @@ export namespace AutocompleteRootProps {
       Autocomplete.Root.Props<TItemValue>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
 
-      // ComboboxRootProps より:
+      // ComboboxRootProps より :
       | "children"
       | "name"
       // | "form"
@@ -209,13 +199,13 @@ export namespace AutocompleteRootProps {
       | "submitOnItemClick"
       // | "fillInputOnItemPress"
 
-      // AriaComboboxProps より:
+      // AriaComboboxProps より :
       // | "selectionMode"
       // | "selectedValue"
       // | "defaultSelectedValue"
       // | "onSelectedValueChange"
 
-      // AutocompleteRootProps より:
+      // AutocompleteRootProps より :
       | "items"
       | "form"
       | "mode"
@@ -226,11 +216,9 @@ export namespace AutocompleteRootProps {
       | "defaultValue"
       | "value"
       | "onValueChange"
-      | "submitOnItemClick"
       | "itemToStringValue"
       | "actionsRef"
       | "onOpenChange"
-      | "onItemHighlighted"
       | "openOnInputClick"
     >,
     keyof Render | keyof SuruUI
@@ -264,9 +252,7 @@ export interface IAutocompleteRoot extends IComponent<AutocompleteRootProps> {
  *
  * 入力値とポップアップの開閉状態を管理し、各パーツをグループ化します。これ自身は HTML 要素をレンダリングしません。
  */
-export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
-  props: AutocompleteRootProps,
-) {
+export const AutocompleteRoot: IAutocompleteRoot = (props: AutocompleteRootProps) => {
   const {
     size = "md",
     color = "grey",
@@ -276,13 +262,19 @@ export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
     disabled = false,
     readOnly = false,
     required = false,
-    // Autocomplete の `itemToStringValue` は入力欄に表示する文字列 (ラベル) として使われるため、
-    // Combobox の `itemToStringValue` ではなく `itemToStringLabel` と同じ規則で解決します。
+    // Autocomplete の `itemToStringValue` は入力欄に表示する文字列 (ラベル) として使われるため、Combobox の `itemToStringValue` ではなく `itemToStringLabel` と同じ規則で解決します。
     itemToStringValue = defaultItemToStringLabel,
     ...otherProps
   } = props;
   const ctx = React.useMemo<AutocompleteContext>(
-    () => ({ size, color, items, radius, variant, outlined: false }),
+    () => ({
+      size,
+      color,
+      items,
+      radius,
+      variant,
+      outlined: false,
+    }),
     [size, color, items, radius, variant],
   );
 
@@ -301,7 +293,6 @@ export const AutocompleteRoot: IAutocompleteRoot = function SuiAutocompleteRoot(
 };
 
 export { AutocompleteRoot as Root };
-
 export namespace Root {
   export type State<TItem = any> = AutocompleteRootState<TItem>;
 

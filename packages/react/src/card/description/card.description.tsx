@@ -18,10 +18,7 @@ export namespace CardDescriptionProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type CardDescriptionProps = CardDescriptionProps.Render &
 
 export type ICardDescription = IComponent<CardDescriptionProps>;
 
-/**
- * カードのタイトルを補足する説明を表示するコンポーネントです。
- */
-export const CardDescription: ICardDescription = function SuiCardDescription(props) {
+/** カードのタイトルを補足する説明を表示するコンポーネントです。 */
+export const CardDescription: ICardDescription = (props) => {
   const ctx = useCardContext();
 
   return useRender({
@@ -58,7 +53,6 @@ export const CardDescription: ICardDescription = function SuiCardDescription(pro
 };
 
 export { CardDescription as Description };
-
 export namespace Description {
   export type State = CardDescriptionState;
 

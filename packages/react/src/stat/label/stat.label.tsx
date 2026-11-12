@@ -18,10 +18,7 @@ export namespace StatLabelProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"dt", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"dt", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -39,7 +36,7 @@ export type IStatLabel = IComponent<StatLabelProps>;
  *
  * `dt` 要素を描画します。
  */
-export const StatLabel: IStatLabel = function SuiStatLabel(props) {
+export const StatLabel: IStatLabel = (props) => {
   const ctx = useStatContext();
 
   return useRender({
@@ -58,7 +55,6 @@ export const StatLabel: IStatLabel = function SuiStatLabel(props) {
 };
 
 export { StatLabel as Label };
-
 export namespace Label {
   export type State = StatLabelState;
 

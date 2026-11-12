@@ -49,14 +49,10 @@ export namespace ResizablePanelProps {
      */
     minSize?: ResizablePanelSize | undefined;
 
-    /**
-     * パネルサイズが変化したときに呼び出されます。
-     */
+    /** パネルサイズが変化したときに呼び出されます。 */
     onResize?: PanelProps["onResize"];
 
-    /**
-     * パネルサイズが変化したときに、パーセント値で呼び出されます。
-     */
+    /** パネルサイズが変化したときに、パーセント値で呼び出されます。 */
     onSizeChange?: ((size: number) => void) | undefined;
 
     /**
@@ -71,7 +67,7 @@ export namespace ResizablePanelProps {
     Pick<
       React.ComponentProps<typeof ExternalPanel>,
       // [注意] 必ず react-resizable-panels の型を確認してから取り出すプロパティーを決めます。
-      // PanelProps より:
+      // PanelProps より :
       | "collapsedSize"
       | "collapsible"
       | "disabled"
@@ -100,7 +96,7 @@ export type ResizablePanelProps = ResizablePanelProps.Render &
 export type IResizablePanel = IComponent<ResizablePanelProps>;
 
 function normalizePanelSize(value: ResizablePanelSize | undefined): ResizablePanelSize | undefined {
-  return typeof value === "number" ? value + "%" : value;
+  return typeof value === "number" ? `${value}%` : value;
 }
 
 /**
@@ -109,7 +105,7 @@ function normalizePanelSize(value: ResizablePanelSize | undefined): ResizablePan
  * `size` を指定すると、外部ライブラリーの命令型 API を使ってサイズを更新します。
  * 数値のサイズはパーセントとして扱います。
  */
-export const ResizablePanel: IResizablePanel = function SuiResizablePanel(props) {
+export const ResizablePanel: IResizablePanel = (props) => {
   const ctx = useResizableContext();
   const {
     size: sizeProp,
@@ -135,6 +131,7 @@ export const ResizablePanel: IResizablePanel = function SuiResizablePanel(props)
   React.useEffect(() => {
     if (sizeProp !== undefined) {
       const nextSize = normalizePanelSize(sizeProp);
+
       if (nextSize !== undefined) {
         internalPanelRef.current?.resize(nextSize);
       }
@@ -143,7 +140,10 @@ export const ResizablePanel: IResizablePanel = function SuiResizablePanel(props)
 
   return useRender({
     props: [
-      { ...otherProps, render },
+      {
+        ...otherProps,
+        render,
+      },
       {
         maxSize: normalizePanelSize(maxSize),
         minSize: normalizePanelSize(minSize),
@@ -163,7 +163,6 @@ export const ResizablePanel: IResizablePanel = function SuiResizablePanel(props)
 };
 
 export { ResizablePanel as Panel };
-
 export namespace Panel {
   export type State = ResizablePanelState;
 

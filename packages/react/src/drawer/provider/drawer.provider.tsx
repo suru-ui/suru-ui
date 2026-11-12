@@ -17,15 +17,15 @@ export namespace DrawerProviderProps {
     Pick<
       React.ComponentProps<typeof Drawer.Provider>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DrawerProviderProps より:
+      // DrawerProviderProps より :
       "children"
     >,
-    keyof Render | keyof SuruUI
+    keyof Render
   >;
 
   export type HTML = Omit<
     React.ComponentProps<typeof Drawer.Provider>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof BaseUI
   >;
 }
 
@@ -44,12 +44,9 @@ export type IDrawerProvider = IComponent<DrawerProviderProps>;
  *
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const DrawerProvider: IDrawerProvider = function SuiDrawerProvider(props) {
-  return <Drawer.Provider {...props} />;
-};
+export const DrawerProvider: IDrawerProvider = (props) => <Drawer.Provider {...props} />;
 
 export { DrawerProvider as Provider };
-
 export namespace Provider {
   export type State = DrawerProviderState;
 

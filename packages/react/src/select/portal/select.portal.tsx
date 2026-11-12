@@ -27,7 +27,7 @@ export namespace SelectPortalProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Portal>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectPortalProps より:
+      // SelectPortalProps より :
       "container"
     >,
     keyof Render | keyof SuruUI
@@ -54,13 +54,13 @@ export type ISelectPortal = IComponent<SelectPortalProps>;
  *
  * 既定ではポップアップを `<body>` の末尾に配置します。
  */
-export const SelectPortal: ISelectPortal = function SuiSelectPortal(props) {
+export const SelectPortal: ISelectPortal = (props) => {
   const ctx = useSelectContext();
   const {
     style,
     render,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -69,7 +69,10 @@ export const SelectPortal: ISelectPortal = function SuiSelectPortal(props) {
     <BaseSelect.Portal
       {...otherProps}
       {...proxyRenderProps<BaseSelect.Portal.State, SelectPortalState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render,
@@ -89,7 +92,6 @@ export const SelectPortal: ISelectPortal = function SuiSelectPortal(props) {
 };
 
 export { SelectPortal as Portal };
-
 export namespace Portal {
   export type State<TValue = any> = SelectPortalState<TValue>;
 

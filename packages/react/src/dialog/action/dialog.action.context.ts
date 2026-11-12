@@ -21,11 +21,10 @@ export type IUseDialogActionContext = IUseContext<DialogActionContext>;
 /**
  * {@link DialogActionContext} を読み取るフックです。
  */
-export const useDialogActionContext: IUseDialogActionContext = function useSuiDialogActionContext(
-  optional,
-): any {
+export const useDialogActionContext: IUseDialogActionContext = (optional): any => {
   const ctx = React.use(DialogActionContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "DialogActionContext",
       providerName: "DialogAction",

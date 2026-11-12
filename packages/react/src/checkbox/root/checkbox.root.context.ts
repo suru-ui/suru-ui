@@ -20,11 +20,10 @@ export type IUseCheckboxRootContext = IUseContext<CheckboxRootContext>;
 /**
  * {@link CheckboxRootContext} を読み取るフックです。
  */
-export const useCheckboxRootContext: IUseCheckboxRootContext = function useSuiCheckboxRootContext(
-  optional,
-): any {
+export const useCheckboxRootContext: IUseCheckboxRootContext = (optional): any => {
   const ctx = React.use(CheckboxRootContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "CheckboxRootContext",
       providerName: "CheckboxRoot",

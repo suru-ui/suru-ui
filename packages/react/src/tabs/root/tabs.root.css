@@ -1,80 +1,78 @@
 @layer sui.component {
-@scope (.sui_tabs) to ([data-scope]) {
+  @scope (.sui_tabs) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex-direction: column;
+      min-width: 0px;
+      border-style: solid;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  flex-direction: column;
-  min-width: 0px;
-  border-style: solid;
-}
+    /* 変数 */
+    :scope {
+      --sui_tabs-padding-around: ;
+      --sui_tabs-background_color: ;
+      --sui_tabs-border_color: ;
+      --sui_tabs-border_width: ;
+      --sui_tabs-border_radius: ;
+      --sui_tabs-corner_shape: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_tabs-padding-around: ;
-  --sui_tabs-background_color: ;
-  --sui_tabs-border_color: ;
-  --sui_tabs-border_width: ;
-  --sui_tabs-border_radius: ;
-  --sui_tabs-corner_shape: ;
-}
+    /* 可変 */
+    :scope {
+      background-color: var(--sui_tabs-background_color);
+      border-color: var(--_sui_tabs-border_color, transparent);
+      border-width: var(--_sui_tabs-border_width, 0px);
+      border-radius: var(--sui_tabs-border_radius);
+      corner-shape: var(--sui_tabs-corner_shape);
+    }
 
-/* 可変 */
-:scope {
-  background-color: var(--sui_tabs-background_color);
-  border-color: var(--_sui_tabs-border_color, transparent);
-  border-width: var(--_sui_tabs-border_width, 0px);
-  border-radius: var(--sui_tabs-border_radius);
-  corner-shape: var(--sui_tabs-corner_shape);
-}
+    /* 代入 */
+    :scope {
+      --sui_tabs-background_color: var(--sui-canvas-1);
+      --sui_tabs-border_color: var(--sui-grey-naked-border-normal);
+      --sui_tabs-border_width: --sui-border_width(1);
+      --sui_tabs-border_radius: --sui-corner_radius(2);
+      --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
 
-/* 代入 */
-:scope {
-  --sui_tabs-background_color: var(--sui-canvas-1);
-  --sui_tabs-border_color: var(--sui-grey-naked-border-normal);
-  --sui_tabs-border_width: --sui-border_width(1);
-  --sui_tabs-border_radius: --sui-corner_radius(2);
-  --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
+      &.sui_tabs-size_sm {
+        --sui_tabs-padding-around: --sui-space(1.5);
+      }
 
-  &.sui_tabs-size_sm {
-    --sui_tabs-padding-around: --sui-space(1.5);
-  }
+      &.sui_tabs-size_md {
+        --sui_tabs-padding-around: --sui-space(1.5);
+      }
 
-  &.sui_tabs-size_md {
-    --sui_tabs-padding-around: --sui-space(1.5);
-  }
+      &.sui_tabs-size_lg {
+        --sui_tabs-padding-around: --sui-space(2);
+      }
 
-  &.sui_tabs-size_lg {
-    --sui_tabs-padding-around: --sui-space(2);
-  }
+      &.sui_tabs-radius_none {
+        --sui_tabs-border_radius: 0px;
+      }
 
-  &.sui_tabs-radius_none {
-    --sui_tabs-border_radius: 0px;
-  }
+      &.sui_tabs-radius_sm {
+        --sui_tabs-border_radius: --sui-corner_radius(1);
+        --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_tabs-radius_sm {
-    --sui_tabs-border_radius: --sui-corner_radius(1);
-    --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_tabs-radius_md {
+        --sui_tabs-border_radius: --sui-corner_radius(2);
+        --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_tabs-radius_md {
-    --sui_tabs-border_radius: --sui-corner_radius(2);
-    --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_tabs-radius_lg {
+        --sui_tabs-border_radius: --sui-corner_radius(3);
+        --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
+      }
+    }
 
-  &.sui_tabs-radius_lg {
-    --sui_tabs-border_radius: --sui-corner_radius(3);
-    --sui_tabs-corner_shape: superellipse(var(--sui-superellipse));
-  }
-}
-
-/* 変異 */
-:scope {
-  &.sui_tabs-outlined {
-    --_sui_tabs-border_color: var(--sui_tabs-border_color);
-    --_sui_tabs-border_width: var(--sui_tabs-border_width);
-  }
-}
-
-} /* @scope */
+    /* 変異 */
+    :scope {
+      &.sui_tabs-outlined {
+        --_sui_tabs-border_color: var(--sui_tabs-border_color);
+        --_sui_tabs-border_width: var(--sui_tabs-border_width);
+      }
+    }
+  } /* @scope */
 } /* @layer */

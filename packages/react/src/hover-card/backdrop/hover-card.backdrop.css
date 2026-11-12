@@ -1,39 +1,37 @@
 @layer sui.component {
-@scope (.sui_hover_card_backdrop) to ([data-scope]) {
+  @scope (.sui_hover_card_backdrop) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: fixed;
+      inset: 0px;
+      pointer-events: none;
+      transition: opacity 150ms ease-out;
+    }
 
-/* 固定 */
-:scope {
-  position: fixed;
-  inset: 0px;
-  pointer-events: none;
-  transition: opacity 150ms ease-out;
-}
+    /* 変数 */
+    :scope {
+      --sui_hover_card_backdrop-background_color: ;
+      --sui_hover_card_backdrop-opacity: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_hover_card_backdrop-background_color: ;
-  --sui_hover_card_backdrop-opacity: ;
-}
+    /* 可変 */
+    :scope {
+      background-color: var(--sui_hover_card_backdrop-background_color);
+      opacity: var(--_sui_hover_card_backdrop-opacity, var(--sui_hover_card_backdrop-opacity));
+    }
 
-/* 可変 */
-:scope {
-  background-color: var(--sui_hover_card_backdrop-background_color);
-  opacity: var(--_sui_hover_card_backdrop-opacity, var(--sui_hover_card_backdrop-opacity));
-}
+    /* 代入 */
+    :scope {
+      --sui_hover_card_backdrop-background_color: transparent;
+      --sui_hover_card_backdrop-opacity: 1;
+    }
 
-/* 代入 */
-:scope {
-  --sui_hover_card_backdrop-background_color: transparent;
-  --sui_hover_card_backdrop-opacity: 1;
-}
-
-/* 変異 */
-:scope {
-  &.sui_hover_card_backdrop-transition_status_starting,
-  &.sui_hover_card_backdrop-transition_status_ending {
-    --_sui_hover_card_backdrop-opacity: 0;
-  }
-}
-
-} /* @scope */
+    /* 変異 */
+    :scope {
+      &.sui_hover_card_backdrop-transition_status_starting,
+      &.sui_hover_card_backdrop-transition_status_ending {
+        --_sui_hover_card_backdrop-opacity: 0;
+      }
+    }
+  } /* @scope */
 } /* @layer */

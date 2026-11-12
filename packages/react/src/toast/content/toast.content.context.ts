@@ -21,11 +21,10 @@ export type IUseToastContentContext = IUseContext<ToastContentContext>;
 /**
  * {@link ToastContentContext} を読み取るフックです。
  */
-export const useToastContentContext: IUseToastContentContext = function useSuiToastContentContext(
-  optional,
-): any {
+export const useToastContentContext: IUseToastContentContext = (optional): any => {
   const ctx = React.use(ToastContentContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "ToastContentContext",
       providerName: "ToastContent",

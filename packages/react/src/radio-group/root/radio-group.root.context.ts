@@ -4,9 +4,7 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { IUseContext } from "../../types.js";
 
-/**
- * ラジオボタンの配色です。
- */
+/** ラジオボタンの配色です。 */
 export type RadioGroupContextColor = Color;
 
 /**
@@ -50,45 +48,29 @@ export type RadioGroupContextVariant = "naked" | "liquid";
  * {@link RadioGroupRoot} が子パーツへ提供するコンテキストです。
  */
 export type RadioGroupContext = {
-  /**
-   * ラジオボタンの配色です。
-   */
+  /** ラジオボタンの配色です。 */
   readonly color: RadioGroupContextColor;
 
-  /**
-   * グループ全体を無効にするかどうかです。
-   */
+  /** グループ全体を無効にするかどうかです。 */
   readonly disabled: boolean | undefined;
 
-  /**
-   * ラジオボタン群の向きです。
-   */
+  /** ラジオボタン群の向きです。 */
   readonly orientation: RadioGroupContextOrientation;
 
-  /**
-   * 枠線を表示するかどうかです。
-   */
+  /** 枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * ラジオボタンの角丸です。
-   */
+  /** ラジオボタンの角丸です。 */
   readonly radius: RadioGroupContextRadius;
 
-  /**
-   * ラジオボタンの大きさです。
-   */
+  /** ラジオボタンの大きさです。 */
   readonly size: RadioGroupContextSize;
 
-  /**
-   * ラジオボタンの主な外観です。
-   */
+  /** ラジオボタンの主な外観です。 */
   readonly variant: RadioGroupContextVariant;
 };
 
-/**
- * ラジオボタングループのスタイルを子要素へ伝播するコンテキストです。
- */
+/** ラジオボタングループのスタイルを子要素へ伝播するコンテキストです。 */
 export const RadioGroupContext: React.Context<RadioGroupContext | null> =
   React.createContext<RadioGroupContext | null>(null);
 
@@ -97,11 +79,10 @@ export type IUseRadioGroupContext = IUseContext<RadioGroupContext>;
 /**
  * {@link RadioGroupContext} を読み取るフックです。
  */
-export const useRadioGroupContext: IUseRadioGroupContext = function useSuiRadioGroupContext(
-  optional?: boolean,
-): any {
+export const useRadioGroupContext: IUseRadioGroupContext = (optional?: boolean): any => {
   const ctx = React.use(RadioGroupContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "RadioGroupContext",
       providerName: "RadioGroupRoot",
@@ -112,7 +93,6 @@ export const useRadioGroupContext: IUseRadioGroupContext = function useSuiRadioG
 };
 
 export { RadioGroupContext as Context, useRadioGroupContext as useContext };
-
 export namespace Context {
   export type Color = RadioGroupContextColor;
 

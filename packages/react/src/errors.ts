@@ -23,14 +23,10 @@ export class ErrorBase<
  * {@link ContextMissingError} に付与されるメタデータです。
  */
 export type ContextMissingErrorMeta = {
-  /**
-   * 欠落しているコンテキストの名前です。
-   */
+  /** 欠落しているコンテキストの名前です。 */
   readonly contextName: string;
 
-  /**
-   * コンテキストを提供するプロバイダーコンポーネントの名前です。
-   */
+  /** コンテキストを提供するプロバイダーコンポーネントの名前です。 */
   readonly providerName: string;
 };
 
@@ -38,9 +34,7 @@ export type ContextMissingErrorMeta = {
  * {@link ContextMissingError} のコンストラクター引数です。
  */
 export type ContextMissingErrorArgs = ErrorOptions & {
-  /**
-   * 欠落しているコンテキストの名前です。
-   */
+  /** 欠落しているコンテキストの名前です。 */
   readonly contextName: string;
 
   /**
@@ -70,7 +64,10 @@ export class ContextMissingError extends ErrorBase<ContextMissingErrorMeta> {
   public constructor(args: ContextMissingErrorArgs) {
     const { contextName, providerName = contextName, ...options } = args;
     super(
-      { contextName, providerName },
+      {
+        contextName,
+        providerName,
+      },
       ({ contextName, providerName }) =>
         `${contextName} is missing. Must be placed within <${providerName}>`,
       options,

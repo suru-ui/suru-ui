@@ -13,9 +13,7 @@ import {
   TextFieldContext,
 } from "./text-field.root.context.js";
 
-/**
- * 文字入力欄の配色です。
- */
+/** 文字入力欄の配色です。 */
 export type TextFieldRootColor = TextFieldContextColor;
 
 /**
@@ -73,7 +71,7 @@ export namespace TextFieldRootProps {
     /**
      * 文字入力欄の角丸を指定します。
      *
-     * 既定値は {@link TextFieldRootProps.size|size}
+     * 既定値は {@link TextFieldRootProps.size|size}。
      */
     radius?: TextFieldRootRadius | undefined;
 
@@ -115,7 +113,7 @@ export type ITextFieldRoot = IComponent<TextFieldRootProps>;
  *
  * 指定したスタイルプロパティーは、子パーツへ継承されます。
  */
-export const TextFieldRoot: ITextFieldRoot = function SuiTextFieldRoot(props) {
+export const TextFieldRoot: ITextFieldRoot = (props) => {
   const {
     size = "md",
     color = "grey",
@@ -123,7 +121,7 @@ export const TextFieldRoot: ITextFieldRoot = function SuiTextFieldRoot(props) {
     onClick,
     variant = "naked",
     outlined = true,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
@@ -141,12 +139,19 @@ export const TextFieldRoot: ITextFieldRoot = function SuiTextFieldRoot(props) {
     }
 
     const input = evt.currentTarget.querySelector<HTMLInputElement>(".sui_text_field_input");
+
     if (input !== null && !input.disabled) {
       input.focus();
     }
   };
   const ctx = React.useMemo<TextFieldContext>(
-    () => ({ size, color, radius, variant, outlined }),
+    () => ({
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+    }),
     [size, color, radius, variant, outlined],
   );
   const element = useRender({
@@ -173,7 +178,6 @@ export const TextFieldRoot: ITextFieldRoot = function SuiTextFieldRoot(props) {
 };
 
 export { TextFieldRoot as Root };
-
 export namespace Root {
   export type State = TextFieldRootState;
 

@@ -19,9 +19,7 @@ import {
   PasswordFieldContext,
 } from "./password-field.root.context.js";
 
-/**
- * パスワード入力欄の配色です。
- */
+/** パスワード入力欄の配色です。 */
 export type PasswordFieldRootColor = TextFieldRootColor;
 
 /**
@@ -80,9 +78,7 @@ export namespace PasswordFieldRootProps {
      */
     defaultVisible?: boolean | undefined;
 
-    /**
-     * パスワードの表示状態が変わったときに呼ばれます。
-     */
+    /** パスワードの表示状態が変わったときに呼ばれます。 */
     onVisibleChange?: ((visible: boolean) => void) | undefined;
 
     /**
@@ -125,7 +121,7 @@ export namespace PasswordFieldRootProps {
     Pick<
       TextFieldRootProps.BaseUI,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PasswordFieldRootProps より:
+      // PasswordFieldRootProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -149,7 +145,7 @@ export type IPasswordFieldRoot = IComponent<PasswordFieldRootProps>;
  *
  * 指定したスタイルプロパティーは、子パーツへ継承されます。
  */
-export const PasswordFieldRoot: IPasswordFieldRoot = function SuiPasswordFieldRoot(props) {
+export const PasswordFieldRoot: IPasswordFieldRoot = (props) => {
   const {
     size = "md",
     color = "grey",
@@ -160,10 +156,10 @@ export const PasswordFieldRoot: IPasswordFieldRoot = function SuiPasswordFieldRo
     visible: visibleProp,
     outlined = true,
     className,
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
+    "data-scope": dataScope = "",
     defaultVisible = false,
     onVisibleChange,
-    // @ts-expect-error
-    "data-scope": dataScope = "",
     ...otherProps
   } = props;
   const [visible, setVisible] = useControlled<boolean>({
@@ -173,17 +169,18 @@ export const PasswordFieldRoot: IPasswordFieldRoot = function SuiPasswordFieldRo
     controlled: visibleProp,
   });
   const visibleRef = React.useRef(visible);
+  // oxlint-disable-next-line react/refs -- 最新値をコールバックから参照するための更新です。
   visibleRef.current = visible;
+
   const onVisibleChangeRef = React.useRef(onVisibleChange);
+  // oxlint-disable-next-line react/refs -- 最新値をコールバックから参照するための更新です。
   onVisibleChangeRef.current = onVisibleChange;
+
   const ctx = React.useMemo<PasswordFieldContext>(
     () => ({
       visible,
-      setVisible(value) {
-        const nextValue =
-          typeof value === "function"
-            ? (value as (prevValue: boolean) => boolean)(visibleRef.current)
-            : value;
+      setVisible(value): void {
+        const nextValue = typeof value === "function" ? value(visibleRef.current) : value;
 
         if (nextValue !== visibleRef.current) {
           setVisible(nextValue);
@@ -204,7 +201,10 @@ export const PasswordFieldRoot: IPasswordFieldRoot = function SuiPasswordFieldRo
         variant={variant}
         outlined={outlined}
         {...proxyRenderProps<TextFieldRootState, PasswordFieldRootState>(
-          (state) => ({ ...state, visible }),
+          (state) => ({
+            ...state,
+            visible,
+          }),
           {
             style,
             render,
@@ -227,7 +227,6 @@ export const PasswordFieldRoot: IPasswordFieldRoot = function SuiPasswordFieldRo
 };
 
 export { PasswordFieldRoot as Root };
-
 export namespace Root {
   export type State = PasswordFieldRootState;
 

@@ -1,12 +1,10 @@
 /* disabled */
 @layer sui.important {
-@scope (.sui_collapsible) {
-
-:scope {
-  &.sui_collapsible-disabled {
-    cursor: not-allowed;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_collapsible) {
+    :scope {
+      &.sui_collapsible-disabled {
+        cursor: not-allowed;
+      }
+    }
+  } /* @scope */
 } /* @layer */

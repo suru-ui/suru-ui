@@ -25,7 +25,7 @@ export namespace SelectValueProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Value>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectValueProps より:
+      // SelectValueProps より :
       "children" | "placeholder"
     >,
     keyof Render | keyof SuruUI
@@ -47,10 +47,8 @@ export type SelectValueProps = SelectValueProps.Render &
 
 export type ISelectValue = IComponent<SelectValueProps>;
 
-/**
- * 現在の選択値またはプレースホルダーを表示する要素です。
- */
-export const SelectValue: ISelectValue = function SuiSelectValue(props) {
+/** 現在の選択値またはプレースホルダーを表示する要素です。 */
+export const SelectValue: ISelectValue = (props) => {
   const ctx = useSelectTriggerContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const SelectValue: ISelectValue = function SuiSelectValue(props) {
     <BaseSelect.Value
       {...otherProps}
       {...proxyRenderProps<BaseSelect.Value.State, SelectValueState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -100,7 +101,6 @@ export const SelectValue: ISelectValue = function SuiSelectValue(props) {
 };
 
 export { SelectValue as Value };
-
 export namespace Value {
   export type State<TValue = any> = SelectValueState<TValue>;
 

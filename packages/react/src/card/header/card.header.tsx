@@ -18,10 +18,7 @@ export namespace CardHeaderProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type CardHeaderProps = CardHeaderProps.Render &
 
 export type ICardHeader = IComponent<CardHeaderProps>;
 
-/**
- * カードのタイトル・説明・アクションをまとめるコンポーネントです。
- */
-export const CardHeader: ICardHeader = function SuiCardHeader(props) {
+/** カードのタイトル・説明・アクションをまとめるコンポーネントです。 */
+export const CardHeader: ICardHeader = (props) => {
   const ctx = useCardContext();
 
   return useRender({
@@ -58,7 +53,6 @@ export const CardHeader: ICardHeader = function SuiCardHeader(props) {
 };
 
 export { CardHeader as Header };
-
 export namespace Header {
   export type State = CardHeaderState;
 

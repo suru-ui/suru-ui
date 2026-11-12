@@ -10,9 +10,7 @@ import type { IComponent } from "../../types.js";
 import { useComboboxChipsContext } from "../chips/combobox.chips.context.js";
 import { ComboboxChipContext } from "./combobox.chip.context.js";
 
-/**
- * チップの配色です。
- */
+/** チップの配色です。 */
 export type ComboboxChipColor = Color;
 
 /**
@@ -86,7 +84,7 @@ export namespace ComboboxChipProps {
     Pick<
       React.ComponentProps<typeof Combobox.Chip>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxChipProps より:
+      // ComboboxChipProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -115,10 +113,8 @@ export interface IComboboxChip extends IComponent<ComboboxChipProps> {
   <TValue = any>(props: ComboboxChipProps<TValue>): IComponent.Return;
 }
 
-/**
- * 複数選択した値を表すチップ要素です。
- */
-export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: ComboboxChipProps) {
+/** 複数選択した値を表すチップ要素です。 */
+export const ComboboxChip: IComboboxChip = (props: ComboboxChipProps) => {
   const ctx = useComboboxChipsContext();
   const {
     color = ctx.color,
@@ -136,7 +132,15 @@ export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: Combo
     <Combobox.Chip
       {...otherProps}
       {...proxyRenderProps<Combobox.Chip.State, ComboboxChipState>(
-        (state) => ({ ...ctx, color, value, radius, variant, outlined, ...state }),
+        (state) => ({
+          ...ctx,
+          color,
+          value,
+          radius,
+          variant,
+          outlined,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -181,7 +185,6 @@ export const ComboboxChip: IComboboxChip = function SuiComboboxChip(props: Combo
 };
 
 export { ComboboxChip as Chip };
-
 export namespace Chip {
   export type State<TValue = any> = ComboboxChipState<TValue>;
 

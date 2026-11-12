@@ -23,17 +23,17 @@ export type IUseNumberFieldInputContext = IUseContext<NumberFieldInputContext>;
 /**
  * {@link NumberFieldInputContext} を読み取るフックです。
  */
-export const useNumberFieldInputContext: IUseNumberFieldInputContext =
-  function useSuiNumberFieldInputContext(optional): any {
-    const ctx = React.use(NumberFieldInputContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "NumberFieldInputContext",
-        providerName: "NumberFieldInput",
-      });
-    }
+export const useNumberFieldInputContext: IUseNumberFieldInputContext = (optional): any => {
+  const ctx = React.use(NumberFieldInputContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "NumberFieldInputContext",
+      providerName: "NumberFieldInput",
+    });
+  }
+
+  return ctx;
+};
 
 export { NumberFieldInputContext as InputContext, useNumberFieldInputContext as useInputContext };

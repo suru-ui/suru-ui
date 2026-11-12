@@ -21,11 +21,10 @@ export type IUseTooltipPopupContext = IUseContext<TooltipPopupContext>;
 /**
  * {@link TooltipPopupContext} を読み取るフックです。
  */
-export const useTooltipPopupContext: IUseTooltipPopupContext = function useSuiTooltipPopupContext(
-  optional,
-): any {
+export const useTooltipPopupContext: IUseTooltipPopupContext = (optional): any => {
   const ctx = React.use(TooltipPopupContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "TooltipPopupContext",
       providerName: "TooltipPopup",

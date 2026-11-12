@@ -12,24 +12,16 @@ export const SUI_UTILITIES_LAYER = "sui.utilities";
  */
 export const TW_UTILITIES_LAYER = "utilities";
 
-/**
- * プリセットの名前です。
- */
+/** プリセットの名前です。 */
 export const PRESET_NAME = "@suru-ui/unocss";
 
-/**
- * `namespace` オプションの既定値です。
- */
+/** `namespace` オプションの既定値です。 */
 export const DEFAULT_NAMESPACE = true;
 
-/**
- * 名前空間を有効にしたときの、ユーティリティー名の接頭辞と値の区切り文字です。
- */
+/** 名前空間を有効にしたときの、ユーティリティー名の接頭辞と値の区切り文字です。 */
 export const NAMESPACED_SEPARATOR = "-sui-";
 
-/**
- * 名前空間を無効にしたときの、ユーティリティー名の接頭辞と値の区切り文字です。
- */
+/** 名前空間を無効にしたときの、ユーティリティー名の接頭辞と値の区切り文字です。 */
 export const UNNAMESPACED_SEPARATOR = "-";
 
 /**
@@ -41,9 +33,7 @@ export const UNNAMESPACED_SEPARATOR = "-";
  */
 export const TEMPLATE_PARTS = ["canvas", "border", "canvas_text"] as const;
 
-/**
- * 配色テンプレートが持つ部分です。
- */
+/** 配色テンプレートが持つ部分です。 */
 export type TemplatePart = (typeof TEMPLATE_PARTS)[number];
 
 /**
@@ -53,9 +43,7 @@ export type TemplatePart = (typeof TEMPLATE_PARTS)[number];
  */
 export const PROMINENCES = ["normal", "subtle", "strong"] as const;
 
-/**
- * 配色テンプレートの強調度です。
- */
+/** 配色テンプレートの強調度です。 */
 export type Prominence = (typeof PROMINENCES)[number];
 
 /**
@@ -72,11 +60,9 @@ export const COLOR_STEPS = [5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 85, 90, 95] a
  *
  * 他の色と違い、両端に `0` と `100` を持ちます。
  */
-export const GREY_COLOR_STEPS = [0, ...COLOR_STEPS, 100] as const;
+export const GREY_COLOR_STEPS: readonly [0, ...typeof COLOR_STEPS, 100] = [0, ...COLOR_STEPS, 100];
 
-/**
- * 色スケールや配色テンプレートに依存しない色トークンの名前の一覧です。
- */
+/** 色スケールや配色テンプレートに依存しない色トークンの名前の一覧です。 */
 export const BASE_COLOR_TOKENS = [
   "canvas-1",
   "canvas-2",
@@ -103,19 +89,13 @@ export const BASE_COLOR_TOKENS = [
  */
 export const TEXT_FAMILIES = ["dns", "oln", "std"] as const;
 
-/**
- * 文字スタイルが持つ書体です。
- */
+/** 文字スタイルが持つ書体です。 */
 export type TextFamily = (typeof TEXT_FAMILIES)[number];
 
-/**
- * 文字スタイルが持つ大きさの一覧です。
- */
+/** 文字スタイルが持つ大きさの一覧です。 */
 export const TEXT_SIZES = ["sm", "md", "lg", "xl", "2xl", "3xl", "4xl"] as const;
 
-/**
- * 文字スタイルが持つ大きさです。
- */
+/** 文字スタイルが持つ大きさです。 */
 export type TextSize = (typeof TEXT_SIZES)[number];
 
 /**
@@ -127,9 +107,7 @@ export type TextSize = (typeof TEXT_SIZES)[number];
  */
 export const TEXT_WEIGHTS = ["n", "m", "b"] as const;
 
-/**
- * 文字スタイルが持つ太さです。
- */
+/** 文字スタイルが持つ太さです。 */
 export type TextWeight = (typeof TEXT_WEIGHTS)[number];
 
 /**
@@ -137,11 +115,11 @@ export type TextWeight = (typeof TEXT_WEIGHTS)[number];
  *
  * `dns` は太さ `m` を持ちません。
  */
-export const TEXT_FAMILY_WEIGHTS = {
-  dns: ["n", "b"] as const,
+export const TEXT_FAMILY_WEIGHTS: Record<TextFamily, readonly TextWeight[]> = {
+  dns: ["n", "b"],
   oln: TEXT_WEIGHTS,
   std: TEXT_WEIGHTS,
-} satisfies Record<TextFamily, readonly TextWeight[]>;
+};
 
 /**
  * 文字スタイルが参照するプロパティーの一覧です。
@@ -155,79 +133,67 @@ export const TEXT_STYLE_PROPERTIES = [
   "line_height",
 ] as const;
 
-/**
- * 文字スタイルが参照するプロパティーです。
- */
+/** 文字スタイルが参照するプロパティーです。 */
 export type TextStyleProperty = (typeof TEXT_STYLE_PROPERTIES)[number];
 
-/**
- * ユーティリティー名の接頭辞から、設定する CSS プロパティーへの対応表です。
- */
+/** ユーティリティー名の接頭辞から、設定する CSS プロパティーへの対応表です。 */
 export type Properties = Record<string, readonly string[]>;
 
-/**
- * 色を設定するユーティリティーの対応表です。
- */
-export const COLOR_PROPERTIES = {
+/** 色を設定するユーティリティーの対応表です。 */
+export const COLOR_PROPERTIES: Properties = {
   bg: ["background-color"],
-  text: ["color"],
-  border: ["border-color"],
-  outline: ["outline-color"],
   fill: ["fill"],
-  stroke: ["stroke"],
+  text: ["color"],
   caret: ["caret-color"],
   accent: ["accent-color"],
+  border: ["border-color"],
+  stroke: ["stroke"],
+  outline: ["outline-color"],
   decoration: ["text-decoration-color"],
-} as const satisfies Properties;
+};
 
-/**
- * 余白を設定するユーティリティーの対応表です。
- */
-export const SPACE_PROPERTIES = {
-  p: ["padding"],
-  px: ["padding-inline"],
-  py: ["padding-block"],
-  ps: ["padding-inline-start"],
-  pe: ["padding-inline-end"],
-  pt: ["padding-top"],
-  pr: ["padding-right"],
-  pb: ["padding-bottom"],
-  pl: ["padding-left"],
+/** 余白を設定するユーティリティーの対応表です。 */
+export const SPACE_PROPERTIES: Properties = {
   m: ["margin"],
+  p: ["padding"],
+  mb: ["margin-bottom"],
+  me: ["margin-inline-end"],
+  ml: ["margin-left"],
+  mr: ["margin-right"],
+  ms: ["margin-inline-start"],
+  mt: ["margin-top"],
   mx: ["margin-inline"],
   my: ["margin-block"],
-  ms: ["margin-inline-start"],
-  me: ["margin-inline-end"],
-  mt: ["margin-top"],
-  mr: ["margin-right"],
-  mb: ["margin-bottom"],
-  ml: ["margin-left"],
-} as const satisfies Properties;
+  pb: ["padding-bottom"],
+  pe: ["padding-inline-end"],
+  pl: ["padding-left"],
+  pr: ["padding-right"],
+  ps: ["padding-inline-start"],
+  pt: ["padding-top"],
+  px: ["padding-inline"],
+  py: ["padding-block"],
+};
 
-/**
- * ギャップを設定するユーティリティーの対応表です。
- */
-export const GAP_PROPERTIES = {
+/** ギャップを設定するユーティリティーの対応表です。 */
+export const GAP_PROPERTIES: Properties = {
   gap: ["gap"],
   "gap-x": ["column-gap"],
   "gap-y": ["row-gap"],
-} as const satisfies Properties;
+};
 
 /**
  * 高さに適用する大きさを設定するユーティリティーの対応表です。
  *
  * `size` は正方形を作るために幅にも適用します。
  */
-export const SIZE_PROPERTIES = {
+export const SIZE_PROPERTIES: Properties = {
   h: ["height"],
   size: ["width", "height"],
-  "min-h": ["min-height"],
   "max-h": ["max-height"],
-} as const satisfies Properties;
+  "min-h": ["min-height"],
+};
 
-/**
- * コンテナーが持つ大きさの一覧です。
- */
+/** コンテナーが持つ大きさの一覧です。 */
 export const CONTAINER_SIZES = [
   "3xs",
   "2xs",
@@ -244,119 +210,91 @@ export const CONTAINER_SIZES = [
   "7xl",
 ] as const;
 
-/**
- * コンテナーが持つ大きさです。
- */
+/** コンテナーが持つ大きさです。 */
 export type ContainerSize = (typeof CONTAINER_SIZES)[number];
 
-/**
- * 幅などのインライン軸に適用するコンテナーを設定するユーティリティーの対応表です。
- */
-export const CONTAINER_PROPERTIES = {
+/** 幅などのインライン軸に適用するコンテナーを設定するユーティリティーの対応表です。 */
+export const CONTAINER_PROPERTIES: Properties = {
   w: ["width"],
   basis: ["flex-basis"],
-  "min-w": ["min-width"],
-  "min-inline": ["min-inline-size"],
   "max-w": ["max-width"],
+  "min-w": ["min-width"],
   "max-inline": ["max-inline-size"],
-} as const satisfies Properties;
+  "min-inline": ["min-inline-size"],
+};
 
-/**
- * 位置を設定するユーティリティーの対応表です。
- */
-export const INSET_PROPERTIES = {
+/** 位置を設定するユーティリティーの対応表です。 */
+export const INSET_PROPERTIES: Properties = {
+  end: ["inset-inline-end"],
+  top: ["top"],
+  left: ["left"],
   inset: ["inset"],
+  right: ["right"],
+  start: ["inset-inline-start"],
+  bottom: ["bottom"],
   "inset-x": ["inset-inline"],
   "inset-y": ["inset-block"],
-  top: ["top"],
-  right: ["right"],
-  bottom: ["bottom"],
-  left: ["left"],
-  start: ["inset-inline-start"],
-  end: ["inset-inline-end"],
-} as const satisfies Properties;
+};
 
-/**
- * 枠線の幅を設定するユーティリティーの対応表です。
- */
-export const BORDER_WIDTH_PROPERTIES = {
+/** 枠線の幅を設定するユーティリティーの対応表です。 */
+export const BORDER_WIDTH_PROPERTIES: Properties = {
   border: ["border-width"],
+  "border-b": ["border-bottom-width"],
+  "border-e": ["border-inline-end-width"],
+  "border-l": ["border-left-width"],
+  "border-r": ["border-right-width"],
+  "border-s": ["border-inline-start-width"],
+  "border-t": ["border-top-width"],
   "border-x": ["border-inline-width"],
   "border-y": ["border-block-width"],
-  "border-t": ["border-top-width"],
-  "border-r": ["border-right-width"],
-  "border-b": ["border-bottom-width"],
-  "border-l": ["border-left-width"],
-  "border-s": ["border-inline-start-width"],
-  "border-e": ["border-inline-end-width"],
-} as const satisfies Properties;
+};
 
-/**
- * 枠線の幅の段階を省略したときの既定値です。
- */
+/** 枠線の幅の段階を省略したときの既定値です。 */
 export const DEFAULT_BORDER_LEVEL = 1;
 
-/**
- * 枠線のスタイルを設定する CSS プロパティーです。
- */
+/** 枠線のスタイルを設定する CSS プロパティーです。 */
 export const BORDER_STYLE_PROPERTY = "border-style";
 
-/**
- * 枠線のスタイルの既定値です。
- */
+/** 枠線のスタイルの既定値です。 */
 export const BORDER_STYLE_VALUE = "solid";
 
-/**
- * 角丸の段階を省略したときの既定値です。
- */
+/** 角丸の段階を省略したときの既定値です。 */
 export const DEFAULT_RADIUS_LEVEL = 1;
 
-/**
- * 角丸の形状を設定する CSS プロパティーです。
- */
+/** 角丸の形状を設定する CSS プロパティーです。 */
 export const CORNER_SHAPE_PROPERTY = "corner-shape";
 
-/**
- * 角丸の形状をスーパー楕円にする CSS の値です。
- */
+/** 角丸の形状をスーパー楕円にする CSS の値です。 */
 export const CORNER_SHAPE_VALUE = "superellipse(var(--sui-superellipse))";
 
-/**
- * アウトラインの幅を設定するユーティリティーの対応表です。
- */
-export const OUTLINE_PROPERTIES = {
+/** アウトラインの幅を設定するユーティリティーの対応表です。 */
+export const OUTLINE_PROPERTIES: Properties = {
   outline: ["outline-width"],
-} as const satisfies Properties;
+};
 
-/**
- * 角丸を設定するユーティリティーの対応表です。
- */
-export const RADIUS_PROPERTIES = {
+/** 角丸を設定するユーティリティーの対応表です。 */
+export const RADIUS_PROPERTIES: Properties = {
   rounded: ["border-radius"],
-  "rounded-t": ["border-top-left-radius", "border-top-right-radius"],
-  "rounded-r": ["border-top-right-radius", "border-bottom-right-radius"],
   "rounded-b": ["border-bottom-right-radius", "border-bottom-left-radius"],
-  "rounded-l": ["border-top-left-radius", "border-bottom-left-radius"],
-  "rounded-s": ["border-start-start-radius", "border-end-start-radius"],
   "rounded-e": ["border-start-end-radius", "border-end-end-radius"],
-  "rounded-tl": ["border-top-left-radius"],
-  "rounded-tr": ["border-top-right-radius"],
-  "rounded-br": ["border-bottom-right-radius"],
+  "rounded-l": ["border-top-left-radius", "border-bottom-left-radius"],
+  "rounded-r": ["border-top-right-radius", "border-bottom-right-radius"],
+  "rounded-s": ["border-start-start-radius", "border-end-start-radius"],
+  "rounded-t": ["border-top-left-radius", "border-top-right-radius"],
   "rounded-bl": ["border-bottom-left-radius"],
-  "rounded-ss": ["border-start-start-radius"],
-  "rounded-se": ["border-start-end-radius"],
+  "rounded-br": ["border-bottom-right-radius"],
   "rounded-ee": ["border-end-end-radius"],
   "rounded-es": ["border-end-start-radius"],
-} as const satisfies Properties;
+  "rounded-se": ["border-start-end-radius"],
+  "rounded-ss": ["border-start-start-radius"],
+  "rounded-tl": ["border-top-left-radius"],
+  "rounded-tr": ["border-top-right-radius"],
+};
 
-/**
- * ドロップシャドウが持つ大きさの一覧です。
- */
+/** ドロップシャドウが持つ大きさの一覧です。 */
 export const DROP_SHADOW_SIZES = ["xs", "sm", "md", "lg", "xl", "2xl"] as const;
 
-/**
- * ドロップシャドウが持つ大きさです。
- */
+/** ドロップシャドウが持つ大きさです。 */
 export type DropShadowSize = (typeof DROP_SHADOW_SIZES)[number];
 
 /**
@@ -374,61 +312,45 @@ export const DROP_SHADOW_COLORS = [
   "green",
 ] as const;
 
-/**
- * ドロップシャドウが持つ色です。
- */
+/** ドロップシャドウが持つ色です。 */
 export type DropShadowColor = (typeof DROP_SHADOW_COLORS)[number];
 
-/**
- * ドロップシャドウを設定するユーティリティーの対応表です。
- */
-export const DROP_SHADOW_PROPERTIES = {
+/** ドロップシャドウを設定するユーティリティーの対応表です。 */
+export const DROP_SHADOW_PROPERTIES: Properties = {
   "drop-shadow": ["filter"],
-} as const satisfies Properties;
+};
 
-/**
- * ドロップシャドウの色と大きさをキャプチャーする正規表現のソースです。
- */
-export const DROP_SHADOW_VALUE = `(?:(${DROP_SHADOW_COLORS.join("|")})-)?(${DROP_SHADOW_SIZES.join("|")})`;
+/** 正規表現のソースです。 */
+type RegexSource = string;
 
-/**
- * フォントファミリーを設定するユーティリティーの対応表です。
- */
-export const FONT_PROPERTIES = {
+/** コンパイル済みの正規表現です。 */
+type RegexPattern = RegExp;
+
+/** ドロップシャドウの色と大きさをキャプチャーする正規表現のソースです。 */
+export const DROP_SHADOW_VALUE: RegexSource = `(?:(${DROP_SHADOW_COLORS.join("|")})-)?(${DROP_SHADOW_SIZES.join("|")})`;
+
+/** フォントファミリーを設定するユーティリティーの対応表です。 */
+export const FONT_PROPERTIES: Properties = {
   font: ["font-family"],
-} as const satisfies Properties;
+};
 
-/**
- * 段階の数値に一致する正規表現のソースです。
- */
-export const LEVEL = String.raw`\d+(?:\.\d+)?`;
+/** 段階の数値に一致する正規表現のソースです。 */
+export const LEVEL: string = String.raw`\d+(?:\.\d+)?`;
 
-/**
- * 段階の数値をキャプチャーする正規表現のソースです。
- */
-export const LEVEL_CAPTURE = `(${LEVEL})`;
+/** 段階の数値をキャプチャーする正規表現のソースです。 */
+export const LEVEL_CAPTURE: RegexSource = `(${LEVEL})`;
 
-/**
- * 段階の数値に完全一致するかどうかを判定する正規表現です。
- */
-export const LEVEL_PATTERN = new RegExp(`^${LEVEL}$`);
+/** 段階の数値に完全一致するかどうかを判定する正規表現です。 */
+export const LEVEL_PATTERN: RegexPattern = new RegExp(`^${LEVEL}$`, "u");
 
-/**
- * 値を任意の文字列としてキャプチャーする正規表現のソースです。
- */
+/** 値を任意の文字列としてキャプチャーする正規表現のソースです。 */
 export const ANY_VALUE = "(.+)";
 
-/**
- * 色トークンと省略可能な不透明度をキャプチャーする正規表現のソースです。
- */
-export const COLOR_VALUE = String.raw`(.+?)(?:/(\d{1,3}))?`;
+/** 色トークンと省略可能な不透明度をキャプチャーする正規表現のソースです。 */
+export const COLOR_VALUE: string = String.raw`(.+?)(?:/(\d{1,3}))?`;
 
-/**
- * 不透明度の最大値です。
- */
+/** 不透明度の最大値です。 */
 export const MAX_OPACITY = 100;
 
-/**
- * 文字スタイルの名前をキャプチャーする正規表現のソースです。
- */
-export const TEXT_STYLE_VALUE = `((?:${TEXT_FAMILIES.join("|")})-.+)`;
+/** 文字スタイルの名前をキャプチャーする正規表現のソースです。 */
+export const TEXT_STYLE_VALUE: RegexSource = `((?:${TEXT_FAMILIES.join("|")})-.+)`;

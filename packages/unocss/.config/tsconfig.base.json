@@ -6,8 +6,8 @@
     "lib": ["ESNext"],
     "noEmit": true,
     "target": "es2020",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "erasableSyntaxOnly": true
   }
 }

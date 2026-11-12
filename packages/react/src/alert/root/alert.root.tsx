@@ -33,9 +33,7 @@ export type AlertRootActionsPosition = AlertContextActionsPosition;
  */
 export type AlertRootDescriptionPosition = AlertContextDescriptionPosition;
 
-/**
- * アラートの配色です。
- */
+/** アラートの配色です。 */
 export type AlertRootColor = AlertContextColor;
 
 /**
@@ -147,10 +145,8 @@ export type AlertRootProps = AlertRootProps.Render &
 
 export type IAlertRoot = IComponent<AlertRootProps>;
 
-/**
- * アラートのルートコンポーネントです。
- */
-export const AlertRoot: IAlertRoot = function SuiAlertRoot(props) {
+/** アラートのルートコンポーネントです。 */
+export const AlertRoot: IAlertRoot = (props) => {
   const {
     role = "alert",
     size = "md",
@@ -158,15 +154,22 @@ export const AlertRoot: IAlertRoot = function SuiAlertRoot(props) {
     radius = size,
     variant = "muted",
     outlined = true,
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
+    "data-scope": dataScope = "",
     actionsPosition = "side",
     descriptionPosition = "bottom",
-    // @ts-expect-error
-    "data-scope": dataScope = "",
     ...otherDivProps
   } = props;
-
   const ctx = React.useMemo<AlertContext>(
-    () => ({ size, color, radius, variant, outlined, actionsPosition, descriptionPosition }),
+    () => ({
+      size,
+      color,
+      radius,
+      variant,
+      outlined,
+      actionsPosition,
+      descriptionPosition,
+    }),
     [size, color, radius, variant, outlined, actionsPosition, descriptionPosition],
   );
   const element = useRender({
@@ -196,7 +199,6 @@ export const AlertRoot: IAlertRoot = function SuiAlertRoot(props) {
 };
 
 export { AlertRoot as Root };
-
 export namespace Root {
   export type State = AlertRootState;
 

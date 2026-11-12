@@ -1,5 +1,4 @@
 import * as theme from "@suru-ui/theme";
-import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Tree } from "./index.js";

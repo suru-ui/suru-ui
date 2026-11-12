@@ -1,69 +1,65 @@
 @layer sui.component {
-@scope (.sui_aspect_ratio) to ([data-scope]) {
+  @scope (.sui_aspect_ratio) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: relative;
+      overflow: hidden;
+    }
 
-/* 固定 */
-:scope {
-  position: relative;
-  overflow: hidden;
-}
+    /* 変数 */
+    :scope {
+      --sui_aspect_ratio-width: ;
+      --sui_aspect_ratio-ratio: ;
+      --sui_aspect_ratio-border_radius: ;
+      --sui_aspect_ratio-corner_shape: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_aspect_ratio-width: ;
-  --sui_aspect_ratio-ratio: ;
-  --sui_aspect_ratio-border_radius: ;
-  --sui_aspect_ratio-corner_shape: ;
-}
+    /* 可変 */
+    :scope {
+      width: var(--sui_aspect_ratio-width);
+      aspect-ratio: var(--sui_aspect_ratio-ratio);
+      border-radius: var(--sui_aspect_ratio-border_radius);
+      corner-shape: var(--sui_aspect_ratio-corner_shape);
+    }
 
-/* 可変 */
-:scope {
-  width: var(--sui_aspect_ratio-width);
-  aspect-ratio: var(--sui_aspect_ratio-ratio);
-  border-radius: var(--sui_aspect_ratio-border_radius);
-  corner-shape: var(--sui_aspect_ratio-corner_shape);
-}
+    /* 代入 */
+    :scope {
+      --sui_aspect_ratio-width: 100%;
+      --sui_aspect_ratio-ratio: 1;
 
-/* 代入 */
-:scope {
-  --sui_aspect_ratio-width: 100%;
-  --sui_aspect_ratio-ratio: 1;
+      &.sui_aspect_ratio-radius_none {
+        --sui_aspect_ratio-border_radius: 0px;
+      }
 
-  &.sui_aspect_ratio-radius_none {
-    --sui_aspect_ratio-border_radius: 0px;
-  }
+      &.sui_aspect_ratio-radius_sm {
+        --sui_aspect_ratio-border_radius: --sui-corner_radius(1);
+        --sui_aspect_ratio-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_aspect_ratio-radius_sm {
-    --sui_aspect_ratio-border_radius: --sui-corner_radius(1);
-    --sui_aspect_ratio-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_aspect_ratio-radius_md {
+        --sui_aspect_ratio-border_radius: --sui-corner_radius(2);
+        --sui_aspect_ratio-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_aspect_ratio-radius_md {
-    --sui_aspect_ratio-border_radius: --sui-corner_radius(2);
-    --sui_aspect_ratio-corner_shape: superellipse(var(--sui-superellipse));
-  }
-
-  &.sui_aspect_ratio-radius_lg {
-    --sui_aspect_ratio-border_radius: --sui-corner_radius(3);
-    --sui_aspect_ratio-corner_shape: superellipse(var(--sui-superellipse));
-  }
-}
-
-} /* @scope */
+      &.sui_aspect_ratio-radius_lg {
+        --sui_aspect_ratio-border_radius: --sui-corner_radius(3);
+        --sui_aspect_ratio-corner_shape: superellipse(var(--sui-superellipse));
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* 直接の子要素は Suru UI コンポーネント (data-scope 付き) のことがあるため、子要素を広げる宣言だけ下限なしの別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_aspect_ratio) {
-
-/* 固定 */
-:scope {
-  > * {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-}
-
-} /* @scope */
+  @scope (.sui_aspect_ratio) {
+    /* 固定 */
+    :scope {
+      > * {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  } /* @scope */
 } /* @layer */

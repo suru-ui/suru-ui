@@ -23,18 +23,18 @@ export type IUseProgressIndicatorContext = IUseContext<ProgressIndicatorContext>
 /**
  * {@link ProgressIndicatorContext} を読み取るフックです。
  */
-export const useProgressIndicatorContext: IUseProgressIndicatorContext =
-  function useSuiProgressIndicatorContext(optional): any {
-    const ctx = React.use(ProgressIndicatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ProgressIndicatorContext",
-        providerName: "ProgressIndicator",
-      });
-    }
+export const useProgressIndicatorContext: IUseProgressIndicatorContext = (optional): any => {
+  const ctx = React.use(ProgressIndicatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ProgressIndicatorContext",
+      providerName: "ProgressIndicator",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ProgressIndicatorContext as IndicatorContext,

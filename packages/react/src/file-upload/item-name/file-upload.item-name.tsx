@@ -18,10 +18,7 @@ export namespace FileUploadItemNameProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"span", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"span", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type FileUploadItemNameProps = FileUploadItemNameProps.Render &
 
 export type IFileUploadItemName = IComponent<FileUploadItemNameProps>;
 
-/**
- * ファイル名を表示するコンポーネントです。
- */
-export const FileUploadItemName: IFileUploadItemName = function SuiFileUploadItemName(props) {
+/** ファイル名を表示するコンポーネントです。 */
+export const FileUploadItemName: IFileUploadItemName = (props) => {
   const ctx = useFileUploadItemContext();
   const { children = ctx.file.name, ...otherSpanProps } = props;
 
@@ -64,7 +59,6 @@ export const FileUploadItemName: IFileUploadItemName = function SuiFileUploadIte
 };
 
 export { FileUploadItemName as ItemName };
-
 export namespace ItemName {
   export type State = FileUploadItemNameState;
 

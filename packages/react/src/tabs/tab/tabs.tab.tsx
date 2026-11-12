@@ -21,24 +21,16 @@ import { TabsTabContext } from "./tabs.tab.context.js";
  */
 export type TabsTabActivationDirection = BaseTabs.Tab.ActivationDirection;
 
-/**
- * Tabs のタブのメタデータです。
- */
+/** Tabs のタブのメタデータです。 */
 export type TabsTabMetadata = BaseTabs.Tab.Metadata;
 
-/**
- * アクティブなタブの位置です。
- */
+/** アクティブなタブの位置です。 */
 export type TabsTabPosition = BaseTabs.Tab.Position;
 
-/**
- * アクティブなタブの大きさです。
- */
+/** アクティブなタブの大きさです。 */
 export type TabsTabSize = BaseTabs.Tab.Size;
 
-/**
- * Tabs のタブの値です。
- */
+/** Tabs のタブの値です。 */
 export type TabsTabValue = BaseTabs.Tab.Value;
 
 /**
@@ -57,9 +49,9 @@ export namespace TabsTabProps {
     Pick<
       React.ComponentProps<typeof BaseTabs.Tab>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // TabsTabProps より:
+      // TabsTabProps より :
       | "value"
       | "disabled"
     >,
@@ -82,49 +74,52 @@ export type TabsTabProps = TabsTabProps.Render &
 
 export type ITabsTab = IComponent<TabsTabProps>;
 
-/**
- * 対応するパネルを切り替える Tab ボタンです。
- */
-export const TabsTab: ITabsTab = function SuiTabsTab(props) {
+/** 対応するパネルを切り替える Tab ボタンです。 */
+export const TabsTab: ITabsTab = (props) => {
   const ctx = useTabsContext();
   const { style, render, className, ...otherProps } = props;
 
   return (
     <BaseTabs.Tab
       {...otherProps}
-      {...proxyRenderProps<BaseTabs.Tab.State, TabsTabState>((state) => ({ ...ctx, ...state }), {
-        style,
-        render: (htmlProps, state) => (
-          <TabsTabContext value={state}>
-            <RenderElement
-              state={state}
-              render={render}
-              htmlProps={htmlProps}
-              defaultTagName="button"
-            />
-          </TabsTabContext>
-        ),
-        className: cn<TabsTabState>(
-          className,
-          "sui_tabs_tab",
-          (state) => state.active && "sui_tabs_tab-active",
-          (state) => state.disabled && "sui_tabs_tab-disabled",
-          (state) => `sui_tabs_tab-size_${state.size}`,
-          (state) => `sui_tabs_tab-radius_${state.radius}`,
-          (state) => `sui_tabs_tab-variant_${state.variant}`,
-          (state) => state.outlined && "sui_tabs_tab-outlined",
-          (state) => `sui_tabs_tab-active_variant_${state.activeVariant}`,
-          (state) => `sui_tabs_tab-orientation_${state.orientation}`,
-          (state) => state.thin && "sui_tabs_tab-thin",
-          (state) => `sui_tabs_tab-tab_activation_direction_${state.tabActivationDirection}`,
-        ),
-      })}
+      {...proxyRenderProps<BaseTabs.Tab.State, TabsTabState>(
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
+        {
+          style,
+          render: (htmlProps, state) => (
+            <TabsTabContext value={state}>
+              <RenderElement
+                state={state}
+                render={render}
+                htmlProps={htmlProps}
+                defaultTagName="button"
+              />
+            </TabsTabContext>
+          ),
+          className: cn<TabsTabState>(
+            className,
+            "sui_tabs_tab",
+            (state) => state.active && "sui_tabs_tab-active",
+            (state) => state.disabled && "sui_tabs_tab-disabled",
+            (state) => `sui_tabs_tab-size_${state.size}`,
+            (state) => `sui_tabs_tab-radius_${state.radius}`,
+            (state) => `sui_tabs_tab-variant_${state.variant}`,
+            (state) => state.outlined && "sui_tabs_tab-outlined",
+            (state) => `sui_tabs_tab-active_variant_${state.activeVariant}`,
+            (state) => `sui_tabs_tab-orientation_${state.orientation}`,
+            (state) => state.thin && "sui_tabs_tab-thin",
+            (state) => `sui_tabs_tab-tab_activation_direction_${state.tabActivationDirection}`,
+          ),
+        },
+      )}
     />
   );
 };
 
 export { TabsTab as Tab };
-
 export namespace Tab {
   export type State<TItem = any> = TabsTabState<TItem>;
 

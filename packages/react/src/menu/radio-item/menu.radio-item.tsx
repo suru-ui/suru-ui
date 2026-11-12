@@ -13,14 +13,10 @@ import { getItemVariant } from "../_menu.utils.jsx";
 import { useMenuContext } from "../root/menu.root.context.js";
 import { MenuRadioItemContext } from "./menu.radio-item.context.js";
 
-/**
- * ラジオ項目の配色です。
- */
+/** ラジオ項目の配色です。 */
 export type MenuRadioItemColor = Button.Root.Color;
 
-/**
- * ラジオ項目の角丸です。
- */
+/** ラジオ項目の角丸です。 */
 export type MenuRadioItemRadius = Button.Root.Radius;
 
 /**
@@ -73,9 +69,9 @@ export namespace MenuRadioItemProps {
       Pick<
         React.ComponentProps<typeof Menu.RadioItem>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // NonNativeButtonProps より:
+        // NonNativeButtonProps より :
         | keyof NonNativeButtonProps
-        // MenuRadioItemProps より:
+        // MenuRadioItemProps より :
         | "value"
         | "onClick"
         | "disabled"
@@ -103,10 +99,8 @@ export type MenuRadioItemProps = MenuRadioItemProps.Render &
 
 export type IMenuRadioItem = IComponent<MenuRadioItemProps>;
 
-/**
- * ラジオグループ内のメニュー項目です。
- */
-export const MenuRadioItem: IMenuRadioItem = function SuiMenuRadioItem(props) {
+/** ラジオグループ内のメニュー項目です。 */
+export const MenuRadioItem: IMenuRadioItem = (props) => {
   const ctx = useMenuContext();
   const {
     id,
@@ -167,15 +161,19 @@ export const MenuRadioItem: IMenuRadioItem = function SuiMenuRadioItem(props) {
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, MenuRadioItemState>(
-                (state) => ({ ...ctx, ...state, ...itemState }),
+                (state) => ({
+                  ...ctx,
+                  ...state,
+                  ...itemState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <MenuRadioItemContext value={state}>
                       <RenderElement
                         state={state}
                         render={render ?? <div />}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="div"
                       />
                     </MenuRadioItemContext>
@@ -203,7 +201,6 @@ export const MenuRadioItem: IMenuRadioItem = function SuiMenuRadioItem(props) {
 };
 
 export { MenuRadioItem as RadioItem };
-
 export namespace RadioItem {
   export type State<TItem = any> = MenuRadioItemState<TItem>;
 

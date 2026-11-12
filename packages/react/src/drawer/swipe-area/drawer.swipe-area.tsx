@@ -19,7 +19,7 @@ export namespace DrawerSwipeAreaProps {
     Pick<
       React.ComponentProps<typeof Drawer.SwipeArea>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // DrawerSwipeAreaProps より:
+      // DrawerSwipeAreaProps より :
       "disabled" | "swipeDirection"
     >,
     keyof Render | keyof SuruUI
@@ -41,10 +41,8 @@ export type DrawerSwipeAreaProps = DrawerSwipeAreaProps.Render &
 
 export type IDrawerSwipeArea = IComponent<DrawerSwipeAreaProps>;
 
-/**
- * 画面端からのスワイプでドロワーを開く領域です。
- */
-export const DrawerSwipeArea: IDrawerSwipeArea = function SuiDrawerSwipeArea(props) {
+/** 画面端からのスワイプでドロワーを開く領域です。 */
+export const DrawerSwipeArea: IDrawerSwipeArea = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -63,7 +61,6 @@ export const DrawerSwipeArea: IDrawerSwipeArea = function SuiDrawerSwipeArea(pro
 };
 
 export { DrawerSwipeArea as SwipeArea };
-
 export namespace SwipeArea {
   export type State = DrawerSwipeAreaState;
 

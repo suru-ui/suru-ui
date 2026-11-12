@@ -83,8 +83,7 @@ import {
   useAutocompleteFilteredItems,
 } from "./autocomplete.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type AutocompleteActions = AutocompleteRootActions;
 
@@ -243,24 +242,16 @@ namespace AutocompleteProps {
      */
     backdrop?: boolean | undefined;
 
-    /**
-     * リストが空のときだけ表示する内容です。
-     */
+    /** リストが空のときだけ表示する内容です。 */
     empty?: React.ReactNode | undefined;
 
-    /**
-     * 入力欄の末尾に表示する内容です。
-     */
+    /** 入力欄の末尾に表示する内容です。 */
     endAddons?: Iterable<React.ReactNode> | undefined;
 
-    /**
-     * 検索結果リストの内容です。
-     */
+    /** 検索結果リストの内容です。 */
     itemToRenderedValue?: ((item: TItem, index: number) => React.ReactNode) | undefined;
 
-    /**
-     * 入力欄のプレースホルダー文字列です。
-     */
+    /** 入力欄のプレースホルダー文字列です。 */
     placeholder?: string | undefined;
 
     /**
@@ -279,14 +270,10 @@ namespace AutocompleteProps {
      */
     slotProps?: AutocompleteSlotProps<TItem> | undefined;
 
-    /**
-     * 入力欄の先頭に表示する内容です。
-     */
+    /** 入力欄の先頭に表示する内容です。 */
     startAddons?: Iterable<React.ReactNode> | undefined;
 
-    /**
-     * 非同期検索などの状態を読み上げる内容です。
-     */
+    /** 非同期検索などの状態を読み上げる内容です。 */
     status?: React.ReactNode | undefined;
   };
 
@@ -309,15 +296,17 @@ export interface IUseAutocompleteAPI {
    * {@link AutocompleteAPI} を作成します。
    *
    * @template TItem 項目の値の型です。
+   *
    * @param props {@link Autocomplete} の props です。
+   *
    * @returns オートコンプリートの API です
    */
   <TItem = any>(props: AutocompleteProps<TItem>): AutocompleteAPI<TItem>;
 }
 
-// API
-// ---
+// API.
 
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- 未指定を表す一意なセンチネルです。
 const NONE = {} as never;
 
 /**
@@ -336,8 +325,39 @@ export class AutocompleteAPI<TItem = any> {
 
   private readonly inputGroupProps: AutocompleteProps.InputGroup;
 
+  private readonly defaultCollectionItemRenderer: IAutocompleteCollectionItemRenderer<TItem> = (
+    item,
+    index,
+  ) => {
+    switch (true) {
+      case isItemGroup<AutocompleteItemGroupObject<TItem>>(item): {
+        const groupLabelProps = this.getGroupLabelProps(item);
+        const separatorProps = this.getSeparatorProps();
+
+        return (
+          <AutocompleteGroup {...this.getGroupProps(item)} key={getItemKey(item) ?? index}>
+            {groupLabelProps && <AutocompleteGroupLabel {...groupLabelProps} />}
+            <AutocompleteCollection {...this.getCollectionProps()} />
+            {separatorProps && <AutocompleteSeparator {...separatorProps} />}
+          </AutocompleteGroup>
+        );
+      }
+
+      case isLabeledItem<AutocompleteRootLabeledItemObject<TItem>>(item):
+      case isPrimitiveItem(item):
+      case !isReactNode(item):
+        return (
+          <AutocompleteItem {...this.getItemProps(item, index)} key={getItemKey(item) ?? index} />
+        );
+
+      default:
+        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
+    }
+  };
+
   /**
    * @param props {@link Autocomplete} の props です。
+   *
    * @internal
    */
   public constructor(props: AutocompleteProps<TItem>) {
@@ -448,36 +468,6 @@ export class AutocompleteAPI<TItem = any> {
     this.inputGroupProps = inputGroupProps;
   }
 
-  private defaultCollectionItemRenderer: IAutocompleteCollectionItemRenderer<TItem> = (
-    item,
-    index,
-  ) => {
-    switch (true) {
-      case isItemGroup<AutocompleteItemGroupObject<TItem>>(item): {
-        const groupLabelProps = this.getGroupLabelProps(item);
-        const separatorProps = this.getSeparatorProps();
-
-        return (
-          <AutocompleteGroup {...this.getGroupProps(item)} key={getItemKey(item) ?? index}>
-            {groupLabelProps && <AutocompleteGroupLabel {...groupLabelProps} />}
-            <AutocompleteCollection {...this.getCollectionProps()} />
-            {separatorProps && <AutocompleteSeparator {...separatorProps} />}
-          </AutocompleteGroup>
-        );
-      }
-
-      case isLabeledItem<AutocompleteRootLabeledItemObject<TItem>>(item):
-      case isPrimitiveItem(item):
-      case !isReactNode(item):
-        return (
-          <AutocompleteItem {...this.getItemProps(item, index)} key={getItemKey(item) ?? index} />
-        );
-
-      default:
-        return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
-    }
-  };
-
   /**
    * {@link AutocompleteAddon} に渡す props を取得します。
    */
@@ -506,7 +496,7 @@ export class AutocompleteAPI<TItem = any> {
     const { backdrop: props } = this.slotProps;
 
     if (backdrop || props) {
-      return props || {};
+      return props ?? {};
     }
 
     return null;
@@ -559,9 +549,11 @@ export class AutocompleteAPI<TItem = any> {
    */
   public getEmptyProps(): AutocompleteEmptyProps | null {
     const { empty } = this.autocompleteProps;
+
     if (!isLikelyVisibleNode(empty)) {
       return null;
     }
+
     const { empty: props = {} } = this.slotProps;
 
     return {
@@ -574,12 +566,14 @@ export class AutocompleteAPI<TItem = any> {
    * 入力欄の末尾に表示する {@link AutocompleteAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { endAddons: addons = [] } = this.autocompleteProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -616,8 +610,15 @@ export class AutocompleteAPI<TItem = any> {
 
     if (item) {
       const { label, ...otherProps } = item;
+
       if (isLikelyVisibleNode(label)) {
-        return mergeProps([baseProps, otherProps, { children: label }]);
+        return mergeProps([
+          baseProps,
+          otherProps,
+          {
+            children: label,
+          },
+        ]);
       }
 
       return null;
@@ -673,7 +674,10 @@ export class AutocompleteAPI<TItem = any> {
       return mergeProps([
         props,
         otherProps,
-        { value: item, children: itemToRenderedValue(item, index) },
+        {
+          value: item,
+          children: itemToRenderedValue(item, index),
+        },
       ]);
     }
 
@@ -744,7 +748,7 @@ export class AutocompleteAPI<TItem = any> {
   public getScrollAreaProps(): Omit<ScrollAreaRootProps, "children"> {
     const { scrollArea: props = {} } = this.slotProps;
     const {
-      // @ts-expect-error
+      // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
       "data-scope": dataScope = null,
       ...otherProps
     } = props;
@@ -776,7 +780,7 @@ export class AutocompleteAPI<TItem = any> {
     const { separator: props } = this.slotProps;
 
     if (separator || props) {
-      return props || {};
+      return props ?? {};
     }
 
     return null;
@@ -786,12 +790,14 @@ export class AutocompleteAPI<TItem = any> {
    * 入力欄の先頭に表示する {@link AutocompleteAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { startAddons: addons = [] } = this.autocompleteProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -834,35 +840,26 @@ export class AutocompleteAPI<TItem = any> {
 /**
  * {@link AutocompleteAPI} を作成するフックです。
  */
-export const useAutocompleteAPI: IUseAutocompleteAPI = function useSuiAutocompleteAPI(props) {
-  return new AutocompleteAPI(props);
-};
+export const useAutocompleteAPI: IUseAutocompleteAPI = (props) => new AutocompleteAPI(props);
 
 export { AutocompleteAPI as API, useAutocompleteAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IAutocomplete extends IComponent<AutocompleteProps> {
   /**
    * @template TItem 項目の値の型です。
    */
   <TItem = any>(props: AutocompleteProps<TItem>): IComponent.Return;
-
   readonly useContext: IUseAutocompleteContext;
-
   readonly useFilter: IUseAutocompleteFilter;
-
   readonly useFilteredItems: IUseAutocompleteFilteredItems;
-
   readonly useItemContext: IUseAutocompleteItemContext;
 }
 
-/**
- * 検索文字列に応じて候補を絞り込んで表示する入力欄です。
- */
+/** 検索文字列に応じて候補を絞り込んで表示する入力欄です。 */
 export const Autocomplete: IAutocomplete = /*#__PURE__*/ Object.assign(
-  function SuiAutocomplete(props: AutocompleteProps) {
+  (props: AutocompleteProps) => {
     const api = useAutocompleteAPI(props);
     const emptyProps = api.getEmptyProps();
     const backdropProps = api.getBackdropProps();

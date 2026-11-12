@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { FieldRoot } from "../../field/root/field.root.jsx";
@@ -10,10 +10,10 @@ import "../../../tests/src/_locators.js";
 
 describe("NumberFieldRoot", () => {
   test("既定の修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<NumberFieldRoot />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_number_field").element();
     expect(root.classList.contains("sui_number_field")).toBe(true);
     expect(root.classList.contains("sui_number_field-size_md")).toBe(true);
@@ -24,10 +24,10 @@ describe("NumberFieldRoot", () => {
   });
 
   test("指定した大きさと配色と角丸と外観のクラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<NumberFieldRoot size="lg" color="blue" variant="naked" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_number_field").element();
     expect(root.classList.contains("sui_number_field-size_lg")).toBe(true);
     expect(root.classList.contains("sui_number_field-color_blue")).toBe(true);
@@ -36,7 +36,7 @@ describe("NumberFieldRoot", () => {
   });
 
   test("角丸を指定しないときは大きさに追従させる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <div id="sm">
@@ -48,7 +48,7 @@ describe("NumberFieldRoot", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.container
         .querySelector("#sm .sui_number_field")
@@ -62,10 +62,10 @@ describe("NumberFieldRoot", () => {
   });
 
   test("枠線の修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<NumberFieldRoot outlined />);
 
-    // 検証
+    // 検証。
     expect(
       screen
         .getByClassName("sui_number_field")
@@ -75,25 +75,25 @@ describe("NumberFieldRoot", () => {
   });
 
   test("スタイル起点として data-scope を付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<NumberFieldRoot />);
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_number_field").element().getAttribute("data-scope")).toBe("");
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<NumberFieldRoot className="custom" />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_number_field").element();
     expect(root.classList.contains("custom")).toBe(true);
     expect(root.classList.contains("sui_number_field")).toBe(true);
   });
 
   test("利用者の props を入力欄へ渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot id="field" defaultValue={3}>
         <NumberFieldGroup>
@@ -102,14 +102,14 @@ describe("NumberFieldRoot", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const input = screen.getByClassName("sui_number_field_input").element() as HTMLInputElement;
     expect(input.id).toBe("field");
     expect(input.value).toBe("3");
   });
 
   test("無効時は状態クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot disabled>
         <NumberFieldGroup>
@@ -118,13 +118,13 @@ describe("NumberFieldRoot", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_number_field").element();
     expect(root.classList.contains("sui_number_field-disabled")).toBe(true);
   });
 
   test("Field の検証状態を入力欄のクラスへ反映する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <FieldRoot invalid>
@@ -144,23 +144,23 @@ describe("NumberFieldRoot", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const inputs = screen.container.querySelectorAll<HTMLElement>(".sui_number_field_input");
     expect(inputs[0]?.classList.contains("sui_number_field_input-invalid")).toBe(true);
     expect(inputs[1]?.classList.contains("sui_number_field_input-unverified")).toBe(true);
   });
 
   test("render で要素を置き換える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<NumberFieldRoot render={<section />} />);
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_number_field").element();
     expect(root.tagName).toBe("SECTION");
   });
 
   test("render の関数へスタイル情報とルートの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot
         size="lg"
@@ -178,14 +178,14 @@ describe("NumberFieldRoot", () => {
       />,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_number_field").element();
     expect(root.tagName).toBe("SECTION");
     expect(root.getAttribute("data-probe")).toBe("lg/blue/none/naked/true/true");
   });
 
   test("className の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot
         size="lg"
@@ -194,7 +194,7 @@ describe("NumberFieldRoot", () => {
       />,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_number_field").element();
     expect(root.classList.contains("probe-size_lg-color_blue")).toBe(true);
   });

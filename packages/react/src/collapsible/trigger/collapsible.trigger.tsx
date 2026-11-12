@@ -31,9 +31,9 @@ export namespace CollapsibleTriggerProps {
     Pick<
       React.ComponentProps<typeof Collapsible.Trigger>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // CollapsibleTriggerProps より:
+      // CollapsibleTriggerProps より :
       | never
     >,
     keyof Render | keyof SuruUI
@@ -60,7 +60,7 @@ export type ICollapsibleTrigger = IComponent<CollapsibleTriggerProps>;
  *
  * ボタンなどの操作要素を子に渡して使います。
  */
-export const CollapsibleTrigger: ICollapsibleTrigger = function SuiCollapsibleTrigger(props) {
+export const CollapsibleTrigger: ICollapsibleTrigger = (props) => {
   const ctx = useCollapsibleContext();
   const { style, children, className, ...otherProps } = props;
 
@@ -68,7 +68,10 @@ export const CollapsibleTrigger: ICollapsibleTrigger = function SuiCollapsibleTr
     <Collapsible.Trigger
       {...otherProps}
       {...proxyRenderProps<Collapsible.Trigger.State, CollapsibleTriggerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -98,7 +101,6 @@ export const CollapsibleTrigger: ICollapsibleTrigger = function SuiCollapsibleTr
 };
 
 export { CollapsibleTrigger as Trigger };
-
 export namespace Trigger {
   export type State = CollapsibleTriggerState;
 

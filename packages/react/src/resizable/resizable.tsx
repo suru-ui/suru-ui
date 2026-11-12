@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import type { IComponent } from "../types.js";
 import {
   type ResizableContext,
@@ -19,8 +17,7 @@ import {
   useResizableContext,
 } from "./resizable.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type ResizableOrientation = ResizableRootOrientation;
 
@@ -39,13 +36,13 @@ export interface IUseResizableAPI {
    * {@link ResizableAPI} を作成します。
    *
    * @param props {@link Resizable} の props です。
+   *
    * @returns リサイズ可能なパネル群の API です
    */
   (props: ResizableProps): ResizableAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Resizable} を構成する各パーツの props を作成するための API です。
@@ -55,6 +52,7 @@ export class ResizableAPI {
 
   /**
    * @param props {@link Resizable} の props です。
+   *
    * @internal
    */
   public constructor(props: ResizableProps) {
@@ -72,29 +70,20 @@ export class ResizableAPI {
 /**
  * {@link ResizableAPI} を作成するフックです。
  */
-export const useResizableAPI: IUseResizableAPI = function useSuiResizableAPI(props) {
-  return new ResizableAPI(props);
-};
+export const useResizableAPI: IUseResizableAPI = (props) => new ResizableAPI(props);
 
 export { ResizableAPI as API, useResizableAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IResizable extends IComponent<ResizableProps> {
-  /**
-   * 隣接するパネルのサイズを変更するハンドルです。
-   */
+  /** 隣接するパネルのサイズを変更するハンドルです。 */
   readonly Handle: IComponent<ResizableHandleProps>;
 
-  /**
-   * サイズを変更できるパネル要素です。
-   */
+  /** サイズを変更できるパネル要素です。 */
   readonly Panel: IComponent<ResizablePanelProps>;
 
-  /**
-   * パネル群のルート要素です。
-   */
+  /** パネル群のルート要素です。 */
   readonly PanelGroup: IComponent<ResizableRootProps>;
 
   /**
@@ -110,7 +99,7 @@ export interface IResizable extends IComponent<ResizableProps> {
  * ハンドルはポインター操作と矢印キーによる操作に対応します。
  */
 export const Resizable: IResizable = /*#__PURE__*/ Object.assign(
-  function SuiResizable(props: ResizableProps) {
+  (props: ResizableProps) => {
     const api = useResizableAPI(props);
 
     return <ResizableRoot {...api.getRootProps()} />;

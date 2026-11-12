@@ -11,8 +11,7 @@ import {
   RadioIndicator,
 } from "./radio.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type RadioColor = RadioRootColor;
 
@@ -41,9 +40,7 @@ namespace RadioProps {
   export type Indicator = Pick<RadioIndicatorProps, "children">;
 
   export type Radio = {
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: RadioSlotProps | undefined;
   };
 
@@ -71,14 +68,15 @@ export interface IUseRadioAPI {
    * {@link RadioAPI} を作成します。
    *
    * @template TValue 項目の値の型です。
+   *
    * @param props {@link Radio} の props です。
+   *
    * @returns ラジオボタンの API です。
    */
   <TValue = any>(props: RadioProps<TValue>): RadioAPI<TValue>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Radio} を構成する各パーツの props などを作成するための API です。
@@ -94,11 +92,14 @@ export class RadioAPI<TValue = any> {
 
   /**
    * @param props {@link Radio} の props です。
+   *
    * @internal
    */
   public constructor(props: RadioProps<TValue>) {
     const { children, slotProps = {}, ...rootProps } = props;
-    this.indicatorProps = { children };
+    this.indicatorProps = {
+      children,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -126,23 +127,19 @@ export class RadioAPI<TValue = any> {
 /**
  * {@link RadioAPI} を作成するフックです。
  */
-export const useRadioAPI: IUseRadioAPI = function useSuiRadioAPI<TValue = any>(
-  props: RadioProps<TValue>,
-) {
-  return new RadioAPI(props);
-};
+export const useRadioAPI: IUseRadioAPI = <TValue = any,>(props: RadioProps<TValue>) =>
+  new RadioAPI(props);
 
 export { RadioAPI as API, useRadioAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * ラジオボタンを表示するコンポーネントです。
  *
  * ラベルのテキストは `label` 要素で囲んで指定します。
  */
-export const Radio: IRadio = function SuiRadio<TValue = any>(props: RadioProps<TValue>) {
+export const Radio: IRadio = <TValue = any,>(props: RadioProps<TValue>) => {
   const api = useRadioAPI(props);
 
   return (

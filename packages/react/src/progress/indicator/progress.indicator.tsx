@@ -23,7 +23,7 @@ export namespace ProgressIndicatorProps {
     Pick<
       React.ComponentProps<typeof Progress.Indicator>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ProgressIndicatorProps より:
+      // ProgressIndicatorProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace ProgressIndicatorProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Progress.Indicator>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -45,10 +45,8 @@ export type ProgressIndicatorProps = ProgressIndicatorProps.Render &
 
 export type IProgressIndicator = IComponent<ProgressIndicatorProps>;
 
-/**
- * 進捗の現在値を示すインジケーターコンポーネントです。
- */
-export const ProgressIndicator: IProgressIndicator = function SuiProgressIndicator(props) {
+/** 進捗の現在値を示すインジケーターコンポーネントです。 */
+export const ProgressIndicator: IProgressIndicator = (props) => {
   const ctx = useProgressTrackContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const ProgressIndicator: IProgressIndicator = function SuiProgressIndicat
     <Progress.Indicator
       {...otherProps}
       {...proxyRenderProps<Progress.Indicator.State, ProgressIndicatorState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -86,7 +87,6 @@ export const ProgressIndicator: IProgressIndicator = function SuiProgressIndicat
 };
 
 export { ProgressIndicator as Indicator };
-
 export namespace Indicator {
   export type State = ProgressIndicatorState;
 

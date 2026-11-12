@@ -3,12 +3,6 @@ import { type ErrorMeta, type ErrorOptions, I18nErrorBase, setErrorMessage } fro
 export type { ErrorMeta, ErrorOptions };
 export { setErrorMessage };
 
-// -------------------------------------------------------------------------------------------------
-//
-// 一般
-//
-// -------------------------------------------------------------------------------------------------
-
 /**
  * このパッケージにおけるエラークラスの基底です。
  *

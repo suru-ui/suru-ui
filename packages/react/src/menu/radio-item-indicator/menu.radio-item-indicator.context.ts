@@ -25,18 +25,20 @@ export type IUseMenuRadioItemIndicatorContext = IUseContext<MenuRadioItemIndicat
 /**
  * {@link MenuRadioItemIndicatorContext} を読み取るフックです。
  */
-export const useMenuRadioItemIndicatorContext: IUseMenuRadioItemIndicatorContext =
-  function useSuiMenuRadioItemIndicatorContext(optional): any {
-    const ctx = React.use(MenuRadioItemIndicatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "MenuRadioItemIndicatorContext",
-        providerName: "MenuRadioItemIndicator",
-      });
-    }
+export const useMenuRadioItemIndicatorContext: IUseMenuRadioItemIndicatorContext = (
+  optional,
+): any => {
+  const ctx = React.use(MenuRadioItemIndicatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "MenuRadioItemIndicatorContext",
+      providerName: "MenuRadioItemIndicator",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   MenuRadioItemIndicatorContext as RadioItemIndicatorContext,

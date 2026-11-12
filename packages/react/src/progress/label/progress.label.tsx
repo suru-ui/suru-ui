@@ -23,16 +23,13 @@ export namespace ProgressLabelProps {
     Pick<
       React.ComponentProps<typeof Progress.Label>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ProgressLabelProps より:
+      // ProgressLabelProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Progress.Label>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Progress.Label>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -45,10 +42,8 @@ export type ProgressLabelProps = ProgressLabelProps.Render &
 
 export type IProgressLabel = IComponent<ProgressLabelProps>;
 
-/**
- * 進捗のラベルコンポーネントです。
- */
-export const ProgressLabel: IProgressLabel = function SuiProgressLabel(props) {
+/** 進捗のラベルコンポーネントです。 */
+export const ProgressLabel: IProgressLabel = (props) => {
   const ctx = useProgressContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +51,10 @@ export const ProgressLabel: IProgressLabel = function SuiProgressLabel(props) {
     <Progress.Label
       {...otherProps}
       {...proxyRenderProps<Progress.Label.State, ProgressLabelState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -86,7 +84,6 @@ export const ProgressLabel: IProgressLabel = function SuiProgressLabel(props) {
 };
 
 export { ProgressLabel as Label };
-
 export namespace Label {
   export type State = ProgressLabelState;
 

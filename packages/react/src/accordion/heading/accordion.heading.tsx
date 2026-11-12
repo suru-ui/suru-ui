@@ -23,7 +23,7 @@ export namespace AccordionHeadingProps {
     Pick<
       React.ComponentProps<typeof Accordion.Header>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AccordionHeaderProps より:
+      // AccordionHeaderProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace AccordionHeadingProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Accordion.Header>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -45,10 +45,8 @@ export type AccordionHeadingProps = AccordionHeadingProps.Render &
 
 export type IAccordionHeading = IComponent<AccordionHeadingProps>;
 
-/**
- * アコーディオンの見出しコンポーネントです。
- */
-export const AccordionHeading: IAccordionHeading = function SuiAccordionHeading(props) {
+/** アコーディオンの見出しコンポーネントです。 */
+export const AccordionHeading: IAccordionHeading = (props) => {
   const ctx = useAccordionItemContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const AccordionHeading: IAccordionHeading = function SuiAccordionHeading(
     <Accordion.Header
       {...otherProps}
       {...proxyRenderProps<Accordion.Header.State, AccordionHeadingState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -72,6 +73,7 @@ export const AccordionHeading: IAccordionHeading = function SuiAccordionHeading(
           className: cn<AccordionHeadingState>(
             className,
             "sui_accordion_heading",
+            // oxlint-disable-next-line typescript/no-deprecated -- Base UI の orientation を後方互換のため使用します。
             (state) => `sui_accordion_heading-size_${state.size}`,
             (state) => `sui_accordion_heading-radius_${state.radius}`,
             (state) => state.separator && "sui_accordion_heading-separator",
@@ -79,6 +81,7 @@ export const AccordionHeading: IAccordionHeading = function SuiAccordionHeading(
             (state) => state.open && "sui_accordion_heading-open",
             (state) => state.hidden && "sui_accordion_heading-hidden",
             (state) => `sui_accordion_heading-index_${state.index}`,
+            // oxlint-disable-next-line typescript/no-deprecated -- Base UI の orientation を後方互換のため使用します。
             (state) => `sui_accordion_heading-orientation_${state.orientation}`,
           ),
         },
@@ -88,7 +91,6 @@ export const AccordionHeading: IAccordionHeading = function SuiAccordionHeading(
 };
 
 export { AccordionHeading as Heading };
-
 export namespace Heading {
   export type State = AccordionHeadingState;
 

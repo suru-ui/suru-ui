@@ -18,10 +18,7 @@ export namespace DrawerBodyProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type DrawerBodyProps = DrawerBodyProps.Render &
 
 export type IDrawerBody = IComponent<DrawerBodyProps>;
 
-/**
- * ドロワーのボディーコンポーネントです。
- */
-export const DrawerBody: IDrawerBody = function SuiDrawerBody(props) {
+/** ドロワーのボディーコンポーネントです。 */
+export const DrawerBody: IDrawerBody = (props) => {
   const ctx = useDrawerContentContext();
   const element = useRender({
     props: [
@@ -66,7 +61,6 @@ export const DrawerBody: IDrawerBody = function SuiDrawerBody(props) {
 };
 
 export { DrawerBody as Body };
-
 export namespace Body {
   export type State = DrawerBodyState;
 

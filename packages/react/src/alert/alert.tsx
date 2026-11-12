@@ -20,8 +20,7 @@ import {
   AlertDescription,
 } from "./alert.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type AlertColor = AlertRootColor;
 
@@ -65,29 +64,19 @@ export type AlertState = AlertRootState;
 
 namespace AlertProps {
   export type Alert = {
-    /**
-     * アラートの操作ボタンです。
-     */
+    /** アラートの操作ボタンです。 */
     actions?: AlertActionsProps["children"] | undefined;
 
-    /**
-     * アラートの説明文です。
-     */
+    /** アラートの説明文です。 */
     children?: AlertDescriptionProps["children"] | undefined;
 
-    /**
-     * アラートに表示するアイコンです。
-     */
+    /** アラートに表示するアイコンです。 */
     icon?: AlertIconProps["children"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: AlertSlotProps | undefined;
 
-    /**
-     * アラートのタイトルです。
-     */
+    /** アラートのタイトルです。 */
     title?: AlertTitleProps["children"] | undefined;
   };
 
@@ -106,13 +95,13 @@ export interface IUseAlertAPI {
    * {@link AlertAPI} を作成します。
    *
    * @param props {@link Alert} の props です。
+   *
    * @returns アラートの API です
    */
   (props: AlertProps): AlertAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Alert} を構成する各パーツの props を作成するための API です。
@@ -126,11 +115,17 @@ export class AlertAPI {
 
   /**
    * @param props {@link Alert} の props です。
+   *
    * @internal
    */
   public constructor(props: AlertProps) {
     const { icon, title, actions, children, slotProps = {}, ...rootProps } = props;
-    this.alertProps = { icon, title, actions, children };
+    this.alertProps = {
+      icon,
+      title,
+      actions,
+      children,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -222,19 +217,14 @@ export class AlertAPI {
 /**
  * {@link AlertAPI} を作成するフックです。
  */
-export const useAlertAPI: IUseAlertAPI = function useSuiAlertAPI(props) {
-  return new AlertAPI(props);
-};
+export const useAlertAPI: IUseAlertAPI = (props) => new AlertAPI(props);
 
 export { AlertAPI as API, useAlertAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
-/**
- * 重要なメッセージや通知をステータスインジケーター付きで表示するコンポーネントです。
- */
-export const Alert: IAlert = function SuiAlert(props: AlertProps) {
+/** 重要なメッセージや通知をステータスインジケーター付きで表示するコンポーネントです。 */
+export const Alert: IAlert = (props: AlertProps) => {
   const api = useAlertAPI(props);
   const iconProps = api.getIconProps();
   const titleProps = api.getTitleProps();

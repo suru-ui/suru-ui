@@ -11,6 +11,7 @@ import {
 } from "./_tabs.jsx";
 import type { TabsContext } from "./root/tabs.root.context.js";
 import {
+  type TabsTab,
   type TabsRootSize,
   type TabsTabProps,
   type TabsTabValue,
@@ -27,15 +28,13 @@ import {
   type TabsRootActiveVariant,
   type TabsRootChangeEventReason,
   type TabsRootChangeEventDetails,
-  TabsTab,
   TabsList,
   TabsRoot,
   TabsPanel,
   TabsIndicator,
 } from "./tabs.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type TabsActiveVariant = TabsRootActiveVariant;
 
@@ -99,9 +98,7 @@ namespace TabsProps {
   export type Root<TItem = any> = Omit<TabsRootProps<TItem>, "children" | keyof Tabs>;
 
   export type Tabs = {
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: TabsSlotProps | undefined;
   };
 }
@@ -118,14 +115,15 @@ export interface IUseTabsAPI {
    * {@link TabsAPI} を作成します。
    *
    * @template TItem 項目の型です。
+   *
    * @param props {@link Tabs} の props です。
+   *
    * @returns タブの API です。
    */
   <TItem = any>(props: TabsProps<TItem>): TabsAPI<TItem>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Tabs} を構成する各パーツの props などを作成するための API です。
@@ -137,8 +135,14 @@ export class TabsAPI<TItem = any> {
 
   private readonly slotProps: TabsSlotProps;
 
+  private readonly defaultItemRenderer: ITabsItemRenderer<TItem> = createItemRenderer<TItem>(
+    (item) => this.getTabProps(item),
+    (item) => this.getLabel(item),
+  );
+
   /**
    * @param props {@link Tabs} の props です。
+   *
    * @internal
    */
   public constructor(props: TabsProps<TItem>) {
@@ -146,11 +150,6 @@ export class TabsAPI<TItem = any> {
     this.rootProps = rootProps;
     this.slotProps = slotProps;
   }
-
-  private readonly defaultItemRenderer: ITabsItemRenderer<TItem> = createItemRenderer<TItem>(
-    (item) => this.getTabProps(item),
-    (item) => this.getLabel(item),
-  );
 
   /**
    * {@link TabsIndicator} に渡す props を取得します。
@@ -202,6 +201,7 @@ export class TabsAPI<TItem = any> {
 
     for (const item of items) {
       const children = getTabsItemContent(item);
+
       if (children === undefined) {
         continue;
       }
@@ -232,21 +232,24 @@ export class TabsAPI<TItem = any> {
     const { tab: props = {} } = this.slotProps;
     const itemProps = getTabsItemProps(item);
 
-    return mergeProps<typeof TabsTab>([{ ...props, value: itemProps.value }, itemProps]);
+    return mergeProps<typeof TabsTab>([
+      {
+        ...props,
+        value: itemProps.value,
+      },
+      itemProps,
+    ]);
   }
 }
 
 /**
  * {@link TabsAPI} を作成するフックです。
  */
-export const useTabsAPI: IUseTabsAPI = function useSuiTabsAPI(props) {
-  return new TabsAPI(props);
-};
+export const useTabsAPI: IUseTabsAPI = (props) => new TabsAPI(props);
 
 export { TabsAPI as API, useTabsAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface ITabs extends IComponent<TabsProps> {
   /**
@@ -262,7 +265,7 @@ export interface ITabs extends IComponent<TabsProps> {
  * 矢印キーでタブ間を移動でき、`Enter` または `Space` で選択します。
  * レイアウトを細かく制御する場合は、`Root` と各パーツを直接組み立てます。
  */
-export const Tabs: ITabs = function SuiTabs(props: TabsProps) {
+export const Tabs: ITabs = (props: TabsProps) => {
   const api = useTabsAPI(props);
   const panelPropsList = api.getPanelPropsList();
 

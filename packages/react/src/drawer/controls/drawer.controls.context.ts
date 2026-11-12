@@ -20,17 +20,17 @@ export type IUseDrawerControlsContext = IUseContext<DrawerControlsContext>;
 /**
  * {@link DrawerControlsContext} を読み取るフックです。
  */
-export const useDrawerControlsContext: IUseDrawerControlsContext =
-  function useSuiDrawerControlsContext(optional): any {
-    const ctx = React.use(DrawerControlsContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "DrawerControlsContext",
-        providerName: "DrawerControls",
-      });
-    }
+export const useDrawerControlsContext: IUseDrawerControlsContext = (optional): any => {
+  const ctx = React.use(DrawerControlsContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "DrawerControlsContext",
+      providerName: "DrawerControls",
+    });
+  }
+
+  return ctx;
+};
 
 export { DrawerControlsContext as ControlsContext, useDrawerControlsContext as useControlsContext };

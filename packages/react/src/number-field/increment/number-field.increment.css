@@ -1,113 +1,112 @@
 @layer sui.component {
-@scope (.sui_number_field) to ([data-scope]) {
+  @scope (.sui_number_field) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      .sui_number_field_increment {
+        position: relative;
+        z-index: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        text-decoration: none;
+        touch-action: manipulation;
+        cursor: default;
+        user-select: none;
 
-/* 固定 */
-:scope {
-  .sui_number_field_increment {
-    position: relative;
-    z-index: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    text-decoration: none;
-    touch-action: manipulation;
-    cursor: default;
-    user-select: none;
+        @media (any-hover: hover) {
+          &:hover {
+            z-index: 1;
+          }
+        }
 
-    @media (any-hover: hover) {
-      &:hover {
-        z-index: 1;
+        &:focus-visible {
+          z-index: 1;
+        }
       }
     }
 
-    &:focus-visible {
-      z-index: 1;
-    }
-  }
-}
+    /* 可変 */
+    :scope {
+      .sui_number_field_increment {
+        width: var(--sui_number_field_stepper-size);
+        height: var(--sui_number_field_stepper-size);
+        font-family: var(--sui_number_field_stepper-font_family);
+        font-size: var(--sui_number_field_stepper-font_size);
+        font-weight: var(--sui_number_field_stepper-font_weight);
+        line-height: var(--sui_number_field_stepper-line_height);
+        color: var(--_sui_number_field_stepper-color, var(--sui_number_field_stepper-color-idle));
+        letter-spacing: var(--sui_number_field_stepper-letter_spacing);
+        background-color: var(
+          --_sui_number_field_stepper-background_color,
+          var(--sui_number_field_stepper-background_color-idle)
+        );
+        border-radius: var(--sui_number_field_stepper-border_radius);
+        corner-shape: var(--sui_number_field_stepper-corner_shape);
 
-/* 可変 */
-:scope {
-  .sui_number_field_increment {
-    width: var(--sui_number_field_stepper-size);
-    height: var(--sui_number_field_stepper-size);
-    font-family: var(--sui_number_field_stepper-font_family);
-    font-size: var(--sui_number_field_stepper-font_size);
-    font-weight: var(--sui_number_field_stepper-font_weight);
-    line-height: var(--sui_number_field_stepper-line_height);
-    color: var(--_sui_number_field_stepper-color, var(--sui_number_field_stepper-color-idle));
-    letter-spacing: var(--sui_number_field_stepper-letter_spacing);
-    background-color: var(--_sui_number_field_stepper-background_color,
-                        var(--sui_number_field_stepper-background_color-idle)
-                      );
-    border-radius: var(--sui_number_field_stepper-border_radius);
-    corner-shape: var(--sui_number_field_stepper-corner_shape);
-
-    svg:not(.sui-ignore) {
-      width: var(--sui_number_field_stepper__svg-size);
-      height: var(--sui_number_field_stepper__svg-size);
-      color: var(--sui_number_field_stepper__svg-color);
-    }
-  }
-}
-
-/* 変異 */
-:scope {
-  &:not(.sui_number_field-disabled) .sui_number_field_increment {
-    @media (any-hover: hover) {
-      &:hover {
-        --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);
-        --_sui_number_field_stepper-background_color:
-          var(--sui_number_field_stepper-background_color-hover);
+        svg:not(.sui-ignore) {
+          width: var(--sui_number_field_stepper__svg-size);
+          height: var(--sui_number_field_stepper__svg-size);
+          color: var(--sui_number_field_stepper__svg-color);
+        }
       }
     }
 
-    &:active {
-      --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-active);
-      --_sui_number_field_stepper-background_color:
-        var(--sui_number_field_stepper-background_color-active);
-    }
-  }
-}
+    /* 変異 */
+    :scope {
+      &:not(.sui_number_field-disabled) .sui_number_field_increment {
+        @media (any-hover: hover) {
+          &:hover {
+            --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-hover);
+            --_sui_number_field_stepper-background_color: var(
+              --sui_number_field_stepper-background_color-hover
+            );
+          }
+        }
 
-} /* @scope */
+        &:active {
+          --_sui_number_field_stepper-color: var(--sui_number_field_stepper-color-active);
+          --_sui_number_field_stepper-background_color: var(
+            --sui_number_field_stepper-background_color-active
+          );
+        }
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 /* Button を内包し、ルートの無効状態に依存するため、ルート起点の別ブロックにします。 */
 @layer sui.important {
-@scope (.sui_number_field) to ([data-scope]) {
+  @scope (.sui_number_field) to ([data-scope]) {
+    :scope {
+      &.sui_number_field-disabled .sui_number_field_increment {
+        cursor: not-allowed;
+        background-color: transparent;
+      }
 
-:scope {
-  &.sui_number_field-disabled .sui_number_field_increment {
-    cursor: not-allowed;
-    background-color: transparent;
-  }
+      &.sui_number_field-disabled.sui_number_field-variant_naked .sui_number_field_increment {
+        color: var(--sui-disabled-naked-canvas_text);
 
-  &.sui_number_field-disabled.sui_number_field-variant_naked .sui_number_field_increment {
-    color: var(--sui-disabled-naked-canvas_text);
+        svg:not(.sui-ignore) {
+          color: --sui-icon_color(
+            var(--sui-disabled-naked-canvas_text),
+            var(--sui-disabled-naked-canvas)
+          );
+        }
+      }
 
-    svg:not(.sui-ignore) {
-      color: --sui-icon_color(
-               var(--sui-disabled-naked-canvas_text),
-               var(--sui-disabled-naked-canvas)
-             );
+      &.sui_number_field-disabled.sui_number_field-variant_liquid .sui_number_field_increment {
+        color: var(--sui-disabled-liquid-canvas_text);
+
+        svg:not(.sui-ignore) {
+          color: --sui-icon_color(
+            var(--sui-disabled-liquid-canvas_text),
+            var(--sui-disabled-liquid-canvas)
+          );
+        }
+      }
     }
-  }
-
-  &.sui_number_field-disabled.sui_number_field-variant_liquid .sui_number_field_increment {
-    color: var(--sui-disabled-liquid-canvas_text);
-
-    svg:not(.sui-ignore) {
-      color: --sui-icon_color(
-               var(--sui-disabled-liquid-canvas_text),
-               var(--sui-disabled-liquid-canvas)
-             );
-    }
-  }
-}
-
-} /* @scope */
+  } /* @scope */
 } /* @layer */

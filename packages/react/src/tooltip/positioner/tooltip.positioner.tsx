@@ -23,9 +23,9 @@ export namespace TooltipPositionerProps {
     Pick<
       React.ComponentProps<typeof Tooltip.Positioner>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TooltipPositionerProps より:
+      // TooltipPositionerProps より :
       | "side"
-      // UseAnchorPositioningSharedParameters より:
+      // UseAnchorPositioningSharedParameters より :
       | "align"
       | "anchor"
       | "sticky"
@@ -57,10 +57,8 @@ export type TooltipPositionerProps = TooltipPositionerProps.Render &
 
 export type ITooltipPositioner = IComponent<TooltipPositionerProps>;
 
-/**
- * トリガーを基準にポップアップを配置する要素です。
- */
-export const TooltipPositioner: ITooltipPositioner = function SuiTooltipPositioner(props) {
+/** トリガーを基準にポップアップを配置する要素です。 */
+export const TooltipPositioner: ITooltipPositioner = (props) => {
   const ctx = useTooltipPortalContext();
   const { style, render, className, positionMethod = "fixed", ...otherProps } = props;
 
@@ -68,7 +66,10 @@ export const TooltipPositioner: ITooltipPositioner = function SuiTooltipPosition
     <Tooltip.Positioner
       {...otherProps}
       {...proxyRenderProps<Tooltip.Positioner.State, TooltipPositionerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -89,7 +90,10 @@ export const TooltipPositioner: ITooltipPositioner = function SuiTooltipPosition
             (state) => state.outlined && "sui_tooltip_positioner-outlined",
             (state) => state.open && "sui_tooltip_positioner-open",
             (state) => state.anchorHidden && "sui_tooltip_positioner-anchor_hidden",
-            (state) => state.instant && "sui_tooltip_positioner-instant",
+            (state) =>
+              state.instant !== undefined &&
+              state.instant !== "" &&
+              "sui_tooltip_positioner-instant",
             (state) => `sui_tooltip_positioner-side_${state.side.replaceAll("-", "_")}`,
             (state) => `sui_tooltip_positioner-align_${state.align}`,
           ),
@@ -101,7 +105,6 @@ export const TooltipPositioner: ITooltipPositioner = function SuiTooltipPosition
 };
 
 export { TooltipPositioner as Positioner };
-
 export namespace Positioner {
   export type State = TooltipPositionerState;
 

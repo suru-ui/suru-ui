@@ -4,6 +4,7 @@ import * as React from "react";
 import type { IComponent } from "../types.js";
 import {
   type TooltipHandle,
+  type TooltipContext,
   type ITooltipTrigger,
   type TooltipRootSize,
   type TooltipRootProps,
@@ -23,15 +24,13 @@ import {
   TooltipArrow,
   TooltipPopup,
   TooltipPortal,
-  TooltipContext,
   TooltipTrigger,
   TooltipPositioner,
   useTooltipContext,
   createTooltipHandle,
 } from "./tooltip.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type TooltipActions = TooltipRootActions;
 
@@ -88,9 +87,7 @@ namespace TooltipProps {
   export type Root<TPayload = any> = Omit<TooltipRootProps<TPayload>, keyof TooltipProps.Tooltip>;
 
   export type Tooltip<TPayload = any> = {
-    /**
-     * ツールチップの内容です。
-     */
+    /** ツールチップの内容です。 */
     children?: React.ReactNode | undefined;
 
     /**
@@ -107,9 +104,7 @@ namespace TooltipProps {
      */
     showArrow?: boolean | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: TooltipSlotProps<TPayload> | undefined;
 
     /**
@@ -142,14 +137,15 @@ export interface IUseTooltipAPI {
    * {@link TooltipAPI} を作成します。
    *
    * @template TPayload トリガーが送信するデータの型です。
+   *
    * @param props {@link Tooltip} の props です。
+   *
    * @returns ツールチップの API です
    */
   <TPayload = any>(props: TooltipProps<TPayload>): TooltipAPI<TPayload>;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Tooltip} を構成する各パーツの props などを作成するための API です。
@@ -171,6 +167,7 @@ export class TooltipAPI<TPayload = any> {
 
   /**
    * @param props {@link Tooltip} の props です。
+   *
    * @internal
    */
   public constructor(props: TooltipProps<TPayload>) {
@@ -265,7 +262,7 @@ export class TooltipAPI<TPayload = any> {
     const { arrow: props } = this.slotProps;
 
     if (showArrow || props) {
-      return props || {};
+      return props ?? {};
     }
 
     return null;
@@ -346,16 +343,12 @@ export class TooltipAPI<TPayload = any> {
 /**
  * {@link TooltipAPI} を作成するフックです。
  */
-export const useTooltipAPI: IUseTooltipAPI = function useSuiTooltipAPI<TPayload>(
-  props: TooltipProps<TPayload>,
-) {
-  return new TooltipAPI(props);
-};
+export const useTooltipAPI: IUseTooltipAPI = <TPayload,>(props: TooltipProps<TPayload>) =>
+  new TooltipAPI(props);
 
 export { TooltipAPI as API, useTooltipAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface ITooltip extends IComponent<TooltipProps> {
   /**
@@ -372,7 +365,6 @@ export interface ITooltip extends IComponent<TooltipProps> {
    * {@link TooltipHandle} を作成する関数です。
    */
   readonly createHandle: ICreateTooltipHandle;
-
   readonly useContext: IUseTooltipContext;
 }
 
@@ -382,7 +374,7 @@ export interface ITooltip extends IComponent<TooltipProps> {
  * ホバーまたはフォーカスで内容を表示します。
  */
 export const Tooltip: ITooltip = /*#__PURE__*/ Object.assign(
-  function SuiTooltip(props: TooltipProps) {
+  (props: TooltipProps) => {
     const api = useTooltipAPI(props);
     const triggerProps = api.getTriggerProps();
     const arrowProps = api.getArrowProps();

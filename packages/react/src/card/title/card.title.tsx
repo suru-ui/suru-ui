@@ -18,10 +18,7 @@ export namespace CardTitleProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type CardTitleProps = CardTitleProps.Render &
 
 export type ICardTitle = IComponent<CardTitleProps>;
 
-/**
- * カードのタイトルを表示するコンポーネントです。
- */
-export const CardTitle: ICardTitle = function SuiCardTitle(props) {
+/** カードのタイトルを表示するコンポーネントです。 */
+export const CardTitle: ICardTitle = (props) => {
   const ctx = useCardContext();
 
   return useRender({
@@ -58,7 +53,6 @@ export const CardTitle: ICardTitle = function SuiCardTitle(props) {
 };
 
 export { CardTitle as Title };
-
 export namespace Title {
   export type State = CardTitleState;
 

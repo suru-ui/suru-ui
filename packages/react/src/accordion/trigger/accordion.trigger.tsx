@@ -33,9 +33,9 @@ export namespace AccordionTriggerProps {
     Pick<
       React.ComponentProps<typeof Accordion.Trigger>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // AccordionTriggerProps より:
+      // AccordionTriggerProps より :
       | never
     >,
     keyof Render | keyof SuruUI
@@ -57,10 +57,8 @@ export type AccordionTriggerProps = AccordionTriggerProps.Render &
 
 export type IAccordionTrigger = IComponent<AccordionTriggerProps>;
 
-/**
- * アコーディオンの開閉ボタンコンポーネントです。
- */
-export const AccordionTrigger: IAccordionTrigger = function SuiAccordionTrigger(props) {
+/** アコーディオンの開閉ボタンコンポーネントです。 */
+export const AccordionTrigger: IAccordionTrigger = (props) => {
   const ctx = useAccordionItemContext();
   const { style, render, unstyled = false, className, ...otherProps } = props;
 
@@ -68,7 +66,11 @@ export const AccordionTrigger: IAccordionTrigger = function SuiAccordionTrigger(
     <Accordion.Trigger
       {...otherProps}
       {...proxyRenderProps<Accordion.Trigger.State, AccordionTriggerState>(
-        (state) => ({ ...ctx, ...state, unstyled }),
+        (state) => ({
+          ...ctx,
+          ...state,
+          unstyled,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -85,6 +87,7 @@ export const AccordionTrigger: IAccordionTrigger = function SuiAccordionTrigger(
             className,
             "sui_accordion_trigger",
             (state) => state.unstyled && "sui_accordion_trigger-unstyled",
+            // oxlint-disable-next-line typescript/no-deprecated -- Base UI の orientation を後方互換のため使用します。
             (state) => `sui_accordion_trigger-size_${state.size}`,
             (state) => `sui_accordion_trigger-radius_${state.radius}`,
             (state) => state.separator && "sui_accordion_trigger-separator",
@@ -92,6 +95,7 @@ export const AccordionTrigger: IAccordionTrigger = function SuiAccordionTrigger(
             (state) => state.open && "sui_accordion_trigger-open",
             (state) => state.hidden && "sui_accordion_trigger-hidden",
             (state) => `sui_accordion_trigger-index_${state.index}`,
+            // oxlint-disable-next-line typescript/no-deprecated -- Base UI の orientation を後方互換のため使用します。
             (state) => `sui_accordion_trigger-orientation_${state.orientation}`,
           ),
         },
@@ -101,7 +105,6 @@ export const AccordionTrigger: IAccordionTrigger = function SuiAccordionTrigger(
 };
 
 export { AccordionTrigger as Trigger };
-
 export namespace Trigger {
   export type State = AccordionTriggerState;
 

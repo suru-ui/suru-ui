@@ -16,14 +16,10 @@ export type ComboboxChipContext<TItem = any> = Readonly<
     ChipsContext<TItem>,
     Override<
       {
-        /**
-         * 項目の値です。
-         */
+        /** 項目の値です。 */
         value: TItem | undefined;
 
-        /**
-         * チップの主な外観です。
-         */
+        /** チップの主な外観です。 */
         variant: ComboboxChipVariant;
       },
       Combobox.Chip.State
@@ -42,11 +38,10 @@ export type IUseComboboxChipContext = IUseContext<ComboboxChipContext>;
 /**
  * {@link ComboboxChipContext} を読み取るフックです。
  */
-export const useComboboxChipContext: IUseComboboxChipContext = function useSuiComboboxChipContext(
-  optional,
-): any {
+export const useComboboxChipContext: IUseComboboxChipContext = (optional): any => {
   const ctx = React.use(ComboboxChipContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "ComboboxChipContext",
       providerName: "ComboboxChip",

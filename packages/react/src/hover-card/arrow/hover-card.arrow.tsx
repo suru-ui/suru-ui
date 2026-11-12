@@ -23,7 +23,7 @@ export namespace HoverCardArrowProps {
     Pick<
       React.ComponentProps<typeof PreviewCard.Arrow>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PreviewCardArrowProps より:
+      // PreviewCardArrowProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace HoverCardArrowProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof PreviewCard.Arrow>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -45,10 +45,8 @@ export type HoverCardArrowProps = HoverCardArrowProps.Render &
 
 export type IHoverCardArrow = IComponent<HoverCardArrowProps>;
 
-/**
- * ポップアップとトリガーをつなぐ矢印要素です。
- */
-export const HoverCardArrow: IHoverCardArrow = function SuiHoverCardArrow(props) {
+/** ポップアップとトリガーをつなぐ矢印要素です。 */
+export const HoverCardArrow: IHoverCardArrow = (props) => {
   const ctx = usePopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const HoverCardArrow: IHoverCardArrow = function SuiHoverCardArrow(props)
     <PreviewCard.Arrow
       {...otherProps}
       {...proxyRenderProps<PreviewCard.Arrow.State, HoverCardArrowState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -87,7 +88,6 @@ export const HoverCardArrow: IHoverCardArrow = function SuiHoverCardArrow(props)
 };
 
 export { HoverCardArrow as Arrow };
-
 export namespace Arrow {
   export type State = HoverCardArrowState;
 

@@ -19,7 +19,7 @@ export namespace FieldItemProps {
     Pick<
       React.ComponentProps<typeof Field.Item>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // FieldItemProps より:
+      // FieldItemProps より :
       "disabled"
     >,
     keyof Render | keyof SuruUI
@@ -46,7 +46,7 @@ export type IFieldItem = IComponent<FieldItemProps>;
  *
  * ラベルと説明文をラップして 1 つの項目としてまとめます。
  */
-export const FieldItem: IFieldItem = function SuiFieldItem(props) {
+export const FieldItem: IFieldItem = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -69,7 +69,6 @@ export const FieldItem: IFieldItem = function SuiFieldItem(props) {
 };
 
 export { FieldItem as Item };
-
 export namespace Item {
   export type State = FieldItemState;
 

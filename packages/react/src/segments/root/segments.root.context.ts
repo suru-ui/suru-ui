@@ -13,9 +13,7 @@ import type { IUseContext } from "../../types.js";
  */
 export type SegmentsContextActiveVariant = ColorTemplate;
 
-/**
- * Segments の配色です。
- */
+/** Segments の配色です。 */
 export type SegmentsContextColor = Color;
 
 /**
@@ -44,47 +42,35 @@ export type SegmentsContextSize = Size;
  * @template TItem 項目の型です。
  */
 export type SegmentsContext<TItem = any> = {
-  /**
-   * 選択中のセグメントの主な外観です。
-   */
+  /** 選択中のセグメントの主な外観です。 */
   readonly activeVariant: SegmentsContextActiveVariant;
 
-  /**
-   * Segments の配色です。
-   */
+  /** Segments の配色です。 */
   readonly color: SegmentsContextColor;
 
-  /**
-   * セグメントに表示する項目の一覧です。
-   */
+  /** セグメントに表示する項目の一覧です。 */
   readonly items: readonly TItem[];
 
-  /**
-   * Segments の角丸の大きさです。
-   */
+  /** Segments の角丸の大きさです。 */
   readonly radius: SegmentsContextRadius;
 
-  /**
-   * Segments の大きさです。
-   */
+  /** Segments の大きさです。 */
   readonly size: SegmentsContextSize;
 
-  /**
-   * 上下の余白を半分にして高さを薄くするかどうかです。
-   */
+  /** 上下の余白を半分にして高さを薄くするかどうかです。 */
   readonly thin: boolean;
 };
 
-/**
- * セグメントの項目を子パーツへ伝播するコンテキストです。
- */
+/** セグメントの項目を子パーツへ伝播するコンテキストです。 */
 export const SegmentsContext: React.Context<SegmentsContext | null> =
   React.createContext<SegmentsContext | null>(null);
 
 export interface IUseSegmentsContext extends IUseContext<SegmentsContext> {
   /**
    * @template TItem 項目の型です。
+   *
    * @param optional `true` の場合、コンテキストが見つからなくてもエラーを投げません。
+   *
    * @returns コンテキストです。`optional` が `true` でコンテキストがない場合は `null` です。
    */
   <TItem = any>(optional?: false): SegmentsContext<TItem>;
@@ -94,11 +80,10 @@ export interface IUseSegmentsContext extends IUseContext<SegmentsContext> {
 /**
  * {@link SegmentsContext} を読み取るフックです。
  */
-export const useSegmentsContext: IUseSegmentsContext = function useSuiSegmentsContext(
-  optional?: boolean,
-): any {
+export const useSegmentsContext: IUseSegmentsContext = (optional?: boolean): any => {
   const ctx = React.use(SegmentsContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "SegmentsContext",
       providerName: "SegmentsRoot",
@@ -109,7 +94,6 @@ export const useSegmentsContext: IUseSegmentsContext = function useSuiSegmentsCo
 };
 
 export { SegmentsContext as Context, useSegmentsContext as useContext };
-
 export namespace Context {
   export type ActiveVariant = SegmentsContextActiveVariant;
 

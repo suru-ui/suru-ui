@@ -1,5 +1,4 @@
-import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { TabsList } from "../list/tabs.list.jsx";
@@ -10,7 +9,7 @@ import "../../../tests/src/_locators.js";
 
 describe("TabsIndicator", () => {
   test("インジケーターとして描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TabsRoot defaultValue="projects">
         <TabsList>
@@ -21,14 +20,14 @@ describe("TabsIndicator", () => {
       </TabsRoot>,
     );
 
-    // 検証
+    // 検証。
     const indicator = screen.getByRole("presentation").element();
     expect(indicator.tagName).toBe("SPAN");
     expect(indicator.classList.contains("sui_tabs_indicator")).toBe(true);
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TabsRoot defaultValue="overview">
         <TabsList>
@@ -38,14 +37,14 @@ describe("TabsIndicator", () => {
       </TabsRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_tabs_indicator").element().classList.contains("custom")).toBe(
       true,
     );
   });
 
   test("render の関数へスタイル情報を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <TabsRoot size="lg" variant="segments" defaultValue="overview">
         <TabsList>
@@ -59,7 +58,7 @@ describe("TabsIndicator", () => {
       </TabsRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_tabs_indicator").element().getAttribute("data-probe")).toBe(
       "lg/segments/horizontal",
     );

@@ -32,7 +32,7 @@ export namespace PasswordFieldAddonProps {
     Pick<
       TextFieldAddonProps.BaseUI,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PasswordFieldAddonProps より:
+      // PasswordFieldAddonProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -56,7 +56,7 @@ export type IPasswordFieldAddon = IComponent<PasswordFieldAddonProps>;
  *
  * 接頭辞、接尾辞、アイコンなどを表示できます。
  */
-export const PasswordFieldAddon: IPasswordFieldAddon = function SuiPasswordFieldAddon(props) {
+export const PasswordFieldAddon: IPasswordFieldAddon = (props) => {
   const ctx = usePasswordFieldContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -64,7 +64,10 @@ export const PasswordFieldAddon: IPasswordFieldAddon = function SuiPasswordField
     <TextFieldAddon
       {...otherProps}
       {...proxyRenderProps<TextFieldAddonState, PasswordFieldAddonState>(
-        (state) => ({ ...state, visible: ctx.visible }),
+        (state) => ({
+          ...state,
+          visible: ctx.visible,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -94,7 +97,6 @@ export const PasswordFieldAddon: IPasswordFieldAddon = function SuiPasswordField
 };
 
 export { PasswordFieldAddon as Addon };
-
 export namespace Addon {
   export type State = PasswordFieldAddonState;
 

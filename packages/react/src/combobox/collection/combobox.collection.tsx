@@ -27,6 +27,7 @@ export interface IComboboxCollectionItemRenderer<TItem = any> {
    *
    * @param item 現在の項目です。
    * @param index 項目のインデックスです。
+   *
    * @returns レンダリングする内容です。
    */
   (item: TItem, index: number): React.ReactNode;
@@ -56,7 +57,7 @@ export namespace ComboboxCollectionProps {
       Pick<
         React.ComponentProps<typeof Combobox.Collection>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // ComboboxCollectionProps より:
+        // ComboboxCollectionProps より :
         "children"
       >,
       keyof Render | keyof SuruUI
@@ -92,11 +93,8 @@ export interface IComboboxCollection extends IComponent<ComboboxCollectionProps>
  *
  * これ自身は HTML 要素をレンダリングしません。
  */
-export const ComboboxCollection: IComboboxCollection = function SuiComboboxCollection(
-  props: ComboboxCollectionProps,
-) {
+export const ComboboxCollection: IComboboxCollection = (props: ComboboxCollectionProps) => {
   const ctx = useComboboxContext();
-
   const defaultItemRenderer: IComboboxCollectionItemRenderer = (item, index) => {
     switch (true) {
       case isItemGroup<ComboboxRootItemGroupObject>(item): {
@@ -135,14 +133,12 @@ export const ComboboxCollection: IComboboxCollection = function SuiComboboxColle
         return <React.Fragment key={getItemKey(item) ?? index}>{item}</React.Fragment>;
     }
   };
-
   const { children = defaultItemRenderer, separator = true } = props;
 
   return <Combobox.Collection>{children}</Combobox.Collection>;
 };
 
 export { ComboboxCollection as Collection };
-
 export namespace Collection {
   export type State = ComboboxCollectionState;
 

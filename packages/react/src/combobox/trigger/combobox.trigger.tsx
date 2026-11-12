@@ -28,9 +28,9 @@ export namespace ComboboxTriggerProps {
     Pick<
       React.ComponentProps<typeof Combobox.Trigger>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // ComboboxTriggerProps より:
+      // ComboboxTriggerProps より :
       | "disabled"
     >,
     keyof Render | keyof SuruUI
@@ -52,17 +52,15 @@ export type ComboboxTriggerProps = ComboboxTriggerProps.Render &
 
 export type IComboboxTrigger = IComponent<ComboboxTriggerProps>;
 
-/**
- * 候補リストを開閉するボタン要素です。
- */
-export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(props) {
+/** 候補リストを開閉するボタン要素です。 */
+export const ComboboxTrigger: IComboboxTrigger = (props) => {
   const ctx = useComboboxContext();
   const {
     style,
     children,
     className,
-    nativeButton = false,
     "aria-label": ariaLabel = "候補リストを開閉",
+    nativeButton = false,
     ...otherProps
   } = props;
 
@@ -70,7 +68,10 @@ export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(pro
     <Combobox.Trigger
       {...otherProps}
       {...proxyRenderProps<Combobox.Trigger.State, ComboboxTriggerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -116,7 +117,6 @@ export const ComboboxTrigger: IComboboxTrigger = function SuiComboboxTrigger(pro
 };
 
 export { ComboboxTrigger as Trigger };
-
 export namespace Trigger {
   export type State<TItem = any> = ComboboxTriggerState<TItem>;
 

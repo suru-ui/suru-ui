@@ -25,9 +25,9 @@ export namespace NumberFieldDecrementProps {
     Pick<
       React.ComponentProps<typeof NumberField.Decrement>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // NumberFieldDecrementProps より:
+      // NumberFieldDecrementProps より :
       | never
     >,
     keyof Render | keyof SuruUI
@@ -49,10 +49,8 @@ export type NumberFieldDecrementProps = NumberFieldDecrementProps.Render &
 
 export type INumberFieldDecrement = IComponent<NumberFieldDecrementProps>;
 
-/**
- * 値を減らすボタンです。
- */
-export const NumberFieldDecrement: INumberFieldDecrement = function SuiNumberFieldDecrement(props) {
+/** 値を減らすボタンです。 */
+export const NumberFieldDecrement: INumberFieldDecrement = (props) => {
   const ctx = useNumberFieldAddonContext();
   const {
     style,
@@ -67,7 +65,10 @@ export const NumberFieldDecrement: INumberFieldDecrement = function SuiNumberFie
     <NumberField.Decrement
       {...otherProps}
       {...proxyRenderProps<NumberField.Decrement.State, NumberFieldDecrementState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -111,7 +112,6 @@ export const NumberFieldDecrement: INumberFieldDecrement = function SuiNumberFie
 };
 
 export { NumberFieldDecrement as Decrement };
-
 export namespace Decrement {
   export type State = NumberFieldDecrementState;
 

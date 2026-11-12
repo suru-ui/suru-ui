@@ -160,7 +160,13 @@ export const Controlled = meta.story({
       <div className="flex w-80 flex-col gap-2">
         <FileUpload value={files} multiple onValueChange={setFiles} />
         <p className="text-sm text-slate-500">{files.length} 件選択中です。</p>
-        <button type="button" onClick={() => setFiles([])} className="text-sm underline">
+        <button
+          type="button"
+          className="text-sm underline"
+          onClick={() => {
+            setFiles([]);
+          }}
+        >
           リセット
         </button>
       </div>
@@ -181,7 +187,9 @@ export const WithValidation = meta.story({
           multiple
           maxFileSize={1024 * 1024}
           minFileSize={1}
-          onFileAccept={(details) => setAccepted(details.files)}
+          onFileAccept={(details) => {
+            setAccepted(details.files);
+          }}
           onFileReject={(details) => {
             setAccepted(details.acceptedFiles);
             setRejected(
@@ -259,7 +267,12 @@ export const InForm = meta.story({
   name: "フォームでの利用",
   render() {
     return (
-      <form onSubmit={(event) => event.preventDefault()} className="flex w-80 flex-col gap-2">
+      <form
+        className="flex w-80 flex-col gap-2"
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <FileUpload name="attachments" multiple required />
         <button type="submit" className="text-sm underline">
           送信

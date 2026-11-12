@@ -21,24 +21,16 @@ import { SegmentsItemContext } from "./segments.item.context.js";
  */
 export type SegmentsItemActivationDirection = BaseTabs.Tab.ActivationDirection;
 
-/**
- * Segments のセグメントのメタデータです。
- */
+/** Segments のセグメントのメタデータです。 */
 export type SegmentsItemMetadata = BaseTabs.Tab.Metadata;
 
-/**
- * アクティブなセグメントの位置です。
- */
+/** アクティブなセグメントの位置です。 */
 export type SegmentsItemPosition = BaseTabs.Tab.Position;
 
-/**
- * アクティブなセグメントの大きさです。
- */
+/** アクティブなセグメントの大きさです。 */
 export type SegmentsItemSize = BaseTabs.Tab.Size;
 
-/**
- * Segments のセグメントの値です。
- */
+/** Segments のセグメントの値です。 */
 export type SegmentsItemValue = BaseTabs.Tab.Value;
 
 /**
@@ -57,9 +49,9 @@ export namespace SegmentsItemProps {
     Pick<
       React.ComponentProps<typeof BaseTabs.Tab>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // TabsTabProps より:
+      // TabsTabProps より :
       | "value"
       | "disabled"
     >,
@@ -82,10 +74,8 @@ export type SegmentsItemProps = SegmentsItemProps.Render &
 
 export type ISegmentsItem = IComponent<SegmentsItemProps>;
 
-/**
- * 選択できる個々のセグメントです。
- */
-export const SegmentsItem: ISegmentsItem = function SuiSegmentsItem(props) {
+/** 選択できる個々のセグメントです。 */
+export const SegmentsItem: ISegmentsItem = (props) => {
   const ctx = useSegmentsContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -93,7 +83,10 @@ export const SegmentsItem: ISegmentsItem = function SuiSegmentsItem(props) {
     <BaseTabs.Tab
       {...otherProps}
       {...proxyRenderProps<BaseTabs.Tab.State, SegmentsItemState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -126,7 +119,6 @@ export const SegmentsItem: ISegmentsItem = function SuiSegmentsItem(props) {
 };
 
 export { SegmentsItem as Item };
-
 export namespace Item {
   export type State<TItem = any> = SegmentsItemState<TItem>;
 

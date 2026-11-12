@@ -25,7 +25,7 @@ export namespace ComboboxGroupLabelProps {
     Pick<
       React.ComponentProps<typeof Combobox.GroupLabel>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxGroupLabelProps より:
+      // ComboboxGroupLabelProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace ComboboxGroupLabelProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Combobox.GroupLabel>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type ComboboxGroupLabelProps = ComboboxGroupLabelProps.Render &
 
 export type IComboboxGroupLabel = IComponent<ComboboxGroupLabelProps>;
 
-/**
- * 候補グループの見出し要素です。
- */
-export const ComboboxGroupLabel: IComboboxGroupLabel = function SuiComboboxGroupLabel(props) {
+/** 候補グループの見出し要素です。 */
+export const ComboboxGroupLabel: IComboboxGroupLabel = (props) => {
   const ctx = useComboboxGroupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const ComboboxGroupLabel: IComboboxGroupLabel = function SuiComboboxGroup
     <Combobox.GroupLabel
       {...otherProps}
       {...proxyRenderProps<Combobox.GroupLabel.State, ComboboxGroupLabelState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -96,7 +97,6 @@ export const ComboboxGroupLabel: IComboboxGroupLabel = function SuiComboboxGroup
 };
 
 export { ComboboxGroupLabel as GroupLabel };
-
 export namespace GroupLabel {
   export type State<TItem = any> = ComboboxGroupLabelState<TItem>;
 

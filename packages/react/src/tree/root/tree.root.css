@@ -1,55 +1,53 @@
 @layer sui.component {
-@scope (.sui_tree) to ([data-scope]) {
+  @scope (.sui_tree) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex-direction: column;
+      min-width: 0px;
+      outline-style: solid;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  flex-direction: column;
-  min-width: 0px;
-  outline-style: solid;
-}
+    /* 変数 */
+    :scope {
+      --sui_tree-gap: ;
+      --sui_tree-font_family: ;
+      --sui_tree-color: ;
+      --sui_tree-focusring_width: ;
+      --sui_tree-focusring_color: ;
+      --sui_tree-focusring_offset: ;
+      --sui_tree-background_color: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_tree-gap: ;
-  --sui_tree-font_family: ;
-  --sui_tree-color: ;
-  --sui_tree-focusring_width: ;
-  --sui_tree-focusring_color: ;
-  --sui_tree-focusring_offset: ;
-  --sui_tree-background_color: ;
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_tree-gap);
+      font-family: var(--sui_tree-font_family);
+      color: var(--sui_tree-color);
+      outline-width: var(--_sui_tree-outline_width, 0px);
+      outline-color: var(--_sui_tree-outline_color, transparent);
+      outline-offset: var(--_sui_tree-outline_offset, 0px);
+      background-color: var(--sui_tree-background_color);
+    }
 
-/* 可変 */
-:scope {
-  gap: var(--sui_tree-gap);
-  font-family: var(--sui_tree-font_family);
-  color: var(--sui_tree-color);
-  outline-width: var(--_sui_tree-outline_width, 0px);
-  outline-color: var(--_sui_tree-outline_color, transparent);
-  outline-offset: var(--_sui_tree-outline_offset, 0px);
-  background-color: var(--sui_tree-background_color);
-}
+    /* 代入 */
+    :scope {
+      --sui_tree-gap: --sui-gap(1);
+      --sui_tree-font_family: var(--sui-font-sans);
+      --sui_tree-color: var(--sui-canvas_text-1);
+      --sui_tree-focusring_width: var(--sui-focusring_width);
+      --sui_tree-focusring_color: var(--sui-focusring_color);
+      --sui_tree-focusring_offset: var(--sui-focusring_offset);
+      --sui_tree-background_color: var(--sui-canvas-1);
+    }
 
-/* 代入 */
-:scope {
-  --sui_tree-gap: --sui-gap(1);
-  --sui_tree-font_family: var(--sui-font-sans);
-  --sui_tree-color: var(--sui-canvas_text-1);
-  --sui_tree-focusring_width: var(--sui-focusring_width);
-  --sui_tree-focusring_color: var(--sui-focusring_color);
-  --sui_tree-focusring_offset: var(--sui-focusring_offset);
-  --sui_tree-background_color: var(--sui-canvas-1);
-}
-
-/* 変異 */
-:scope {
-  &:focus-visible {
-    --_sui_tree-outline_width: var(--sui_tree-focusring_width);
-    --_sui_tree-outline_color: var(--sui_tree-focusring_color);
-    --_sui_tree-outline_offset: var(--sui_tree-focusring_offset);
-  }
-}
-
-} /* @scope */
+    /* 変異 */
+    :scope {
+      &:focus-visible {
+        --_sui_tree-outline_width: var(--sui_tree-focusring_width);
+        --_sui_tree-outline_color: var(--sui_tree-focusring_color);
+        --_sui_tree-outline_offset: var(--sui_tree-focusring_offset);
+      }
+    }
+  } /* @scope */
 } /* @layer */

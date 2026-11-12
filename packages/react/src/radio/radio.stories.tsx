@@ -216,7 +216,9 @@ export const Controlled = meta.story({
       <RadioGroup
         value={value}
         className="flex flex-col gap-3"
-        onValueChange={(nextValue) => setValue(String(nextValue))}
+        onValueChange={(nextValue) => {
+          setValue(nextValue);
+        }}
       >
         <label className="flex items-center gap-2">
           <Radio {...props} value="option-a" />

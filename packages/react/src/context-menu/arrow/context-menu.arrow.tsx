@@ -25,7 +25,7 @@ export namespace ContextMenuArrowProps {
     Pick<
       React.ComponentProps<typeof ContextMenu.Arrow>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // MenuArrowProps より:
+      // MenuArrowProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace ContextMenuArrowProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof ContextMenu.Arrow>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type ContextMenuArrowProps = ContextMenuArrowProps.Render &
 
 export type IContextMenuArrow = IComponent<ContextMenuArrowProps>;
 
-/**
- * ポップアップとトリガーをつなぐ矢印要素です。
- */
-export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(props) {
+/** ポップアップとトリガーをつなぐ矢印要素です。 */
+export const ContextMenuArrow: IContextMenuArrow = (props) => {
   const ctx = usePopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(
     <ContextMenu.Arrow
       {...otherProps}
       {...proxyRenderProps<ContextMenu.Arrow.State, ContextMenuArrowState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -96,7 +97,6 @@ export const ContextMenuArrow: IContextMenuArrow = function SuiContextMenuArrow(
 };
 
 export { ContextMenuArrow as Arrow };
-
 export namespace Arrow {
   export type State<TItem = any> = ContextMenuArrowState<TItem>;
 

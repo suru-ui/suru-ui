@@ -37,7 +37,7 @@ export type IAlertDialogFooter = IComponent<AlertDialogFooterProps>;
  *
  * 積み上げ式では内容を等幅の 2 列に並べます。
  */
-export const AlertDialogFooter: IAlertDialogFooter = function SuiAlertDialogFooter(props) {
+export const AlertDialogFooter: IAlertDialogFooter = (props) => {
   const ctx = useAlertDialogPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -45,7 +45,10 @@ export const AlertDialogFooter: IAlertDialogFooter = function SuiAlertDialogFoot
     <Card.Footer
       {...otherProps}
       {...proxyRenderProps<Card.Footer.State, AlertDialogFooterState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -79,7 +82,6 @@ export const AlertDialogFooter: IAlertDialogFooter = function SuiAlertDialogFoot
 };
 
 export { AlertDialogFooter as Footer };
-
 export namespace Footer {
   export type State = AlertDialogFooterState;
 

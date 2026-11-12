@@ -11,8 +11,7 @@ import {
   BadgeRoot,
 } from "./badge.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type BadgeColor = BadgeRootColor;
 
@@ -43,13 +42,13 @@ export interface IUseBadgeAPI {
    * {@link BadgeAPI} を作成します。
    *
    * @param props {@link Badge} の props です。
+   *
    * @returns バッジの API です
    */
   (props: BadgeProps): BadgeAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Badge} を構成する各パーツの props を作成するための API です。
@@ -59,6 +58,7 @@ export class BadgeAPI {
 
   /**
    * @param props {@link Badge} の props です。
+   *
    * @internal
    */
   public constructor(props: BadgeProps) {
@@ -76,21 +76,18 @@ export class BadgeAPI {
 /**
  * {@link BadgeAPI} を作成するフックです。
  */
-export const useBadgeAPI: IUseBadgeAPI = function useSuiBadgeAPI(props) {
-  return new BadgeAPI(props);
-};
+export const useBadgeAPI: IUseBadgeAPI = (props) => new BadgeAPI(props);
 
 export { BadgeAPI as API, useBadgeAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * 状態や数値を示す小さなラベルを表示するコンポーネントです。
  *
  * `position` を指定すると、基準となる要素の四隅へ重ねて表示できます。`variant` が `"dot"` のときは内容を表示せず、小さな点だけを描画します。
  */
-export const Badge: IBadge = function SuiBadge(props) {
+export const Badge: IBadge = (props) => {
   const api = useBadgeAPI(props);
 
   return <BadgeRoot {...api.getRootProps()} />;

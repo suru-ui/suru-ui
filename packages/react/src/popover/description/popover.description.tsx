@@ -23,7 +23,7 @@ export namespace PopoverDescriptionProps {
     Pick<
       React.ComponentProps<typeof Popover.Description>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PopoverDescriptionProps より:
+      // PopoverDescriptionProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -31,7 +31,7 @@ export namespace PopoverDescriptionProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Popover.Description>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -45,10 +45,8 @@ export type PopoverDescriptionProps = PopoverDescriptionProps.Render &
 
 export type IPopoverDescription = IComponent<PopoverDescriptionProps>;
 
-/**
- * ポップオーバーの説明文を表示する段落要素です。
- */
-export const PopoverDescription: IPopoverDescription = function SuiPopoverDescription(props) {
+/** ポップオーバーの説明文を表示する段落要素です。 */
+export const PopoverDescription: IPopoverDescription = (props) => {
   const ctx = usePopoverPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -56,7 +54,10 @@ export const PopoverDescription: IPopoverDescription = function SuiPopoverDescri
     <Popover.Description
       {...otherProps}
       {...proxyRenderProps<Popover.Description.State, PopoverDescriptionState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -91,7 +92,6 @@ export const PopoverDescription: IPopoverDescription = function SuiPopoverDescri
 };
 
 export { PopoverDescription as Description };
-
 export namespace Description {
   export type State = PopoverDescriptionState;
 

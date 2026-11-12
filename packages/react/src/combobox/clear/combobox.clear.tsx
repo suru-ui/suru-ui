@@ -27,9 +27,9 @@ export namespace ComboboxClearProps {
     Pick<
       React.ComponentProps<typeof Combobox.Clear>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // ComboboxClearProps より:
+      // ComboboxClearProps より :
       | "disabled"
       | "keepMounted"
     >,
@@ -52,10 +52,8 @@ export type ComboboxClearProps = ComboboxClearProps.Render &
 
 export type IComboboxClear = IComponent<ComboboxClearProps>;
 
-/**
- * 選択値を消去するボタン要素です。
- */
-export const ComboboxClear: IComboboxClear = function SuiComboboxClear(props) {
+/** 選択値を消去するボタン要素です。 */
+export const ComboboxClear: IComboboxClear = (props) => {
   const ctx = useComboboxAddonContext();
   const {
     style,
@@ -70,7 +68,10 @@ export const ComboboxClear: IComboboxClear = function SuiComboboxClear(props) {
     <Combobox.Clear
       {...otherProps}
       {...proxyRenderProps<Combobox.Clear.State, ComboboxClearState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -122,7 +123,6 @@ export const ComboboxClear: IComboboxClear = function SuiComboboxClear(props) {
 };
 
 export { ComboboxClear as Clear };
-
 export namespace Clear {
   export type State<TItem = any> = ComboboxClearState<TItem>;
 

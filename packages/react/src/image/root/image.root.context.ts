@@ -30,20 +30,14 @@ export type ImageContextRadius = "none" | Size | "full";
  * {@link ImageRoot} が提供する状態です。
  */
 export type ImageContext = {
-  /**
-   * 画像の表示方法 (`object-fit`) です。
-   */
+  /** 画像の表示方法 (`object-fit`) です。 */
   readonly fit: ImageContextFit | undefined;
 
-  /**
-   * 画像の角丸です。
-   */
+  /** 画像の角丸です。 */
   readonly radius: ImageContextRadius;
 };
 
-/**
- * 画像の見た目を子孫へ伝播するコンテキストです。
- */
+/** 画像の見た目を子孫へ伝播するコンテキストです。 */
 export const ImageContext: React.Context<ImageContext | null> =
   React.createContext<ImageContext | null>(null);
 
@@ -52,11 +46,10 @@ export type IUseImageContext = IUseContext<ImageContext>;
 /**
  * {@link ImageContext} を読み取るフックです。
  */
-export const useImageContext: IUseImageContext = function useSuiImageContext(
-  optional?: boolean,
-): any {
+export const useImageContext: IUseImageContext = (optional?: boolean): any => {
   const ctx = React.use(ImageContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "ImageContext",
       providerName: "ImageRoot",
@@ -67,7 +60,6 @@ export const useImageContext: IUseImageContext = function useSuiImageContext(
 };
 
 export { ImageContext as Context, useImageContext as useContext };
-
 export namespace Context {
   export type Fit = ImageContextFit;
 

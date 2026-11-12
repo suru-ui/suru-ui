@@ -16,10 +16,7 @@ export namespace SidebarGroupContentProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"div", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"div", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -37,7 +34,7 @@ export type ISidebarGroupContent = IComponent<SidebarGroupContentProps>;
  *
  * ナビゲーションの項目などを配置します。
  */
-export const SidebarGroupContent: ISidebarGroupContent = function SuiSidebarGroupContent(props) {
+export const SidebarGroupContent: ISidebarGroupContent = (props) => {
   const ctx = useSidebarContext();
 
   return useRender({
@@ -53,7 +50,6 @@ export const SidebarGroupContent: ISidebarGroupContent = function SuiSidebarGrou
 };
 
 export { SidebarGroupContent as GroupContent };
-
 export namespace GroupContent {
   export type State = SidebarGroupContentState;
 

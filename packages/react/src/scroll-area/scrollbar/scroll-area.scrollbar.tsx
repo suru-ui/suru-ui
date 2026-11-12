@@ -19,7 +19,7 @@ export namespace ScrollAreaScrollbarProps {
     Pick<
       React.ComponentProps<typeof BaseScrollArea.Scrollbar>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ScrollAreaScrollbarProps より:
+      // ScrollAreaScrollbarProps より :
       "orientation" | "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -46,8 +46,9 @@ export type IScrollAreaScrollbar = IComponent<ScrollAreaScrollbarProps>;
  *
  * 子要素として {@link ScrollAreaThumb} を配置します。
  */
-export const ScrollAreaScrollbar: IScrollAreaScrollbar = function SuiScrollAreaScrollbar(props) {
+export const ScrollAreaScrollbar: IScrollAreaScrollbar = (props) => {
   const { className, ...otherProps } = props;
+
   return (
     <BaseScrollArea.Scrollbar
       {...otherProps}
@@ -70,7 +71,6 @@ export const ScrollAreaScrollbar: IScrollAreaScrollbar = function SuiScrollAreaS
 };
 
 export { ScrollAreaScrollbar as Scrollbar };
-
 export namespace Scrollbar {
   export type State = ScrollAreaScrollbarState;
 

@@ -32,12 +32,9 @@ export type IToggleButtonPending = IComponent<ToggleButtonPendingProps>;
  *
  * 保留中のみ有効になります。
  */
-export const ToggleButtonPending: IToggleButtonPending = function SuiToggleButtonPending(props) {
-  return <Button.Pending {...props} />;
-};
+export const ToggleButtonPending: IToggleButtonPending = (props) => <Button.Pending {...props} />;
 
 export { ToggleButtonPending as Pending };
-
 export namespace Pending {
   export type State = ToggleButtonPendingState;
 

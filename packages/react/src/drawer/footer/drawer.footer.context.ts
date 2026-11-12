@@ -20,11 +20,10 @@ export type IUseDrawerFooterContext = IUseContext<DrawerFooterContext>;
 /**
  * {@link DrawerFooterContext} を読み取るフックです。
  */
-export const useDrawerFooterContext: IUseDrawerFooterContext = function useSuiDrawerFooterContext(
-  optional,
-): any {
+export const useDrawerFooterContext: IUseDrawerFooterContext = (optional): any => {
   const ctx = React.use(DrawerFooterContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "DrawerFooterContext",
       providerName: "DrawerFooter",

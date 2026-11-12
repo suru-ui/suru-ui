@@ -20,11 +20,11 @@ const VARIANTS: readonly AlertDialog.Variant[] = ["default", "stacked"];
 const STATUSES: readonly {
   readonly Icon: typeof InfoIcon;
   readonly color: "blue" | "green" | "yellow" | "red";
-  readonly confirmColor: "blue" | "green" | "yellow" | "red";
-  readonly description: string;
-  readonly status: string;
   readonly title: string;
+  readonly status: string;
   readonly trigger: string;
+  readonly description: string;
+  readonly confirmColor: "blue" | "green" | "yellow" | "red";
 }[] = [
   {
     Icon: InfoIcon,
@@ -118,7 +118,7 @@ export const Basic = meta.story({
     return (
       <AlertDialog
         {...props}
-        icon={props.icon && <Trash2Icon />}
+        icon={props.icon === true && <Trash2Icon />}
         cancel={
           <Button size={props.size} variant="naked">
             キャンセル
@@ -165,14 +165,25 @@ export const Controlled = meta.story({
           状態: <span className="font-mono">{open ? "open" : "closed"}</span>
         </p>
         <div className="flex items-center gap-2">
-          <Button onClick={() => setOpen(true)}>開く</Button>
-          <Button onClick={() => setOpen((prev) => !prev)} variant="liquid">
+          <Button
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            開く
+          </Button>
+          <Button
+            variant="liquid"
+            onClick={() => {
+              setOpen((prev) => !prev);
+            }}
+          >
             切り替え
           </Button>
         </div>
         <AlertDialog
           {...props}
-          icon={props.icon && <Trash2Icon />}
+          icon={props.icon === true && <Trash2Icon />}
           open={open}
           cancel={<Button variant="naked">キャンセル</Button>}
           confirm={<Button color="red">削除する</Button>}
@@ -207,7 +218,7 @@ export const Variants = meta.story({
           <AlertDialog
             key={variant}
             {...props}
-            icon={props.icon && <Trash2Icon />}
+            icon={props.icon === true && <Trash2Icon />}
             title={`外観: ${variant}`}
             cancel={<Button variant="naked">キャンセル</Button>}
             confirm={<Button color="red">削除する</Button>}
@@ -244,7 +255,7 @@ export const Sizes = meta.story({
           <AlertDialog
             key={size}
             {...props}
-            icon={props.icon && <Trash2Icon />}
+            icon={props.icon === true && <Trash2Icon />}
             size={size}
             title={`大きさ: ${size}`}
             cancel={
@@ -292,7 +303,7 @@ export const Radii = meta.story({
           <AlertDialog
             key={radius}
             {...props}
-            icon={props.icon && <Trash2Icon />}
+            icon={props.icon === true && <Trash2Icon />}
             title={`角丸: ${radius}`}
             cancel={<Button variant="naked">キャンセル</Button>}
             radius={radius}
@@ -326,7 +337,7 @@ export const Outline = meta.story({
       <div className="flex flex-wrap items-center gap-4">
         <AlertDialog
           {...props}
-          icon={props.icon && <Trash2Icon />}
+          icon={props.icon === true && <Trash2Icon />}
           cancel={<Button variant="naked">キャンセル</Button>}
           confirm={<Button color="red">削除する</Button>}
           trigger={
@@ -343,7 +354,7 @@ export const Outline = meta.story({
         />
         <AlertDialog
           {...props}
-          icon={props.icon && <Trash2Icon />}
+          icon={props.icon === true && <Trash2Icon />}
           cancel={<Button variant="naked">キャンセル</Button>}
           confirm={<Button color="red">削除する</Button>}
           trigger={<Button variant="liquid">枠線無し</Button>}
@@ -494,7 +505,7 @@ export const WithBody = meta.story({
     return (
       <AlertDialog
         {...props}
-        icon={props.icon && <Trash2Icon />}
+        icon={props.icon === true && <Trash2Icon />}
         cancel={<Button variant="naked">キャンセル</Button>}
         confirm={<Button color="red">削除する</Button>}
         trigger={<Button color="red">内容を確認して削除</Button>}
@@ -533,7 +544,7 @@ export const Scrollable = meta.story({
     return (
       <AlertDialog
         {...props}
-        icon={props.icon && <Trash2Icon />}
+        icon={props.icon === true && <Trash2Icon />}
         cancel={<Button variant="naked">閉じる</Button>}
         confirm={<Button>同意する</Button>}
         trigger={<Button>利用規約を読む</Button>}
@@ -545,8 +556,8 @@ export const Scrollable = meta.story({
           },
         }}
       >
-        {LONG_TEXT.split("\n").map((line, i) => (
-          <p key={i}>{line}</p>
+        {LONG_TEXT.split("\n").map((line) => (
+          <p key={line}>{line}</p>
         ))}
       </AlertDialog>
     );
@@ -567,7 +578,7 @@ export const WithCancelIconButton = meta.story({
     return (
       <AlertDialog
         {...props}
-        icon={props.icon && <Trash2Icon />}
+        icon={props.icon === true && <Trash2Icon />}
         cancel={<Button variant="naked">キャンセル</Button>}
         confirm={<Button color="red">削除する</Button>}
         trigger={<Button color="red">プロジェクトを削除</Button>}
@@ -598,12 +609,7 @@ export const WithCancelIconButton = meta.story({
 //     return (
 //       <AlertDialog
 //         {...props}
-//         icon={props.icon && <Trash2Icon />}
-//         action={<span className="text-xs text-neutral-500">自動保存済み</span>}
-//         cancel={<Button variant="naked">キャンセル</Button>}
-//         confirm={<Button color="red">削除する</Button>}
-//         trigger={<Button color="red">下書きを削除</Button>}
-//         slotProps={{
+//         icon={props.icon === true && <Trash2Icon />}        action={<span className="text-xs text-neutral-500">自動保存済み</span>}        cancel={<Button variant="naked">キャンセル</Button>}        confirm={<Button color="red">削除する</Button>}        trigger={<Button color="red">下書きを削除</Button>}        slotProps={{
 //           icon: {
 //             color: "red",
 //             muted: true,
@@ -630,13 +636,24 @@ export const Imperative = meta.story({
 
     return (
       <div className="flex items-center gap-4">
-        <Button onClick={() => handle.open(null)}>開く</Button>
-        <Button onClick={() => handle.close()} variant="liquid">
+        <Button
+          onClick={() => {
+            handle.open(null);
+          }}
+        >
+          開く
+        </Button>
+        <Button
+          variant="liquid"
+          onClick={() => {
+            handle.close();
+          }}
+        >
           閉じる
         </Button>
         <AlertDialog
           {...props}
-          icon={props.icon && <Trash2Icon />}
+          icon={props.icon === true && <Trash2Icon />}
           cancel={<Button variant="naked">キャンセル</Button>}
           handle={handle}
           confirm={<Button color="red">削除する</Button>}
@@ -687,7 +704,13 @@ export const ValidationClose = meta.story({
       >
         <div className="flex flex-col gap-1">
           <span className="text-sm text-neutral-500">確認コード</span>
-          <TextField value={code} placeholder="123456" onValueChange={(value) => setCode(value)} />
+          <TextField
+            value={code}
+            placeholder="123456"
+            onValueChange={(value) => {
+              setCode(value);
+            }}
+          />
           {invalid && <span className="text-sm text-red-500">確認コードを入力します。</span>}
         </div>
       </AlertDialog>

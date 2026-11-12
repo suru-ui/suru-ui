@@ -1,133 +1,127 @@
 @layer sui.component {
-@scope (.sui_slider_track) to ([data-scope]) {
+  @scope (.sui_slider_track) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: relative;
+      width: 100%;
+      border-style: solid;
 
-/* 固定 */
-:scope {
-  position: relative;
-  width: 100%;
-  border-style: solid;
+      &.sui_slider_track-orientation_vertical {
+        height: 100%;
+      }
+    }
 
-  &.sui_slider_track-orientation_vertical {
-    height: 100%;
-  }
-}
+    /* 可変 */
+    :scope {
+      height: var(--sui_slider_track-size);
+      background-color: var(--sui_slider_track-canvas);
+      border-color: var(--_sui_slider_track-border_color, transparent);
+      border-width: var(--_sui_slider_track-border_width, 0px);
+      border-radius: var(--sui_slider_track-border_radius);
+      corner-shape: var(--sui_slider_track-corner_shape);
 
-/* 可変 */
-:scope {
-  height: var(--sui_slider_track-size);
-  background-color: var(--sui_slider_track-canvas);
-  border-color: var(--_sui_slider_track-border_color, transparent);
-  border-width: var(--_sui_slider_track-border_width, 0px);
-  border-radius: var(--sui_slider_track-border_radius);
-  corner-shape: var(--sui_slider_track-corner_shape);
-
-  &.sui_slider_track-orientation_vertical {
-    width: var(--sui_slider_track-size);
-  }
-}
-
-} /* @scope */
+      &.sui_slider_track-orientation_vertical {
+        width: var(--sui_slider_track-size);
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* トラックの寸法変数は操作領域が参照し、角丸と配色の指定はルートの修飾クラスに依存するため、ルート起点の別ブロックにします。 */
 @layer sui.component {
-@scope (.sui_slider) to ([data-scope]) {
+  @scope (.sui_slider) to ([data-scope]) {
+    /* 変数 */
+    :scope {
+      --sui_slider_track-size: ;
+      --sui_slider_track-border_color-idle: ;
+      --sui_slider_track-border_color-hover: ;
+      --sui_slider_track-border_color-active: ;
+      --sui_slider_track-border_width: ;
+      --sui_slider_track-border_radius: ;
+      --sui_slider_track-corner_shape: ;
+      --sui_slider_track-canvas: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_slider_track-size: ;
-  --sui_slider_track-border_color-idle: ;
-  --sui_slider_track-border_color-hover: ;
-  --sui_slider_track-border_color-active: ;
-  --sui_slider_track-border_width: ;
-  --sui_slider_track-border_radius: ;
-  --sui_slider_track-corner_shape: ;
-  --sui_slider_track-canvas: ;
-}
+    /* 代入 */
+    :scope {
+      --sui_slider_track-size: calc(var(--sui_slider_thumb-size) / 4);
+      --sui_slider_track-border_width: --sui-border_width(1);
 
-/* 代入 */
-:scope {
-  --sui_slider_track-size: calc(var(--sui_slider_thumb-size) / 4);
-  --sui_slider_track-border_width: --sui-border_width(1);
+      &.sui_slider-radius_none {
+        --sui_slider_track-border_radius: 0px;
+      }
 
-  &.sui_slider-radius_none {
-    --sui_slider_track-border_radius: 0px;
-  }
+      &.sui_slider-radius_sm {
+        --sui_slider_track-border_radius: --sui-corner_radius(1);
+        --sui_slider_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_slider-radius_sm {
-    --sui_slider_track-border_radius: --sui-corner_radius(1);
-    --sui_slider_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_slider-radius_md {
+        --sui_slider_track-border_radius: --sui-corner_radius(2);
+        --sui_slider_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_slider-radius_md {
-    --sui_slider_track-border_radius: --sui-corner_radius(2);
-    --sui_slider_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_slider-radius_lg {
+        --sui_slider_track-border_radius: --sui-corner_radius(3);
+        --sui_slider_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_slider-radius_lg {
-    --sui_slider_track-border_radius: --sui-corner_radius(3);
-    --sui_slider_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_slider-radius_full {
+        --sui_slider_track-border_radius: calc(var(--sui_slider_track-size) / 2);
+        --sui_slider_track-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_slider-radius_full {
-    --sui_slider_track-border_radius: calc(var(--sui_slider_track-size) / 2);
-    --sui_slider_track-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_slider-variant_naked {
+        --sui_slider_track-border_color-idle: var(--sui-grey-naked-border-normal);
+        --sui_slider_track-border_color-hover: var(--sui-grey-naked-border-subtle);
+        --sui_slider_track-border_color-active: var(--sui-grey-naked-border-strong);
+        --sui_slider_track-canvas: var(--sui-grey-naked-canvas-normal);
+      }
 
-  &.sui_slider-variant_naked {
-    --sui_slider_track-border_color-idle: var(--sui-grey-naked-border-normal);
-    --sui_slider_track-border_color-hover: var(--sui-grey-naked-border-subtle);
-    --sui_slider_track-border_color-active: var(--sui-grey-naked-border-strong);
-    --sui_slider_track-canvas: var(--sui-grey-naked-canvas-normal);
-  }
-
-  &.sui_slider-variant_liquid {
-    --sui_slider_track-border_color-idle: var(--sui-grey-liquid-border-normal);
-    --sui_slider_track-border_color-hover: var(--sui-grey-liquid-border-subtle);
-    --sui_slider_track-border_color-active: var(--sui-grey-liquid-border-strong);
-    --sui_slider_track-canvas: var(--sui-grey-liquid-canvas-normal);
-  }
-}
-
-/* 変異 */
-:scope {
-  &.sui_slider-outlined .sui_slider_track {
-    --_sui_slider_track-border_color: var(--sui_slider_track-border_color-idle);
-    --_sui_slider_track-border_width: var(--sui_slider_track-border_width);
-
-    @media (any-hover: hover) {
-      &:hover {
-        --_sui_slider_track-border_color: var(--sui_slider_track-border_color-hover);
+      &.sui_slider-variant_liquid {
+        --sui_slider_track-border_color-idle: var(--sui-grey-liquid-border-normal);
+        --sui_slider_track-border_color-hover: var(--sui-grey-liquid-border-subtle);
+        --sui_slider_track-border_color-active: var(--sui-grey-liquid-border-strong);
+        --sui_slider_track-canvas: var(--sui-grey-liquid-canvas-normal);
       }
     }
 
-    &:active {
-      --_sui_slider_track-border_color: var(--sui_slider_track-border_color-active);
-    }
-  }
-}
+    /* 変異 */
+    :scope {
+      &.sui_slider-outlined .sui_slider_track {
+        --_sui_slider_track-border_color: var(--sui_slider_track-border_color-idle);
+        --_sui_slider_track-border_width: var(--sui_slider_track-border_width);
 
-} /* @scope */
+        @media (any-hover: hover) {
+          &:hover {
+            --_sui_slider_track-border_color: var(--sui_slider_track-border_color-hover);
+          }
+        }
+
+        &:active {
+          --_sui_slider_track-border_color: var(--sui_slider_track-border_color-active);
+        }
+      }
+    }
+  } /* @scope */
 } /* @layer */
 
 /* disabled */
 /* 配色の指定はルートのバリアントに依存し、トラック自身にはバリアントの修飾クラスが無いため、ルート起点の別ブロックにします。 */
 @layer sui.important {
-@scope (.sui_slider) to ([data-scope]) {
+  @scope (.sui_slider) to ([data-scope]) {
+    :scope {
+      &.sui_slider-disabled.sui_slider-variant_naked .sui_slider_track {
+        cursor: not-allowed;
+        background-color: var(--sui-disabled-naked-canvas);
+        border-color: var(--sui-disabled-naked-border);
+      }
 
-:scope {
-  &.sui_slider-disabled.sui_slider-variant_naked .sui_slider_track {
-    cursor: not-allowed;
-    background-color: var(--sui-disabled-naked-canvas);
-    border-color: var(--sui-disabled-naked-border);
-  }
-
-  &.sui_slider-disabled.sui_slider-variant_liquid .sui_slider_track {
-    cursor: not-allowed;
-    background-color: var(--sui-disabled-liquid-canvas);
-    border-color: var(--sui-disabled-liquid-border);
-  }
-}
-
-} /* @scope */
+      &.sui_slider-disabled.sui_slider-variant_liquid .sui_slider_track {
+        cursor: not-allowed;
+        background-color: var(--sui-disabled-liquid-canvas);
+        border-color: var(--sui-disabled-liquid-border);
+      }
+    }
+  } /* @scope */
 } /* @layer */

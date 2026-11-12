@@ -29,12 +29,6 @@ export type UseRenderArgs<
   TState extends State = any,
   TEnabled extends boolean | undefined = undefined,
 > = StateArgs<TState> & {
-  defaultTagName: keyof React.JSX.IntrinsicElements;
-  props:
-    | ElementProps<TRenderedElementType, TState>
-    | readonly ElementProps<TRenderedElementType, TState>[];
-  enabled?: TEnabled | undefined;
-  stateAttributesMapping?: Readonly<StateAttributesMapping<TState>> | undefined;
   /**
    * @deprecated
    */
@@ -42,6 +36,12 @@ export type UseRenderArgs<
     | React.Ref<TRenderedElementType>
     | readonly (React.Ref<TRenderedElementType> | undefined)[]
     | undefined;
+  props:
+    | ElementProps<TRenderedElementType, TState>
+    | readonly ElementProps<TRenderedElementType, TState>[];
+  enabled?: TEnabled | undefined;
+  defaultTagName: keyof React.JSX.IntrinsicElements;
+  stateAttributesMapping?: Readonly<StateAttributesMapping<TState>> | undefined;
 };
 
 export type UseRenderReturn<TEnabled extends boolean | undefined> = ReturnType<
@@ -53,17 +53,24 @@ export default function useRender<
   TState extends State = {},
   TEnabled extends boolean | undefined = undefined,
 >(args: UseRenderArgs<TRenderedElementType, TState, TEnabled>): UseRenderReturn<TEnabled> {
+  // oxlint-disable-next-line typescript/no-deprecated -- Base UI の useRender と互換性のある引数を受け取ります。
   const { ref, props, state, enabled, defaultTagName, stateAttributesMapping } = args;
   const refList = Array.isArray(ref) ? ref.slice() : [ref];
   let renderProps: RenderProps<TState>;
   const elementPropsList = [];
+
   if (Array.isArray(props)) {
     const propsList = props;
     const renderPropsList: RenderProps<TState>[] = [];
+
     for (const propsItem of propsList) {
       const { ref: itemRef, style, render, className, ...elementProps } = propsItem;
 
-      const renderProps: RenderProps<TState> = { style, className };
+      const renderProps: RenderProps<TState> = {
+        style,
+        className,
+      };
+
       if ("render" in propsItem) {
         renderProps.render = render;
       }
@@ -71,6 +78,7 @@ export default function useRender<
       if (itemRef !== undefined) {
         refList.push(itemRef);
       }
+
       renderPropsList.push(renderProps);
       elementPropsList.push(elementProps);
     }
@@ -82,10 +90,15 @@ export default function useRender<
     if (itemRef !== undefined) {
       refList.push(itemRef);
     }
-    renderProps = { style, className };
+
+    renderProps = {
+      style,
+      className,
+    };
     if ("render" in props) {
       renderProps.render = render;
     }
+
     elementPropsList.push(elementProps);
   }
 

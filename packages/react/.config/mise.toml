@@ -1,88 +1,41 @@
 [tasks.test]
-run = [
-  { task = "test:server" },
-  { task = "test:client" },
-  { task = "test:format" },
-  { task = "test:lint" },
-  { task = "test:typecheck" },
-]
+run = [{ task = "test:server" }, { task = "test:client" }, { task = "test:check" }]
 env = { CI = 1 }
 
 [tasks."test:server"]
-run = "npx vitest --config ./.config/vitest.server.ts"
+run = "pnpm exec vp test --config ./.config/vite.server.config.ts"
 
 [tasks."test:client"]
-run = "npx vitest --config ./.config/vitest.client.ts"
+run = "pnpm exec vp test --config ./.config/vite.client.config.ts"
 
-[tasks."test:format"]
-run = [{ task = "test:format:oxc" }, { task = "test:format:extra" }, { task = "test:format:style" }]
+[tasks."test:coverage"]
+run = [{ task = "test:coverage:server" }, { task = "test:coverage:client" }]
+env = { CI = 1 }
 
-[tasks."test:format:oxc"]
-run = { task = "format:oxc", args = ["--check"] }
+[tasks."test:coverage:server"]
+run = "pnpm exec vp test run --coverage --config ./.config/vite.server.config.ts"
 
-[tasks."test:format:extra"]
+[tasks."test:coverage:client"]
+run = "pnpm exec vp test run --coverage --config ./.config/vite.client.config.ts"
+
+[tasks."test:check"]
 run = [
-  "node ./scripts/sort-jsx-props.ts --check",
-  "node ./scripts/sort-object-props.ts --check",
-  "node ./scripts/sort-type-props.ts --check",
-  "node ./scripts/sort-import-exports.ts --check",
+  "node ./scripts/sort-css-variables.ts --check",
   "node ./scripts/sort-namespace-exports.ts --check",
+  "pnpm exec vp check",
+  "pnpm exec stylelint './src/**/*.css' --config ./.config/.stylelintrc.json",
 ]
 
-[tasks."test:format:style"]
-run = "node ./scripts/sort-css-variables.ts --check"
-
-[tasks."test:lint"]
-run = [{ task = "test:lint:oxc" }, { task = "test:lint:style" }]
-
-[tasks."test:lint:oxc"]
-run = "set -e; cp ./.config/.oxlintrc.json ./.tmp-oxlintrc.json; trap 'rm -f ./.tmp-oxlintrc.json' EXIT; npx oxlint --config ./.tmp-oxlintrc.json"
-
-[tasks."test:lint:style"]
-run = "npx stylelint './src/**/*.css' --config ./.config/.stylelintrc.json"
-
-[tasks."test:typecheck"]
+[tasks.check]
 run = [
-  "npx tsc --noEmit --project ./.config/tsconfig.base.json",
-  "npx tsc --noEmit --project ./.config/tsconfig.test.json",
-  "npx tsc --noEmit --project ./.config/tsconfig.client.json",
-  "npx tsc --noEmit --project ./.config/tsconfig.server.json",
-  "npx tsc --noEmit --project ./.config/tsconfig.config.json",
-]
-
-[tasks.format]
-run = [{ task = "format:oxc" }, { task = "format:extra" }, { task = "format:style" }]
-
-[tasks."format:oxc"]
-run = "set -e; cp ./.config/.oxfmtrc.json ./.tmp-oxfmtrc.json; trap 'rm -f ./.tmp-oxfmtrc.json' EXIT; npx oxfmt --config ./.tmp-oxfmtrc.json"
-
-[tasks."format:extra"]
-run = [
-  "node ./scripts/sort-jsx-props.ts",
-  "node ./scripts/sort-object-props.ts",
-  "node ./scripts/sort-type-props.ts",
-  "node ./scripts/sort-import-exports.ts",
+  "node ./scripts/sort-css-variables.ts",
   "node ./scripts/sort-namespace-exports.ts",
+  "pnpm exec vp check --fix",
+  "pnpm exec stylelint './src/**/*.css' --config ./.config/.stylelintrc.json --fix",
 ]
-
-[tasks."format:style"]
-run = "node ./scripts/sort-css-variables.ts"
-
-[tasks.lint]
-run = [{ task = "lint:oxc" }, { task = "lint:style" }]
-
-[tasks."lint:oxc"]
-run = { task = "test:lint:oxc", args = ["--fix"] }
-
-[tasks."lint:style"]
-run = { task = "test:lint:style", args = ["--fix"] }
 
 [tasks.update]
-run = [
-  "npx npm-check-updates --target minor -u --cooldown 7",
-  "pnpm install",
-  "npx playwright install --with-deps",
-]
+run = []
 
 [tasks.dev]
 run = "npx storybook dev --config-dir ./.config/storybook --port 6006"

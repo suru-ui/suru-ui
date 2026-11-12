@@ -1,27 +1,25 @@
 @layer sui.component {
-@scope (.sui_breadcrumb_list) to ([data-scope]) {
+  @scope (.sui_breadcrumb_list) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
 
-/* 固定 */
-:scope {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
+    /* 変数 */
+    :scope {
+      --sui_breadcrumb_list-gap: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_breadcrumb_list-gap: ;
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_breadcrumb_list-gap);
+    }
 
-/* 可変 */
-:scope {
-  gap: var(--sui_breadcrumb_list-gap);
-}
-
-/* 代入 */
-:scope {
-  --sui_breadcrumb_list-gap: var(--sui_breadcrumb-gap);
-}
-
-} /* @scope */
+    /* 代入 */
+    :scope {
+      --sui_breadcrumb_list-gap: var(--sui_breadcrumb-gap);
+    }
+  } /* @scope */
 } /* @layer */

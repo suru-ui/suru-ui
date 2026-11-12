@@ -25,18 +25,20 @@ export type IUseContextMenuRadioGroupContext = IUseContext<ContextMenuRadioGroup
 /**
  * {@link ContextMenuRadioGroupContext} を読み取るフックです。
  */
-export const useContextMenuRadioGroupContext: IUseContextMenuRadioGroupContext =
-  function useSuiContextMenuRadioGroupContext(optional): any {
-    const ctx = React.use(ContextMenuRadioGroupContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ContextMenuRadioGroupContext",
-        providerName: "ContextMenuRadioGroup",
-      });
-    }
+export const useContextMenuRadioGroupContext: IUseContextMenuRadioGroupContext = (
+  optional,
+): any => {
+  const ctx = React.use(ContextMenuRadioGroupContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ContextMenuRadioGroupContext",
+      providerName: "ContextMenuRadioGroup",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   ContextMenuRadioGroupContext as RadioGroupContext,

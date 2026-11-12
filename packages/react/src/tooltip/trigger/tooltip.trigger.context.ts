@@ -21,17 +21,17 @@ export type IUseTooltipTriggerContext = IUseContext<TooltipTriggerContext>;
 /**
  * {@link TooltipTriggerContext} を読み取るフックです。
  */
-export const useTooltipTriggerContext: IUseTooltipTriggerContext =
-  function useSuiTooltipTriggerContext(optional): any {
-    const ctx = React.use(TooltipTriggerContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "TooltipTriggerContext",
-        providerName: "TooltipTrigger",
-      });
-    }
+export const useTooltipTriggerContext: IUseTooltipTriggerContext = (optional): any => {
+  const ctx = React.use(TooltipTriggerContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "TooltipTriggerContext",
+      providerName: "TooltipTrigger",
+    });
+  }
+
+  return ctx;
+};
 
 export { TooltipTriggerContext as TriggerContext, useTooltipTriggerContext as useTriggerContext };

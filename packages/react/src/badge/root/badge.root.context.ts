@@ -4,9 +4,7 @@ import * as React from "react";
 import { ContextMissingError } from "../../errors.js";
 import type { IUseContext } from "../../types.js";
 
-/**
- * バッジの配色です。
- */
+/** バッジの配色です。 */
 export type BadgeContextColor = Color;
 
 /**
@@ -60,50 +58,32 @@ export type BadgeContextVariant = "standard" | "dot";
  * {@link BadgeRoot} が提供する状態です。
  */
 export type BadgeContext = {
-  /**
-   * バッジの色です。
-   */
+  /** バッジの色です。 */
   readonly color: BadgeContextColor;
 
-  /**
-   * 枠線を表示するかどうかです。
-   */
+  /** 枠線を表示するかどうかです。 */
   readonly outlined: boolean;
 
-  /**
-   * バッジを重ねる要素の形状です。
-   */
+  /** バッジを重ねる要素の形状です。 */
   readonly overlap: BadgeContextOverlap;
 
-  /**
-   * バッジの配置です。
-   */
+  /** バッジの配置です。 */
   readonly position: BadgeContextPosition | undefined;
 
-  /**
-   * バッジの角丸の大きさです。
-   */
+  /** バッジの角丸の大きさです。 */
   readonly radius: BadgeContextRadius;
 
-  /**
-   * バッジの周囲にリングを表示するかどうかです。
-   */
+  /** バッジの周囲にリングを表示するかどうかです。 */
   readonly ring: boolean;
 
-  /**
-   * バッジの大きさです。
-   */
+  /** バッジの大きさです。 */
   readonly size: BadgeContextSize;
 
-  /**
-   * バッジの主な外観です。
-   */
+  /** バッジの主な外観です。 */
   readonly variant: BadgeContextVariant;
 };
 
-/**
- * バッジの見た目を子孫へ伝播するコンテキストです。
- */
+/** バッジの見た目を子孫へ伝播するコンテキストです。 */
 export const BadgeContext: React.Context<BadgeContext | null> =
   React.createContext<BadgeContext | null>(null);
 
@@ -112,11 +92,10 @@ export type IUseBadgeContext = IUseContext<BadgeContext>;
 /**
  * {@link BadgeContext} を読み取るフックです。
  */
-export const useBadgeContext: IUseBadgeContext = function useSuiBadgeContext(
-  optional?: boolean,
-): any {
+export const useBadgeContext: IUseBadgeContext = (optional?: boolean): any => {
   const ctx = React.use(BadgeContext);
-  if (ctx === null && !optional) {
+
+  if (ctx === null && optional !== true) {
     throw new ContextMissingError({
       contextName: "BadgeContext",
       providerName: "BadgeRoot",
@@ -127,7 +106,6 @@ export const useBadgeContext: IUseBadgeContext = function useSuiBadgeContext(
 };
 
 export { BadgeContext as Context, useBadgeContext as useContext };
-
 export namespace Context {
   export type Color = BadgeContextColor;
 

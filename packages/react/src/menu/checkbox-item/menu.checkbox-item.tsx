@@ -23,14 +23,10 @@ export type MenuCheckboxItemChangeEventDetails = Menu.CheckboxItem.ChangeEventDe
  */
 export type MenuCheckboxItemChangeEventReason = Menu.CheckboxItem.ChangeEventReason;
 
-/**
- * チェックボックス項目の配色です。
- */
+/** チェックボックス項目の配色です。 */
 export type MenuCheckboxItemColor = Button.Root.Color;
 
-/**
- * チェックボックス項目の角丸です。
- */
+/** チェックボックス項目の角丸です。 */
 export type MenuCheckboxItemRadius = Button.Root.Radius;
 
 /**
@@ -83,9 +79,9 @@ export namespace MenuCheckboxItemProps {
       Pick<
         React.ComponentProps<typeof Menu.CheckboxItem>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // NonNativeButtonProps より:
+        // NonNativeButtonProps より :
         | keyof NonNativeButtonProps
-        // MenuCheckboxItemProps より:
+        // MenuCheckboxItemProps より :
         | "checked"
         | "defaultChecked"
         | "onCheckedChange"
@@ -115,10 +111,8 @@ export type MenuCheckboxItemProps = MenuCheckboxItemProps.Render &
 
 export type IMenuCheckboxItem = IComponent<MenuCheckboxItemProps>;
 
-/**
- * 設定をオンまたはオフにできるメニュー項目です。
- */
-export const MenuCheckboxItem: IMenuCheckboxItem = function SuiMenuCheckboxItem(props) {
+/** 設定をオンまたはオフにできるメニュー項目です。 */
+export const MenuCheckboxItem: IMenuCheckboxItem = (props) => {
   const ctx = useMenuContext();
   const {
     id,
@@ -183,15 +177,19 @@ export const MenuCheckboxItem: IMenuCheckboxItem = function SuiMenuCheckboxItem(
               htmlProps,
               buttonRootProps,
               proxyRenderProps<Button.Root.State, MenuCheckboxItemState>(
-                (state) => ({ ...ctx, ...state, ...itemState }),
+                (state) => ({
+                  ...ctx,
+                  ...state,
+                  ...itemState,
+                }),
                 {
                   style,
-                  render: (htmlProps, state) => (
+                  render: (currentHtmlProps, state) => (
                     <MenuCheckboxItemContext value={state}>
                       <RenderElement
                         state={state}
                         render={render ?? <div />}
-                        htmlProps={htmlProps}
+                        htmlProps={currentHtmlProps}
                         defaultTagName="div"
                       />
                     </MenuCheckboxItemContext>
@@ -219,7 +217,6 @@ export const MenuCheckboxItem: IMenuCheckboxItem = function SuiMenuCheckboxItem(
 };
 
 export { MenuCheckboxItem as CheckboxItem };
-
 export namespace CheckboxItem {
   export type State<TItem = any> = MenuCheckboxItemState<TItem>;
 

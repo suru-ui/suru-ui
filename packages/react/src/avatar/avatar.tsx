@@ -13,8 +13,7 @@ import {
   AvatarFallback,
 } from "./avatar.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type AvatarColor = AvatarRootColor;
 
@@ -51,14 +50,10 @@ namespace AvatarProps {
      */
     alt?: AvatarImageProps["alt"] | undefined;
 
-    /**
-     * 画像を表示できないときに代わりに表示する内容です。
-     */
+    /** 画像を表示できないときに代わりに表示する内容です。 */
     children?: AvatarFallbackProps["children"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: AvatarSlotProps | undefined;
 
     /**
@@ -84,13 +79,13 @@ export interface IUseAvatarAPI {
    * {@link AvatarAPI} を作成します。
    *
    * @param props {@link Avatar} の props です。
+   *
    * @returns アバターの API です
    */
   (props: AvatarProps): AvatarAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Avatar} を構成する各パーツの props を作成するための API です。
@@ -104,11 +99,16 @@ export class AvatarAPI {
 
   /**
    * @param props {@link Avatar} の props です。
+   *
    * @internal
    */
   public constructor(props: AvatarProps) {
     const { alt, src, children, slotProps = {}, ...rootProps } = props;
-    this.avatarProps = { alt, src, children };
+    this.avatarProps = {
+      alt,
+      src,
+      children,
+    };
     this.slotProps = slotProps;
     this.rootProps = rootProps;
   }
@@ -163,19 +163,14 @@ export class AvatarAPI {
 /**
  * {@link AvatarAPI} を作成するフックです。
  */
-export const useAvatarAPI: IUseAvatarAPI = function useSuiAvatarAPI(props) {
-  return new AvatarAPI(props);
-};
+export const useAvatarAPI: IUseAvatarAPI = (props) => new AvatarAPI(props);
 
 export { AvatarAPI as API, useAvatarAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
-/**
- * 画像またはフォールバックコンテンツを持つアバターを表示するコンポーネントです。
- */
-export const Avatar: IAvatar = function SuiAvatar(props) {
+/** 画像またはフォールバックコンテンツを持つアバターを表示するコンポーネントです。 */
+export const Avatar: IAvatar = (props) => {
   const api = useAvatarAPI(props);
   const imageProps = api.getImageProps();
   const fallbackProps = api.getFallbackProps();

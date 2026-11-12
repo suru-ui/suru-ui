@@ -25,7 +25,7 @@ export namespace SelectPositionerProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Positioner>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // UseAnchorPositioningSharedParameters より:
+      // UseAnchorPositioningSharedParameters より :
       | "anchor"
       | "positionMethod"
       | "side"
@@ -38,7 +38,7 @@ export namespace SelectPositionerProps {
       | "arrowPadding"
       | "disableAnchorTracking"
       | "collisionAvoidance"
-      // SelectPositionerProps より:
+      // SelectPositionerProps より :
       | "alignItemWithTrigger"
     >,
     keyof Render | keyof SuruUI
@@ -60,10 +60,8 @@ export type SelectPositionerProps = SelectPositionerProps.Render &
 
 export type ISelectPositioner = IComponent<SelectPositionerProps>;
 
-/**
- * ポップアップをトリガーへ位置合わせする要素です。
- */
-export const SelectPositioner: ISelectPositioner = function SuiSelectPositioner(props) {
+/** ポップアップをトリガーへ位置合わせする要素です。 */
+export const SelectPositioner: ISelectPositioner = (props) => {
   const ctx = useSelectPortalContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -71,7 +69,10 @@ export const SelectPositioner: ISelectPositioner = function SuiSelectPositioner(
     <BaseSelect.Positioner
       {...otherProps}
       {...proxyRenderProps<BaseSelect.Positioner.State, SelectPositionerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -103,7 +104,6 @@ export const SelectPositioner: ISelectPositioner = function SuiSelectPositioner(
 };
 
 export { SelectPositioner as Positioner };
-
 export namespace Positioner {
   export type State<TValue = any> = SelectPositionerState<TValue>;
 

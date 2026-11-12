@@ -23,18 +23,18 @@ export type IUseNumberFieldIncrementContext = IUseContext<NumberFieldIncrementCo
 /**
  * {@link NumberFieldIncrementContext} を読み取るフックです。
  */
-export const useNumberFieldIncrementContext: IUseNumberFieldIncrementContext =
-  function useSuiNumberFieldIncrementContext(optional): any {
-    const ctx = React.use(NumberFieldIncrementContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "NumberFieldIncrementContext",
-        providerName: "NumberFieldIncrement",
-      });
-    }
+export const useNumberFieldIncrementContext: IUseNumberFieldIncrementContext = (optional): any => {
+  const ctx = React.use(NumberFieldIncrementContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "NumberFieldIncrementContext",
+      providerName: "NumberFieldIncrement",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   NumberFieldIncrementContext as IncrementContext,

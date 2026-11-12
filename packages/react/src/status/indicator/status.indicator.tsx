@@ -18,10 +18,7 @@ export namespace StatusIndicatorProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"span", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"span", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -34,10 +31,8 @@ export type StatusIndicatorProps = StatusIndicatorProps.Render &
 
 export type IStatusIndicator = IComponent<StatusIndicatorProps>;
 
-/**
- * 状態を示すドットを表示するインジケーターコンポーネントです。
- */
-export const StatusIndicator: IStatusIndicator = function SuiStatusIndicator(props) {
+/** 状態を示すドットを表示するインジケーターコンポーネントです。 */
+export const StatusIndicator: IStatusIndicator = (props) => {
   const ctx = useStatusContext();
   const { "aria-hidden": ariaHidden = true, ...otherSpanProps } = props;
 
@@ -62,7 +57,6 @@ export const StatusIndicator: IStatusIndicator = function SuiStatusIndicator(pro
 };
 
 export { StatusIndicator as Indicator };
-
 export namespace Indicator {
   export type State = StatusIndicatorState;
 

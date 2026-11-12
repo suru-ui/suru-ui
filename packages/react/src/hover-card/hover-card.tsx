@@ -3,6 +3,7 @@ import * as React from "react";
 import type { IComponent } from "../types.js";
 import {
   type HoverCardHandle,
+  type HoverCardContext,
   type HoverCardRootSize,
   type IHoverCardTrigger,
   type HoverCardRootProps,
@@ -24,7 +25,6 @@ import {
   HoverCardArrow,
   HoverCardPopup,
   HoverCardPortal,
-  HoverCardContext,
   HoverCardTrigger,
   HoverCardBackdrop,
   HoverCardPositioner,
@@ -32,8 +32,7 @@ import {
   createHoverCardHandle,
 } from "./hover-card.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type HoverCardActions = HoverCardRootActions;
 
@@ -94,6 +93,7 @@ export interface IHoverCardPopupRenderer<TPayload = any> {
    * 内容をレンダリングします。
    *
    * @param args レンダリングに必要な値です。
+   *
    * @returns レンダリングする内容です。
    */
   (args: { payload: TPayload | undefined }): React.ReactNode;
@@ -133,9 +133,7 @@ namespace HoverCardProps {
      */
     handle?: HoverCardHandle<TPayload> | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: HoverCardSlotProps<TPayload> | undefined;
 
     /**
@@ -171,14 +169,15 @@ export interface IUseHoverCardAPI {
    * {@link HoverCardAPI} を作成します。
    *
    * @template TPayload トリガーから受け取るデータの型です。
+   *
    * @param props {@link HoverCard} の props です。
+   *
    * @returns ホバーカードの API です
    */
   <TPayload = any>(props: HoverCardProps<TPayload>): HoverCardAPI<TPayload>;
 }
 
-// API
-// ---
+// API.
 
 // 矢印の高さ (px) です。`hover-card.arrow.css` の `--sui_hover_card_arrow-size` と合わせます。
 const HOVER_CARD_ARROW_SIZE = 6;
@@ -199,8 +198,35 @@ export class HoverCardAPI<TPayload = any> {
 
   private readonly popupProps: HoverCardProps.Popup;
 
+  private readonly defaultRootChildren: IHoverCardRootRenderer<TPayload> = ({ payload }) => {
+    const triggerProps = this.getTriggerProps();
+    const arrowProps = this.getArrowProps();
+    const backdropProps = this.getBackdropProps();
+    const children = this.getPopupChildren();
+
+    return (
+      <>
+        {triggerProps && <HoverCardTrigger {...triggerProps} />}
+        <HoverCardPortal {...this.getPortalProps()}>
+          {backdropProps && <HoverCardBackdrop {...backdropProps} />}
+          <HoverCardPositioner {...this.getPositionerProps()}>
+            <HoverCardPopup {...this.getPopupProps()}>
+              {arrowProps && <HoverCardArrow {...arrowProps} />}
+              {typeof children === "function"
+                ? children({
+                    payload,
+                  })
+                : children}
+            </HoverCardPopup>
+          </HoverCardPositioner>
+        </HoverCardPortal>
+      </>
+    );
+  };
+
   /**
    * @param props {@link HoverCard} の props です。
+   *
    * @internal
    */
   public constructor(props: HoverCardProps<TPayload>) {
@@ -253,28 +279,6 @@ export class HoverCardAPI<TPayload = any> {
     this.popupProps = popupProps;
   }
 
-  private defaultRootChildren: IHoverCardRootRenderer<TPayload> = ({ payload }) => {
-    const triggerProps = this.getTriggerProps();
-    const arrowProps = this.getArrowProps();
-    const backdropProps = this.getBackdropProps();
-    const children = this.getPopupChildren();
-
-    return (
-      <>
-        {triggerProps && <HoverCardTrigger {...triggerProps} />}
-        <HoverCardPortal {...this.getPortalProps()}>
-          {backdropProps && <HoverCardBackdrop {...backdropProps} />}
-          <HoverCardPositioner {...this.getPositionerProps()}>
-            <HoverCardPopup {...this.getPopupProps()}>
-              {arrowProps && <HoverCardArrow {...arrowProps} />}
-              {typeof children === "function" ? children({ payload }) : children}
-            </HoverCardPopup>
-          </HoverCardPositioner>
-        </HoverCardPortal>
-      </>
-    );
-  };
-
   /**
    * {@link HoverCardArrow} に渡す props を取得します。
    *
@@ -285,7 +289,7 @@ export class HoverCardAPI<TPayload = any> {
     const { arrow: props } = this.slotProps;
 
     if (arrow || props) {
-      return props || {};
+      return props ?? {};
     }
 
     return null;
@@ -301,7 +305,7 @@ export class HoverCardAPI<TPayload = any> {
     const { backdrop: props } = this.slotProps;
 
     if (backdrop || props) {
-      return props || {};
+      return props ?? {};
     }
 
     return null;
@@ -340,7 +344,12 @@ export class HoverCardAPI<TPayload = any> {
     const arrowProps = this.getArrowProps();
     const { sideOffset = arrowProps ? HOVER_CARD_ARROW_SIZE : undefined, ...otherProps } = props;
 
-    return sideOffset === undefined ? otherProps : { ...otherProps, sideOffset };
+    return sideOffset === undefined
+      ? otherProps
+      : {
+          ...otherProps,
+          sideOffset,
+        };
   }
 
   /**
@@ -381,30 +390,24 @@ export class HoverCardAPI<TPayload = any> {
 /**
  * {@link HoverCardAPI} を作成するフックです。
  */
-export const useHoverCardAPI: IUseHoverCardAPI = function useSuiHoverCardAPI<TPayload>(
-  props: HoverCardProps<TPayload>,
-) {
-  return new HoverCardAPI(props);
-};
+export const useHoverCardAPI: IUseHoverCardAPI = <TPayload,>(props: HoverCardProps<TPayload>) =>
+  new HoverCardAPI(props);
 
 export { HoverCardAPI as API, useHoverCardAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IHoverCard extends IComponent<HoverCardProps> {
   /**
    * @template TPayload トリガーから受け取るデータの型です。
    */
   <TPayload = any>(props: HoverCardProps<TPayload>): IComponent.Return;
-
   readonly Trigger: IHoverCardTrigger;
 
   /**
    * {@link HoverCardHandle} を作成する関数です。
    */
   readonly createHandle: ICreateHoverCardHandle;
-
   readonly useContext: IUseHoverCardContext;
 }
 
@@ -415,7 +418,7 @@ export interface IHoverCard extends IComponent<HoverCardProps> {
  * 構成を細かく制御する場合は、{@link HoverCardRoot|Root} を直接組み立てます。
  */
 export const HoverCard: IHoverCard = /*#__PURE__*/ Object.assign(
-  function SuiHoverCard(props: HoverCardProps) {
+  (props: HoverCardProps) => {
     const api = useHoverCardAPI(props);
 
     return <HoverCardRoot {...api.getRootProps()} />;

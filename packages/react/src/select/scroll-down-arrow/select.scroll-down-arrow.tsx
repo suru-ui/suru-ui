@@ -25,7 +25,7 @@ export namespace SelectScrollDownArrowProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.ScrollDownArrow>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectScrollDownArrowProps より:
+      // SelectScrollDownArrowProps より :
       "keepMounted"
     >,
     keyof Render | keyof SuruUI
@@ -47,12 +47,8 @@ export type SelectScrollDownArrowProps = SelectScrollDownArrowProps.Render &
 
 export type ISelectScrollDownArrow = IComponent<SelectScrollDownArrowProps>;
 
-/**
- * 下方向へスクロールできることを示す要素です。
- */
-export const SelectScrollDownArrow: ISelectScrollDownArrow = function SuiSelectScrollDownArrow(
-  props,
-) {
+/** 下方向へスクロールできることを示す要素です。 */
+export const SelectScrollDownArrow: ISelectScrollDownArrow = (props) => {
   const ctx = useSelectPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -60,7 +56,10 @@ export const SelectScrollDownArrow: ISelectScrollDownArrow = function SuiSelectS
     <BaseSelect.ScrollDownArrow
       {...otherProps}
       {...proxyRenderProps<BaseSelect.ScrollDownArrow.State, SelectScrollDownArrowState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -95,7 +94,6 @@ export const SelectScrollDownArrow: ISelectScrollDownArrow = function SuiSelectS
 };
 
 export { SelectScrollDownArrow as ScrollDownArrow };
-
 export namespace ScrollDownArrow {
   export type State<TValue = any> = SelectScrollDownArrowState<TValue>;
 

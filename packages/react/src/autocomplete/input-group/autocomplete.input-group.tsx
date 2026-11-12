@@ -22,9 +22,7 @@ import { AutocompleteInputGroupContext } from "./autocomplete.input-group.contex
  */
 export type AutocompleteInputGroupState<TItem = any> = AutocompleteInputGroupContext<TItem>;
 
-/**
- * 入力グループの配色です。
- */
+/** 入力グループの配色です。 */
 export type AutocompleteInputGroupColor = AutocompleteContextColor;
 
 /**
@@ -99,7 +97,7 @@ export namespace AutocompleteInputGroupProps {
     Pick<
       React.ComponentProps<typeof Autocomplete.InputGroup>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AutocompleteInputGroupProps より:
+      // AutocompleteInputGroupProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -126,9 +124,7 @@ export type IAutocompleteInputGroup = IComponent<AutocompleteInputGroupProps>;
  *
  * Root のスタイルプロパティーがこの要素へ適用されます。
  */
-export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutocompleteInputGroup(
-  props,
-) {
+export const AutocompleteInputGroup: IAutocompleteInputGroup = (props) => {
   const ctx = useAutocompleteContext();
   const {
     size = ctx.size,
@@ -139,7 +135,7 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
     variant = ctx.variant,
     outlined = true,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -148,7 +144,15 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
     <Autocomplete.InputGroup
       {...otherProps}
       {...proxyRenderProps<Autocomplete.InputGroup.State, AutocompleteInputGroupState>(
-        (state) => ({ ...ctx, size, color, radius, variant, outlined, ...state }),
+        (state) => ({
+          ...ctx,
+          size,
+          color,
+          radius,
+          variant,
+          outlined,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -192,7 +196,6 @@ export const AutocompleteInputGroup: IAutocompleteInputGroup = function SuiAutoc
 };
 
 export { AutocompleteInputGroup as InputGroup };
-
 export namespace InputGroup {
   export type State<TItem = any> = AutocompleteInputGroupState<TItem>;
 

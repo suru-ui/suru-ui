@@ -27,7 +27,7 @@ export namespace DialogDescriptionProps {
       Pick<
         React.ComponentProps<typeof Dialog.Description>,
         // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-        // DialogDescriptionProps より:
+        // DialogDescriptionProps より :
         never
       >,
       keyof Render | keyof SuruUI
@@ -36,7 +36,7 @@ export namespace DialogDescriptionProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Dialog.Description>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -55,7 +55,7 @@ export type IDialogDescription = IComponent<DialogDescriptionProps>;
  *
  * 見た目はカードの説明文として描画され、ポップアップの説明に関連付けます。
  */
-export const DialogDescription: IDialogDescription = function SuiDialogDescription(props) {
+export const DialogDescription: IDialogDescription = (props) => {
   const ctx = useDialogPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -67,15 +67,18 @@ export const DialogDescription: IDialogDescription = function SuiDialogDescripti
           {...mergeProps<typeof Card.Description>([
             htmlProps,
             proxyRenderProps<Card.Description.State, DialogDescriptionState>(
-              (state) => ({ ...ctx, ...state }),
+              (state) => ({
+                ...ctx,
+                ...state,
+              }),
               {
                 style,
-                render: (htmlProps, state) => (
+                render: (currentHtmlProps, state) => (
                   <DialogDescriptionContext value={state}>
                     <RenderElement
                       state={state}
                       render={render}
-                      htmlProps={htmlProps}
+                      htmlProps={currentHtmlProps}
                       defaultTagName="p"
                     />
                   </DialogDescriptionContext>
@@ -104,7 +107,6 @@ export const DialogDescription: IDialogDescription = function SuiDialogDescripti
 };
 
 export { DialogDescription as Description };
-
 export namespace Description {
   export type State = DialogDescriptionState;
 

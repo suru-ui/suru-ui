@@ -1,142 +1,140 @@
 @layer sui.component {
-@scope (.sui_avatar) to ([data-scope]) {
+  @scope (.sui_avatar) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      user-select: none;
+    }
 
-/* 固定 */
-:scope {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  user-select: none;
-}
+    /* 変数 */
+    :scope {
+      --sui_avatar-size: ;
+      --sui_avatar-font_family: ;
+      --sui_avatar-font_size: ;
+      --sui_avatar-font_weight: ;
+      --sui_avatar-line_height: ;
+      --sui_avatar-color: ;
+      --sui_avatar-letter_spacing: ;
+      --sui_avatar-background_color: ;
+      --sui_avatar-border_radius: ;
+      --sui_avatar-corner_shape: ;
+    }
 
-/* 変数 */
-:scope {
-  --sui_avatar-size: ;
-  --sui_avatar-font_family: ;
-  --sui_avatar-font_size: ;
-  --sui_avatar-font_weight: ;
-  --sui_avatar-line_height: ;
-  --sui_avatar-color: ;
-  --sui_avatar-letter_spacing: ;
-  --sui_avatar-background_color: ;
-  --sui_avatar-border_radius: ;
-  --sui_avatar-corner_shape: ;
-}
+    /* 可変 */
+    :scope {
+      width: var(--sui_avatar-size);
+      height: var(--sui_avatar-size);
+      font-family: var(--sui_avatar-font_family);
+      font-size: var(--sui_avatar-font_size);
+      font-weight: var(--sui_avatar-font_weight);
+      line-height: var(--sui_avatar-line_height);
+      color: var(--sui_avatar-color);
+      letter-spacing: var(--sui_avatar-letter_spacing);
+      background-color: var(--sui_avatar-background_color);
+      border-radius: var(--sui_avatar-border_radius);
+      corner-shape: var(--sui_avatar-corner_shape);
+    }
 
-/* 可変 */
-:scope {
-  width: var(--sui_avatar-size);
-  height: var(--sui_avatar-size);
-  font-family: var(--sui_avatar-font_family);
-  font-size: var(--sui_avatar-font_size);
-  font-weight: var(--sui_avatar-font_weight);
-  line-height: var(--sui_avatar-line_height);
-  color: var(--sui_avatar-color);
-  letter-spacing: var(--sui_avatar-letter_spacing);
-  background-color: var(--sui_avatar-background_color);
-  border-radius: var(--sui_avatar-border_radius);
-  corner-shape: var(--sui_avatar-corner_shape);
-}
+    /* 代入 */
+    :scope {
+      --sui_avatar-font_family: var(--sui-font-sans);
 
-/* 代入 */
-:scope {
-  --sui_avatar-font_family: var(--sui-font-sans);
+      &.sui_avatar-size_sm {
+        --sui_avatar-size: var(--sui-size-sm);
+        --sui_avatar-font_size: var(--sui-text-oln-sm-b-font_size);
+        --sui_avatar-font_weight: var(--sui-text-oln-sm-b-font_weight);
+        --sui_avatar-line_height: var(--sui-text-oln-sm-b-line_height);
+        --sui_avatar-letter_spacing: var(--sui-text-oln-sm-b-letter_spacing);
+      }
 
-  &.sui_avatar-size_sm {
-    --sui_avatar-size: var(--sui-size-sm);
-    --sui_avatar-font_size: var(--sui-text-oln-sm-b-font_size);
-    --sui_avatar-font_weight: var(--sui-text-oln-sm-b-font_weight);
-    --sui_avatar-line_height: var(--sui-text-oln-sm-b-line_height);
-    --sui_avatar-letter_spacing: var(--sui-text-oln-sm-b-letter_spacing);
-  }
+      &.sui_avatar-size_md {
+        --sui_avatar-size: var(--sui-size-md);
+        --sui_avatar-font_size: var(--sui-text-oln-md-b-font_size);
+        --sui_avatar-font_weight: var(--sui-text-oln-md-b-font_weight);
+        --sui_avatar-line_height: var(--sui-text-oln-md-b-line_height);
+        --sui_avatar-letter_spacing: var(--sui-text-oln-md-b-letter_spacing);
+      }
 
-  &.sui_avatar-size_md {
-    --sui_avatar-size: var(--sui-size-md);
-    --sui_avatar-font_size: var(--sui-text-oln-md-b-font_size);
-    --sui_avatar-font_weight: var(--sui-text-oln-md-b-font_weight);
-    --sui_avatar-line_height: var(--sui-text-oln-md-b-line_height);
-    --sui_avatar-letter_spacing: var(--sui-text-oln-md-b-letter_spacing);
-  }
+      &.sui_avatar-size_lg {
+        --sui_avatar-size: var(--sui-size-lg);
+        --sui_avatar-font_size: var(--sui-text-oln-lg-b-font_size);
+        --sui_avatar-font_weight: var(--sui-text-oln-lg-b-font_weight);
+        --sui_avatar-line_height: var(--sui-text-oln-lg-b-line_height);
+        --sui_avatar-letter_spacing: var(--sui-text-oln-lg-b-letter_spacing);
+      }
 
-  &.sui_avatar-size_lg {
-    --sui_avatar-size: var(--sui-size-lg);
-    --sui_avatar-font_size: var(--sui-text-oln-lg-b-font_size);
-    --sui_avatar-font_weight: var(--sui-text-oln-lg-b-font_weight);
-    --sui_avatar-line_height: var(--sui-text-oln-lg-b-line_height);
-    --sui_avatar-letter_spacing: var(--sui-text-oln-lg-b-letter_spacing);
-  }
+      &.sui_avatar-radius_none {
+        --sui_avatar-border_radius: 0px;
+      }
 
-  &.sui_avatar-radius_none {
-    --sui_avatar-border_radius: 0px;
-  }
+      &.sui_avatar-radius_sm {
+        --sui_avatar-border_radius: --sui-corner_radius(1);
+        --sui_avatar-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_avatar-radius_sm {
-    --sui_avatar-border_radius: --sui-corner_radius(1);
-    --sui_avatar-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_avatar-radius_md {
+        --sui_avatar-border_radius: --sui-corner_radius(2);
+        --sui_avatar-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_avatar-radius_md {
-    --sui_avatar-border_radius: --sui-corner_radius(2);
-    --sui_avatar-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_avatar-radius_lg {
+        --sui_avatar-border_radius: --sui-corner_radius(3);
+        --sui_avatar-corner_shape: superellipse(var(--sui-superellipse));
+      }
 
-  &.sui_avatar-radius_lg {
-    --sui_avatar-border_radius: --sui-corner_radius(3);
-    --sui_avatar-corner_shape: superellipse(var(--sui-superellipse));
-  }
+      &.sui_avatar-radius_full {
+        --sui_avatar-border_radius: calc(var(--sui_avatar-size) / 2);
+        --sui_avatar-corner_shape: none;
+      }
 
-  &.sui_avatar-radius_full {
-    --sui_avatar-border_radius: calc(var(--sui_avatar-size) / 2);
-    --sui_avatar-corner_shape: none;
-  }
+      &.sui_avatar-radius_circle {
+        --sui_avatar-border_radius: calc(var(--sui_avatar-size) / 2);
+        --sui_avatar-corner_shape: none;
+      }
 
-  &.sui_avatar-radius_circle {
-    --sui_avatar-border_radius: calc(var(--sui_avatar-size) / 2);
-    --sui_avatar-corner_shape: none;
-  }
+      &.sui_avatar-color_grey {
+        --sui_avatar-color: var(--sui-grey-solid-canvas_text-normal);
+        --sui_avatar-background_color: var(--sui-grey-solid-canvas-normal);
+      }
 
-  &.sui_avatar-color_grey {
-    --sui_avatar-color: var(--sui-grey-solid-canvas_text-normal);
-    --sui_avatar-background_color: var(--sui-grey-solid-canvas-normal);
-  }
+      &.sui_avatar-color_blue {
+        --sui_avatar-color: var(--sui-blue-solid-canvas_text-normal);
+        --sui_avatar-background_color: var(--sui-blue-solid-canvas-normal);
+      }
 
-  &.sui_avatar-color_blue {
-    --sui_avatar-color: var(--sui-blue-solid-canvas_text-normal);
-    --sui_avatar-background_color: var(--sui-blue-solid-canvas-normal);
-  }
+      &.sui_avatar-color_purple {
+        --sui_avatar-color: var(--sui-purple-solid-canvas_text-normal);
+        --sui_avatar-background_color: var(--sui-purple-solid-canvas-normal);
+      }
 
-  &.sui_avatar-color_purple {
-    --sui_avatar-color: var(--sui-purple-solid-canvas_text-normal);
-    --sui_avatar-background_color: var(--sui-purple-solid-canvas-normal);
-  }
+      &.sui_avatar-color_magenta {
+        --sui_avatar-color: var(--sui-magenta-solid-canvas_text-normal);
+        --sui_avatar-background_color: var(--sui-magenta-solid-canvas-normal);
+      }
 
-  &.sui_avatar-color_magenta {
-    --sui_avatar-color: var(--sui-magenta-solid-canvas_text-normal);
-    --sui_avatar-background_color: var(--sui-magenta-solid-canvas-normal);
-  }
+      &.sui_avatar-color_red {
+        --sui_avatar-color: var(--sui-red-solid-canvas_text-normal);
+        --sui_avatar-background_color: var(--sui-red-solid-canvas-normal);
+      }
 
-  &.sui_avatar-color_red {
-    --sui_avatar-color: var(--sui-red-solid-canvas_text-normal);
-    --sui_avatar-background_color: var(--sui-red-solid-canvas-normal);
-  }
+      &.sui_avatar-color_orange {
+        --sui_avatar-color: var(--sui-orange-solid-canvas_text-normal);
+        --sui_avatar-background_color: var(--sui-orange-solid-canvas-normal);
+      }
 
-  &.sui_avatar-color_orange {
-    --sui_avatar-color: var(--sui-orange-solid-canvas_text-normal);
-    --sui_avatar-background_color: var(--sui-orange-solid-canvas-normal);
-  }
+      &.sui_avatar-color_yellow {
+        --sui_avatar-color: var(--sui-yellow-solid-canvas_text-normal);
+        --sui_avatar-background_color: var(--sui-yellow-solid-canvas-normal);
+      }
 
-  &.sui_avatar-color_yellow {
-    --sui_avatar-color: var(--sui-yellow-solid-canvas_text-normal);
-    --sui_avatar-background_color: var(--sui-yellow-solid-canvas-normal);
-  }
-
-  &.sui_avatar-color_green {
-    --sui_avatar-color: var(--sui-green-solid-canvas_text-normal);
-    --sui_avatar-background_color: var(--sui-green-solid-canvas-normal);
-  }
-}
-
-} /* @scope */
+      &.sui_avatar-color_green {
+        --sui_avatar-color: var(--sui-green-solid-canvas_text-normal);
+        --sui_avatar-background_color: var(--sui-green-solid-canvas-normal);
+      }
+    }
+  } /* @scope */
 } /* @layer */

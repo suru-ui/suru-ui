@@ -1,5 +1,5 @@
 import "@suru-ui/theme/suru.css";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import "./button.parts.js";
@@ -14,7 +14,7 @@ import { ButtonRoot } from "./root/button.root.jsx";
 
 describe("ButtonRoot の配置", () => {
   test("公開パーツをすべて描画して余白を持たない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ButtonRoot pending>
         <ButtonContent>送信</ButtonContent>
@@ -29,7 +29,7 @@ describe("ButtonRoot の配置", () => {
       </ButtonRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_button_content").query()).not.toBe(null);
     expect(screen.getByClassName("sui_button_pending").query()).not.toBe(null);
     expect(screen.getByClassName("sui_button_circular_progress").query()).not.toBe(null);
@@ -38,6 +38,7 @@ describe("ButtonRoot の配置", () => {
     expect(screen.getByClassName("sui_button_circular_progress_fill_rotation").query()).not.toBe(
       null,
     );
+
     for (const element of screen.container.querySelectorAll<HTMLElement>(".sui_button *")) {
       const style = getComputedStyle(element);
       expect(style.marginTop).toBe("0px");
@@ -46,7 +47,7 @@ describe("ButtonRoot の配置", () => {
   });
 
   test("大きさに応じた最小の高さを持つ", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ButtonRoot id="xs" size="xs" />
@@ -56,7 +57,7 @@ describe("ButtonRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     expect(getComputedStyle(screen.container.querySelector("#xs")!).minHeight).toBe("22px");
     expect(getComputedStyle(screen.container.querySelector("#sm")!).minHeight).toBe("26px");
     expect(getComputedStyle(screen.container.querySelector("#md")!).minHeight).toBe("32px");
@@ -64,17 +65,17 @@ describe("ButtonRoot の配置", () => {
   });
 
   test("正方形では幅と高さを揃える", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ButtonRoot squared />);
 
-    // 検証
+    // 検証。
     const { width, height } = screen.getByClassName("sui_button").element().getBoundingClientRect();
     expect(width).toBeCloseTo(32, 1);
     expect(height).toBeCloseTo(32, 1);
   });
 
   test("thin では上下の余白が小さくなる", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ButtonRoot id="plain">送信</ButtonRoot>
@@ -84,7 +85,7 @@ describe("ButtonRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const plain = screen.container.querySelector("#plain")!;
     const thin = screen.container.querySelector("#thin")!;
     expect(thin.classList.contains("sui_button-thin")).toBe(true);
@@ -95,16 +96,16 @@ describe("ButtonRoot の配置", () => {
   });
 
   test("角丸 full は高さの半分にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ButtonRoot radius="full" />);
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(screen.getByClassName("sui_button").element());
     expect(style.borderTopLeftRadius).toBe("16px");
   });
 
   test("内容を中央に配置する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ButtonRoot>
         <ButtonContent>
@@ -113,16 +114,18 @@ describe("ButtonRoot の配置", () => {
       </ButtonRoot>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_button").element();
     const rootStyle = getComputedStyle(root);
     expect(rootStyle.display).toBe("inline-flex");
     expect(rootStyle.alignItems).toBe("center");
     expect(rootStyle.justifyContent).toBe("center");
+
     const content = screen.getByClassName("sui_button_content").element();
     const contentStyle = getComputedStyle(content);
     expect(contentStyle.display).toBe("flex");
     expect(contentStyle.alignItems).toBe("center");
+
     const contentRect = content.getBoundingClientRect();
     const textRect = screen.getByText("送信").element().getBoundingClientRect();
     expect(textRect.left + textRect.width / 2).toBeCloseTo(
@@ -136,7 +139,7 @@ describe("ButtonRoot の配置", () => {
   });
 
   test("item では内容を両端に配置する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ButtonRoot item style={{ width: "200px" }}>
         <span>項目</span>
@@ -144,7 +147,7 @@ describe("ButtonRoot の配置", () => {
       </ButtonRoot>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_button").element();
     const style = getComputedStyle(root);
     const paddingStart = Number.parseFloat(style.paddingInlineStart);
@@ -157,7 +160,7 @@ describe("ButtonRoot の配置", () => {
   });
 
   test("保留中はオーバーレイで内容を隠す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <ButtonRoot pending>
         <ButtonContent>送信</ButtonContent>
@@ -170,12 +173,14 @@ describe("ButtonRoot の配置", () => {
       </ButtonRoot>,
     );
 
-    // 検証
+    // 検証。
     const root = screen.getByClassName("sui_button").element();
     const content = screen.getByClassName("sui_button_content").element();
     expect(getComputedStyle(content).visibility).toBe("hidden");
+
     const pending = screen.getByClassName("sui_button_pending").element();
     expect(getComputedStyle(pending).position).toBe("absolute");
+
     const rootRect = root.getBoundingClientRect();
     const progressRect = screen
       .getByClassName("sui_button_circular_progress")
@@ -192,7 +197,7 @@ describe("ButtonRoot の配置", () => {
   });
 
   test("枠線を表示しても高さを変えない", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <ButtonRoot id="plain" />
@@ -200,7 +205,7 @@ describe("ButtonRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const plain = screen.container.querySelector<HTMLElement>("#plain")!;
     const outlined = screen.container.querySelector<HTMLElement>("#outlined")!;
     expect(outlined.getBoundingClientRect().height).toBeCloseTo(
@@ -210,30 +215,30 @@ describe("ButtonRoot の配置", () => {
   });
 
   test("outlined では枠線を表示する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(<ButtonRoot outlined />);
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(screen.getByClassName("sui_button").element());
     expect(style.borderTopStyle).toBe("solid");
     expect(Number.parseFloat(style.borderTopWidth)).toBeGreaterThan(0);
   });
 
   test("通常のボタンはフォーカス時に焦点リングを表示する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(<ButtonRoot>実行</ButtonRoot>);
     const button = screen.getByClassName("sui_button").element();
 
-    // 実行
+    // 実行。
     button.focus({ focusVisible: true });
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(button);
     expect(Number.parseFloat(style.outlineWidth)).toBeGreaterThan(0);
   });
 
   test("リストアイテムはハイライト中は焦点リングを表示しない", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <ButtonRoot item className="sui_menu_item-highlighted">
         項目
@@ -241,16 +246,16 @@ describe("ButtonRoot の配置", () => {
     );
     const button = screen.getByClassName("sui_button").element();
 
-    // 実行
+    // 実行。
     button.focus({ focusVisible: true });
 
-    // 検証
+    // 検証。
     const style = getComputedStyle(button);
     expect(style.outlineWidth).toBe("0px");
   });
 
   test("配色を背景と文字へ適用する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <>
         <span
@@ -267,7 +272,7 @@ describe("ButtonRoot の配置", () => {
       </>,
     );
 
-    // 検証
+    // 検証。
     const expected = getComputedStyle(screen.getByText("色の基準").element());
     const button = getComputedStyle(screen.getByClassName("sui_button").element());
     expect(button.color).toBe(expected.color);

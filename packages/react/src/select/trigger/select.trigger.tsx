@@ -26,9 +26,9 @@ export namespace SelectTriggerProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.Trigger>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // SelectTriggerProps より:
+      // SelectTriggerProps より :
       | "disabled"
     >,
     keyof Render | keyof SuruUI
@@ -56,13 +56,13 @@ export type ISelectTrigger = IComponent<SelectTriggerProps>;
  * Root のスタイルプロパティーがこの要素へ適用されます。
  * キーボードでは `Enter` や `Space`、`ArrowDown` で開きます。
  */
-export const SelectTrigger: ISelectTrigger = function SuiSelectTrigger(props) {
+export const SelectTrigger: ISelectTrigger = (props) => {
   const ctx = useSelectContext();
   const {
     style,
     render,
     className,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherProps
   } = props;
@@ -71,7 +71,10 @@ export const SelectTrigger: ISelectTrigger = function SuiSelectTrigger(props) {
     <BaseSelect.Trigger
       {...otherProps}
       {...proxyRenderProps<BaseSelect.Trigger.State, SelectTriggerState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -114,7 +117,6 @@ export const SelectTrigger: ISelectTrigger = function SuiSelectTrigger(props) {
 };
 
 export { SelectTrigger as Trigger };
-
 export namespace Trigger {
   export type State<TValue = any> = SelectTriggerState<TValue>;
 

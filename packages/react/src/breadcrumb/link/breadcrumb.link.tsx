@@ -13,14 +13,10 @@ import { type BreadcrumbContext, useBreadcrumbContext } from "../root/breadcrumb
 export type BreadcrumbLinkState<TItem = any> = Override<
   BreadcrumbContext<TItem>,
   {
-    /**
-     * 現在のページかどうかです。
-     */
+    /** 現在のページかどうかです。 */
     readonly current: boolean;
 
-    /**
-     * リンクが無効かどうかです。
-     */
+    /** リンクが無効かどうかです。 */
     readonly disabled: boolean;
   }
 >;
@@ -71,7 +67,7 @@ export type IBreadcrumbLink = IComponent<BreadcrumbLinkProps>;
  *
  * `current` が `true` の場合はリンクにせず、`aria-current="page"` を持つ要素として描画します。
  */
-export const BreadcrumbLink: IBreadcrumbLink = function SuiBreadcrumbLink(props) {
+export const BreadcrumbLink: IBreadcrumbLink = (props) => {
   const ctx = useBreadcrumbContext();
   const { href, current = false, onClick, disabled = false, tabIndex, ...otherAnchorProps } = props;
   const handleOnClick: NonNullable<BreadcrumbLinkProps["onClick"]> = (event) => {
@@ -95,18 +91,21 @@ export const BreadcrumbLink: IBreadcrumbLink = function SuiBreadcrumbLink(props)
           (state) => `sui_breadcrumb_link-size_${state.size}`,
           (state) => `sui_breadcrumb_link-color_${state.color}`,
         ),
+        "data-href": current || disabled ? href : undefined,
         "aria-current": current ? "page" : undefined,
         "aria-disabled": disabled || undefined,
-        "data-href": current || disabled ? href : undefined,
       },
     ],
-    state: { ...ctx, current, disabled },
+    state: {
+      ...ctx,
+      current,
+      disabled,
+    },
     defaultTagName: current ? "span" : "a",
   });
 };
 
 export { BreadcrumbLink as Link };
-
 export namespace Link {
   export type State<TItem = any> = BreadcrumbLinkState<TItem>;
 

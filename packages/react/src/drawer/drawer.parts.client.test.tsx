@@ -1,5 +1,5 @@
 import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { DrawerBackdrop } from "./backdrop/drawer.backdrop.jsx";
@@ -42,14 +42,14 @@ function renderDrawer(children: React.ReactNode) {
 
 describe("DrawerPortal", () => {
   test("ポップアップを別の場所へ配置する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(
       <DrawerHeader>
         <DrawerTitle>見出し</DrawerTitle>
       </DrawerHeader>,
     );
 
-    // 検証
+    // 検証。
     const portal = screen.getByClassName("sui_drawer_portal").element();
     expect(portal.tagName).toBe("DIV");
     expect(portal.getAttribute("data-scope")).toBe("");
@@ -58,14 +58,14 @@ describe("DrawerPortal", () => {
 
 describe("DrawerBackdrop", () => {
   test("オーバーレイを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(
       <DrawerHeader>
         <DrawerTitle>見出し</DrawerTitle>
       </DrawerHeader>,
     );
 
-    // 検証
+    // 検証。
     const backdrop = screen.getByClassName("sui_drawer_backdrop").element();
     expect(backdrop.tagName).toBe("DIV");
   });
@@ -73,14 +73,14 @@ describe("DrawerBackdrop", () => {
 
 describe("DrawerViewport", () => {
   test("配置コンテナーを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(
       <DrawerHeader>
         <DrawerTitle>見出し</DrawerTitle>
       </DrawerHeader>,
     );
 
-    // 検証
+    // 検証。
     const viewport = screen.getByClassName("sui_drawer_viewport").element();
     expect(viewport.tagName).toBe("DIV");
   });
@@ -88,14 +88,14 @@ describe("DrawerViewport", () => {
 
 describe("DrawerPopup", () => {
   test("スワイプ方向のクラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(
       <DrawerHeader>
         <DrawerTitle>見出し</DrawerTitle>
       </DrawerHeader>,
     );
 
-    // 検証
+    // 検証。
     const popup = screen.getByClassName("sui_drawer_popup").element();
     expect(popup.classList.contains("sui_drawer_popup-swipe_direction_down")).toBe(true);
   });
@@ -103,10 +103,10 @@ describe("DrawerPopup", () => {
 
 describe("DrawerContent", () => {
   test("コンテンツを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(<span>内容</span>);
 
-    // 検証
+    // 検証。
     const content = screen.getByClassName("sui_drawer_content").element();
     expect(content.tagName).toBe("DIV");
     expect(content.textContent).toBe("内容");
@@ -115,14 +115,14 @@ describe("DrawerContent", () => {
 
 describe("DrawerHeader", () => {
   test("ヘッダーを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(
       <DrawerHeader>
         <span>内容</span>
       </DrawerHeader>,
     );
 
-    // 検証
+    // 検証。
     const header = screen.getByClassName("sui_drawer_header").element();
     expect(header.tagName).toBe("DIV");
     expect(header.textContent).toBe("内容");
@@ -131,14 +131,14 @@ describe("DrawerHeader", () => {
 
 describe("DrawerTitle", () => {
   test("見出しとして描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(
       <DrawerHeader>
         <DrawerTitle>見出し</DrawerTitle>
       </DrawerHeader>,
     );
 
-    // 検証
+    // 検証。
     const title = screen.getByRole("heading", { name: "見出し" }).element();
     expect(title.tagName).toBe("H2");
     expect(title.classList.contains("sui_drawer_title")).toBe(true);
@@ -147,14 +147,14 @@ describe("DrawerTitle", () => {
 
 describe("DrawerDescription", () => {
   test("説明文として描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(
       <DrawerHeader>
         <DrawerDescription>説明</DrawerDescription>
       </DrawerHeader>,
     );
 
-    // 検証
+    // 検証。
     const description = screen.getByText("説明").element();
     expect(description.tagName).toBe("P");
     expect(description.classList.contains("sui_drawer_description")).toBe(true);
@@ -163,10 +163,10 @@ describe("DrawerDescription", () => {
 
 describe("DrawerBody", () => {
   test("本文を描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(<DrawerBody>本文</DrawerBody>);
 
-    // 検証
+    // 検証。
     const body = screen.getByClassName("sui_drawer_body").element();
     expect(body.tagName).toBe("DIV");
     expect(body.textContent).toBe("本文");
@@ -175,14 +175,14 @@ describe("DrawerBody", () => {
 
 describe("DrawerFooter", () => {
   test("フッターを描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(
       <DrawerFooter>
         <span>操作</span>
       </DrawerFooter>,
     );
 
-    // 検証
+    // 検証。
     const footer = screen.getByClassName("sui_drawer_footer").element();
     expect(footer.tagName).toBe("DIV");
     expect(footer.textContent).toBe("操作");
@@ -191,28 +191,28 @@ describe("DrawerFooter", () => {
 
 describe("DrawerControls", () => {
   test("既定では絶対配置にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(
       <DrawerHeader>
         <DrawerControls>操作</DrawerControls>
       </DrawerHeader>,
     );
 
-    // 検証
+    // 検証。
     const controls = screen.getByClassName("sui_drawer_controls").element();
     expect(controls.classList.contains("sui_drawer_controls-absolute")).toBe(true);
     expect(controls.classList.contains("sui_drawer_controls-relative")).toBe(false);
   });
 
   test("指定すると相対配置にする", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(
       <DrawerHeader>
         <DrawerControls absolute={false}>操作</DrawerControls>
       </DrawerHeader>,
     );
 
-    // 検証
+    // 検証。
     const controls = screen.getByClassName("sui_drawer_controls").element();
     expect(controls.classList.contains("sui_drawer_controls-relative")).toBe(true);
   });
@@ -220,7 +220,7 @@ describe("DrawerControls", () => {
 
 describe("DrawerTrigger", () => {
   test("描画関数の要素にクラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <DrawerRoot>
         <DrawerTrigger>
@@ -233,7 +233,7 @@ describe("DrawerTrigger", () => {
       </DrawerRoot>,
     );
 
-    // 検証
+    // 検証。
     const trigger = screen.getByRole("button", { name: "開く" }).element();
     expect(trigger.classList.contains("sui_drawer_trigger")).toBe(true);
   });
@@ -241,7 +241,7 @@ describe("DrawerTrigger", () => {
 
 describe("DrawerClose", () => {
   test("描画関数の要素にクラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await renderDrawer(
       <DrawerClose>
         {(props) => (
@@ -252,7 +252,7 @@ describe("DrawerClose", () => {
       </DrawerClose>,
     );
 
-    // 検証
+    // 検証。
     const close = screen.getByRole("button", { name: "閉じる" }).element();
     expect(close.classList.contains("sui_drawer_close")).toBe(true);
   });
@@ -260,7 +260,7 @@ describe("DrawerClose", () => {
 
 describe("DrawerSwipeHandle", () => {
   test("スワイプ方向のクラスを付けて描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <DrawerRoot defaultOpen>
         <DrawerPortal>
@@ -278,7 +278,7 @@ describe("DrawerSwipeHandle", () => {
       </DrawerRoot>,
     );
 
-    // 検証
+    // 検証。
     const swipeHandle = screen.getByClassName("sui_drawer_swipe_handle").element();
     expect(swipeHandle.tagName).toBe("DIV");
     expect(swipeHandle.classList.contains("sui_drawer_swipe_handle-swipe_direction_down")).toBe(
@@ -290,14 +290,14 @@ describe("DrawerSwipeHandle", () => {
 
 describe("DrawerSwipeArea", () => {
   test("スワイプ方向のクラスを付けて描画する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <DrawerRoot swipeDirection="right">
         <DrawerSwipeArea />
       </DrawerRoot>,
     );
 
-    // 検証
+    // 検証。
     const swipeArea = screen.getByClassName("sui_drawer_swipe_area").element();
     expect(swipeArea.tagName).toBe("DIV");
     expect(swipeArea.classList.contains("sui_drawer_swipe_area-swipe_direction_left")).toBe(true);

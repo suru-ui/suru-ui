@@ -25,7 +25,7 @@ export namespace SelectItemTextProps {
     Pick<
       React.ComponentProps<typeof BaseSelect.ItemText>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // SelectItemTextProps より:
+      // SelectItemTextProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -33,7 +33,7 @@ export namespace SelectItemTextProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof BaseSelect.ItemText>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,10 +47,8 @@ export type SelectItemTextProps = SelectItemTextProps.Render &
 
 export type ISelectItemText = IComponent<SelectItemTextProps>;
 
-/**
- * 選択肢の表示テキストを包む要素です。
- */
-export const SelectItemText: ISelectItemText = function SuiSelectItemText(props) {
+/** 選択肢の表示テキストを包む要素です。 */
+export const SelectItemText: ISelectItemText = (props) => {
   const ctx = useSelectItemContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +56,10 @@ export const SelectItemText: ISelectItemText = function SuiSelectItemText(props)
     <BaseSelect.ItemText
       {...otherProps}
       {...proxyRenderProps<BaseSelect.ItemText.State, SelectItemTextState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -96,7 +97,6 @@ export const SelectItemText: ISelectItemText = function SuiSelectItemText(props)
 };
 
 export { SelectItemText as ItemText };
-
 export namespace ItemText {
   export type State<TValue = any> = SelectItemTextState<TValue>;
 

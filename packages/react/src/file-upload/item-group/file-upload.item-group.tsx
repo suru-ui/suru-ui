@@ -15,10 +15,7 @@ export namespace FileUploadItemGroupProps {
 
   export type BaseUI = {};
 
-  export type HTML = Omit<
-    BaseUIComponentProps<"ul", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<BaseUIComponentProps<"ul", never, never>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -31,11 +28,9 @@ export type FileUploadItemGroupProps = FileUploadItemGroupProps.Render &
 
 export type IFileUploadItemGroup = IComponent<FileUploadItemGroupProps>;
 
-/**
- * 選択済みファイルの一覧を包むコンテナーです。
- */
-export const FileUploadItemGroup: IFileUploadItemGroup = function SuiFileUploadItemGroup(props) {
-  return useRender({
+/** 選択済みファイルの一覧を包むコンテナーです。 */
+export const FileUploadItemGroup: IFileUploadItemGroup = (props) =>
+  useRender({
     props: [
       props,
       {
@@ -44,10 +39,8 @@ export const FileUploadItemGroup: IFileUploadItemGroup = function SuiFileUploadI
     ],
     defaultTagName: "ul",
   });
-};
 
 export { FileUploadItemGroup as ItemGroup };
-
 export namespace ItemGroup {
   export type State = FileUploadItemGroupState;
 

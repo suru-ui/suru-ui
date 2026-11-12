@@ -7,8 +7,7 @@ import {
   AspectRatioRoot,
 } from "./aspect-ratio.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type AspectRatioRadius = AspectRatioRootRadius;
 
@@ -31,13 +30,13 @@ export interface IUseAspectRatioAPI {
    * {@link AspectRatioAPI} を作成します。
    *
    * @param props {@link AspectRatio} の props です。
+   *
    * @returns アスペクト比の API です
    */
   (props: AspectRatioProps): AspectRatioAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link AspectRatio} を構成する各パーツの props を作成するための API です。
@@ -47,6 +46,7 @@ export class AspectRatioAPI {
 
   /**
    * @param props {@link AspectRatio} の props です。
+   *
    * @internal
    */
   public constructor(props: AspectRatioProps) {
@@ -64,14 +64,11 @@ export class AspectRatioAPI {
 /**
  * {@link AspectRatioAPI} を作成するフックです。
  */
-export const useAspectRatioAPI: IUseAspectRatioAPI = function useSuiAspectRatioAPI(props) {
-  return new AspectRatioAPI(props);
-};
+export const useAspectRatioAPI: IUseAspectRatioAPI = (props) => new AspectRatioAPI(props);
 
 export { AspectRatioAPI as API, useAspectRatioAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * 指定した比率で幅と高さを保つコンテナーコンポーネントです。
@@ -79,7 +76,7 @@ export { AspectRatioAPI as API, useAspectRatioAPI as useAPI };
  * レスポンシブに決まる幅に対して、画像や動画、地図の埋め込みなどを一定の比率で表示します。
  * 直接の子要素はコンテナーいっぱいに配置されます。
  */
-export const AspectRatio: IAspectRatio = function SuiAspectRatio(props) {
+export const AspectRatio: IAspectRatio = (props) => {
   const api = useAspectRatioAPI(props);
 
   return <AspectRatioRoot {...api.getRootProps()} />;

@@ -203,7 +203,9 @@ export const Controlled = meta.story({
           {...props}
           items={usageItems}
           value={value}
-          onValueChange={(nextValue) => setValue(String(nextValue))}
+          onValueChange={(nextValue) => {
+            setValue(String(nextValue));
+          }}
         />
         <span>現在の値: {value}</span>
       </div>

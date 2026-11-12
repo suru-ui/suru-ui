@@ -27,16 +27,12 @@ export type ToggleButtonCircularProgressTrackProps = ToggleButtonCircularProgres
 
 export type IToggleButtonCircularProgressTrack = IComponent<ToggleButtonCircularProgressTrackProps>;
 
-/**
- * 円形プログレスバーのトラック（背景の円弧）を描画するコンポーネントです。
- */
-export const ToggleButtonCircularProgressTrack: IToggleButtonCircularProgressTrack =
-  function SuiToggleButtonCircularProgressTrack(props) {
-    return <Button.CircularProgressTrack {...props} />;
-  };
+/** 円形プログレスバーのトラック（背景の円弧）を描画するコンポーネントです。 */
+export const ToggleButtonCircularProgressTrack: IToggleButtonCircularProgressTrack = (props) => (
+  <Button.CircularProgressTrack {...props} />
+);
 
 export { ToggleButtonCircularProgressTrack as CircularProgressTrack };
-
 export namespace CircularProgressTrack {
   export type State = ToggleButtonCircularProgressTrackState;
 

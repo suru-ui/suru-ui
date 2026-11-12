@@ -6,7 +6,6 @@ import {
   LoaderCircleIcon,
   AlertTriangleIcon,
 } from "lucide-react";
-import * as React from "react";
 
 import { preview, controls } from "../../.config/storybook/preview.js";
 import { Button } from "../button/index.js";
@@ -26,9 +25,9 @@ const VARIANTS: readonly Alert.Variant[] = ["muted", "naked", "liquid"];
 const STATUSES: readonly {
   readonly Icon: typeof InfoIcon;
   readonly color: Alert.Color;
-  readonly description: string;
-  readonly status: string;
   readonly title: string;
+  readonly status: string;
+  readonly description: string;
 }[] = [
   {
     Icon: InfoIcon,

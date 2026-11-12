@@ -1,4 +1,4 @@
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { NumberFieldRoot } from "../root/number-field.root.jsx";
@@ -7,35 +7,35 @@ import "../../../tests/src/_locators.js";
 
 describe("NumberFieldScrubArea", () => {
   test("ドラッグ領域を表示して修飾クラスを付ける", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot>
         <NumberFieldScrubArea>数量</NumberFieldScrubArea>
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const area = screen.getByClassName("sui_number_field_scrub_area").element();
     expect(area.tagName).toBe("SPAN");
     expect(area.textContent).toBe("数量");
   });
 
   test("利用者の className を保持する", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot>
         <NumberFieldScrubArea className="custom">数量</NumberFieldScrubArea>
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     const area = screen.getByClassName("sui_number_field_scrub_area").element();
     expect(area.classList.contains("custom")).toBe(true);
     expect(area.classList.contains("sui_number_field_scrub_area")).toBe(true);
   });
 
   test("render の関数へスタイル情報とスクラブの状態を渡す", async ({ expect }) => {
-    // 準備と実行
+    // 準備と実行。
     const screen = await render(
       <NumberFieldRoot size="lg" color="blue">
         <NumberFieldScrubArea
@@ -51,7 +51,7 @@ describe("NumberFieldScrubArea", () => {
       </NumberFieldRoot>,
     );
 
-    // 検証
+    // 検証。
     expect(
       screen.getByClassName("sui_number_field_scrub_area").element().getAttribute("data-probe"),
     ).toBe("lg/blue/false");

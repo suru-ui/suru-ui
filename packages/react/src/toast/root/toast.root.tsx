@@ -33,7 +33,7 @@ export namespace ToastRootProps {
     Pick<
       React.ComponentProps<typeof Toast.Root>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ToastRootProps より:
+      // ToastRootProps より :
       "swipeDirection"
     >,
     keyof Render | keyof SuruUI
@@ -70,9 +70,7 @@ export interface IToastRoot extends IComponent<ToastRootProps> {
  *
  * `toast` には {@link useToastClient} から取得した通知オブジェクトを渡します。
  */
-export const ToastRoot: IToastRoot = function SuiToastRoot<TData extends object = any>(
-  props: ToastRootProps<TData>,
-) {
+export const ToastRoot: IToastRoot = <TData extends object = any>(props: ToastRootProps<TData>) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -96,7 +94,6 @@ export const ToastRoot: IToastRoot = function SuiToastRoot<TData extends object 
 };
 
 export { ToastRoot as Root };
-
 export namespace Root {
   export type State = ToastRootState;
 

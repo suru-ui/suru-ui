@@ -34,7 +34,7 @@ export namespace SegmentsListProps {
     Pick<
       React.ComponentProps<typeof BaseTabs.List>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TabsListProps より:
+      // TabsListProps より :
       "activateOnFocus" | "loopFocus"
     >,
     keyof Render | keyof SuruUI
@@ -68,7 +68,7 @@ export interface ISegmentsList extends IComponent<SegmentsListProps> {
  *
  * {@link SegmentsRoot} の `items` を読み取り、`children` を省略した場合は既定の並びで表示します。
  */
-export const SegmentsList: ISegmentsList = function SuiSegmentsList(props: SegmentsListProps) {
+export const SegmentsList: ISegmentsList = (props: SegmentsListProps) => {
   const ctx = useSegmentsContext();
   const {
     style,
@@ -84,7 +84,10 @@ export const SegmentsList: ISegmentsList = function SuiSegmentsList(props: Segme
     <BaseTabs.List
       {...otherProps}
       {...proxyRenderProps<BaseTabs.List.State, SegmentsListState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -115,14 +118,12 @@ export const SegmentsList: ISegmentsList = function SuiSegmentsList(props: Segme
     </BaseTabs.List>
   );
 };
-
 const defaultListItemRenderer: ISegmentsRootItemRenderer = createItemRenderer(
   getSegmentsItemProps,
   getSegmentsItemLabel,
 );
 
 export { SegmentsList as List };
-
 export namespace List {
   export type State<TItem = any> = SegmentsListState<TItem>;
 

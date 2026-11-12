@@ -1,6 +1,6 @@
 import "@suru-ui/theme/suru.css";
 import * as React from "react";
-import { test, describe } from "vitest";
+import { test, describe } from "vite-plus/test";
 import { render } from "vitest-browser-react";
 
 import { Toast } from "../toast.jsx";
@@ -13,10 +13,10 @@ import "../../../tests/src/_locators.js";
  * Provider の配下で client から通知を追加する動作を検証するために使用します。
  */
 function AddButton(props: {
+  type?: string | undefined;
+  title?: string | undefined;
   children?: React.ReactNode;
   description?: string | undefined;
-  title?: string | undefined;
-  type?: string | undefined;
 }) {
   const client = useToastClient();
 
@@ -38,7 +38,7 @@ function AddButton(props: {
 
 describe("Toast", () => {
   test("通知を追加して見出しと説明を表示する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <Toast.Provider timeout={0}>
         <AddButton title="更新完了" description="プロフィールを更新しました。" />
@@ -46,10 +46,10 @@ describe("Toast", () => {
       </Toast.Provider>,
     );
 
-    // 実行
+    // 実行。
     await screen.getByRole("button", { name: "追加" }).click();
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("heading", { name: "更新完了" }).element().tagName).toBe("H2");
     expect(screen.getByText("プロフィールを更新しました。").element().tagName).toBe("P");
   });
@@ -61,7 +61,7 @@ describe("Toast", () => {
     ["info", "sui_alert-color_blue"],
   ] as const) {
     test(`通知の種類 ${type} を配色 ${color} に変換する`, async ({ expect }) => {
-      // 準備
+      // 準備。
       const screen = await render(
         <Toast.Provider timeout={0}>
           <AddButton type={type} />
@@ -69,10 +69,10 @@ describe("Toast", () => {
         </Toast.Provider>,
       );
 
-      // 実行
+      // 実行。
       await screen.getByRole("button", { name: "追加" }).click();
 
-      // 検証
+      // 検証。
       expect(screen.getByClassName("sui_toast_content").element().classList.contains(color)).toBe(
         true,
       );
@@ -80,7 +80,7 @@ describe("Toast", () => {
   }
 
   test("アクションと閉じるボタンがないときは操作を表示しない", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <Toast.Provider timeout={0}>
         <AddButton />
@@ -88,15 +88,15 @@ describe("Toast", () => {
       </Toast.Provider>,
     );
 
-    // 実行
+    // 実行。
     await screen.getByRole("button", { name: "追加" }).click();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("sui_alert_actions").query()).toBe(null);
   });
 
   test("閉じるボタンの文言を変更する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <Toast.Provider timeout={0}>
         <AddButton />
@@ -104,16 +104,16 @@ describe("Toast", () => {
       </Toast.Provider>,
     );
 
-    // 実行
+    // 実行。
     await screen.getByRole("button", { name: "追加" }).click();
 
-    // 検証
+    // 検証。
     expect(screen.getByText("消す").query()).not.toBe(null);
     expect(screen.getByText("閉じる").query()).toBe(null);
   });
 
   test("一覧の描画関数で各通知をカスタマイズする", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <Toast.Provider timeout={0}>
         <AddButton />
@@ -123,15 +123,15 @@ describe("Toast", () => {
       </Toast.Provider>,
     );
 
-    // 実行
+    // 実行。
     await screen.getByRole("button", { name: "追加" }).click();
 
-    // 検証
+    // 検証。
     expect(screen.getByClassName("custom-toast").query()).not.toBe(null);
   });
 
   test("一覧の内容を差し替える", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <Toast.Provider timeout={0}>
         <AddButton />
@@ -141,16 +141,16 @@ describe("Toast", () => {
       </Toast.Provider>,
     );
 
-    // 実行
+    // 実行。
     await screen.getByRole("button", { name: "追加" }).click();
 
-    // 検証
+    // 検証。
     expect(screen.getByText("カスタム一覧").query()).not.toBe(null);
     expect(screen.getByClassName("sui_toast").query()).toBe(null);
   });
 
   test("作成したマネージャーから通知を追加する", async ({ expect }) => {
-    // 準備
+    // 準備。
     const manager = Toast.createManager();
     const screen = await render(
       <Toast.Provider timeout={0} toastManager={manager}>
@@ -161,15 +161,15 @@ describe("Toast", () => {
       </Toast.Provider>,
     );
 
-    // 実行
+    // 実行。
     await screen.getByRole("button", { name: "追加" }).click();
 
-    // 検証
+    // 検証。
     expect(screen.getByRole("heading", { name: "マネージャー" }).query()).not.toBe(null);
   });
 
   test("上限を超えた通知を制限状態にする", async ({ expect }) => {
-    // 準備
+    // 準備。
     const screen = await render(
       <Toast.Provider limit={1} timeout={0}>
         <AddButton />
@@ -177,11 +177,11 @@ describe("Toast", () => {
       </Toast.Provider>,
     );
 
-    // 実行
+    // 実行。
     await screen.getByRole("button", { name: "追加" }).click();
     await screen.getByRole("button", { name: "追加" }).click();
 
-    // 検証
+    // 検証。
     const limited = screen.getByClassName("sui_toast-limited").elements();
     expect(limited.length).toBe(1);
   });

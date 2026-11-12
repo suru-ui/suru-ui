@@ -20,8 +20,7 @@ import {
   FormatNumberRoot,
 } from "./format-number.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type FormatNumberCompactDisplay = FormatNumberRootCompactDisplay;
 
@@ -70,13 +69,13 @@ export interface IUseFormatNumberAPI {
    * {@link FormatNumberAPI} を作成します。
    *
    * @param props {@link FormatNumber} の props です。
+   *
    * @returns 数値書式の API です
    */
   (props: FormatNumberProps): FormatNumberAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link FormatNumber} を構成する各パーツの props を作成するための API です。
@@ -86,6 +85,7 @@ export class FormatNumberAPI {
 
   /**
    * @param props {@link FormatNumber} の props です。
+   *
    * @internal
    */
   public constructor(props: FormatNumberProps) {
@@ -103,21 +103,18 @@ export class FormatNumberAPI {
 /**
  * {@link FormatNumberAPI} を作成するフックです。
  */
-export const useFormatNumberAPI: IUseFormatNumberAPI = function useSuiFormatNumberAPI(props) {
-  return new FormatNumberAPI(props);
-};
+export const useFormatNumberAPI: IUseFormatNumberAPI = (props) => new FormatNumberAPI(props);
 
 export { FormatNumberAPI as API, useFormatNumberAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * 数値をロケールに従って書式化して表示するコンポーネントです。
  *
  * 小数、通貨、パーセント、単位などの書式を指定できます。テキストノードとして描画されるため、見た目の調整は親要素で行います。
  */
-export const FormatNumber: IFormatNumber = function SuiFormatNumber(props) {
+export const FormatNumber: IFormatNumber = (props) => {
   const api = useFormatNumberAPI(props);
 
   return <FormatNumberRoot {...api.getRootProps()} />;

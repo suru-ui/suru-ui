@@ -25,16 +25,13 @@ export namespace ComboboxArrowProps {
     Pick<
       React.ComponentProps<typeof Combobox.Arrow>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxArrowProps より:
+      // ComboboxArrowProps より :
       never
     >,
     keyof Render | keyof SuruUI
   >;
 
-  export type HTML = Omit<
-    React.ComponentProps<typeof Combobox.Arrow>,
-    keyof Render | keyof SuruUI | keyof BaseUI
-  >;
+  export type HTML = Omit<React.ComponentProps<typeof Combobox.Arrow>, keyof Render | keyof SuruUI>;
 }
 
 /**
@@ -47,10 +44,8 @@ export type ComboboxArrowProps = ComboboxArrowProps.Render &
 
 export type IComboboxArrow = IComponent<ComboboxArrowProps>;
 
-/**
- * ポップアップと入力欄をつなぐ矢印要素です。
- */
-export const ComboboxArrow: IComboboxArrow = function SuiComboboxArrow(props) {
+/** ポップアップと入力欄をつなぐ矢印要素です。 */
+export const ComboboxArrow: IComboboxArrow = (props) => {
   const ctx = useComboboxPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -58,7 +53,10 @@ export const ComboboxArrow: IComboboxArrow = function SuiComboboxArrow(props) {
     <Combobox.Arrow
       {...otherProps}
       {...proxyRenderProps<Combobox.Arrow.State, ComboboxArrowState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -97,7 +95,6 @@ export const ComboboxArrow: IComboboxArrow = function SuiComboboxArrow(props) {
 };
 
 export { ComboboxArrow as Arrow };
-
 export namespace Arrow {
   export type State<TItem = any> = ComboboxArrowState<TItem>;
 

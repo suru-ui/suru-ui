@@ -21,17 +21,17 @@ export type IUseProgressTrackContext = IUseContext<ProgressTrackContext>;
 /**
  * {@link ProgressTrackContext} を読み取るフックです。
  */
-export const useProgressTrackContext: IUseProgressTrackContext =
-  function useSuiProgressTrackContext(optional): any {
-    const ctx = React.use(ProgressTrackContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "ProgressTrackContext",
-        providerName: "ProgressTrack",
-      });
-    }
+export const useProgressTrackContext: IUseProgressTrackContext = (optional): any => {
+  const ctx = React.use(ProgressTrackContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "ProgressTrackContext",
+      providerName: "ProgressTrack",
+    });
+  }
+
+  return ctx;
+};
 
 export { ProgressTrackContext as TrackContext, useProgressTrackContext as useTrackContext };

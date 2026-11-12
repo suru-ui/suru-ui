@@ -1,49 +1,47 @@
 @layer sui.component {
-@scope (.sui_drawer_header) to ([data-scope]) {
+  @scope (.sui_drawer_header) to ([data-scope]) {
+    /* 固定 */
+    :scope {
+      position: relative;
+      display: flex;
+      flex-shrink: 0;
+      flex-direction: column;
+      text-align: start;
 
-/* 固定 */
-:scope {
-  position: relative;
-  display: flex;
-  flex-shrink: 0;
-  flex-direction: column;
-  text-align: start;
-
-  &.sui_drawer_header-swipe_direction_down,
-  &.sui_drawer_header-swipe_direction_up {
-    @media (width < 768px) {
-      text-align: center;
+      &.sui_drawer_header-swipe_direction_down,
+      &.sui_drawer_header-swipe_direction_up {
+        @media (width < 768px) {
+          text-align: center;
+        }
+      }
     }
-  }
-}
 
-/* 変数 */
-:scope {
-  --sui_drawer_header-gap: ;
-  --sui_drawer_header-padding_block_start: ;
-  --sui_drawer_header-padding_block_end: ;
-  --sui_drawer_header-padding_inline: ;
-}
+    /* 変数 */
+    :scope {
+      --sui_drawer_header-gap: ;
+      --sui_drawer_header-padding_block_start: ;
+      --sui_drawer_header-padding_block_end: ;
+      --sui_drawer_header-padding_inline: ;
+    }
 
-/* 可変 */
-:scope {
-  gap: var(--sui_drawer_header-gap);
-  padding-block-start: var(--sui_drawer_header-padding_block_start);
-  padding-block-end: var(--sui_drawer_header-padding_block_end);
-  padding-inline: var(--sui_drawer_header-padding_inline);
-}
+    /* 可変 */
+    :scope {
+      gap: var(--sui_drawer_header-gap);
+      padding-block-start: var(--sui_drawer_header-padding_block_start);
+      padding-block-end: var(--sui_drawer_header-padding_block_end);
+      padding-inline: var(--sui_drawer_header-padding_inline);
+    }
 
-/* 代入 */
-:scope {
-  --sui_drawer_header-gap: --sui-gap(0.5);
-  --sui_drawer_header-padding_block_start: --sui-space(4);
-  --sui_drawer_header-padding_block_end: 0px;
-  --sui_drawer_header-padding_inline: --sui-space(4);
+    /* 代入 */
+    :scope {
+      --sui_drawer_header-gap: --sui-gap(0.5);
+      --sui_drawer_header-padding_block_start: --sui-space(4);
+      --sui_drawer_header-padding_block_end: 0px;
+      --sui_drawer_header-padding_inline: --sui-space(4);
 
-  @media (min-width: 768px) {
-    --sui_drawer_header-gap: --sui-gap(1.5);
-  }
-}
-
-} /* @scope */
+      @media (min-width: 768px) {
+        --sui_drawer_header-gap: --sui-gap(1.5);
+      }
+    }
+  } /* @scope */
 } /* @layer */

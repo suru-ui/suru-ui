@@ -23,8 +23,7 @@ import {
   PasswordFieldToggleButton,
 } from "./password-field.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type PasswordFieldChangeEventDetails = PasswordFieldInputChangeEventDetails;
 
@@ -79,19 +78,13 @@ namespace PasswordFieldProps {
   >;
 
   export type PasswordField = {
-    /**
-     * 入力欄の末尾に表示する内容です。
-     */
+    /** 入力欄の末尾に表示する内容です。 */
     endAddons?: Iterable<React.ReactNode> | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: PasswordFieldSlotProps | undefined;
 
-    /**
-     * 入力欄の先頭に表示する内容です。
-     */
+    /** 入力欄の先頭に表示する内容です。 */
     startAddons?: Iterable<React.ReactNode> | undefined;
 
     /**
@@ -120,14 +113,15 @@ export interface IUsePasswordFieldAPI {
    * {@link PasswordFieldAPI} を作成します。
    *
    * @param props {@link PasswordField} の props です。
+   *
    * @returns パスワード入力欄の API です
    */
   (props: PasswordFieldProps): PasswordFieldAPI;
 }
 
-// API
-// ---
+// API.
 
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- 未指定を表す一意なセンチネルです。
 const NONE = {} as never;
 
 /**
@@ -146,6 +140,7 @@ export class PasswordFieldAPI {
 
   /**
    * @param props {@link PasswordField} の props です。
+   *
    * @internal
    */
   public constructor(props: PasswordFieldProps) {
@@ -205,12 +200,14 @@ export class PasswordFieldAPI {
    * 入力欄の末尾に表示する {@link PasswordFieldAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapEndAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { endAddons: addons = [] } = this.passwordFieldProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -241,12 +238,14 @@ export class PasswordFieldAPI {
    * 入力欄の先頭に表示する {@link PasswordFieldAddon} の一覧を取得します。
    *
    * @template T コールバックの返り値の型です。
+   *
    * @returns コールバックの返り値の一覧です。
    */
   public mapStartAddons<T>(callback: (addon: React.ReactNode, index: number) => T): T[] {
     const { startAddons: addons = [] } = this.passwordFieldProps;
     const result: T[] = [];
     let index = 0;
+
     for (const addon of addons) {
       result.push(callback(addon, index++));
     }
@@ -278,14 +277,11 @@ export class PasswordFieldAPI {
 /**
  * {@link PasswordFieldAPI} を作成するフックです。
  */
-export const usePasswordFieldAPI: IUsePasswordFieldAPI = function useSuiPasswordFieldAPI(props) {
-  return new PasswordFieldAPI(props);
-};
+export const usePasswordFieldAPI: IUsePasswordFieldAPI = (props) => new PasswordFieldAPI(props);
 
 export { PasswordFieldAPI as API, usePasswordFieldAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IPasswordField extends IComponent<PasswordFieldProps> {
   readonly useContext: IUsePasswordFieldContext;
@@ -297,7 +293,7 @@ export interface IPasswordField extends IComponent<PasswordFieldProps> {
  * 文字入力欄と同じ外観を持ち、既定で表示切替ボタン付きのパスワード入力欄として振る舞います。
  */
 export const PasswordField: IPasswordField = /*#__PURE__*/ Object.assign(
-  function SuiPasswordField(props: PasswordFieldProps) {
+  (props: PasswordFieldProps) => {
     const api = usePasswordFieldAPI(props);
     const toggleButtonProps = api.getToggleButtonProps();
 

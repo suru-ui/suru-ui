@@ -1,4 +1,4 @@
-// TODO(tai-kun): いつか複合コンポーネントの方に組み込む
+// NOTE(tai-kun): いつか複合コンポーネントの方に組み込みます。
 
 import { Combobox } from "@base-ui/react/combobox";
 import * as React from "react";
@@ -27,7 +27,7 @@ export namespace ComboboxStatusProps {
     Pick<
       React.ComponentProps<typeof Combobox.Status>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // ComboboxStatusProps より:
+      // ComboboxStatusProps より :
       never
     >,
     keyof Render | keyof SuruUI
@@ -35,7 +35,7 @@ export namespace ComboboxStatusProps {
 
   export type HTML = Omit<
     React.ComponentProps<typeof Combobox.Status>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -49,10 +49,8 @@ export type ComboboxStatusProps = ComboboxStatusProps.Render &
 
 export type IComboboxStatus = IComponent<ComboboxStatusProps>;
 
-/**
- * 非同期検索などの状態を読み上げる要素です。
- */
-export const ComboboxStatus: IComboboxStatus = function SuiComboboxStatus(props) {
+/** 非同期検索などの状態を読み上げる要素です。 */
+export const ComboboxStatus: IComboboxStatus = (props) => {
   const ctx = useComboboxPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -60,7 +58,10 @@ export const ComboboxStatus: IComboboxStatus = function SuiComboboxStatus(props)
     <Combobox.Status
       {...otherProps}
       {...proxyRenderProps<Combobox.Status.State, ComboboxStatusState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -98,7 +99,6 @@ export const ComboboxStatus: IComboboxStatus = function SuiComboboxStatus(props)
 };
 
 export { ComboboxStatus as Status };
-
 export namespace Status {
   export type State<TItem = any> = ComboboxStatusState<TItem>;
 

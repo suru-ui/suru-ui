@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { ChevronRightIcon } from "../../_icons.jsx";
 import proxyRenderProps from "../../_proxy-render-props.js";
 import RenderElement from "../../_render-element.jsx";
@@ -24,7 +22,7 @@ export namespace PaginationNextButtonProps {
     Pick<
       Button.ButtonRootProps.BaseUI,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // PaginationNextButtonProps より:
+      // PaginationNextButtonProps より :
       keyof Button.ButtonRootProps.BaseUI
     >,
     keyof Render | keyof SuruUI
@@ -51,7 +49,7 @@ export type IPaginationNextButton = IComponent<PaginationNextButtonProps>;
  *
  * 最後のページでは無効になります。大きさ・配色・角丸は {@link PaginationRoot} から引き継ぎます。
  */
-export const PaginationNextButton: IPaginationNextButton = function SuiPaginationNextButton(props) {
+export const PaginationNextButton: IPaginationNextButton = (props) => {
   const ctx = usePaginationContext();
   const {
     style,
@@ -66,7 +64,10 @@ export const PaginationNextButton: IPaginationNextButton = function SuiPaginatio
   const handleClick: NonNullable<Button.ButtonRootProps["onClick"]> = (event) => {
     onClick?.(event);
     if (!event.defaultPrevented && !isDisabled) {
-      ctx.goToPage(ctx.page + 1, { event, reason: "next" });
+      ctx.goToPage(ctx.page + 1, {
+        event,
+        reason: "next",
+      });
     }
   };
 
@@ -74,7 +75,10 @@ export const PaginationNextButton: IPaginationNextButton = function SuiPaginatio
     <Button.Root
       {...otherProps}
       {...proxyRenderProps<Button.Root.State, PaginationNextButtonState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -112,7 +116,6 @@ export const PaginationNextButton: IPaginationNextButton = function SuiPaginatio
 };
 
 export { PaginationNextButton as NextButton };
-
 export namespace NextButton {
   export type State = PaginationNextButtonState;
 

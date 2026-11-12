@@ -82,7 +82,7 @@ export namespace TooltipRootProps {
     Pick<
       React.ComponentProps<typeof Tooltip.Root<TPayload>>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // TooltipRootProps より:
+      // TooltipRootProps より :
       | "defaultOpen"
       | "open"
       | "onOpenChange"
@@ -130,12 +130,14 @@ export interface ITooltipRoot extends IComponent<TooltipRootProps> {
  * 開閉状態を管理し、トリガーとポップアップをグループ化します。
  * それ自身は HTML 要素をレンダリングしません。
  */
-export const TooltipRoot: ITooltipRoot = function SuiTooltipRoot<TPayload>(
-  props: TooltipRootProps<TPayload>,
-) {
+export const TooltipRoot: ITooltipRoot = <TPayload,>(props: TooltipRootProps<TPayload>) => {
   const { size = "md", handle, radius = size, outlined = true, ...otherProps } = props;
   const ctx = React.useMemo<TooltipContext>(
-    () => ({ size, radius, outlined }),
+    () => ({
+      size,
+      radius,
+      outlined,
+    }),
     [size, radius, outlined],
   );
 
@@ -147,7 +149,6 @@ export const TooltipRoot: ITooltipRoot = function SuiTooltipRoot<TPayload>(
 };
 
 export { TooltipRoot as Root };
-
 export namespace Root {
   export type State = TooltipRootState;
 

@@ -346,23 +346,16 @@ export const WithIcon = meta.story({
 
     // 合成コンポーネントを使用して以下のように簡単に実装できますが、配列内に React 要素を渡すと Storybook の不具合（？）でブラウザーがフリーズするため、ここではメモとして残しておきます。
     // return (
-    //   <div className={`w-md ${minH(props.size)}`}>
-    //     <Accordion
+    //   <div className={`w-md ${minH(props.size)}`}>    <Accordion
     //       {...props}
     //       items={ITEMS.map((item) => ({
     //         ...item,
     //         title: (
-    //           <>
-    //             <div className="flex gap-2 items-center">
-    //               <MessageCircleQuestionIcon />
+    //           <>            <div className="flex gap-2 items-center">              <MessageCircleQuestionIcon />
     //               {item.title}
-    //             </div>
-    //           </>
-    //         ),
+    //             </div>          </>        ),
     //       }))}
-    //       defaultValue={["1"]}
-    //     />
-    //   </div>
+    //       defaultValue={["1"]}    />  </div>
     // );
   },
 });

@@ -19,7 +19,7 @@ export namespace AvatarFallbackProps {
     Pick<
       React.ComponentProps<typeof Avatar.Fallback>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // AvatarFallbackProps より:
+      // AvatarFallbackProps より :
       "delay"
     >,
     keyof Render | keyof SuruUI
@@ -41,10 +41,8 @@ export type AvatarFallbackProps = AvatarFallbackProps.Render &
 
 export type IAvatarFallback = IComponent<AvatarFallbackProps>;
 
-/**
- * アバターのフォールバックを表示するコンポーネントです。
- */
-export const AvatarFallback: IAvatarFallback = function SuiAvatarFallback(props) {
+/** アバターのフォールバックを表示するコンポーネントです。 */
+export const AvatarFallback: IAvatarFallback = (props) => {
   const { className, ...otherProps } = props;
 
   return (
@@ -60,7 +58,6 @@ export const AvatarFallback: IAvatarFallback = function SuiAvatarFallback(props)
 };
 
 export { AvatarFallback as Fallback };
-
 export namespace Fallback {
   export type State = AvatarFallbackState;
 

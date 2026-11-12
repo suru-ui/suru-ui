@@ -25,17 +25,17 @@ export type IUseAutocompleteInputContext = IUseContext<AutocompleteInputContext>
 /**
  * {@link AutocompleteInputContext} を読み取るフックです。
  */
-export const useAutocompleteInputContext: IUseAutocompleteInputContext =
-  function useSuiAutocompleteInputContext(optional): any {
-    const ctx = React.use(AutocompleteInputContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AutocompleteInputContext",
-        providerName: "AutocompleteInput",
-      });
-    }
+export const useAutocompleteInputContext: IUseAutocompleteInputContext = (optional): any => {
+  const ctx = React.use(AutocompleteInputContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AutocompleteInputContext",
+      providerName: "AutocompleteInput",
+    });
+  }
+
+  return ctx;
+};
 
 export { AutocompleteInputContext as InputContext, useAutocompleteInputContext as useInputContext };

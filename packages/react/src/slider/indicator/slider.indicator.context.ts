@@ -21,18 +21,18 @@ export type IUseSliderIndicatorContext = IUseContext<SliderIndicatorContext>;
 /**
  * {@link SliderIndicatorContext} を読み取るフックです。
  */
-export const useSliderIndicatorContext: IUseSliderIndicatorContext =
-  function useSuiSliderIndicatorContext(optional): any {
-    const ctx = React.use(SliderIndicatorContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "SliderIndicatorContext",
-        providerName: "SliderIndicator",
-      });
-    }
+export const useSliderIndicatorContext: IUseSliderIndicatorContext = (optional): any => {
+  const ctx = React.use(SliderIndicatorContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "SliderIndicatorContext",
+      providerName: "SliderIndicator",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   SliderIndicatorContext as IndicatorContext,

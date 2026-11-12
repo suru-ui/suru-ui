@@ -15,8 +15,7 @@ import {
   useAvatarGroupContext,
 } from "./avatar-group.parts.js";
 
-// Types
-// -----
+// Types.
 
 export type AvatarGroupColor = AvatarGroupRootColor;
 
@@ -55,9 +54,7 @@ namespace AvatarGroupProps {
      */
     max?: number | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: AvatarGroupSlotProps | undefined;
   };
 
@@ -74,13 +71,13 @@ export interface IUseAvatarGroupAPI {
    * {@link AvatarGroupAPI} を作成します。
    *
    * @param props {@link AvatarGroup} の props です。
+   *
    * @returns アバターグループの API です
    */
   (props: AvatarGroupProps): AvatarGroupAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link AvatarGroup} を構成する各パーツの props を作成するための API です。
@@ -94,6 +91,7 @@ export class AvatarGroupAPI {
 
   /**
    * @param props {@link AvatarGroup} の props です。
+   *
    * @internal
    */
   public constructor(props: AvatarGroupProps) {
@@ -144,14 +142,11 @@ export class AvatarGroupAPI {
 /**
  * {@link AvatarGroupAPI} を作成するフックです。
  */
-export const useAvatarGroupAPI: IUseAvatarGroupAPI = function useSuiAvatarGroupAPI(props) {
-  return new AvatarGroupAPI(props);
-};
+export const useAvatarGroupAPI: IUseAvatarGroupAPI = (props) => new AvatarGroupAPI(props);
 
 export { AvatarGroupAPI as API, useAvatarGroupAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 export interface IAvatarGroup extends IComponent<AvatarGroupProps> {
   /**
@@ -160,11 +155,9 @@ export interface IAvatarGroup extends IComponent<AvatarGroupProps> {
   readonly useContext: IUseAvatarGroupContext;
 }
 
-/**
- * 複数のアバターを重ねて表示するコンポーネントです。
- */
+/** 複数のアバターを重ねて表示するコンポーネントです。 */
 export const AvatarGroup: IAvatarGroup = /*#__PURE__*/ Object.assign(
-  function SuiAvatarGroup(props: AvatarGroupProps) {
+  (props: AvatarGroupProps) => {
     const api = useAvatarGroupAPI(props);
     const { children, ...otherRootProps } = api.getRootProps();
     const surplusProps = api.getSurplusProps();

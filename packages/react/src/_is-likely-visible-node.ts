@@ -8,6 +8,7 @@ export default function isLikelyVisibleNode(node: unknown): node is LikelyVisibl
   if (!isReactNode(node)) {
     return false;
   }
+
   if (node == null || typeof node === "boolean") {
     return false;
   }

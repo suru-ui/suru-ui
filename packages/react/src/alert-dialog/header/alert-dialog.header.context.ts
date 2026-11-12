@@ -23,18 +23,18 @@ export type IUseAlertDialogHeaderContext = IUseContext<AlertDialogHeaderContext>
 /**
  * {@link AlertDialogHeaderContext} を読み取るフックです。
  */
-export const useAlertDialogHeaderContext: IUseAlertDialogHeaderContext =
-  function useSuiAlertDialogHeaderContext(optional): any {
-    const ctx = React.use(AlertDialogHeaderContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "AlertDialogHeaderContext",
-        providerName: "AlertDialogHeader",
-      });
-    }
+export const useAlertDialogHeaderContext: IUseAlertDialogHeaderContext = (optional): any => {
+  const ctx = React.use(AlertDialogHeaderContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "AlertDialogHeaderContext",
+      providerName: "AlertDialogHeader",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   AlertDialogHeaderContext as HeaderContext,

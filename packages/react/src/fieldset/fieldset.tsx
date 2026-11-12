@@ -8,8 +8,7 @@ import {
   FieldsetLegend,
 } from "./fieldset.parts.js";
 
-// Types
-// -----
+// Types.
 
 /**
  * {@link Fieldset} が持つ状態です。
@@ -28,14 +27,10 @@ export type FieldsetSlotProps = {
 
 namespace FieldsetProps {
   export type Fieldset = {
-    /**
-     * フィールドセットの凡例です。
-     */
+    /** フィールドセットの凡例です。 */
     legend?: FieldsetLegendProps["children"] | undefined;
 
-    /**
-     * 各パーツに個別の props を渡すためのオブジェクトです。
-     */
+    /** 各パーツに個別の props を渡すためのオブジェクトです。 */
     slotProps?: FieldsetSlotProps | undefined;
   };
 
@@ -54,13 +49,13 @@ export interface IUseFieldsetAPI {
    * {@link FieldsetAPI} を作成します。
    *
    * @param props {@link Fieldset} の props です。
+   *
    * @returns フィールドセットの API です
    */
   (props: FieldsetProps): FieldsetAPI;
 }
 
-// API
-// ---
+// API.
 
 /**
  * {@link Fieldset} を構成する各パーツの props などを作成するための API です。
@@ -74,6 +69,7 @@ export class FieldsetAPI {
 
   /**
    * @param props {@link Fieldset} の props です。
+   *
    * @internal
    */
   public constructor(props: FieldsetProps) {
@@ -113,21 +109,18 @@ export class FieldsetAPI {
 /**
  * {@link FieldsetAPI} を作成するフックです。
  */
-export const useFieldsetAPI: IUseFieldsetAPI = function useSuiFieldsetAPI(props) {
-  return new FieldsetAPI(props);
-};
+export const useFieldsetAPI: IUseFieldsetAPI = (props) => new FieldsetAPI(props);
 
 export { FieldsetAPI as API, useFieldsetAPI as useAPI };
 
-// Component
-// ---------
+// Component.
 
 /**
  * 関連するコントロールを凡例とともにグループ化するコンポーネントです。
  *
  * `disabled` を指定すると、グループ内のコントロールも無効になります。
  */
-export const Fieldset: IFieldset = function SuiFieldset(props) {
+export const Fieldset: IFieldset = (props) => {
   const api = useFieldsetAPI(props);
   const { children, ...otherRootProps } = api.getRootProps();
   const legendProps = api.getLegendProps();

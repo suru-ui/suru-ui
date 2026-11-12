@@ -301,7 +301,9 @@ export const WithList = meta.story({
           {...props}
           page={page}
           totalPages={totalPages}
-          onPageChange={(nextPage) => setPage(nextPage)}
+          onPageChange={(nextPage) => {
+            setPage(nextPage);
+          }}
         />
         <span>
           {page} / {totalPages} ページ

@@ -38,7 +38,7 @@ export const Usage = meta.story({
     size: "md",
     label: "総閲覧者数",
     trend: undefined,
-    value: 11297,
+    value: 11_297,
     description: undefined,
   }),
 });
@@ -53,7 +53,9 @@ export const WithTrend = meta.story({
     description: "先月より",
   }),
   render(props) {
-    return <Stat {...props} value={<FormatNumber value={props.value as number} />} />;
+    const value = typeof props.value === "number" ? props.value : 0;
+
+    return <Stat {...props} value={<FormatNumber value={value} />} />;
   },
 });
 
@@ -84,7 +86,7 @@ export const Sizes = meta.story({
   ...ctrl({
     label: "総閲覧者数",
     trend: "22 %",
-    value: 11297,
+    value: 11_297,
     description: "先月から増加しました",
   }),
   render(props) {

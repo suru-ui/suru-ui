@@ -12,9 +12,7 @@ import { type SidebarContextState, useSidebarContext } from "../root/sidebar.roo
 export type SidebarRailState = Override<
   SidebarContextState,
   {
-    /**
-     * この切り替えボタンを無効にするかどうかです。
-     */
+    /** この切り替えボタンを無効にするかどうかです。 */
     readonly disabled: boolean;
   }
 >;
@@ -28,7 +26,7 @@ export namespace SidebarRailProps {
 
   export type HTML = Omit<
     BaseUIComponentProps<"button", never, never>,
-    keyof Render | keyof SuruUI | keyof BaseUI
+    keyof Render | keyof SuruUI
   >;
 }
 
@@ -47,7 +45,7 @@ export type ISidebarRail = IComponent<SidebarRailProps>;
  *
  * {@link SidebarRoot} の内側に配置します。折りたたみ不可のサイドバーでは表示されません。
  */
-export const SidebarRail: ISidebarRail = function SuiSidebarRail(props) {
+export const SidebarRail: ISidebarRail = (props) => {
   const ctx = useSidebarContext();
   const {
     type = "button",
@@ -55,7 +53,7 @@ export const SidebarRail: ISidebarRail = function SuiSidebarRail(props) {
     children,
     disabled = false,
     "aria-label": ariaLabel = "サイドバーを切り替える",
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
     ...otherButtonProps
   } = props;
@@ -77,11 +75,7 @@ export const SidebarRail: ISidebarRail = function SuiSidebarRail(props) {
     [ctx.collapsible, ctx.open, ctx.side, ctx.state, ctx.variant, disabled],
   );
 
-  if (ctx.collapsible === "none") {
-    return null;
-  }
-
-  return useRender({
+  const element = useRender({
     props: [
       otherButtonProps,
       {
@@ -100,17 +94,22 @@ export const SidebarRail: ISidebarRail = function SuiSidebarRail(props) {
           (state) => state.variant !== undefined && `sui_sidebar_rail-variant_${state.variant}`,
         ),
         "aria-label": ariaLabel,
-        "aria-expanded": ctx.open,
         "data-scope": dataScope,
+        "aria-expanded": ctx.open,
       },
     ],
     state: renderState,
     defaultTagName: "button",
   });
+
+  if (ctx.collapsible === "none") {
+    return null;
+  }
+
+  return element;
 };
 
 export { SidebarRail as Rail };
-
 export namespace Rail {
   export type State = SidebarRailState;
 

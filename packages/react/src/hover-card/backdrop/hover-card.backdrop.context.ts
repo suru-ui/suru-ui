@@ -23,18 +23,18 @@ export type IUseHoverCardBackdropContext = IUseContext<HoverCardBackdropContext>
 /**
  * {@link HoverCardBackdropContext} を読み取るフックです。
  */
-export const useHoverCardBackdropContext: IUseHoverCardBackdropContext =
-  function useSuiHoverCardBackdropContext(optional): any {
-    const ctx = React.use(HoverCardBackdropContext);
-    if (ctx === null && !optional) {
-      throw new ContextMissingError({
-        contextName: "HoverCardBackdropContext",
-        providerName: "HoverCardBackdrop",
-      });
-    }
+export const useHoverCardBackdropContext: IUseHoverCardBackdropContext = (optional): any => {
+  const ctx = React.use(HoverCardBackdropContext);
 
-    return ctx;
-  };
+  if (ctx === null && optional !== true) {
+    throw new ContextMissingError({
+      contextName: "HoverCardBackdropContext",
+      providerName: "HoverCardBackdrop",
+    });
+  }
+
+  return ctx;
+};
 
 export {
   HoverCardBackdropContext as BackdropContext,

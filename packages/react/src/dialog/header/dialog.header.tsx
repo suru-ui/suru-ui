@@ -32,10 +32,8 @@ export type DialogHeaderProps = DialogHeaderProps.Render &
 
 export type IDialogHeader = IComponent<DialogHeaderProps>;
 
-/**
- * ダイアログの見出し・説明・操作をまとめるコンポーネントです。
- */
-export const DialogHeader: IDialogHeader = function SuiDialogHeader(props) {
+/** ダイアログの見出し・説明・操作をまとめるコンポーネントです。 */
+export const DialogHeader: IDialogHeader = (props) => {
   const ctx = useDialogPopupContext();
   const { style, render, className, ...otherProps } = props;
 
@@ -43,7 +41,10 @@ export const DialogHeader: IDialogHeader = function SuiDialogHeader(props) {
     <Card.Header
       {...otherProps}
       {...proxyRenderProps<Card.Header.State, DialogHeaderState>(
-        (state) => ({ ...ctx, ...state }),
+        (state) => ({
+          ...ctx,
+          ...state,
+        }),
         {
           style,
           render: (htmlProps, state) => (
@@ -77,7 +78,6 @@ export const DialogHeader: IDialogHeader = function SuiDialogHeader(props) {
 };
 
 export { DialogHeader as Header };
-
 export namespace Header {
   export type State = DialogHeaderState;
 

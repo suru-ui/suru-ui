@@ -15,9 +15,7 @@ import {
   ButtonContext,
 } from "./button.root.context.js";
 
-/**
- * ボタンの配色です。
- */
+/** ボタンの配色です。 */
 export type ButtonRootColor = ButtonContextColor;
 
 /**
@@ -103,7 +101,7 @@ export namespace ButtonRootProps {
     /**
      * ボタンの角丸の大きさを指定します。
      *
-     * 既定値:
+     * 既定値 :
      * | {@link ButtonRootProps.size|size} | radius |
      * | ------ | ------ |
      * | `"xs"` | `"sm"` |
@@ -150,9 +148,9 @@ export namespace ButtonRootProps {
     Pick<
       React.ComponentProps<typeof Button>,
       // [注意] 必ず Base UI の型を確認してから取り出すプロパティーを決めます。
-      // NativeButtonProps より:
+      // NativeButtonProps より :
       | keyof NativeButtonProps
-      // ButtonProps より:
+      // ButtonProps より :
       | "focusableWhenDisabled"
     >,
     keyof Render | keyof SuruUI
@@ -174,10 +172,8 @@ export type ButtonRootProps = ButtonRootProps.Render &
 
 export type IButtonRoot = IComponent<ButtonRootProps>;
 
-/**
- * ボタンのルートコンポーネントです。
- */
-export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
+/** ボタンのルートコンポーネントです。 */
+export const ButtonRoot: IButtonRoot = (props) => {
   const {
     item = false,
     size = "md",
@@ -194,9 +190,9 @@ export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
     disabled = false,
     outlined = false,
     className,
-    focusableWhenDisabled = !disabled && pending,
-    // @ts-expect-error
+    // @ts-expect-error data-scope は Base UI のコンポーネント型に含まれないため。
     "data-scope": dataScope = "",
+    focusableWhenDisabled = !disabled && pending,
     ...otherProps
   } = props;
 
@@ -255,7 +251,6 @@ export const ButtonRoot: IButtonRoot = function SuiButtonRoot(props) {
 };
 
 export { ButtonRoot as Root };
-
 export namespace Root {
   export type State = ButtonRootState;
 
