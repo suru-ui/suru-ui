@@ -1,0 +1,177 @@
+---
+title: HoverCard
+description: Describes the HoverCard component's triggers, arrows, positioning, opening/closing controls, and slotProps.
+---
+
+HoverCard is a component that displays additional information when you hover over a link or button. You can present the content you want to check without changing the screen, such as an overview of the terms of use or the user's profile. Triggers and popups are automatically associated and open after a delay.
+
+## Basic usage [#basic-usage]
+
+Specify the element to be hovered over in `trigger` and the content to be displayed in `children` . Pass elements such as links and buttons to the trigger.
+
+<Component path="hover-card/basic" />
+
+Passing a function to `children` allows it to receive and assemble the active trigger's `payload` . If you want multiple triggers to share a single hovercard, pass the handle created in `HoverCard.createHandle` to `handle` .
+
+## arrows and placement [#placement]
+
+`arrow` displays an arrow in the popup. The placement can be adjusted with `side` and `align` of `slotProps.positioner` , and `sideOffset` specifies the distance from the trigger.
+
+<Component path="hover-card/placement" />
+
+When `arrow` is enabled, `sideOffset` defaults to 6 px to match the height of the arrow. `side` can be selected from `"top"` , `"bottom"` , `"left"` , `"right"` . If it is close to the edge of the screen, the position will be automatically adjusted to fit within the viewing area.
+
+## Opening/closing control [#controlled]
+
+By specifying `open` and `onOpenChange` , the open/closed state can be controlled externally. `delay` and `closeDelay` are specified in milliseconds. If you change `delay` to `0` , it will open immediately on hover.
+
+<Component path="hover-card/controlled" />
+
+Use `defaultOpen` to specify an uncontrolled initial state. If you want to process when the opening/closing animation is complete, you can use `onOpenChangeComplete` .
+
+## Props [#props]
+
+### Specific props [#hover-card-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "The element to hover over. Specify links, buttons, etc.",
+    },
+    children: {
+      type: `React.ReactNode |\n((args: { payload }) => React.ReactNode)`,
+      description:
+        "This is the content to be displayed in the popup. Specifying a function allows you to receive the payload of an active trigger.",
+    },
+    arrow: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to display arrows in popups.",
+    },
+    backdrop: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to display a Backdrop behind the popup.",
+    },
+    delay: {
+      type: "number",
+      default: "600",
+      description: "Specifies the wait time in milliseconds between hovering and opening.",
+    },
+    closeDelay: {
+      type: "number",
+      default: "300",
+      description: "Specifies the wait time in milliseconds between hovering and closing.",
+    },
+    handle: {
+      type: "HoverCardHandle<TPayload>",
+      description:
+        "A handle that associates the trigger with the hover card. Create with HoverCard.createHandle.",
+    },
+    slotProps: {
+      type: "HoverCardSlotProps",
+      default: "{}",
+      description: "An object for passing individual props to each part.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The size of the popup.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "Same as size",
+      description: "The size of the rounded corners. If omitted, the value of size is used.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to display a border on the popup.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+HoverCard is based on Base UI's PreviewCard. Props related to open/closed state can be passed as is. `className` , `style` , `render` apply to popups.
+
+<TypeTable
+  type={{
+    defaultOpen: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to leave it open from the beginning.",
+    },
+    open: {
+      type: "boolean",
+      description: "Specify this to control the open/close state.",
+    },
+    onOpenChange: {
+      type: `(open: boolean,\neventDetails: HoverCard.ChangeEventDetails) => void`,
+      description: "Called when the open/closed state changes.",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "Called when the open/close animation is complete.",
+    },
+    actionsRef: {
+      type: "React.RefObject<HoverCard.Actions | null>",
+      description: "A ref for imperatively executing close and unmount.",
+    },
+    triggerId: {
+      type: "string | null",
+      description: "ID of the trigger to associate with. Use in a controlled manner.",
+    },
+    defaultTriggerId: {
+      type: "string | null",
+      description: "The ID of the first trigger to associate with.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: "object",
+      description:
+        "These are the props to pass to the trigger. Children, handle, delay, closeDelay are specified in the HoverCard body.",
+    },
+    arrow: {
+      type: "object",
+      description:
+        "Props to be passed to the arrow. Even if arrow is not specified, an arrow will be displayed if this slot is specified.",
+    },
+    backdrop: {
+      type: "object",
+      description: "These are the props to pass to Backdrop.",
+    },
+    portal: {
+      type: "object",
+      description:
+        "These are the props to pass to the portal. You can specify the display destination container, etc.",
+    },
+    positioner: {
+      type: "object",
+      description:
+        "Props to be passed to Positioner to adjust placement. You can specify side, align, sideOffset, etc.",
+    },
+  }}
+/>
+
+## Styling [#styling-hooks]
+
+Popups are given `sui_hover_card_popup` . Class names such as `sui_hover_card_popup-size_md` , `sui_hover_card_popup-radius_md` , `sui_hover_card_popup-outlined` , `sui_hover_card_popup-open` , `sui_hover_card_popup-side_top` are also added depending on the props.
+
+Triggers are given `sui_hover_card_trigger` , arrows are given `sui_hover_card_arrow` , and placed elements are given `sui_hover_card_positioner` . Popup margins and background color can be adjusted using `--sui_hover_card_popup-*` CSS variables.
+
+See also: [Component structure ](/guides/component-anatomy) , [Element and component composition ](/guides/composition) , [Appearance customization ](/guides/styling) ]

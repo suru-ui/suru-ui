@@ -1,0 +1,246 @@
+---
+title: Menu
+description: Describes the Menu component's item types, triggers, appearance, open/close state, and slotProps.
+---
+
+Menu is a component that displays a menu that opens from a trigger such as a button. Passing an array of items to `items` allows you to assemble regular operation items, check items, radio items, submenus, and link items. Keyboard operations and focus management are handled by Menu in the Base UI.
+
+## Basic usage [#basic-usage]
+
+Specify the element that opens the menu in `trigger` and the item to display in `items` . In addition to strings, you can also pass React nodes containing icons to the item's `label` .
+
+<Component path="menu/basic" />
+
+Each item can be specified as `disabled` or `color` . `color="red"` is suitable for operations that require attention, such as deletion. If you need a separator line, divide the items into groups and it will be inserted automatically.
+
+## Item types [#item-types]
+
+Use `type` of the item object to switch the type of item to display. If `type` is omitted, it becomes a normal operation item. The selection status of check items and radio items is managed using `checked` and `value` .
+
+<Component path="menu/item-types" />
+
+| `type`              | Main fields                                | Description                                                               |
+| ------------------- | ------------------------------------------ | ------------------------------------------------------------------------- |
+| `"item"` (omitted)  | `label` , `disabled` , `onClick` , `color` | Normal operation items.                                                   |
+| `"link"`            | `label` , `href` , `target`                | Items that act as links.                                                  |
+| `"checkbox"`        | `label` , `checked` , `onCheckedChange`    | Check items with selection status.                                        |
+| `"radio-group"`     | `value` , `onValueChange` , `items`        | A group that collects radio items.                                        |
+| `"radio"`           | `label` , `value`                          | Items within the radio group.                                             |
+| `"submenu"`         | `label` , `items`                          | Items that open child menus.                                              |
+| `"group"` (omitted) | `label` , `items`                          | Groups with headings. A separator line will be placed between the groups. |
+
+A group's `items` can contain regular items, link items, check items, radio groups, and submenus. The same item object can also be specified in a submenu.
+
+## Appearance and disabling [#appearance]
+
+`size` specifies the overall menu and item dimensions, `radius` specifies rounded corners, and `variant` specifies the main appearance of the item. `outlined` toggles the popup border.
+
+<Component path="menu/appearance" />
+
+Specifying `disabled` makes the entire menu inoperable. If you want to disable only a specific item, specify `disabled` for that item object. Changing `modal` to `false` allows you to keep the menu open while interacting with other elements on the page.
+
+## Props [#props]
+
+### Specific props [#menu-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "Trigger to open the menu. Specifies elements such as buttons and links.",
+    },
+    items: {
+      type: "readonly Menu.ItemObject[]",
+      default: "[]",
+      description:
+        "A list of items to be displayed in the popup. If you specify an array of groups, each group will be separated and displayed.",
+    },
+    checkboxIndicator: {
+      type: "React.ReactNode",
+      default: "check icon",
+      description: "This is the content displayed when the check item is selected.",
+    },
+    radioIndicator: {
+      type: "React.ReactNode",
+      default: "dot icon",
+      description: "This is the content to display when the radio item is selected.",
+    },
+    slotProps: {
+      type: "MenuSlotProps",
+      default: "{}",
+      description: "An object for passing individual props to each part.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "Popup and item sizes.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "Same as size",
+      description: "Rounded corners for popups and items. If omitted, the value of size is used.",
+    },
+    variant: {
+      type: `"solid" | "naked" | "liquid"`,
+      default: `"naked"`,
+      description:
+        "This is the main appearance of the item. solid is a solid fill, naked is no background, and liquid is a thin fill.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to display a border on the popup.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Menu is based on the Base UI's Menu. Props related to opening/closing status and focus can be passed as is. `className` , `style` , `render` apply to popups.
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "Specify this to control the open/close state.",
+    },
+    defaultOpen: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to leave it open from the beginning.",
+    },
+    onOpenChange: {
+      type: `(open: boolean,\neventDetails: Menu.ChangeEventDetails) => void`,
+      description: "Called when the open/closed state changes.",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "Called when the open/close animation is complete.",
+    },
+    modal: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to restrict operations on the entire page while it is open.",
+    },
+    loopFocus: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to cycle the focus from the end to the beginning on the keyboard.",
+    },
+    highlightItemOnHover: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to highlight items when the pointer hovers over them.",
+    },
+    orientation: {
+      type: `"vertical" | "horizontal"`,
+      default: `"vertical"`,
+      description: "This is the orientation of the menu. Affects arrow key behavior.",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disable the entire menu.",
+    },
+    closeParentOnEsc: {
+      type: "boolean",
+      default: "false",
+      description: "Whether pressing the Escape key in a submenu also closes the parent menu.",
+    },
+    actionsRef: {
+      type: "React.RefObject<Menu.Actions | null>",
+      description: "A ref for imperatively executing close and unmount.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: "object",
+      description:
+        "These are the props to pass to the trigger. Children is specified in the Menu's trigger.",
+    },
+    portal: {
+      type: "object",
+      description:
+        "These are the props to pass to the portal. You can specify the display destination container, etc.",
+    },
+    positioner: {
+      type: "object",
+      description:
+        "Props to be passed to Positioner to adjust placement. You can specify side, align, sideOffset, etc.",
+    },
+    backdrop: {
+      type: "object",
+      description: "These are the props to pass to Backdrop.",
+    },
+    item: {
+      type: "object",
+      description: "These are props to be passed to normal operation items.",
+    },
+    linkItem: {
+      type: "object",
+      description: "Props to be passed to the link item.",
+    },
+    checkboxItem: {
+      type: "object",
+      description: "Props to be passed to the check item.",
+    },
+    checkboxItemIndicator: {
+      type: "object",
+      description: "Props to be passed to the check item indicator.",
+    },
+    radioGroup: {
+      type: "object",
+      description: "These are the props to pass to the radio group.",
+    },
+    radioItem: {
+      type: "object",
+      description: "Props to pass to the radio item.",
+    },
+    radioItemIndicator: {
+      type: "object",
+      description: "Props to pass to the radio item's indicator.",
+    },
+    group: {
+      type: "object",
+      description: "These are the props to pass to the group.",
+    },
+    groupLabel: {
+      type: "object",
+      description: "These are the props to pass to the group heading.",
+    },
+    separator: {
+      type: "object",
+      description: "Props to be passed to the separator line between groups.",
+    },
+    submenuRoot: {
+      type: "object",
+      description: "Props to be passed to the root of the submenu.",
+    },
+    submenuTrigger: {
+      type: "object",
+      description: "Props to be passed to the item that opens the submenu.",
+    },
+  }}
+/>
+
+## Styling [#styling-hooks]
+
+Triggers are given `sui_menu_trigger` , popups are given `sui_menu_popup` , and regular items are given `sui_menu_item` . Check items are `sui_menu_checkbox_item` , radio items are `sui_menu_radio_item` , link items are `sui_menu_link_item` , and items that open submenus are `sui_menu_submenu_trigger` .
+
+Items have class names such as `sui_menu_item-checked` , `sui_menu_item-disabled` , `sui_menu_item-highlighted` , `sui_menu_item-outlined` , etc. depending on their state. Popups include `sui_menu_popup-size_md` , `sui_menu_popup-radius_md` , `sui_menu_popup-variant_naked` , `sui_menu_popup-open` , etc.
+
+Groups are given `sui_menu_group` , group headings are given `sui_menu_group_label` , separators are given `sui_menu_separator` , and indicators are given `sui_menu_item_indicator` . Spacing and background color can be adjusted using the `--sui_menu_popup-*` and `--sui_menu_item-*` CSS variables.
+
+See also: [Component structure ](/guides/component-anatomy) , [Element and component composition ](/guides/composition) , [Appearance customization ](/guides/styling) ]

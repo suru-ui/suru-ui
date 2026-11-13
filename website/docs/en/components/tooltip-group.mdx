@@ -1,0 +1,63 @@
+---
+title: TooltipGroup
+description: Explains TooltipGroup props and sharing delays across multiple tooltips.
+---
+
+TooltipGroup shares open/close delays across multiple Tooltips. When showing adjacent tooltips in sequence, the next tooltip appears immediately if the previous one closed within a timeout. TooltipGroup itself renders no HTML element.
+
+## Basic usage [#basic-usage]
+
+Wrap multiple Tooltips in a TooltipGroup. `delay`, `closeDelay`, and `timeout` are shared with tooltips in the group.
+
+<Component path="tooltip-group/basic" />
+
+Values specified on an individual Tooltip for `delay` or `closeDelay` take precedence.
+
+## Delays [#delay]
+
+The group shares these 3 values:
+
+| Prop         | Description                                                               |
+| ------------ | ------------------------------------------------------------------------- |
+| `delay`      | Time to wait before showing a tooltip for the first time.                 |
+| `closeDelay` | Time to wait before closing a tooltip.                                    |
+| `timeout`    | Time after closing a tooltip during which the next one shows immediately. |
+
+The default `timeout` is 400 ms. After that elapses, the next tooltip again waits for `delay`.
+
+## Props [#props]
+
+### Specific props [#tooltip-group-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "The Tooltips sharing the delay.",
+    },
+    delay: {
+      type: "number",
+      description: "Milliseconds to wait before showing a tooltip.",
+    },
+    closeDelay: {
+      type: "number",
+      description: "Milliseconds to wait before closing a tooltip.",
+    },
+    timeout: {
+      type: "number",
+      default: "400",
+      description:
+        "Milliseconds after closing a tooltip during which the next one shows immediately.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+TooltipGroup is built on Base UI Tooltip Provider. Apart from `delay`, `closeDelay`, `timeout`, and `children`, it has no unique props. Individual Tooltips in the group accept the usual Tooltip props.
+
+## Styling [#styling-hooks]
+
+TooltipGroup renders no HTML element, so it has no dedicated class names. Style displayed tooltips via the `sui_tooltip_popup` classes from child Tooltips.
+
+See also: [Tooltip](/components/tooltip), [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling)

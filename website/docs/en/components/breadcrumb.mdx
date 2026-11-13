@@ -1,0 +1,123 @@
+---
+title: Breadcrumb
+description: Explains the Breadcrumb component's items, collapsed display, link states, and styling hooks.
+---
+
+Breadcrumb shows the hierarchy up to the current page as a breadcrumb list. It communicates the location within the site and makes upper pages easy to reach. Listing items in `items` treats the last item as the current page.
+
+## Basic usage [#basic-usage]
+
+Each entry in `items` takes a `label` and an `href`. Items without `href` render as plain items with no destination. The last item is automatically treated as the current page and rendered as a `span` with `aria-current="page"`.
+
+<Component path="breadcrumb/basic" />
+
+Passing `current` explicitly marks an item other than the last as the current page. Passing `disabled` as `true` disables that item's link.
+
+```tsx
+<Breadcrumb
+  items={[
+    { href: "/", label: "Home" },
+    { href: "/products", label: "Products", disabled: true },
+    { label: "Suru UI" },
+  ]}
+/>
+```
+
+## Collapsed [#collapsed]
+
+With `maxItems`, items beyond that count collapse into an ellipsis. Pressing the ellipsis opens a list to pick the hidden items.
+
+<Component path="breadcrumb/collapsed" />
+
+Values of `maxItems` below 3 are treated as 3. The first item and the trailing items are kept; the rest collapse. When `items` fits within `maxItems`, no collapsing occurs.
+
+## Link states [#link-states]
+
+Items with `disabled` can no longer navigate to their destination. The current-page item renders as a `span` rather than a link, with no `href`.
+
+<Component path="breadcrumb/states" />
+
+Use `slotProps.link` to pass the same props to every link. However, `children`, `current`, and `href` are overridden by each item's values.
+
+## Props [#props]
+
+### Specific props [#breadcrumb-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode | IBreadcrumbItemRenderer<TItem>",
+      description:
+        "The list content. Passing a function renders each item. When omitted, the default sequence is generated from items.",
+    },
+    items: {
+      type: "readonly TItem[]",
+      description: "The breadcrumb items. Each item takes a label, plus href, disabled, and more.",
+    },
+    maxItems: {
+      type: "number",
+      description:
+        "The maximum number of items shown, including the ellipsis. Values below 3 are treated as 3.",
+    },
+    slotProps: {
+      type: "BreadcrumbSlotProps",
+      default: "{}",
+      description: "An object for passing props to individual parts.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "The color scheme of the breadcrumb, applied to the current-page link.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The size of the breadcrumb.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    item: {
+      type: "object",
+      description: "Props passed to every item element.",
+    },
+    link: {
+      type: "object",
+      description:
+        "Props passed to every link. children, current, and href are overridden by each item.",
+    },
+    list: {
+      type: "object",
+      description: "Props passed to the list element.",
+    },
+    separator: {
+      type: "object",
+      description: "Props passed to every separator. aria-hidden is never overridden.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Breadcrumb renders a `nav`, so it accepts attributes such as `className`, `style`, `id`, `aria-*`, and `data-*`. The default `aria-label` is the Japanese equivalent of "Breadcrumb". Remaining props are inherited from the base `nav` element.
+
+## Styling [#styling-hooks]
+
+The root element gets `sui_breadcrumb`. Depending on props, class names such as `sui_breadcrumb-size_md` and `sui_breadcrumb-color_grey` are added.
+
+Inner parts get `sui_breadcrumb_list`, `sui_breadcrumb_item`, `sui_breadcrumb_link`, and `sui_breadcrumb_separator`. The current-page link also gets `sui_breadcrumb_link-current`, and disabled links get `sui_breadcrumb_link-disabled`.
+
+You can adjust them with `className` or `style`, or override spacing and text color with CSS variables.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Composing elements and components](/guides/composition)

@@ -1,0 +1,153 @@
+---
+title: Sidebar
+description: Explains Sidebar structure, open state, appearance variants, and collapsing.
+---
+
+Sidebar arranges application navigation. A provider managing open state, the sidebar body, and a main-content region compose an application shell.
+
+## Basic usage [#basic-usage]
+
+`Sidebar` is the provider managing open state. Place `Sidebar.Root` and `Sidebar.Inset` inside it. `Sidebar.Root` combines a header, scroll area, footer, groups, and a rail for opening/closing.
+
+<Component path="sidebar/basic" />
+
+The minimal structure is:
+
+```tsx
+<Sidebar>
+  <Sidebar.Root>
+    <Sidebar.Content>ナビゲーション</Sidebar.Content>
+    <Sidebar.Rail />
+  </Sidebar.Root>
+  <Sidebar.Inset>
+    <Sidebar.Trigger />
+    メインコンテンツ
+  </Sidebar.Inset>
+</Sidebar>
+```
+
+`Sidebar.Trigger` uses the provider context, so it works even outside `Sidebar.Root`. You can omit the default icon and pass custom button content.
+
+## Parts [#parts]
+
+| Part                           | Role                                                  |
+| ------------------------------ | ----------------------------------------------------- |
+| `Sidebar` / `Sidebar.Provider` | Manages open state and renders a wrapping `div`.      |
+| `Sidebar.Root`                 | Renders the sidebar body as an `aside`.               |
+| `Sidebar.Header`               | Region pinned to the top of the sidebar.              |
+| `Sidebar.Content`              | The scrollable main navigation region.                |
+| `Sidebar.Footer`               | Region pinned to the bottom of the sidebar.           |
+| `Sidebar.Group`                | A section grouping related items.                     |
+| `Sidebar.GroupLabel`           | A group heading.                                      |
+| `Sidebar.GroupContent`         | Region arranging items within a group.                |
+| `Sidebar.Inset`                | The main-content region beside the sidebar.           |
+| `Sidebar.Rail`                 | A slim strip on the sidebar edge toggling open/close. |
+| `Sidebar.Trigger`              | A button toggling open/close.                         |
+| `Sidebar.useContext`           | A hook returning open state and actions.              |
+
+`Sidebar.useContext()` returns `open`, `state`, `toggle`, and `setOpen`. Inside `Sidebar.Root` it also includes `side`, `variant`, and `collapsible`. Use it e.g. to hide labels in icon-only collapsed display.
+
+## Open state [#open-state]
+
+`defaultOpen` sets the initial state. Passing `open` makes it controlled, with changes received via `onOpenChange`.
+
+```tsx
+const [open, setOpen] = React.useState(true);
+
+<Sidebar open={open} onOpenChange={setOpen}>
+  <Sidebar.Root>{/* ... */}</Sidebar.Root>
+  <Sidebar.Inset>
+    <Sidebar.Trigger />
+    {/* ... */}
+  </Sidebar.Inset>
+</Sidebar>;
+```
+
+Open state can be toggled from either `Sidebar.Trigger` or `Sidebar.Rail`. With `collapsible="none"`, no rail renders and the trigger is disabled.
+
+## Appearance [#appearance]
+
+`Sidebar.Root` `variant` accepts `sidebar`, `floating`, or `inset`. `side` sets left/right placement; `collapsible` sets the collapsing behavior.
+
+<Component path="sidebar/variants" />
+
+- `variant="sidebar"`: Classic fixed sidebar pushing content aside.
+- `variant="floating"`: Floating panel with margin, border, and rounded corners.
+- `variant="inset"`: Appearance indenting the main-content side.
+- `collapsible="offcanvas"`: Slides in from the screen edge and hides fully.
+- `collapsible="icon"`: Collapses to icon-column width.
+- `collapsible="none"`: Cannot be collapsed.
+
+## Props [#props]
+
+### Specific props [#sidebar-specific-props]
+
+`Sidebar` and `Sidebar.Provider` accept the same props.
+
+<TypeTable
+  type={{
+    defaultOpen: {
+      type: "boolean",
+      default: "true",
+      description: "The initial open state. Ignored when open is specified.",
+    },
+    open: {
+      type: "boolean",
+      description: "Controls whether the sidebar is open.",
+    },
+    onOpenChange: {
+      type: "(open: boolean) => void",
+      description: "Called when the open state changes.",
+    },
+    slotProps: {
+      type: "SidebarSlotProps",
+      description: "An object for passing props to individual parts.",
+    },
+  }}
+/>
+
+Use `slotProps.provider` to pass extra props to the provider.
+
+### slotProps [#slot-props]
+
+| Slot       | Type                                     | Description                                                                             |
+| ---------- | ---------------------------------------- | --------------------------------------------------------------------------------------- |
+| `provider` | `Omit<SidebarProviderProps, "children">` | Extra props passed to the provider. `open`, `defaultOpen`, etc. can be overridden here. |
+
+### Appearance props [#appearance-props]
+
+Props of `Sidebar.Root`.
+
+<TypeTable
+  type={{
+    collapsible: {
+      type: `"offcanvas" | "icon" | "none"`,
+      default: `"offcanvas"`,
+      description: "How the sidebar collapses.",
+    },
+    side: {
+      type: `"left" | "right"`,
+      default: `"left"`,
+      description: "The edge on which the sidebar is placed.",
+    },
+    variant: {
+      type: `"sidebar" | "floating" | "inset"`,
+      default: `"sidebar"`,
+      description: "The appearance variant of the sidebar.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+The provider renders a `div`, `Sidebar.Root` an `aside`, and `Sidebar.Trigger`/`Sidebar.Rail` `button` elements. Each accepts `className`, `style`, `id`, `aria-*`, `data-*`, and similar attributes. `render` can replace the element.
+
+## Styling [#styling-hooks]
+
+The provider carries `sui_sidebar_provider`. Depending on open state, `sui_sidebar_provider-expanded`, `sui_sidebar_provider-collapsed`, and `sui_sidebar_provider-open` are added.
+
+`Sidebar.Root` carries `sui_sidebar`. Depending on `side`, `variant`, `collapsible`, and open state, class names such as `sui_sidebar-side_right`, `sui_sidebar-variant_floating`, `sui_sidebar-collapsible_icon`, `sui_sidebar-expanded`, and `sui_sidebar-open` are added.
+
+Inner parts carry `sui_sidebar_header`, `sui_sidebar_content`, `sui_sidebar_footer`, `sui_sidebar_group`, `sui_sidebar_group_label`, `sui_sidebar_group_content`, `sui_sidebar_inset`, `sui_sidebar_rail`, and `sui_sidebar_trigger`.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Layout and sizing](/guides/layout)

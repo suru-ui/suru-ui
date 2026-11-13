@@ -1,0 +1,151 @@
+---
+title: Input
+description: Describes the Input component's input fields, appearance, controlled values, and style hooks.
+---
+
+Input is a component that displays input fields such as text and email addresses. It is based on Base UI's Input, and you can pass the attributes accepted by the native input element as is. If you want to combine labels, explanations, and errors, combine it with `Field` or `Label` .
+
+## Basic usage [#basic-usage]
+
+Specify the type of input item with `type` . If omitted, `"text"` will be used. When `htmlFor` of `Label` and `id` of `Input` are aligned, the label and input field will be associated.
+
+<Component path="input/basic" />
+
+`Field` allows you to manage labels, descriptions, and error displays all at once. `Input` reads the validation state of `Field` and changes the border color when it is an invalid value.
+
+## Appearance [#appearance]
+
+`variant` can be selected from `naked` and `liquid` . `outlined` specifies the presence or absence of a border, `size` specifies the height and font size, and `radius` specifies the size of rounded corners. `color` is used for the border color when focused.
+
+<Component path="input/appearance" />
+
+`radius="full"` will be capsule-shaped and `radius="circle"` will be perfectly circular. `circle` is suitable for cases where you want input fields to appear round, such as search buttons.
+
+## state and control [#states]
+
+Specifying `value` and `onValueChange` allows input values ​​to be managed in external state. Use `defaultValue` to specify an initial value without control. `disabled` and `readOnly` affect both appearance and operation.
+
+<Component path="input/states" />
+
+`onValueChange` accepts a string of input values. Even if you want to treat it as a number, first receive it as a string and convert it as necessary.
+
+## Props [#props]
+
+### Specific props [#input-specific-props]
+
+<TypeTable
+  type={{
+    type: {
+      type: `"date" | "datetime-local" | "email" |\n"file" | "hidden" | "month" | "number" |\n"password" | "search" | "tel" | "text" |\n"time" | "url" | "week"`,
+      default: `"text"`,
+      description: "Type of input item. Buttons and selection types cannot be used.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "The color applied to the border when focused.",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description:
+        "This is the main appearance of the input field. naked means no background, liquid means a thin fill.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "This is the size of the input field.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: "Same as size",
+      description: "The size of the rounded corners. If omitted, the value of size is used.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether or not to display the border.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Input is based on Base UI Input, so you can pass the attributes that the native input element accepts, as well as the props provided by Base UI Input.
+
+<TypeTable
+  type={{
+    value: {
+      type: "string",
+      description: "Controlled input value.",
+    },
+    defaultValue: {
+      type: "string",
+      description: "Initial value for non-control.",
+    },
+    onValueChange: {
+      type: "(value: string, eventDetails: Input.ChangeEventDetails) => void",
+      description: "Called when the input value changes.",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disable the input field.",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "Make it read-only.",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to make it a required input.",
+    },
+    placeholder: {
+      type: "string",
+      description: "This is the information displayed when the value is empty.",
+    },
+    name: {
+      type: "string",
+      description: "The name of the input field used when submitting the form.",
+    },
+    id: {
+      type: "string",
+      description: "The ID of the element. Specify it along with htmlFor of Label.",
+    },
+    autoComplete: {
+      type: "string",
+      description: "Browser autocompletion type.",
+    },
+    className: {
+      type: `string |\n((state: Input.State) => string | undefined)`,
+      description: "Additional class name. When you pass a function, you receive state.",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Input.State) => React.CSSProperties)`,
+      description: "Inline style. When you pass a function, you receive state.",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "Replace the root element with another element.",
+    },
+  }}
+/>
+
+## Styling [#styling-hooks]
+
+The root element is given `sui_input` . Class names such as `sui_input-size_md` , `sui_input-color_grey` , `sui_input-radius_md` , `sui_input-variant_naked` , `sui_input-outlined` are also added depending on the props.
+
+`sui_input-valid` , `sui_input-invalid` , `sui_input-unverified` , `sui_input-disabled` , `sui_input-touched` , `sui_input-dirty` , `sui_input-filled` , `sui_input-focused` are assigned depending on the verification state and operation state.
+
+You can adjust the appearance with CSS variables such as `--sui_input-min_height` , `--sui_input-padding_inline` , `--sui_input-border_radius` , and `--sui_input-focusring_width` .
+
+See also: [Field ](/components/field) , [Label ](/components/label) , [Customize Appearance ](/guides/styling)

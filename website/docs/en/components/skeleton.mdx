@@ -1,0 +1,97 @@
+---
+title: Skeleton
+description: Explains Skeleton radius, animation, and overlay.
+---
+
+Skeleton is a placeholder representing loading content. Reserving the same shape as the real content avoids layout shift when loading completes.
+
+## Basic usage [#basic-usage]
+
+Skeleton renders a `span`. By default width and height are 100%, so set the display size via `style` or `className`.
+
+<Component path="skeleton/basic" />
+
+To announce loading to assistive technology, set `aria-busy` on the parent. Treat Skeleton itself as decorative.
+
+```tsx
+<div aria-busy="true">
+  <p>プロフィール</p>
+  <Skeleton style={{ width: "12rem", height: "1rem" }} />
+</div>
+```
+
+## Appearance [#appearance]
+
+`animation` accepts `pulse`, `shine`, or `none`. `pulse` blinks; `shine` sweeps light across.
+
+`radius` has 4 steps: `none`, `sm`, `md`, `lg`. Match it to the loading target shape, e.g. cards or avatars.
+
+<Component path="skeleton/appearance" />
+
+## Overlay [#overlay]
+
+Passing `overlay` renders it absolutely positioned to cover the parent. Overlay a loading state on top of already displayed content. The parent needs `position: relative`.
+
+<Component path="skeleton/overlay" />
+
+```tsx
+<div style={{ position: "relative" }}>
+  読み込み済みの内容
+  <Skeleton overlay />
+</div>
+```
+
+## Props [#props]
+
+### Specific props [#skeleton-specific-props]
+
+<TypeTable
+  type={{
+    animation: {
+      type: `"pulse" | "shine" | "none"`,
+      default: `"pulse"`,
+      description: "Blink, light sweep, or no animation.",
+    },
+    overlay: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to display as an overlay covering the parent.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The border radius.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    animation: {
+      type: `"pulse" | "shine" | "none"`,
+      default: `"pulse"`,
+      description: "The skeleton animation.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The skeleton border radius.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Skeleton renders a `span`, so it accepts `className`, `style`, `id`, `aria-*`, `data-*`, and similar attributes. `className` and `style` also accept functions receiving `Skeleton.State`, whose state includes `animation`, `overlay`, and `radius`.
+
+`render` replaces the root element with another element.
+
+## Styling [#styling-hooks]
+
+The root element carries `sui_skeleton`. Depending on props, class names such as `sui_skeleton-radius_lg`, `sui_skeleton-animation_shine`, and `sui_skeleton-overlay` are added.
+
+Set width and height via `className` or `style`. Use `--sui_skeleton-*` CSS variables to override background, radius, and more.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Async states](/guides/async-state)

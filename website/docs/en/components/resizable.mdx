@@ -1,0 +1,121 @@
+---
+title: Resizable
+description: Explains Resizable panels, handles, orientation, and size limits.
+---
+
+Resizable lets users drag the boundary between adjacent panels to resize them. Suitable for editor sidebars or split views where users adjust the visible area. Handles work with pointer input plus arrow keys.
+
+## Basic usage [#basic-usage]
+
+Alternate `Resizable.Panel` and `Resizable.Handle` as children of `Resizable`. `Resizable` is an alias of `Resizable.PanelGroup`.
+
+<Component path="resizable/basic" />
+
+A panel's `defaultSize` is its initial size. Numbers are treated as percentages; you can also pass unit-bearing strings like `"16rem"`.
+
+## Orientation and size [#orientation-and-size]
+
+Passing `vertical` to `orientation` stacks panels top to bottom. `minSize` and `maxSize` bound the size range, and `collapsible` makes a panel foldable.
+
+<Component path="resizable/vertical" />
+
+```tsx
+<Resizable orientation="vertical" style={{ height: "20rem" }}>
+  <Resizable.Panel defaultSize={50} minSize={20}>
+    上部
+  </Resizable.Panel>
+  <Resizable.Handle />
+  <Resizable.Panel defaultSize={50} maxSize={80}>
+    下部
+  </Resizable.Panel>
+</Resizable>
+```
+
+Passing `size` controls the panel size. `onSizeChange` receives the changed percentage value.
+
+## Handle [#handle]
+
+Passing `invisible` to `Resizable.Handle` reduces the handle thickness to 0. It disappears visually but the hit area remains, so resizing still works. `disabled` makes it inoperable.
+
+<Component path="resizable/handle" />
+
+Handles are focusable and support arrow-key operation. The focus ring is preserved even when hidden, so keyboard operation is not hindered.
+
+## Props [#props]
+
+### Specific props [#resizable-specific-props]
+
+Props of `Resizable` and `Resizable.PanelGroup`.
+
+<TypeTable
+  type={{
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"horizontal"`,
+      description: "The direction in which panels are laid out.",
+    },
+    resizeTargetMinimumSize: {
+      type: "{ fine: number; coarse: number }",
+      default: "{ fine: 8, coarse: 20 }",
+      description:
+        "The minimum hit-area size for starting a pointer resize. fine is for mouse/pen, coarse for touch.",
+    },
+  }}
+/>
+
+Props of `Resizable.Panel`.
+
+<TypeTable
+  type={{
+    defaultSize: {
+      type: "number | string",
+      description: "The initial panel size. Numbers are treated as percentages.",
+    },
+    maxSize: {
+      type: "number | string",
+      description: "The maximum panel size. Numbers are treated as percentages.",
+    },
+    minSize: {
+      type: "number | string",
+      description: "The minimum panel size. Numbers are treated as percentages.",
+    },
+    size: {
+      type: "number | string",
+      description: "Controls the panel size. Numbers are treated as percentages.",
+    },
+    onResize: {
+      type: "(size, id, previousSize) => void",
+      description: "Called when the panel size changes.",
+    },
+    onSizeChange: {
+      type: "(size: number) => void",
+      description: "Called with the percentage value when the panel size changes.",
+    },
+  }}
+/>
+
+Props of `Resizable.Handle`.
+
+<TypeTable
+  type={{
+    invisible: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to hide the handle. The hit area remains.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Resizable is built on `react-resizable-panels`. The root accepts `defaultLayout`, `onLayoutChange`, `onLayoutChanged`, `disabled`, and more. Panels accept `collapsible`, `collapsedSize`, `disabled`, `panelRef`, and more; handles accept `disabled`, `disableDoubleClick`, and more.
+
+Each part renders a `div`, so it also accepts `className`, `style`, `id`, `aria-*`, `data-*`, and similar attributes. `className` and `style` accept functions receiving state.
+
+## Styling [#styling-hooks]
+
+The root element carries `sui_resizable`, plus orientation classes such as `sui_resizable-orientation_vertical`.
+
+Panels carry `sui_resizable_panel` and `sui_resizable_panel-orientation_horizontal`, while handles carry `sui_resizable_handle`, `sui_resizable_handle-direction_vertical`, `sui_resizable_handle-invisible`, `sui_resizable_handle-disabled`, and similar class names.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Layout and sizing](/guides/layout)

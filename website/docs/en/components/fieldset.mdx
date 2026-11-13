@@ -1,0 +1,98 @@
+---
+title: Fieldset
+description: Describes the Fieldset component's legend, disabling, slotProps, and style hooks.
+---
+
+A Fieldset is a component that groups related form controls together with a legend. It is used to create a meaningful group, such as contact information on an inquiry form, shipping address, and billing address. By default it draws the `<fieldset>` element and the legend is automatically associated with the group.
+
+## Basic usage [#basic-usage]
+
+Specify headings in `legend` and grouping controls in `children` . Input fields within a group are assembled using `Field` and `Input` in the same way as regular forms.
+
+<Component path="fieldset/basic" />
+
+Omitting `legend` results in a group without a legend. If you don't need a legend, you can use something like `div` instead of `Fieldset` to group them together, but `Fieldset` is better when it's clear that you want to group related controls together.
+
+## Legend and disabled state [#states]
+
+Specifying `disabled` disables the entire group. There is no need to specify `disabled` for each input field, as the inner controls are also disabled all at once. The legend also has a disabled color scheme to convey that it cannot be operated.
+
+<Component path="fieldset/states" />
+
+If you only want to change the appearance of the legend, pass `style` or `className` to `slotProps.legend` . The following example changes the legend color to blue.
+
+```tsx
+<Fieldset legend="Shipping address" slotProps={{ legend: { style: { color: "#1d4ed8" } } }}>
+  {/*control*/}
+</Fieldset>
+```
+
+## Parts and slotProps [#parts-and-slot-props]
+
+Fieldset consists of two parts: `Root` and `Legend` . If you want to assemble without using presets, import `Root` and `Legend` exposed by the component's module, and place `Legend` and the control inside `Root` . The release status of parts varies depending on the package version, so the actual import source should match the entry point of the package you are using.
+
+Using `slotProps` , you can adjust only the legend while preserving the structure of the preset. The concept of slots is explained in Component Structure ](/guides/component-anatomy) .
+
+| Slot     | Role                                                                                             |
+| -------- | ------------------------------------------------------------------------------------------------ |
+| `legend` | This is the `Legend` part that displays the group heading. `children` is specified by `legend` . |
+
+## Props [#props]
+
+### Specific props [#fieldset-specific-props]
+
+<TypeTable
+  type={{
+    legend: {
+      type: "React.ReactNode",
+      description:
+        "A legend to display as a group heading. If omitted, the group will have no legend.",
+    },
+    slotProps: {
+      type: "FieldsetSlotProps",
+      default: "{}",
+      description:
+        "An object for passing individual props to each part. You can now specify a legend slot.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Fieldsets are based on Base UI's Fieldsets, so you can pass the attributes that the native fieldset element accepts, as well as the props that Base UI's Fieldsets provide.
+
+<TypeTable
+  type={{
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disable the entire group. Inner controls are also disabled.",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "A grouping control.",
+    },
+    className: {
+      type: `string |\n((state: Fieldset.State) => string | undefined)`,
+      description: "Additional class name. When you pass a function, you receive state.",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Fieldset.State) => React.CSSProperties)`,
+      description: "Inline style. When you pass a function, you receive state.",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "Replace the root element with another element.",
+    },
+  }}
+/>
+
+The `Legend` part similarly accepts native attributes and Base UI's `render` , etc.
+
+## Styling [#styling-hooks]
+
+The root element is given `sui_fieldset` . When `disabled` is `true` , `sui_fieldset-disabled` is also added. The legend is given `sui_fieldset_legend` , and when disabled it is given `sui_fieldset_legend-disabled` .
+
+You can override the spacing within groups with `--sui_fieldset-gap` and the text and color of the legend with `--sui_fieldset_legend-*` .
+
+See also: [Component structure ](/guides/component-anatomy) , [Element and component composition ](/guides/composition) , [Appearance customization ](/guides/styling) ]

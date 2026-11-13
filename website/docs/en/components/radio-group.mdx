@@ -1,0 +1,141 @@
+---
+title: RadioGroup
+description: Explains RadioGroup value management, orientation, appearance, and disabled state.
+---
+
+RadioGroup groups multiple radio buttons and manages their selection. Only one value is selected within a group, and arrow keys move between options. Use [Radio](/components/radio) for the individual buttons.
+
+## Basic usage [#basic-usage]
+
+Pass the initially selected value to `defaultValue` and arrange Radio buttons with labels as children. For controlled state, use `value` and `onValueChange`.
+
+<Component path="radio-group/basic" />
+
+Associate the group with an `aria-label` or an external label so users know what the group selects.
+
+## Orientation [#orientation]
+
+Pass `"horizontal"` to `orientation` to lay radio buttons out horizontally. The default is `"vertical"`.
+
+<Component path="radio-group/orientation" />
+
+## Controlled selection [#controlled]
+
+Use `value` and `onValueChange` to manage the selection externally. The first `onValueChange` argument receives the selected Radio's `value`.
+
+<Component path="radio-group/controlled" />
+
+## Appearance [#appearance]
+
+`color`, `size`, `radius`, `variant`, and `outlined` set the appearance of all radio buttons in the group at once. Values set on the group take precedence over values set on individual Radios.
+
+```tsx
+<RadioGroup defaultValue="a" color="blue" size="lg" variant="liquid">
+  <label>
+    <Radio value="a" />
+    選択肢 A
+  </label>
+</RadioGroup>
+```
+
+## Props [#props]
+
+### Specific props [#radio-group-specific-props]
+
+<TypeTable
+  type={{
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"vertical"`,
+      description: "The direction in which radio buttons are laid out.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "The color scheme of radio buttons in the group.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The size of radio buttons in the group.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: `"full"`,
+      description: "The border radius.",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "The main appearance of radio buttons in the group.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to show the border.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+RadioGroup is built on Base UI Radio Group, so the following props pass through.
+
+<TypeTable
+  type={{
+    value: {
+      type: "TValue",
+      description: "The controlled selection.",
+    },
+    defaultValue: {
+      type: "TValue",
+      description: "The uncontrolled initial selection.",
+    },
+    onValueChange: {
+      type: `(value: TValue,\ndetails: RadioGroupChangeEventDetails) => void`,
+      description: "Callback invoked when the selection changes.",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disables the whole group.",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "Makes the group read-only.",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "Requires a selection on form submission.",
+    },
+    name: {
+      type: "string",
+      description: "The field name used on form submission.",
+    },
+    form: {
+      type: "string",
+      description: "The ID of the form associated with the group.",
+    },
+    inputRef: {
+      type: "React.Ref<HTMLInputElement>",
+      description: "A ref to the hidden input element.",
+    },
+  }}
+/>
+
+Other attributes such as `className`, `style`, `render`, and `data-*` also pass through. RadioGroup has no `slotProps`.
+
+## Styling [#styling-hooks]
+
+The root element carries `sui_radio_group`. Depending on props and state, class names such as `sui_radio_group-size_md`, `sui_radio_group-color_blue`, `sui_radio_group-radius_full`, `sui_radio_group-variant_naked`, `sui_radio_group-orientation_vertical`, `sui_radio_group-outlined`, and `sui_radio_group-disabled` are added.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Component design](/explanation/component-design)

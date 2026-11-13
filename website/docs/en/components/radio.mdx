@@ -1,0 +1,142 @@
+---
+title: Radio
+description: Explains Radio value, labels, appearance, and non-selectable states.
+---
+
+Radio is a radio button selecting one of several options. Selection state is managed by [RadioGroup](/components/radio-group), so Radio is normally used inside one. Give each Radio in the same group a unique `value`.
+
+## Basic usage [#basic-usage]
+
+Place Radios inside a RadioGroup, wrapping each label text in a `label` element. Pressing the label also selects the option, making the whole row clickable.
+
+<Component path="radio/basic" />
+
+`children` renders inside the indicator and is not the label. Normally omit it and use the default indicator. Always associate the label with a `label` element or similar.
+
+```tsx
+<RadioGroup defaultValue="a">
+  <label>
+    <Radio value="a" />
+    選択肢 A
+  </label>
+  <label>
+    <Radio value="b" />
+    選択肢 B
+  </label>
+</RadioGroup>
+```
+
+## Appearance [#appearance]
+
+Use `color`, `size`, `radius`, `variant`, and `outlined` for appearance. Inside a RadioGroup, group-level values take precedence over individual Radio values.
+
+<Component path="radio/appearance" />
+
+## States [#states]
+
+`disabled` disables the radio button, `readOnly` makes it unchangeable, and `required` makes selection mandatory on form submission. To disable a whole group, use RadioGroup's `disabled`.
+
+<Component path="radio/states" />
+
+## Props [#props]
+
+### Specific props [#radio-specific-props]
+
+<TypeTable
+  type={{
+    value: {
+      type: "TValue",
+      description: "The radio button value. Must be unique within the same RadioGroup.",
+    },
+    children: {
+      type: "React.ReactNode",
+      description:
+        "Content rendered inside the indicator when selected. This is not the label, so normally omit it.",
+    },
+    slotProps: {
+      type: "RadioSlotProps",
+      default: "{}",
+      description: "An object for passing props to individual parts.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "The radio button color scheme. The group value wins inside a RadioGroup.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The size of the radio button.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: `"full"`,
+      description: "The border radius.",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "The main appearance. naked has no background; liquid has a light fill.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to show the border.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Radio is built on Base UI Radio, so the following props pass through.
+
+<TypeTable
+  type={{
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disables the radio button.",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "Makes the radio button read-only.",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "Requires selection on form submission.",
+    },
+    id: {
+      type: "string",
+      description: "The radio button ID.",
+    },
+    inputRef: {
+      type: "React.Ref<HTMLInputElement>",
+      description: "A ref to the hidden input element.",
+    },
+  }}
+/>
+
+Other attributes such as `className`, `style`, `render`, and `data-*` also pass through.
+
+### slotProps [#slot-props]
+
+| Key         | Type                                    | Description                                                                          |
+| ----------- | --------------------------------------- | ------------------------------------------------------------------------------------ |
+| `indicator` | `Omit<RadioIndicatorProps, "children">` | Props passed to the indicator. Pass `keepMounted` to keep it mounted when unchecked. |
+
+## Styling [#styling-hooks]
+
+The root element carries `sui_radio`. Depending on props and state, class names such as `sui_radio-size_md`, `sui_radio-color_blue`, `sui_radio-radius_full`, `sui_radio-variant_naked`, `sui_radio-outlined`, `sui_radio-checked`, `sui_radio-disabled`, and `sui_radio-focused` are added.
+
+The indicator carries `sui_radio_indicator`, plus `sui_radio_indicator-checked` when selected.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Component design](/explanation/component-design)

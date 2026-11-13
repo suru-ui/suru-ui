@@ -2,6 +2,6 @@ import { defineMeta } from "blume";
 
 export default defineMeta({
   icon: "rocket",
-  pages: [],
-  title: "Getting Started",
+  pages: ["installation", "first-button"],
+  title: "Getting started",
 });

@@ -1,0 +1,91 @@
+---
+title: Styling
+description: How to adjust component appearance with props, className, style, CSS variables, and theme tokens.
+---
+
+There are several ways to change appearance. Starting from the smallest change keeps code resilient to updates and its intent clear. This guide uses Button to explain general customization ideas.
+
+## Appearance props [#appearance-props]
+
+Start with the appearance props a component provides. Many presets offer props such as `variant`, `color`, `size`, and `radius`.
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function PrimaryAction() {
+  return (
+    <Button color="blue" variant="solid" size="md">
+      保存
+    </Button>
+  );
+}
+```
+
+Using the preset vocabulary first, instead of hard-coding colors and sizes in CSS, keeps theme changes and cross-component consistency easier.
+
+## State-aware styles [#state-aware-styles]
+
+For components built on Base UI, `className` and `style` accept functions receiving state.
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveButton() {
+  return (
+    <Button
+      color="blue"
+      className={(state) => (state.pending ? "is-pending" : undefined)}
+      style={(state) => ({
+        opacity: state.disabled ? 0.6 : 1,
+      })}
+    >
+      保存
+    </Button>
+  );
+}
+```
+
+```css
+.is-pending {
+  cursor: progress;
+}
+```
+
+The shape of state passed to the function varies by component. For Button, states such as `pending`, `disabled`, `size`, and `color` are available. Check each component reference for available states.
+
+**CSS variables**
+
+When a component exposes CSS variables, override them inside a class.
+
+```css
+.checkout-button {
+  --sui_button-min_height: 48px;
+  --sui_button-padding_inline: 2rem;
+}
+```
+
+```tsx
+<Button className="checkout-button" color="blue">
+  保存
+</Button>
+```
+
+CSS variables are useful for changing appearance only in a specific screen or region. Not every component exposes the same variables, so check the reference for availability.
+
+## Layers [#layers]
+
+Suru UI component styles are defined inside CSS cascade layers. Application CSS outside layers wins, so overrides via classes and CSS variables take precedence.
+
+On the other hand, overrides targeting internal class names directly are fragile against structural changes. Start with public props, `slotProps`, and CSS variables, and use classes only for the remainder.
+
+**Which to use**
+
+| Scope to change                      | Method                            |
+| ------------------------------------ | --------------------------------- |
+| Pick a standard appearance           | Props such as `color` and `size`  |
+| Change only part of the internals    | `slotProps`                       |
+| Apply state-dependent classes/styles | `className` and `style` functions |
+| Resize only a specific region        | CSS variables                     |
+| Change the structure itself          | Assemble parts directly           |
+
+Related: [Component anatomy](/guides/component-anatomy), [Element and component composition](/guides/composition), [Button reference](/components/button)

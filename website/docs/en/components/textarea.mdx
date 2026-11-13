@@ -1,0 +1,143 @@
+---
+title: Textarea
+description: Explains Textarea props, appearance, and multiline input control.
+---
+
+Textarea inputs multiline text. Use it for inquiries, notes, and other long-form content. It accepts the same attributes as the native `textarea`, so it fits easily into existing forms.
+
+## Basic usage [#basic-usage]
+
+Specify the visible row count with `rows`. When omitted, the browser default applies. `placeholder` and `defaultValue` also pass through.
+
+<Component path="textarea/basic" />
+
+To add a label or description, wrap with `Field`. Validation and error display also group into `Field`.
+
+```tsx
+<Field label="Inquiry" description="Please be as detailed as possible.">
+  <Textarea rows={4} placeholder="Inquiry" />
+</Field>
+```
+
+## Appearance [#appearance]
+
+`variant` accepts `naked` or `liquid`. Combine `size`, `radius`, `color`, and `outlined` to match surrounding forms.
+
+<Component path="textarea/appearance" />
+
+`size` has 3 steps: `sm`, `md`, `lg`. `radius` defaults to the same value as `size`.
+
+## Control and states [#controlled-and-states]
+
+To manage the input value yourself, combine `value` and `onValueChange`. Useful for character counts and other input-dependent logic.
+
+<Component path="textarea/controlled" />
+
+`disabled` disables input itself; `readOnly` makes the value unchangeable. Combining a validation error with `Field` `invalid` reflects it in the border color.
+
+<Component path="textarea/states" />
+
+## Props [#props]
+
+### Specific props [#textarea-specific-props]
+
+<TypeTable
+  type={{
+    rows: {
+      type: "number",
+      description: "The visible row count. When omitted, the browser default applies.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "The color applied to the border on focus and similar states.",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "The main appearance. liquid has a light fill.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The size of the textarea.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "circle"`,
+      default: "Same as size",
+      description: "The border radius.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to show the border.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Textarea renders Base UI Input as a `textarea`, so it accepts native textarea attributes plus Base UI Input props. The main ones are:
+
+<TypeTable
+  type={{
+    value: {
+      type: "string | number | readonly string[]",
+      description: "Specify to control the input value.",
+    },
+    defaultValue: {
+      type: "string | number | readonly string[]",
+      description: "The initial value for uncontrolled use.",
+    },
+    onValueChange: {
+      type: `(value: string,\neventDetails: Textarea.ChangeEventDetails) => void`,
+      description: "Called when the input value changes.",
+    },
+    placeholder: {
+      type: "string",
+      description: "The description shown when the input is empty.",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disables the input.",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "Makes the value unchangeable.",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "Makes the input required.",
+    },
+    maxLength: {
+      type: "number",
+      description: "The maximum number of characters.",
+    },
+    name: {
+      type: "string",
+      description: "The name used on form submission.",
+    },
+    className: {
+      type: `string |\n((state: Textarea.State) => string | undefined)`,
+      description: "Additional class names. A function receives state.",
+    },
+  }}
+/>
+
+## Styling [#styling-hooks]
+
+The root element is a `textarea` carrying `sui_textarea`. Depending on props, class names such as `sui_textarea-size_md`, `sui_textarea-color_blue`, `sui_textarea-radius_md`, `sui_textarea-variant_naked`, and `sui_textarea-outlined` are added.
+
+Depending on state, `sui_textarea-focused`, `sui_textarea-filled`, `sui_textarea-invalid`, `sui_textarea-valid`, `sui_textarea-disabled`, `sui_textarea-dirty`, and similar classes are added.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Layout and sizing](/guides/layout)

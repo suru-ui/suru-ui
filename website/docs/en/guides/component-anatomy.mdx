@@ -1,0 +1,115 @@
+---
+title: Component anatomy
+description: The relationship between presets, parts, slots, and slotProps, using Button as an example.
+---
+
+Suru UI components are split into ready-to-use "presets" and the "parts" that compose them. This guide explains their relationship and how to customize each for your goal, using Button as a small concrete example.
+
+## Presets and parts [#preset-and-parts]
+
+A preset is a component with multiple parts pre-assembled. `Button` and `Card` are presets: place them as-is and they work.
+
+Parts are the individual elements that make up a preset. For Button, the roles are:
+
+- `Root`: root element holding appearance and state
+- `Content`: element rendering the label
+- `Addon`: auxiliary elements before and after the label
+- `Pending`: in-progress overlay
+- `CircularProgress`: circular progress indicator
+
+Presets assemble these parts in a default order for common use. When you want a different structure or fine-grained control over individual parts, work with parts directly.
+
+## Base UI [#base-ui]
+
+Many Suru UI presets are built on Base UI components and utilities. Base UI is an unstyled React component library providing low-level behavior such as state management, keyboard interaction, ARIA, and render-element replacement. Suru UI adds theme, appearance, and preset structure on top.
+
+So props provided by Base UI may be available as-is, such as:
+
+- `render`: replace the rendered element or component
+- `nativeButton`: whether the root is a native button element
+- `focusableWhenDisabled`: keep focusability while disabled
+- `className` and `style`: functions receiving state
+
+Available props vary by component. See the [Base UI docs](https://base-ui.com/) for behavior details. Preset-level props are documented in each component reference.
+
+## What is a slot [#what-is-a-slot]
+
+A slot is a named location among the parts a preset renders internally, where props can be injected from outside. It is a component-design extension point, distinct from React `children` or portals.
+
+Some multi-part presets expose `slotProps`. Not every preset has `slotProps`.
+
+`slotProps` is an object keyed by slot name. For example, Button's `slotProps.content` holds props passed to the `Content` part that renders the label.
+
+Button's `slotProps` is one example. Other multi-part presets such as Card and Alert follow the same pattern.
+
+| Slot               | Role                        |
+| ------------------ | --------------------------- |
+| `content`          | Element rendering the label |
+| `addon`            | Leading and trailing addons |
+| `pending`          | In-progress overlay         |
+| `circularProgress` | Circular progress indicator |
+
+**slotProps**
+
+To adjust only part of a preset while keeping its structure, use `slotProps`.
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveButton() {
+  return (
+    <Button
+      color="blue"
+      slotProps={{
+        content: {
+          style: { letterSpacing: "0.05em" },
+        },
+        pending: {
+          overlay: false,
+        },
+      }}
+    >
+      保存
+    </Button>
+  );
+}
+```
+
+`slotProps` values are merged with the props the preset assembles internally. Props controlled by the preset, such as `children`, may be excluded from the types. Start with preset props and `slotProps`; code that avoids depending on internal structure is more resilient to change.
+
+For all Button `slotProps` keys, see the [Button reference](/components/button#slot-props).
+
+## Composing parts [#compose-parts]
+
+To change a preset's structure or order, assemble parts directly. Importing the parts module as a namespace makes ownership clear and avoids name collisions.
+
+```tsx
+// Example of a module bundling parts
+import * as ButtonParts from "./button";
+
+export function CustomButton() {
+  return (
+    <ButtonParts.Root color="blue">
+      <ButtonParts.Addon aria-hidden="true">★</ButtonParts.Addon>
+      <ButtonParts.Content>保存</ButtonParts.Content>
+    </ButtonParts.Root>
+  );
+}
+```
+
+Here `./button` is an example module bundling Button parts. Replace it with the entry point your package actually exports. Parts availability varies by package version. Suru UI presets assemble parts internally the same way.
+
+Working with parts directly is flexible but depends on preset internals. Prefer presets or `slotProps` when they meet your goal.
+
+**Which to use**
+
+| Goal                              | Method                           |
+| --------------------------------- | -------------------------------- |
+| Tweak the standard appearance     | Props such as `color` and `size` |
+| Adjust only part of the internals | `slotProps`                      |
+| Change structure or order         | Assemble parts directly          |
+| Render as a different element     | `render`                         |
+
+Replacing elements with `render` and composition is covered in [Element and component composition](/guides/composition).
+
+Related: [Button reference](/components/button), [Element and component composition](/guides/composition), [Styling](/guides/styling)

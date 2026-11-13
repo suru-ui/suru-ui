@@ -1,0 +1,249 @@
+---
+title: Drawer
+description: Describes the Drawer component's props, display orientation, swipe operations, and snap points.
+---
+
+A Drawer is an area that slides out from the edge of the screen. Use this when you want to display supplementary operations, settings, confirmations, etc. while keeping the current screen. You can specify the display edge and swipe direction with `swipeDirection` .
+
+## Basic usage [#basic-usage]
+
+Pass the element that opens the drawer to `trigger` and the contents to `title` , `description` , and `children` . `footer` is displayed fixedly at the bottom.
+
+<Component path="drawer/basic" />
+
+`showCloseIconButton` defaults to `true` with a close icon in the top right. `controls` allows you to add your own operations in front of it.
+
+## Display direction [#direction]
+
+`swipeDirection` can be `up` , `down` , `left` , `right` . When `showSwipeHandle` becomes `true` , swipe handles appear on the edge of the drawer.
+
+<Component path="drawer/directions" />
+
+`swipeDirection` also determines the direction of the swipe to close the drawer. `modal={false}` results in a non-modal drawer that allows you to interact with the screen behind it.
+
+## snap point [#snap-points]
+
+Specifying `snapPoints` allows you to stop the drawer at a fixed height. Numbers between 0 and 1 are treated as a percentage of the viewport height; numbers greater than 1 are treated as pixel values. Strings containing `px` and `rem` can also be specified.
+
+```tsx
+const snapPoints = ["148px", 0.5, 1];
+
+<Drawer
+  title="quick settings"
+  trigger={<Button>Open settings<</Button>}
+  snapPoints={snapPoints}
+  defaultSnapPoint={0.5}
+  onSnapPointChange={(snapPoint) => {
+    console.log(snapPoint);
+  }}
+>
+  You can change the height by dragging.
+</Drawer>;
+```
+
+When `snapToSequentialPoints` is set to `true` , swiping moves to adjacent snap points in order.
+
+## Props [#props]
+
+### Specific props [#drawer-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "Trigger to open the drawer. If omitted, no trigger will be drawn.",
+    },
+    title: {
+      type: "React.ReactNode",
+      description: "This is the drawer heading.",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "This is the explanatory text to be displayed below the heading.",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "This is the main text of the drawer.",
+    },
+    footer: {
+      type: "React.ReactNode",
+      description: "This is the content displayed at the bottom of the drawer.",
+    },
+    controls: {
+      type: "React.ReactNode",
+      description:
+        "This is an operation to display in the upper right corner of the header. Placed inside the close icon.",
+    },
+    onClose: {
+      type: "React.MouseEventHandler<HTMLButtonElement>",
+      description: "A callback called when the close icon is clicked.",
+    },
+    showCloseIconButton: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to display the close icon button.",
+    },
+    showSwipeHandle: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to display swipe handles on the edge of the drawer.",
+    },
+    handle: {
+      type: "DrawerHandle<TPayload>",
+      description:
+        "A handle that associates the trigger with the drawer. Specify this when opening/closing from the outside.",
+    },
+    slotProps: {
+      type: "DrawerSlotProps<TPayload>",
+      default: "{}",
+      description: "An object for passing individual props to each internal part.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+The Drawer is based on the Base UI Drawer. The main props for open/close state and swipe are:
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "Controls the open/close state of the drawer.",
+    },
+    defaultOpen: {
+      type: "boolean",
+      description: "Whether to open the drawer in the initial state.",
+    },
+    onOpenChange: {
+      type: "(open: boolean,\ndetails: Drawer.ChangeEventDetails) => void",
+      description: "This is a callback called when the open/closed state changes.",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "A callback called when the opening/closing animation is complete.",
+    },
+    modal: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to display it modally. If false, you can operate the screen behind.",
+    },
+    swipeDirection: {
+      type: `"up" | "down" | "left" | "right"`,
+      default: `"down"`,
+      description: "The direction of the swipe to close the drawer.",
+    },
+    disablePointerDismissal: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to prevent it from closing by clicking on the background.",
+    },
+    snapPoints: {
+      type: "DrawerSnapPoint[]",
+      description: "This is a list of heights to stop the drawer.",
+    },
+    snapPoint: {
+      type: "DrawerSnapPoint | null",
+      description: "Controls the current snap point.",
+    },
+    defaultSnapPoint: {
+      type: "DrawerSnapPoint | null",
+      description: "This is the initial snap point.",
+    },
+    onSnapPointChange: {
+      type: "(snapPoint: DrawerSnapPoint | null,\ndetails: Drawer.SnapPointChangeEventDetails) => void",
+      description: "A callback called when the snap point changes.",
+    },
+    snapToSequentialPoints: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to move to adjacent snap points in order.",
+    },
+    actionsRef: {
+      type: "React.RefObject<Drawer.Actions | null>",
+      description: "A reference to operate the drawer imperatively.",
+    },
+  }}
+/>
+
+Create a handle in `Drawer.createHandle()` and pass it to `handle` to open and close it from an external button. Props other than those listed here are inherited from the Base UI Drawer.
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    backdrop: {
+      type: "DrawerBackdropProps",
+      description: "Pass props to the background.",
+    },
+    body: {
+      type: `Omit<DrawerBodyProps, "children">`,
+      description: "Pass props in the body. children is specified in the Drawer body.",
+    },
+    close: {
+      type: `Omit<DrawerCloseProps, "children">`,
+      description: "Pass props to the close icon button.",
+    },
+    content: {
+      type: `Omit<DrawerContentProps, "children">`,
+      description: "Pass props to the content area that contains the body.",
+    },
+    controls: {
+      type: `Omit<DrawerControlsProps, "children">`,
+      description: "Pass props to the operation at the top right of the header.",
+    },
+    description: {
+      type: `Omit<DrawerDescriptionProps, "children">`,
+      description: "Pass props to the description.",
+    },
+    footer: {
+      type: `Omit<DrawerFooterProps, "children">`,
+      description: "Pass props to the footer.",
+    },
+    header: {
+      type: `Omit<DrawerHeaderProps, "children">`,
+      description: "Pass props in the header.",
+    },
+    popup: {
+      type: `Omit<DrawerPopupProps, "children">`,
+      description: "Pass props to the drawer popup.",
+    },
+    portal: {
+      type: `Omit<DrawerPortalProps, "children">`,
+      description: "Pass props to the portal.",
+    },
+    swipeArea: {
+      type: "DrawerSwipeAreaProps",
+      description:
+        "Pass props to the swipe area at the edge of the screen. If specified, the area will be drawn.",
+    },
+    swipeHandle: {
+      type: "DrawerSwipeHandleProps",
+      description: "Pass props to the swipe handle.",
+    },
+    title: {
+      type: `Omit<DrawerTitleProps, "children">`,
+      description: "Pass props to the heading.",
+    },
+    trigger: {
+      type: `Omit<DrawerTriggerProps<TPayload>, "children" | "handle">`,
+      description: "Pass props to the trigger. Children are specified in trigger.",
+    },
+    viewport: {
+      type: `Omit<DrawerViewportProps, "children">`,
+      description: "Pass props to the viewport where you want to place the drawer.",
+    },
+    virtualKeyboardProvider: {
+      type: `Omit<DrawerVirtualKeyboardProviderProps, "children">`,
+      description: "Pass props to the provider that handles the height of the virtual keyboard.",
+    },
+  }}
+/>
+
+## Styling [#styling-hooks]
+
+Popups are given `sui_drawer_popup` . Depending on the state, class names such as `sui_drawer_popup-swipe_direction_down` , `sui_drawer_popup-open` , `sui_drawer_popup-swiping` , `sui_drawer_popup-expanded` , `sui_drawer_popup-nested` are also added.
+
+Internal parts have class names such as `sui_drawer_content` , `sui_drawer_header` , `sui_drawer_title` , `sui_drawer_description` , `sui_drawer_body` , `sui_drawer_footer` , `sui_drawer_swipe_handle` , etc.
+
+See also: [Component structure ](/guides/component-anatomy) , [Customize appearance ](/guides/styling) , [Dialog ](/components/dialog) ]

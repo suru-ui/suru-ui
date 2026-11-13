@@ -1,0 +1,83 @@
+---
+title: Element and component composition
+description: How to render a component as another element or custom component with render props while keeping its appearance.
+---
+
+Many components render a default HTML element suited to their purpose. The `render` prop replaces that element with another element or custom component. This guide uses Button to show how to reuse appearance while preserving semantics.
+
+## Replacing the element [#render-element]
+
+Passing a React element to `render` replaces the component's root element with it.
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function ReadGuideLink() {
+  return (
+    <Button variant="naked" render={<a href="/getting-started" />} nativeButton={false}>
+      はじめにを読む
+    </Button>
+  );
+}
+```
+
+The appearance stays Button while the actual element becomes `<a>`. `nativeButton` is a Base UI prop indicating whether the root is a native button element. Pass `false` when replacing it with a link or another element.
+
+**Custom components**
+
+`render` also accepts a custom React component. In that case, the component must spread received props onto an underlying DOM element. In React 19, `ref` is passed as a regular prop, so `forwardRef` is unnecessary.
+
+```tsx
+import { Button } from "@suru-ui/react";
+import * as React from "react";
+
+function FancyLink({ ref, ...props }: React.ComponentProps<"a">) {
+  return <a {...props} ref={ref} data-fancy="true" />;
+}
+
+export function DocsLink() {
+  return (
+    <Button variant="naked" render={<FancyLink href="/docs" />} nativeButton={false}>
+      ドキュメント
+    </Button>
+  );
+}
+```
+
+When an element is passed to `render`, component-side and element-side props are merged. `className` is concatenated; `style` and event handlers both apply. If a custom component does not spread props correctly, styles and accessibility attributes are lost.
+
+## Render function [#render-function]
+
+Passing a function to `render` receives the component state as an argument. It is useful for varying attributes or content by state.
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveButton({ isPending }: { isPending: boolean }) {
+  return (
+    <Button
+      pending={isPending}
+      render={(props, state) => <button {...props} aria-busy={state.pending} />}
+    >
+      保存
+    </Button>
+  );
+}
+```
+
+With a render function, you are responsible for spreading the received props yourself. It suits performance-sensitive cases and cases where rendering varies greatly by state.
+
+## Semantics [#semantics]
+
+Even with the same appearance, choose the element meaning for the purpose.
+
+| Purpose                                  | Suitable element |
+| ---------------------------------------- | ---------------- |
+| Actions such as form submit, open dialog | button           |
+| Navigation to another or external page   | a                |
+
+Implementing navigation as a button breaks keyboard and screen-reader expectations. Conversely, implementing an in-page action as a link makes browser history and context menus behave unnaturally. `render` reuses appearance while keeping element semantics correct.
+
+Give icon-only buttons an `aria-label`, and links text that makes the destination clear.
+
+Related: [Component anatomy](/guides/component-anatomy), [Styling](/guides/styling), [Button reference](/components/button)

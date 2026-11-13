@@ -1,0 +1,143 @@
+---
+title: Segments
+description: Explains Segments items, value, appearance, and control.
+---
+
+Segments is a segmented control selecting one of several related options. Suitable when a few options should always stay visible, e.g. switching time periods or sort orders. It is internally built on tabs.
+
+## Basic usage [#basic-usage]
+
+Pass options as an array to `items`. Each item is either a bare value or an object with `label` and `value`. `defaultValue` sets the initial selection.
+
+<Component path="segments/basic" />
+
+Omitting `items`, you can also pass items directly as `children`. Normally use `items` to keep labels and values explicit.
+
+## Appearance [#appearance]
+
+`activeVariant` is the appearance of the selected item. `solid` is filled, `liquid` is a light fill, and `naked` has no background. Tune with `color`, `size`, `radius`, and `thin`.
+
+<Component path="segments/appearance" />
+
+When `radius` is omitted it matches `size`. `thin` halves vertical padding to reduce height.
+
+## Controlled selection [#controlled]
+
+Passing `value` makes it a controlled component. Receive the new value via `onValueChange` and update state. Passing `disabled: true` on an item disables only that item.
+
+<Component path="segments/controlled" />
+
+```tsx
+const [value, setValue] = React.useState("week");
+
+<Segments items={items} value={value} onValueChange={(nextValue) => setValue(String(nextValue))} />;
+```
+
+Passing `orientation="vertical"` stacks items vertically.
+
+## Props [#props]
+
+### Specific props [#segments-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: `React.ReactNode |\n((item, index, items) => React.ReactNode)`,
+      description: "Segment content, or a function rendering each item. Normally specify items.",
+    },
+    items: {
+      type: "readonly TItem[]",
+      description: "Items shown in the segments. Specify values, or objects with label and value.",
+    },
+    slotProps: {
+      type: "SegmentsSlotProps",
+      description: "An object for passing props to individual parts.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    activeVariant: {
+      type: `"solid" | "liquid" | "naked"`,
+      default: `"solid"`,
+      description: "The main appearance of the selected item.",
+    },
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "The color scheme for the selected item background and text.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: "Same as size",
+      description: "The border radius of the segments.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The size of the segments.",
+    },
+    thin: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to halve vertical padding to reduce height.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| Slot        | Type                                             | Description                                                            |
+| ----------- | ------------------------------------------------ | ---------------------------------------------------------------------- |
+| `indicator` | `SegmentsIndicatorProps`                         | Props passed to the indicator of the selected item.                    |
+| `item`      | `Omit<SegmentsItemProps, "children" \| "value">` | Props passed to every item. `children` and `value` are not overridden. |
+| `list`      | `Omit<SegmentsListProps, "children">`            | Props passed to the list arranging items.                              |
+
+### Inherited props [#inherited-props]
+
+Segments is built on Base UI Tabs, so the following props pass through.
+
+<TypeTable
+  type={{
+    value: {
+      type: "SegmentsValue",
+      description: "The controlled selection.",
+    },
+    defaultValue: {
+      type: "SegmentsValue",
+      description: "The initial selection.",
+    },
+    onValueChange: {
+      type: "(value, eventDetails) => void",
+      description: "Called when the selection changes.",
+    },
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"horizontal"`,
+      description: "The direction in which segments are laid out.",
+    },
+    className: {
+      type: `string |\n((state: Segments.State) => string | undefined)`,
+      description: "Additional class names. A function receiving state is also accepted.",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Segments.State) => React.CSSProperties)`,
+      description: "Inline styles. A function receiving state is also accepted.",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "Replaces the root element with another element.",
+    },
+  }}
+/>
+
+## Styling [#styling-hooks]
+
+The root element carries `sui_segments`. Depending on props and state, class names such as `sui_segments-size_md`, `sui_segments-color_blue`, `sui_segments-radius_full`, `sui_segments-active_variant_liquid`, `sui_segments-orientation_vertical`, and `sui_segments-thin` are added.
+
+Inner parts carry `sui_segments_list`, `sui_segments_item`, and `sui_segments_indicator`. The selected item gains `sui_segments_item-active`; disabled items gain `sui_segments_item-disabled`.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Layout and sizing](/guides/layout)

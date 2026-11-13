@@ -1,0 +1,143 @@
+---
+title: Collapsible
+description: Learn about collapsible component props, opening/closing controls, customizing triggers and content.
+---
+
+Collapsible is a component that expands or collapses content by manipulating headings or buttons. Use this to hide content that does not need to be displayed all the time, such as supplementary information or detailed settings. If you place `Collapsible.Indicator` inside the trigger, the icon will rotate depending on the open/closed state.
+
+## Basic usage [#basic-usage]
+
+Specify the contents to be folded into `children` of the element drawn as an open/close button in `trigger` . Pass something like `Button` to the trigger and combine it with `Collapsible.Indicator` .
+
+<Component path="collapsible/basic" />
+
+If `trigger` is omitted, no trigger will be drawn. If you want the trigger to be its own element, you can supplement the attribute with `slotProps.trigger` .
+
+## Opening/closing control [#controlled]
+
+`open` and `onOpenChange` can be specified to control the open/closed state. `defaultOpen` is used to set the initial state to an open state.
+
+<Component path="collapsible/controlled" />
+
+The second argument to `onOpenChange` is passed details such as the reason for opening and closing. Specifying `disabled` prevents the trigger from being manipulated.
+
+## Replacing the indicator [#custom-indicator]
+
+Specifying `children` of `Collapsible.Indicator` allows you to replace the default arrow icon with another icon. The indicator automatically rotates according to the open/closed state.
+
+```tsx
+<Collapsible
+  trigger={
+    <Button variant="naked">
+      detail
+      <Collapsible.Indicator>
+        <PlusIcon aria-hidden="true" />
+      </Collapsible.Indicator>
+    </Button>
+  }
+>
+  This is the content that will be collapsed.
+</Collapsible>
+```
+
+## Props [#props]
+
+### Specific props [#collapsible-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description:
+        "An element drawn as an open/close button. If omitted, no trigger will be drawn.",
+    },
+    children: {
+      type: "React.ReactNode",
+      description:
+        "This is the content to be displayed by folding it. Values ​​that are not displayed, such as null or false, are not rendered.",
+    },
+    slotProps: {
+      type: "CollapsibleSlotProps",
+      default: "{}",
+      description: "An object for passing separate props to triggers and content.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "Trigger and content size.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Collapsible is based on Base UI's Collapsible, so you can pass the following props for open/close state:
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "Controls open state.",
+    },
+    defaultOpen: {
+      type: "boolean",
+      description: "Whether or not to open in the initial state.",
+    },
+    onOpenChange: {
+      type: "(open: boolean,\ndetails: Collapsible.ChangeEventDetails) => void",
+      description: "This is a callback called when the open/closed state changes.",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disables trigger operation.",
+    },
+    className: {
+      type: `string |\n((state: Collapsible.State) => string | undefined)`,
+      description: "Additional class name. When you pass a function, you receive state.",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Collapsible.State) => React.CSSProperties)`,
+      description: "Inline style. When you pass a function, you receive state.",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "Replace the root element with another element.",
+    },
+  }}
+/>
+
+Props other than those listed here are inherited from Collapsible in Base UI.
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    content: {
+      type: `Omit<CollapsibleContentProps, "children">`,
+      description:
+        "Pass props to the content to be collapsed. children is specified in the Collapsible body.",
+    },
+    trigger: {
+      type: `Omit<CollapsibleTriggerProps, "children">`,
+      description: "Pass props to the trigger. Children are specified in trigger.",
+    },
+  }}
+/>
+
+By changing `keepMounted` to `true` on the content side, it can be retained in the DOM even after closing. `hiddenUntilFound` specifies whether the browser's search-in-page automatically expands collapsed content when it is encountered.
+
+## Styling [#styling-hooks]
+
+The root element is given `sui_collapsible` . Depending on the props and state, class names such as `sui_collapsible-size_md` , `sui_collapsible-open` , `sui_collapsible-disabled` , `sui_collapsible-transition_status_*` are also added.
+
+Internal parts are given `sui_collapsible_trigger` , `sui_collapsible_content` , `sui_collapsible_indicator` . Content is marked with `sui_collapsible_content` even if it is held in `keepMounted` .
+
+See also: [Component structure ](/guides/component-anatomy) , [Appearance customization ](/guides/styling) , [Element and component composition ](/guides/composition) ]

@@ -1,0 +1,94 @@
+---
+title: Rendering async state
+description: How to reflect loading, disabled, and in-progress states in component rendering.
+---
+
+Async operations need to tell users that input was accepted, that it is not finished yet, and that controls are temporarily unavailable. This guide uses Button to show how to design state and reflect it in rendering.
+
+## Disabled vs. pending [#disabled-vs-pending]
+
+`disabled` means "this action cannot run right now". `pending` means "the action started but has not finished yet".
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveActions() {
+  return (
+    <>
+      <Button disabled>送信できません</Button>
+      <Button pending>送信中</Button>
+    </>
+  );
+}
+```
+
+Button's `pending` disables presses while showing an in-progress indicator. Unless combined with `disabled`, it keeps focus, so keyboard context is preserved after the operation completes.
+
+Components without a dedicated `pending` state can express the same meaning by combining `disabled` with `aria-busy` and similar attributes.
+
+## Wiring state [#wire-state]
+
+React's `useTransition` keeps the pending state only while the async work runs.
+
+```tsx
+import { Button } from "@suru-ui/react";
+import * as React from "react";
+
+export function SaveButton() {
+  const [isPending, startTransition] = React.useTransition();
+
+  function handleSave() {
+    startTransition(async () => {
+      await fetch("/api/save", { method: "POST" });
+    });
+  }
+
+  return (
+    <Button color="blue" pending={isPending} onClick={handleSave}>
+      保存
+    </Button>
+  );
+}
+```
+
+Passing `isPending` directly into the component switches rendering from start to completion. The same applies when using an external state library: pass the in-progress boolean to the component.
+
+**Progress**
+
+When progress is measurable, show a percentage. For Button, pass a number from 0 to 100 to `percentage`.
+
+```tsx
+<Button pending percentage={40}>
+  アップロード
+</Button>
+```
+
+Omitting the percentage, or passing a negative value, renders an indeterminate spinner. Choose based on the task: an indeterminate spinner for work that finishes in seconds, a percentage for long uploads.
+
+## Double submit [#double-submit]
+
+Pending state prevents double submission, not just visual feedback. Button's `pending` disables presses, but guarding the handler as well is safer. Adding a guard to `handleSave` looks like this:
+
+```tsx
+function handleSave() {
+  if (isPending) {
+    return;
+  }
+
+  startTransition(async () => {
+    await fetch("/api/save", { method: "POST" });
+  });
+}
+```
+
+## Focus [#focus]
+
+When rendering pending state, consider focus and screen-reader announcements as well as visuals.
+
+- Components that keep focus while pending let users continue keyboard operation after completion.
+- To announce pending state to screen readers, consider `aria-busy` and similar attributes.
+- After completion, communicate the result with text or a live region.
+
+Which attributes a component sets automatically depends on its implementation. Add attributes as needed.
+
+Related: [Component anatomy](/guides/component-anatomy), [Styling](/guides/styling), [Button reference](/components/button)

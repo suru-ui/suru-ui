@@ -1,0 +1,190 @@
+---
+title: ToggleButton
+description: Explains ToggleButton props, pressed state, appearance, and pending display.
+---
+
+ToggleButton toggles its pressed state on each press. Use it for stateful actions such as formatting toolbars or view switching. Pressed state is managed via `pressed`, and appearance follows the state.
+
+## Basic usage [#basic-usage]
+
+Pass a label or icon to `children`. For icon-only buttons, combine `squared` with `aria-label`.
+
+<Component path="toggle-button/basic" />
+
+Pass `defaultPressed` to start pressed. To manage pressed state yourself, use `pressed` and `onPressedChange`.
+
+```tsx
+const [pressed, setPressed] = useState(false);
+
+<ToggleButton pressed={pressed} onPressedChange={setPressed}>
+  On
+</ToggleButton>;
+```
+
+## Appearance [#appearance]
+
+`variant` accepts `liquid` or `naked`. When pressed, the appearance becomes solid regardless of `variant`, and `color` sets that color scheme.
+
+<Component path="toggle-button/appearance" />
+
+`size` has 4 steps: `xs`, `sm`, `md`, `lg`. The default `radius` is `sm` or `md` depending on `size`. `outlined` adds a border.
+
+## Control and pending [#controlled-and-pending]
+
+To sync pressed state with external state, combine `pressed` and `onPressedChange`.
+
+<Component path="toggle-button/controlled" />
+
+Passing `true` to `pending` disables pressing and shows a circular progress indicator. Passing 0–100 to `percentage` shows progress.
+
+<Component path="toggle-button/pending" />
+
+Focus is preserved while pending, so the keyboard context continues unless `disabled` is also used.
+
+## Props [#props]
+
+### Specific props [#toggle-button-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "The toggle button content.",
+    },
+    percentage: {
+      type: "number",
+      description:
+        "The circular progress value from 0 to 100. Omitted or negative values render indeterminate mode.",
+    },
+    indeterminate: {
+      type: "boolean",
+      description:
+        "Whether to render the circular progress indeterminate. When omitted, it is derived from percentage.",
+    },
+    slotProps: {
+      type: "ToggleButtonSlotProps",
+      default: "{}",
+      description: "An object for passing props to individual parts.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "The pressed-state color scheme. Unpressed buttons render grey.",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"liquid"`,
+      description: "The main appearance of the unpressed state.",
+    },
+    size: {
+      type: `"xs" | "sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The size of the toggle button.",
+    },
+    radius: {
+      type: `"none" | "xs" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: "sm or md depending on size",
+      description: "The border radius. Defaults to sm for xs/sm sizes and md for md/lg sizes.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to show the border.",
+    },
+    pending: {
+      type: "boolean",
+      default: "false",
+      description: "Whether it is pending. Pressing is disabled and progress is shown.",
+    },
+    squared: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to make the button square. Suitable for icon-only buttons.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+ToggleButton is built on Base UI Toggle, so pressed-state props pass through. The main ones are:
+
+<TypeTable
+  type={{
+    pressed: {
+      type: "boolean",
+      description: "Specify to control the pressed state.",
+    },
+    defaultPressed: {
+      type: "boolean",
+      default: "false",
+      description: "The initial pressed state for uncontrolled use.",
+    },
+    onPressedChange: {
+      type: `(pressed: boolean,\neventDetails: ToggleButton.ChangeEventDetails) => void`,
+      description: "Called when the pressed state changes.",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disables the toggle button.",
+    },
+    value: {
+      type: "string",
+      description: "The value associated with the toggle button.",
+    },
+    focusableWhenDisabled: {
+      type: "boolean",
+      description:
+        "Whether to keep it focusable when disabled. Defaults to true when pending is true and disabled is false.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    content: {
+      type: "object",
+      description:
+        "Props passed to the element showing the label. Specify children via ToggleButton children.",
+    },
+    pending: {
+      type: "object",
+      description: "Props passed to the pending display. Accepts overlay and keepMounted.",
+    },
+    circularProgress: {
+      type: "object",
+      description:
+        "Props passed to the circular progress. Specify percentage and indeterminate on ToggleButton itself.",
+    },
+    circularProgressTrack: {
+      type: "object",
+      description: "Props passed to the background arc of the circular progress.",
+    },
+    circularProgressFill: {
+      type: "object",
+      description: "Props passed to the progress arc. Accepts strokeDashoffset, strokeWidth, etc.",
+    },
+    circularProgressFillRotation: {
+      type: "object",
+      description:
+        "Props passed to the indeterminate rotation animation. Accepts dur, values, etc.",
+    },
+  }}
+/>
+
+## Styling [#styling-hooks]
+
+ToggleButton shares the Button root, so the root carries `sui_button`. Depending on props, class names such as `sui_button-size_md`, `sui_button-color_blue`, `sui_button-radius_md`, `sui_button-variant_solid`, `sui_button-outlined`, `sui_button-squared`, and `sui_button-pending` are added.
+
+The pressed state is exposed via the `data-pressed` attribute from Base UI Toggle. Inner parts carry `sui_button_content`, `sui_button_pending`, `sui_button_circular_progress`, and similar class names.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Async states](/guides/async-state)

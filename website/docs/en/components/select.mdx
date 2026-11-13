@@ -1,0 +1,206 @@
+---
+title: Select
+description: Explains Select items, multiple selection, grouping, and appearance.
+---
+
+Select picks a value from predefined options. It supports single and multiple selection and can group options. When there are many options, consider Combobox for filterable input.
+
+## Basic usage [#basic-usage]
+
+Specify options in `items` and adjust the display with `label` and `placeholder`. When an option is a string, it is used as both label and value.
+
+<Component path="select/basic" />
+
+`defaultValue` sets the initial value. Passing `value` makes it controlled, so pair it with `onValueChange`.
+
+## Items [#items]
+
+`items` accepts the following forms:
+
+- An array of values such as strings
+- An array of objects with `label` and `value`
+- An object mapping values to display content
+- An array of groups with `label` and `items`
+
+<Component path="select/grouped" />
+
+Groups render with a heading and dividers. Passing `disabled` on an item disables only that item.
+
+## Multiple and controlled [#multiple-and-controlled]
+
+Passing `multiple` allows selecting several values. In that case `defaultValue` and `value` are arrays.
+
+<Component path="select/multiple" />
+
+```tsx
+const [value, setValue] = React.useState<string[]>([]);
+
+<Select items={["TypeScript", "Rust", "Go"]} multiple value={value} onValueChange={setValue} />;
+```
+
+The `onValueChange` argument is the selected value for single selection or an array for multiple selection. Even with object items, only the value is passed.
+
+## Appearance [#appearance]
+
+`variant` accepts `naked` or `liquid`. Adjust the trigger and popup shape with `size`, `radius`, and `outlined`.
+
+<Component path="select/appearance" />
+
+Passing `true` to `backdrop` shows a backdrop behind the popup. Use `slotProps.backdrop` to change its content or props.
+
+## Props [#props]
+
+### Specific props [#select-specific-props]
+
+<TypeTable
+  type={{
+    backdrop: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to show a backdrop behind the popup.",
+    },
+    children: {
+      type: `React.ReactNode |\n((item, index, items) => React.ReactNode)`,
+      description: "List content, or a function rendering each item. Normally specify items.",
+    },
+    label: {
+      type: "React.ReactNode",
+      description: "The label shown above the trigger.",
+    },
+    placeholder: {
+      type: "React.ReactNode",
+      default: `"選択してください"`,
+      description: "Content shown when no value is selected.",
+    },
+    slotProps: {
+      type: "SelectSlotProps",
+      description: "An object for passing props to individual parts.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to show a border on the trigger.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: "Same as size",
+      description: "The border radius of the trigger and popup.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The size of the trigger and list items.",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description:
+        "The main appearance of the trigger. naked has no background; liquid has a light fill.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| Slot              | Description                                                                                   |
+| ----------------- | --------------------------------------------------------------------------------------------- |
+| `arrow`           | Props passed to the popup arrow.                                                              |
+| `backdrop`        | Props passed to the backdrop. Specifying it shows the backdrop even when `backdrop` is false. |
+| `group`           | Props passed to groups.                                                                       |
+| `groupLabel`      | Props passed to group headings.                                                               |
+| `icon`            | Props passed to the trigger icon.                                                             |
+| `item`            | Props passed to every item. `children` and `value` are not overridden.                        |
+| `itemIndicator`   | Props passed to the indicator shown on selected items.                                        |
+| `itemText`        | Props passed to item labels.                                                                  |
+| `label`           | Props passed to the label above the trigger.                                                  |
+| `list`            | Props passed to the list arranging items.                                                     |
+| `popup`           | Props passed to the popup.                                                                    |
+| `portal`          | Props passed to the portal.                                                                   |
+| `positioner`      | Props passed to the positioning element. Accepts `side`, `align`, `sideOffset`, etc.          |
+| `scrollDownArrow` | Props passed to the scroll-down arrow.                                                        |
+| `scrollUpArrow`   | Props passed to the scroll-up arrow.                                                          |
+| `separator`       | Props passed to dividers between groups.                                                      |
+| `value`           | Props passed to the current value shown in the trigger.                                       |
+
+### Inherited props [#inherited-props]
+
+Select is built on Base UI Select, so the following props pass through.
+
+<TypeTable
+  type={{
+    value: {
+      type: "TValue | TValue[] | null",
+      description: "The controlled selection. An array when multiple is true.",
+    },
+    defaultValue: {
+      type: "TValue | TValue[] | null",
+      description: "The initial selection.",
+    },
+    onValueChange: {
+      type: "(value, eventDetails) => void",
+      description: "Called when the selection changes.",
+    },
+    multiple: {
+      type: "boolean",
+      default: "false",
+      description: "Whether multiple values can be selected.",
+    },
+    open: {
+      type: "boolean",
+      description: "Controls the popup open state.",
+    },
+    defaultOpen: {
+      type: "boolean",
+      description: "The initial popup open state.",
+    },
+    onOpenChange: {
+      type: "(open, eventDetails) => void",
+      description: "Called when the popup open state changes.",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to disable the trigger.",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to make the value read-only.",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to require a value.",
+    },
+    name: {
+      type: "string",
+      description: "The name used on form submission.",
+    },
+    form: {
+      type: "string",
+      description: "The ID of the associated form.",
+    },
+    modal: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to treat the popup as modal.",
+    },
+  }}
+/>
+
+`className` and `style` apply to the trigger. The trigger renders a native `button`, so button attributes such as `onClick` and `aria-*` also pass through.
+
+## Styling [#styling-hooks]
+
+The trigger carries `sui_select`. Depending on props and state, class names such as `sui_select-size_md`, `sui_select-radius_full`, `sui_select-variant_liquid`, `sui_select-outlined`, `sui_select-open`, `sui_select-placeholder`, and `sui_select-disabled` are added.
+
+The popup and list carry `sui_select_popup` and `sui_select_list`. Items carry `sui_select_item` plus `sui_select_item-selected` when selected, `sui_select_item-highlighted` when highlighted, and `sui_select_item-disabled` when disabled.
+
+See also: [Component anatomy](/guides/component-anatomy), [Composition](/guides/composition), [Customizing appearance](/guides/styling)

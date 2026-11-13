@@ -1,0 +1,157 @@
+---
+title: Meter
+description: Describes value specification, ranges, value format, and appearance for the Meter component.
+---
+
+Meter is a component that displays the current value as a percentage of a known range. Used to show measured values ​​such as storage usage and battery level. To indicate progress, use [Progress ](/components/progress) instead.
+
+## Basic usage [#basic-usage]
+
+Specify the current value in `value` and specify the range with `min` and `max` if necessary. `label` displays the label and current value.
+
+<Component path="meter/basic" />
+
+If `label` is not specified, the label and value display will be omitted. In this case, use `aria-label` or `aria-valuetext` to convey the meaning to assistive technology.
+
+## range and value [#range]
+
+`min` and `max` determine the range of values ​​to display. Default values ​​are `0` and `100` respectively. If you want to specify a range that includes negative values, pass a negative number to `min` .
+
+```tsx
+<Meter label="temperature" min={-20} max={40} value={12} />
+```
+
+If `value` exceeds the range, the value is displayed rounded to the minimum or maximum value.
+
+## Value format [#format]
+
+You can change the format of the displayed value by passing options for `Intl.NumberFormat` to `format` . If `locale` is also specified, the notation will be appropriate for the language or region.
+
+<Component path="meter/format" />
+
+```tsx
+<Meter
+  label="storage"
+  value={183}
+  max={256}
+  format={{ style: "unit", unit: "gigabyte", maximumFractionDigits: 0 }}
+  locale="ja-JP"
+/>
+```
+
+## Appearance [#appearance]
+
+`variant` can be selected from `liquid` and `naked` . Specify the color scheme with `color` , the size with `size` , and the rounded corners with `radius` . `outlined` determines whether the track border is displayed.
+
+<Component path="meter/appearance" />
+
+## Props [#props]
+
+### Specific props [#meter-specific-props]
+
+<TypeTable
+  type={{
+    label: {
+      type: "React.ReactNode",
+      description:
+        "Explanatory label for the meter. If specified, the current value will also be displayed.",
+    },
+    value: {
+      type: "number",
+      default: "0",
+      description: "Current value.",
+    },
+    slotProps: {
+      type: "MeterSlotProps",
+      default: "{}",
+      description: "An object for passing individual props to each part.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "This is the color of the meter.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "It is the size of the meter.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: `"full"`,
+      description: "The size of the rounded corners.",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"liquid"`,
+      description:
+        "This is the main appearance of the meter. naked means no background, liquid means a thin fill.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to display the track border.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Meter is based on Base UI's Meter, so you can pass the following props as is.
+
+<TypeTable
+  type={{
+    min: {
+      type: "number",
+      default: "0",
+      description: "The minimum value of the range.",
+    },
+    max: {
+      type: "number",
+      default: "100",
+      description: "Maximum value of the range.",
+    },
+    format: {
+      type: "Intl.NumberFormatOptions",
+      description: "This is the format for displaying the value.",
+    },
+    locale: {
+      type: "Intl.LocalesArgument",
+      description:
+        "The locale used to format the value. If omitted, it will be the locale of the execution environment.",
+    },
+    getAriaValueText: {
+      type: "(formattedValue: string, value: number) => string",
+      description:
+        "This function returns the text of the value to be passed to assistive technology.",
+    },
+    "aria-valuetext": {
+      type: "string",
+      description: "Text that describes the current value.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| Key         | Type                                | Description                                                                                                         |
+| ----------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `indicator` | `MeterIndicatorProps`               | Props to be passed to the indicator that shows the current value.                                                   |
+| `label`     | `Omit<MeterLabelProps, "children">` | Props to be passed to the label. The display content is specified by `label` .                                      |
+| `track`     | `Omit<MeterTrackProps, "children">` | Props to pass to the track.                                                                                         |
+| `value`     | `MeterValueProps`                   | Props to be passed to display the current value. You can customize the display by passing functions to `children` . |
+
+## Styling [#styling-hooks]
+
+The root element is given `sui_meter` . Depending on the props, class names such as `sui_meter-size_md` , `sui_meter-color_blue` , `sui_meter-radius_full` , `sui_meter-variant_liquid` , `sui_meter-outlined` are also added.
+
+Internal parts are given class names such as `sui_meter_label` , `sui_meter_value` , `sui_meter_track` , `sui_meter_indicator` .
+
+See also: [Component structure ](/guides/component-anatomy) , [Customize appearance ](/guides/styling) , [Layout and size ](/guides/layout) ]

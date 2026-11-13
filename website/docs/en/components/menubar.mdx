@@ -1,0 +1,137 @@
+---
+title: Menubar
+description: Explains how to specify items in the Menubar component, menu orientation, and customization for the entire menu.
+---
+
+Menubar is a component that arranges multiple menus horizontally or vertically, like an application's menu bar. Each menu is specified as a pair of trigger and item, and items can include submenus, check items, etc. You can also use the keyboard to move between menus and open/close them.
+
+## Basic usage [#basic-usage]
+
+Arrange objects in `items` that have `trigger` to open the menu and `items` to display in the popup. `trigger` specifies an element such as a button.
+
+<Component path="menubar/basic" />
+
+```tsx
+<Menubar
+  items={[
+    {
+      trigger: <Button variant="naked">file<</Button>,
+      items: [{ label: "Create new" }, { label: "open" }, { label: "keep" }],
+    },
+  ]}
+/>
+```
+
+Use the arrow keys to move to the next menu, and press Enter or Spacebar to open the menu. Within the menu that opens, you can use the up and down arrow keys to move between items.
+
+## Item types [#item-types]
+
+The following items can be specified in `items` of each menu:
+
+- Items with `label` become regular menu items.
+- Items with `type: "submenu"` , `label` , `items` are items that open submenus.
+- Items with `type: "checkbox"` and `label` are items whose checked state can be toggled.
+- Items with `type: "radio-group"` and `items` form a group of exclusive choices.
+- Items with `type: "link"` and `label` are items that act as links.
+
+```tsx
+items={[
+  { type: "checkbox", label: "Show ruler", defaultChecked: true },
+  {
+    type: "submenu",
+    label: "zoom",
+    items: [{ label: "50%" }, { label: "100%" }, { label: "200%" }],
+  },
+]}
+```
+
+## direction [#orientation]
+
+By specifying `"vertical"` for `orientation` , you can arrange the menus vertically. The default value is `"horizontal"` .
+
+<Component path="menubar/vertical" />
+
+## Customize the menu [#menu-customization]
+
+`slotProps.menu` allows you to pass the same props to all menus. This is useful when you want to change the size, appearance, rounded corners, etc. of a menu all at once.
+
+```tsx
+<Menubar slotProps={{ menu: { size: "sm", variant: "liquid", radius: "md" } }} items={items} />
+```
+
+If you want to change the appearance of just an individual menu, specify `size` , `variant` , etc. directly to that item's object. The value you specify in the field object takes precedence over the value in `slotProps.menu` .
+
+## Props [#props]
+
+### Specific props [#menubar-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode | IMenubarItemRenderer<TItem>",
+      description:
+        "A function that draws the contents of the menu bar or each item. If a function is specified, each item in items will be passed as an argument.",
+    },
+    items: {
+      type: "readonly TItem[]",
+      default: "[]",
+      description:
+        "Items arranged on the menu bar. Each item is an object with a trigger and items.",
+    },
+    slotProps: {
+      type: "MenubarSlotProps",
+      default: "{}",
+      description: "An object for passing individual props to each part.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Since the Menubar is based on the Base UI Menubar, you can pass the following props as is.
+
+<TypeTable
+  type={{
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disable the entire menu bar.",
+    },
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"horizontal"`,
+      description: "It is suitable for arranging menus.",
+    },
+    loopFocus: {
+      type: "boolean",
+      default: "true",
+      description:
+        "Determines whether to return focus to the beginning when moving to the end using the arrow keys.",
+    },
+    modal: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to treat the menu bar as modal.",
+    },
+    "aria-label": {
+      type: "string",
+      description: "The name of the menu bar. Please specify the purpose clearly.",
+    },
+  }}
+/>
+
+Other attributes you can pass include `className` , `style` , `render` , and `data-*` .
+
+### slotProps [#slot-props]
+
+| Key    | Type                                     | Description                                                                                                           |
+| ------ | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `menu` | `Omit<Menu.Props, "items" \| "trigger">` | Props to be passed to all menus. `items` and `trigger` are specified for each item, so they cannot be specified here. |
+
+## Styling [#styling-hooks]
+
+The root element is given `sui_menubar` . Depending on the props and state, class names such as `sui_menubar-orientation_horizontal` , `sui_menubar-orientation_vertical` , `sui_menubar-disabled` , `sui_menubar-modal` , `sui_menubar-has_submenu_open` are also added.
+
+Each menu trigger has a class name such as `sui_menu_trigger` , popups `sui_menu_popup` , and items `sui_menu_item` , so you can also adjust the menu's appearance in `className` in `slotProps.menu` .
+
+See also: [Component structure ](/guides/component-anatomy) , [Element and component composition ](/guides/composition) , [Appearance customization ](/guides/styling) ]

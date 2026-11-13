@@ -1,0 +1,117 @@
+---
+title: Image
+description: Describes how the Image component is displayed, rounded corners, alt text, and loading attributes.
+---
+
+Image is a component that displays an image. By default, `object-fit` is not specified and the image is displayed in its original proportions. You can use `fit` to specify how it fits into the container, and `radius` to specify rounded corners. The size is specified using `width` and `height` or `style` or CSS.
+
+## Basic usage [#basic-usage]
+
+Specify the image URL in `src` and the image content in `alt` . Specifying the size with `width` and `height` of `style` will make it easier to match the layout.
+
+<Component path="image/basic" />
+
+Images that convey content should be given descriptive `alt` . Combine `alt=""` and `aria-hidden="true"` for decorative images to prevent screen readers from reading them.
+
+## Display method and rounded corners [#fit-and-radius]
+
+`fit` corresponds to `object-fit` , and you can choose from `cover` , `contain` , `fill` , `none` , `scale-down` . `radius` can be chosen from `none` , `sm` , `md` , `lg` , `full` .
+
+<Component path="image/fit" />
+
+`fit="cover"` fills the container without leaving any blank spaces and cuts off any excess. Since `fit="contain"` displays the entire image, there may be some blank space depending on the ratio of the image. If you want `radius="full"` to be circular, make `width` and `height` the same value.
+
+## Alternative text and loading [#accessibility]
+
+If you want to describe the content of the image, write a short and specific description in `alt` . Specifying `loading="lazy"` and `decoding="async"` allows you to delay the loading of off-screen images, making them less likely to interfere with drawing.
+
+```tsx
+<Image
+  src="/images/landscape.jpg"
+  alt="Mountains dyed in the sunset"
+  fit="cover"
+  radius="md"
+  loading="lazy"
+  decoding="async"
+  style={{ width: "100%", height: 240 }}
+/>
+```
+
+## Props [#props]
+
+### Specific props [#image-specific-props]
+
+<TypeTable
+  type={{
+    fit: {
+      type: `"cover" | "contain" | "fill" |\n"none" | "scale-down"`,
+      description:
+        "How to display images. Corresponds to object-fit; if omitted, no object-fit is specified.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: `"none"`,
+      description: "This is the size of the rounded corners of the image.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Image draws a `img` element, so you can pass attributes that the native img element accepts.
+
+<TypeTable
+  type={{
+    src: {
+      type: "string",
+      description: "Image URL.",
+    },
+    alt: {
+      type: "string",
+      description: "Alternative text for images. Specify an empty string for decorative images.",
+    },
+    width: {
+      type: "number | string",
+      description: "The width of the image.",
+    },
+    height: {
+      type: "number | string",
+      description: "The height of the image.",
+    },
+    loading: {
+      type: `"eager" | "lazy"`,
+      description: "How to load images.",
+    },
+    decoding: {
+      type: `"sync" | "async" | "auto"`,
+      description: "How to decode images.",
+    },
+    className: {
+      type: `string |\n((state: Image.State) => string | undefined)`,
+      description: "Additional class name. When you pass a function, you receive state.",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Image.State) => React.CSSProperties)`,
+      description: "Inline style. When you pass a function, you receive state.",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "Replace the root element with another element.",
+    },
+  }}
+/>
+
+## Styling [#styling-hooks]
+
+The root element is given `sui_image` . Class names such as `sui_image-radius_md` will be added depending on `radius` , `sui_image-fit_cover` will be added depending on `fit` , etc.
+
+You can adjust the display using the `--sui_image-object_fit` , `--sui_image-border_radius` , and `--sui_image-corner_shape` CSS variables.
+
+See also: Customize appearance ](/guides/styling) , Layout and size ](/guides/layout) , Component structure ](/guides/component-anatomy)

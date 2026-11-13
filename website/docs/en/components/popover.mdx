@@ -1,0 +1,174 @@
+---
+title: Popover
+description: Explains Popover trigger, placement, arrow, open-state control, and appearance.
+---
+
+Popover shows supplementary content or actions in a popup when a trigger such as a button is pressed. It holds richer content than a menu, making it suitable for settings descriptions or account info. Trigger and content are linked automatically, with focus and Escape-key handling built in.
+
+## Basic usage [#basic-usage]
+
+Pass the element that opens the popup to `trigger` and the popup content to `children`. By default it appears 8px below the trigger.
+
+<Component path="popover/basic" />
+
+Popover internally composes a trigger, portal, positioner, and popup. Place headings and descriptions inside `children`.
+
+```tsx
+<Popover trigger={<Button>詳細を表示</Button>}>
+  <h3>共有の設定</h3>
+  <p>リンクを知っている人だけが閲覧できます。</p>
+</Popover>
+```
+
+## Placement and arrow [#placement]
+
+Use `slotProps.positioner` `side` and `align` for position and `sideOffset` for the distance from the trigger. `arrow` set to `true` shows an arrow on the popup.
+
+<Component path="popover/placement" />
+
+`side` accepts `"top"`, `"bottom"`, `"left"`, or `"right"`; `align` accepts `"start"`, `"center"`, or `"end"`. Near viewport edges the position adjusts automatically to stay visible.
+
+## Controlled open state [#controlled]
+
+Use `open` and `onOpenChange` to manage open state externally. Use `defaultOpen` to start open uncontrolled.
+
+<Component path="popover/controlled" />
+
+Passing `true` to `modal` restricts interaction outside the popup. The default is `false`.
+
+## Appearance [#appearance]
+
+Use `size` for popup size and `radius` for corners. Passing `false` to `outlined` removes the border so content is separated by background alone.
+
+<Component path="popover/appearance" />
+
+## Props [#props]
+
+### Specific props [#popover-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: "React.ReactNode",
+      description: "The element rendered as the popover trigger.",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "The content shown inside the popover.",
+    },
+    arrow: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to show an arrow on the popup.",
+    },
+    backdrop: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to show a Backdrop behind the popup.",
+    },
+    handle: {
+      type: "PopoverHandle<TPayload>",
+      description:
+        "A handle linking the trigger and the popover. Create it with Popover.createHandle.",
+    },
+    slotProps: {
+      type: "PopoverSlotProps<TPayload>",
+      default: "{}",
+      description: "An object for passing props to individual parts.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The size of the popover.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "Same as size",
+      description: "The border radius.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to show a border around the popup.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Popover is built on Base UI Popover, so the following props pass through.
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "The controlled open state.",
+    },
+    defaultOpen: {
+      type: "boolean",
+      default: "false",
+      description: "The uncontrolled initial open state.",
+    },
+    onOpenChange: {
+      type: `(open: boolean,\ndetails: PopoverChangeEventDetails) => void`,
+      description: "Callback invoked when the open state changes.",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "Callback invoked when the open/close animation completes.",
+    },
+    modal: {
+      type: `boolean | "trap-focus"`,
+      default: "false",
+      description: "Whether to treat the popover as modal.",
+    },
+    triggerId: {
+      type: "string | null",
+      description: "The ID used to link the trigger.",
+    },
+    defaultTriggerId: {
+      type: "string | null",
+      description: "The trigger ID linked on initial render.",
+    },
+    actionsRef: {
+      type: "React.RefObject<PopoverActions | null>",
+      description: "A ref for imperatively controlling open state.",
+    },
+    initialFocus: {
+      type: `boolean | React.RefObject<HTMLElement | null> |\n((openType) => void | boolean | HTMLElement | null)`,
+      description: "The element to focus when opened.",
+    },
+    finalFocus: {
+      type: `boolean | React.RefObject<HTMLElement | null> |\n((closeType) => void | boolean | HTMLElement | null)`,
+      description: "The element to focus when closed.",
+    },
+  }}
+/>
+
+Other attributes such as `className`, `style`, and `data-*` also pass through. `initialFocus` and `finalFocus` are forwarded to the popup.
+
+### slotProps [#slot-props]
+
+| Key          | Description                                                                          |
+| ------------ | ------------------------------------------------------------------------------------ |
+| `arrow`      | Props passed to the arrow. Specifying this key shows the arrow even without `arrow`. |
+| `backdrop`   | Props passed to the Backdrop. Specifying this key shows it even without `backdrop`.  |
+| `popup`      | Props passed to the popup. Accepts `style`, `className`, etc.                        |
+| `portal`     | Props passed to the portal.                                                          |
+| `positioner` | Props passed to the positioner. Accepts `side`, `align`, `sideOffset`, etc.          |
+| `trigger`    | Props passed to the trigger. `children` and `handle` cannot be specified here.       |
+
+## Styling [#styling-hooks]
+
+Popover itself renders no HTML element, so there is no root class. The trigger carries `sui_popover_trigger`, the positioner `sui_popover_positioner`, and the popup `sui_popover_popup`.
+
+The popup also gains class names such as `sui_popover_popup-size_md`, `sui_popover_popup-radius_md`, `sui_popover_popup-side_bottom`, `sui_popover_popup-align_center`, `sui_popover_popup-outlined`, and `sui_popover_popup-open`. The arrow carries `sui_popover_arrow` and the Backdrop `sui_popover_backdrop`.
+
+See also: [Component anatomy](/guides/component-anatomy), [Composition](/guides/composition), [Customizing appearance](/guides/styling)

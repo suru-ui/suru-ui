@@ -1,0 +1,190 @@
+---
+title: Field
+description: Describes the Field component's props, validation, error messages, and association of labels and descriptions.
+---
+
+Field is a component that handles labels, input fields, descriptions, and error messages as a single unit. Automatically associate input fields with labels and display messages depending on the form validation status. In addition to text input, it can be combined with checkboxes and selection components.
+
+## Basic usage [#basic-usage]
+
+Specify `label` and `description` and place the input field in the child element. When using native input fields, use `Field.Control` to automatically associate and validate labels.
+
+<Component path="field/basic" />
+
+`errorMatches` specifies the validation state of the error to display. Passing an object allows you to change the message for each validation state, and passing `true` displays error elements regardless of validation state. Messages are retrieved from `validate` and form validation results.
+
+## Validation and errors [#validation]
+
+You can add your own validation by specifying `validate` . You can select the verification timing for `validationMode` from `onSubmit` , `onBlur` , and `onChange` .
+
+<Component path="field/validation" />
+
+By passing a function to `validity` , you can display arbitrary content depending on the validation state. The argument is passed a state containing `validity` and `errors` .
+
+```tsx
+<Field
+  label="email address"
+  errorMatches={false}
+  validity={(state) => (state.validity.valid === true ? <span>Valid.<</span> : null)}
+>
+  <Field.Control type="email" required />
+</Field>
+```
+
+`errorMatches` can be specified with a message for each verification state, like `{ valueMissing: "Please enter.", typeMismatch: "Please check the format." }` . Keys can be `valueMissing` , `typeMismatch` , `patternMismatch` , `tooShort` , `tooLong` , `customError` , etc. Adjust the style of the entire error message with `slotProps.error` .
+
+## Parts configuration [#parts]
+
+`Field` is a preset that internally assembles labels, input fields, explanations, and error messages. Available directly from the package root are `Field` and its static members `Field.Control` and `Field.Item` . Adjust labels and descriptions using `slotProps` .
+
+```tsx
+<Field
+  label="nickname"
+  description="It will be visible to other users."
+  errorMatches={{ valueMissing: "Please enter your nickname." }}
+  slotProps={{ label: { style: { color: "#1d4ed8" } } }}
+>
+  <Field.Control required placeholder="Sooooo" />
+</Field>
+```
+
+If you want to combine multiple inputs into one field, such as a checkbox, surround each item with `Field.Item` .
+
+## Props [#props]
+
+### Specific props [#field-specific-props]
+
+<TypeTable
+  type={{
+    label: {
+      type: "React.ReactNode",
+      description: "This is the label displayed above the input field.",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "This is the explanatory text to be displayed below the input field.",
+    },
+    errorMatches: {
+      type: "Field.ErrorMatches",
+      default: "true",
+      description:
+        "The validation status of the error to display. If false is specified, no error message will be displayed.",
+    },
+    validity: {
+      type: "(state: Field.ValidityData) => React.ReactNode",
+      description:
+        "This is a function that returns the content to display depending on the validation status.",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "This is an input field placed between the label and the description.",
+    },
+    slotProps: {
+      type: "FieldSlotProps",
+      default: "{}",
+      description:
+        "This is an object for passing props to the label, description, error, and validation status parts.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Field is based on the Base UI's Field. The main props for validation and state are:
+
+<TypeTable
+  type={{
+    name: {
+      type: "string",
+      description: "This is the item name when submitting the form.",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disable the entire field.",
+    },
+    validate: {
+      type: `(value: unknown, formValues: Form.Values) =>\nstring | string[] | null | void |\nPromise<string | string[] | null | void>`,
+      description: "A function that performs its own validation.",
+    },
+    validationMode: {
+      type: `"onSubmit" | "onBlur" | "onChange"`,
+      description: "It's time to do some testing.",
+    },
+    validationDebounceTime: {
+      type: "number",
+      description: "Specifies the wait time in milliseconds when validating with onChange.",
+    },
+    invalid: {
+      type: "boolean",
+      description:
+        "Specify whether to treat it as an invalid state, independent of the verification result.",
+    },
+    dirty: {
+      type: "boolean",
+      description: "Specifies whether the value is treated as changed.",
+    },
+    touched: {
+      type: "boolean",
+      description: "Specify whether to treat it as operated.",
+    },
+    actionsRef: {
+      type: "React.RefObject<Field.Actions | null>",
+      description: "A reference for manipulating fields imperatively.",
+    },
+    className: {
+      type: `string |\n((state: Field.State) => string | undefined)`,
+      description: "Additional class name. When you pass a function, you receive state.",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Field.State) => React.CSSProperties)`,
+      description: "Inline style. When you pass a function, you receive state.",
+    },
+  }}
+/>
+
+Props other than those listed here are inherited from the Base UI's Field.
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    description: {
+      type: `Omit<FieldDescriptionProps, "children">`,
+      description: "Pass props to the description.",
+    },
+    error: {
+      type: `Omit<FieldErrorProps, "children" | "match">`,
+      description: "Pass common props to all error messages.",
+    },
+    label: {
+      type: `Omit<FieldLabelProps, "children">`,
+      description: "Pass props to the label.",
+    },
+    validity: {
+      type: `Omit<FieldValidityProps, "children">`,
+      description: "Pass props to display validation status.",
+    },
+  }}
+/>
+
+### parts [#parts-props]
+
+`Field` has `Field.Control` and `Field.Item` as static members. Labels, descriptions, errors, and validation status displays are configured as internal parts and adjusted from `slotProps` .
+
+| Parts                   | Description                                                                  |
+| ----------------------- | ---------------------------------------------------------------------------- | ------------ | --- |
+| `Field.Control`         | Native input field associated with label and validation.                     |
+| `Field.Item`            | Combines multiple inputs, such as checkboxes and radios, into a single item. | `Field.Item` |     |
+| `slotProps.label`       | Adjust label styles and attributes.                                          |
+| `slotProps.description` | Adjust the style and attributes of the description text.                     |
+| `slotProps.error`       | Adjust styles and attributes common to all error messages.                   |
+| `slotProps.validity`    | Adjust the display style and attributes according to the validation state.   |
+
+## Styling [#styling-hooks]
+
+The root element is given `sui_field` . Depending on the state, class names such as `sui_field-disabled` , `sui_field-touched` , `sui_field-dirty` , `sui_field-invalid` , `sui_field-valid` , `sui_field-unverified` , `sui_field-filled` , `sui_field-focused` are also added.
+
+Internal parts are given `sui_field_label` , `sui_field_description` , `sui_field_error` , `sui_field_control` , and `sui_field_item` , each with the same status qualification class.
+
+See also: [Component structure ](/guides/component-anatomy) , [Customize appearance ](/guides/styling) , [Form ](/components/form) ]

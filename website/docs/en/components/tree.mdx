@@ -1,0 +1,165 @@
+---
+title: Tree
+description: Explains Tree props, item structure, selection/expansion control, and appearance.
+---
+
+Tree displays hierarchies such as folders or categories. It follows the WAI-ARIA tree pattern, supporting keyboard move, selection, and expansion. Only expanded nodes render, so large hierarchies stay focused on what matters.
+
+## Basic usage [#basic-usage]
+
+Pass an array of nodes to `items`. Each node takes a unique `id`, a display `label`, and child `items`. Pass initially expanded node `id`s to `defaultExpandedValue`.
+
+<Component path="tree/basic" />
+
+A node `label` accepts React elements as well as strings. Including icons or badges in labels makes types easier to tell apart.
+
+| Field      | Type                         | Description                                                  |
+| ---------- | ---------------------------- | ------------------------------------------------------------ |
+| `id`       | `string`                     | A unique identifier for expansion/selection state. Required. |
+| `label`    | `React.ReactNode`            | Content shown in the node. Required.                         |
+| `items`    | `readonly Tree.ItemObject[]` | Child nodes. Non-empty nodes become expandable branches.     |
+| `disabled` | `boolean`                    | Disables the node. Enabled when omitted.                     |
+
+Props other than `id`, `label`, and `items` are passed to that item element.
+
+## Selection and expansion [#selection-and-expansion]
+
+By default, clicking a node selects only it. Shift-click selects a range of visible nodes; Ctrl/Meta-click toggles selection. Clicking a branch node without modifiers also toggles expansion.
+
+<Component path="tree/controlled" />
+
+To control selection, combine `value` and `onValueChange`; to control expansion, combine `expandedValue` and `onExpandedValueChange`. Both take arrays of identifiers.
+
+Keyboard operations:
+
+- `ArrowUp` / `ArrowDown`: Move between visible nodes.
+- `ArrowRight`: Expand a collapsed node or move to a child node.
+- `ArrowLeft`: Collapse an expanded node or move to the parent node.
+- `Home` / `End`: Move to the first/last node.
+- `Enter` / `Space`: Select the focused node.
+- `*`: Expand all collapsed branch nodes.
+
+## Appearance [#appearance]
+
+`variant` is the appearance of selected items; `color` is its color scheme. `muted` softens the item background; `outlined` adds a border to selected items.
+
+<Component path="tree/appearance" />
+
+`size` has 3 steps: `sm`, `md`, `lg`. The default `radius` matches `size`.
+
+## Props [#props]
+
+### Specific props [#tree-specific-props]
+
+<TypeTable
+  type={{
+    items: {
+      type: "readonly Tree.ItemObject[]",
+      default: "[]",
+      description: "The nodes shown in the tree.",
+    },
+    value: {
+      type: "readonly string[]",
+      description: "Specify to control selected node identifiers.",
+    },
+    defaultValue: {
+      type: "readonly string[]",
+      default: "[]",
+      description: "The initial selection for uncontrolled use.",
+    },
+    onValueChange: {
+      type: `(value: readonly string[],\nevent: React.SyntheticEvent) => void`,
+      description: "Called when the selection changes.",
+    },
+    expandedValue: {
+      type: "readonly string[]",
+      description: "Specify to control expanded node identifiers.",
+    },
+    defaultExpandedValue: {
+      type: "readonly string[]",
+      default: "[]",
+      description: "The initial expansion for uncontrolled use.",
+    },
+    onExpandedValueChange: {
+      type: `(value: readonly string[],\nevent: React.SyntheticEvent) => void`,
+      description: "Called when the expansion changes.",
+    },
+    children: {
+      type: `React.ReactNode |\n((node, level, posInSet, setSize) => React.ReactNode)`,
+      description: "Tree content, or a function rendering visible nodes. Normally omit it.",
+    },
+    slotProps: {
+      type: "TreeSlotProps",
+      default: "{}",
+      description: "An object for passing props to individual parts.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "The color scheme of selected items.",
+    },
+    variant: {
+      type: `"liquid" | "solid"`,
+      default: `"liquid"`,
+      description: "The main appearance of selected items.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The size of tree items.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: "Same as size",
+      description: "The border radius of item highlights.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to show a border on selected items.",
+    },
+    muted: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to soften the item background.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    item: {
+      type: "object",
+      description:
+        "Props passed to every item in common. children and tree-structure props cannot be specified.",
+    },
+    indicator: {
+      type: "object",
+      description:
+        "Props passed to every expansion indicator in common. visible is derived from having children.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+The root element is a `div`. It accepts `className`, `style`, `id`, `aria-*`, `data-*`, and similar attributes. Describe the whole tree with `aria-label` or `aria-labelledby`. Tree items render as `role="treeitem"`, and focus is consolidated on the root element.
+
+## Styling [#styling-hooks]
+
+The root element carries `sui_tree`. Depending on props, class names such as `sui_tree-size_md`, `sui_tree-color_blue`, `sui_tree-radius_md`, `sui_tree-variant_liquid`, `sui_tree-outlined`, and `sui_tree-muted` are added.
+
+Items carry `sui_tree_item`, plus `sui_tree_item-expanded` when expanded, `sui_tree_item-selected` when selected, and `sui_tree_item-disabled` when disabled. Expansion indicators carry `sui_tree_item_indicator`, with `sui_tree_item_indicator-hidden` for childless items.
+
+Item depth is exposed via the `--sui_tree_item-level` CSS variable. Use it to adjust indentation.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Layout and sizing](/guides/layout)

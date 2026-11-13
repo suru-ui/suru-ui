@@ -1,0 +1,319 @@
+---
+title: Autocomplete
+description: Describes autocomplete component suggestions, grouping, external filtering, and style hooks.
+---
+
+Autocomplete is an input field that narrows down the candidates based on the string you enter. Assists input in situations where there are many candidates, such as search forms and item selection. In addition to arrays of strings, you can pass objects that are pairs of display labels and values, or grouped items.
+
+## Basic usage [#basic-usage]
+
+Specify the list of candidates in `items` and the guidance text for the input field in `placeholder` . Click or type in the input field to open a pop-up with suggestions. If there are no candidates, the contents of `empty` will be displayed.
+
+<Component path="autocomplete/basic" />
+
+In addition to strings, you can also pass objects with `{ label, value }` to `items` . When using objects, `value` is used for the selection value and `label` is used to display suggestions.
+
+```tsx
+<Autocomplete
+  items={[
+    { label: "Tokyo", value: "13" },
+    { label: "Osaka prefecture", value: "27" },
+  ]}
+  placeholder="Search by prefecture"
+/>
+```
+
+## Grouped [#grouped]
+
+If you pass an array of groups with `{ label, items }` to `items` , each group will be displayed with a heading and a separator line. Specify `separator={false}` to hide the separator line at the end of the group.
+
+<Component path="autocomplete/grouped" />
+
+Items within a group can also be strings or `{ label, value }` objects. If you omit `label` for the group, no heading will be drawn.
+
+## External filtering [#filtering]
+
+You can disable filtering inside the component by specifying `filter={null}` . In this case, pass the suggestions to display to `filteredItems` . Suitable for using search API results or your own matching logic.
+
+<Component path="autocomplete/filtered" />
+
+Get the input value in `onValueChange` and update `filteredItems` accordingly. If you pass the number of items and loading status to `status` , the status will also be transmitted to the screen reader.
+
+## Props [#props]
+
+### Specific props [#autocomplete-specific-props]
+
+<TypeTable
+  type={{
+    backdrop: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to display an overlay on the popup background.",
+    },
+    children: {
+      type: "React.ReactNode |\n((item: TItem, index: number) => React.ReactNode)",
+      description:
+        "Contents of the search result list. You can draw each item by passing a function.",
+    },
+    empty: {
+      type: "React.ReactNode",
+      description: "This content is displayed only when the list is empty.",
+    },
+    endAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "This is the content to be displayed at the end of the input field.",
+    },
+    itemToRenderedValue: {
+      type: "(item: TItem, index: number) => React.ReactNode",
+      description:
+        "This is a function that creates candidate display contents from items. If omitted, label or string is used.",
+    },
+    items: {
+      type: "readonly TItem[]",
+      description:
+        "This is a list of candidates. If you specify an array of groups, each group will be displayed.",
+    },
+    placeholder: {
+      type: "string",
+      description: "Placeholder string for input field.",
+    },
+    separator: {
+      type: "boolean",
+      default: "true",
+      description:
+        "Whether to display a separator line at the end of the group. Applies only when using the default renderer.",
+    },
+    slotProps: {
+      type: "AutocompleteSlotProps<TItem>",
+      default: "{}",
+      description: "An object for passing individual props to each part.",
+    },
+    startAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "This is the content to be displayed at the beginning of the input field.",
+    },
+    status: {
+      type: "React.ReactNode",
+      description: "This is the content that reads out the status of asynchronous search, etc.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "The color applied to the border when focused.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "This is the size of input fields and list items.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: "Same as size",
+      description: "The size of the rounded corners of the input group.",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description:
+        "This is the main appearance of the input field. naked means no background, liquid means a thin fill.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to display a border around the input group.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Autocomplete is based on Base UI's Autocomplete, so props related to input values ​​and open/closed state can be passed as is. The main ones are:
+
+<TypeTable
+  type={{
+    value: {
+      type: "string",
+      description: "Specify this to control the value of the input field.",
+    },
+    defaultValue: {
+      type: "string",
+      description: "This is the initial value of the input field.",
+    },
+    onValueChange: {
+      type: "(value: string, eventDetails) => void",
+      description: "A callback that is called when the input value changes.",
+    },
+    open: {
+      type: "boolean",
+      description: "Specify to control whether the suggestion popup is open.",
+    },
+    defaultOpen: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to open the suggestion popup from the beginning.",
+    },
+    onOpenChange: {
+      type: "(open: boolean, eventDetails) => void",
+      description:
+        "This is a callback that is called when the open/closed state of the popup changes.",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to disable the input field.",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to make the input field read-only.",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to make the input field mandatory.",
+    },
+    filter: {
+      type: "null | ((item, query, itemToString) => boolean)",
+      description:
+        "A function that matches candidates. Specifying null disables internal filtering.",
+    },
+    filteredItems: {
+      type: "readonly TItem[]",
+      description:
+        "These are candidates narrowed down externally. If specified, it will be used instead of the internal filter.",
+    },
+    mode: {
+      type: `"list" | "both" | "inline" | "none"`,
+      default: `"list"`,
+      description: "Specifies refinement and inline completion behavior.",
+    },
+    autoHighlight: {
+      type: `boolean | "always"`,
+      default: "true",
+      description: "Whether to automatically highlight the first matching candidate.",
+    },
+    openOnInputClick: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to open a popup with suggestions when you click the input field.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    addon: {
+      type: "object",
+      description: "These are props to be passed to the attached elements of the input field.",
+    },
+    backdrop: {
+      type: "object",
+      description: "Props to pass to the background overlay.",
+    },
+    clear: {
+      type: "object",
+      description: "This is a prop to be passed to the button that clears the input value.",
+    },
+    collection: {
+      type: "object",
+      description:
+        "Props to pass to the collection of candidates. You can customize the drawing of items with children.",
+    },
+    content: {
+      type: "object",
+      description: "Props to pass to the contents of the scroll area.",
+    },
+    corner: {
+      type: "object",
+      description: "Props to be passed to the corner of the scroll area.",
+    },
+    empty: {
+      type: "object",
+      description: "Props to be passed to display when the candidate is empty.",
+    },
+    group: {
+      type: "object",
+      description: "These are the props to pass to the group.",
+    },
+    groupLabel: {
+      type: "object",
+      description: "These are the props to pass to the group heading.",
+    },
+    input: {
+      type: "object",
+      description:
+        "Props to be passed to the input field. placeholder can also be specified in the Autocomplete body.",
+    },
+    inputGroup: {
+      type: "object",
+      description:
+        "These are props to be passed to the group that collects input fields and attached elements.",
+    },
+    item: {
+      type: "object",
+      description:
+        "Props to be passed to each candidate. value and children are set from the item.",
+    },
+    list: {
+      type: "object",
+      description: "Props to pass to the list of candidates.",
+    },
+    popup: {
+      type: "object",
+      description: "Props to be passed to the suggestion popup.",
+    },
+    portal: {
+      type: "object",
+      description: "These are the props to pass to the portal.",
+    },
+    positioner: {
+      type: "object",
+      description: "Props to be passed to popup placement.",
+    },
+    scrollArea: {
+      type: "object",
+      description: "Props to be passed to the root of the scroll area.",
+    },
+    scrollbar: {
+      type: "object",
+      description: "Props to be passed to the scrollbar.",
+    },
+    separator: {
+      type: "object",
+      description: "Props to be passed to the group separator line.",
+    },
+    status: {
+      type: "object",
+      description: "Props passed to the area that reads the state.",
+    },
+    thumb: {
+      type: "object",
+      description: "Props to be passed to the scrollbar thumb.",
+    },
+    viewport: {
+      type: "object",
+      description: "Props to pass to the scroll area viewport.",
+    },
+  }}
+/>
+
+## Styling [#styling-hooks]
+
+Input groups are given `sui_autocomplete` . Depending on the props, class names such as `sui_autocomplete-size_md` , `sui_autocomplete-color_blue` , `sui_autocomplete-radius_md` , `sui_autocomplete-variant_liquid` , `sui_autocomplete-outlined` , `sui_autocomplete-open` , `sui_autocomplete-disabled` , `sui_autocomplete-readonly` , `sui_autocomplete-focused` are also added.
+
+Internal parts are given `sui_autocomplete_input` , `sui_autocomplete_item` , `sui_autocomplete_group` , `sui_autocomplete_group_label` , `sui_autocomplete_empty` , `sui_autocomplete_popup` , etc. `sui_autocomplete_item-highlighted` is used for candidate highlighting.
+
+In addition to adjusting `className` and `style` , you can override widths and margins using CSS variables.
+
+See also: [Component structure ](/guides/component-anatomy) , [Customize appearance ](/guides/styling) , [Display asynchronous state ](/guides/async-state) ]

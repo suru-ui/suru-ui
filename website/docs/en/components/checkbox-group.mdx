@@ -1,0 +1,128 @@
+---
+title: CheckboxGroup
+description: Describes the CheckboxGroup component's props, multiple selection control, full selection, orientation and appearance.
+---
+
+CheckboxGroup is a component that collects multiple Checkboxes into a selection group. It manages an array of selection values ​​and propagates the appearance such as size and color scheme to the Checkboxes in the group.
+
+## Basic usage [#basic-usage]
+
+Specify `value` for the child Checkbox and pass an array of selection values ​​to `defaultValue` or `value` . Enclose the label in `label` elements.
+
+<Component path="checkbox-group/basic" />
+
+Checkboxes within a group inherit the group's `size` , `color` , `radius` , `variant` , `outlined` . Group settings override the appearance specified for individual Checkboxes.
+
+## Select all [#select-all]
+
+By specifying all the values ​​in the group in `allValues` and placing a Checkbox with `parent` attached, you can switch between selecting all and deselecting all. The parent Checkbox will be in a checked or intermediate state depending on the selected state of the child.
+
+<Component path="checkbox-group/parent" />
+
+## Orientation and appearance [#orientation-and-appearance]
+
+If you specify `orientation="horizontal"` , they will be arranged horizontally. Color scheme and size can be specified for each group.
+
+<Component path="checkbox-group/appearance" />
+
+## Props [#props]
+
+### Specific props [#checkbox-group-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "Checkboxes and labels to include in the group.",
+    },
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"vertical"`,
+      description: "This is the direction in which the checkboxes are arranged.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "Color scheme for checkboxes within a group.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "Size of checkboxes within the group.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: "Same as size",
+      description: "Rounded corners of checkboxes within a group.",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "This is the main appearance of checkboxes within a group.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to display borders around checkboxes within the group.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+CheckboxGroup is based on Base UI's CheckboxGroup. The props for managing selection values ​​are:
+
+<TypeTable
+  type={{
+    value: {
+      type: "string[]",
+      description: "An array of selected values. Specify when controlling.",
+    },
+    defaultValue: {
+      type: "string[]",
+      description: "An array of initial selection values.",
+    },
+    onValueChange: {
+      type: "(value: string[],\ndetails: CheckboxGroup.ChangeEventDetails) => void",
+      description: "A callback called when the selected value changes.",
+    },
+    allValues: {
+      type: "string[]",
+      description: "All values ​​within the group. Used in select all checkbox with parent.",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disable the entire group.",
+    },
+    className: {
+      type: `string |\n((state: CheckboxGroup.State) => string | undefined)`,
+      description: "Additional class name. When you pass a function, you receive state.",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: CheckboxGroup.State) => React.CSSProperties)`,
+      description: "Inline style. When you pass a function, you receive state.",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "Replace the root element with another element.",
+    },
+  }}
+/>
+
+Group status can be obtained with `CheckboxGroup.useContext()` . States include `size` , `color` , `radius` , `variant` , `outlined` , `orientation` , `disabled` , etc. Props other than those listed here are inherited from CheckboxGroup in Base UI.
+
+## Styling [#styling-hooks]
+
+The root element is given `sui_checkbox_group` . Depending on the props, class names such as `sui_checkbox_group-size_md` , `sui_checkbox_group-color_blue` , `sui_checkbox_group-radius_md` , `sui_checkbox_group-variant_liquid` , `sui_checkbox_group-outlined` , `sui_checkbox_group-orientation_horizontal` are also added.
+
+It is given `sui_checkbox_group-disabled` in the disabled state, and `sui_checkbox_group-invalid` or `sui_checkbox_group-valid` in the verified state.
+
+See also: [Component structure ](/guides/component-anatomy) , [Customize appearance ](/guides/styling) , [Checkbox ](/components/checkbox)

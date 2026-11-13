@@ -1,0 +1,86 @@
+---
+title: Layout and sizing
+description: How to fit component width, arrangement, and density to layout requirements.
+---
+
+Component appearance breaks down easily when considered apart from the page layout. This guide uses Button to explain how to fit width, arrangement, and density to your layout.
+
+Code examples use icons from `lucide-react`. Any other icon library works the same way.
+
+## Width [#width]
+
+Button renders as `inline-flex`, so it sizes to its content by default. To stretch it to the parent width, specify `width`.
+
+```tsx
+<Button color="blue" style={{ width: "100%" }}>
+  保存
+</Button>
+```
+
+To lay out several elements in a row and stretch only one to fill the rest, combine a flex layout with `flex: 1`.
+
+```tsx
+import { EllipsisIcon } from "lucide-react";
+import { Button } from "@suru-ui/react";
+
+<div style={{ display: "flex", gap: "0.5rem" }}>
+  <Button color="blue" style={{ flex: 1 }}>
+    保存
+  </Button>
+  <Button squared aria-label="その他の操作">
+    <EllipsisIcon aria-hidden="true" />
+  </Button>
+</div>;
+```
+
+## Size [#size]
+
+When a component offers `size`, choose it to match surrounding information density. Button has four steps: `xs`, `sm`, `md`, and `lg`.
+
+```tsx
+<Button size="sm">小さめ</Button>
+<Button size="lg">大きめ</Button>
+```
+
+To reduce height, use density props such as `thin`. For icon-only buttons, `squared` makes a square shape that aligns heights easily.
+
+```tsx
+import { Trash2Icon } from "lucide-react";
+import { Button } from "@suru-ui/react";
+
+<>
+  <Button size="sm" thin>
+    閉じる
+  </Button>
+  <Button squared aria-label="削除">
+    <Trash2Icon aria-hidden="true" />
+  </Button>
+</>;
+```
+
+**Radius**
+
+Match corner radius to the page's overall design language. When a component offers `radius`, specify it via props rather than custom CSS.
+
+```tsx
+<Button radius="full">丸いボタン</Button>
+```
+
+When Button's `radius` is omitted, the default follows `size`: smaller buttons get a smaller radius and larger buttons the standard one, keeping proportions balanced per size.
+
+## List items [#item]
+
+Sometimes you want to split a label and auxiliary elements to opposite ends, as in menu or list items. Button's `item` is a layout prop for that use case.
+
+```tsx
+<Button item style={{ width: "100%" }}>
+  <span>設定</span>
+  <span aria-hidden="true">›</span>
+</Button>
+```
+
+`item` narrows horizontal padding and justifies content to both ends. It can look cramped on regular action buttons, so reserve it for use inside lists.
+
+`thin`, `squared`, and `item` are Button examples. Not every component has the same props. Check each component reference for layout-affecting props.
+
+Related: [Component anatomy](/guides/component-anatomy), [Styling](/guides/styling), [Button reference](/components/button)

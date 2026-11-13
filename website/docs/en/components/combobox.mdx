@@ -1,0 +1,312 @@
+---
+title: Combobox
+description: Describes the Combobox component's props, multiple selection, grouping, asynchronous search, and appearance.
+---
+
+Combobox is a component that selects a value from predefined items while narrowing down the candidates in an input field. It supports both single selection and multiple selection, and is used in situations where there are many candidates or when you want to obtain candidates according to input. You can also switch to placing the input field inside the popup.
+
+## Basic usage [#basic-usage]
+
+Specify the candidate array in `items` and pass the input field guidance text to `placeholder` . As you type, the default filter narrows down the suggestions.
+
+<Component path="combobox/basic" />
+
+If there are no candidates, the contents of `empty` will be displayed. `status` is used to inform screen readers about the progress of asynchronous searches.
+
+## multiple selection [#multiple]
+
+`multiple` allows you to select multiple values. The selected value will be displayed as a chip in the input field and can be deselected using the Delete Chip button.
+
+<Component path="combobox/multiple" />
+
+Setting `keepFilterOnSelect` to `true` allows the input field to remain filtered and the popup to remain open even after selecting an item.
+
+## Grouped [#grouping]
+
+If objects with `label` and `items` are arranged in `items` , each group will be displayed with a heading and a dividing line. You can remove the separator line at the end of the group with `separator={false}` .
+
+<Component path="combobox/grouped" />
+
+## Asynchronous search [#async-search]
+
+If you want to get suggestions from the server, disable default filtering in `filter={null}` and receive input values ​​in `onInputValueChange` to update `items` . If you pass a search or error message to `status` , it will read the status.
+
+<Component path="combobox/async-search" />
+
+`itemToStringLabel` converts the selected value to a string to be displayed in the input field or chip. By specifying `isItemEqualToValue` , you can independently determine the identity of items.
+
+## Props [#props]
+
+### Specific props [#combobox-specific-props]
+
+<TypeTable
+  type={{
+    items: {
+      type: "readonly TItem[]",
+      description:
+        "This is a list of candidates. If you specify an array of groups, each group will be separated and displayed.",
+    },
+    label: {
+      type: "React.ReactNode",
+      description: "The label to display above the input field or trigger.",
+    },
+    placeholder: {
+      type: "string",
+      description: "This is the string displayed in the input field when no value is selected.",
+    },
+    empty: {
+      type: "React.ReactNode",
+      default: `"Not applicable"`,
+      description: "This is what is displayed when there are no candidates.",
+    },
+    status: {
+      type: "React.ReactNode",
+      description: "This is the content to read out the status such as searching or error.",
+    },
+    startAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description:
+        "This is an attached element that is displayed at the beginning of the input field.",
+    },
+    endAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "This is an attached element that is displayed at the end of the input field.",
+    },
+    arrow: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to display arrows in popups.",
+    },
+    backdrop: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to display the background behind the popup.",
+    },
+    inputInPopup: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to place the search input field in the popup.",
+    },
+    keepFilterOnSelect: {
+      type: "boolean",
+      default: "false",
+      description:
+        "When selecting multiple items, determines whether to maintain filtering and popup display even after selecting an item.",
+    },
+    separator: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to display a separator line at the end of the group.",
+    },
+    itemLabelRenderer: {
+      type: "(item: TItem, context) => React.ReactNode",
+      description:
+        "This is a function that generates labels to be displayed on items in the candidate list.",
+    },
+    chipLabelRenderer: {
+      type: "(item: TItem, context) => React.ReactNode",
+      description:
+        "This is a function that generates a label to be displayed on the chip when multiple selections are made.",
+    },
+    slotProps: {
+      type: "ComboboxSlotProps<TItem, TMultiple>",
+      default: "{}",
+      description: "An object for passing individual props to each internal part.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "This is the color scheme applied to the border when focusing.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "This is the size of the input field and candidate items.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: "Same as size",
+      description: "Rounded corners for groups containing input fields.",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "This is the main appearance of the input field. liquid will be a thin fill.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to display a border around the group containing the input field.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Combobox is based on the Base UI Combobox. The main props related to values ​​and open/closed states are as follows.
+
+<TypeTable
+  type={{
+    value: {
+      type: "TItem | TItem[] | null",
+      description: "Controls the selection value. When multiple is true, it becomes an array.",
+    },
+    defaultValue: {
+      type: "TItem | TItem[] | null",
+      description: "This is the initial selection value.",
+    },
+    onValueChange: {
+      type: "(value: TItem | TItem[] | null,\ndetails: Combobox.ChangeEventDetails) => void",
+      description: "A callback called when the selected value changes.",
+    },
+    multiple: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to enable multiple selection.",
+    },
+    open: {
+      type: "boolean",
+      description: "Controls the open/close state of the popup.",
+    },
+    defaultOpen: {
+      type: "boolean",
+      description: "Whether to open the popup by default.",
+    },
+    onOpenChange: {
+      type: "(open: boolean,\ndetails: Combobox.ChangeEventDetails) => void",
+      description:
+        "This is a callback that is called when the open/closed state of the popup changes.",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "A callback called when the opening/closing animation is complete.",
+    },
+    inputValue: {
+      type: "string",
+      description: "Controls the value of the input field.",
+    },
+    defaultInputValue: {
+      type: "string",
+      description: "This is the initial value of the input field.",
+    },
+    onInputValueChange: {
+      type: "(value: string,\ndetails: Combobox.ChangeEventDetails) => void",
+      description: "A callback that is called when the input value changes.",
+    },
+    filter: {
+      type: "Combobox.IFilter | null",
+      description:
+        "This is how to narrow down the candidates. Specifying null disables the default filter.",
+    },
+    filteredItems: {
+      type: "readonly TItem[]",
+      description: "Specify this when passing candidates narrowed down externally.",
+    },
+    itemToStringLabel: {
+      type: "(item: TItem) => string",
+      description: "This is a function that converts an item to a display label.",
+    },
+    itemToStringValue: {
+      type: "(item: TItem) => string",
+      description: "A function that converts an item into a value to be sent to a form.",
+    },
+    isItemEqualToValue: {
+      type: "(item: TItem, value: TItem) => boolean",
+      description: "This function determines whether the item and selected value are equal.",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "Disable combo box.",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "Make it read-only.",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to make it a required field in the form.",
+    },
+    autoHighlight: {
+      type: "boolean",
+      description: "Whether to automatically highlight the first candidate.",
+    },
+    highlightItemOnHover: {
+      type: "boolean",
+      description: "Whether to highlight when the pointer is over a candidate.",
+    },
+    openOnInputClick: {
+      type: "boolean",
+      description: "Whether to open a popup when clicking in the input field.",
+    },
+    className: {
+      type: `string |\n((state: Combobox.State) => string | undefined)`,
+      description: "Class name to add to the input group.",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Combobox.State) => React.CSSProperties)`,
+      description: "Inline style applied to input groups.",
+    },
+  }}
+/>
+
+Props other than those listed here are inherited from Combobox in Base UI.
+
+### slotProps [#slot-props]
+
+`slotProps` allows you to pass props to each part assembled by the default renderer.
+
+| Key                 | Description                                                                                      |
+| ------------------- | ------------------------------------------------------------------------------------------------ | --------------- | --- |
+| `addon`             | Ancillary element of the input field. `children` is specified by `startAddons` and `endAddons` . |
+| `arrow`             | Pop-up arrow.                                                                                    |
+| `backdrop`          | Popup background.                                                                                |
+| `chip`              | Chip for multiple selection. `value` is passed from the selection.                               |
+| `chipRemove`        | Chip deletion button.                                                                            |
+| `chips`             | Element that holds the chips together.                                                           |
+| `clear`             | This button clears the selected value.                                                           |
+| `collection`        | A collection that draws the items in the group.                                                  |
+| `content`           | Contents of the scroll area.                                                                     |
+| `corner`            | Corner of the scroll area.                                                                       |
+| `display`           | An element that displays a selection value instead of an input field.                            |
+| `empty`             | Displayed when there are no candidates. `children` is specified by `empty` .                     |
+| `group`             | Candidate group.                                                                                 |
+| `groupLabel`        | Group heading.                                                                                   |
+| `icon`              | Icon to be displayed at the end of the input field.                                              |
+| `input`             | Input field for search.                                                                          |
+| `inputGroupInPopup` | Input group within the popup.                                                                    |
+| `item`              | Candidate item.                                                                                  |
+| `itemIndicator`     | Indicator to display on selected candidates.                                                     | `itemIndicator` |     |
+| `list`              | Candidate list.                                                                                  |
+| `popup`             | This is a popup that displays suggestions.                                                       |
+| `portal`            | Portal that draws a popup.                                                                       |
+| `positioner`        | Element that controls popup placement.                                                           |
+| `scrollArea`        | Scroll area for candidate list.                                                                  |
+| `scrollbar`         | Scroll bar.                                                                                      |
+| `separator`         | Group separation line.                                                                           |
+| `status`            | Element that reads the search status.                                                            |
+| `thumb`             | Scroll bar knob.                                                                                 |
+| `trigger`           | Trigger when placing the input field in a popup.                                                 |
+| `value`             | Displays the selected value. You can specify your own renderer with `children` .                 |
+| `viewport`          | Viewport of the scroll area.                                                                     |
+
+## Styling [#styling-hooks]
+
+Input groups are given `sui_combobox` . Depending on the state, class names such as `sui_combobox-size_md` , `sui_combobox-color_blue` , `sui_combobox-radius_md` , `sui_combobox-variant_liquid` , `sui_combobox-outlined` , `sui_combobox-open` , `sui_combobox-disabled` , `sui_combobox-placeholder` are also added.
+
+Popups are given `sui_combobox_popup` and `sui_combobox_popup-size_*` , `sui_combobox_popup-open` , `sui_combobox_popup-empty` , `sui_combobox_popup-side_*` , `sui_combobox_popup-align_*` , etc. are added depending on the state.
+
+Candidate items are marked with `sui_combobox_item` and also have a status class such as `sui_combobox_item-selected` , `sui_combobox_item-highlighted` , `sui_combobox_item-disabled` , etc. Chips are marked `sui_combobox_chip` .
+
+See also: [Component structure ](/guides/component-anatomy) , [Customize appearance ](/guides/styling) , [Display asynchronous state ](/guides/async-state) ]

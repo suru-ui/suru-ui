@@ -1,0 +1,97 @@
+---
+title: Component Design
+description: Explains the design intent behind presets, parts, Base UI, slots, states, and styles, using Button as an example.
+---
+
+This page explains what combination of pieces Suru UI components are made of, and why they are structured that way. Button is used as a small concrete example for understanding the design.
+
+## Presets and Parts [#preset-and-parts]
+
+Suru UI components are split into ready-to-use presets and the parts that compose them. A preset is a pre-assembled common structure and style. Parts are the individual elements that make up that preset.
+
+In Button, `Root` carries appearance and state, `Content` renders the label, and `Addon` handles auxiliary elements before and after it. `Pending` and `CircularProgress` are used for the pending state.
+
+This two-layer structure has the following benefits:
+
+- Common use cases are covered by using the preset as is.
+- To change only part of the internals, adjust via `slotProps`.
+- To change the structure itself, compose parts directly.
+
+Rather than assembling everything from parts from the start, the design is to use the preset first and descend to the lower layer only where needed.
+
+## Base UI [#base-ui]
+
+Many Suru UI presets are built on Base UI components and utilities. Base UI is an unstyled component library for React that provides low-level behavior such as state management, keyboard interaction, ARIA, and render-element replacement. Suru UI adds theme, appearance, and preset structure on top of it.
+
+With this division, Suru UI can focus on consistency of appearance and usage while relying on Base UI's implementation for complex interactive behavior. Representative props coming from this foundation include `render`, `nativeButton`, `focusableWhenDisabled`, and `className` or `style` that take state as an argument.
+
+## Slots [#slots]
+
+Slots are named places among the parts a preset renders internally where props can be injected from outside. Unlike React `children` or portals, they are designed as extension points into the preset's internal structure.
+
+`slotProps` is an object keyed by slot name. It lets you adjust part of the internals while keeping the preset's structure. Not every preset has `slotProps`, and slot names and counts differ by component.
+
+For slot providers, there is the benefit of not having to expose the entire internal structure. For consumers, there is the benefit of staying aligned with preset updates. Only when you want to change the structure itself, consider direct part composition.
+
+## State and Appearance [#state-and-appearance]
+
+In Suru UI, props that select appearance are distinguished from state that changes with interaction.
+
+Button's `variant`, `color`, and `size` are appearance props. Hover, active, focus, disabled, and pending are states. Separating appearance props from state lets the same-looking piece be used consistently across states.
+
+State-dependent styles can be expressed by passing a function to `className` or `style`. Component-specific class names or CSS variables are also available, but the starting point is the public props and state mechanism.
+
+## Part Composition [#part-composition]
+
+When the preset's structure or order does not fit your requirements, compose parts directly. Importing a module of parts with `import * as` as a namespace makes clear which parts belong to which component.
+
+```tsx
+import * as ButtonParts from "./button";
+
+export function CustomButton() {
+  return (
+    <ButtonParts.Root color="blue">
+      <ButtonParts.Content>保存</ButtonParts.Content>
+    </ButtonParts.Root>
+  );
+}
+```
+
+`./button` in this example is a placeholder for a module of parts. Replace the actual import source with the entry point exposed by the package you use. Part availability varies by package version.
+
+Direct part handling is flexible but depends on the preset's internal structure. When the goal can be achieved with a preset or `slotProps`, prefer that for more resilient code.
+
+## Styling and Accessibility [#styling]
+
+Component styles are composed with theme tokens, CSS variables, and CSS cascade layers.
+
+- Values such as colors, spacing, and font sizes come from theme tokens.
+- Base styles are defined in the `sui.component` layer, and states such as disabled and pending in the `sui.important` layer.
+- Resets apply only to elements whose class names contain `sui_`.
+
+This structure keeps application-wide styles and component styles from colliding. Since normal application CSS sits outside the layers, overrides via classes or CSS variables take precedence.
+
+For large visual changes, first consider props such as `variant` and `color`, and adjust only what is missing with `slotProps`, CSS variables, and extra classes.
+
+**Accessibility**
+
+Even when reusing a component's appearance, keep the element semantics appropriate for the purpose.
+
+- Use button for form submission and in-page actions.
+- Use links for page navigation.
+- Name icon-only controls with `aria-label`.
+- Distinguish disabled from in-progress, and consider focus and screen-reader announcement for in-progress states.
+
+Button renders a native button element by default so that keyboard operation, focus, and screen-reader announcement are left to the standard behavior of browsers and elements. Even when moving the appearance to another element, preserve this semantics.
+
+**Summary**
+
+Suru UI's component design can be summarized as follows:
+
+- Start with presets, and adjust internals with `slotProps` as needed.
+- To change structure, compose parts as a namespace.
+- Think of Base UI behavior separately from Suru UI appearance and theme.
+- Prefer props and tokens for appearance, and use CSS supplementally.
+- Preserve element semantics and accessibility.
+
+Related: [Component Anatomy](/guides/component-anatomy), [Composition](/guides/composition), [Styling](/guides/styling), [Button Reference](/components/button)

@@ -1,0 +1,87 @@
+---
+title: ScrollArea
+description: Explains ScrollArea scroll direction, scrollbar display, and part props.
+---
+
+ScrollArea fits content into a scrollable region. It keeps native scrolling while showing slim scrollbars. Use it to fit long text, tables, or wide layouts into a limited area.
+
+## Basic usage [#basic-usage]
+
+Pass the scrollable content to `children`. Set height and width via the root `style` or `className`.
+
+<Component path="scroll-area/basic" />
+
+A vertical scrollbar is always rendered in the scroll region. It hides when content fits, but `slotProps.scrollbar.keepMounted` keeps it in the DOM.
+
+## Horizontal [#horizontal]
+
+Passing `horizontal` also shows a horizontal scrollbar. Use it when content is wider than the region.
+
+<Component path="scroll-area/horizontal" />
+
+The vertical scrollbar renders regardless of `horizontal`.
+
+## Scrollbar [#scrollbar]
+
+Passing `alwaysShowScrollbar` keeps scrollbars visible even when the scroll region is not hovered. Use `slotProps.scrollbar` and `slotProps.horizontalScrollbar` to pass props to each bar.
+
+<Component path="scroll-area/always-show" />
+
+```tsx
+<ScrollArea alwaysShowScrollbar slotProps={{ scrollbar: { keepMounted: true } }}>
+  {/* ... */}
+</ScrollArea>
+```
+
+## Props [#props]
+
+### Specific props [#scroll-area-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "The content shown in the scroll region.",
+    },
+    horizontal: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to show the horizontal scrollbar.",
+    },
+    slotProps: {
+      type: "ScrollAreaSlotProps",
+      description: "An object for passing props to individual parts.",
+    },
+    alwaysShowScrollbar: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to always show scrollbars.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| Slot                  | Type                                                          | Description                                                    |
+| --------------------- | ------------------------------------------------------------- | -------------------------------------------------------------- |
+| `content`             | `Omit<ScrollAreaContentProps, "children">`                    | Props passed to the element wrapping the content.              |
+| `corner`              | `ScrollAreaCornerProps`                                       | Props passed to the corner where scrollbars intersect.         |
+| `horizontalScrollbar` | `Omit<ScrollAreaScrollbarProps, "children" \| "orientation">` | Props passed to the horizontal scrollbar.                      |
+| `horizontalThumb`     | `ScrollAreaThumbProps`                                        | Props passed to the horizontal thumb.                          |
+| `scrollbar`           | `Omit<ScrollAreaScrollbarProps, "children" \| "orientation">` | Props passed to the vertical scrollbar. Accepts `keepMounted`. |
+| `thumb`               | `ScrollAreaThumbProps`                                        | Props passed to the vertical thumb.                            |
+| `viewport`            | `Omit<ScrollAreaViewportProps, "children">`                   | Props passed to the viewport clipping the content.             |
+
+### Inherited props [#inherited-props]
+
+ScrollArea is built on Base UI Scroll Area. The root accepts `overflowEdgeThreshold`, the distance considered near an edge.
+
+The root renders a `div`, so it also accepts `className`, `style`, `id`, `aria-*`, `data-*`, and similar attributes. `className` and `style` accept functions receiving `ScrollArea.State`.
+
+## Styling [#styling-hooks]
+
+The root element carries `sui_scroll_area`. Depending on state, class names such as `sui_scroll_area-scrolling`, `sui_scroll_area-has_overflow_x`, `sui_scroll_area-has_overflow_y`, `sui_scroll_area-overflow_y_end`, and `sui_scroll_area-always_show_scrollbar` are added.
+
+Inner parts carry `sui_scroll_area_viewport`, `sui_scroll_area_content`, `sui_scroll_area_scrollbar`, `sui_scroll_area_thumb`, and `sui_scroll_area_corner`. Scrollbars also gain direction classes such as `sui_scroll_area_scrollbar-orientation_vertical`.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Layout and sizing](/guides/layout)

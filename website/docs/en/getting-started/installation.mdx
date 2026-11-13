@@ -1,0 +1,72 @@
+---
+title: Installation
+description: Add the Suru UI packages and load the styles needed to render a Button.
+---
+
+Add Suru UI to your React project so you can render a Button.
+
+## Requirements [#requirements]
+
+- React >=19.0.0
+
+## Install the package [#install-package]
+
+```package-install
+npm i @suru-ui/theme @suru-ui/react
+```
+
+## Styles [#load-styles]
+
+At your application entry point, load the Suru UI CSS exactly once.
+
+```tsx src/main.tsx
+import "@suru-ui/theme/suru.css";
+import "@suru-ui/react/suru.css";
+
+import * as React from "react";
+import { createRoot } from "react-dom/client";
+
+import App from "./App";
+
+createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
+```
+
+`@suru-ui/theme/suru.css` contains theme tokens and reset styles. `@suru-ui/react/suru.css` contains component styles. Without loading the CSS, Button renders with the browser's default appearance.
+
+## Check the rendering [#render-button]
+
+Once the CSS is loaded, import and place a component.
+
+```tsx src/App.tsx
+import { Button } from "@suru-ui/react";
+
+export default function App() {
+  return <Button color="blue">Save</Button>;
+}
+```
+
+Start the dev server and confirm that a blue "Save" button appears.
+
+## Color theme [#color-theme]
+
+When you select `@suru-ui/theme/suru.css`, Suru UI CSS follows the system color theme by default. To switch manually, set `data-theme` on the `html` element to `light` or `dark`.
+
+```html
+<html lang="en" data-theme="dark"></html>
+```
+
+No JavaScript is needed to switch themes. To update it from application state, change `data-theme` with ordinary DOM operations or your framework's mechanism.
+
+If you need only light-theme or only dark-theme design tokens, import `@suru-ui/theme/suru-light.css` or `@suru-ui/theme/suru-dark.css` respectively.
+
+| Stylesheet                      | Selectable themes | Default theme     |
+| ------------------------------- | ----------------- | ----------------- |
+| `@suru-ui/theme/suru.css`       | light and dark    | Browser-dependent |
+| `@suru-ui/theme/suru-light.css` | light only        | light             |
+| `@suru-ui/theme/suru-dark.css`  | dark only         | dark              |
+
+Continue to [Your first Button](/getting-started/first-button) to learn basic props while building real buttons.

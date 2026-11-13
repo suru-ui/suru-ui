@@ -1,0 +1,92 @@
+---
+title: Stat
+description: Explains Stat label, value, trend, description, and size.
+---
+
+Stat displays a number with supplementary info. Combine label, value, change trend, and description to show dashboard metrics or report figures.
+
+## Basic usage [#basic-usage]
+
+Pass display content to `label`, `value`, `trend`, and `description`. `value` also accepts strings and elements, so digit grouping or units work.
+
+<Component path="stat/basic" />
+
+Stat renders a `dl`, arranging the label as `dt` and the value, trend, and description as `dd`. Heading relationships are conveyed as a definition list.
+
+## Trend [#trend]
+
+Pass change content to `trend`. When `slotProps.trend.direction` is omitted, `up`, `down`, or `flat` is inferred from the sign of the leading number in the content. Uninferrable content is treated as `flat`.
+
+<Component path="stat/trend" />
+
+Arrows and colors change by direction so increases and decreases are visually distinct. When text alone is ambiguous, specify `direction` explicitly.
+
+## Size [#size]
+
+`size` has 3 steps: `sm`, `md`, `lg`. Use `sm` for secondary metrics in cards and `lg` for primary metrics to express priority.
+
+<Component path="stat/sizes" />
+
+## Props [#props]
+
+### Specific props [#stat-specific-props]
+
+<TypeTable
+  type={{
+    label: {
+      type: "React.ReactNode",
+      description: "The stat label. Rendered as a dt element when specified.",
+    },
+    value: {
+      type: "React.ReactNode",
+      description: "The stat value. Accepts numbers, strings, and elements.",
+    },
+    trend: {
+      type: "React.ReactNode",
+      description: "Content showing the value change. Direction is inferred from the numeric sign.",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "Supplementary stat description. Shown below the value and trend.",
+    },
+    slotProps: {
+      type: "StatSlotProps",
+      description: "An object for passing props to individual parts.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "Sets the size of label, value, trend, and description at once.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| Slot          | Type                                     | Description                                                  |
+| ------------- | ---------------------------------------- | ------------------------------------------------------------ |
+| `label`       | `Omit<StatLabelProps, "children">`       | Props passed to the label `dt` element.                      |
+| `value`       | `Omit<StatValueProps, "children">`       | Props passed to the value `dd` element.                      |
+| `trend`       | `Omit<StatTrendProps, "children">`       | Props passed to the trend `dd` element. Accepts `direction`. |
+| `description` | `Omit<StatDescriptionProps, "children">` | Props passed to the description `dd` element.                |
+
+`trend` `direction` is one of `up`, `down`, or `flat`.
+
+### Inherited props [#inherited-props]
+
+Stat renders a `dl`, so it accepts `className`, `style`, `id`, `aria-*`, `data-*`, and similar attributes. `className` and `style` also accept functions receiving `Stat.State`, whose state includes `size`. `render` replaces the root element.
+
+## Styling [#styling-hooks]
+
+The root element carries `sui_stat`, plus `sui_stat-size_lg` and similar classes according to `size`.
+
+Inner parts carry `sui_stat_label`, `sui_stat_value`, `sui_stat_trend`, and `sui_stat_description`. Trends also gain direction classes such as `sui_stat_trend-direction_up`.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling), [Layout and sizing](/guides/layout)

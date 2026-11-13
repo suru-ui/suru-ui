@@ -1,0 +1,122 @@
+---
+title: Form
+description: Describes Form component validation timing, server errors, submitted values, and imperative validation.
+---
+
+Form is a component that summarizes the form's validation state and collects the values ​​as an object upon submission. By default it draws the native `<form>` element and works with the internal `Field` to control error display. In addition to native form attributes, you can take advantage of the validation mechanisms provided by Form in Base UI.
+
+## Basic usage [#basic-usage]
+
+Create an input field by combining `Field` and `Input` and place a submit button. `onFormSubmit` allows you to receive form values ​​as objects when submitting.
+
+<Component path="form/basic" />
+
+If you specify `onFormSubmit` , the native submit event will automatically call `preventDefault()` . If you want to use regular `onSubmit` , you can still pass event handlers.
+
+## Validation and errors [#validation]
+
+Specify the verification timing with `validationMode` . If you pass a server-side error to `errors` , the message will be displayed in `Field` with the appropriate `name` .
+
+<Component path="form/validation" />
+
+| Value      | Validation Timing                                                                           |
+| ---------- | ------------------------------------------------------------------------------------------- |
+| `onSubmit` | Validate on submission and then revalidate on each value change. This is the default value. |
+| `onBlur`   | Validate when field loses focus.                                                            |
+| `onChange` | Validate every time the value changes.                                                      |
+
+The keys of `errors` correspond to `name` of `Field` . The value specifies the message to display. When used with `errorMatches` on the `Field` side, native validation messages can also be displayed in Japanese.
+
+## Submit values ​​and imperative validation [#actions]
+
+The first argument of `onFormSubmit` is passed an object of input values ​​with `name` as the key. The second argument contains the sending details.
+
+```tsx
+<Form
+  onFormSubmit={(values, details) => {
+    console.log(values, details.reason);
+  }}
+>
+  {/*field*/}
+</Form>
+```
+
+`actionsRef` allows you to perform validation from outside the form. In addition to validating all fields, you can validate only specific field names.
+
+```tsx
+const actionsRef = React.useRef<Form.Actions>(null);
+
+<Form actionsRef={actionsRef}>{/*field*/}</Form>;
+
+actionsRef.current?.validate();
+actionsRef.current?.validate("email");
+```
+
+## Props [#props]
+
+### Specific props [#form-specific-props]
+
+<TypeTable
+  type={{
+    validationMode: {
+      type: `"onSubmit" | "onBlur" | "onChange"`,
+      default: `"onSubmit"`,
+      description:
+        "It's time to validate the field. If validationMode on the Field side is specified, that takes precedence.",
+    },
+    errors: {
+      type: "Record<string, string | string[]>",
+      description:
+        "This is a validation error that occurred on the server side, etc. The key corresponds to the field's name, and the value specifies the message.",
+    },
+    onFormSubmit: {
+      type: `(formValues: Record<string, any>,\neventDetails: Form.SubmitEventDetails) => void`,
+      description:
+        "Called when the form is submitted. Receive form values ​​and submission details.",
+    },
+    actionsRef: {
+      type: "React.RefObject<Form.Actions | null>",
+      description:
+        "A ref for imperative validation. You can validate entire fields or specific fields with validate.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Since the Form is based on the Base UI Form, it can pass attributes accepted by the native form element as well as props provided by the Base UI Form.
+
+<TypeTable
+  type={{
+    onSubmit: {
+      type: "React.FormEventHandler<HTMLFormElement>",
+      description: "Handler for the native submit event.",
+    },
+    noValidate: {
+      type: "boolean",
+      description: "Whether to disable native browser validation.",
+    },
+    className: {
+      type: `string |\n((state: Form.State) => string | undefined)`,
+      description: "Additional class name. When you pass a function, you receive state.",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Form.State) => React.CSSProperties)`,
+      description: "Inline style. When you pass a function, you receive state.",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "Replace the root element with another element.",
+    },
+  }}
+/>
+
+## Styling [#styling-hooks]
+
+The root element is given `sui_form` . The Form is arranged as a vertical flex container, and `--sui_form-gap` allows you to adjust the spacing between child elements.
+
+```tsx
+<Form style={{ "--sui_form-gap": "1.5rem" } as React.CSSProperties}>{/*field*/}</Form>
+```
+
+See also: [Component structure ](/guides/component-anatomy) , [Asynchronous state display ](/guides/async-state) , [Appearance customization ](/guides/styling) ]

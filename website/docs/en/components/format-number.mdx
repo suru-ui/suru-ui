@@ -1,0 +1,126 @@
+---
+title: FormatNumber
+description: Describes the formatting of the FormatNumber component, including locale, currency, units, and abbreviations.
+---
+
+FormatNumber is a component that formats and displays numbers according to the locale. You can specify thousands separators, currency, percentages, units, abbreviations, etc. with the `Intl.NumberFormat` options. Since it is drawn as a text node, visual adjustments are made on the parent element side.
+
+## Basic usage [#basic-usage]
+
+Specifies the number to format in `value` . If `locales` is omitted, the default locale of the execution environment will be used, so if you want to fix the display, specify `"ja-JP"` etc.
+
+<Component path="format-number/basic" />
+
+Toggle `style` to select decimal, currency, percent, and unit formats. For currency, specify the ISO 4217 currency code in `currency` .
+
+## Notation and units [#notation]
+
+`notation="compact"` can be used to shorten large numbers. Combining `style="unit"` and `unit` allows you to attach units to numbers.
+
+<Component path="format-number/notation" />
+
+`currencySign="accounting"` displays negative currency amounts in parentheses. `signDisplay` can also be used to add a sign to positive values. Adjust the number of digits with `minimumFractionDigits` and `maximumFractionDigits` .
+
+## Props [#props]
+
+### Specific props [#format-number-specific-props]
+
+<TypeTable
+  type={{
+    value: {
+      type: "number | bigint",
+      description: "The number to format. Required.",
+    },
+    locales: {
+      type: `string | Intl.Locale |\nreadonly (string | Intl.Locale)[]`,
+      description:
+        "The locale used to format numbers. If omitted, the default locale of the execution environment will be used.",
+    },
+    style: {
+      type: `"decimal" | "currency" | "percent" | "unit"`,
+      default: `"decimal"`,
+      description: "The type of number format.",
+    },
+    currency: {
+      type: "string",
+      description: "Currency code. Used when style is currency.",
+    },
+    currencyDisplay: {
+      type: `"symbol" | "narrowSymbol" | "code" | "name"`,
+      description:
+        "This is how the currency is displayed. Choose from symbols, short symbols, currency codes, and currency names.",
+    },
+    currencySign: {
+      type: `"standard" | "accounting"`,
+      description:
+        "How to display negative currency amounts. In accounting, it is enclosed in parentheses.",
+    },
+    unit: {
+      type: "string",
+      description: "It is a unit. Used when style is unit. Example: kilometer, byte.",
+    },
+    unitDisplay: {
+      type: `"short" | "narrow" | "long"`,
+      description: "Unit display style.",
+    },
+    notation: {
+      type: `"standard" | "scientific" |\n"engineering" | "compact"`,
+      description:
+        "This is a way to represent numerical values. In compact, it is abbreviated as 15,000.",
+    },
+    compactDisplay: {
+      type: `"short" | "long"`,
+      description: "This is a display style for abbreviations.",
+    },
+    signDisplay: {
+      type: `"auto" | "always" | "exceptZero" |\n"negative" | "never"`,
+      description: "This is how the sign of a number is displayed.",
+    },
+    minimumFractionDigits: {
+      type: "number",
+      description: "Minimum number of digits after the decimal point.",
+    },
+    maximumFractionDigits: {
+      type: "number",
+      description: "Maximum number of digits after the decimal point.",
+    },
+    minimumSignificantDigits: {
+      type: "number",
+      description: "Minimum number of significant digits.",
+    },
+    maximumSignificantDigits: {
+      type: "number",
+      description: "Maximum number of significant digits.",
+    },
+    useGrouping: {
+      type: `boolean | "always" | "auto" | "min2"`,
+      description: "Whether to display scale separators.",
+    },
+    roundingMode: {
+      type: `Intl.NumberFormatOptions["roundingMode"]`,
+      description: "How to round numbers.",
+    },
+    roundingIncrement: {
+      type: "number",
+      description: "The rounding step width.",
+    },
+    trailingZeroDisplay: {
+      type: `"auto" | "stripIfInteger"`,
+      description: "How to display trailing zeros after the decimal point.",
+    },
+  }}
+/>
+
+Props other than `value` and `locales` correspond to `Intl.NumberFormat` options. Options not listed here can be passed as is in `Intl.NumberFormatOptions` .
+
+## Styling [#styling-hooks]
+
+Because FormatNumber draws formatted text, it does not output HTML elements or class names that start with `sui_` . If you want to change the font color or size, specify the style in the parent element such as `span` or `strong` .
+
+```tsx
+<p style={{ fontSize: "1.5rem", fontWeight: 700 }}>
+  <FormatNumber value={1234} style="currency" currency="JPY" locales="ja-JP" />
+</p>
+```
+
+See also: [Customize appearance ](/guides/styling) , [Component structure ](/guides/component-anatomy) ]

@@ -1,0 +1,141 @@
+---
+title: Card
+description: Describes the Card component's header, interaction elements, footer, appearance, and style hooks.
+---
+
+A Card is a component that displays a collection of information and operations. Combine the title, description, body, and footer into a single frame and use it as an item in a list or dashboard. You can place the operation elements at the top right of the header and the buttons at the end at the same time.
+
+## Basic usage [#basic-usage]
+
+Specify the heading in `title` , the supplement in `description` , and the body in `children` . Pass `footer` any operations or additional information to place at the end of the card.
+
+<Component path="card/basic" />
+
+If `title` , `description` , and `action` are all omitted, no header is drawn. This is useful when you want to create a card that only displays the main text.
+
+```tsx
+<Card title="plan" description="Current contract details">
+  Next update date is December 1st.
+</Card>
+```
+
+## Control elements and footers [#actions]
+
+If you pass an element to `action` it will be placed at the top right of the header. Good for indicating card status or auxiliary actions, such as badges or icon buttons. Confirm and cancel buttons can be arranged in `footer` .
+
+<Component path="card/action" />
+
+You can use `slotProps.action` and `slotProps.footer` to pass individual props to each element.
+
+## Appearance [#appearance]
+
+`size` specifies the margins and font size of the entire card, and `radius` specifies the rounded corners. `outlined` controls the display of borders.
+
+<Component path="card/appearance" />
+
+If `radius` is omitted, the value will be the same as `size` . If you erase the border, the border will be expressed using only the background color, so be careful of the contrast with the background.
+
+## Props [#props]
+
+### Specific props [#card-specific-props]
+
+<TypeTable
+  type={{
+    action: {
+      type: "React.ReactNode",
+      description: "This is an operation element displayed at the top right of the card header.",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "This is the text of the card.",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "A description that supplements the card title.",
+    },
+    footer: {
+      type: "React.ReactNode",
+      description:
+        "Operations and supplementary information to be displayed at the end of the card.",
+    },
+    slotProps: {
+      type: "CardSlotProps",
+      default: "{}",
+      description: "An object for passing individual props to each part.",
+    },
+    title: {
+      type: "React.ReactNode",
+      description: "The title of the card.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "It's the size of the card.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "Same as size",
+      description:
+        "This is the size of the rounded corners of the card. If omitted, the value will be the same as size.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to display a border on the card.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    action: {
+      type: "object",
+      description:
+        "These are props to be passed to the operation element at the top right of the header.",
+    },
+    content: {
+      type: "object",
+      description: "Props to pass to the body element. Children is specified by Card's children.",
+    },
+    description: {
+      type: "object",
+      description: "Props to be passed to the description element.",
+    },
+    footer: {
+      type: "object",
+      description: "Props to be passed to the footer element.",
+    },
+    header: {
+      type: "object",
+      description:
+        "Props to be passed to the header element. If there is no title, description, or operation element, it will be ignored.",
+    },
+    title: {
+      type: "object",
+      description: "Props to be passed to the title element.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Card draws a `div` element, so you can pass attributes like `className` , `style` , `id` , `aria-*` , `data-*` , etc. You can also replace the root element with another element with `render` . The remaining props are inherited from the base `div` element.
+
+## Styling [#styling-hooks]
+
+The root element is given `sui_card` . Depending on the props, class names such as `sui_card-size_md` , `sui_card-radius_md` , `sui_card-outlined` are also added.
+
+Internal parts are given `sui_card_header` , `sui_card_title` , `sui_card_description` , `sui_card_action` , `sui_card_content` , `sui_card_footer` .
+
+In addition to adjusting `className` and `style` , you can override margins and width using CSS variables.
+
+See also: [Component structure ](/guides/component-anatomy) , [Customize appearance ](/guides/styling) , [Layout and size ](/guides/layout) ]

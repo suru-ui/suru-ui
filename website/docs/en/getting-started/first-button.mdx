@@ -1,0 +1,129 @@
+---
+title: Your first Button
+description: Build a save toolbar while learning basic Button props and form usage.
+---
+
+In this tutorial, you will build a toolbar with Save and Cancel buttons. Run the finished code while learning basic Button usage.
+
+## What you will build [#what-you-will-build]
+
+You will build a toolbar like this.
+
+- "Cancel" is a subtle button with no background.
+- "Save" is a blue filled button.
+- Pressing "Save" logs a message to the console.
+
+## Place buttons [#place-buttons]
+
+First, create `src/SaveToolbar.tsx`.
+
+```tsx src/SaveToolbar.tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveToolbar() {
+  return (
+    <div style={{ display: "flex", gap: "0.5rem" }}>
+      <Button variant="naked">Cancel</Button>
+      <Button color="blue">Save</Button>
+    </div>
+  );
+}
+```
+
+`Button`'s `children` become the button label. Use `color` for the color scheme and `variant` for the main appearance.
+
+- The default `color` is `"grey"`.
+- The default `variant` is `"solid"`. `"naked"` renders no background.
+
+**Mount in the app**
+
+Render the toolbar from `src/App.tsx`.
+
+```tsx src/App.tsx
+import { SaveToolbar } from "./SaveToolbar";
+
+export default function App() {
+  return <SaveToolbar />;
+}
+```
+
+Start the dev server and confirm the two buttons sit side by side.
+
+## Handle clicks [#handle-click]
+
+Add a handler for pressing "Save".
+
+```tsx src/SaveToolbar.tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveToolbar() {
+  function handleSave() {
+    console.log("Saved");
+  }
+
+  return (
+    <div style={{ display: "flex", gap: "0.5rem" }}>
+      <Button variant="naked">Cancel</Button>
+      <Button color="blue" onClick={handleSave}>
+        Save
+      </Button>
+    </div>
+  );
+}
+```
+
+`onClick` behaves the same as on a native button element.
+
+## Submit a form [#submit-form]
+
+The button element rendered by Button uses `type="button"` by default. To make it submit a form, specify `type="submit"` explicitly.
+
+```tsx
+import { Button } from "@suru-ui/react";
+import * as React from "react";
+
+export function SaveForm() {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.log("Form submitted");
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Button type="submit" color="blue">
+        Save
+      </Button>
+    </form>
+  );
+}
+```
+
+:::note
+Omitting `type` means `"button"`, so it will not accidentally submit when placed inside a form. Specify `type="submit"` only when using it as a submit button.
+:::
+
+## Try states [#try-states]
+
+Changing basic props adjusts appearance and behavior.
+
+```tsx
+<Button size="sm">Small</Button>
+<Button radius="full">Pill button</Button>
+<Button disabled>Disabled</Button>
+<Button outlined color="red">
+  Delete
+</Button>
+```
+
+See the [Button reference](/components/button) for details on each prop.
+
+## Next steps [#next-steps]
+
+<CardGroup cols={2}>
+  <Card title="Component anatomy" href="/guides/component-anatomy" icon="component">
+    Learn the relationship between presets, parts, and slots.
+  </Card>
+  <Card title="Showing async state" href="/guides/async-state" icon="loader">
+    Reflect loading and disabled states in components.
+  </Card>
+</CardGroup>

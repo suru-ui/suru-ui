@@ -1,0 +1,298 @@
+---
+title: AlertDialog
+description: Describes the AlertDialog component's confirmation flow, appearance, opening/closing controls, and style hooks.
+---
+
+AlertDialog is a modal dialog that asks for confirmation before irreversible operations such as deletion. Darkens the background and blocks other actions until you choose to confirm or cancel. You can configure the title, description, icon, confirmation button, and cancel button all at once.
+
+## Basic usage [#basic-usage]
+
+Specify the element that opens the dialog in `trigger` and the confirmation content in `title` and `description` . `cancel` and `confirm` are the abort and confirm buttons respectively. Pressing either will close the dialog.
+
+<Component path="alert-dialog/basic" />
+
+If you pass an element to `children` , it will be displayed as the body below the description. Used to store supplementary information necessary for confirmation, such as a list of items to be deleted.
+
+```tsx
+<AlertDialog
+  trigger={<Button color="red">delete<</Button>}
+  title="Do you want to delete it?"
+  description="This operation cannot be undone."
+  cancel={<Button variant="naked">cancel<</Button>}
+  confirm={<Button color="red">delete<</Button>}
+>
+  <p>List of items to be deleted.<</p>
+</AlertDialog>
+```
+
+`Button` etc. can be passed as is to `confirm` and `cancel` . If you pass your own content to `footer` , `cancel` and `confirm` will still be placed after the footer content.
+
+## Appearance [#appearance]
+
+`variant` can be selected from `default` and `stacked` . `stacked` puts the heading and description in the center and stacks the operations in the top right. `size` , `radius` , `outlined` control the size, rounded corners, and borders of the dialog.
+
+<Component path="alert-dialog/appearance" />
+
+Passing an icon to `icon` will display it to the left of the header. The color scheme and background of the icon can be adjusted with `slotProps.icon` . If you omit `action` and change `showCancelIconButton` to `true` , a close icon button will appear in the top right corner.
+
+## Controlled [#controlled]
+
+`open` and `onOpenChange` allow you to control opening and closing of dialogs from external state. It is also possible to omit `trigger` and open it from any button.
+
+<Component path="alert-dialog/controlled" />
+
+By specifying `defaultOpen` , you can display it in the open state from the beginning. If you want to manipulate it imperatively, create a handle in `AlertDialog.createHandle()` and pass it to `handle` .
+
+If you want to perform validation when the confirmation button is pressed, if there is a problem with `onConfirm` , you can call `event.preventBaseUIHandler()` to stop the process without closing the dialog.
+
+## Props [#props]
+
+### Specific props [#alertdialog-specific-props]
+
+<TypeTable
+  type={{
+    action: {
+      type: "React.ReactNode",
+      description:
+        "This is an operation element displayed at the top right of the header. If you omit showCancelIconButton to true, the close icon button will be displayed.",
+    },
+    cancel: {
+      type: "React.ReactNode",
+      description: "A button to cancel and close the dialog.",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "This is the body of the dialog. It will be displayed below the description.",
+    },
+    confirm: {
+      type: "React.ReactNode",
+      description: "This button confirms and closes the dialog.",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "A description of the dialog. Displayed in the header.",
+    },
+    footer: {
+      type: "React.ReactNode",
+      description:
+        "This is the content to be displayed at the end of the dialog. If cancel and confirm are specified, they will be placed after the footer content.",
+    },
+    icon: {
+      type: "React.ReactNode",
+      description: "Dialog icon.",
+    },
+    onCancel: {
+      type: "(event: React.MouseEvent<HTMLButtonElement> &\n{ preventBaseUIHandler: () => void }) => void",
+      description: "A callback called when the abort button is clicked.",
+    },
+    onConfirm: {
+      type: "(event: React.MouseEvent<HTMLButtonElement> &\n{ preventBaseUIHandler: () => void }) => void",
+      description: "A callback called when the confirmation button is clicked.",
+    },
+    showCancelIconButton: {
+      type: "boolean",
+      default: "false",
+      description:
+        "Whether to display the close icon button in the upper right corner. It is not displayed if action is specified.",
+    },
+    slotProps: {
+      type: "AlertDialogSlotProps",
+      default: "{}",
+      description: "An object for passing individual props to each part.",
+    },
+    title: {
+      type: "React.ReactNode",
+      description: "Dialog heading.",
+    },
+    trigger: {
+      type: "React.ReactNode",
+      description:
+        "A trigger that opens a dialog. If only slotProps.toggleTrigger is specified, it will not be drawn.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "Dialog size.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "Same as size",
+      description:
+        "The size of the rounded corners of the dialog. If omitted, the value will be the same as size.",
+    },
+    variant: {
+      type: `"default" | "stacked"`,
+      default: `"default"`,
+      description:
+        "This is the main appearance of the dialog. Stacked aligns headings and descriptions in the center and stacks operations in the top right.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "Whether to display a border in the dialog.",
+    },
+  }}
+/>
+
+### Icon props [#icon-props]
+
+The following props can be passed to `slotProps.icon` .
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"red"`,
+      description: "The color scheme of the icon.",
+    },
+    muted: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to make the background color of the icon more subtle.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to display a border around the icon.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: "Same as size",
+      description: "The size of the rounded corners of the icon.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "The size of the icon.",
+    },
+    variant: {
+      type: `"solid" | "naked" | "liquid"`,
+      default: `"liquid"`,
+      description: "This is the main appearance of the icon.",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    action: {
+      type: "object",
+      description:
+        "These are props to be passed to the operation element at the top right of the header.",
+    },
+    backdrop: {
+      type: "object",
+      description: "Props to pass to the background overlay.",
+    },
+    cancelTrigger: {
+      type: "object",
+      description:
+        "Props to be passed to the abort button element. children is specified by cancel.",
+    },
+    confirmTrigger: {
+      type: "object",
+      description:
+        "Props to be passed to the confirmation button element. children is specified with confirm.",
+    },
+    content: {
+      type: "object",
+      description:
+        "Props to pass to the body element. Children is specified in children of AlertDialog.",
+    },
+    description: {
+      type: "object",
+      description: "Props to be passed to the description element.",
+    },
+    footer: {
+      type: "object",
+      description: "Props to be passed to the footer element.",
+    },
+    header: {
+      type: "object",
+      description: "Props to be passed to the header element.",
+    },
+    icon: {
+      type: "object",
+      description:
+        "Props to be passed to the icon element. You can adjust the appearance with color, muted, etc.",
+    },
+    portal: {
+      type: "object",
+      description: "These are the props to pass to the portal.",
+    },
+    title: {
+      type: "object",
+      description: "Props to be passed to the heading element.",
+    },
+    toggleTrigger: {
+      type: "object",
+      description: "These are the props to pass to the trigger. Children are specified in trigger.",
+    },
+    viewport: {
+      type: "object",
+      description: "Props to be passed to the viewport where the dialog will be placed.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Since AlertDialog is based on Base UI's AlertDialog, props related to open/closed state can be passed as is.
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "Specify to control whether the dialog is open.",
+    },
+    defaultOpen: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to display it in the open state from the beginning.",
+    },
+    onOpenChange: {
+      type: "(open: boolean, eventDetails) => void",
+      description: "This is a callback called when the open/closed state changes.",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "A callback called when the opening/closing animation is complete.",
+    },
+    handle: {
+      type: "AlertDialogHandle<TPayload>",
+      description:
+        "A handle for opening and closing on command. Create with AlertDialog.createHandle().",
+    },
+    triggerId: {
+      type: "string",
+      description: "An ID that identifies the open dialog trigger.",
+    },
+    defaultTriggerId: {
+      type: "string",
+      description: "An ID that identifies the trigger when it first opens.",
+    },
+    actionsRef: {
+      type: "React.RefObject<AlertDialog.Actions | null>",
+      description: "A ref for imperatively manipulating the dialog.",
+    },
+  }}
+/>
+
+## Styling [#styling-hooks]
+
+Dialog popups are given `sui_alert_dialog_popup` and `sui_card` from cards. Depending on the props, class names such as `sui_alert_dialog_popup-size_md` , `sui_alert_dialog_popup-radius_md` , `sui_alert_dialog_popup-variant_stacked` , `sui_alert_dialog_popup-outlined` are also added.
+
+Internal parts are given `sui_alert_dialog_backdrop` , `sui_alert_dialog_viewport` , `sui_alert_dialog_header` , `sui_alert_dialog_icon` , `sui_alert_dialog_title` , `sui_alert_dialog_description` , `sui_alert_dialog_content` , `sui_alert_dialog_footer` .
+
+In addition to adjusting `className` and `style` , you can override margins and width using CSS variables.
+
+See also: [Component structure ](/guides/component-anatomy) , [Appearance customization ](/guides/styling) , [Element and component composition ](/guides/composition) ]

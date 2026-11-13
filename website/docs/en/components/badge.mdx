@@ -1,0 +1,110 @@
+---
+title: Badge
+description: Explains the Badge component's props, appearance, and overlay usage.
+---
+
+Badge is a small label that shows a status or count. It can stand alone or be overlaid on the corner of an avatar or icon with `position`.
+
+## Basic usage [#basic-usage]
+
+Pass the displayed content to `children`. Use a short number or label, such as a notification count.
+
+<Component path="badge/basic" />
+
+With `variant="dot"`, only a small dot is rendered without content. Add an `aria-label` when the status carries no content.
+
+```tsx
+<Badge variant="dot" color="blue" aria-label="You have unread notifications" />
+```
+
+**Appearance**
+
+Use `color` for the color scheme and `size` for the size. `outlined` shows a border, and `ring` shows a ring that separates the badge from the element underneath.
+
+```tsx
+<Badge color="green">Done</Badge>
+<Badge color="orange" outlined>Pending</Badge>
+<Badge color="red" ring>3</Badge>
+```
+
+## Overlay [#overlay]
+
+With `position`, the badge is absolutely positioned at one of the four corners of the positioned ancestor. `overlap` adjusts where the badge center sits based on the shape of the anchor element.
+
+<Component path="badge/overlay" />
+
+- `overlap="rectangular"`: centers the badge on the corner of a rectangle.
+- `overlap="circular"`: centers the badge on the circumference of a circle.
+
+## Props [#props]
+
+### Specific props [#badge-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "The content shown in the badge. Not rendered when variant is dot.",
+    },
+    variant: {
+      type: `"standard" | "dot"`,
+      default: `"standard"`,
+      description: "The main appearance of the badge. dot renders a small dot without content.",
+    },
+    position: {
+      type: `"top-left" | "top-right" |\n"bottom-left" | "bottom-right"`,
+      description:
+        "Overlays the badge on a corner of the positioned ancestor. When omitted, it renders in normal flow.",
+    },
+    overlap: {
+      type: `"rectangular" | "circular"`,
+      default: `"rectangular"`,
+      description:
+        "The shape of the overlaid element. circular adjusts the position onto the circumference.",
+    },
+    ring: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to show a ring around the badge.",
+    },
+  }}
+/>
+
+### Appearance props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "The color scheme of the badge.",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"sm"`,
+      description: "The size of the badge.",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: `"full"`,
+      description: "The corner radius.",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "Whether to show a border.",
+    },
+  }}
+/>
+
+### Inherited props [#inherited-props]
+
+Badge renders a `span`, so it accepts attributes such as `className`, `style`, `id`, `aria-*`, and `data-*`. When using `position`, give the parent `position: relative` or `position: absolute`.
+
+## Styling [#styling-hooks]
+
+The root element gets `sui_badge`. Depending on props, class names such as `sui_badge-size_sm`, `sui_badge-color_red`, `sui_badge-radius_full`, and `sui_badge-variant_dot` are added.
+
+You can adjust it with `className` or `style`, or override sizing and spacing with the `--sui_badge-*` CSS variables.
+
+See also: [Component anatomy](/guides/component-anatomy), [Customizing appearance](/guides/styling)
