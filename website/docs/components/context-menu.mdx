@@ -1,0 +1,236 @@
+---
+title: ContextMenu
+description: ContextMenu コンポーネントの props、項目オブジェクト、サブメニュー、チェック項目とラジオ項目を説明します。
+---
+
+ContextMenu は、右クリックまたは長押しで開くメニューです。ファイル操作やテキスト編集など、対象を選んでから操作を表示する場面で使います。`items` に項目オブジェクトを並べるだけで、グループやサブメニュー、チェック項目、ラジオ項目を組み立てられます。
+
+## 使い方 [#basic-usage]
+
+`trigger` に右クリックの対象を、`items` にメニューの項目を指定します。項目は `label` を持つオブジェクトで、`color` を指定すると破壊的な操作を赤系で表示できます。
+
+<Component path="context-menu/basic" />
+
+メニューを開く対象には、`div` や画像などを渡せます。開閉を `open` で制御する場合は、トリガーを省略して外部の要素から開けます。
+
+## グループとサブメニュー [#groups-and-submenus]
+
+`items` を入れ子にするとグループになり、`label` を付けると見出しが表示されます。`type: "submenu"` の項目は、子の `items` をサブメニューとして表示します。
+
+<Component path="context-menu/items" />
+
+グループの末尾には区切り線が表示されます。項目の `label` には、アイコンやキーボードショートカットを表す `kbd` 要素なども配置できます。
+
+## 状態を持つ項目 [#stateful-items]
+
+`type: "checkbox"` の項目はオンとオフを切り替えられます。`type: "radio-group"` の項目は、子の `type: "radio"` から 1 つを選びます。選択状態を制御する場合は、`checked` と `onCheckedChange`、または `value` と `onValueChange` を指定します。
+
+<Component path="context-menu/stateful" />
+
+チェック済みの表示には `checkboxIndicator`、ラジオ選択済みの表示には `radioIndicator` を使います。どちらも `slotProps` で個別に props を渡せます。
+
+## props [#props]
+
+### 固有 props [#context-menu-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "右クリックまたは長押しの対象として描画する要素です。",
+    },
+    items: {
+      type: "readonly TItem[]",
+      description:
+        "メニューに表示する項目の一覧です。グループやサブメニューのオブジェクトも指定できます。",
+    },
+    children: {
+      type: `React.ReactNode |\n((item: TItem, index: number, items: readonly TItem[]) => React.ReactNode)`,
+      description:
+        "ポップアップの内容、または各項目を描画する関数です。省略時は items を既定のレンダラーで表示します。",
+    },
+    checkboxIndicator: {
+      type: "React.ReactNode",
+      description: "チェック項目が選択されているときに表示する内容です。",
+    },
+    radioIndicator: {
+      type: "React.ReactNode",
+      description: "ラジオ項目が選択されているときに表示する内容です。",
+    },
+    slotProps: {
+      type: "ContextMenuSlotProps",
+      default: "{}",
+      description: "内部の各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ポップアップと項目の大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "size と同じ値",
+      description: "ポップアップと項目の角丸です。",
+    },
+    variant: {
+      type: `"solid" | "naked" | "liquid"`,
+      default: `"naked"`,
+      description: "項目の主な外観です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "ポップアップに枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+ContextMenu は Base UI の ContextMenu を基盤にしています。開閉状態に関する主な props は次のとおりです。
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "メニューの開閉状態を制御します。",
+    },
+    defaultOpen: {
+      type: "boolean",
+      description: "初期状態でメニューを開くかどうかです。",
+    },
+    onOpenChange: {
+      type: "(open: boolean,\ndetails: ContextMenu.ChangeEventDetails) => void",
+      description: "開閉状態が変わったときに呼ばれるコールバックです。",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "開閉のアニメーションが完了したときに呼ばれるコールバックです。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "メニューを開けないようにします。",
+    },
+    loopFocus: {
+      type: "boolean",
+      description: "キーボード操作で末尾から先頭へ循環するかどうかです。",
+    },
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      description: "メニューの矢印キー操作の向きです。",
+    },
+    highlightItemOnHover: {
+      type: "boolean",
+      description: "ポインターが項目の上にあるときにハイライトするかどうかです。",
+    },
+    className: {
+      type: `string |\n((state: ContextMenu.State) => string | undefined)`,
+      description: "ポップアップに追加するクラス名です。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: ContextMenu.State) => React.CSSProperties)`,
+      description: "ポップアップに適用するインラインスタイルです。",
+    },
+  }}
+/>
+
+メニューの項目は `color`、`disabled`、`onClick` などを個別に受け取ります。項目の `color` には Button と同じ配色を指定できます。ここに挙げた以外の props は Base UI の ContextMenu から継承します。
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    backdrop: {
+      type: `Omit<ContextMenuBackdropProps, "children">`,
+      description: "ポップアップの背景に props を渡します。",
+    },
+    checkboxItem: {
+      type: `Omit<ContextMenuCheckboxItemProps, "children">`,
+      description: "チェック項目に props を渡します。",
+    },
+    checkboxItemIndicator: {
+      type: `Omit<ContextMenuCheckboxItemIndicatorProps, "children">`,
+      description: "チェック済みの表示に props を渡します。",
+    },
+    group: {
+      type: `Omit<ContextMenuGroupProps, "children">`,
+      description: "グループに props を渡します。",
+    },
+    groupLabel: {
+      type: `Omit<ContextMenuGroupLabelProps, "children">`,
+      description: "グループの見出しに props を渡します。",
+    },
+    item: {
+      type: `Omit<ContextMenuItemProps, "children">`,
+      description: "通常の項目に props を渡します。",
+    },
+    linkItem: {
+      type: `Omit<ContextMenuLinkItemProps, "children">`,
+      description: "リンク項目に props を渡します。",
+    },
+    portal: {
+      type: `Omit<ContextMenuPortalProps, "children">`,
+      description: "ポータルに props を渡します。",
+    },
+    positioner: {
+      type: `Omit<ContextMenuPositionerProps, "children">`,
+      description: "ポップアップの配置に props を渡します。align や sideOffset を指定できます。",
+    },
+    radioGroup: {
+      type: `Omit<ContextMenuRadioGroupProps, "children" | "items">`,
+      description: "ラジオグループに props を渡します。",
+    },
+    radioItem: {
+      type: `Omit<ContextMenuRadioItemProps, "children" | "value">`,
+      description: "ラジオ項目に props を渡します。",
+    },
+    radioItemIndicator: {
+      type: `Omit<ContextMenuRadioItemIndicatorProps, "children">`,
+      description: "ラジオ選択済みの表示に props を渡します。",
+    },
+    separator: {
+      type: "ContextMenuSeparatorProps",
+      description: "区切り線に props を渡します。",
+    },
+    submenuRoot: {
+      type: `Omit<ContextMenuSubmenuRootProps, "children">`,
+      description: "サブメニューのルートに props を渡します。",
+    },
+    submenuTrigger: {
+      type: `Omit<ContextMenuSubmenuTriggerProps, "children">`,
+      description: "サブメニューを開く項目に props を渡します。",
+    },
+    trigger: {
+      type: `Omit<ContextMenuTriggerProps, "children">`,
+      description: "右クリックの対象に props を渡します。children は trigger で指定します。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルートは HTML 要素を描画しないため、クラス名はポップアップとトリガーに付与されます。
+
+| クラス名                                    | 条件                                        |
+| ------------------------------------------- | ------------------------------------------- |
+| `sui_context_menu_popup`                    | 常に付与されます。                          |
+| `sui_context_menu_popup-open`               | メニューが開いているときに付与されます。    |
+| `sui_context_menu_popup-size_md` など       | `size` に応じて付与されます。               |
+| `sui_context_menu_popup-radius_md` など     | `radius` に応じて付与されます。             |
+| `sui_context_menu_popup-variant_naked` など | `variant` に応じて付与されます。            |
+| `sui_context_menu_popup-outlined`           | `outlined` が `true` のときに付与されます。 |
+| `sui_context_menu_trigger`                  | トリガーに常に付与されます。                |
+| `sui_context_menu_item`                     | 各項目に常に付与されます。                  |
+| `sui_context_menu_checkbox_item`            | チェック項目に付与されます。                |
+
+項目には `sui_context_menu_item-highlighted` と `sui_context_menu_item-disabled` が、チェック項目にはさらに `sui_context_menu_item-checked` が加わります。ポップアップの配置に応じて `sui_context_menu_popup-side_*` と `sui_context_menu_popup-align_*` が付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[Dialog](/components/dialog)

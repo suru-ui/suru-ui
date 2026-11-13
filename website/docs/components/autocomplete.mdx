@@ -1,0 +1,310 @@
+---
+title: Autocomplete
+description: Autocomplete コンポーネントの候補表示、グループ化、外部フィルタリング、スタイルのフックを説明します。
+---
+
+Autocomplete は、入力した文字列に応じて候補を絞り込む入力欄です。検索フォームや項目選択など、候補が多い場面で入力を補助します。文字列の配列のほか、表示ラベルと値を組にしたオブジェクトや、グループ化した項目を渡せます。
+
+## 使い方 [#basic-usage]
+
+`items` に候補の一覧を、`placeholder` に入力欄の案内文を指定します。入力欄をクリックするか文字を入力すると、候補のポップアップが開きます。候補がないときは `empty` の内容が表示されます。
+
+<Component path="autocomplete/basic" />
+
+`items` には文字列のほか、`{ label, value }` を持つオブジェクトも渡せます。オブジェクトを使う場合は、`value` が選択値、`label` が候補の表示に使われます。
+
+```tsx
+<Autocomplete
+  items={[
+    { label: "東京都", value: "13" },
+    { label: "大阪府", value: "27" },
+  ]}
+  placeholder="都道府県を検索"
+/>
+```
+
+## グループ化 [#grouped]
+
+`items` に `{ label, items }` を持つグループの配列を渡すと、グループごとに見出しと区切り線を付けて表示します。`separator={false}` を指定すると、グループ末尾の区切り線を非表示にできます。
+
+<Component path="autocomplete/grouped" />
+
+グループ内の項目にも、文字列または `{ label, value }` のオブジェクトを指定できます。グループの `label` を省略すると、見出しは描画されません。
+
+## 外部で絞り込む [#filtering]
+
+`filter={null}` を指定すると、コンポーネント内部の絞り込みを無効にできます。この場合は `filteredItems` に表示する候補を渡します。検索 API の結果や独自の照合ロジックを使うときに適しています。
+
+<Component path="autocomplete/filtered" />
+
+`onValueChange` で入力値を取得し、その値に応じて `filteredItems` を更新します。`status` に件数や読み込み状態を渡すと、スクリーンリーダーにも状態が伝わります。
+
+## props [#props]
+
+### 固有 props [#autocomplete-specific-props]
+
+<TypeTable
+  type={{
+    backdrop: {
+      type: "boolean",
+      default: "false",
+      description: "ポップアップの背景にオーバーレイを表示するかどうかです。",
+    },
+    children: {
+      type: "React.ReactNode |\n((item: TItem, index: number) => React.ReactNode)",
+      description: "検索結果リストの内容です。関数を渡すと各項目を描画できます。",
+    },
+    empty: {
+      type: "React.ReactNode",
+      description: "リストが空のときだけ表示する内容です。",
+    },
+    endAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "入力欄の末尾に表示する内容です。",
+    },
+    itemToRenderedValue: {
+      type: "(item: TItem, index: number) => React.ReactNode",
+      description:
+        "項目から候補の表示内容を作る関数です。省略時は label または文字列が使われます。",
+    },
+    items: {
+      type: "readonly TItem[]",
+      description: "候補の一覧です。グループの配列を指定するとグループごとに表示します。",
+    },
+    placeholder: {
+      type: "string",
+      description: "入力欄のプレースホルダー文字列です。",
+    },
+    separator: {
+      type: "boolean",
+      default: "true",
+      description:
+        "グループの末尾に区切り線を表示するかどうかです。既定のレンダラーを使うときにだけ適用されます。",
+    },
+    slotProps: {
+      type: "AutocompleteSlotProps<TItem>",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+    startAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "入力欄の先頭に表示する内容です。",
+    },
+    status: {
+      type: "React.ReactNode",
+      description: "非同期検索などの状態を読み上げる内容です。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "フォーカス時に枠線へ適用する色です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "入力欄とリスト項目の大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: "size と同じ値",
+      description: "入力グループの角丸の大きさです。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "入力欄の主な外観です。naked は背景なし、liquid は薄い塗りつぶしです。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "入力グループに枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Autocomplete は Base UI の Autocomplete を基盤にしているため、入力値と開閉状態に関する props をそのまま渡せます。主なものは次のとおりです。
+
+<TypeTable
+  type={{
+    value: {
+      type: "string",
+      description: "入力欄の値を制御する場合に指定します。",
+    },
+    defaultValue: {
+      type: "string",
+      description: "入力欄の初期値です。",
+    },
+    onValueChange: {
+      type: "(value: string, eventDetails) => void",
+      description: "入力値が変わったときに呼ばれるコールバックです。",
+    },
+    open: {
+      type: "boolean",
+      description: "候補のポップアップを開いているかどうかを制御する場合に指定します。",
+    },
+    defaultOpen: {
+      type: "boolean",
+      default: "false",
+      description: "最初から候補のポップアップを開くかどうかです。",
+    },
+    onOpenChange: {
+      type: "(open: boolean, eventDetails) => void",
+      description: "ポップアップの開閉状態が変わったときに呼ばれるコールバックです。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "入力欄を無効にするかどうかです。",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "入力欄を読み取り専用にするかどうかです。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "入力欄を必須にするかどうかです。",
+    },
+    filter: {
+      type: "null | ((item, query, itemToString) => boolean)",
+      description: "候補を照合する関数です。null を指定すると内部の絞り込みを無効にします。",
+    },
+    filteredItems: {
+      type: "readonly TItem[]",
+      description: "外部で絞り込んだ候補です。指定すると内部の絞り込みの代わりに使われます。",
+    },
+    mode: {
+      type: `"list" | "both" | "inline" | "none"`,
+      default: `"list"`,
+      description: "絞り込みとインライン補完の動作を指定します。",
+    },
+    autoHighlight: {
+      type: `boolean | "always"`,
+      default: "true",
+      description: "最初に一致した候補を自動でハイライトするかどうかです。",
+    },
+    openOnInputClick: {
+      type: "boolean",
+      default: "true",
+      description: "入力欄をクリックしたときに候補のポップアップを開くかどうかです。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    addon: {
+      type: "object",
+      description: "入力欄の付属要素に渡す props です。",
+    },
+    backdrop: {
+      type: "object",
+      description: "背景のオーバーレイに渡す props です。",
+    },
+    clear: {
+      type: "object",
+      description: "入力値を消去するボタンに渡す props です。",
+    },
+    collection: {
+      type: "object",
+      description:
+        "候補のコレクションに渡す props です。children で項目の描画をカスタマイズできます。",
+    },
+    content: {
+      type: "object",
+      description: "スクロール領域の内容に渡す props です。",
+    },
+    corner: {
+      type: "object",
+      description: "スクロール領域の角に渡す props です。",
+    },
+    empty: {
+      type: "object",
+      description: "候補が空のときの表示に渡す props です。",
+    },
+    group: {
+      type: "object",
+      description: "グループに渡す props です。",
+    },
+    groupLabel: {
+      type: "object",
+      description: "グループの見出しに渡す props です。",
+    },
+    input: {
+      type: "object",
+      description: "入力欄に渡す props です。placeholder は Autocomplete 本体でも指定できます。",
+    },
+    inputGroup: {
+      type: "object",
+      description: "入力欄と付属要素をまとめるグループに渡す props です。",
+    },
+    item: {
+      type: "object",
+      description: "個々の候補に渡す props です。value と children は項目から設定されます。",
+    },
+    list: {
+      type: "object",
+      description: "候補のリストに渡す props です。",
+    },
+    popup: {
+      type: "object",
+      description: "候補のポップアップに渡す props です。",
+    },
+    portal: {
+      type: "object",
+      description: "ポータルに渡す props です。",
+    },
+    positioner: {
+      type: "object",
+      description: "ポップアップの配置に渡す props です。",
+    },
+    scrollArea: {
+      type: "object",
+      description: "スクロール領域のルートに渡す props です。",
+    },
+    scrollbar: {
+      type: "object",
+      description: "スクロールバーに渡す props です。",
+    },
+    separator: {
+      type: "object",
+      description: "グループの区切り線に渡す props です。",
+    },
+    status: {
+      type: "object",
+      description: "状態を読み上げる領域に渡す props です。",
+    },
+    thumb: {
+      type: "object",
+      description: "スクロールバーのつまみに渡す props です。",
+    },
+    viewport: {
+      type: "object",
+      description: "スクロール領域のビューポートに渡す props です。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+入力グループには `sui_autocomplete` が付与されます。props に応じて、`sui_autocomplete-size_md`、`sui_autocomplete-color_blue`、`sui_autocomplete-radius_md`、`sui_autocomplete-variant_liquid`、`sui_autocomplete-outlined`、`sui_autocomplete-open`、`sui_autocomplete-disabled`、`sui_autocomplete-readonly`、`sui_autocomplete-focused` などのクラス名も加わります。
+
+内部のパーツには `sui_autocomplete_input`、`sui_autocomplete_item`、`sui_autocomplete_group`、`sui_autocomplete_group_label`、`sui_autocomplete_empty`、`sui_autocomplete_popup` などが付与されます。候補の強調表示には `sui_autocomplete_item-highlighted` が使われます。
+
+`className` や `style` で調整できるほか、CSS 変数を使って幅や余白を上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[非同期状態の表示](/guides/async-state)

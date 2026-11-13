@@ -1,0 +1,129 @@
+---
+title: Pagination
+description: Pagination コンポーネントの総ページ数、表示範囲、ページ移動の制御、外観を説明します。
+---
+
+Pagination は、一覧や検索結果のページ移動を行うコンポーネントです。総ページ数からページ番号ボタンと前後の移動ボタンを組み立て、現在のページを強調表示します。省略された範囲は省略記号になり、押すと移動先を検索できます。
+
+## 使い方 [#basic-usage]
+
+`totalPages` に総ページ数を指定します。初期表示のページは `defaultPage` で指定でき、省略した場合は 1 ページ目が表示されます。
+
+<Component path="pagination/basic" />
+
+ページ番号ボタンは現在のページを `aria-current="page"` で示します。前後の移動ボタンは、最初と最後のページで自動的に無効になります。
+
+## ページの表示範囲 [#page-range]
+
+`siblingCount` は現在のページの前後に表示するページ数を、`boundaryCount` は先頭と末尾に常に表示するページ数を指定します。どちらも既定値は `1` です。
+
+<Component path="pagination/range" />
+
+ページ間が離れている場合は省略記号（…）が表示されます。省略記号を押すとポップアップが開き、入力欄でページを絞り込んで移動先を選べます。
+
+## ページの制御 [#controlled]
+
+`page` と `onPageChange` を使うと、現在のページを外部の状態で管理できます。`onPageChange` の第 2 引数には、移動のきっかけを示す `reason` が含まれます。
+
+<Component path="pagination/controlled" />
+
+`reason` は、ページ番号ボタンでは `"item"`、前のボタンでは `"previous"`、次のボタンでは `"next"`、省略記号では `"ellipsis"` になります。
+
+## 外観 [#appearance]
+
+`color` は現在のページと前後の移動ボタンに適用されます。省略記号の配色は常に `"grey"` です。`size` で大きさを、`radius` で角丸を指定できます。
+
+<Component path="pagination/appearance" />
+
+`disabled` を指定すると、すべてのページ移動が無効になります。
+
+## props [#props]
+
+### 固有 props [#pagination-specific-props]
+
+<TypeTable
+  type={{
+    totalPages: {
+      type: "number",
+      description: "総ページ数です。小数値は切り捨てられます。",
+    },
+    defaultPage: {
+      type: "number",
+      default: "1",
+      description: "非制御の初期表示ページです。page を指定しないときに使われます。",
+    },
+    page: {
+      type: "number",
+      description: "制御された現在のページです。",
+    },
+    onPageChange: {
+      type: `(page: number,\ndetails: PaginationChangeEventDetails) => void`,
+      description: "ページが変更されたときに呼ばれるコールバックです。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "ページ移動を無効にするかどうかです。",
+    },
+    siblingCount: {
+      type: "number",
+      default: "1",
+      description: "現在のページの前後に表示するページ数です。",
+    },
+    boundaryCount: {
+      type: "number",
+      default: "1",
+      description: "先頭と末尾に常に表示するページ数です。",
+    },
+    slotProps: {
+      type: "PaginationSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "現在のページと前後の移動ボタンの配色です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ページネーションの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: "size と同じ値",
+      description: "角丸の大きさです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Pagination のルートは `nav` 要素として描画されるため、`aria-label`、`className`、`style`、`data-*` などの属性を渡せます。`aria-label` の既定値は `"ページネーション"` です。
+
+ページ番号ボタンと前後の移動ボタンは Button を基盤にしているため、それぞれの `slotProps` を通じて `disabled` や `aria-label` などを個別に指定できます。
+
+### slotProps [#slot-props]
+
+| キー             | 説明                                                                                           |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| `ellipsis`       | すべての省略記号に渡す props です。`start` と `end` は上書きされません。                       |
+| `item`           | すべてのページ番号ボタンに渡す props です。`children`、`page`、`selected` は上書きされません。 |
+| `nextButton`     | 次のページへ移動するボタンに渡す props です。                                                  |
+| `previousButton` | 前のページへ移動するボタンに渡す props です。                                                  |
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_pagination` が付与されます。props と状態に応じて、`sui_pagination-size_md`、`sui_pagination-color_blue`、`sui_pagination-radius_md`、`sui_pagination-disabled` などのクラス名も加わります。
+
+内部のパーツには、`sui_pagination_item`、`sui_pagination_item-selected`、`sui_pagination_previous`、`sui_pagination_next`、`sui_pagination_ellipsis` などのクラス名が付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

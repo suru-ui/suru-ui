@@ -1,0 +1,112 @@
+---
+title: Chip
+description: Chip コンポーネントの props、外観、アイコンやボタンとの組み合わせを説明します。
+---
+
+Chip は、タグや属性、短い状態を表示する小さなラベルです。一覧の絞り込み条件や、項目に付いたラベルを表すときに使います。`render` で `button` 要素に置き換えると、押せるチップとしても使えます。
+
+## 使い方 [#basic-usage]
+
+`children` に表示するテキストやアイコンを指定します。アイコンは `lucide-react` などから読み込み、装飾用なら `aria-hidden="true"` を付けます。
+
+<Component path="chip/basic" />
+
+チップ自体を操作可能にする場合は、`render` に `button` 要素を渡します。内容がアイコンだけの場合は `aria-label` で名前を補ってください。
+
+```tsx
+<Chip render={<button type="button" />} onClick={removeTag} aria-label="タグを削除">
+  デザイン
+  <XIcon aria-hidden="true" />
+</Chip>
+```
+
+## 外観 [#appearance]
+
+`variant` は `solid`、`naked`、`liquid` から選択できます。`color` で配色を、`size` で大きさを、`radius` で角丸を指定します。
+
+<Component path="chip/appearance" />
+
+`outlined` を指定すると枠線が付きます。既定の `radius` は `full` なので、丸みのあるチップになります。
+
+## props [#props]
+
+### 固有 props [#chip-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "チップに表示するテキストやアイコンです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "チップの配色です。",
+    },
+    variant: {
+      type: `"solid" | "naked" | "liquid"`,
+      default: `"liquid"`,
+      description: "チップの主な外観です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"sm"`,
+      description: "チップの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: `"full"`,
+      description: "角丸の大きさです。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Chip は `span` 要素を描画するため、`className`、`style`、`id`、`onClick`、`aria-*`、`data-*` などの属性を渡せます。
+
+<TypeTable
+  type={{
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "ルート要素を別の要素に置き換えます。button を渡すと押せるチップになります。",
+    },
+    className: {
+      type: `string |\n((state: Chip.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Chip.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_chip` が付与されます。props に応じて、次のクラス名も加わります。
+
+| クラス名                       | 条件                                        |
+| ------------------------------ | ------------------------------------------- |
+| `sui_chip`                     | 常に付与されます。                          |
+| `sui_chip-size_sm` など        | `size` に応じて付与されます。               |
+| `sui_chip-color_blue` など     | `color` に応じて付与されます。              |
+| `sui_chip-radius_full` など    | `radius` に応じて付与されます。             |
+| `sui_chip-variant_liquid` など | `variant` に応じて付与されます。            |
+| `sui_chip-outlined`            | `outlined` が `true` のときに付与されます。 |
+
+`className` や `style` で調整できるほか、CSS 変数 `--sui_chip-*` を使って余白や文字の大きさを上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[要素とコンポーネントの合成](/guides/composition)

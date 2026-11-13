@@ -1,0 +1,115 @@
+---
+title: コンポーネントの構造
+description: プリセット、パーツ、スロット、slotProps の関係を、Button を例に説明します。
+---
+
+Suru UI のコンポーネントは、すぐに使える「プリセット」と、それを構成する「パーツ」に分かれています。このガイドでは、両者の関係と、目的に応じたカスタマイズ方法を説明します。Button は、構造を理解するための小さな具体例として使います。
+
+## プリセットとパーツ [#preset-and-parts]
+
+プリセットは、複数のパーツをあらかじめ組み立てたコンポーネントです。`Button` や `Card` のように、そのまま配置すれば使えるものを指します。
+
+パーツは、プリセットを構成する個々の要素です。Button を例にすると、次のような役割に分かれています。
+
+- `Root`: 外観と状態を持つルート要素
+- `Content`: ラベルを表示する要素
+- `Addon`: ラベルの前後に置く補助要素
+- `Pending`: 処理中のオーバーレイ
+- `CircularProgress`: 円形のプログレス表示
+
+プリセットは、これらのパーツを既定の順序で組み立て、一般的な使い方をすぐに提供します。一方で、構造を変えたい場合や、パーツ単位で細かく制御したい場合には、パーツを直接扱えます。
+
+## Base UI [#base-ui]
+
+Suru UI の多くのプリセットは、Base UI のコンポーネントやユーティリティーを土台にしています。Base UI は、スタイルを持たない React 向けのコンポーネントライブラリーで、状態管理、キーボード操作、ARIA、描画要素の置き換えなどの低レベルな振る舞いを提供します。Suru UI はその上に、テーマ、外観、プリセットの構造を追加しています。
+
+そのため、Base UI が提供する次のような props をそのまま使える場合があります。
+
+- `render`: 描画する要素やコンポーネントを置き換える
+- `nativeButton`: ルートがネイティブの button 要素かどうかを指定する
+- `focusableWhenDisabled`: 無効時にもフォーカス可能にする
+- `className` と `style`: 状態を引数に取る関数を指定する
+
+どの props が使えるかはコンポーネントによって異なります。振る舞いの詳細は [Base UI のドキュメント](https://base-ui.com/)を参照してください。Suru UI のプリセットとしての props は、各コンポーネントのリファレンスで確認できます。
+
+## スロット [#what-is-a-slot]
+
+スロットは、プリセットが内部で描画するパーツのうち、外部から props を差し込める名前付きの場所です。React の `children` や portal とは別の、コンポーネント設計上の拡張点です。
+
+複数のパーツからなるプリセットの一部には、`slotProps` が用意されています。すべてのプリセットに `slotProps` があるわけではありません。
+
+`slotProps` は、スロット名をキーにしたオブジェクトです。たとえば Button の `slotProps.content` は、ラベルを表示する `Content` パーツに渡す props です。
+
+Button の `slotProps` は一例です。Card や Alert など、複数のパーツからなるプリセットの一部にも同じ仕組みがあります。
+
+| スロット           | 役割                 |
+| ------------------ | -------------------- |
+| `content`          | ラベルを表示する要素 |
+| `addon`            | 先頭と末尾の補助要素 |
+| `pending`          | 処理中のオーバーレイ |
+| `circularProgress` | 円形のプログレス表示 |
+
+**slotProps**
+
+プリセットの構造はそのままに、内部の一部だけを調整したい場合は `slotProps` を使います。
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveButton() {
+  return (
+    <Button
+      color="blue"
+      slotProps={{
+        content: {
+          style: { letterSpacing: "0.05em" },
+        },
+        pending: {
+          overlay: false,
+        },
+      }}
+    >
+      保存
+    </Button>
+  );
+}
+```
+
+`slotProps` の値は、プリセットが内部で組み立てる props とマージされます。`children` など、プリセットが制御する props は型から除外されている場合があります。まずはプリセットの props と `slotProps` で目的を達成できないかを検討すると、内部構造の変更に強いコードになります。
+
+Button の `slotProps` の全キーは[Button のリファレンス](/components/button#slot-props)を参照してください。
+
+## パーツ構成 [#compose-parts]
+
+プリセットの構造や順序を変えたい場合は、パーツを直接組み立てます。パーツをまとめたモジュールを名前空間としてインポートすると、どのパーツがどのコンポーネントに属するかが明確になり、名前の衝突も避けられます。
+
+```tsx
+// パーツをまとめたモジュールの例
+import * as ButtonParts from "./button";
+
+export function CustomButton() {
+  return (
+    <ButtonParts.Root color="blue">
+      <ButtonParts.Addon aria-hidden="true">★</ButtonParts.Addon>
+      <ButtonParts.Content>保存</ButtonParts.Content>
+    </ButtonParts.Root>
+  );
+}
+```
+
+この例の `./button` は、Button のパーツをまとめたモジュールの例です。実際のインポート元は、利用するパッケージが公開しているエントリーポイントに置き換えてください。パーツの公開状況はパッケージのバージョンによって異なります。Suru UI のプリセットも、内部ではこのようにパーツを組み立てています。
+
+パーツを直接扱う方法は柔軟ですが、プリセットの内部構造に依存するコードになります。プリセットや `slotProps` で目的を達成できる場合は、そちらを優先してください。
+
+**使い分け**
+
+| 目的                     | 方法                           |
+| ------------------------ | ------------------------------ |
+| 標準の外観を少し変える   | `color` や `size` などの props |
+| 内部の一部だけを調整する | `slotProps`                    |
+| 構造や順序を変える       | パーツを直接組み立てる         |
+| 別の要素として描画する   | `render`                       |
+
+`render` を使った要素の置き換えと合成は、[要素とコンポーネントの合成](/guides/composition)で説明しています。
+
+関連: [Button のリファレンス](/components/button)、[要素とコンポーネントの合成](/guides/composition)、[外観のカスタマイズ](/guides/styling)

@@ -1,0 +1,143 @@
+---
+title: Textarea
+description: Textarea コンポーネントの props、外観、複数行入力の制御方法を説明します。
+---
+
+Textarea は、複数行のテキストを入力するためのコンポーネントです。問い合わせ内容やメモなど、長さのある文章を受け取るときに使います。ネイティブの `textarea` と同じ属性を渡せるため、既存のフォームにも組み込みやすいコンポーネントです。
+
+## 使い方 [#basic-usage]
+
+`rows` で表示する行数を指定します。省略した場合はブラウザーの既定の行数になります。`placeholder` や `defaultValue` もそのまま渡せます。
+
+<Component path="textarea/basic" />
+
+ラベルや説明を添える場合は、`Field` で囲みます。入力値の検証とエラー表示も `Field` にまとめられます。
+
+```tsx
+<Field label="問い合わせ内容" description="できるだけ詳しく入力します。">
+  <Textarea rows={4} placeholder="問い合わせ内容" />
+</Field>
+```
+
+## 外観 [#appearance]
+
+`variant` は `naked` と `liquid` から選択できます。`size`、`radius`、`color`、`outlined` を組み合わせて、周囲のフォームに合わせられます。
+
+<Component path="textarea/appearance" />
+
+`size` は `sm`、`md`、`lg` の 3 段階です。`radius` の既定値は `size` と同じ値になります。
+
+## 制御と状態 [#controlled-and-states]
+
+入力値を自分で管理する場合は、`value` と `onValueChange` を組み合わせます。文字数を表示するなど、入力内容に応じた処理に向いています。
+
+<Component path="textarea/controlled" />
+
+`disabled` は入力自体を無効にし、`readOnly` は値を変更できない状態にします。検証エラーは `Field` の `invalid` と組み合わせると、枠線の色に反映されます。
+
+<Component path="textarea/states" />
+
+## props [#props]
+
+### 固有 props [#textarea-specific-props]
+
+<TypeTable
+  type={{
+    rows: {
+      type: "number",
+      description: "テキストエリアの表示行数です。省略するとブラウザーの既定値になります。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "フォーカス時などに枠線へ適用する色です。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "テキストエリアの主な外観です。liquid は薄い塗りつぶしを持ちます。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "テキストエリアの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "circle"`,
+      default: "size と同じ値",
+      description: "枠線の角丸です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Textarea は Base UI の Input を `textarea` として描画するため、ネイティブの textarea が受け付ける属性と、Base UI の Input が提供する props を渡せます。主なものは次のとおりです。
+
+<TypeTable
+  type={{
+    value: {
+      type: "string | number | readonly string[]",
+      description: "入力値を制御する場合に指定します。",
+    },
+    defaultValue: {
+      type: "string | number | readonly string[]",
+      description: "非制御で使うときの初期値です。",
+    },
+    onValueChange: {
+      type: `(value: string,\neventDetails: Textarea.ChangeEventDetails) => void`,
+      description: "入力値が変更されたときに呼び出されます。",
+    },
+    placeholder: {
+      type: "string",
+      description: "入力欄が空のときに表示する説明です。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "入力欄を無効にします。",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "値を変更できない状態にします。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "入力欄を必須にします。",
+    },
+    maxLength: {
+      type: "number",
+      description: "入力できる最大文字数です。",
+    },
+    name: {
+      type: "string",
+      description: "フォームで送信するときの名前です。",
+    },
+    className: {
+      type: `string |\n((state: Textarea.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルート要素は `textarea` で、`sui_textarea` が付与されます。props に応じて `sui_textarea-size_md`、`sui_textarea-color_blue`、`sui_textarea-radius_md`、`sui_textarea-variant_naked`、`sui_textarea-outlined` などのクラス名も加わります。
+
+状態に応じて `sui_textarea-focused`、`sui_textarea-filled`、`sui_textarea-invalid`、`sui_textarea-valid`、`sui_textarea-disabled`、`sui_textarea-dirty` なども付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

@@ -1,0 +1,123 @@
+---
+title: Breadcrumb
+description: Breadcrumb コンポーネントの項目、省略表示、リンクの状態、スタイルのフックを説明します。
+---
+
+Breadcrumb は、現在のページまでの階層をパンくずリストとして表示するコンポーネントです。サイト内の位置を伝え、上位のページへ移動しやすくします。`items` に項目を並べると、最後の項目が現在のページとして扱われます。
+
+## 使い方 [#basic-usage]
+
+`items` の各項目には `label` と `href` を指定します。`href` を省略した項目は遷移先を持たない項目として表示されます。最後の項目は自動的に現在のページとして扱われ、`aria-current="page"` を持つ `span` として描画されます。
+
+<Component path="breadcrumb/basic" />
+
+`current` を明示すると、最後の項目以外を現在のページとして扱えます。`disabled` を `true` にすると、その項目のリンクを無効にできます。
+
+```tsx
+<Breadcrumb
+  items={[
+    { href: "/", label: "ホーム" },
+    { href: "/products", label: "製品", disabled: true },
+    { label: "Suru UI" },
+  ]}
+/>
+```
+
+## 省略表示 [#collapsed]
+
+`maxItems` を指定すると、項目数がその値を超えたときに省略記号へまとめます。省略記号を押すと、省略された項目を選択するための候補リストが開きます。
+
+<Component path="breadcrumb/collapsed" />
+
+`maxItems` は 3 未満の値が 3 として扱われます。先頭の項目と末尾側の項目を残し、それ以外が省略の対象になります。`items` の数が `maxItems` 以下なら、省略表示は行われません。
+
+## リンクの状態 [#link-states]
+
+`disabled` を指定した項目は、リンク先へ遷移できなくなります。現在のページの項目はリンクではなく `span` として描画され、`href` は付与されません。
+
+<Component path="breadcrumb/states" />
+
+`slotProps.link` を使うと、すべてのリンクに同じ props を渡せます。ただし、`children`、`current`、`href` は項目ごとの値で上書きされます。
+
+## props [#props]
+
+### 固有 props [#breadcrumb-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode | IBreadcrumbItemRenderer<TItem>",
+      description:
+        "リストの内容です。関数を渡すと各項目を描画できます。省略すると items から既定の並びを生成します。",
+    },
+    items: {
+      type: "readonly TItem[]",
+      description:
+        "パンくずリストの項目です。各項目には label を指定し、href や disabled などを渡せます。",
+    },
+    maxItems: {
+      type: "number",
+      description: "省略記号を含めて表示する項目の最大数です。3 未満の値は 3 として扱われます。",
+    },
+    slotProps: {
+      type: "BreadcrumbSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "パンくずリストの配色です。現在のページのリンクに適用されます。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "パンくずリストの大きさです。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    item: {
+      type: "object",
+      description: "すべての項目の要素に渡す props です。",
+    },
+    link: {
+      type: "object",
+      description:
+        "すべてのリンクに渡す props です。children、current、href は項目ごとの値で上書きされます。",
+    },
+    list: {
+      type: "object",
+      description: "リストの要素に渡す props です。",
+    },
+    separator: {
+      type: "object",
+      description: "すべてのセパレーターに渡す props です。aria-hidden は上書きされません。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Breadcrumb は `nav` 要素を描画するため、`className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。`aria-label` の既定値は「パンくずリスト」です。残りの props はベースの `nav` 要素から継承します。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_breadcrumb` が付与されます。props に応じて、`sui_breadcrumb-size_md`、`sui_breadcrumb-color_grey` などのクラス名も加わります。
+
+内部のパーツには `sui_breadcrumb_list`、`sui_breadcrumb_item`、`sui_breadcrumb_link`、`sui_breadcrumb_separator` が付与されます。現在のページのリンクには `sui_breadcrumb_link-current`、無効なリンクには `sui_breadcrumb_link-disabled` が加わります。
+
+`className` や `style` で調整できるほか、CSS 変数を使って余白や文字色を上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[要素とコンポーネントの合成](/guides/composition)

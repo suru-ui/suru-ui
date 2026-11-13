@@ -1,0 +1,292 @@
+---
+title: AlertDialog
+description: AlertDialog コンポーネントの確認フロー、外観、開閉の制御、スタイルのフックを説明します。
+---
+
+AlertDialog は、削除などの取り返しのつかない操作の前に確認を求めるモーダルダイアログです。背景を暗くし、確認または中止を選ぶまで他の操作をブロックします。タイトル、説明文、アイコン、確認ボタンと中止ボタンをまとめて構成できます。
+
+## 使い方 [#basic-usage]
+
+`trigger` にダイアログを開く要素を、`title` と `description` に確認内容を指定します。`cancel` と `confirm` はそれぞれ中止ボタンと確認ボタンになります。どちらも押すとダイアログが閉じます。
+
+<Component path="alert-dialog/basic" />
+
+`children` に要素を渡すと、説明文の下に本文として表示されます。削除される項目の一覧など、確認に必要な補足情報を置くときに使います。
+
+```tsx
+<AlertDialog
+  trigger={<Button color="red">削除する</Button>}
+  title="削除しますか？"
+  description="この操作は取り消せません。"
+  cancel={<Button variant="naked">キャンセル</Button>}
+  confirm={<Button color="red">削除する</Button>}
+>
+  <p>削除される項目の一覧です。</p>
+</AlertDialog>
+```
+
+`confirm` や `cancel` には `Button` などをそのまま渡せます。`footer` に独自の内容を渡した場合も、`cancel` と `confirm` はフッターの内容の後に配置されます。
+
+## 外観 [#appearance]
+
+`variant` は `default` と `stacked` から選択できます。`stacked` では見出しと説明文を中央に寄せ、操作を右上へ重ねます。`size`、`radius`、`outlined` はダイアログの大きさ、角丸、枠線を制御します。
+
+<Component path="alert-dialog/appearance" />
+
+`icon` にアイコンを渡すと、ヘッダーの左側に表示されます。アイコンの配色や背景は `slotProps.icon` で調整できます。`action` を省略して `showCancelIconButton` を `true` にすると、右上に閉じるアイコンボタンが表示されます。
+
+## 開閉を制御する [#controlled]
+
+`open` と `onOpenChange` を使うと、ダイアログの開閉を外部の状態から制御できます。`trigger` を省略し、任意のボタンから開く構成も可能です。
+
+<Component path="alert-dialog/controlled" />
+
+`defaultOpen` を指定すると、最初から開いた状態で表示できます。命令的に操作したい場合は `AlertDialog.createHandle()` でハンドルを作成し、`handle` に渡します。
+
+確認ボタンの押下時に検証を行いたい場合は、`onConfirm` で問題があれば `event.preventBaseUIHandler()` を呼ぶと、ダイアログを閉じずに処理を止められます。
+
+## props [#props]
+
+### 固有 props [#alertdialog-specific-props]
+
+<TypeTable
+  type={{
+    action: {
+      type: "React.ReactNode",
+      description:
+        "ヘッダー右上に表示する操作要素です。省略して showCancelIconButton を true にすると、閉じるアイコンボタンが表示されます。",
+    },
+    cancel: {
+      type: "React.ReactNode",
+      description: "中止してダイアログを閉じるボタンです。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "ダイアログの本文です。説明文の下に表示されます。",
+    },
+    confirm: {
+      type: "React.ReactNode",
+      description: "確認してダイアログを閉じるボタンです。",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "ダイアログの説明文です。ヘッダー内に表示されます。",
+    },
+    footer: {
+      type: "React.ReactNode",
+      description:
+        "ダイアログの末尾に表示する内容です。cancel と confirm を指定した場合は、フッターの内容の後に配置されます。",
+    },
+    icon: {
+      type: "React.ReactNode",
+      description: "ダイアログのアイコンです。",
+    },
+    onCancel: {
+      type: "(event: React.MouseEvent<HTMLButtonElement> &\n{ preventBaseUIHandler: () => void }) => void",
+      description: "中止ボタンがクリックされたときに呼ばれるコールバックです。",
+    },
+    onConfirm: {
+      type: "(event: React.MouseEvent<HTMLButtonElement> &\n{ preventBaseUIHandler: () => void }) => void",
+      description: "確認ボタンがクリックされたときに呼ばれるコールバックです。",
+    },
+    showCancelIconButton: {
+      type: "boolean",
+      default: "false",
+      description:
+        "右上に閉じるアイコンボタンを表示するかどうかです。action を指定した場合は表示されません。",
+    },
+    slotProps: {
+      type: "AlertDialogSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+    title: {
+      type: "React.ReactNode",
+      description: "ダイアログの見出しです。",
+    },
+    trigger: {
+      type: "React.ReactNode",
+      description:
+        "ダイアログを開くトリガーです。slotProps.toggleTrigger だけを指定しても描画されません。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ダイアログの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "size と同じ値",
+      description: "ダイアログの角丸の大きさです。省略すると size と同じ値になります。",
+    },
+    variant: {
+      type: `"default" | "stacked"`,
+      default: `"default"`,
+      description:
+        "ダイアログの主な外観です。stacked では見出しと説明文を中央に寄せ、操作を右上へ重ねます。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "ダイアログに枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### アイコンの props [#icon-props]
+
+`slotProps.icon` には、次の props を渡せます。
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"red"`,
+      description: "アイコンの配色です。",
+    },
+    muted: {
+      type: "boolean",
+      default: "false",
+      description: "アイコンの背景色を控えめにするかどうかです。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "アイコンに枠線を表示するかどうかです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: "size と同じ値",
+      description: "アイコンの角丸の大きさです。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "アイコンの大きさです。",
+    },
+    variant: {
+      type: `"solid" | "naked" | "liquid"`,
+      default: `"liquid"`,
+      description: "アイコンの主な外観です。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    action: {
+      type: "object",
+      description: "ヘッダー右上の操作要素に渡す props です。",
+    },
+    backdrop: {
+      type: "object",
+      description: "背景のオーバーレイに渡す props です。",
+    },
+    cancelTrigger: {
+      type: "object",
+      description: "中止ボタンの要素に渡す props です。children は cancel で指定します。",
+    },
+    confirmTrigger: {
+      type: "object",
+      description: "確認ボタンの要素に渡す props です。children は confirm で指定します。",
+    },
+    content: {
+      type: "object",
+      description:
+        "本文の要素に渡す props です。children は AlertDialog の children で指定します。",
+    },
+    description: {
+      type: "object",
+      description: "説明文の要素に渡す props です。",
+    },
+    footer: {
+      type: "object",
+      description: "フッターの要素に渡す props です。",
+    },
+    header: {
+      type: "object",
+      description: "ヘッダーの要素に渡す props です。",
+    },
+    icon: {
+      type: "object",
+      description: "アイコンの要素に渡す props です。color や muted などで外観を調整できます。",
+    },
+    portal: {
+      type: "object",
+      description: "ポータルに渡す props です。",
+    },
+    title: {
+      type: "object",
+      description: "見出しの要素に渡す props です。",
+    },
+    toggleTrigger: {
+      type: "object",
+      description: "トリガーに渡す props です。children は trigger で指定します。",
+    },
+    viewport: {
+      type: "object",
+      description: "ダイアログを配置するビューポートに渡す props です。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+AlertDialog は Base UI の AlertDialog を基盤にしているため、開閉状態に関する props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "ダイアログを開いているかどうかを制御する場合に指定します。",
+    },
+    defaultOpen: {
+      type: "boolean",
+      default: "false",
+      description: "最初から開いた状態で表示するかどうかです。",
+    },
+    onOpenChange: {
+      type: "(open: boolean, eventDetails) => void",
+      description: "開閉状態が変わったときに呼ばれるコールバックです。",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "開閉のアニメーションが完了したときに呼ばれるコールバックです。",
+    },
+    handle: {
+      type: "AlertDialogHandle<TPayload>",
+      description: "命令的に開閉するためのハンドルです。AlertDialog.createHandle() で作成します。",
+    },
+    triggerId: {
+      type: "string",
+      description: "開いているダイアログのトリガーを識別する ID です。",
+    },
+    defaultTriggerId: {
+      type: "string",
+      description: "最初に開くときのトリガーを識別する ID です。",
+    },
+    actionsRef: {
+      type: "React.RefObject<AlertDialog.Actions | null>",
+      description: "ダイアログを命令的に操作するための ref です。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ダイアログのポップアップには `sui_alert_dialog_popup` と、カード由来の `sui_card` が付与されます。props に応じて、`sui_alert_dialog_popup-size_md`、`sui_alert_dialog_popup-radius_md`、`sui_alert_dialog_popup-variant_stacked`、`sui_alert_dialog_popup-outlined` などのクラス名も加わります。
+
+内部のパーツには `sui_alert_dialog_backdrop`、`sui_alert_dialog_viewport`、`sui_alert_dialog_header`、`sui_alert_dialog_icon`、`sui_alert_dialog_title`、`sui_alert_dialog_description`、`sui_alert_dialog_content`、`sui_alert_dialog_footer` が付与されます。
+
+`className` や `style` で調整できるほか、CSS 変数を使って余白や幅を上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[要素とコンポーネントの合成](/guides/composition)

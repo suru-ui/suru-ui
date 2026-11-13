@@ -1,0 +1,188 @@
+---
+title: Field
+description: Field コンポーネントの props、検証、エラーメッセージ、ラベルと説明の関連付けを説明します。
+---
+
+Field は、ラベル、入力欄、説明文、エラーメッセージを 1 つのまとまりとして扱うコンポーネントです。入力欄とラベルを自動で関連付け、フォームの検証状態に応じてメッセージを表示します。テキスト入力だけでなく、チェックボックスや選択コンポーネントと組み合わせられます。
+
+## 使い方 [#basic-usage]
+
+`label` と `description` を指定し、子要素に入力欄を置きます。ネイティブの入力欄を使う場合は `Field.Control` を使うと、ラベルとの関連付けと検証が自動で行われます。
+
+<Component path="field/basic" />
+
+`errorMatches` には、表示するエラーの検証状態を指定します。オブジェクトを渡すと検証状態ごとにメッセージを変更でき、`true` を渡すと検証状態にかかわらずエラー要素を表示します。メッセージは `validate` やフォームの検証結果から取得されます。
+
+## 検証とエラー [#validation]
+
+`validate` を指定すると、独自の検証を追加できます。`validationMode` で検証のタイミングを `onSubmit`、`onBlur`、`onChange` から選べます。
+
+<Component path="field/validation" />
+
+`validity` に関数を渡すと、検証状態に応じた任意の内容を表示できます。引数には `validity` と `errors` を含む状態が渡されます。
+
+```tsx
+<Field
+  label="メールアドレス"
+  errorMatches={false}
+  validity={(state) => (state.validity.valid === true ? <span>有効です。</span> : null)}
+>
+  <Field.Control type="email" required />
+</Field>
+```
+
+`errorMatches` には `{ valueMissing: "入力してください。", typeMismatch: "形式を確認してください。" }` のように、検証状態ごとのメッセージを指定できます。`valueMissing`、`typeMismatch`、`patternMismatch`、`tooShort`、`tooLong`、`customError` などをキーにできます。エラーメッセージ全体のスタイルは `slotProps.error` で調整します。
+
+## パーツ構成 [#parts]
+
+`Field` は、ラベル、入力欄、説明文、エラーメッセージを内部で組み立てるプリセットです。パッケージのルートから直接利用できるのは `Field` と、その静的メンバーである `Field.Control`、`Field.Item` です。ラベルや説明文の調整は `slotProps` で行います。
+
+```tsx
+<Field
+  label="ニックネーム"
+  description="ほかの利用者に公開されます。"
+  errorMatches={{ valueMissing: "ニックネームを入力してください。" }}
+  slotProps={{ label: { style: { color: "#1d4ed8" } } }}
+>
+  <Field.Control required placeholder="すーるー" />
+</Field>
+```
+
+チェックボックスのように複数の入力を 1 つのフィールドにまとめる場合は、`Field.Item` で各項目を囲みます。
+
+## props [#props]
+
+### 固有 props [#field-specific-props]
+
+<TypeTable
+  type={{
+    label: {
+      type: "React.ReactNode",
+      description: "入力欄の上に表示するラベルです。",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "入力欄の下に表示する説明文です。",
+    },
+    errorMatches: {
+      type: "Field.ErrorMatches",
+      default: "true",
+      description:
+        "表示するエラーの検証状態です。false を指定するとエラーメッセージを表示しません。",
+    },
+    validity: {
+      type: "(state: Field.ValidityData) => React.ReactNode",
+      description: "検証状態に応じて表示する内容を返す関数です。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "ラベルと説明文の間に配置する入力欄です。",
+    },
+    slotProps: {
+      type: "FieldSlotProps",
+      default: "{}",
+      description:
+        "ラベル、説明文、エラー、検証状態の各パーツに props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Field は Base UI の Field を基盤にしています。検証と状態に関する主な props は次のとおりです。
+
+<TypeTable
+  type={{
+    name: {
+      type: "string",
+      description: "フォームへ送信するときの項目名です。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "フィールド全体を無効にします。",
+    },
+    validate: {
+      type: `(value: unknown, formValues: Form.Values) =>\nstring | string[] | null | void |\nPromise<string | string[] | null | void>`,
+      description: "独自の検証を行う関数です。",
+    },
+    validationMode: {
+      type: `"onSubmit" | "onBlur" | "onChange"`,
+      description: "検証を行うタイミングです。",
+    },
+    validationDebounceTime: {
+      type: "number",
+      description: "onChange で検証するときの待ち時間をミリ秒で指定します。",
+    },
+    invalid: {
+      type: "boolean",
+      description: "検証結果とは別に、無効状態として扱うかどうかを指定します。",
+    },
+    dirty: {
+      type: "boolean",
+      description: "値を変更済みとして扱うかどうかを指定します。",
+    },
+    touched: {
+      type: "boolean",
+      description: "操作済みとして扱うかどうかを指定します。",
+    },
+    actionsRef: {
+      type: "React.RefObject<Field.Actions | null>",
+      description: "フィールドを命令的に操作するための参照です。",
+    },
+    className: {
+      type: `string |\n((state: Field.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Field.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+  }}
+/>
+
+ここに挙げた以外の props は Base UI の Field から継承します。
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    description: {
+      type: `Omit<FieldDescriptionProps, "children">`,
+      description: "説明文に props を渡します。",
+    },
+    error: {
+      type: `Omit<FieldErrorProps, "children" | "match">`,
+      description: "すべてのエラーメッセージに共通の props を渡します。",
+    },
+    label: {
+      type: `Omit<FieldLabelProps, "children">`,
+      description: "ラベルに props を渡します。",
+    },
+    validity: {
+      type: `Omit<FieldValidityProps, "children">`,
+      description: "検証状態の表示に props を渡します。",
+    },
+  }}
+/>
+
+### パーツ [#parts-props]
+
+`Field` は `Field.Control` と `Field.Item` を静的メンバーとして持ちます。ラベル、説明文、エラー、検証状態の表示は内部パーツとして構成され、`slotProps` から調整します。
+
+| パーツ                  | 説明                                                                    |
+| ----------------------- | ----------------------------------------------------------------------- |
+| `Field.Control`         | ラベルと検証に関連付けたネイティブの入力欄です。                        |
+| `Field.Item`            | チェックボックスやラジオなど、複数の入力を 1 つの項目としてまとめます。 |
+| `slotProps.label`       | ラベルのスタイルや属性を調整します。                                    |
+| `slotProps.description` | 説明文のスタイルや属性を調整します。                                    |
+| `slotProps.error`       | すべてのエラーメッセージに共通するスタイルや属性を調整します。          |
+| `slotProps.validity`    | 検証状態に応じた表示のスタイルや属性を調整します。                      |
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_field` が付与されます。状態に応じて、`sui_field-disabled`、`sui_field-touched`、`sui_field-dirty`、`sui_field-invalid`、`sui_field-valid`、`sui_field-unverified`、`sui_field-filled`、`sui_field-focused` などのクラス名も加わります。
+
+内部のパーツには `sui_field_label`、`sui_field_description`、`sui_field_error`、`sui_field_control`、`sui_field_item` が付与され、それぞれ同じ状態の修飾クラスを持ちます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[Form](/components/form)

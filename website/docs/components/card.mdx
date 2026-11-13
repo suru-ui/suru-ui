@@ -1,0 +1,138 @@
+---
+title: Card
+description: Card コンポーネントのヘッダー、操作要素、フッター、外観、スタイルのフックを説明します。
+---
+
+Card は、情報や操作をひとまとまりにして表示するコンポーネントです。タイトル、説明文、本文、フッターを 1 つの枠にまとめ、一覧やダッシュボードの項目として使います。ヘッダー右上の操作要素や、末尾のボタンを同時に配置できます。
+
+## 使い方 [#basic-usage]
+
+`title` に見出しを、`description` に補足を、`children` に本文を指定します。`footer` には、カードの末尾に置く操作や補足情報を渡します。
+
+<Component path="card/basic" />
+
+`title`、`description`、`action` をすべて省略すると、ヘッダーは描画されません。本文だけを表示するカードを作りたい場合に便利です。
+
+```tsx
+<Card title="プラン" description="現在の契約内容です">
+  次の更新日は 12 月 1 日です。
+</Card>
+```
+
+## 操作要素とフッター [#actions]
+
+`action` に要素を渡すと、ヘッダーの右上に配置されます。バッジやアイコンボタンなど、カードの状態や補助操作を示すのに適しています。`footer` には確認ボタンやキャンセルボタンを並べられます。
+
+<Component path="card/action" />
+
+`slotProps.action` や `slotProps.footer` を使うと、それぞれの要素に個別の props を渡せます。
+
+## 外観 [#appearance]
+
+`size` でカード全体の余白と文字の大きさを、`radius` で角丸を指定します。`outlined` は枠線の表示を制御します。
+
+<Component path="card/appearance" />
+
+`radius` を省略すると `size` と同じ値になります。枠線を消すと背景色だけで境界を表現するため、背景とのコントラストに注意してください。
+
+## props [#props]
+
+### 固有 props [#card-specific-props]
+
+<TypeTable
+  type={{
+    action: {
+      type: "React.ReactNode",
+      description: "カードのヘッダー右上に表示する操作要素です。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "カードの本文です。",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "カードのタイトルを補足する説明です。",
+    },
+    footer: {
+      type: "React.ReactNode",
+      description: "カードの末尾に表示する操作や補足情報です。",
+    },
+    slotProps: {
+      type: "CardSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+    title: {
+      type: "React.ReactNode",
+      description: "カードのタイトルです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "カードの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "size と同じ値",
+      description: "カードの角丸の大きさです。省略すると size と同じ値になります。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "カードに枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    action: {
+      type: "object",
+      description: "ヘッダー右上の操作要素に渡す props です。",
+    },
+    content: {
+      type: "object",
+      description: "本文の要素に渡す props です。children は Card の children で指定します。",
+    },
+    description: {
+      type: "object",
+      description: "説明文の要素に渡す props です。",
+    },
+    footer: {
+      type: "object",
+      description: "フッターの要素に渡す props です。",
+    },
+    header: {
+      type: "object",
+      description:
+        "ヘッダーの要素に渡す props です。タイトル・説明・操作要素のいずれもないときは無視されます。",
+    },
+    title: {
+      type: "object",
+      description: "タイトルの要素に渡す props です。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Card は `div` 要素を描画するため、`className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。`render` でルート要素を別の要素に置き換えることもできます。残りの props はベースの `div` 要素から継承します。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_card` が付与されます。props に応じて、`sui_card-size_md`、`sui_card-radius_md`、`sui_card-outlined` などのクラス名も加わります。
+
+内部のパーツには `sui_card_header`、`sui_card_title`、`sui_card_description`、`sui_card_action`、`sui_card_content`、`sui_card_footer` が付与されます。
+
+`className` や `style` で調整できるほか、CSS 変数を使って余白や幅を上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

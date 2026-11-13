@@ -1,0 +1,166 @@
+---
+title: Switch
+description: Switch コンポーネントの props、外観、オンとオフの制御方法を説明します。
+---
+
+Switch は、設定のオンとオフを切り替えるコンポーネントです。変更は即座に反映されるため、送信操作を必要としない設定に向いています。ラベルと組み合わせて、何を切り替えるのかを明確にしてください。
+
+## 使い方 [#basic-usage]
+
+`label` 要素でテキストと組み合わせます。`defaultChecked` を指定すると、初期状態をオンにできます。
+
+<Component path="switch/basic" />
+
+オンとオフの状態を自分で管理する場合は、`checked` と `onCheckedChange` を組み合わせます。`onCheckedChange` は第 1 引数に真偽値を受け取ります。
+
+```tsx
+const [checked, setChecked] = useState(false);
+
+<Switch checked={checked} onCheckedChange={setChecked} />;
+```
+
+## 外観 [#appearance]
+
+`variant` で背景の有無を、`color` でオンのときの配色を指定します。`size` は `sm`、`md`、`lg` の 3 段階です。`outlined` を `false` にすると枠線を消せます。
+
+<Component path="switch/appearance" />
+
+角丸は `radius` で指定します。既定値は `full` で、`none`、`sm`、`md`、`lg`、`circle` から選択できます。
+
+## 制御 [#controlled]
+
+制御されたスイッチでは、`checked` の値を更新しない限り表示は変わりません。フォームの検証や非同期処理と連動させる場合に使います。
+
+<Component path="switch/controlled" />
+
+`readOnly` は値の変更だけを禁止し、`disabled` はフォーカスを含む操作を無効にします。どちらの場合も、ラベルを含めて状態が分かるようにしてください。
+
+## props [#props]
+
+### 固有 props [#switch-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "つまみの中に表示する内容です。通常は省略し、label 要素で説明文を添えます。",
+    },
+    slotProps: {
+      type: "SwitchSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "オンのときの配色です。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"liquid"`,
+      description: "スイッチの主な外観です。liquid は薄い塗りつぶしを持ちます。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "スイッチの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: `"full"`,
+      description: "スイッチの角丸の大きさです。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Switch は Base UI の Switch を基盤にしているため、チェック状態やフォームに関する props をそのまま渡せます。主なものは次のとおりです。
+
+<TypeTable
+  type={{
+    checked: {
+      type: "boolean",
+      description: "チェック状態を制御する場合に指定します。",
+    },
+    defaultChecked: {
+      type: "boolean",
+      default: "false",
+      description: "非制御で使うときの初期のチェック状態です。",
+    },
+    onCheckedChange: {
+      type: `(checked: boolean,\neventDetails: Switch.ChangeEventDetails) => void`,
+      description: "チェック状態が変更されたときに呼び出されます。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "スイッチを無効にします。",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "ユーザーによる変更を禁止します。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "フォームの送信前にチェックを必須にします。",
+    },
+    name: {
+      type: "string",
+      description: "フォームで送信するときの名前です。",
+    },
+    value: {
+      type: "string",
+      description: "オンのときに送信する値です。",
+    },
+    uncheckedValue: {
+      type: "string",
+      description: "オフのときに送信する値です。省略すると値を送信しません。",
+    },
+    id: {
+      type: "string",
+      description: "非表示の input 要素の ID です。",
+    },
+    form: {
+      type: "string",
+      description: "非表示の input を関連付けるフォームの ID です。",
+    },
+    inputRef: {
+      type: "React.Ref<HTMLInputElement>",
+      description: "非表示の input 要素への参照です。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    thumb: {
+      type: "object",
+      description: "つまみに渡す props です。children は Switch の children で指定します。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_switch` が付与されます。props に応じて `sui_switch-size_sm`、`sui_switch-color_blue`、`sui_switch-radius_full`、`sui_switch-variant_liquid`、`sui_switch-outlined` などのクラス名も加わります。
+
+状態に応じて `sui_switch-checked`、`sui_switch-disabled`、`sui_switch-readonly`、`sui_switch-focused`、`sui_switch-dirty`、`sui_switch-valid` なども付与されます。つまみには `sui_switch_thumb` と、同じ接尾辞を持つクラス名が付きます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

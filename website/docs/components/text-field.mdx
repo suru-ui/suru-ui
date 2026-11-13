@@ -1,0 +1,170 @@
+---
+title: TextField
+description: TextField コンポーネントの props、アドオン、外観、入力状態を説明します。
+---
+
+TextField は、枠線の内側に 1 行の入力欄と補助表示を並べたコンポーネントです。接頭辞やアイコンを入力欄の前後に置けます。枠線の余白をクリックすると入力欄にフォーカスが移るため、狭い領域でも操作しやすくなっています。
+
+## 使い方 [#basic-usage]
+
+`placeholder` や `defaultValue`、`type` など、入力欄に渡す props をトップレベルで指定します。入力欄の属性を個別に指定する場合は `slotProps.input` を使います。
+
+<Component path="text-field/basic" />
+
+ラベルと説明を添える場合は、`Field` で囲みます。入力値の検証結果も `Field` と組み合わせて表示できます。
+
+```tsx
+<Field label="メールアドレス" description="連絡先として使用します。">
+  <TextField type="email" placeholder="you@example.com" />
+</Field>
+```
+
+## アドオン [#addons]
+
+`startAddons` と `endAddons` に入力欄の前後に表示する内容を指定します。文字列の接頭辞やアイコンなど、配列などの反復可能な値を渡せます。
+
+<Component path="text-field/addons" />
+
+アドオンをクリックすると入力欄にフォーカスが移ります。`disableFocusOnClick` を指定すると、この自動フォーカスを止められます。
+
+## 外観と状態 [#appearance-and-states]
+
+`variant` は `naked` と `liquid` から選択します。`size`、`radius`、`color`、`outlined` を組み合わせて、周囲のデザインに合わせられます。
+
+<Component path="text-field/appearance" />
+
+`disabled` は入力自体を無効にし、`readOnly` は値を変更できない状態にします。検証エラーは `Field` の `invalid` と組み合わせると、枠線の色に反映されます。
+
+<Component path="text-field/states" />
+
+## props [#props]
+
+### 固有 props [#text-field-specific-props]
+
+<TypeTable
+  type={{
+    startAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "入力欄の先頭に表示するアドオンです。",
+    },
+    endAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "入力欄の末尾に表示するアドオンです。",
+    },
+    slotProps: {
+      type: "TextFieldSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "フォーカス時などに枠線へ適用する色です。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "入力欄の主な外観です。liquid は薄い塗りつぶしを持ちます。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "入力欄の大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: "size と同じ値",
+      description: "枠線の角丸です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 入力 props [#input-props]
+
+トップレベルで指定できる入力欄の props です。`slotProps.input` に同じ名前を指定すると、そちらが優先されます。
+
+<TypeTable
+  type={{
+    type: {
+      type: "TextField.Type",
+      default: `"text"`,
+      description: "入力項目です。button や checkbox などの選択系は含まれません。",
+    },
+    value: {
+      type: "string | number | readonly string[]",
+      description: "入力値を制御する場合に指定します。",
+    },
+    defaultValue: {
+      type: "string | number | readonly string[]",
+      description: "非制御で使うときの初期値です。",
+    },
+    onValueChange: {
+      type: `(value: string,\neventDetails: TextField.ChangeEventDetails) => void`,
+      description: "入力値が変更されたときに呼び出されます。",
+    },
+    placeholder: {
+      type: "string",
+      description: "入力欄が空のときに表示する説明です。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "入力欄を無効にします。",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "値を変更できない状態にします。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "入力欄を必須にします。",
+    },
+    name: {
+      type: "string",
+      description: "フォームで送信するときの名前です。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    input: {
+      type: "object",
+      description: "入力欄に渡す props です。トップレベルの入力 props より優先されます。",
+    },
+    addon: {
+      type: "object",
+      description: "すべてのアドオンに渡す props です。disableFocusOnClick を指定できます。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+ルート要素は `div` なので、`className`、`style`、`id`、`aria-*`、`data-*` などの属性はルート要素に渡されます。入力欄自体に属性を渡す場合は `slotProps.input` を使ってください。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_text_field` が付与されます。props に応じて `sui_text_field-size_md`、`sui_text_field-color_blue`、`sui_text_field-radius_md`、`sui_text_field-variant_naked`、`sui_text_field-outlined` などのクラス名も加わります。
+
+入力欄には `sui_text_field_input`、アドオンには `sui_text_field_addon` が付与されます。入力欄の状態に応じて `sui_text_field_input-focused`、`sui_text_field_input-filled`、`sui_text_field_input-invalid`、`sui_text_field_input-disabled` なども加わります。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

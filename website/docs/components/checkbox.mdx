@@ -1,0 +1,197 @@
+---
+title: Checkbox
+description: Checkbox コンポーネントの props、選択状態、グループとの連携、外観を説明します。
+---
+
+Checkbox は、オンとオフの 2 つの状態を持つ入力です。設定の切り替えや、複数の選択肢から該当するものを選ぶ場面で使います。ラベルのテキストは `label` 要素で囲んで指定すると、クリックでチェック状態を切り替えられます。
+
+## 使い方 [#basic-usage]
+
+ラベルのテキストは `label` 要素の子として配置します。Checkbox とラベルを同じ `label` 要素に入れると、テキストのクリックでも状態を切り替えられます。`defaultChecked` を指定すると、初期状態をチェック済みにできます。
+
+<Component path="checkbox/basic" />
+
+Checkbox の `children` はインジケーターの中に描画されます。チェックマークを独自のアイコンに差し替えたい場合に使います。
+
+## 選択状態 [#selection-states]
+
+`checked` と `onCheckedChange` を指定すると、選択状態を制御できます。`indeterminate` は、複数の子項目の一部だけが選択されていることを示す中間状態です。
+
+<Component path="checkbox/states" />
+
+`disabled` は操作とフォーカスを無効にし、`readOnly` は状態を変えずにフォーカスだけを許可します。フォームで必須にする場合は `required` を指定します。
+
+## グループとの連携 [#within-checkbox-group]
+
+複数の Checkbox をまとめる場合は、[CheckboxGroup](/components/checkbox-group) の子として配置し、各 Checkbox に `value` を指定します。グループ内では、`color`、`size`、`radius`、`variant`、`outlined` をグループ側でまとめて指定できます。
+
+```tsx
+<CheckboxGroup defaultValue={["design"]}>
+  <label>
+    <Checkbox value="design" />
+    デザイン
+  </label>
+  <label>
+    <Checkbox value="engineering" />
+    エンジニアリング
+  </label>
+</CheckboxGroup>
+```
+
+## 外観 [#appearance]
+
+`color` で配色を、`size` で大きさを指定します。`variant="liquid"` にすると薄い塗りつぶしが付き、`outlined={false}` で枠線を消せます。
+
+<Component path="checkbox/appearance" />
+
+## props [#props]
+
+### 固有 props [#checkbox-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description:
+        "インジケーターの中に表示する内容です。既定ではチェックアイコンが描画されます。ラベルのテキストは label 要素で指定します。",
+    },
+    slotProps: {
+      type: "CheckboxSlotProps",
+      default: "{}",
+      description: "インジケーターなどの内部パーツに props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "チェックボックスの配色です。CheckboxGroup 内ではグループの値が優先されます。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "チェックボックスの大きさです。CheckboxGroup 内ではグループの値が優先されます。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: "size と同じ値",
+      description: "角丸の大きさです。既定値は size です。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "チェックボックスの主な外観です。liquid は薄い塗りつぶしになります。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Checkbox は Base UI の Checkbox を基盤にしているため、次の props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    checked: {
+      type: "boolean",
+      description: "チェック状態を制御します。",
+    },
+    defaultChecked: {
+      type: "boolean",
+      description: "初期のチェック状態です。",
+    },
+    indeterminate: {
+      type: "boolean",
+      default: "false",
+      description: "中間状態として表示するかどうかです。",
+    },
+    onCheckedChange: {
+      type: "(checked: boolean,\ndetails: Checkbox.ChangeEventDetails) => void",
+      description: "チェック状態が変わったときに呼ばれるコールバックです。",
+    },
+    parent: {
+      type: "boolean",
+      default: "false",
+      description: "CheckboxGroup の全選択チェックボックスとして扱うかどうかです。",
+    },
+    value: {
+      type: "string",
+      description: "CheckboxGroup 内で選択値を識別するための値です。",
+    },
+    uncheckedValue: {
+      type: "string",
+      description: "未チェック時にフォームへ送信する値です。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "チェックボックスを無効にします。",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "読み取り専用にします。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "フォームで必須項目にするかどうかです。",
+    },
+    name: {
+      type: "string",
+      description: "フォームへ送信するときの項目名です。",
+    },
+    className: {
+      type: `string |\n((state: Checkbox.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Checkbox.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "ルート要素を別の要素に置き換えます。",
+    },
+  }}
+/>
+
+`value` は CheckboxGroup 内の識別に、`uncheckedValue` は未チェック時にフォームへ送信する値に使います。ここに挙げた以外の属性も、Base UI の Checkbox から継承します。
+
+### slotProps [#slot-props]
+
+| キー        | 型                                         | 説明                                                                                                 |
+| ----------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `indicator` | `Omit<CheckboxIndicatorProps, "children">` | チェックマークを表示するインジケーターに props を渡します。`children` は Checkbox 本体で指定します。 |
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_checkbox` が付与されます。props と状態に応じて、次のクラス名も加わります。
+
+| クラス名                           | 条件                                        |
+| ---------------------------------- | ------------------------------------------- |
+| `sui_checkbox`                     | 常に付与されます。                          |
+| `sui_checkbox-size_sm` など        | `size` に応じて付与されます。               |
+| `sui_checkbox-color_blue` など     | `color` に応じて付与されます。              |
+| `sui_checkbox-radius_full` など    | `radius` に応じて付与されます。             |
+| `sui_checkbox-variant_liquid` など | `variant` に応じて付与されます。            |
+| `sui_checkbox-outlined`            | `outlined` が `true` のときに付与されます。 |
+| `sui_checkbox-checked`             | チェック済みのときに付与されます。          |
+| `sui_checkbox-indeterminate`       | 中間状態のときに付与されます。              |
+| `sui_checkbox-disabled`            | 無効のときに付与されます。                  |
+| `sui_checkbox-readonly`            | 読み取り専用のときに付与されます。          |
+| `sui_checkbox-required`            | 必須のときに付与されます。                  |
+| `sui_checkbox-invalid` など        | 検証状態に応じて付与されます。              |
+
+インジケーターには `sui_checkbox_indicator` が付与され、`sui_checkbox_indicator-checked` や `sui_checkbox_indicator-disabled` などの状態クラスも加わります。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[CheckboxGroup](/components/checkbox-group)

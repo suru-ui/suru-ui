@@ -1,0 +1,117 @@
+---
+title: Image
+description: Image コンポーネントの表示方法、角丸、代替テキスト、読み込み属性を説明します。
+---
+
+Image は、画像を表示するコンポーネントです。既定では `object-fit` を指定せず、画像は元の比率のまま表示されます。`fit` でコンテナーへのはめ込み方法を、`radius` で角丸を指定できます。大きさは `width` と `height`、または `style` や CSS で指定します。
+
+## 使い方 [#basic-usage]
+
+`src` に画像の URL を、`alt` に画像の内容を指定します。大きさは `style` の `width` と `height` で指定すると、レイアウトに合わせやすくなります。
+
+<Component path="image/basic" />
+
+内容を伝える画像には、内容を説明する `alt` を指定します。装飾だけの画像には `alt=""` と `aria-hidden="true"` を組み合わせ、スクリーンリーダーに読み上げさせないようにします。
+
+## 表示方法と角丸 [#fit-and-radius]
+
+`fit` は `object-fit` に対応し、`cover`、`contain`、`fill`、`none`、`scale-down` から選べます。`radius` は `none`、`sm`、`md`、`lg`、`full` から選べます。
+
+<Component path="image/fit" />
+
+`fit="cover"` は余白を残さずコンテナーを埋め、はみ出した部分を切り取ります。`fit="contain"` は画像全体を表示するため、画像の比率によっては余白が生まれます。`radius="full"` を円形にしたい場合は、`width` と `height` を同じ値にしてください。
+
+## 代替テキストと読み込み [#accessibility]
+
+画像の内容を説明する場合は、`alt` に短く具体的な説明を書きます。`loading="lazy"` と `decoding="async"` を指定すると、画面外の画像の読み込みを遅らせ、描画を妨げにくくできます。
+
+```tsx
+<Image
+  src="/images/landscape.jpg"
+  alt="夕焼けに染まる山並み"
+  fit="cover"
+  radius="md"
+  loading="lazy"
+  decoding="async"
+  style={{ width: "100%", height: 240 }}
+/>
+```
+
+## props [#props]
+
+### 固有 props [#image-specific-props]
+
+<TypeTable
+  type={{
+    fit: {
+      type: `"cover" | "contain" | "fill" |\n"none" | "scale-down"`,
+      description:
+        "画像の表示方法です。object-fit に対応し、省略すると object-fit は指定されません。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: `"none"`,
+      description: "画像の角丸の大きさです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Image は `img` 要素を描画するため、ネイティブの img 要素が受け付ける属性を渡せます。
+
+<TypeTable
+  type={{
+    src: {
+      type: "string",
+      description: "画像の URL です。",
+    },
+    alt: {
+      type: "string",
+      description: "画像の代替テキストです。装飾画像では空文字を指定します。",
+    },
+    width: {
+      type: "number | string",
+      description: "画像の幅です。",
+    },
+    height: {
+      type: "number | string",
+      description: "画像の高さです。",
+    },
+    loading: {
+      type: `"eager" | "lazy"`,
+      description: "画像の読み込み方法です。",
+    },
+    decoding: {
+      type: `"sync" | "async" | "auto"`,
+      description: "画像のデコード方法です。",
+    },
+    className: {
+      type: `string |\n((state: Image.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Image.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "ルート要素を別の要素に置き換えます。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_image` が付与されます。`radius` に応じて `sui_image-radius_md` など、`fit` に応じて `sui_image-fit_cover` などのクラス名が加わります。
+
+`--sui_image-object_fit`、`--sui_image-border_radius`、`--sui_image-corner_shape` の CSS 変数で表示を調整できます。
+
+関連: [外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)、[コンポーネントの構造](/guides/component-anatomy)

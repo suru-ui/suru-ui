@@ -577,16 +577,18 @@ export const RootOnly = meta.story({
     outlined: false,
   }),
   render(props) {
+    const Button = ButtonParts;
+
     return (
       <div className="flex flex-wrap gap-3">
-        <ButtonParts.Root {...props}>ボタン</ButtonParts.Root>
-        <ButtonParts.Root {...props}>
+        <Button.Root {...props}>ボタン</Button.Root>
+        <Button.Root {...props}>
           <GlobeIcon />
           ボタン
-        </ButtonParts.Root>
-        <ButtonParts.Root {...props} squared>
+        </Button.Root>
+        <Button.Root {...props} squared>
           <Trash2Icon />
-        </ButtonParts.Root>
+        </Button.Root>
       </div>
     );
   },

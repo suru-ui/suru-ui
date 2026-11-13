@@ -1,6 +1,32 @@
 ---
 title: ガイド
-description: ""
+description: コンポーネントの構造、合成、外観、状態、レイアウトに関する一般的なガイドです。Button を具体例として使います。
 ---
 
-このページはテンプレートの初期出力です。
+このセクションは、特定の課題を解決するためのハウツーガイドです。Button の機能を個別に説明するのではなく、コンポーネントを扱うときに共通して役立つ考え方を、Button を例に説明します。
+
+## ガイド一覧 [#guide-list]
+
+<CardGroup cols={2}>
+  <Card title="コンポーネントの構造" href="/guides/component-anatomy" icon="component">
+    プリセット、パーツ、スロット、slotProps の関係を説明します。
+  </Card>
+  <Card title="要素とコンポーネントの合成" href="/guides/composition" icon="link">
+    render props を使って、要素の意味を保ちながら見た目を再利用します。
+  </Card>
+  <Card title="外観のカスタマイズ" href="/guides/styling" icon="palette">
+    props、className、style、CSS 変数を使った見た目の調整方法です。
+  </Card>
+  <Card title="非同期状態の表示" href="/guides/async-state" icon="loader">
+    処理中、無効、進捗中をユーザーに伝える方法を説明します。
+  </Card>
+  <Card title="レイアウトとサイズ" href="/guides/layout" icon="layout-dashboard">
+    幅、並び方、密度をレイアウトに合わせて調整します。
+  </Card>
+</CardGroup>
+
+## 読み方 [#how-to-read]
+
+ガイドは、すでに Suru UI のセットアップが完了していることを前提としています。まだセットアップしていない場合は、先に[インストール](/getting-started/installation)を完了してください。
+
+各ガイドは独立しています。すべてを順番に読む必要はありません。Button の具体的な props や型を調べたい場合は、[Button のリファレンス](/components/button)を参照してください。

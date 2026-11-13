@@ -1,0 +1,63 @@
+---
+title: TooltipGroup
+description: TooltipGroup コンポーネントの props と、複数のツールチップで遅延を共有する方法を説明します。
+---
+
+TooltipGroup は、複数の Tooltip の開閉遅延をまとめるコンポーネントです。近接したツールチップを続けて表示するとき、先に表示したツールチップが閉じてから一定時間内であれば、次のツールチップをすぐに表示できます。TooltipGroup 自体は HTML 要素を描画しません。
+
+## 使い方 [#basic-usage]
+
+複数の Tooltip を TooltipGroup で囲みます。`delay`、`closeDelay`、`timeout` はグループ内のツールチップに共有されます。
+
+<Component path="tooltip-group/basic" />
+
+個々の Tooltip に `delay` や `closeDelay` を指定した場合は、その値が優先されます。
+
+## 遅延の仕組み [#delay]
+
+グループ内で共有される値は次の 3 つです。
+
+| Prop         | 説明                                                                         |
+| ------------ | ---------------------------------------------------------------------------- |
+| `delay`      | 最初にツールチップを表示するまでの待ち時間です。                             |
+| `closeDelay` | ツールチップを閉じるまでの待ち時間です。                                     |
+| `timeout`    | 直前のツールチップを閉じてから、次のツールチップをすぐに表示できる時間です。 |
+
+`timeout` の既定値は 400 ミリ秒です。この時間を過ぎると、次のツールチップは再び `delay` の待ち時間を経て表示されます。
+
+## props [#props]
+
+### 固有 props [#tooltip-group-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "遅延を共有する Tooltip の一覧です。",
+    },
+    delay: {
+      type: "number",
+      description: "ツールチップを表示するまでの待ち時間をミリ秒で指定します。",
+    },
+    closeDelay: {
+      type: "number",
+      description: "ツールチップを閉じるまでの待ち時間をミリ秒で指定します。",
+    },
+    timeout: {
+      type: "number",
+      default: "400",
+      description:
+        "直前のツールチップを閉じてから、次のツールチップをすぐに表示できる時間をミリ秒で指定します。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+TooltipGroup は Base UI の Tooltip Provider を基盤にしています。`delay`、`closeDelay`、`timeout` と `children` 以外に独自の props はありません。グループ内の個々の Tooltip には、Tooltip の props をそのまま指定できます。
+
+## スタイル [#styling-hooks]
+
+TooltipGroup は HTML 要素を描画しないため、専用のクラス名はありません。表示されるツールチップのスタイルは、子の Tooltip が付与する `sui_tooltip_popup` などのクラス名で調整してください。
+
+関連: [Tooltip](/components/tooltip)、[コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)

@@ -1,0 +1,153 @@
+---
+title: Meter
+description: Meter コンポーネントの値の指定、範囲、値の書式、外観を説明します。
+---
+
+Meter は、既知の範囲に対する現在値の割合を表示するコンポーネントです。ストレージの使用量やバッテリーの残量など、測定値を示すときに使います。処理の進捗を示す場合は、代わりに [Progress](/components/progress) を使います。
+
+## 使い方 [#basic-usage]
+
+`value` に現在値を指定し、必要に応じて `min` と `max` で範囲を指定します。`label` を指定すると、ラベルと現在値が表示されます。
+
+<Component path="meter/basic" />
+
+`label` を指定しない場合は、ラベルと値の表示が省略されます。この場合は `aria-label` や `aria-valuetext` で、支援技術へ意味を伝えてください。
+
+## 範囲と値 [#range]
+
+`min` と `max` は表示する値の範囲を決めます。既定値はそれぞれ `0` と `100` です。負の値を含む範囲を指定したい場合は、`min` に負の数を渡します。
+
+```tsx
+<Meter label="気温" min={-20} max={40} value={12} />
+```
+
+`value` が範囲を超えた場合は、最小値または最大値に丸められた値が表示されます。
+
+## 値の書式 [#format]
+
+`format` に `Intl.NumberFormat` のオプションを渡すと、表示する値の書式を変更できます。`locale` を合わせて指定すると、言語や地域に応じた表記になります。
+
+<Component path="meter/format" />
+
+```tsx
+<Meter
+  label="ストレージ"
+  value={183}
+  max={256}
+  format={{ style: "unit", unit: "gigabyte", maximumFractionDigits: 0 }}
+  locale="ja-JP"
+/>
+```
+
+## 外観 [#appearance]
+
+`variant` は `liquid` と `naked` から選択できます。`color` で配色を、`size` で大きさを、`radius` で角丸を指定します。`outlined` はトラックの枠線を表示するかどうかを決めます。
+
+<Component path="meter/appearance" />
+
+## props [#props]
+
+### 固有 props [#meter-specific-props]
+
+<TypeTable
+  type={{
+    label: {
+      type: "React.ReactNode",
+      description: "メーターの説明ラベルです。指定すると現在値もあわせて表示されます。",
+    },
+    value: {
+      type: "number",
+      default: "0",
+      description: "現在値です。",
+    },
+    slotProps: {
+      type: "MeterSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "メーターの配色です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "メーターの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: `"full"`,
+      description: "角丸の大きさです。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"liquid"`,
+      description: "メーターの主な外観です。naked は背景なし、liquid は薄い塗りつぶしです。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "トラックの枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Meter は Base UI の Meter を基盤にしているため、次の props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    min: {
+      type: "number",
+      default: "0",
+      description: "範囲の最小値です。",
+    },
+    max: {
+      type: "number",
+      default: "100",
+      description: "範囲の最大値です。",
+    },
+    format: {
+      type: "Intl.NumberFormatOptions",
+      description: "値を表示するときの書式です。",
+    },
+    locale: {
+      type: "Intl.LocalesArgument",
+      description: "値の書式に使うロケールです。省略時は実行環境のロケールになります。",
+    },
+    getAriaValueText: {
+      type: "(formattedValue: string, value: number) => string",
+      description: "支援技術へ伝える値のテキストを返す関数です。",
+    },
+    "aria-valuetext": {
+      type: "string",
+      description: "現在値を説明するテキストです。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| キー        | 型                                  | 説明                                                                                 |
+| ----------- | ----------------------------------- | ------------------------------------------------------------------------------------ |
+| `indicator` | `MeterIndicatorProps`               | 現在値を示すインジケーターに渡す props です。                                        |
+| `label`     | `Omit<MeterLabelProps, "children">` | ラベルに渡す props です。表示内容は `label` で指定します。                           |
+| `track`     | `Omit<MeterTrackProps, "children">` | トラックに渡す props です。                                                          |
+| `value`     | `MeterValueProps`                   | 現在値の表示に渡す props です。`children` に関数を渡すと表示をカスタマイズできます。 |
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_meter` が付与されます。props に応じて、`sui_meter-size_md`、`sui_meter-color_blue`、`sui_meter-radius_full`、`sui_meter-variant_liquid`、`sui_meter-outlined` などのクラス名も加わります。
+
+内部のパーツには、`sui_meter_label`、`sui_meter_value`、`sui_meter_track`、`sui_meter_indicator` などのクラス名が付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

@@ -1,0 +1,121 @@
+---
+title: Resizable
+description: Resizable のパネル、ハンドル、向き、サイズ制限の指定方法を説明します。
+---
+
+Resizable は、隣り合うパネルの境界をドラッグしてサイズを変更できるコンポーネントです。エディターのサイドバーや分割ビューなど、ユーザーが表示領域を調整したい場面に適しています。ハンドルはポインターのほか、矢印キーでも操作できます。
+
+## 使い方 [#basic-usage]
+
+`Resizable` の子要素に `Resizable.Panel` と `Resizable.Handle` を交互に配置します。`Resizable` は `Resizable.PanelGroup` の別名です。
+
+<Component path="resizable/basic" />
+
+パネルの `defaultSize` は初期サイズです。数値はパーセントとして扱われ、`"16rem"` のような単位付きの文字列も指定できます。
+
+## 向きとサイズ [#orientation-and-size]
+
+`orientation` に `vertical` を指定すると、パネルを上下に並べられます。`minSize` と `maxSize` でサイズの範囲を制限し、`collapsible` を指定するとパネルを折りたためます。
+
+<Component path="resizable/vertical" />
+
+```tsx
+<Resizable orientation="vertical" style={{ height: "20rem" }}>
+  <Resizable.Panel defaultSize={50} minSize={20}>
+    上部
+  </Resizable.Panel>
+  <Resizable.Handle />
+  <Resizable.Panel defaultSize={50} maxSize={80}>
+    下部
+  </Resizable.Panel>
+</Resizable>
+```
+
+`size` を指定するとパネルのサイズを制御できます。`onSizeChange` で変更後のパーセント値を受け取れます。
+
+## ハンドル [#handle]
+
+`Resizable.Handle` の `invisible` を指定すると、ハンドルの太さを 0 にできます。見た目は消えますが判定領域は残るため、リサイズは引き続き可能です。`disabled` を指定すると操作できなくなります。
+
+<Component path="resizable/handle" />
+
+ハンドルはフォーカス可能で、矢印キーによる操作にも対応します。キーボード操作を妨げないよう、非表示にする場合もフォーカスリングは維持されます。
+
+## props [#props]
+
+### 固有 props [#resizable-specific-props]
+
+`Resizable` と `Resizable.PanelGroup` の props です。
+
+<TypeTable
+  type={{
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"horizontal"`,
+      description: "パネルを並べる向きです。",
+    },
+    resizeTargetMinimumSize: {
+      type: "{ fine: number; coarse: number }",
+      default: "{ fine: 8, coarse: 20 }",
+      description:
+        "ポインターでリサイズを始められる判定領域の最小サイズです。fine はマウスやペン、coarse はタッチに使われます。",
+    },
+  }}
+/>
+
+`Resizable.Panel` の props です。
+
+<TypeTable
+  type={{
+    defaultSize: {
+      type: "number | string",
+      description: "パネルの初期サイズです。数値はパーセントとして扱われます。",
+    },
+    maxSize: {
+      type: "number | string",
+      description: "パネルが大きくなるときの最大サイズです。数値はパーセントとして扱われます。",
+    },
+    minSize: {
+      type: "number | string",
+      description: "パネルが小さくなるときの最小サイズです。数値はパーセントとして扱われます。",
+    },
+    size: {
+      type: "number | string",
+      description: "パネルのサイズを制御します。数値はパーセントとして扱われます。",
+    },
+    onResize: {
+      type: "(size, id, previousSize) => void",
+      description: "パネルサイズが変化したときに呼ばれます。",
+    },
+    onSizeChange: {
+      type: "(size: number) => void",
+      description: "パネルサイズが変化したときに、パーセント値で呼ばれます。",
+    },
+  }}
+/>
+
+`Resizable.Handle` の props です。
+
+<TypeTable
+  type={{
+    invisible: {
+      type: "boolean",
+      default: "false",
+      description: "ハンドルを非表示にするかどうかを指定します。判定領域は残ります。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Resizable は `react-resizable-panels` を基盤にしています。ルートには `defaultLayout`、`onLayoutChange`、`onLayoutChanged`、`disabled` などを渡せます。パネルには `collapsible`、`collapsedSize`、`disabled`、`panelRef` などを、ハンドルには `disabled`、`disableDoubleClick` などを渡せます。
+
+各パーツは `div` 要素を描画するため、`className`、`style`、`id`、`aria-*`、`data-*` などの属性も渡せます。`className` と `style` には状態を受け取る関数を指定できます。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_resizable` が付与され、向きに応じて `sui_resizable-orientation_vertical` などのクラス名が加わります。
+
+パネルには `sui_resizable_panel` と `sui_resizable_panel-orientation_horizontal` などが、ハンドルには `sui_resizable_handle`、`sui_resizable_handle-direction_vertical`、`sui_resizable_handle-invisible`、`sui_resizable_handle-disabled` などが付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

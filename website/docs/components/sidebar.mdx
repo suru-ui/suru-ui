@@ -1,0 +1,153 @@
+---
+title: Sidebar
+description: Sidebar の構成、開閉状態、外観バリアント、折りたたみの方法を説明します。
+---
+
+Sidebar は、アプリケーションのナビゲーションを配置するためのコンポーネントです。開閉状態を管理するプロバイダーと、サイドバー本体、メインコンテンツの領域を組み合わせて、アプリケーションシェルを構成します。
+
+## 使い方 [#basic-usage]
+
+`Sidebar` が開閉状態を管理するプロバイダーです。その中に `Sidebar.Root` と `Sidebar.Inset` を配置します。`Sidebar.Root` には、ヘッダー、スクロール領域、フッター、グループ、開閉用のレールを組み合わせます。
+
+<Component path="sidebar/basic" />
+
+最小構成は次のとおりです。
+
+```tsx
+<Sidebar>
+  <Sidebar.Root>
+    <Sidebar.Content>ナビゲーション</Sidebar.Content>
+    <Sidebar.Rail />
+  </Sidebar.Root>
+  <Sidebar.Inset>
+    <Sidebar.Trigger />
+    メインコンテンツ
+  </Sidebar.Inset>
+</Sidebar>
+```
+
+`Sidebar.Trigger` はプロバイダーのコンテキストを使うため、`Sidebar.Root` の外側に置いても動作します。既定のアイコンを省略し、独自のボタン内容を渡すこともできます。
+
+## 構成 [#parts]
+
+| パーツ                         | 役割                                                 |
+| ------------------------------ | ---------------------------------------------------- |
+| `Sidebar` / `Sidebar.Provider` | 開閉状態を管理し、全体を包む `div` を描画します。    |
+| `Sidebar.Root`                 | サイドバー本体の `aside` を描画します。              |
+| `Sidebar.Header`               | サイドバー上部に固定される領域です。                 |
+| `Sidebar.Content`              | スクロール可能なメインのナビゲーション領域です。     |
+| `Sidebar.Footer`               | サイドバー下部に固定される領域です。                 |
+| `Sidebar.Group`                | 関連する項目をまとめるセクションです。               |
+| `Sidebar.GroupLabel`           | グループの見出しです。                               |
+| `Sidebar.GroupContent`         | グループ内の項目を並べる領域です。                   |
+| `Sidebar.Inset`                | サイドバーの横に表示するメインコンテンツの領域です。 |
+| `Sidebar.Rail`                 | サイドバーの端で開閉を切り替える細い帯です。         |
+| `Sidebar.Trigger`              | 開閉を切り替えるボタンです。                         |
+| `Sidebar.useContext`           | 開閉状態と操作を取得するフックです。                 |
+
+`Sidebar.useContext()` は `open`、`state`、`toggle`、`setOpen` を返します。`Sidebar.Root` の内側では、`side`、`variant`、`collapsible` も含まれます。アイコンだけの折りたたみ表示に合わせてラベルを隠す場合などに使います。
+
+## 開閉状態 [#open-state]
+
+`defaultOpen` で初期状態を指定します。`open` を指定すると制御コンポーネントになり、`onOpenChange` で変更を受け取ります。
+
+```tsx
+const [open, setOpen] = React.useState(true);
+
+<Sidebar open={open} onOpenChange={setOpen}>
+  <Sidebar.Root>{/* ... */}</Sidebar.Root>
+  <Sidebar.Inset>
+    <Sidebar.Trigger />
+    {/* ... */}
+  </Sidebar.Inset>
+</Sidebar>;
+```
+
+開閉状態は `Sidebar.Trigger` と `Sidebar.Rail` のどちらからでも切り替えられます。`collapsible="none"` の場合、レールは描画されず、トリガーも無効になります。
+
+## 外観 [#appearance]
+
+`Sidebar.Root` の `variant` は `sidebar`、`floating`、`inset` から選択できます。`side` で左右の配置を、`collapsible` で折りたたみ方法を指定します。
+
+<Component path="sidebar/variants" />
+
+- `variant="sidebar"`: コンテンツを押し出す従来の固定サイドバーです。
+- `variant="floating"`: 周囲に余白と枠、角丸を持つ浮遊パネルになります。
+- `variant="inset"`: メインコンテンツの側を押し込んだ外観になります。
+- `collapsible="offcanvas"`: 画面の端からスライドして完全に隠れます。
+- `collapsible="icon"`: アイコン列の幅まで折りたたみます。
+- `collapsible="none"`: 折りたためません。
+
+## props [#props]
+
+### 固有 props [#sidebar-specific-props]
+
+`Sidebar` と `Sidebar.Provider` は同じ props を受け取ります。
+
+<TypeTable
+  type={{
+    defaultOpen: {
+      type: "boolean",
+      default: "true",
+      description: "初期の開閉状態です。open を指定した場合は無視されます。",
+    },
+    open: {
+      type: "boolean",
+      description: "サイドバーが開いているかどうかを制御します。",
+    },
+    onOpenChange: {
+      type: "(open: boolean) => void",
+      description: "開閉状態が変化したときに呼ばれます。",
+    },
+    slotProps: {
+      type: "SidebarSlotProps",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+`slotProps.provider` を使うと、プロバイダーに追加の props を渡せます。
+
+### slotProps [#slot-props]
+
+| スロット   | 型                                       | 説明                                                                                      |
+| ---------- | ---------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `provider` | `Omit<SidebarProviderProps, "children">` | プロバイダーに追加で渡す props です。`open` や `defaultOpen` などもここで上書きできます。 |
+
+### 外観 props [#appearance-props]
+
+`Sidebar.Root` の props です。
+
+<TypeTable
+  type={{
+    collapsible: {
+      type: `"offcanvas" | "icon" | "none"`,
+      default: `"offcanvas"`,
+      description: "サイドバーの折りたたみ方法を指定します。",
+    },
+    side: {
+      type: `"left" | "right"`,
+      default: `"left"`,
+      description: "サイドバーを配置する辺を指定します。",
+    },
+    variant: {
+      type: `"sidebar" | "floating" | "inset"`,
+      default: `"sidebar"`,
+      description: "サイドバーの外観バリアントを指定します。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+プロバイダーは `div`、`Sidebar.Root` は `aside`、`Sidebar.Trigger` と `Sidebar.Rail` は `button` を描画します。それぞれ `className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。`render` で要素を置き換えることもできます。
+
+## スタイル [#styling-hooks]
+
+プロバイダーには `sui_sidebar_provider` が付与されます。開閉状態に応じて `sui_sidebar_provider-expanded`、`sui_sidebar_provider-collapsed`、`sui_sidebar_provider-open` が加わります。
+
+`Sidebar.Root` には `sui_sidebar` が付与されます。`side`、`variant`、`collapsible`、開閉状態に応じて、`sui_sidebar-side_right`、`sui_sidebar-variant_floating`、`sui_sidebar-collapsible_icon`、`sui_sidebar-expanded`、`sui_sidebar-open` などのクラス名が加わります。
+
+内部のパーツには `sui_sidebar_header`、`sui_sidebar_content`、`sui_sidebar_footer`、`sui_sidebar_group`、`sui_sidebar_group_label`、`sui_sidebar_group_content`、`sui_sidebar_inset`、`sui_sidebar_rail`、`sui_sidebar_trigger` が付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

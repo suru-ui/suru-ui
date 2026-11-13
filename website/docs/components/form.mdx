@@ -1,0 +1,121 @@
+---
+title: Form
+description: Form コンポーネントの検証タイミング、サーバーエラー、送信値、命令的な検証を説明します。
+---
+
+Form は、フォームの検証状態をまとめ、送信時に値をオブジェクトとして集めるコンポーネントです。既定ではネイティブの `<form>` 要素を描画し、内部の `Field` と連携してエラー表示を制御します。ネイティブのフォーム属性に加えて、Base UI の Form が提供する検証の仕組みを利用できます。
+
+## 使い方 [#basic-usage]
+
+`Field` と `Input` を組み合わせて入力欄を作り、送信ボタンを配置します。`onFormSubmit` を使うと、送信時にフォームの値をオブジェクトとして受け取れます。
+
+<Component path="form/basic" />
+
+`onFormSubmit` を指定した場合、ネイティブの submit イベントでは自動的に `preventDefault()` が呼ばれます。通常の `onSubmit` を使いたい場合は、これまでどおりイベントハンドラーを渡せます。
+
+## 検証とエラー [#validation]
+
+`validationMode` で検証のタイミングを指定します。`errors` にサーバー側のエラーを渡すと、該当する `name` を持つ `Field` にメッセージが表示されます。
+
+<Component path="form/validation" />
+
+| 値         | 検証のタイミング                                                       |
+| ---------- | ---------------------------------------------------------------------- |
+| `onSubmit` | 送信時に検証し、その後は値の変更ごとに再検証します。これが既定値です。 |
+| `onBlur`   | フィールドからフォーカスが外れたときに検証します。                     |
+| `onChange` | 値が変更されるたびに検証します。                                       |
+
+`errors` のキーは `Field` の `name` と対応します。値には表示するメッセージを指定します。`Field` 側の `errorMatches` と併用すると、ネイティブの検証メッセージも日本語で表示できます。
+
+## 送信値と命令的な検証 [#actions]
+
+`onFormSubmit` の第 1 引数には、`name` をキーにした入力値のオブジェクトが渡されます。第 2 引数には送信の詳細が入ります。
+
+```tsx
+<Form
+  onFormSubmit={(values, details) => {
+    console.log(values, details.reason);
+  }}
+>
+  {/* フィールド */}
+</Form>
+```
+
+`actionsRef` を使うと、フォームの外から検証を実行できます。すべてのフィールドを検証するほか、特定のフィールド名だけを検証できます。
+
+```tsx
+const actionsRef = React.useRef<Form.Actions>(null);
+
+<Form actionsRef={actionsRef}>{/* フィールド */}</Form>;
+
+actionsRef.current?.validate();
+actionsRef.current?.validate("email");
+```
+
+## props [#props]
+
+### 固有 props [#form-specific-props]
+
+<TypeTable
+  type={{
+    validationMode: {
+      type: `"onSubmit" | "onBlur" | "onChange"`,
+      default: `"onSubmit"`,
+      description:
+        "フィールドを検証するタイミングです。Field 側の validationMode が指定されている場合は、そちらが優先されます。",
+    },
+    errors: {
+      type: "Record<string, string | string[]>",
+      description:
+        "サーバー側などで発生した検証エラーです。キーは Field の name に対応し、値にはメッセージを指定します。",
+    },
+    onFormSubmit: {
+      type: `(formValues: Record<string, any>,\neventDetails: Form.SubmitEventDetails) => void`,
+      description: "フォームが送信されたときに呼ばれます。フォームの値と送信の詳細を受け取ります。",
+    },
+    actionsRef: {
+      type: "React.RefObject<Form.Actions | null>",
+      description:
+        "命令的に検証するための ref です。validate で全体または特定のフィールドを検証できます。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Form は Base UI の Form を基盤にしているため、ネイティブの form 要素が受け付ける属性と、Base UI の Form が提供する props を渡せます。
+
+<TypeTable
+  type={{
+    onSubmit: {
+      type: "React.FormEventHandler<HTMLFormElement>",
+      description: "ネイティブの submit イベントのハンドラーです。",
+    },
+    noValidate: {
+      type: "boolean",
+      description: "ブラウザーのネイティブ検証を無効にするかどうかです。",
+    },
+    className: {
+      type: `string |\n((state: Form.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Form.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "ルート要素を別の要素に置き換えます。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_form` が付与されます。Form は縦方向の flex コンテナーとして配置され、`--sui_form-gap` で子要素の間隔を調整できます。
+
+```tsx
+<Form style={{ "--sui_form-gap": "1.5rem" } as React.CSSProperties}>{/* フィールド */}</Form>
+```
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[非同期状態の表示](/guides/async-state)、[外観のカスタマイズ](/guides/styling)

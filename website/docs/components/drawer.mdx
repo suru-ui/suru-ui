@@ -1,0 +1,246 @@
+---
+title: Drawer
+description: Drawer コンポーネントの props、表示方向、スワイプ操作、スナップポイントを説明します。
+---
+
+Drawer は、画面の端からスライドして表示される領域です。補足の操作や設定、確認などを、現在の画面を保ったまま表示したい場面で使います。`swipeDirection` で表示する端とスワイプ方向を指定できます。
+
+## 使い方 [#basic-usage]
+
+`trigger` にドロワーを開く要素を、`title`、`description`、`children` に内容を渡します。`footer` は下部に固定して表示されます。
+
+<Component path="drawer/basic" />
+
+`showCloseIconButton` は既定で `true` になり、右上に閉じるアイコンが表示されます。`controls` を使うと、その手前に独自の操作を追加できます。
+
+## 表示方向 [#direction]
+
+`swipeDirection` には `up`、`down`、`left`、`right` を指定できます。`showSwipeHandle` を `true` にすると、ドロワーの端にスワイプ用のハンドルが表示されます。
+
+<Component path="drawer/directions" />
+
+`swipeDirection` は、ドロワーを閉じるスワイプの方向も決めます。`modal={false}` を指定すると、背後の画面を操作できる非モーダルのドロワーになります。
+
+## スナップポイント [#snap-points]
+
+`snapPoints` を指定すると、ドロワーを決まった高さに止められます。0 から 1 の数値はビューポートの高さに対する割合、1 より大きい数値はピクセル値として扱われます。`px` や `rem` を含む文字列も指定できます。
+
+```tsx
+const snapPoints = ["148px", 0.5, 1];
+
+<Drawer
+  title="クイック設定"
+  trigger={<Button>設定を開く</Button>}
+  snapPoints={snapPoints}
+  defaultSnapPoint={0.5}
+  onSnapPointChange={(snapPoint) => {
+    console.log(snapPoint);
+  }}
+>
+  ドラッグして高さを切り替えられます。
+</Drawer>;
+```
+
+`snapToSequentialPoints` を `true` にすると、スワイプで隣り合うスナップポイントへ順番に移動します。
+
+## props [#props]
+
+### 固有 props [#drawer-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "ドロワーを開くトリガーです。省略するとトリガーを描画しません。",
+    },
+    title: {
+      type: "React.ReactNode",
+      description: "ドロワーの見出しです。",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "見出しの下に表示する説明文です。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "ドロワーの本文です。",
+    },
+    footer: {
+      type: "React.ReactNode",
+      description: "ドロワーの下部に表示する内容です。",
+    },
+    controls: {
+      type: "React.ReactNode",
+      description: "ヘッダー右上に表示する操作です。閉じるアイコンの内側に配置されます。",
+    },
+    onClose: {
+      type: "React.MouseEventHandler<HTMLButtonElement>",
+      description: "閉じるアイコンがクリックされたときに呼ばれるコールバックです。",
+    },
+    showCloseIconButton: {
+      type: "boolean",
+      default: "true",
+      description: "閉じるアイコンボタンを表示するかどうかです。",
+    },
+    showSwipeHandle: {
+      type: "boolean",
+      default: "false",
+      description: "ドロワーの端にスワイプ用のハンドルを表示するかどうかです。",
+    },
+    handle: {
+      type: "DrawerHandle<TPayload>",
+      description: "トリガーとドロワーを関連付けるハンドルです。外部から開閉する場合に指定します。",
+    },
+    slotProps: {
+      type: "DrawerSlotProps<TPayload>",
+      default: "{}",
+      description: "内部の各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Drawer は Base UI の Drawer を基盤にしています。開閉状態とスワイプに関する主な props は次のとおりです。
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "ドロワーの開閉状態を制御します。",
+    },
+    defaultOpen: {
+      type: "boolean",
+      description: "初期状態でドロワーを開くかどうかです。",
+    },
+    onOpenChange: {
+      type: "(open: boolean,\ndetails: Drawer.ChangeEventDetails) => void",
+      description: "開閉状態が変わったときに呼ばれるコールバックです。",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "開閉のアニメーションが完了したときに呼ばれるコールバックです。",
+    },
+    modal: {
+      type: "boolean",
+      default: "true",
+      description: "モーダルとして表示するかどうかです。false の場合は背後の画面を操作できます。",
+    },
+    swipeDirection: {
+      type: `"up" | "down" | "left" | "right"`,
+      default: `"down"`,
+      description: "ドロワーを閉じるスワイプの方向です。",
+    },
+    disablePointerDismissal: {
+      type: "boolean",
+      default: "false",
+      description: "背景のクリックで閉じないようにするかどうかです。",
+    },
+    snapPoints: {
+      type: "DrawerSnapPoint[]",
+      description: "ドロワーを止める高さの一覧です。",
+    },
+    snapPoint: {
+      type: "DrawerSnapPoint | null",
+      description: "現在のスナップポイントを制御します。",
+    },
+    defaultSnapPoint: {
+      type: "DrawerSnapPoint | null",
+      description: "初期のスナップポイントです。",
+    },
+    onSnapPointChange: {
+      type: "(snapPoint: DrawerSnapPoint | null,\ndetails: Drawer.SnapPointChangeEventDetails) => void",
+      description: "スナップポイントが変わったときに呼ばれるコールバックです。",
+    },
+    snapToSequentialPoints: {
+      type: "boolean",
+      default: "false",
+      description: "隣り合うスナップポイントへ順番に移動するかどうかです。",
+    },
+    actionsRef: {
+      type: "React.RefObject<Drawer.Actions | null>",
+      description: "ドロワーを命令的に操作するための参照です。",
+    },
+  }}
+/>
+
+`Drawer.createHandle()` でハンドルを作成し、`handle` に渡すと外部のボタンから開閉できます。ここに挙げた以外の props は Base UI の Drawer から継承します。
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    backdrop: {
+      type: "DrawerBackdropProps",
+      description: "背景に props を渡します。",
+    },
+    body: {
+      type: `Omit<DrawerBodyProps, "children">`,
+      description: "本文に props を渡します。children は Drawer 本体で指定します。",
+    },
+    close: {
+      type: `Omit<DrawerCloseProps, "children">`,
+      description: "閉じるアイコンボタンに props を渡します。",
+    },
+    content: {
+      type: `Omit<DrawerContentProps, "children">`,
+      description: "本文を含むコンテンツ領域に props を渡します。",
+    },
+    controls: {
+      type: `Omit<DrawerControlsProps, "children">`,
+      description: "ヘッダー右上の操作に props を渡します。",
+    },
+    description: {
+      type: `Omit<DrawerDescriptionProps, "children">`,
+      description: "説明文に props を渡します。",
+    },
+    footer: {
+      type: `Omit<DrawerFooterProps, "children">`,
+      description: "フッターに props を渡します。",
+    },
+    header: {
+      type: `Omit<DrawerHeaderProps, "children">`,
+      description: "ヘッダーに props を渡します。",
+    },
+    popup: {
+      type: `Omit<DrawerPopupProps, "children">`,
+      description: "ドロワーのポップアップに props を渡します。",
+    },
+    portal: {
+      type: `Omit<DrawerPortalProps, "children">`,
+      description: "ポータルに props を渡します。",
+    },
+    swipeArea: {
+      type: "DrawerSwipeAreaProps",
+      description: "画面端のスワイプ領域に props を渡します。指定すると領域が描画されます。",
+    },
+    swipeHandle: {
+      type: "DrawerSwipeHandleProps",
+      description: "スワイプ用のハンドルに props を渡します。",
+    },
+    title: {
+      type: `Omit<DrawerTitleProps, "children">`,
+      description: "見出しに props を渡します。",
+    },
+    trigger: {
+      type: `Omit<DrawerTriggerProps<TPayload>, "children" | "handle">`,
+      description: "トリガーに props を渡します。children は trigger で指定します。",
+    },
+    viewport: {
+      type: `Omit<DrawerViewportProps, "children">`,
+      description: "ドロワーを配置するビューポートに props を渡します。",
+    },
+    virtualKeyboardProvider: {
+      type: `Omit<DrawerVirtualKeyboardProviderProps, "children">`,
+      description: "仮想キーボードの高さを扱うプロバイダーに props を渡します。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ポップアップには `sui_drawer_popup` が付与されます。状態に応じて、`sui_drawer_popup-swipe_direction_down`、`sui_drawer_popup-open`、`sui_drawer_popup-swiping`、`sui_drawer_popup-expanded`、`sui_drawer_popup-nested` などのクラス名も加わります。
+
+内部のパーツには `sui_drawer_content`、`sui_drawer_header`、`sui_drawer_title`、`sui_drawer_description`、`sui_drawer_body`、`sui_drawer_footer`、`sui_drawer_swipe_handle` などのクラス名が付きます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[Dialog](/components/dialog)

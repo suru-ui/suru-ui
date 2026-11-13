@@ -1,0 +1,194 @@
+---
+title: FileUpload
+description: FileUpload コンポーネントのファイル選択、検証、制御された値、slotProps を説明します。
+---
+
+FileUpload は、クリックまたはドラッグアンドドロップでファイルを選択するコンポーネントです。選択済みのファイルを一覧表示し、個別の削除や、種類・件数・サイズによる検証を行えます。ドロップゾーンと隠し input は内部で自動的に構成されます。
+
+## 使い方 [#basic-usage]
+
+`children` にドロップゾーンの案内文を指定します。省略すると「ここにファイルをドラッグアンドドロップ、またはクリックして選択」が表示されます。`accept`、`multiple`、`maxFiles` などを組み合わせて、受け付けるファイルを制限できます。
+
+<Component path="file-upload/basic" />
+
+`accept` は HTML の `accept` 属性と同じ形式の文字列を受け付けます。配列で複数の指定をまとめることもできます。`multiple` を指定しない場合、新しい選択で既存の選択が置き換わります。
+
+## 検証と拒否の報告 [#validation]
+
+`accept`、`maxFiles`、`maxFileSize`、`minFileSize` に合わないファイルは選択されず、`onFileReject` に報告されます。`onFileAccept` では、検証に合格したファイルだけを取得できます。
+
+<Component path="file-upload/validation" />
+
+拒否された理由は `rejectedFiles` の `reason` で確認できます。
+
+| 理由           | 条件                                      |
+| -------------- | ----------------------------------------- |
+| `invalid_type` | ファイルの種類が `accept` に一致しない    |
+| `max_files`    | 選択できるファイル数を超えている          |
+| `min_size`     | ファイルサイズが `minFileSize` より小さい |
+| `max_size`     | ファイルサイズが `maxFileSize` より大きい |
+
+`onFileReject` の `acceptedFiles` には、同じ選択の中で受け入れられたファイルが入ります。拒否されたファイルだけを利用者に示したい場合は、`rejectedFiles` を使ってメッセージを組み立てます。
+
+## 選択状態の制御 [#controlled]
+
+`value` と `onValueChange` を指定すると、選択済みファイルのリストを外部の状態で管理できます。非制御で初期値を指定する場合は `defaultValue` を使います。
+
+<Component path="file-upload/controlled" />
+
+`value` は `readonly File[]`、`onValueChange` は `File[]` を受け取ります。フォーム送信時にファイルを送る場合は、`name` を指定すると隠し input に反映されます。
+
+## パーツと slotProps [#parts-and-slot-props]
+
+FileUpload は `Root`、`HiddenInput`、`Dropzone`、`ItemGroup`、`Item`、`ItemName`、`ItemSizeText`、`ItemDeleteTrigger` などのパーツで構成されます。`Trigger` と `ClearTrigger` を使うと、ドロップゾーンとは別の選択ボタンや、すべて削除するボタンを配置できます。
+
+`slotProps` を使うと、プリセットが内部で描画するパーツに props を渡せます。
+
+| スロット            | 役割                                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| `dropzone`          | ドラッグアンドドロップを受け付ける領域です。`children` は FileUpload の `children` で指定します。 |
+| `hiddenInput`       | ファイル選択ダイアログを開く隠し input です。                                                     |
+| `itemGroup`         | 選択済みファイルの一覧をまとめる要素です。                                                        |
+| `item`              | ファイル 1 件を表示する項目です。`file` と `children` は上書きされます。                          |
+| `itemName`          | ファイル名を表示する要素です。                                                                    |
+| `itemSizeText`      | ファイルサイズを表示する要素です。                                                                |
+| `itemDeleteTrigger` | ファイルを削除するボタンです。`children` の既定値は「×」です。                                    |
+
+## props [#props]
+
+### 固有 props [#file-upload-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      default: `"ここにファイルをドラッグアンドドロップ、またはクリックして選択"`,
+      description: "ドロップゾーンに表示する案内文です。",
+    },
+    accept: {
+      type: "string | readonly string[]",
+      description:
+        "受け付けるファイルの種類です。HTML の accept 属性と同じ形式か、その配列を指定します。",
+    },
+    multiple: {
+      type: "boolean",
+      default: "false",
+      description:
+        "複数のファイルを選択できるかどうかです。false の場合、新しい選択で既存の選択を置き換えます。",
+    },
+    maxFiles: {
+      type: "number",
+      default: "Number.POSITIVE_INFINITY",
+      description: "選択できるファイル数の上限です。",
+    },
+    maxFileSize: {
+      type: "number",
+      default: "Number.POSITIVE_INFINITY",
+      description: "1 つのファイルのサイズの上限をバイト単位で指定します。",
+    },
+    minFileSize: {
+      type: "number",
+      default: "0",
+      description: "1 つのファイルのサイズの下限をバイト単位で指定します。",
+    },
+    name: {
+      type: "string",
+      description: "フォーム送信時に使う入力項目の名前です。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "必須入力にするかどうかです。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "ファイルアップロード全体を無効にします。子パーツの props より優先されます。",
+    },
+    defaultValue: {
+      type: "readonly File[]",
+      description: "非制御で初期表示するファイルのリストです。",
+    },
+    value: {
+      type: "readonly File[]",
+      description: "制御されたファイルのリストです。",
+    },
+    onValueChange: {
+      type: "(files: File[]) => void",
+      description: "選択済みファイルのリストが変わったときに呼ばれます。",
+    },
+    onFileAccept: {
+      type: "(details: FileUpload.AcceptEventDetails) => void",
+      description:
+        "ファイルが検証に合格したときに呼ばれます。details.files で受け入れられたファイルを取得できます。",
+    },
+    onFileReject: {
+      type: "(details: FileUpload.RejectEventDetails) => void",
+      description:
+        "ファイルが検証で拒否されたときに呼ばれます。details.rejectedFiles で理由を確認できます。",
+    },
+    slotProps: {
+      type: "FileUploadSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "ファイルアップロードの配色です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ファイルアップロードの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: "size と同じ値",
+      description: "角丸の大きさです。省略すると size の値が使われます。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "ドロップゾーンの主な外観です。naked は背景なし、liquid は薄い塗りつぶしです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+FileUpload のルートは `div` 要素を描画します。`className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。ルート要素を別の要素に置き換える場合は `render` を使います。
+
+<TypeTable
+  type={{
+    className: {
+      type: `string |\n((state: FileUpload.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: FileUpload.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "ルート要素を別の要素に置き換えます。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_file_upload` が付与されます。props に応じて `sui_file_upload-size_md`、`sui_file_upload-color_grey`、`sui_file_upload-radius_md`、`sui_file_upload-variant_naked`、`sui_file_upload-disabled`、`sui_file_upload-multiple`、`sui_file_upload-required` などのクラス名も加わります。
+
+ドロップゾーンには `sui_file_upload_dropzone` が付与され、ドラッグ中は `sui_file_upload_dropzone-dragover` が加わります。選択済みファイルの項目には `sui_file_upload_item`、ファイル名には `sui_file_upload_item_name`、サイズには `sui_file_upload_item_size_text` が付与されます。
+
+`--sui_file_upload-gap` や `--sui_file_upload_dropzone-*` などの CSS 変数で、間隔や枠線、背景色を上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[要素とコンポーネントの合成](/guides/composition)、[外観のカスタマイズ](/guides/styling)

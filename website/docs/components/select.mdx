@@ -1,0 +1,205 @@
+---
+title: Select
+description: Select の項目、複数選択、グループ化、外観の指定方法を説明します。
+---
+
+Select は、あらかじめ定義した項目から値を選ぶコンポーネントです。単一選択と複数選択に対応し、項目をグループ化して表示できます。項目が多い場合は、入力による絞り込みができる Combobox の使用を検討してください。
+
+## 使い方 [#basic-usage]
+
+`items` に選択肢を指定し、`label` と `placeholder` で表示を調整します。選択肢が文字列の場合は、その文字列がそのままラベルと値になります。
+
+<Component path="select/basic" />
+
+`defaultValue` を指定すると初期値を設定できます。`value` を指定する場合は制御コンポーネントになるため、`onValueChange` と組み合わせてください。
+
+## 項目の指定 [#items]
+
+`items` には次の形式を指定できます。
+
+- 文字列などの値の配列
+- `label` と `value` を持つオブジェクトの配列
+- 値をキー、表示内容を値とするオブジェクト
+- `label` と `items` を持つグループの配列
+
+<Component path="select/grouped" />
+
+グループを指定すると、グループごとに見出しと区切り線が表示されます。項目ごとに `disabled` を指定すると、その項目だけを選択不可にできます。
+
+## 複数選択と制御 [#multiple-and-controlled]
+
+`multiple` を指定すると複数の値を選択できます。この場合、`defaultValue` と `value` は配列になります。
+
+<Component path="select/multiple" />
+
+```tsx
+const [value, setValue] = React.useState<string[]>([]);
+
+<Select items={["TypeScript", "Rust", "Go"]} multiple value={value} onValueChange={setValue} />;
+```
+
+`onValueChange` の引数には、単一選択では選択値、複数選択では選択値の配列が渡されます。項目オブジェクトを指定した場合も、値だけが渡されます。
+
+## 外観 [#appearance]
+
+`variant` は `naked` と `liquid` から選択できます。`size`、`radius`、`outlined` で選択欄とポップアップの形を調整できます。
+
+<Component path="select/appearance" />
+
+`backdrop` を `true` にすると、ポップアップの背後にバックドロップを表示します。内容や props を変更する場合は `slotProps.backdrop` を使います。
+
+## props [#props]
+
+### 固有 props [#select-specific-props]
+
+<TypeTable
+  type={{
+    backdrop: {
+      type: "boolean",
+      default: "false",
+      description: "ポップアップの背後にバックドロップを表示するかどうかを指定します。",
+    },
+    children: {
+      type: `React.ReactNode |\n((item, index, items) => React.ReactNode)`,
+      description: "リストの内容、または各項目を描画する関数です。通常は items を指定します。",
+    },
+    label: {
+      type: "React.ReactNode",
+      description: "トリガーの上に表示するラベルです。",
+    },
+    placeholder: {
+      type: "React.ReactNode",
+      default: `"選択してください"`,
+      description: "選択値がないときに表示する内容です。",
+    },
+    slotProps: {
+      type: "SelectSlotProps",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "選択欄に枠線を表示するかどうかを指定します。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: "size と同じ値",
+      description: "選択欄とポップアップの角丸を指定します。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "選択欄とリスト項目の大きさを指定します。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "選択欄の主な外観です。naked は背景なし、liquid は薄い塗りつぶしになります。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| スロット          | 説明                                                                                      |
+| ----------------- | ----------------------------------------------------------------------------------------- |
+| `arrow`           | ポップアップの矢印に渡す props です。                                                     |
+| `backdrop`        | バックドロップに渡す props です。指定すると `backdrop` が `true` でなくても表示されます。 |
+| `group`           | グループに渡す props です。                                                               |
+| `groupLabel`      | グループの見出しに渡す props です。                                                       |
+| `icon`            | トリガーのアイコンに渡す props です。                                                     |
+| `item`            | すべての項目に渡す props です。`children` と `value` は上書きされません。                 |
+| `itemIndicator`   | 選択中の項目に表示するインジケーターに渡す props です。                                   |
+| `itemText`        | 項目のラベルに渡す props です。                                                           |
+| `label`           | トリガーの上に表示するラベルに渡す props です。                                           |
+| `list`            | 項目を並べるリストに渡す props です。                                                     |
+| `popup`           | ポップアップに渡す props です。                                                           |
+| `portal`          | ポータルに渡す props です。                                                               |
+| `positioner`      | 配置を制御する要素に渡す props です。`side`、`align`、`sideOffset` などを指定できます。   |
+| `scrollDownArrow` | 下方向のスクロール矢印に渡す props です。                                                 |
+| `scrollUpArrow`   | 上方向のスクロール矢印に渡す props です。                                                 |
+| `separator`       | グループ間の区切り線に渡す props です。                                                   |
+| `value`           | トリガーに表示する現在値に渡す props です。                                               |
+
+### 継承 props [#inherited-props]
+
+Select は Base UI の Select を基盤にしているため、次の props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    value: {
+      type: "TValue | TValue[] | null",
+      description: "制御された選択値です。multiple が true のときは配列になります。",
+    },
+    defaultValue: {
+      type: "TValue | TValue[] | null",
+      description: "初期の選択値です。",
+    },
+    onValueChange: {
+      type: "(value, eventDetails) => void",
+      description: "選択値が変更されたときに呼ばれます。",
+    },
+    multiple: {
+      type: "boolean",
+      default: "false",
+      description: "複数の値を選択できるようにするかどうかを指定します。",
+    },
+    open: {
+      type: "boolean",
+      description: "ポップアップの開閉状態を制御します。",
+    },
+    defaultOpen: {
+      type: "boolean",
+      description: "ポップアップの初期の開閉状態です。",
+    },
+    onOpenChange: {
+      type: "(open, eventDetails) => void",
+      description: "ポップアップの開閉状態が変化したときに呼ばれます。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "選択欄を無効にするかどうかを指定します。",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "値を読み取り専用にするかどうかを指定します。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "値を必須にするかどうかを指定します。",
+    },
+    name: {
+      type: "string",
+      description: "フォーム送信時に使う名前です。",
+    },
+    form: {
+      type: "string",
+      description: "関連付けるフォームの ID です。",
+    },
+    modal: {
+      type: "boolean",
+      default: "true",
+      description: "ポップアップをモーダルとして扱うかどうかを指定します。",
+    },
+  }}
+/>
+
+`className` と `style` はトリガーに適用されます。トリガーはネイティブの `button` 要素を描画するため、`onClick` や `aria-*` などの button 属性も渡せます。
+
+## スタイル [#styling-hooks]
+
+トリガーには `sui_select` が付与されます。props と状態に応じて、`sui_select-size_md`、`sui_select-radius_full`、`sui_select-variant_liquid`、`sui_select-outlined`、`sui_select-open`、`sui_select-placeholder`、`sui_select-disabled` などのクラス名が加わります。
+
+ポップアップとリストには `sui_select_popup`、`sui_select_list` が付与されます。項目には `sui_select_item` と、選択中を示す `sui_select_item-selected`、強調中の `sui_select_item-highlighted`、無効な `sui_select_item-disabled` などのクラス名が加わります。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[要素とコンポーネントの合成](/guides/composition)、[外観のカスタマイズ](/guides/styling)

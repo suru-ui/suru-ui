@@ -1,0 +1,109 @@
+---
+title: AvatarGroup
+description: AvatarGroup コンポーネントの重ね合わせ、余剰分の表示、スタイルのフックを説明します。
+---
+
+AvatarGroup は、複数のアバターを重ねて表示するコンポーネントです。メンバーの一覧やリアクションしたユーザーなど、限られた幅で複数の人物を示したいときに使います。表示数を制限し、超過分を `+3` のような件数にまとめられます。
+
+## 使い方 [#basic-usage]
+
+子要素に `Avatar` を並べます。`size`、`color`、`radius` はグループから子のアバターへ伝播します。子のアバターで同じ prop を指定した場合は、色と角丸は子の指定が優先されます。大きさはグループの指定が優先されます。
+
+<Component path="avatar-group/basic" />
+
+`color="auto"` を指定すると、子のアバターごとに配色を自動で割り当てます。`color` の既定値は `auto` です。
+
+```tsx
+<AvatarGroup size="md" color="auto">
+  <Avatar>い</Avatar>
+  <Avatar>ろ</Avatar>
+  <Avatar>は</Avatar>
+</AvatarGroup>
+```
+
+## 余剰分の表示 [#surplus]
+
+`max` はグループに表示するアバターの最大数です。超過分は末尾に `+N` のアバターとしてまとめられます。`max` には余剰分のアバターも含まれます。
+
+<Component path="avatar-group/surplus" />
+
+たとえばアバターが 6 個で `max={4}` の場合、先頭の 3 個と `+3` が表示されます。アバターの数が `max` 以下なら、余剰分は表示されません。
+
+`reverse` を `true` にすると、アバターの重なり順を逆にできます。
+
+## props [#props]
+
+### 固有 props [#avatargroup-specific-props]
+
+<TypeTable
+  type={{
+    max: {
+      type: "number",
+      default: "4",
+      description: "表示するアバターの最大数です。余剰分のアバターもこの数に含まれます。",
+    },
+    slotProps: {
+      type: "AvatarGroupSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"auto" | "grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"auto"`,
+      description: "各アバターの背景色です。auto では子のアバターごとに自動で割り当てます。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "アバターの大きさです。子のアバターの指定を上書きします。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: `"full"`,
+      description: "アバターの角丸です。子のアバターに指定がある場合はそちらが優先されます。",
+    },
+    reverse: {
+      type: "boolean",
+      default: "false",
+      description: "アバターの重なり順を逆にするかどうかです。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    root: {
+      type: "object",
+      description: "グループのルート要素に渡す props です。",
+    },
+    surplus: {
+      type: "object",
+      description: "余剰分のアバターに渡す props です。children は自動で +N に設定されます。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+AvatarGroup は `div` 要素を描画するため、`className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。子孫では `AvatarGroup.useContext()` または `useAvatarGroupContext()` でグループの状態を取得できます。
+
+残りの props はベースの `div` 要素から継承します。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_avatar_group` が付与されます。props に応じて、`sui_avatar_group-size_md`、`sui_avatar_group-color_auto`、`sui_avatar_group-radius_full`、`sui_avatar_group-reverse`、`sui_avatar_group-forward` などのクラス名も加わります。
+
+子のアバターには、グループの状態が反映された `sui_avatar` のクラス名が付与されます。
+
+`className` や `style` で調整できるほか、CSS 変数を使って重なりの幅や余白を上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

@@ -1,0 +1,98 @@
+---
+title: Status
+description: Status の色、大きさ、リップル、ラベルの指定方法を説明します。
+---
+
+Status は、オンラインや処理中などの状態を、色付きのドットとラベルで示すコンポーネントです。ユーザーの在席状況やバックグラウンド処理の進行状態を、一覧の中で簡潔に表せます。
+
+## 使い方 [#basic-usage]
+
+`children` がドットの横に表示するラベルになります。`color` で状態の色を指定します。ラベルを省略すると、ドットだけを表示します。
+
+<Component path="status/basic" />
+
+## リップル [#ping]
+
+`ping` を指定すると、ドットからリップルが広がるアニメーションを表示します。処理中など、状態が続いていることを目立たせたい場合に使います。
+
+<Component path="status/ping" />
+
+`rippleSize` はリップルの大きさです。`containRipple` を `true` にすると、リップルがはみ出す分の余白を確保し、レイアウト上の占有範囲にリップルを含めます。
+
+## 外観 [#appearance]
+
+`color` は 8 色から、`size` は `sm`、`md`、`lg` から選択できます。色はインジケーターのドットに適用され、ラベルの文字色は変わりません。
+
+<Component path="status/appearance" />
+
+## props [#props]
+
+### 固有 props [#status-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "ドットの横に表示するラベルです。省略するとドットだけを表示します。",
+    },
+    slotProps: {
+      type: "StatusSlotProps",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+    containRipple: {
+      type: "boolean",
+      default: "false",
+      description: "リップルを含めた大きさでインジケーターを表示するかどうかを指定します。",
+    },
+    ping: {
+      type: "boolean",
+      default: "false",
+      description: "インジケーターにリップルが広がるアニメーションを表示するかどうかを指定します。",
+    },
+    rippleSize: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ドットの大きさに対するリップルの相対的な大きさを指定します。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "インジケーターのドットの配色です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ドットとラベルを含めたステータスの大きさです。",
+    },
+    rippleSize: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "リップルの相対的な大きさです。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| スロット    | 型                     | 説明                                                                                  |
+| ----------- | ---------------------- | ------------------------------------------------------------------------------------- |
+| `indicator` | `StatusIndicatorProps` | ドットを表示するインジケーターに渡す props です。`aria-hidden` は既定で `true` です。 |
+
+### 継承 props [#inherited-props]
+
+Status は `span` 要素を描画します。`className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。`className` と `style` には `Status.State` を受け取る関数も指定でき、状態には `color`、`ping`、`rippleSize`、`size`、`containRipple` が含まれます。`render` でルート要素を置き換えられます。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_status` が付与されます。props に応じて、`sui_status-color_green`、`sui_status-size_lg`、`sui_status-ripple_size_sm`、`sui_status-ping`、`sui_status-contain_ripple` などのクラス名も加わります。
+
+インジケーターには `sui_status_indicator` と、色、大きさ、リップルに対応するクラス名が付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[非同期状態の表示](/guides/async-state)

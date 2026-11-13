@@ -1,0 +1,109 @@
+---
+title: Badge
+description: Badge コンポーネントの props、外観、重ね合わせの方法を説明します。
+---
+
+Badge は、状態や数値を示す小さなラベルです。単独で表示するほか、`position` を指定してアバターやアイコンの隅に重ねられます。
+
+## 使い方 [#basic-usage]
+
+`children` に表示する内容を指定します。通知の件数のように、短い数値やラベルを渡します。
+
+<Component path="badge/basic" />
+
+`variant="dot"` を指定すると、内容を表示せず小さな点だけを描画します。内容を持たない状態表示には `aria-label` を添えてください。
+
+```tsx
+<Badge variant="dot" color="blue" aria-label="未読の通知があります" />
+```
+
+**外観**
+
+`color` で配色を、`size` で大きさを指定します。`outlined` は枠線、`ring` は重ねた要素との境界を分けるリングを表示します。
+
+```tsx
+<Badge color="green">対応済み</Badge>
+<Badge color="orange" outlined>保留</Badge>
+<Badge color="red" ring>3</Badge>
+```
+
+## 重ね合わせ [#overlay]
+
+`position` を指定すると、基準となる位置指定要素の四隅に絶対位置で配置されます。`overlap` は基準要素の形状に合わせて、バッジの中心を合わせる位置を調整します。
+
+<Component path="badge/overlay" />
+
+- `overlap="rectangular"`: 四角形の角にバッジの中心を合わせます。
+- `overlap="circular"`: 円形の円周上にバッジの中心を合わせます。
+
+## props [#props]
+
+### 固有 props [#badge-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "バッジに表示する内容です。variant が dot のときは描画されません。",
+    },
+    variant: {
+      type: `"standard" | "dot"`,
+      default: `"standard"`,
+      description: "バッジの主な外観です。dot は内容を表示しない小さな点になります。",
+    },
+    position: {
+      type: `"top-left" | "top-right" |\n"bottom-left" | "bottom-right"`,
+      description:
+        "基準となる位置指定要素の四隅へ重ねる位置です。省略すると通常フローで表示されます。",
+    },
+    overlap: {
+      type: `"rectangular" | "circular"`,
+      default: `"rectangular"`,
+      description: "重ねる要素の形状です。circular では円形の円周上に位置を調整します。",
+    },
+    ring: {
+      type: "boolean",
+      default: "false",
+      description: "バッジの周囲にリングを表示するかどうかです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "バッジの配色です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"sm"`,
+      description: "バッジの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: `"full"`,
+      description: "角丸の大きさです。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Badge は `span` 要素を描画するため、`className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。`position` を使うときは、親要素に `position: relative` または `position: absolute` を指定してください。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_badge` が付与されます。props に応じて、`sui_badge-size_sm`、`sui_badge-color_red`、`sui_badge-radius_full`、`sui_badge-variant_dot` などのクラス名も加わります。
+
+`className` や `style` で調整できるほか、CSS 変数 `--sui_badge-*` を使って大きさや余白を上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)

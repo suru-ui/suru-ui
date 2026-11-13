@@ -1,0 +1,185 @@
+---
+title: Slider
+description: Slider の値の指定、外観、範囲選択、制御の方法を説明します。
+---
+
+Slider は、つまみを動かして数値を選ぶコンポーネントです。音量、不透明度、価格帯など、連続した値や範囲を直感的に指定できます。つまみはポインターのほか、矢印キーでも操作できます。
+
+## 使い方 [#basic-usage]
+
+`defaultValue` に初期値を指定します。`label` を渡すとスライダーの上にラベルが表示され、`renderValue` を渡すと現在値が表示されます。`renderValue` に `true` を指定すると、書式化された値をそのまま表示します。
+
+<Component path="slider/basic" />
+
+`renderValue` に関数を渡すと、書式化された値の配列と生の値の配列を受け取れます。単位や接尾辞を付けたい場合に使います。
+
+```tsx
+<Slider label="音量" renderValue={(formatted) => `${formatted[0]} dB`} defaultValue={40} />
+```
+
+## 外観 [#appearance]
+
+`variant` は `naked` と `liquid` から選択できます。`color` は現在値を示す部分に適用され、`size`、`radius`、`outlined` で形を調整できます。
+
+<Component path="slider/appearance" />
+
+`outlined` は既定で `true` です。枠線を外すと、背景だけでトラックを表現できます。
+
+## 範囲と制御 [#range-and-controlled]
+
+`value` または `defaultValue` に配列を渡すと、値の数だけつまみが表示されます。`min`、`max`、`step` で範囲と刻み幅を指定します。
+
+<Component path="slider/range" />
+
+`value` を指定すると制御コンポーネントになります。`onValueChange` で変更を受け取り、状態を更新してください。値の変更が確定したタイミングで処理したい場合は `onValueCommitted` を使います。
+
+```tsx
+const [value, setValue] = React.useState<readonly number[]>([30, 70]);
+
+<Slider
+  min={0}
+  max={100}
+  step={5}
+  value={value}
+  onValueChange={setValue}
+  renderValue={(formatted) => `${formatted[0]} から ${formatted[1]}`}
+/>;
+```
+
+## props [#props]
+
+### 固有 props [#slider-specific-props]
+
+<TypeTable
+  type={{
+    label: {
+      type: "React.ReactNode",
+      description: "スライダーの説明ラベルです。指定するとラベル要素を表示します。",
+    },
+    renderValue: {
+      type: `true | React.ReactNode |\n((formattedValues: readonly string[], values: readonly number[]) => React.ReactNode)`,
+      description: "現在値の表示内容です。true の場合は書式化された値を表示します。",
+    },
+    slotProps: {
+      type: "SliderSlotProps",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "現在値を示す部分の配色です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "枠線を表示するかどうかを指定します。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: `"full"`,
+      description: "トラックとつまみの角丸を指定します。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "スライダーの大きさを指定します。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"liquid"`,
+      description:
+        "スライダーの主な外観です。naked は背景なし、liquid は薄い塗りつぶしになります。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| スロット    | 型                                     | 説明                                                            |
+| ----------- | -------------------------------------- | --------------------------------------------------------------- |
+| `control`   | `Omit<SliderControlProps, "children">` | 操作領域に渡す props です。縦方向の高さなどもここで指定します。 |
+| `indicator` | `SliderIndicatorProps`                 | 選択範囲を示すインジケーターに渡す props です。                 |
+| `label`     | `Omit<SliderLabelProps, "children">`   | ラベル要素に渡す props です。                                   |
+| `thumb`     | `SliderThumbProps`                     | すべてのつまみに渡す props です。`index` は内部で設定されます。 |
+| `track`     | `Omit<SliderTrackProps, "children">`   | トラックに渡す props です。                                     |
+| `value`     | `Omit<SliderValueProps, "children">`   | 現在値の表示要素に渡す props です。                             |
+
+`orientation="vertical"` を使う場合は、`slotProps.control.style` で高さを指定します。
+
+### 継承 props [#inherited-props]
+
+Slider は Base UI の Slider を基盤にしているため、次の props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    defaultValue: {
+      type: "number | readonly number[]",
+      description: "初期値です。配列を指定すると範囲スライダーになります。",
+    },
+    value: {
+      type: "number | readonly number[]",
+      description: "制御された現在値です。配列を指定すると値の数だけつまみを表示します。",
+    },
+    onValueChange: {
+      type: "(value, eventDetails) => void",
+      description: "値が変更されたときに呼ばれます。",
+    },
+    onValueCommitted: {
+      type: "(value, eventDetails) => void",
+      description: "値の変更が確定したときに呼ばれます。",
+    },
+    min: {
+      type: "number",
+      default: "0",
+      description: "選択できる最小値です。",
+    },
+    max: {
+      type: "number",
+      default: "100",
+      description: "選択できる最大値です。",
+    },
+    step: {
+      type: "number",
+      default: "1",
+      description: "値を増減するときの刻み幅です。",
+    },
+    minStepsBetweenValues: {
+      type: "number",
+      default: "0",
+      description: "複数のつまみの間に必要な最小の刻み数です。",
+    },
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"horizontal"`,
+      description: "スライダーの向きです。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "スライダーを無効にするかどうかを指定します。",
+    },
+    format: {
+      type: "Intl.NumberFormatOptions",
+      description: "値の書式設定です。",
+    },
+    locale: {
+      type: "Intl.LocalesArgument",
+      description: "値の書式化に使うロケールです。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_slider` が付与されます。props と状態に応じて、`sui_slider-size_md`、`sui_slider-color_blue`、`sui_slider-radius_full`、`sui_slider-variant_liquid`、`sui_slider-outlined`、`sui_slider-disabled`、`sui_slider-orientation_vertical` などのクラス名が加わります。
+
+内部のパーツには `sui_slider_label`、`sui_slider_value`、`sui_slider_control`、`sui_slider_track`、`sui_slider_indicator`、`sui_slider_thumb` が付与されます。各パーツにも大きさや状態に応じたクラス名が加わります。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

@@ -1,0 +1,122 @@
+---
+title: FormatNumber
+description: FormatNumber コンポーネントのロケール、通貨、単位、短縮表記などの書式設定を説明します。
+---
+
+FormatNumber は、数値をロケールに従って書式化して表示するコンポーネントです。桁区切り、通貨、パーセント、単位、短縮表記などを `Intl.NumberFormat` のオプションで指定できます。テキストノードとして描画されるため、見た目の調整は親要素側で行います。
+
+## 使い方 [#basic-usage]
+
+`value` に書式化する数値を指定します。`locales` を省略すると実行環境の既定ロケールが使われるため、表示を固定したい場合は `"ja-JP"` などを明示します。
+
+<Component path="format-number/basic" />
+
+`style` を切り替えると、小数、通貨、パーセント、単位の書式を選べます。通貨の場合は `currency` に ISO 4217 の通貨コードを指定します。
+
+## 表記と単位 [#notation]
+
+`notation="compact"` を使うと、大きな数値を短縮表記にできます。`style="unit"` と `unit` を組み合わせると、数値に単位を付けられます。
+
+<Component path="format-number/notation" />
+
+`currencySign="accounting"` は、負の通貨額を括弧で囲んで表示します。`signDisplay` を使うと、正の値にも符号を付けられます。桁数は `minimumFractionDigits` と `maximumFractionDigits` で調整します。
+
+## props [#props]
+
+### 固有 props [#format-number-specific-props]
+
+<TypeTable
+  type={{
+    value: {
+      type: "number | bigint",
+      description: "書式化する数値です。必須です。",
+    },
+    locales: {
+      type: `string | Intl.Locale |\nreadonly (string | Intl.Locale)[]`,
+      description: "数値の書式に使うロケールです。省略すると実行環境の既定ロケールが使われます。",
+    },
+    style: {
+      type: `"decimal" | "currency" | "percent" | "unit"`,
+      default: `"decimal"`,
+      description: "数値の書式の種類です。",
+    },
+    currency: {
+      type: "string",
+      description: "通貨コードです。style が currency のときに使います。",
+    },
+    currencyDisplay: {
+      type: `"symbol" | "narrowSymbol" | "code" | "name"`,
+      description: "通貨の表示方法です。記号、短い記号、通貨コード、通貨名から選びます。",
+    },
+    currencySign: {
+      type: `"standard" | "accounting"`,
+      description: "負の通貨額の表示方法です。accounting では括弧で囲みます。",
+    },
+    unit: {
+      type: "string",
+      description: "単位です。style が unit のときに使います。例: kilometer、byte。",
+    },
+    unitDisplay: {
+      type: `"short" | "narrow" | "long"`,
+      description: "単位の表示スタイルです。",
+    },
+    notation: {
+      type: `"standard" | "scientific" |\n"engineering" | "compact"`,
+      description: "数値の表記方法です。compact では 1.5万 のような短縮表記になります。",
+    },
+    compactDisplay: {
+      type: `"short" | "long"`,
+      description: "短縮表記の表示スタイルです。",
+    },
+    signDisplay: {
+      type: `"auto" | "always" | "exceptZero" |\n"negative" | "never"`,
+      description: "数値の符号の表示方法です。",
+    },
+    minimumFractionDigits: {
+      type: "number",
+      description: "小数点以下の最小桁数です。",
+    },
+    maximumFractionDigits: {
+      type: "number",
+      description: "小数点以下の最大桁数です。",
+    },
+    minimumSignificantDigits: {
+      type: "number",
+      description: "有効数字の最小桁数です。",
+    },
+    maximumSignificantDigits: {
+      type: "number",
+      description: "有効数字の最大桁数です。",
+    },
+    useGrouping: {
+      type: `boolean | "always" | "auto" | "min2"`,
+      description: "位取りの区切りを表示するかどうかです。",
+    },
+    roundingMode: {
+      type: `Intl.NumberFormatOptions["roundingMode"]`,
+      description: "数値の丸め方法です。",
+    },
+    roundingIncrement: {
+      type: "number",
+      description: "丸めの刻み幅です。",
+    },
+    trailingZeroDisplay: {
+      type: `"auto" | "stripIfInteger"`,
+      description: "小数点以下の末尾のゼロの表示方法です。",
+    },
+  }}
+/>
+
+`value` と `locales` 以外の props は `Intl.NumberFormat` のオプションに対応しています。ここに記載していないオプションも、`Intl.NumberFormatOptions` に含まれるものはそのまま渡せます。
+
+## スタイル [#styling-hooks]
+
+FormatNumber は書式化したテキストを描画するため、HTML 要素や `sui_` で始まるクラス名を出力しません。文字色や大きさを変えたい場合は、`span` や `strong` などの親要素でスタイルを指定します。
+
+```tsx
+<p style={{ fontSize: "1.5rem", fontWeight: 700 }}>
+  <FormatNumber value={1234} style="currency" currency="JPY" locales="ja-JP" />
+</p>
+```
+
+関連: [外観のカスタマイズ](/guides/styling)、[コンポーネントの構造](/guides/component-anatomy)

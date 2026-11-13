@@ -1,0 +1,92 @@
+---
+title: Stat
+description: Stat のラベル、値、トレンド、説明、大きさの指定方法を説明します。
+---
+
+Stat は、数値とその補足情報をまとめて表示するコンポーネントです。ラベル、値、増減のトレンド、説明を組み合わせて、ダッシュボードの指標やレポートの数値を表せます。
+
+## 使い方 [#basic-usage]
+
+`label`、`value`、`trend`、`description` に表示する内容を指定します。`value` は文字列や要素も受け取れるため、桁区切りや単位を含む表示にも使えます。
+
+<Component path="stat/basic" />
+
+Stat は `dl` 要素を描画し、ラベルを `dt`、値、トレンド、説明を `dd` として並べます。見出しとの関係が定義リストとして伝わります。
+
+## トレンド [#trend]
+
+`trend` には増減を示す内容を指定します。`slotProps.trend.direction` を省略した場合は、内容の先頭にある数値の符号から `up`、`down`、`flat` を推測します。推測できない場合は `flat` として扱われます。
+
+<Component path="stat/trend" />
+
+方向に応じて矢印と色が変わるため、増加と減少を視覚的に区別できます。文字だけでは意味が伝わりにくい場合は、`direction` を明示してください。
+
+## 大きさ [#size]
+
+`size` は `sm`、`md`、`lg` の 3 段階です。カード内の補助的な指標には `sm`、主要な指標には `lg` を使うと、情報の優先度を表せます。
+
+<Component path="stat/sizes" />
+
+## props [#props]
+
+### 固有 props [#stat-specific-props]
+
+<TypeTable
+  type={{
+    label: {
+      type: "React.ReactNode",
+      description: "統計のラベルです。指定すると dt 要素として表示されます。",
+    },
+    value: {
+      type: "React.ReactNode",
+      description: "統計の値です。数値、文字列、要素を指定できます。",
+    },
+    trend: {
+      type: "React.ReactNode",
+      description: "値の増減を示す内容です。数値の符号から方向を推測します。",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "統計の補足説明です。値やトレンドの下に表示されます。",
+    },
+    slotProps: {
+      type: "StatSlotProps",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ラベル、値、トレンド、説明の大きさをまとめて指定します。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| スロット      | 型                                       | 説明                                                                |
+| ------------- | ---------------------------------------- | ------------------------------------------------------------------- |
+| `label`       | `Omit<StatLabelProps, "children">`       | ラベルの `dt` 要素に渡す props です。                               |
+| `value`       | `Omit<StatValueProps, "children">`       | 値の `dd` 要素に渡す props です。                                   |
+| `trend`       | `Omit<StatTrendProps, "children">`       | トレンドの `dd` 要素に渡す props です。`direction` を指定できます。 |
+| `description` | `Omit<StatDescriptionProps, "children">` | 説明の `dd` 要素に渡す props です。                                 |
+
+`trend` の `direction` は `up`、`down`、`flat` のいずれかです。
+
+### 継承 props [#inherited-props]
+
+Stat は `dl` 要素を描画するため、`className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。`className` と `style` には `Stat.State` を受け取る関数も指定でき、状態には `size` が含まれます。`render` でルート要素を置き換えられます。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_stat` が付与され、`size` に応じて `sui_stat-size_lg` などのクラス名が加わります。
+
+内部のパーツには `sui_stat_label`、`sui_stat_value`、`sui_stat_trend`、`sui_stat_description` が付与されます。トレンドには `sui_stat_trend-direction_up` などの方向別のクラス名も加わります。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

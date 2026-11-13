@@ -22,6 +22,9 @@ export default defineConfig({
       }),
     ],
   },
+  examples: {
+    css: "examples/examples.css",
+  },
   deployment: {
     base: `/${GITHUB_REPO}`,
     site: `https://${GITHUB_OWNER}.github.io`,
@@ -42,8 +45,6 @@ export default defineConfig({
   },
   navigation: {
     repo: `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}`,
-    // タブのラベルは必ず en を一番上にしてください。
-    // ドキュメント以外のページでは英語版の UI にフォールバックされるようにします。
     tabs: [
       {
         path: "/",

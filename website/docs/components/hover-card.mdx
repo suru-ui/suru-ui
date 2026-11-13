@@ -1,0 +1,176 @@
+---
+title: HoverCard
+description: HoverCard コンポーネントのトリガー、矢印、配置、開閉の制御、slotProps を説明します。
+---
+
+HoverCard は、リンクやボタンにマウスカーソルを重ねると補足情報を表示するコンポーネントです。利用規約の概要や、ユーザーのプロフィールなど、画面遷移せずに確認したい内容を提示できます。トリガーとポップアップは自動で関連付けられ、遅延の後に開きます。
+
+## 使い方 [#basic-usage]
+
+`trigger` にホバーの対象となる要素を、`children` に表示する内容を指定します。トリガーにはリンクやボタンなどの要素を渡します。
+
+<Component path="hover-card/basic" />
+
+`children` に関数を渡すと、アクティブなトリガーの `payload` を受け取って内容を組み立てられます。複数のトリガーで 1 つのホバーカードを共有する場合は、`HoverCard.createHandle` で作成したハンドルを `handle` に渡します。
+
+## 矢印と配置 [#placement]
+
+`arrow` を指定すると、ポップアップに矢印が表示されます。配置は `slotProps.positioner` の `side` と `align` で調整でき、`sideOffset` でトリガーとの距離を指定します。
+
+<Component path="hover-card/placement" />
+
+`arrow` を有効にすると、矢印の高さに合わせて `sideOffset` の既定値が 6 px になります。`side` は `"top"`、`"bottom"`、`"left"`、`"right"` から選べます。画面の端に近い場合は、表示領域に収まるように位置が自動で調整されます。
+
+## 開閉の制御 [#controlled]
+
+`open` と `onOpenChange` を指定すると、開閉状態を外部から制御できます。`delay` と `closeDelay` はミリ秒単位で指定します。`delay` を `0` にすると、ホバーした直後に開きます。
+
+<Component path="hover-card/controlled" />
+
+非制御で初期状態を指定する場合は `defaultOpen` を使います。開閉のアニメーションが完了したタイミングで処理を行いたい場合は、`onOpenChangeComplete` を利用できます。
+
+## props [#props]
+
+### 固有 props [#hover-card-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "ホバーの対象となる要素です。リンクやボタンなどを指定します。",
+    },
+    children: {
+      type: `React.ReactNode |\n((args: { payload }) => React.ReactNode)`,
+      description:
+        "ポップアップに表示する内容です。関数を指定すると、アクティブなトリガーの payload を受け取れます。",
+    },
+    arrow: {
+      type: "boolean",
+      default: "false",
+      description: "ポップアップに矢印を表示するかどうかです。",
+    },
+    backdrop: {
+      type: "boolean",
+      default: "false",
+      description: "ポップアップの背面に Backdrop を表示するかどうかです。",
+    },
+    delay: {
+      type: "number",
+      default: "600",
+      description: "ホバーしてから開くまでの待ち時間をミリ秒で指定します。",
+    },
+    closeDelay: {
+      type: "number",
+      default: "300",
+      description: "ホバーが外れてから閉じるまでの待ち時間をミリ秒で指定します。",
+    },
+    handle: {
+      type: "HoverCardHandle<TPayload>",
+      description:
+        "トリガーとホバーカードを関連付けるハンドルです。HoverCard.createHandle で作成します。",
+    },
+    slotProps: {
+      type: "HoverCardSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ポップアップの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "size と同じ値",
+      description: "角丸の大きさです。省略すると size の値が使われます。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "ポップアップに枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+HoverCard は Base UI の PreviewCard を基盤にしています。開閉状態に関する props をそのまま渡せます。`className`、`style`、`render` はポップアップに適用されます。
+
+<TypeTable
+  type={{
+    defaultOpen: {
+      type: "boolean",
+      default: "false",
+      description: "最初から開いた状態にするかどうかです。",
+    },
+    open: {
+      type: "boolean",
+      description: "開閉状態を制御する場合に指定します。",
+    },
+    onOpenChange: {
+      type: `(open: boolean,\neventDetails: HoverCard.ChangeEventDetails) => void`,
+      description: "開閉状態が変わったときに呼ばれます。",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "開閉のアニメーションが完了したときに呼ばれます。",
+    },
+    actionsRef: {
+      type: "React.RefObject<HoverCard.Actions | null>",
+      description: "close や unmount を命令的に実行するための ref です。",
+    },
+    triggerId: {
+      type: "string | null",
+      description: "関連付けるトリガーの ID です。制御された状態で使用します。",
+    },
+    defaultTriggerId: {
+      type: "string | null",
+      description: "最初に関連付けるトリガーの ID です。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: "object",
+      description:
+        "トリガーに渡す props です。children、handle、delay、closeDelay は HoverCard 本体で指定します。",
+    },
+    arrow: {
+      type: "object",
+      description:
+        "矢印に渡す props です。arrow を指定しなくても、このスロットを指定すると矢印が表示されます。",
+    },
+    backdrop: {
+      type: "object",
+      description: "Backdrop に渡す props です。",
+    },
+    portal: {
+      type: "object",
+      description: "ポータルに渡す props です。表示先の container などを指定できます。",
+    },
+    positioner: {
+      type: "object",
+      description:
+        "配置を調整する Positioner に渡す props です。side、align、sideOffset などを指定できます。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ポップアップには `sui_hover_card_popup` が付与されます。props に応じて `sui_hover_card_popup-size_md`、`sui_hover_card_popup-radius_md`、`sui_hover_card_popup-outlined`、`sui_hover_card_popup-open`、`sui_hover_card_popup-side_top` などのクラス名も加わります。
+
+トリガーには `sui_hover_card_trigger`、矢印には `sui_hover_card_arrow`、配置要素には `sui_hover_card_positioner` が付与されます。ポップアップの余白や背景色は `--sui_hover_card_popup-*` の CSS 変数で調整できます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[要素とコンポーネントの合成](/guides/composition)、[外観のカスタマイズ](/guides/styling)

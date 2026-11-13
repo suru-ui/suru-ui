@@ -1,0 +1,141 @@
+---
+title: RadioGroup
+description: RadioGroup コンポーネントの選択値の管理、向き、外観、無効状態を説明します。
+---
+
+RadioGroup は、複数のラジオボタンを 1 つのグループにまとめ、選択状態を管理するコンポーネントです。グループ内では 1 つの値だけが選択され、矢印キーで選択肢を移動できます。個々のラジオボタンには [Radio](/components/radio) を使います。
+
+## 使い方 [#basic-usage]
+
+`defaultValue` に初期選択の値を指定し、子要素に Radio とラベルを並べます。制御された状態にしたい場合は、`value` と `onValueChange` を使います。
+
+<Component path="radio-group/basic" />
+
+グループには `aria-label` または外部のラベルを関連付けて、何を選ぶグループなのかを伝えてください。
+
+## 向き [#orientation]
+
+`orientation` に `"horizontal"` を指定すると、ラジオボタンを横に並べられます。既定値は `"vertical"` です。
+
+<Component path="radio-group/orientation" />
+
+## 選択値の制御 [#controlled]
+
+`value` と `onValueChange` を使うと、選択値を外部の状態で管理できます。`onValueChange` の第 1 引数には、選択された Radio の `value` が渡されます。
+
+<Component path="radio-group/controlled" />
+
+## 外観 [#appearance]
+
+`color`、`size`、`radius`、`variant`、`outlined` でグループ内のラジオボタンの外観をまとめて指定できます。グループに指定した値は、個々の Radio に指定した値より優先されます。
+
+```tsx
+<RadioGroup defaultValue="a" color="blue" size="lg" variant="liquid">
+  <label>
+    <Radio value="a" />
+    選択肢 A
+  </label>
+</RadioGroup>
+```
+
+## props [#props]
+
+### 固有 props [#radio-group-specific-props]
+
+<TypeTable
+  type={{
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"vertical"`,
+      description: "ラジオボタンを並べる向きです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "グループ内のラジオボタンの配色です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "グループ内のラジオボタンの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: `"full"`,
+      description: "角丸の大きさです。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "グループ内のラジオボタンの主な外観です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+RadioGroup は Base UI の Radio Group を基盤にしているため、次の props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    value: {
+      type: "TValue",
+      description: "制御された選択値です。",
+    },
+    defaultValue: {
+      type: "TValue",
+      description: "非制御の初期選択値です。",
+    },
+    onValueChange: {
+      type: `(value: TValue,\ndetails: RadioGroupChangeEventDetails) => void`,
+      description: "選択値が変わったときに呼ばれるコールバックです。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "グループ全体を無効にします。",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "選択値を変更できない読み取り専用の状態にします。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "フォームの送信時に選択を必須にします。",
+    },
+    name: {
+      type: "string",
+      description: "フォームで送信するときの項目名です。",
+    },
+    form: {
+      type: "string",
+      description: "グループを関連付けるフォームの ID です。",
+    },
+    inputRef: {
+      type: "React.Ref<HTMLInputElement>",
+      description: "非表示の input 要素への ref です。",
+    },
+  }}
+/>
+
+このほか、`className`、`style`、`render`、`data-*` などの属性も渡せます。RadioGroup には `slotProps` はありません。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_radio_group` が付与されます。props と状態に応じて、`sui_radio_group-size_md`、`sui_radio_group-color_blue`、`sui_radio_group-radius_full`、`sui_radio_group-variant_naked`、`sui_radio_group-orientation_vertical`、`sui_radio_group-outlined`、`sui_radio_group-disabled` などのクラス名も加わります。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[コンポーネントの設計](/explanation/component-design)

@@ -1,0 +1,174 @@
+---
+title: Accordion
+description: Accordion コンポーネントの props、複数展開、無効状態、スタイルのフックを説明します。
+---
+
+Accordion は、複数の項目を折りたたんで表示するコンポーネントです。FAQ や設定項目など、情報量の多いページで、必要な内容だけを展開して読めるようにします。`items` に項目を渡すと、見出しとパネルが自動で構成されます。
+
+## 使い方 [#basic-usage]
+
+`items` の各項目には、見出しの `title` とパネルの `content` を指定します。`defaultValue` には、最初から開いておく項目の `value` を配列で渡します。
+
+<Component path="accordion/basic" />
+
+項目の値は `value` で指定します。`value` を省略した場合はインデックスが使われます。`disabled` を `true` にすると、その項目だけを無効にできます。
+
+```tsx
+<Accordion
+  items={[
+    { value: "profile", title: "プロフィール", content: "..." },
+    { value: "security", title: "セキュリティー", content: "...", disabled: true },
+  ]}
+  defaultValue={["profile"]}
+/>
+```
+
+## 複数の項目を開く [#multiple]
+
+既定では、同時に開ける項目は 1 つだけです。`multiple` を指定すると、複数の項目を同時に展開できます。`defaultValue` に複数の値を渡す場合は、`multiple` も指定してください。
+
+<Component path="accordion/multiple" />
+
+## 状態と区切り線 [#states]
+
+`separator` は隣接する項目の区切り線を、`indicator` は開閉状態を示すインジケーターを制御します。`indicator={false}` を指定するとインジケーターを非表示にできます。`size` と `radius` で大きさと角丸を調整できます。
+
+<Component path="accordion/states" />
+
+項目ごとの `disabled` に加えて、ルートの `disabled` で全体を無効にできます。全体を無効にした場合も、開いている項目の内容はそのまま表示されます。
+
+## props [#props]
+
+### 固有 props [#accordion-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode |\nIAccordionItemRenderer<TItem>",
+      description:
+        "アコーディオンの内容、または各項目を描画する関数です。関数を渡すと items の各項目が引数になります。",
+    },
+    indicator: {
+      type: "React.ReactNode",
+      default: "true",
+      description:
+        "開閉状態を示すインジケーターです。true で既定の表示、false で非表示、ReactNode で独自の表示になります。",
+    },
+    items: {
+      type: "readonly TItem[]",
+      default: "[]",
+      description: "アコーディオンの項目です。各項目には title と content を指定します。",
+    },
+    slotProps: {
+      type: "AccordionSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+`items` の項目オブジェクトでは、`title` と `content` 以外のプロパティーが `AccordionItem` に渡されます。たとえば `value` と `disabled` を項目ごとに指定できます。
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "アコーディオンの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: `"none"`,
+      description: "角丸の大きさです。",
+    },
+    separator: {
+      type: "boolean",
+      default: "true",
+      description: "隣接する項目の区切り線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    content: {
+      type: "object",
+      description: "各項目のパネルに渡す props です。children は項目の content で指定します。",
+    },
+    heading: {
+      type: "object",
+      description: "各項目の見出し要素に渡す props です。",
+    },
+    indicator: {
+      type: "object",
+      description: "インジケーターに渡す props です。children は indicator で指定します。",
+    },
+    item: {
+      type: "object",
+      description: "各項目のルート要素に渡す props です。",
+    },
+    trigger: {
+      type: "object",
+      description:
+        "各項目の開閉ボタンに渡す props です。children は title とインジケーターから構成されます。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Accordion は Base UI の Accordion を基盤にしているため、開閉状態に関する props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    value: {
+      type: "AccordionValue<TValue>",
+      description: "開いている項目の値を制御する場合に指定します。",
+    },
+    defaultValue: {
+      type: "AccordionValue<TValue>",
+      description: "最初から開いておく項目の値です。",
+    },
+    onValueChange: {
+      type: "(value: AccordionValue<TValue>, eventDetails) => void",
+      description: "開閉状態が変わったときに呼ばれるコールバックです。",
+    },
+    multiple: {
+      type: "boolean",
+      default: "false",
+      description: "複数の項目を同時に開けるようにするかどうかです。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "アコーディオン全体を無効にするかどうかです。",
+    },
+    hiddenUntilFound: {
+      type: "boolean",
+      default: "false",
+      description: '閉じたパネルを hidden="until-found" で保持するかどうかです。',
+    },
+    keepMounted: {
+      type: "boolean",
+      default: "false",
+      description:
+        "閉じたパネルを DOM に保持するかどうかです。hiddenUntilFound を指定した場合は無視されます。",
+    },
+  }}
+/>
+
+`className`、`style`、`render` も利用できます。`className` と `style` には状態を受け取る関数を渡せます。残りの props は Base UI の Accordion から継承します。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_accordion` が付与されます。props に応じて、`sui_accordion-size_md`、`sui_accordion-radius_none`、`sui_accordion-separator`、`sui_accordion-disabled`、`sui_accordion-orientation_vertical` などのクラス名も加わります。
+
+内部のパーツには `sui_accordion_item`、`sui_accordion_heading`、`sui_accordion_trigger`、`sui_accordion_indicator`、`sui_accordion_content` が付与されます。開いている項目には `sui_accordion_item-open`、`sui_accordion_trigger-open` などの状態クラスが加わります。
+
+`className` や `style` で調整できるほか、CSS 変数を使って余白や境界線を上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[要素とコンポーネントの合成](/guides/composition)

@@ -1,0 +1,247 @@
+---
+title: Dialog
+description: Dialog コンポーネントの props、開閉の制御、積み上げ式の外観、命令的な操作を説明します。
+---
+
+Dialog は、画面の中央に一時的な領域を表示するコンポーネントです。確認、入力、詳細の表示など、ユーザーの操作を一時的に集中させたい場面で使います。既定ではモーダルとして表示され、背景の操作を遮ります。
+
+## 使い方 [#basic-usage]
+
+`trigger` にダイアログを開く要素を指定し、`title`、`description`、`children` に内容を渡します。`close` はフッターに配置される閉じる操作で、`footer` はその手前に追加する内容です。
+
+<Component path="dialog/basic" />
+
+右上の閉じるアイコンは既定で表示されます。`showCloseIconButton={false}` を指定すると非表示になります。`action` を使うと、閉じるアイコンの手前に独自の操作を追加できます。
+
+## 開閉の制御 [#controlled]
+
+`open` と `onOpenChange` を指定すると、ダイアログの開閉を制御できます。トリガーを使わず、外部のボタンから開く場合にも使えます。
+
+<Component path="dialog/controlled" />
+
+`onClose` は `close` がクリックされたときに呼ばれます。閉じる前に検証したい場合は、イベントの `preventBaseUIHandler()` を呼ぶと閉じる操作を止められます。
+
+```tsx
+<Dialog
+  close={<Button>保存する</Button>}
+  onClose={(event) => {
+    if (!isValid) {
+      event.preventBaseUIHandler();
+    }
+  }}
+  title="プロフィールを編集"
+>
+  入力内容を確認してください。
+</Dialog>
+```
+
+## 積み上げ式の外観 [#stacked]
+
+`variant="stacked"` を指定すると、見出しと説明を中央に寄せ、操作を右上へ重ねた外観になります。
+
+<Component path="dialog/stacked" />
+
+`outlined={false}` で枠線を消せます。`size` と `radius` はカードと同じ段階から選択できます。
+
+## 命令的な操作 [#imperative]
+
+`Dialog.createHandle()` で作成したハンドルを使うと、コンポーネントの外から開閉できます。ハンドルは `handle` に渡します。
+
+```tsx
+const handle = Dialog.createHandle();
+
+handle.open(null);
+handle.close();
+
+<Dialog handle={handle} title="通知" />;
+```
+
+`Dialog.ToggleTrigger` は、ハンドルと関連付けたトリガーを個別に配置したい場合に使います。
+
+## props [#props]
+
+### 固有 props [#dialog-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "ダイアログを開くトリガーです。省略するとトリガーを描画しません。",
+    },
+    title: {
+      type: "React.ReactNode",
+      description: "ダイアログの見出しです。",
+    },
+    description: {
+      type: "React.ReactNode",
+      description: "見出しの下に表示する説明文です。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "ダイアログの本文です。",
+    },
+    action: {
+      type: "React.ReactNode",
+      description: "ヘッダー右上に表示する操作です。閉じるアイコンの手前に配置されます。",
+    },
+    footer: {
+      type: "React.ReactNode",
+      description: "フッターに表示する内容です。close を指定した場合はその手前に配置されます。",
+    },
+    close: {
+      type: "React.ReactNode",
+      description: "フッターに配置する閉じる操作です。",
+    },
+    onClose: {
+      type: "React.MouseEventHandler<HTMLButtonElement>",
+      description: "close がクリックされたときに呼ばれるコールバックです。",
+    },
+    showCloseIconButton: {
+      type: "boolean",
+      default: "true",
+      description: "右上に閉じるアイコンボタンを表示するかどうかです。",
+    },
+    slotProps: {
+      type: "DialogSlotProps<TPayload>",
+      default: "{}",
+      description: "内部の各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ダイアログの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "size と同じ値",
+      description: "ダイアログの角丸です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "ダイアログに枠線を表示するかどうかです。",
+    },
+    variant: {
+      type: `"default" | "stacked"`,
+      default: `"default"`,
+      description: "ダイアログの主な外観です。stacked は見出しと説明を中央に寄せます。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Dialog は Base UI の Dialog を基盤にしています。開閉状態とフォーカスに関する主な props は次のとおりです。
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "ダイアログの開閉状態を制御します。",
+    },
+    defaultOpen: {
+      type: "boolean",
+      description: "初期状態でダイアログを開くかどうかです。",
+    },
+    onOpenChange: {
+      type: "(open: boolean,\ndetails: Dialog.ChangeEventDetails) => void",
+      description: "開閉状態が変わったときに呼ばれるコールバックです。",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "開閉のアニメーションが完了したときに呼ばれるコールバックです。",
+    },
+    modal: {
+      type: "boolean",
+      default: "true",
+      description: "モーダルとして表示するかどうかです。false の場合は背景を操作できます。",
+    },
+    disablePointerDismissal: {
+      type: "boolean",
+      default: "false",
+      description: "背景のクリックで閉じないようにするかどうかです。",
+    },
+    handle: {
+      type: "DialogHandle<TPayload>",
+      description: "外部から開閉するためのハンドルです。",
+    },
+    initialFocus: {
+      type: `React.RefObject<HTMLElement | null> |\nboolean |\n((openType) => boolean | HTMLElement | null | void)`,
+      description: "開いたときにフォーカスする要素を指定します。",
+    },
+    finalFocus: {
+      type: `React.RefObject<HTMLElement | null> |\nboolean |\n((closeType) => boolean | HTMLElement | null | void)`,
+      description: "閉じたときにフォーカスする要素を指定します。",
+    },
+  }}
+/>
+
+`Dialog` コンポーネントは `createHandle` と `ToggleTrigger` を静的メンバーとして持ちます。`Dialog.createHandle()` でハンドルを作成し、`Dialog.ToggleTrigger` でトリガーを個別に配置できます。
+
+`className` と `style` はポップアップに適用されます。ポップアップの要素を置き換える場合は `render` を使います。ここに挙げた以外の props は Base UI の Dialog から継承します。
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    action: {
+      type: `Omit<DialogActionProps, "children">`,
+      description: "ヘッダー右上の操作に props を渡します。",
+    },
+    backdrop: {
+      type: "DialogBackdropProps",
+      description: "背景に props を渡します。",
+    },
+    closeTrigger: {
+      type: `Omit<DialogCloseTriggerProps, "children">`,
+      description: "フッターの閉じる操作に props を渡します。children は close で指定します。",
+    },
+    content: {
+      type: `Omit<DialogContentProps, "children">`,
+      description: "本文に props を渡します。children は Dialog 本体で指定します。",
+    },
+    description: {
+      type: `Omit<DialogDescriptionProps, "children">`,
+      description: "説明文に props を渡します。",
+    },
+    footer: {
+      type: `Omit<DialogFooterProps, "children">`,
+      description: "フッターに props を渡します。",
+    },
+    header: {
+      type: `Omit<DialogHeaderProps, "children">`,
+      description: "ヘッダーに props を渡します。",
+    },
+    portal: {
+      type: `Omit<DialogPortalProps, "children">`,
+      description: "ポータルに props を渡します。",
+    },
+    title: {
+      type: `Omit<DialogTitleProps, "children">`,
+      description: "見出しに props を渡します。",
+    },
+    toggleTrigger: {
+      type: `Omit<DialogToggleTriggerProps<TPayload>, "children" | "handle">`,
+      description: "trigger で描画するトリガーに props を渡します。",
+    },
+    viewport: {
+      type: `Omit<DialogViewportProps, "children">`,
+      description: "ダイアログを配置するビューポートに props を渡します。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ポップアップには `sui_dialog_popup` が付与されます。状態に応じて、`sui_dialog_popup-size_md`、`sui_dialog_popup-radius_md`、`sui_dialog_popup-variant_stacked`、`sui_dialog_popup-outlined`、`sui_dialog_popup-open`、`sui_dialog_popup-nested` などのクラス名も加わります。
+
+トリガーには `sui_dialog_trigger` が付与されます。内部のパーツには `sui_dialog_header`、`sui_dialog_title`、`sui_dialog_description`、`sui_dialog_content`、`sui_dialog_footer` などのクラス名が付きます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[要素とコンポーネントの合成](/guides/composition)

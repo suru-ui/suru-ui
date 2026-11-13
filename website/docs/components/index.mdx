@@ -1,0 +1,106 @@
+---
+title: コンポーネント
+description: Suru UI が提供するコンポーネントの一覧です。用途からリファレンスを探せます。
+---
+
+Suru UI のコンポーネントは、フォーム、ナビゲーション、オーバーレイ、データ表示などの用途ごとに分類できます。各ページでは、使い方の例、props、スタイルのフックを確認できます。
+
+まずは[Button](/components/button) と [Badge](/components/badge) を読むと、Suru UI のプリセット、パーツ、`slotProps` の関係を把握しやすくなります。コンポーネントの共通設計は[コンポーネントの構造](/guides/component-anatomy)で説明しています。
+
+## 操作 [#action-components]
+
+ユーザーの操作を受け付けるコンポーネントです。
+
+| コンポーネント                            | 説明                           |
+| ----------------------------------------- | ------------------------------ |
+| [Button](/components/button)              | クリック可能な操作を表します。 |
+| [ToggleButton](/components/toggle-button) | 押下状態を持つボタンです。     |
+
+## 入力 [#input-components]
+
+テキストや数値、選択肢を受け取るコンポーネントです。
+
+| コンポーネント                              | 説明                                                   |
+| ------------------------------------------- | ------------------------------------------------------ |
+| [Autocomplete](/components/autocomplete)    | 入力に応じて候補を絞り込む入力欄です。                 |
+| [Checkbox](/components/checkbox)            | 真偽値や選択状態を切り替えます。                       |
+| [CheckboxGroup](/components/checkbox-group) | 複数のチェックボックスをグループ化します。             |
+| [Combobox](/components/combobox)            | 定義済みの項目から値を選択します。                     |
+| [Field](/components/field)                  | ラベル、入力欄、説明、エラーをまとめます。             |
+| [Fieldset](/components/fieldset)            | 関連するコントロールを凡例付きでまとめます。           |
+| [FileUpload](/components/file-upload)       | ファイルの選択とドラッグアンドドロップを受け付けます。 |
+| [Form](/components/form)                    | フォームの検証と送信を管理します。                     |
+| [Input](/components/input)                  | ネイティブの入力要素を表示します。                     |
+| [Label](/components/label)                  | フォームコントロールのラベルです。                     |
+| [NumberField](/components/number-field)     | 数値を増減できる入力欄です。                           |
+| [PasswordField](/components/password-field) | 表示を切り替えられるパスワード入力欄です。             |
+| [Radio](/components/radio)                  | 排他的な選択肢の 1 つを選びます。                      |
+| [RadioGroup](/components/radio-group)       | 複数のラジオボタンをグループ化します。                 |
+| [Select](/components/select)                | 定義済みの項目から 1 つまたは複数の値を選びます。      |
+| [Slider](/components/slider)                | 範囲内の値を連続的に選びます。                         |
+| [Switch](/components/switch)                | オンとオフを切り替えます。                             |
+| [Textarea](/components/textarea)            | 複数行のテキストを入力します。                         |
+| [TextField](/components/text-field)         | 枠線付きの文字入力欄です。                             |
+
+## 表示 [#display-components]
+
+情報を読みやすく整理して表示するコンポーネントです。
+
+| コンポーネント                            | 説明                                             |
+| ----------------------------------------- | ------------------------------------------------ |
+| [Accordion](/components/accordion)        | 項目を折りたたんで表示します。                   |
+| [Alert](/components/alert)                | 重要なメッセージを状態付きで表示します。         |
+| [AspectRatio](/components/aspect-ratio)   | 指定した比率で領域の大きさを保ちます。           |
+| [Avatar](/components/avatar)              | 画像またはフォールバックのアバターを表示します。 |
+| [AvatarGroup](/components/avatar-group)   | 複数のアバターを重ねて表示します。               |
+| [Badge](/components/badge)                | 小さな状態や数値を表示します。                   |
+| [Card](/components/card)                  | 情報や操作をひとまとまりにします。               |
+| [Chip](/components/chip)                  | 短いラベルや属性を表示します。                   |
+| [FormatNumber](/components/format-number) | 数値をロケールに従って書式化します。             |
+| [Image](/components/image)                | 画像を表示します。                               |
+| [Meter](/components/meter)                | 既知の範囲に対する現在値を表示します。           |
+| [Progress](/components/progress)          | 処理の進捗を表示します。                         |
+| [Skeleton](/components/skeleton)          | 読み込み中のプレースホルダーです。               |
+| [Stat](/components/stat)                  | ラベルと値の組で統計を表示します。               |
+| [Status](/components/status)              | 状態を示すドットとラベルを表示します。           |
+| [Tree](/components/tree)                  | 階層的な項目を表示します。                       |
+
+## ナビゲーション [#navigation-components]
+
+ページや選択肢の間を移動するためのコンポーネントです。
+
+| コンポーネント                       | 説明                                     |
+| ------------------------------------ | ---------------------------------------- |
+| [Breadcrumb](/components/breadcrumb) | 現在位置までの経路を表示します。         |
+| [Menubar](/components/menubar)       | メニューを横または縦に並べます。         |
+| [Pagination](/components/pagination) | ページ間を移動します。                   |
+| [Segments](/components/segments)     | 関連する選択肢から 1 つを選びます。      |
+| [Sidebar](/components/sidebar)       | 画面端のナビゲーション領域を表示します。 |
+| [Tabs](/components/tabs)             | タブとパネルを切り替えます。             |
+
+## オーバーレイ [#overlay-components]
+
+画面の上に一時的な領域を表示するコンポーネントです。
+
+| コンポーネント                            | 説明                                               |
+| ----------------------------------------- | -------------------------------------------------- |
+| [AlertDialog](/components/alert-dialog)   | 確認を求めるモーダルを表示します。                 |
+| [ContextMenu](/components/context-menu)   | 右クリックや長押しでメニューを表示します。         |
+| [Dialog](/components/dialog)              | モーダルまたは非モーダルのダイアログを表示します。 |
+| [Drawer](/components/drawer)              | 画面端からスライドする領域を表示します。           |
+| [HoverCard](/components/hover-card)       | ホバーで補足情報を表示します。                     |
+| [Menu](/components/menu)                  | ボタンから開くメニューです。                       |
+| [Popover](/components/popover)            | トリガーに紐付くポップオーバーです。               |
+| [Toast](/components/toast)                | 一時的な通知を表示します。                         |
+| [Tooltip](/components/tooltip)            | 短い補足を表示します。                             |
+| [TooltipGroup](/components/tooltip-group) | 複数のツールチップの遅延を共有します。             |
+
+## レイアウト [#layout-components]
+
+領域の配置や大きさを調整するコンポーネントです。
+
+| コンポーネント                         | 説明                                             |
+| -------------------------------------- | ------------------------------------------------ |
+| [Collapsible](/components/collapsible) | 内容を展開または折りたたみます。                 |
+| [Resizable](/components/resizable)     | ドラッグで大きさを変えられるパネルを表示します。 |
+| [ScrollArea](/components/scroll-area)  | 独自のスクロールバーを持つ領域を表示します。     |

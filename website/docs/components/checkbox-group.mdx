@@ -1,0 +1,128 @@
+---
+title: CheckboxGroup
+description: CheckboxGroup コンポーネントの props、複数選択の制御、全選択、向きと外観を説明します。
+---
+
+CheckboxGroup は、複数の Checkbox を 1 つの選択グループとしてまとめるコンポーネントです。選択値の配列を管理し、グループ内の Checkbox へ大きさや配色などの外観をまとめて伝播します。
+
+## 使い方 [#basic-usage]
+
+子の Checkbox に `value` を指定し、`defaultValue` または `value` に選択値の配列を渡します。ラベルは `label` 要素で囲んでください。
+
+<Component path="checkbox-group/basic" />
+
+グループ内の Checkbox は、グループの `size`、`color`、`radius`、`variant`、`outlined` を継承します。個々の Checkbox に指定した外観より、グループの設定が優先されます。
+
+## 全選択 [#select-all]
+
+`allValues` にグループ内のすべての値を指定し、`parent` を付けた Checkbox を置くと、全選択と全解除を切り替えられます。親の Checkbox は、子の選択状態に応じてチェック済みまたは中間状態になります。
+
+<Component path="checkbox-group/parent" />
+
+## 向きと外観 [#orientation-and-appearance]
+
+`orientation="horizontal"` を指定すると横並びになります。配色や大きさはグループ単位で指定できます。
+
+<Component path="checkbox-group/appearance" />
+
+## props [#props]
+
+### 固有 props [#checkbox-group-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "グループに含める Checkbox とラベルです。",
+    },
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"vertical"`,
+      description: "チェックボックス群の並び方向です。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "グループ内のチェックボックスの配色です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "グループ内のチェックボックスの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: "size と同じ値",
+      description: "グループ内のチェックボックスの角丸です。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "グループ内のチェックボックスの主な外観です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "グループ内のチェックボックスに枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+CheckboxGroup は Base UI の CheckboxGroup を基盤にしています。選択値の管理に関する props は次のとおりです。
+
+<TypeTable
+  type={{
+    value: {
+      type: "string[]",
+      description: "選択されている値の配列です。制御する場合に指定します。",
+    },
+    defaultValue: {
+      type: "string[]",
+      description: "初期の選択値の配列です。",
+    },
+    onValueChange: {
+      type: "(value: string[],\ndetails: CheckboxGroup.ChangeEventDetails) => void",
+      description: "選択値が変わったときに呼ばれるコールバックです。",
+    },
+    allValues: {
+      type: "string[]",
+      description: "グループ内のすべての値です。parent を付けた全選択チェックボックスで使います。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "グループ全体を無効にします。",
+    },
+    className: {
+      type: `string |\n((state: CheckboxGroup.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: CheckboxGroup.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "ルート要素を別の要素に置き換えます。",
+    },
+  }}
+/>
+
+グループの状態は `CheckboxGroup.useContext()` で取得できます。状態には `size`、`color`、`radius`、`variant`、`outlined`、`orientation`、`disabled` などが含まれます。ここに挙げた以外の props は Base UI の CheckboxGroup から継承します。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_checkbox_group` が付与されます。props に応じて、`sui_checkbox_group-size_md`、`sui_checkbox_group-color_blue`、`sui_checkbox_group-radius_md`、`sui_checkbox_group-variant_liquid`、`sui_checkbox_group-outlined`、`sui_checkbox_group-orientation_horizontal` などのクラス名も加わります。
+
+無効状態では `sui_checkbox_group-disabled`、検証状態では `sui_checkbox_group-invalid` や `sui_checkbox_group-valid` が付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[Checkbox](/components/checkbox)

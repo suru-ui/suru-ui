@@ -1,0 +1,91 @@
+---
+title: 外観のカスタマイズ
+description: props、className、style、CSS 変数、テーマのトークンを使って、コンポーネントの見た目を調整する方法を説明します。
+---
+
+見た目を変える方法は複数あります。変更の範囲が小さい方法から順に検討すると、アップデートに強く、意図が明確なコードになります。このガイドでは、Button を例に、一般的なカスタマイズの考え方を説明します。
+
+## 外観 props [#appearance-props]
+
+まず検討するのは、コンポーネントが提供する外観の props です。多くのプリセットには、`variant`、`color`、`size`、`radius` のような props が用意されています。
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function PrimaryAction() {
+  return (
+    <Button color="blue" variant="solid" size="md">
+      保存
+    </Button>
+  );
+}
+```
+
+色や大きさを直接 CSS で指定するのではなく、まずプリセットの語彙を使うことで、テーマの変更や他のコンポーネントとの一貫性を保ちやすくなります。
+
+## 状態とスタイル [#state-aware-styles]
+
+Base UI を土台にしたコンポーネントでは、`className` と `style` に状態を引数に取る関数を指定できます。
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveButton() {
+  return (
+    <Button
+      color="blue"
+      className={(state) => (state.pending ? "is-pending" : undefined)}
+      style={(state) => ({
+        opacity: state.disabled ? 0.6 : 1,
+      })}
+    >
+      保存
+    </Button>
+  );
+}
+```
+
+```css
+.is-pending {
+  cursor: progress;
+}
+```
+
+関数が受け取る状態の形はコンポーネントによって異なります。Button の場合は `pending`、`disabled`、`size`、`color` などの状態を参照できます。どの状態が利用できるかは、各コンポーネントのリファレンスを確認してください。
+
+**CSS 変数**
+
+コンポーネントが CSS 変数を公開している場合は、クラスの中で変数を上書きできます。
+
+```css
+.checkout-button {
+  --sui_button-min_height: 48px;
+  --sui_button-padding_inline: 2rem;
+}
+```
+
+```tsx
+<Button className="checkout-button" color="blue">
+  保存
+</Button>
+```
+
+CSS 変数は、特定の画面や領域だけ見た目を変えたい場合に便利です。すべてのコンポーネントが同じ変数を公開しているわけではないため、利用できる変数はリファレンスを確認してください。
+
+## レイヤー [#layers]
+
+Suru UI のコンポーネントスタイルは、CSS カスケードレイヤーの中で定義されています。アプリケーション側の通常の CSS はレイヤーの外側にあるため、クラスや CSS 変数による上書きが優先されます。
+
+一方で、内部のクラス名を直接対象にした上書きは、コンポーネントの構造変更に弱くなります。まずは公開されている props、`slotProps`、CSS 変数を使い、足りない部分だけをクラスで調整してください。
+
+**選び方**
+
+| 変更したい範囲                       | 方法                           |
+| ------------------------------------ | ------------------------------ |
+| 標準の外観を選ぶ                     | `color` や `size` などの props |
+| 内部の一部だけ変える                 | `slotProps`                    |
+| 状態に応じたクラスやスタイルを当てる | `className` と `style` の関数  |
+| 特定の領域だけ寸法を変える           | CSS 変数                       |
+| 構造ごと変える                       | パーツを直接組み立てる         |
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[要素とコンポーネントの合成](/guides/composition)、[Button のリファレンス](/components/button)

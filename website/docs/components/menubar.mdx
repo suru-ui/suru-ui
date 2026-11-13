@@ -1,0 +1,136 @@
+---
+title: Menubar
+description: Menubar コンポーネントの項目の指定方法、メニューの向き、メニュー全体へのカスタマイズを説明します。
+---
+
+Menubar は、アプリケーションのメニューバーのように複数のメニューを横または縦に並べるコンポーネントです。各メニューはトリガーと項目の組で指定し、項目にはサブメニューやチェック項目などを含められます。メニュー間の移動や開閉はキーボードでも操作できます。
+
+## 使い方 [#basic-usage]
+
+`items` に、メニューを開く `trigger` と、ポップアップに表示する `items` を持つオブジェクトを並べます。`trigger` にはボタンなどの要素を指定します。
+
+<Component path="menubar/basic" />
+
+```tsx
+<Menubar
+  items={[
+    {
+      trigger: <Button variant="naked">ファイル</Button>,
+      items: [{ label: "新規作成" }, { label: "開く" }, { label: "保存" }],
+    },
+  ]}
+/>
+```
+
+矢印キーで隣のメニューへ移動し、Enter キーまたは Space キーでメニューを開きます。開いたメニューの中では上下の矢印キーで項目を移動できます。
+
+## 項目の種類 [#item-types]
+
+各メニューの `items` には、次の項目を指定できます。
+
+- `label` を持つ項目は、通常のメニュー項目になります。
+- `type: "submenu"` と `label`、`items` を持つ項目は、サブメニューを開く項目になります。
+- `type: "checkbox"` と `label` を持つ項目は、チェック状態を切り替える項目になります。
+- `type: "radio-group"` と `items` を持つ項目は、排他的な選択肢をまとめたグループになります。
+- `type: "link"` と `label` を持つ項目は、リンクとして動作する項目になります。
+
+```tsx
+items={[
+  { type: "checkbox", label: "ルーラーを表示", defaultChecked: true },
+  {
+    type: "submenu",
+    label: "ズーム",
+    items: [{ label: "50%" }, { label: "100%" }, { label: "200%" }],
+  },
+]}
+```
+
+## 向き [#orientation]
+
+`orientation` に `"vertical"` を指定すると、メニューを縦に並べられます。既定値は `"horizontal"` です。
+
+<Component path="menubar/vertical" />
+
+## メニューのカスタマイズ [#menu-customization]
+
+`slotProps.menu` を使うと、すべてのメニューに同じ props を渡せます。メニューの大きさや外観、角丸などをまとめて変更するときに便利です。
+
+```tsx
+<Menubar slotProps={{ menu: { size: "sm", variant: "liquid", radius: "md" } }} items={items} />
+```
+
+個別のメニューだけ外観を変えたい場合は、その項目のオブジェクトに `size` や `variant` などを直接指定します。項目のオブジェクトに指定した値は、`slotProps.menu` の値より優先されます。
+
+## props [#props]
+
+### 固有 props [#menubar-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode | IMenubarItemRenderer<TItem>",
+      description:
+        "メニューバーの内容、または各項目を描画する関数です。関数を指定した場合は items の各項目が引数として渡されます。",
+    },
+    items: {
+      type: "readonly TItem[]",
+      default: "[]",
+      description:
+        "メニューバーに並べる項目です。各項目は trigger と items を持つオブジェクトです。",
+    },
+    slotProps: {
+      type: "MenubarSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Menubar は Base UI の Menubar を基盤にしているため、次の props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "メニューバー全体を無効にします。",
+    },
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"horizontal"`,
+      description: "メニューを並べる向きです。",
+    },
+    loopFocus: {
+      type: "boolean",
+      default: "true",
+      description: "矢印キーで末尾まで移動したときに、先頭へフォーカスを戻すかどうかです。",
+    },
+    modal: {
+      type: "boolean",
+      default: "true",
+      description: "メニューバーをモーダルとして扱うかどうかです。",
+    },
+    "aria-label": {
+      type: "string",
+      description: "メニューバーの名前です。用途が明確になるように指定してください。",
+    },
+  }}
+/>
+
+このほか、`className`、`style`、`render`、`data-*` などの属性も渡せます。
+
+### slotProps [#slot-props]
+
+| キー   | 型                                       | 説明                                                                                                       |
+| ------ | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `menu` | `Omit<Menu.Props, "items" \| "trigger">` | すべてのメニューに渡す props です。`items` と `trigger` は項目ごとに指定するため、ここでは指定できません。 |
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_menubar` が付与されます。props と状態に応じて、`sui_menubar-orientation_horizontal`、`sui_menubar-orientation_vertical`、`sui_menubar-disabled`、`sui_menubar-modal`、`sui_menubar-has_submenu_open` などのクラス名も加わります。
+
+各メニューのトリガーには `sui_menu_trigger`、ポップアップには `sui_menu_popup`、項目には `sui_menu_item` などのクラス名が付与されるため、メニューの外観は `slotProps.menu` の `className` でも調整できます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[要素とコンポーネントの合成](/guides/composition)、[外観のカスタマイズ](/guides/styling)

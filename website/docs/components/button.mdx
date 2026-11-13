@@ -1,0 +1,356 @@
+---
+title: Button
+description: Button コンポーネントの props、状態、スタイルのフックを説明します。
+---
+
+Button は、クリック可能な操作を表すコンポーネントです。既定ではネイティブの `<button type="button">` を描画します。
+
+## 使い方 [#basic-usage]
+
+`children` がボタンのラベルになります。`color` と `variant` で外観を、`size` で大きさを指定できます。
+
+<Component path="button/basic" />
+
+Button は次の要素を組み合わせて描画されます。
+
+- ルート要素（既定では button 要素）
+- 先頭と末尾のアドオン
+- ラベルを表示するコンテンツ
+- 保留状態のオーバーレイ
+- 円形プログレスバー
+
+通常は Button をそのまま使えば、これらの要素が自動で構成されます。個々の要素へ props を渡したい場合は、後述の `slotProps` を使います。パーツを直接組み立てる方法は[コンポーネントの構造](/guides/component-anatomy)で説明しています。
+
+**アイコン**
+
+`children` にアイコンを置くと、ラベルと一緒に配置されます。アイコンだけのボタンは `squared` と `aria-label` を組み合わせます。アイコンの例では `lucide-react` を使っています。
+
+<Component path="button/icons" />
+
+**外観**
+
+`variant` は `solid`、`naked`、`liquid` から、`color` は 8 色から選択できます。
+
+<Component path="button/appearance" />
+
+**大きさ**
+
+`size` は `xs`、`sm`、`md`、`lg` の 4 段階です。`thin` を組み合わせると高さを抑えられます。
+
+<Component path="button/sizes" />
+
+**形状**
+
+`squared` は正方形、`radius` は角丸の大きさを指定します。
+
+<Component path="button/shapes" />
+
+**幅**
+
+`style` で幅や flex を指定すると、親要素のレイアウトに合わせられます。
+
+<Component path="button/width" />
+
+**修飾**
+
+`muted`、`outlined`、`disabled` を組み合わせた表示です。
+
+<Component path="button/states" />
+
+**状態**
+
+Button の状態は、外観の props と操作の状態から決まります。
+
+| 状態       | 条件                                     | 説明                                                                            |
+| ---------- | ---------------------------------------- | ------------------------------------------------------------------------------- |
+| 通常       | -                                        | 既定の外観で表示されます。                                                      |
+| ホバー     | ポインターが上にある                     | 背景色や文字色、枠線色が hover 用の値に変わります。                             |
+| アクティブ | 押下中                                   | 背景色や文字色、枠線色が active 用の値に変わります。                            |
+| フォーカス | キーボード操作などでフォーカスされている | 通常のボタンではフォーカスリングが表示されます。`item` の場合は表示されません。 |
+| 無効       | `disabled` が `true`                     | 押下できなくなり、無効用の配色になります。                                      |
+| 保留       | `pending` が `true`                      | 押下できなくなり、進行状況が表示されます。                                      |
+
+<Component path="button/pending" />
+
+プレビューのボタンを押すと、1.5 秒間の保留状態を確認できます。
+
+**進捗率**
+
+`percentage` に 0〜100 の値を渡すと、進捗率付きのスピナーになります。
+
+<Component path="button/pending-progress" />
+
+**無効と保留**
+
+`disabled` はボタンを無効にします。`pending` も押下を無効にしますが、処理中であることを示すスピナーを表示し、`disabled` を併用しない限りフォーカスを維持します。
+
+```tsx
+<Button disabled>送信できません</Button>
+<Button pending>送信中</Button>
+```
+
+**コンテキスト**
+
+Button の子孫では、`Button.useContext()` または `useButtonContext()` で状態を取得できます。
+
+```tsx
+import { Button, useButtonContext } from "@suru-ui/react";
+
+function Status() {
+  const state = useButtonContext();
+
+  return <span>{state.pending ? "処理中" : "待機中"}</span>;
+}
+
+export function SaveButton() {
+  return (
+    <Button pending slotProps={{ pending: { overlay: false } }}>
+      <Status />
+    </Button>
+  );
+}
+```
+
+この例では状態の変化を確認しやすいように、保留表示をオーバーレイしない設定にしています。コンテキストには、`color`、`item`、`muted`、`outlined`、`pending`、`radius`、`size`、`squared`、`thin`、`variant` などの状態が含まれます。
+
+## props [#props]
+
+### 固有 props [#button-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "ボタンのラベルとして表示する内容です。",
+    },
+    startAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "ラベルの先頭に表示するアドオンです。配列などの反復可能な値を指定します。",
+    },
+    endAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "ラベルの末尾に表示するアドオンです。配列などの反復可能な値を指定します。",
+    },
+    slotProps: {
+      type: "ButtonSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+    percentage: {
+      type: "number | undefined",
+      description:
+        "円形プログレスバーの進捗率を 0〜100 で指定します。未定義または負の値の場合、indeterminate を指定しない限り不定モードになります。",
+    },
+    indeterminate: {
+      type: "boolean | undefined",
+      description:
+        "円形プログレスバーを不定モードにするかどうかを指定します。省略時は percentage から判定されます。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "ボタンの配色です。",
+    },
+    variant: {
+      type: `"solid" | "naked" | "liquid"`,
+      default: `"solid"`,
+      description:
+        "ボタンの主な外観です。solid は塗りつぶし、naked は背景なし、liquid は薄い塗りつぶしです。",
+    },
+    size: {
+      type: `"xs" | "sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ボタンの大きさです。",
+    },
+    radius: {
+      type: `"none" | "xs" | "sm" | "md" |\n"lg" | "full" | "circle"`,
+      default: "size に応じて sm または md",
+      description:
+        "角丸の大きさです。size が xs または sm のときは sm、md または lg のときは md が既定値になります。",
+    },
+    item: {
+      type: "boolean",
+      default: "false",
+      description:
+        "メニューなどのリスト項目として使うかどうかを指定します。左右の余白が狭くなり、内容が両端揃えになります。",
+    },
+    muted: {
+      type: "boolean",
+      default: "false",
+      description: "背景色を控えめにします。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "枠線を表示するかどうかを指定します。",
+    },
+    pending: {
+      type: "boolean",
+      default: "false",
+      description: "保留状態にするかどうかを指定します。押下が無効になり、進行状況が表示されます。",
+    },
+    squared: {
+      type: "boolean",
+      default: "false",
+      description:
+        "ボタンを正方形にするかどうかを指定します。アイコンだけのボタンなどに適しています。",
+    },
+    thin: {
+      type: "boolean",
+      default: "false",
+      description: "上下の余白を半分にして、ボタンを薄くします。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+`slotProps` を使うと、Button が内部で描画する各要素に props を渡せます。スロットの考え方と、プリセットとパーツの関係は[コンポーネントの構造](/guides/component-anatomy)で説明しています。
+
+<TypeTable
+  type={{
+    addon: {
+      type: "object",
+      description:
+        "先頭と末尾のアドオンに渡す props です。children は startAddons と endAddons で指定します。",
+    },
+    content: {
+      type: "object",
+      description:
+        "ラベルを表示する要素に渡す props です。children は Button の children で指定します。",
+    },
+    pending: {
+      type: "object",
+      description: "保留表示に渡す props です。overlay と keepMounted を指定できます。",
+    },
+    circularProgress: {
+      type: "object",
+      description:
+        "円形プログレスバーに渡す props です。percentage と indeterminate は Button 本体で指定します。",
+    },
+    circularProgressTrack: {
+      type: "object",
+      description: "円形プログレスバーの背景の円弧に渡す props です。",
+    },
+    circularProgressFill: {
+      type: "object",
+      description:
+        "円形プログレスバーの進捗を表す円弧に渡す props です。strokeDashoffset や strokeWidth を指定できます。",
+    },
+    circularProgressFillRotation: {
+      type: "object",
+      description:
+        "不定モード時の回転アニメーションに渡す props です。dur や values を指定できます。",
+    },
+  }}
+/>
+
+**pending の slotProps**
+
+| Prop          | 型        | 既定値  | 説明                                                                                             |
+| ------------- | --------- | ------- | ------------------------------------------------------------------------------------------------ |
+| `overlay`     | `boolean` | `true`  | 親要素を覆うオーバーレイとして表示するかどうかです。`false` の場合は通常のフローに配置されます。 |
+| `keepMounted` | `boolean` | `false` | 保留状態でないときも DOM に保持するかどうかです。                                                |
+
+`keepMounted` を `true` にすると、保留状態でないときは `visibility: hidden` で非表示になります。表示の切り替えに CSS トランジションを適用したい場合などに使えます。
+
+### 継承 props [#inherited-props]
+
+Button は Base UI の Button を基盤にしているため、ネイティブの button 要素が受け付ける属性と、Base UI の Button が提供する props をそのまま渡せます。主なものは次のとおりです。
+
+<TypeTable
+  type={{
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "ボタンを無効にします。",
+    },
+    type: {
+      type: `"button" | "submit" | "reset"`,
+      default: `"button"`,
+      description: "button 要素の type 属性です。",
+    },
+    onClick: {
+      type: "React.MouseEventHandler<HTMLButtonElement>",
+      description: "クリック時のハンドラーです。",
+    },
+    className: {
+      type: `string |\n((state: Button.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Button.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "ルート要素を別の要素に置き換えます。",
+    },
+    nativeButton: {
+      type: "boolean",
+      default: "true",
+      description:
+        "ルートがネイティブの button 要素かどうかです。リンクなどに置き換える場合は false を指定します。",
+    },
+    focusableWhenDisabled: {
+      type: "boolean",
+      description:
+        "無効時にもフォーカス可能にするかどうかです。既定では pending が true かつ disabled が false のとき true になります。",
+    },
+    "aria-*": {
+      type: "string | boolean | number",
+      description: "アクセシビリティ属性です。アイコンだけのボタンには aria-label を指定します。",
+    },
+    "data-*": {
+      type: "string",
+      description: "任意の data 属性です。",
+    },
+  }}
+/>
+
+`className` と `style` には、状態を受け取る関数を渡せます。
+
+```tsx
+<Button
+  className={(state) => (state.pending ? "is-busy" : undefined)}
+  style={(state) => ({ opacity: state.disabled ? 0.6 : 1 })}
+>
+  保存
+</Button>
+```
+
+`render` を使った要素の置き換えや合成は、[要素とコンポーネントの合成](/guides/composition)で説明しています。
+
+## スタイル [#styling-hooks]
+
+**クラス名**
+
+Button は、props に応じてルート要素へクラス名を付与します。追加のスタイルを当てるときの目安にしてください。
+
+| クラス名                        | 条件                                                                 |
+| ------------------------------- | -------------------------------------------------------------------- |
+| `sui_button`                    | 常に付与されます。                                                   |
+| `sui_button-size_xs` など       | `size` に応じて付与されます。                                        |
+| `sui_button-color_grey` など    | `color` に応じて付与されます。                                       |
+| `sui_button-radius_sm` など     | `radius` に応じて付与されます。                                      |
+| `sui_button-variant_solid` など | `variant` に応じて付与されます。                                     |
+| `sui_button-item`               | `item` が `true` のときに付与されます。                              |
+| `sui_button-muted`              | `muted` が `true` のときに付与されます。                             |
+| `sui_button-outlined`           | `outlined` が `true` のときに付与されます。                          |
+| `sui_button-pending`            | `pending` が `true` のときに付与されます。                           |
+| `sui_button-squared`            | `squared` が `true` のときに付与されます。                           |
+| `sui_button-thin`               | `thin` が `true` のときに付与されます。                              |
+| `sui_button-disabled`           | `disabled` が `true` で、`pending` が `false` のときに付与されます。 |
+
+内部のパーツには、`sui_button_content`、`sui_button_addon`、`sui_button_pending`、`sui_button_circular_progress` などのクラス名が付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[要素とコンポーネントの合成](/guides/composition)、[外観のカスタマイズ](/guides/styling)、[非同期状態の表示](/guides/async-state)、[レイアウトとサイズ](/guides/layout)、[コンポーネントの設計](/explanation/component-design)

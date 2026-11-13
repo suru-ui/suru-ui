@@ -1,0 +1,6 @@
+/* TypeTable の長い型シグネチャーを、意図した位置で折り返します。 */
+.not-prose details summary code,
+.not-prose details code {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}

@@ -1,0 +1,209 @@
+---
+title: NumberField
+description: NumberField コンポーネントの数値入力、増減ボタン、ドラッグ操作、値の制御を説明します。
+---
+
+NumberField は、数値の入力に特化したテキストフィールドです。増減ボタンやキーボード操作、ドラッグによる値の変更に対応し、最小値・最大値・刻み幅を指定できます。金額や数量など、数値を厳密に扱う入力欄に適しています。
+
+## 使い方 [#basic-usage]
+
+`defaultValue` に初期値を指定し、`scrubArea` に表示名を渡すと、入力欄の上にラベルが表示されます。`decrement` と `increment` を指定すると、値を減らすボタンと増やすボタンが表示されます。
+
+<Component path="number-field/basic" />
+
+`decrement` と `increment` に `true` を渡すと既定のアイコンが表示されます。任意の要素を渡すと、その要素がボタンの内容になります。
+
+## 操作と状態 [#interactions]
+
+`scrubArea` を指定すると、ラベルをドラッグして値を変更できる領域が表示されます。入力欄にフォーカスした状態では、上下の矢印キーでも値を増減できます。Shift キーを押しながら操作すると `largeStep`、Alt キーを押しながら操作すると `smallStep` の幅で変化します。
+
+`value` と `onValueChange` を使うと、値を外部の状態で管理できます。`onValueChange` の値は `number | null` であるため、空の入力も扱えます。
+
+<Component path="number-field/controlled" />
+
+`disabled` と `readOnly` は入力そのものを制限します。`allowOutOfRange` を指定すると、直接入力した値が `min` と `max` の範囲を超えることを許可できます。ボタンやキーボードによる増減は、この指定にかかわらず範囲内に収まります。
+
+<Component path="number-field/states" />
+
+## 接頭辞と接尾辞 [#addons]
+
+`startAddons` と `endAddons` を使うと、入力欄の先頭と末尾に任意の内容を表示できます。通貨記号や単位などを添えるときに便利です。
+
+```tsx
+<NumberField
+  defaultValue={1000}
+  startAddons={[<JapaneseYenIcon aria-hidden="true" />]}
+  endAddons={["円"]}
+/>
+```
+
+## 外観 [#appearance]
+
+`variant` は `naked` と `liquid` から選択できます。`color`、`size`、`radius`、`outlined` を組み合わせて、入力欄の見た目を調整できます。
+
+<Component path="number-field/appearance" />
+
+## props [#props]
+
+### 固有 props [#number-field-specific-props]
+
+<TypeTable
+  type={{
+    decrement: {
+      type: "boolean | React.ReactNode",
+      description: "値を減らすボタンを表示します。true を指定すると既定のアイコンが表示されます。",
+    },
+    increment: {
+      type: "boolean | React.ReactNode",
+      description: "値を増やすボタンを表示します。true を指定すると既定のアイコンが表示されます。",
+    },
+    scrubArea: {
+      type: "React.ReactNode",
+      description: "ドラッグで値を変更できる領域に表示する内容です。指定すると領域が表示されます。",
+    },
+    startAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "入力欄の先頭に表示する内容です。",
+    },
+    endAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "入力欄の末尾に表示する内容です。",
+    },
+    placeholder: {
+      type: "string",
+      description: "入力欄のプレースホルダーです。",
+    },
+    slotProps: {
+      type: "NumberFieldSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "フォーカス時に枠線へ適用する色です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "入力欄の大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: "size と同じ値",
+      description: "角丸の大きさです。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "入力欄の主な外観です。naked は背景なし、liquid は薄い塗りつぶしです。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+NumberField は Base UI の Number Field を基盤にしているため、次の props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    value: {
+      type: "number | null",
+      description: "制御された現在値です。空の入力は null で表します。",
+    },
+    defaultValue: {
+      type: "number",
+      description: "非制御の初期値です。",
+    },
+    onValueChange: {
+      type: `(value: number | null,\ndetails: NumberFieldChangeEventDetails) => void`,
+      description: "値が変更されたときに呼ばれるコールバックです。",
+    },
+    min: {
+      type: "number",
+      description: "入力できる最小値です。",
+    },
+    max: {
+      type: "number",
+      description: "入力できる最大値です。",
+    },
+    step: {
+      type: `number | "any"`,
+      default: "1",
+      description: "増減ボタンや矢印キーで変化する幅です。",
+    },
+    smallStep: {
+      type: "number",
+      default: "0.1",
+      description: "Alt キーを押しながら操作したときの増減幅です。",
+    },
+    largeStep: {
+      type: "number",
+      default: "10",
+      description: "Shift キーを押しながら操作したときの増減幅です。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "入力欄を無効にします。",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "値を変更できない読み取り専用の入力欄にします。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "値を必須にします。",
+    },
+    name: {
+      type: "string",
+      description: "フォームで送信するときの項目名です。",
+    },
+    format: {
+      type: "Intl.NumberFormatOptions",
+      description: "入力欄と表示値の書式です。",
+    },
+    locale: {
+      type: "Intl.LocalesArgument",
+      description: "書式に使うロケールです。",
+    },
+  }}
+/>
+
+このほか、`form`、`allowOutOfRange`、`allowWheelScrub`、`snapOnStep`、`onValueCommitted`、`inputRef` なども渡せます。
+
+### slotProps [#slot-props]
+
+| キー              | 説明                                                                         |
+| ----------------- | ---------------------------------------------------------------------------- |
+| `addon`           | 入力欄の先頭と末尾のアドオンに渡す props です。                              |
+| `decrement`       | 値を減らすボタンに渡す props です。                                          |
+| `group`           | 入力欄とボタンをまとめるグループに渡す props です。                          |
+| `increment`       | 値を増やすボタンに渡す props です。                                          |
+| `input`           | 入力欄に渡す props です。`aria-label` や `autoComplete` などを指定できます。 |
+| `scrubArea`       | ドラッグ領域に渡す props です。                                              |
+| `scrubAreaCursor` | ドラッグ中のカーソルに渡す props です。                                      |
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_number_field` が付与されます。props と状態に応じて、`sui_number_field-size_md`、`sui_number_field-color_blue`、`sui_number_field-radius_md`、`sui_number_field-variant_naked`、`sui_number_field-outlined`、`sui_number_field-disabled`、`sui_number_field-focused`、`sui_number_field-invalid` などのクラス名も加わります。
+
+内部のパーツには、`sui_number_field_group`、`sui_number_field_input`、`sui_number_field_addon`、`sui_number_field_increment`、`sui_number_field_decrement`、`sui_number_field_scrub_area` などのクラス名が付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[非同期状態の表示](/guides/async-state)

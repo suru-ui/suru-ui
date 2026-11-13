@@ -1,0 +1,98 @@
+---
+title: Fieldset
+description: Fieldset コンポーネントの凡例、無効化、slotProps、スタイルのフックを説明します。
+---
+
+Fieldset は、関連するフォームコントロールを凡例とともにグループ化するコンポーネントです。問い合わせフォームの連絡先や、配送先と請求先のように、意味のあるまとまりを作るときに使います。既定では `<fieldset>` 要素を描画し、凡例はグループと自動的に関連付けられます。
+
+## 使い方 [#basic-usage]
+
+`legend` に見出しを、`children` にグループ化するコントロールを指定します。グループ内の入力欄は、通常のフォームと同じように `Field` や `Input` で組み立てられます。
+
+<Component path="fieldset/basic" />
+
+`legend` を省略すると、凡例のないグループになります。凡例が必要ない場合は、`Fieldset` の代わりに `div` などでまとめることもできますが、関連するコントロールをまとめる意味が明確なときは `Fieldset` が適しています。
+
+## 凡例と無効状態 [#states]
+
+`disabled` を指定すると、グループ全体が無効になります。内側のコントロールもまとめて無効になるため、個々の入力欄に `disabled` を指定する必要はありません。凡例も無効用の配色になり、操作できないことが伝わります。
+
+<Component path="fieldset/states" />
+
+凡例の見た目だけを変えたい場合は、`slotProps.legend` に `style` や `className` を渡します。次の例では、凡例の色を青に変更しています。
+
+```tsx
+<Fieldset legend="配送先" slotProps={{ legend: { style: { color: "#1d4ed8" } } }}>
+  {/* コントロール */}
+</Fieldset>
+```
+
+## パーツと slotProps [#parts-and-slot-props]
+
+Fieldset は `Root` と `Legend` の 2 つのパーツで構成されます。プリセットを使わずに組み立てる場合は、コンポーネントのモジュールが公開する `Root` と `Legend` をインポートし、`Root` の中に `Legend` とコントロールを配置します。パーツの公開状況はパッケージのバージョンによって異なるため、実際のインポート元は利用するパッケージのエントリーポイントに合わせてください。
+
+`slotProps` を使うと、プリセットの構造を保ったまま凡例だけを調整できます。スロットの考え方は[コンポーネントの構造](/guides/component-anatomy)で説明しています。
+
+| スロット | 役割                                                                                  |
+| -------- | ------------------------------------------------------------------------------------- |
+| `legend` | グループの見出しを表示する `Legend` パーツです。`children` は `legend` で指定します。 |
+
+## props [#props]
+
+### 固有 props [#fieldset-specific-props]
+
+<TypeTable
+  type={{
+    legend: {
+      type: "React.ReactNode",
+      description:
+        "グループの見出しとして表示する凡例です。省略すると凡例のないグループになります。",
+    },
+    slotProps: {
+      type: "FieldsetSlotProps",
+      default: "{}",
+      description:
+        "各パーツに個別の props を渡すためのオブジェクトです。現在は legend スロットを指定できます。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Fieldset は Base UI の Fieldset を基盤にしているため、ネイティブの fieldset 要素が受け付ける属性と、Base UI の Fieldset が提供する props を渡せます。
+
+<TypeTable
+  type={{
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "グループ全体を無効にします。内側のコントロールも無効になります。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "グループ化するコントロールです。",
+    },
+    className: {
+      type: `string |\n((state: Fieldset.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Fieldset.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "ルート要素を別の要素に置き換えます。",
+    },
+  }}
+/>
+
+`Legend` パーツも同様に、ネイティブの属性と Base UI の `render` などを受け付けます。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_fieldset` が付与されます。`disabled` が `true` のときは `sui_fieldset-disabled` も加わります。凡例には `sui_fieldset_legend`、無効時には `sui_fieldset_legend-disabled` が付与されます。
+
+`--sui_fieldset-gap` でグループ内の間隔を、`--sui_fieldset_legend-*` で凡例の文字組みや色を上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[要素とコンポーネントの合成](/guides/composition)、[外観のカスタマイズ](/guides/styling)

@@ -1,0 +1,67 @@
+---
+title: AspectRatio
+description: AspectRatio コンポーネントの比率指定、角丸、スタイルのフックを説明します。
+---
+
+AspectRatio は、指定した比率で幅と高さを保つコンテナーコンポーネントです。レスポンシブに決まる幅に対して、画像や動画、地図の埋め込みなどを一定の比率で表示します。直接の子要素はコンテナーいっぱいに配置されます。
+
+## 使い方 [#basic-usage]
+
+`ratio` に幅と高さの比率を指定します。`16 / 9` のような CSS の `aspect-ratio` と同じ形式の文字列か、`1` のような数値を渡せます。数値は「幅 / 高さ」として解釈されます。
+
+<Component path="aspect-ratio/basic" />
+
+子要素には幅や高さを指定しなくても、コンテナー全体に配置されます。画像の場合は `object-fit: cover` を組み合わせると、比率を保ったまま切り抜いて表示できます。
+
+```tsx
+<AspectRatio ratio="16 / 9">
+  <img alt="風景" src="/cover.jpg" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+</AspectRatio>
+```
+
+## 比率と角丸 [#ratios]
+
+`ratio` は `1 / 1`、`4 / 3`、`16 / 9`、`9 / 16` など、用途に合わせて自由に指定できます。`radius` はコンテナーの角丸を制御します。
+
+<Component path="aspect-ratio/ratios" />
+
+`radius` の既定値は `none` です。カードや画像の角を丸めたい場合は `sm`、`md`、`lg` から選択してください。
+
+## props [#props]
+
+### 固有 props [#aspectratio-specific-props]
+
+<TypeTable
+  type={{
+    ratio: {
+      type: `number | string`,
+      default: "1",
+      description:
+        "コンテンツの幅と高さの比率です。数値は幅 / 高さとして解釈され、文字列は CSS の aspect-ratio と同じ規則で解釈されます。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: `"none"`,
+      description: "コンテナーの角丸の大きさです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+AspectRatio は `div` 要素を描画するため、`className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。`render` でルート要素を別の要素に置き換えることもできます。残りの props はベースの `div` 要素から継承します。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_aspect_ratio` が付与されます。`radius` に応じて `sui_aspect_ratio-radius_md` などのクラス名も加わります。比率は CSS 変数 `--sui_aspect_ratio-ratio` として設定されます。
+
+`className` や `style` で幅や背景を調整してください。比率そのものを上書きする場合は `ratio` を使います。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

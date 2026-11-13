@@ -1,0 +1,151 @@
+---
+title: Alert
+description: Alert コンポーネントの props、配色、アクションの配置、スタイルのフックを説明します。
+---
+
+Alert は、重要なメッセージや通知をステータスインジケーター付きで表示するコンポーネントです。フォームの送信結果や警告など、ユーザーに気づいてほしい情報を目立たせるときに使います。タイトル、説明文、アイコン、操作ボタンを組み合わせられます。
+
+## 使い方 [#basic-usage]
+
+`title` に見出しを、`children` に説明文を指定します。`icon` には状態を表すアイコンを渡します。アイコンを省略すると、アイコン領域は描画されません。
+
+<Component path="alert/basic" />
+
+`icon=""` のように空文字を渡すと、アイコンの代わりに状態色の丸いインジケーターが表示されます。内容を持たない状態表示には `aria-label` を添えてください。
+
+```tsx
+<Alert color="green" title="同期が完了しました" icon="" aria-label="完了" />
+```
+
+## 外観 [#appearance]
+
+`variant` は `muted`、`liquid`、`naked` から選択できます。`color` で配色を変えると、アイコンと背景色に反映されます。`outlined` は枠線の表示を制御します。
+
+<Component path="alert/appearance" />
+
+`size` は `sm`、`md`、`lg` の 3 段階です。`radius` を省略すると `size` と同じ値になります。
+
+## アクションと配置 [#actions]
+
+`actions` に操作ボタンを渡すと、アラート内にアクション領域が追加されます。`actionsPosition` は `side` または `bottom` を指定できます。`descriptionPosition` を使うと、説明文をタイトルの下または横に配置できます。
+
+<Component path="alert/actions" />
+
+`descriptionPosition` の値は次のとおりです。
+
+- `bottom`: タイトルの下に説明文を置きます。
+- `side-start`: タイトルの右側に説明文を並べ、左寄せにします。
+- `side-end`: タイトルの右側に説明文を並べ、右寄せにします。
+
+## props [#props]
+
+### 固有 props [#alert-specific-props]
+
+<TypeTable
+  type={{
+    actions: {
+      type: "React.ReactNode",
+      description: "アラートの操作ボタンです。指定するとアクション領域が描画されます。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "アラートの説明文です。",
+    },
+    icon: {
+      type: "React.ReactNode",
+      description:
+        "アラートに表示するアイコンです。空文字を渡すと状態色の丸いインジケーターになります。",
+    },
+    slotProps: {
+      type: "AlertSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+    title: {
+      type: "React.ReactNode",
+      description: "アラートのタイトルです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "アラートの配色です。",
+    },
+    variant: {
+      type: `"muted" | "naked" | "liquid"`,
+      default: `"muted"`,
+      description:
+        "アラートの主な外観です。muted は控えめな背景、naked は背景なし、liquid は薄い塗りつぶしです。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "アラートの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "size と同じ値",
+      description: "角丸の大きさです。省略すると size と同じ値になります。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "枠線を表示するかどうかです。",
+    },
+    actionsPosition: {
+      type: `"side" | "bottom"`,
+      default: `"side"`,
+      description: "操作ボタンの配置です。説明文があるときは説明文との間に仕切り線が表示されます。",
+    },
+    descriptionPosition: {
+      type: `"bottom" | "side-start" | "side-end"`,
+      default: `"bottom"`,
+      description: "タイトルに対する説明文の配置です。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    actions: {
+      type: "object",
+      description: "操作ボタンをまとめる要素に渡す props です。children は actions で指定します。",
+    },
+    description: {
+      type: "object",
+      description: "説明文の要素に渡す props です。children は Alert の children で指定します。",
+    },
+    icon: {
+      type: "object",
+      description: "アイコンの要素に渡す props です。children は icon で指定します。",
+    },
+    title: {
+      type: "object",
+      description: "タイトルの要素に渡す props です。children は title で指定します。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Alert は `div` 要素を描画するため、`className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。`role` の既定値は `alert` です。静的なお知らせとして読み上げたい場合は `role="status"` を指定できます。
+
+`className` と `style` には状態を受け取る関数を渡せます。残りの props はベースの `div` 要素から継承します。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_alert` が付与されます。props に応じて、`sui_alert-color_red`、`sui_alert-size_md`、`sui_alert-radius_md`、`sui_alert-variant_muted`、`sui_alert-outlined`、`sui_alert-actions_position_side`、`sui_alert-description_position_bottom` などのクラス名も加わります。
+
+内部のパーツには `sui_alert_icon`、`sui_alert_title`、`sui_alert_description`、`sui_alert_actions` が付与されます。
+
+`className` や `style` で調整できるほか、CSS 変数を使って余白や色を上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[非同期状態の表示](/guides/async-state)

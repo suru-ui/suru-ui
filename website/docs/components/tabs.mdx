@@ -1,0 +1,153 @@
+---
+title: Tabs
+description: Tabs コンポーネントの props、items の組み立て、外観、制御方法を説明します。
+---
+
+Tabs は、関連する複数のパネルをタブで切り替えるコンポーネントです。`items` にタブのラベルと内容を並べると、タブ一覧と対応するパネルが自動で組み立てられます。矢印キーでタブ間を移動でき、`Enter` または `Space` で選択できます。
+
+## 使い方 [#basic-usage]
+
+`items` の各項目に `label`、`value`、`content` を指定します。`defaultValue` には最初に表示するタブの `value` を渡します。`content` を省略した項目にはパネルが作られません。
+
+<Component path="tabs/basic" />
+
+タブの幅はルート要素の幅に従います。`style` で幅を指定すると、レイアウトに合わせて調整できます。
+
+## 外観 [#appearance]
+
+`variant` は `line` と `segments` から選択できます。`segments` では `activeVariant` を組み合わせて、選択中のタブの塗りつぶしを変えられます。
+
+<Component path="tabs/appearance" />
+
+`size` は `sm`、`md`、`lg` の 3 段階で、`thin` を指定すると上下の余白が半分になります。`radius` の既定値は `size` と同じ値です。
+
+## 配置と制御 [#orientation-and-controlled]
+
+`orientation` に `vertical` を指定すると、タブが縦方向に並びます。キーボードの矢印キーも方向に合わせて動作します。
+
+<Component path="tabs/vertical" />
+
+選択中のタブを自分で管理する場合は、`value` と `onValueChange` を組み合わせます。`onValueChange` は変更後の値を受け取ります。
+
+<Component path="tabs/controlled" />
+
+`items` の項目に `disabled` を指定すると、そのタブは選択できなくなります。無効なタブをクリックしても、現在の値は変わりません。
+
+## props [#props]
+
+### 固有 props [#tabs-specific-props]
+
+<TypeTable
+  type={{
+    items: {
+      type: "readonly TItem[]",
+      default: "[]",
+      description:
+        "タブとパネルの元になる項目です。各項目には label、value、content を指定します。",
+    },
+    slotProps: {
+      type: "TabsSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+`items` の各項目は、タブの props に `label` と `content` を加えた形です。`value` は必須で、`content` を省略するとパネルは描画されません。`disabled` などのタブの props も項目ごとに指定できます。
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    variant: {
+      type: `"line" | "segments"`,
+      default: `"line"`,
+      description: "タブ一覧の主な外観です。line は下線、segments は区分表示になります。",
+    },
+    activeVariant: {
+      type: `"solid" | "naked" | "liquid"`,
+      default: `"liquid"`,
+      description: "選択中のタブの外観です。variant が segments のときに有効です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "タブの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "size と同じ値",
+      description: "タブとインジケーターの角丸です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "タブ一覧の枠線を表示するかどうかです。",
+    },
+    thin: {
+      type: "boolean",
+      default: "false",
+      description: "上下の余白を半分にして高さを抑えるかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Tabs は Base UI の Tabs を基盤にしているため、選択状態と方向に関する props をそのまま渡せます。主なものは次のとおりです。
+
+<TypeTable
+  type={{
+    value: {
+      type: "Tabs.Value",
+      description: "選択中のタブの値を制御する場合に指定します。null を渡すと選択なしになります。",
+    },
+    defaultValue: {
+      type: "Tabs.Value",
+      description: "非制御で使うときの初期の選択値です。",
+    },
+    onValueChange: {
+      type: `(value: Tabs.Value,\neventDetails: Tabs.ChangeEventDetails) => void`,
+      description: "選択中のタブが変更されたときに呼び出されます。",
+    },
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"horizontal"`,
+      description: "タブを並べる方向です。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    list: {
+      type: "object",
+      description:
+        "タブ一覧に渡す props です。children は items から組み立てられます。activateOnFocus と loopFocus を指定できます。",
+    },
+    tab: {
+      type: "object",
+      description:
+        "すべてのタブに共通で渡す props です。children と value は項目から組み立てられます。",
+    },
+    panel: {
+      type: "object",
+      description:
+        "すべてのパネルに共通で渡す props です。children と value は項目から組み立てられます。keepMounted を指定できます。",
+    },
+    indicator: {
+      type: "object",
+      description: "選択中のタブに追従するインジケーターに渡す props です。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_tabs` が付与されます。props に応じて `sui_tabs-size_md`、`sui_tabs-radius_md`、`sui_tabs-variant_line`、`sui_tabs-active_variant_liquid`、`sui_tabs-outlined`、`sui_tabs-thin`、`sui_tabs-orientation_horizontal` などのクラス名も加わります。
+
+内部のパーツには `sui_tabs_list`、`sui_tabs_tab`、`sui_tabs_indicator`、`sui_tabs_panel` が付与されます。選択中のタブには `sui_tabs_tab-active`、無効なタブには `sui_tabs_tab-disabled` が加わります。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

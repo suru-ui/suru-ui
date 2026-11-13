@@ -1,0 +1,142 @@
+---
+title: Collapsible
+description: Collapsible コンポーネントの props、開閉の制御、トリガーとコンテンツのカスタマイズを説明します。
+---
+
+Collapsible は、見出しやボタンを操作して内容を展開または折りたたむコンポーネントです。補足情報や詳細設定など、常に表示する必要のない内容を隠すときに使います。`Collapsible.Indicator` をトリガーの中に置くと、開閉状態に応じてアイコンが回転します。
+
+## 使い方 [#basic-usage]
+
+`trigger` に開閉ボタンとして描画する要素を、`children` に折りたたむ内容を指定します。トリガーには `Button` などを渡し、`Collapsible.Indicator` を組み合わせます。
+
+<Component path="collapsible/basic" />
+
+`trigger` を省略するとトリガーは描画されません。トリガーを独自の要素にする場合は、`slotProps.trigger` で属性を補えます。
+
+## 開閉の制御 [#controlled]
+
+`open` と `onOpenChange` を指定すると、開閉状態を制御できます。`defaultOpen` は初期状態を開いた状態にするときに使います。
+
+<Component path="collapsible/controlled" />
+
+`onOpenChange` の第 2 引数には、開閉理由などの詳細が渡されます。`disabled` を指定すると、トリガーを操作できなくなります。
+
+## インジケーターの差し替え [#custom-indicator]
+
+`Collapsible.Indicator` の `children` を指定すると、既定の矢印アイコンを別のアイコンに置き換えられます。インジケーターは開閉状態に合わせて自動で回転します。
+
+```tsx
+<Collapsible
+  trigger={
+    <Button variant="naked">
+      詳細
+      <Collapsible.Indicator>
+        <PlusIcon aria-hidden="true" />
+      </Collapsible.Indicator>
+    </Button>
+  }
+>
+  折りたたまれる内容です。
+</Collapsible>
+```
+
+## props [#props]
+
+### 固有 props [#collapsible-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "開閉ボタンとして描画する要素です。省略するとトリガーを描画しません。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description:
+        "折りたたんで表示する内容です。null や false など、表示されない値のときは描画されません。",
+    },
+    slotProps: {
+      type: "CollapsibleSlotProps",
+      default: "{}",
+      description: "トリガーとコンテンツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "トリガーとコンテンツの大きさです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Collapsible は Base UI の Collapsible を基盤にしているため、開閉状態に関する次の props を渡せます。
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "開いている状態を制御します。",
+    },
+    defaultOpen: {
+      type: "boolean",
+      description: "初期状態で開くかどうかです。",
+    },
+    onOpenChange: {
+      type: "(open: boolean,\ndetails: Collapsible.ChangeEventDetails) => void",
+      description: "開閉状態が変わったときに呼ばれるコールバックです。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "トリガーの操作を無効にします。",
+    },
+    className: {
+      type: `string |\n((state: Collapsible.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Collapsible.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "ルート要素を別の要素に置き換えます。",
+    },
+  }}
+/>
+
+ここに挙げた以外の props は Base UI の Collapsible から継承します。
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    content: {
+      type: `Omit<CollapsibleContentProps, "children">`,
+      description:
+        "折りたたまれるコンテンツに props を渡します。children は Collapsible 本体で指定します。",
+    },
+    trigger: {
+      type: `Omit<CollapsibleTriggerProps, "children">`,
+      description: "トリガーに props を渡します。children は trigger で指定します。",
+    },
+  }}
+/>
+
+コンテンツ側の `keepMounted` を `true` にすると、閉じた後も DOM に保持できます。`hiddenUntilFound` は、ブラウザーのページ内検索で折りたたまれた内容を見つけたときに自動で展開するかどうかを指定します。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_collapsible` が付与されます。props と状態に応じて、`sui_collapsible-size_md`、`sui_collapsible-open`、`sui_collapsible-disabled`、`sui_collapsible-transition_status_*` などのクラス名も加わります。
+
+内部のパーツには `sui_collapsible_trigger`、`sui_collapsible_content`、`sui_collapsible_indicator` が付与されます。コンテンツには `keepMounted` で保持されている場合も `sui_collapsible_content` が付きます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[要素とコンポーネントの合成](/guides/composition)

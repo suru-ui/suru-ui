@@ -1,0 +1,174 @@
+---
+title: Popover
+description: Popover コンポーネントのトリガー、配置、矢印、開閉の制御、外観を説明します。
+---
+
+Popover は、ボタンなどのトリガーを押したときに、補足情報や操作をポップアップで表示するコンポーネントです。メニューよりも自由な内容を置けるため、設定の説明やアカウント情報の表示に向いています。トリガーと内容は自動で関連付けられ、フォーカスや Escape キーの操作にも対応します。
+
+## 使い方 [#basic-usage]
+
+`trigger` にポップアップを開く要素を、`children` にポップアップの内容を指定します。既定ではトリガーの下に 8px 離して表示されます。
+
+<Component path="popover/basic" />
+
+Popover は内部でトリガー、ポータル、位置決め要素、ポップアップを組み立てます。見出しや説明文は `children` の中に配置してください。
+
+```tsx
+<Popover trigger={<Button>詳細を表示</Button>}>
+  <h3>共有の設定</h3>
+  <p>リンクを知っている人だけが閲覧できます。</p>
+</Popover>
+```
+
+## 配置と矢印 [#placement]
+
+`slotProps.positioner` の `side` と `align` で表示位置を、`sideOffset` でトリガーとの距離を指定できます。`arrow` を `true` にすると、ポップアップに矢印が表示されます。
+
+<Component path="popover/placement" />
+
+`side` は `"top"`、`"bottom"`、`"left"`、`"right"` から、`align` は `"start"`、`"center"`、`"end"` から選択できます。画面の端に近い場合は、表示領域に収まるように位置が自動で調整されます。
+
+## 開閉の制御 [#controlled]
+
+`open` と `onOpenChange` を使うと、開閉状態を外部の状態で管理できます。非制御で初期状態を開いておきたい場合は `defaultOpen` を使います。
+
+<Component path="popover/controlled" />
+
+`modal` に `true` を指定すると、ポップアップの外側の操作を制限できます。既定値は `false` です。
+
+## 外観 [#appearance]
+
+`size` でポップアップの大きさを、`radius` で角丸を指定します。`outlined` に `false` を指定すると、枠線を外して背景色だけで内容を区切れます。
+
+<Component path="popover/appearance" />
+
+## props [#props]
+
+### 固有 props [#popover-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: "React.ReactNode",
+      description: "ポップオーバーを開くトリガーに表示する要素です。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "ポップオーバーの中に表示する内容です。",
+    },
+    arrow: {
+      type: "boolean",
+      default: "false",
+      description: "ポップアップに矢印を表示するかどうかです。",
+    },
+    backdrop: {
+      type: "boolean",
+      default: "false",
+      description: "ポップアップの背面に Backdrop を表示するかどうかです。",
+    },
+    handle: {
+      type: "PopoverHandle<TPayload>",
+      description:
+        "トリガーとポップオーバーを関連付けるハンドルです。Popover.createHandle で作成します。",
+    },
+    slotProps: {
+      type: "PopoverSlotProps<TPayload>",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ポップオーバーの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "size と同じ値",
+      description: "角丸の大きさです。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "ポップアップの周囲に枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Popover は Base UI の Popover を基盤にしているため、次の props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "制御された開閉状態です。",
+    },
+    defaultOpen: {
+      type: "boolean",
+      default: "false",
+      description: "非制御の初期開閉状態です。",
+    },
+    onOpenChange: {
+      type: `(open: boolean,\ndetails: PopoverChangeEventDetails) => void`,
+      description: "開閉状態が変わったときに呼ばれるコールバックです。",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "開閉のアニメーションが完了したときに呼ばれるコールバックです。",
+    },
+    modal: {
+      type: `boolean | "trap-focus"`,
+      default: "false",
+      description: "ポップオーバーをモーダルとして扱うかどうかです。",
+    },
+    triggerId: {
+      type: "string | null",
+      description: "トリガーと関連付けるための ID です。",
+    },
+    defaultTriggerId: {
+      type: "string | null",
+      description: "初期表示で関連付けるトリガーの ID です。",
+    },
+    actionsRef: {
+      type: "React.RefObject<PopoverActions | null>",
+      description: "開閉を命令的に操作するための ref です。",
+    },
+    initialFocus: {
+      type: `boolean | React.RefObject<HTMLElement | null> |\n((openType) => void | boolean | HTMLElement | null)`,
+      description: "開いたときにフォーカスする要素を指定します。",
+    },
+    finalFocus: {
+      type: `boolean | React.RefObject<HTMLElement | null> |\n((closeType) => void | boolean | HTMLElement | null)`,
+      description: "閉じたときにフォーカスする要素を指定します。",
+    },
+  }}
+/>
+
+このほか、`className`、`style`、`data-*` などの属性も渡せます。`initialFocus` と `finalFocus` はポップアップへ渡されます。
+
+### slotProps [#slot-props]
+
+| キー         | 説明                                                                                        |
+| ------------ | ------------------------------------------------------------------------------------------- |
+| `arrow`      | 矢印に渡す props です。`arrow` を指定しなくても、このキーを指定すると矢印が表示されます。   |
+| `backdrop`   | Backdrop に渡す props です。`backdrop` を指定しなくても、このキーを指定すると表示されます。 |
+| `popup`      | ポップアップに渡す props です。`style` や `className` などを指定できます。                  |
+| `portal`     | ポータルに渡す props です。                                                                 |
+| `positioner` | 位置決め要素に渡す props です。`side`、`align`、`sideOffset` などを指定できます。           |
+| `trigger`    | トリガーに渡す props です。`children` と `handle` は指定できません。                        |
+
+## スタイル [#styling-hooks]
+
+Popover 自体は HTML 要素を描画しないため、ルートのクラス名はありません。トリガーには `sui_popover_trigger`、位置決め要素には `sui_popover_positioner`、ポップアップには `sui_popover_popup` が付与されます。
+
+ポップアップには、`sui_popover_popup-size_md`、`sui_popover_popup-radius_md`、`sui_popover_popup-side_bottom`、`sui_popover_popup-align_center`、`sui_popover_popup-outlined`、`sui_popover_popup-open` などのクラス名も加わります。矢印には `sui_popover_arrow`、Backdrop には `sui_popover_backdrop` が付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[要素とコンポーネントの合成](/guides/composition)、[外観のカスタマイズ](/guides/styling)

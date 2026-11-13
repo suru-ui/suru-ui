@@ -1,0 +1,210 @@
+---
+title: Tooltip
+description: Tooltip コンポーネントの props、配置、開閉の制御、分離したトリガーを説明します。
+---
+
+Tooltip は、要素にポインターを合わせるかフォーカスしたときに、短い補足を表示するコンポーネントです。アイコンだけのボタンや省略されたラベルに、意味を補足するために使います。トリガーとポップアップは自動で関連付けられ、エスケープキーでも閉じられます。
+
+## 使い方 [#basic-usage]
+
+`trigger` にツールチップを表示する要素を、`children` に補足の内容を指定します。トリガーにはフォーカス可能な要素を渡してください。
+
+<Component path="tooltip/basic" />
+
+`delay` は表示までの待ち時間をミリ秒で指定します。`closeDelay` は閉じるまでの待ち時間です。既定では表示まで 600 ミリ秒待ちます。
+
+## 配置 [#placement]
+
+`side` で表示する方向を、`align` でその方向に対する揃え方を指定します。`sideOffset` と `alignOffset` でトリガーからの距離を調整できます。
+
+<Component path="tooltip/positions" />
+
+`showArrow` を指定すると、ポップアップとトリガーをつなぐ矢印が表示されます。矢印の見た目は `slotProps.arrow` で調整できます。
+
+## 制御と分離 [#controlled-and-detached]
+
+開閉状態を自分で管理する場合は、`open` と `onOpenChange` を組み合わせます。`keepOpenOnClick` を `true` にすると、トリガーをクリックしても閉じません。
+
+<Component path="tooltip/controlled" />
+
+トリガーとポップアップを別の場所に置く場合は、`Tooltip.createHandle` で作成したハンドルを `Tooltip.Trigger` と `Tooltip` の両方に渡します。
+
+<Component path="tooltip/detached" />
+
+## props [#props]
+
+### 固有 props [#tooltip-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: "React.ReactNode",
+      description: "ツールチップを表示する対象の要素です。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "ツールチップに表示する内容です。",
+    },
+    handle: {
+      type: "TooltipHandle<TPayload>",
+      description: "トリガーとツールチップを関連付けるハンドルです。createHandle で作成します。",
+    },
+    showArrow: {
+      type: "boolean",
+      default: "false",
+      description: "矢印を表示するかどうかです。",
+    },
+    delay: {
+      type: "number",
+      default: "600",
+      description: "表示までの待ち時間をミリ秒で指定します。",
+    },
+    closeDelay: {
+      type: "number",
+      default: "0",
+      description: "閉じるまでの待ち時間をミリ秒で指定します。",
+    },
+    keepOpenOnClick: {
+      type: "boolean",
+      default: "false",
+      description: "トリガーをクリックしてもツールチップを開いたままにするかどうかです。",
+    },
+    slotProps: {
+      type: "TooltipSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ツールチップの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "size と同じ値",
+      description: "ポップアップの角丸です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "ポップアップの枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 配置 props [#placement-props]
+
+<TypeTable
+  type={{
+    side: {
+      type: `"top" | "bottom" | "left" | "right"`,
+      default: `"top"`,
+      description: "ポップアップを表示する方向です。",
+    },
+    align: {
+      type: `"start" | "center" | "end"`,
+      default: `"center"`,
+      description: "表示する方向に対する揃え方です。",
+    },
+    sideOffset: {
+      type: "number",
+      default: "8",
+      description: "トリガーとポップアップの間の距離です。",
+    },
+    alignOffset: {
+      type: "number",
+      default: "0",
+      description: "揃える方向に沿った追加の距離です。",
+    },
+    sticky: {
+      type: "boolean",
+      default: "false",
+      description: "スクロール後もポップアップを表示領域内に保つかどうかです。",
+    },
+    collisionPadding: {
+      type: `number | Partial<Record<"top" | "right" | "bottom" | "left", number>>`,
+      default: "5",
+      description: "表示領域の端から確保する余白です。",
+    },
+    arrowPadding: {
+      type: "number",
+      description: "矢印とポップアップの端の間に確保する距離です。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Tooltip は Base UI の Tooltip を基盤にしているため、開閉状態に関する props をそのまま渡せます。主なものは次のとおりです。
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "開閉状態を制御する場合に指定します。",
+    },
+    defaultOpen: {
+      type: "boolean",
+      default: "false",
+      description: "非制御で使うときの初期の開閉状態です。",
+    },
+    onOpenChange: {
+      type: `(open: boolean,\neventDetails: Tooltip.ChangeEventDetails) => void`,
+      description: "開閉状態が変更されたときに呼び出されます。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "ツールチップを無効にします。",
+    },
+    disableHoverablePopup: {
+      type: "boolean",
+      default: "false",
+      description:
+        "ポップアップ上にポインターを置けるようにする機能を無効にするかどうかです。true の場合、ポップアップへポインターを移動すると閉じます。",
+    },
+    trackCursorAxis: {
+      type: `"none" | "x" | "y" | "both"`,
+      default: `"none"`,
+      description: "カーソルの移動に追従する軸です。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    portal: {
+      type: "object",
+      description: "ポップアップを移動するポータルに渡す props です。container を指定できます。",
+    },
+    positioner: {
+      type: "object",
+      description: "ポップアップを配置する要素に渡す props です。",
+    },
+    trigger: {
+      type: "object",
+      description: "トリガーに渡す props です。payload や disabled などを指定できます。",
+    },
+    arrow: {
+      type: "object",
+      description: "矢印に渡す props です。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ポップアップには `sui_tooltip_popup` が付与されます。props に応じて `sui_tooltip_popup-size_md`、`sui_tooltip_popup-radius_md`、`sui_tooltip_popup-outlined`、`sui_tooltip_popup-open`、`sui_tooltip_popup-side_top`、`sui_tooltip_popup-align_center` などのクラス名も加わります。
+
+トリガーには `sui_tooltip_trigger`、配置要素には `sui_tooltip_positioner`、矢印には `sui_tooltip_arrow`、ポータルには `sui_tooltip_portal` が付与されます。`Tooltip` のルート自体は HTML 要素を描画しません。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[要素とコンポーネントの合成](/guides/composition)

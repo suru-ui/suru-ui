@@ -1,0 +1,6 @@
+@import "@suru-ui/theme/suru.css";
+@import "@suru-ui/react/suru.css";
+
+body {
+  background-color: var(--sui-canvas-1);
+}

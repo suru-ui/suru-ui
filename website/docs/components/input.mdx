@@ -1,0 +1,150 @@
+---
+title: Input
+description: Input コンポーネントの入力項目、外観、制御された値、スタイルのフックを説明します。
+---
+
+Input は、テキストやメールアドレスなどの入力欄を表示するコンポーネントです。Base UI の Input を基盤にしており、ネイティブの input 要素が受け付ける属性をそのまま渡せます。ラベルや説明、エラーをまとめたい場合は `Field` や `Label` と組み合わせます。
+
+## 使い方 [#basic-usage]
+
+`type` で入力項目の種類を指定します。省略すると `"text"` になります。`Label` の `htmlFor` と `Input` の `id` を揃えると、ラベルと入力欄が関連付きます。
+
+<Component path="input/basic" />
+
+`Field` を使うと、ラベル、説明、エラー表示をまとめて管理できます。`Input` は `Field` の検証状態を読み取り、無効な値のときは枠線の色が変わります。
+
+## 外観 [#appearance]
+
+`variant` は `naked` と `liquid` から選べます。`outlined` は枠線の有無、`size` は高さと文字の大きさ、`radius` は角丸の大きさを指定します。`color` はフォーカス時の枠線の色に使われます。
+
+<Component path="input/appearance" />
+
+`radius="full"` はカプセル形、`radius="circle"` は完全な円形になります。`circle` は検索ボタンなど、入力欄を丸く見せたい場合に適しています。
+
+## 状態と制御 [#states]
+
+`value` と `onValueChange` を指定すると、入力値を外部の状態で管理できます。非制御で初期値を指定する場合は `defaultValue` を使います。`disabled` と `readOnly` は見た目と操作の両方に影響します。
+
+<Component path="input/states" />
+
+`onValueChange` は入力値の文字列を受け取ります。数値として扱いたい場合も、まずは文字列として受け取り、必要に応じて変換します。
+
+## props [#props]
+
+### 固有 props [#input-specific-props]
+
+<TypeTable
+  type={{
+    type: {
+      type: `"date" | "datetime-local" | "email" |\n"file" | "hidden" | "month" | "number" |\n"password" | "search" | "tel" | "text" |\n"time" | "url" | "week"`,
+      default: `"text"`,
+      description: "入力項目の種類です。ボタンや選択系の type は使用できません。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "フォーカス時に枠線へ適用する色です。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "入力欄の主な外観です。naked は背景なし、liquid は薄い塗りつぶしです。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "入力欄の大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: "size と同じ値",
+      description: "角丸の大きさです。省略すると size の値が使われます。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Input は Base UI の Input を基盤にしているため、ネイティブの input 要素が受け付ける属性と、Base UI の Input が提供する props を渡せます。
+
+<TypeTable
+  type={{
+    value: {
+      type: "string",
+      description: "制御された入力値です。",
+    },
+    defaultValue: {
+      type: "string",
+      description: "非制御の初期値です。",
+    },
+    onValueChange: {
+      type: "(value: string, eventDetails: Input.ChangeEventDetails) => void",
+      description: "入力値が変わったときに呼ばれます。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "入力欄を無効にします。",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "読み取り専用にします。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "必須入力にするかどうかです。",
+    },
+    placeholder: {
+      type: "string",
+      description: "値が空のときに表示する案内文です。",
+    },
+    name: {
+      type: "string",
+      description: "フォーム送信時に使う入力項目の名前です。",
+    },
+    id: {
+      type: "string",
+      description: "要素の ID です。Label の htmlFor と揃えて指定します。",
+    },
+    autoComplete: {
+      type: "string",
+      description: "ブラウザーの自動補完の種類です。",
+    },
+    className: {
+      type: `string |\n((state: Input.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Input.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "ルート要素を別の要素に置き換えます。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_input` が付与されます。props に応じて `sui_input-size_md`、`sui_input-color_grey`、`sui_input-radius_md`、`sui_input-variant_naked`、`sui_input-outlined` などのクラス名も加わります。
+
+検証状態や操作状態に応じて、`sui_input-valid`、`sui_input-invalid`、`sui_input-unverified`、`sui_input-disabled`、`sui_input-touched`、`sui_input-dirty`、`sui_input-filled`、`sui_input-focused` が付与されます。
+
+`--sui_input-min_height`、`--sui_input-padding_inline`、`--sui_input-border_radius`、`--sui_input-focusring_width` などの CSS 変数で見た目を調整できます。
+
+関連: [Field](/components/field)、[Label](/components/label)、[外観のカスタマイズ](/guides/styling)

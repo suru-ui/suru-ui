@@ -1,0 +1,142 @@
+---
+title: Radio
+description: Radio コンポーネントの値の指定、ラベル、外観、選択できない状態を説明します。
+---
+
+Radio は、複数の選択肢から 1 つを選ぶためのラジオボタンです。選択状態は [RadioGroup](/components/radio-group) が管理するため、通常は RadioGroup の中で使います。同じグループ内の Radio には、それぞれ一意の `value` を指定します。
+
+## 使い方 [#basic-usage]
+
+RadioGroup の中に Radio を並べ、ラベルのテキストを `label` 要素で囲みます。ラベルを押しても選択できるため、選択肢全体をクリックできる領域にできます。
+
+<Component path="radio/basic" />
+
+`children` はインジケーターの中に表示する内容であり、ラベルではありません。通常は指定せず、既定のインジケーターを使います。ラベルは必ず `label` 要素などで関連付けてください。
+
+```tsx
+<RadioGroup defaultValue="a">
+  <label>
+    <Radio value="a" />
+    選択肢 A
+  </label>
+  <label>
+    <Radio value="b" />
+    選択肢 B
+  </label>
+</RadioGroup>
+```
+
+## 外観 [#appearance]
+
+`color`、`size`、`radius`、`variant`、`outlined` で外観を指定できます。RadioGroup の中では、グループに指定した値が個々の Radio より優先されます。
+
+<Component path="radio/appearance" />
+
+## 状態 [#states]
+
+`disabled` はラジオボタンを無効にし、`readOnly` は値を変更できない状態にします。`required` はフォームの送信時に選択を必須にします。グループ全体を無効にしたい場合は、RadioGroup の `disabled` を使ってください。
+
+<Component path="radio/states" />
+
+## props [#props]
+
+### 固有 props [#radio-specific-props]
+
+<TypeTable
+  type={{
+    value: {
+      type: "TValue",
+      description: "ラジオボタンの値です。同じ RadioGroup の中で一意にしてください。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description:
+        "選択時にインジケーターの中に表示する内容です。ラベルではないため、通常は省略します。",
+    },
+    slotProps: {
+      type: "RadioSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "ラジオボタンの配色です。RadioGroup の中ではグループの値が優先されます。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ラジオボタンの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: `"full"`,
+      description: "角丸の大きさです。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "ラジオボタンの主な外観です。naked は背景なし、liquid は薄い塗りつぶしです。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Radio は Base UI の Radio を基盤にしているため、次の props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "ラジオボタンを無効にします。",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "値を変更できない読み取り専用の状態にします。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "フォームの送信時に選択を必須にします。",
+    },
+    id: {
+      type: "string",
+      description: "ラジオボタンの ID です。",
+    },
+    inputRef: {
+      type: "React.Ref<HTMLInputElement>",
+      description: "非表示の input 要素への ref です。",
+    },
+  }}
+/>
+
+このほか、`className`、`style`、`render`、`data-*` などの属性も渡せます。
+
+### slotProps [#slot-props]
+
+| キー        | 型                                      | 説明                                                                                             |
+| ----------- | --------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `indicator` | `Omit<RadioIndicatorProps, "children">` | インジケーターに渡す props です。`keepMounted` を指定すると、未選択のときも DOM に保持できます。 |
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_radio` が付与されます。props と状態に応じて、`sui_radio-size_md`、`sui_radio-color_blue`、`sui_radio-radius_full`、`sui_radio-variant_naked`、`sui_radio-outlined`、`sui_radio-checked`、`sui_radio-disabled`、`sui_radio-focused` などのクラス名も加わります。
+
+インジケーターには `sui_radio_indicator` が付与され、選択状態に応じて `sui_radio_indicator-checked` などのクラス名も加わります。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[コンポーネントの設計](/explanation/component-design)

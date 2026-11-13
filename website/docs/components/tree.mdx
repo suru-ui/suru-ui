@@ -1,0 +1,165 @@
+---
+title: Tree
+description: Tree コンポーネントの props、items の構造、選択と展開の制御、外観を説明します。
+---
+
+Tree は、フォルダーやカテゴリーのような階層構造を表示するコンポーネントです。WAI-ARIA の tree パターンに従い、キーボードで移動、選択、展開を行えます。展開されているノードだけが描画されるため、大きな階層でも必要な部分に集中できます。
+
+## 使い方 [#basic-usage]
+
+`items` にノードの配列を渡します。各ノードには一意な `id`、表示する `label`、子ノードの `items` を指定します。`defaultExpandedValue` には最初から展開するノードの `id` を渡します。
+
+<Component path="tree/basic" />
+
+ノードの `label` には文字列だけでなく React の要素も指定できます。アイコンや補足のバッジをラベルに含めると、種類を判別しやすくなります。
+
+| フィールド | 型                           | 説明                                                         |
+| ---------- | ---------------------------- | ------------------------------------------------------------ |
+| `id`       | `string`                     | 展開と選択の状態管理に使う一意な識別子です。必須です。       |
+| `label`    | `React.ReactNode`            | ノードに表示する内容です。必須です。                         |
+| `items`    | `readonly Tree.ItemObject[]` | 子ノードの一覧です。空でない場合に展開可能な分岐になります。 |
+| `disabled` | `boolean`                    | ノードを無効にします。省略すると有効になります。             |
+
+`id`、`label`、`items` 以外の props は、そのノードの項目要素に渡されます。
+
+## 選択と展開 [#selection-and-expansion]
+
+既定ではクリックしたノードだけが選択されます。`Shift` を押しながらクリックすると表示中のノードを範囲選択し、`Ctrl` または `Meta` を押しながらクリックすると選択を切り替えます。修飾キーを押さずに分岐ノードをクリックすると、選択と同時に展開状態も切り替わります。
+
+<Component path="tree/controlled" />
+
+選択状態を制御する場合は `value` と `onValueChange` を、展開状態を制御する場合は `expandedValue` と `onExpandedValueChange` を組み合わせます。どちらも識別子の配列を受け取ります。
+
+キーボードでは次の操作ができます。
+
+- `ArrowUp` と `ArrowDown`: 表示中のノード間を移動します。
+- `ArrowRight`: 折りたたまれたノードを展開するか、子ノードへ移動します。
+- `ArrowLeft`: 展開されたノードを折りたたむか、親ノードへ移動します。
+- `Home` と `End`: 最初と最後のノードへ移動します。
+- `Enter` と `Space`: フォーカス中のノードを選択します。
+- `*`: 折りたたまれている分岐ノードをすべて展開します。
+
+## 外観 [#appearance]
+
+`variant` は選択中の項目の外観を、`color` はその配色を指定します。`muted` は項目の背景を控えめにし、`outlined` は選択中の項目に枠線を付けます。
+
+<Component path="tree/appearance" />
+
+`size` は `sm`、`md`、`lg` の 3 段階です。`radius` の既定値は `size` と同じ値になります。
+
+## props [#props]
+
+### 固有 props [#tree-specific-props]
+
+<TypeTable
+  type={{
+    items: {
+      type: "readonly Tree.ItemObject[]",
+      default: "[]",
+      description: "ツリーに表示するノードの一覧です。",
+    },
+    value: {
+      type: "readonly string[]",
+      description: "選択中のノードの識別子を制御する場合に指定します。",
+    },
+    defaultValue: {
+      type: "readonly string[]",
+      default: "[]",
+      description: "非制御で使うときの初期の選択状態です。",
+    },
+    onValueChange: {
+      type: `(value: readonly string[],\nevent: React.SyntheticEvent) => void`,
+      description: "選択状態が変更されたときに呼び出されます。",
+    },
+    expandedValue: {
+      type: "readonly string[]",
+      description: "展開中のノードの識別子を制御する場合に指定します。",
+    },
+    defaultExpandedValue: {
+      type: "readonly string[]",
+      default: "[]",
+      description: "非制御で使うときの初期の展開状態です。",
+    },
+    onExpandedValueChange: {
+      type: `(value: readonly string[],\nevent: React.SyntheticEvent) => void`,
+      description: "展開状態が変更されたときに呼び出されます。",
+    },
+    children: {
+      type: `React.ReactNode |\n((node, level, posInSet, setSize) => React.ReactNode)`,
+      description: "ツリーの内容、または表示中のノードを描画する関数です。通常は省略します。",
+    },
+    slotProps: {
+      type: "TreeSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "選択中の項目の配色です。",
+    },
+    variant: {
+      type: `"liquid" | "solid"`,
+      default: `"liquid"`,
+      description: "選択中の項目の主な外観です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ツリーの項目の大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: "size と同じ値",
+      description: "項目のハイライトの角丸です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "選択中の項目に枠線を表示するかどうかです。",
+    },
+    muted: {
+      type: "boolean",
+      default: "false",
+      description: "項目の背景色を控えめにするかどうかです。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    item: {
+      type: "object",
+      description:
+        "すべての項目に共通で渡す props です。children とツリーの構造に関わる props は指定できません。",
+    },
+    indicator: {
+      type: "object",
+      description:
+        "すべての展開インジケーターに共通で渡す props です。visible は項目の子の有無から決まります。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+ルート要素は `div` です。`className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。ツリー全体の説明には `aria-label` または `aria-labelledby` を指定してください。ツリーの項目は `role="treeitem"` として描画され、フォーカスはルート要素に集約されます。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_tree` が付与されます。props に応じて `sui_tree-size_md`、`sui_tree-color_blue`、`sui_tree-radius_md`、`sui_tree-variant_liquid`、`sui_tree-outlined`、`sui_tree-muted` などのクラス名も加わります。
+
+項目には `sui_tree_item` が付与され、展開中は `sui_tree_item-expanded`、選択中は `sui_tree_item-selected`、無効な場合は `sui_tree_item-disabled` が加わります。展開インジケーターには `sui_tree_item_indicator` が付与され、子を持たない項目では `sui_tree_item_indicator-hidden` になります。
+
+項目の深さは CSS 変数 `--sui_tree_item-level` で渡されます。インデントの調整にはこの値を使えます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

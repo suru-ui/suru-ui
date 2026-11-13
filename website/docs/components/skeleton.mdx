@@ -1,0 +1,97 @@
+---
+title: Skeleton
+description: Skeleton の角丸、アニメーション、オーバーレイの指定方法を説明します。
+---
+
+Skeleton は、コンテンツの読み込み中を表すプレースホルダーです。実際の内容と同じ形の領域を確保できるため、読み込み完了時のレイアウトのずれを抑えられます。
+
+## 使い方 [#basic-usage]
+
+Skeleton は `span` 要素を描画します。既定では幅と高さが 100 % になるため、`style` や `className` で表示する領域の大きさを指定します。
+
+<Component path="skeleton/basic" />
+
+読み込み中であることを支援技術へ伝える場合は、親要素に `aria-busy` を指定します。Skeleton 自体は装飾的な要素として扱います。
+
+```tsx
+<div aria-busy="true">
+  <p>プロフィール</p>
+  <Skeleton style={{ width: "12rem", height: "1rem" }} />
+</div>
+```
+
+## 外観 [#appearance]
+
+`animation` は `pulse`、`shine`、`none` から選択できます。`pulse` は明滅し、`shine` は光が流れるアニメーションになります。
+
+`radius` は `none`、`sm`、`md`、`lg` の 4 段階です。カードやアバターなど、読み込み先の形に合わせて指定します。
+
+<Component path="skeleton/appearance" />
+
+## オーバーレイ [#overlay]
+
+`overlay` を指定すると、親要素を覆うように絶対位置で表示されます。すでに表示されている内容の上に、読み込み中の状態を重ねられます。親要素には `position: relative` を指定してください。
+
+<Component path="skeleton/overlay" />
+
+```tsx
+<div style={{ position: "relative" }}>
+  読み込み済みの内容
+  <Skeleton overlay />
+</div>
+```
+
+## props [#props]
+
+### 固有 props [#skeleton-specific-props]
+
+<TypeTable
+  type={{
+    animation: {
+      type: `"pulse" | "shine" | "none"`,
+      default: `"pulse"`,
+      description: "明滅、光の移動、アニメーションなしのいずれかを指定します。",
+    },
+    overlay: {
+      type: "boolean",
+      default: "false",
+      description: "親要素を覆うオーバーレイとして表示するかどうかを指定します。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "角丸の大きさを指定します。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    animation: {
+      type: `"pulse" | "shine" | "none"`,
+      default: `"pulse"`,
+      description: "スケルトンのアニメーションです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "スケルトンの角丸です。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Skeleton は `span` 要素を描画するため、`className`、`style`、`id`、`aria-*`、`data-*` などの属性を渡せます。`className` と `style` には、`Skeleton.State` を受け取る関数も指定できます。状態には `animation`、`overlay`、`radius` が含まれます。
+
+`render` を使うと、ルート要素を別の要素に置き換えられます。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_skeleton` が付与されます。props に応じて、`sui_skeleton-radius_lg`、`sui_skeleton-animation_shine`、`sui_skeleton-overlay` などのクラス名も加わります。
+
+幅や高さは `className` や `style` で指定できます。CSS 変数 `--sui_skeleton-*` を使うと、背景色や角丸などを上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[非同期状態の表示](/guides/async-state)

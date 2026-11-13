@@ -1,0 +1,72 @@
+---
+title: インストール
+description: Suru UI のパッケージを追加し、Button を表示するためのスタイルを読み込みます。
+---
+
+Suru UI を React プロジェクトに追加し、Button を表示できる状態にします。
+
+## 前提 [#requirements]
+
+- React >=19.0.0
+
+## パッケージのインストール [#install-package]
+
+```package-install
+npm i @suru-ui/theme @suru-ui/react
+```
+
+## スタイル [#load-styles]
+
+アプリケーションのエントリーポイントで、Suru UI の CSS を 1 回だけ読み込みます。
+
+```tsx src/main.tsx
+import "@suru-ui/theme/suru.css";
+import "@suru-ui/react/suru.css";
+
+import * as React from "react";
+import { createRoot } from "react-dom/client";
+
+import App from "./App";
+
+createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
+```
+
+`@suru-ui/theme/suru.css` には、テーマのトークン、リセットのスタイルが含まれています。`@suru-ui/react/suru.css` には、コンポーネントのスタイルが含まれています。CSS を読み込まないと、Button はブラウザーの既定の見た目で表示されます。
+
+## 表示確認 [#render-button]
+
+CSS を読み込んだら、コンポーネントをインポートして配置します。
+
+```tsx src/App.tsx
+import { Button } from "@suru-ui/react";
+
+export default function App() {
+  return <Button color="blue">保存</Button>;
+}
+```
+
+開発サーバーを起動し、青い「保存」ボタンが表示されることを確認してください。
+
+## テーマ [#color-theme]
+
+`@suru-ui/theme/suru.css` を選択した場合、Suru UI の CSS は、既定でシステムのカラーテーマに追従します。手動で切り替えるには、`html` 要素の `data-theme` 属性に `light` または `dark` を指定します。
+
+```html
+<html lang="ja" data-theme="dark"></html>
+```
+
+テーマの切り替えに JavaScript は不要です。アプリケーションの状態に応じて属性を変更する場合は、通常の DOM 操作やフレームワークの仕組みで `data-theme` を更新してください。
+
+ライトテーマのみ、またはダークテーマのみのデザイントークンを必要とする場合、それぞれ `@suru-ui/theme/suru-light.css`、`@suru-ui/theme/suru-dark.css` をインポートしてください。
+
+| スタイル                        | 選択可能なテーマ | 既定のテーマ   |
+| ------------------------------- | ---------------- | -------------- |
+| `@suru-ui/theme/suru.css`       | light と dark    | ブラウザー依存 |
+| `@suru-ui/theme/suru-light.css` | light のみ       | light          |
+| `@suru-ui/theme/suru-dark.css`  | dark のみ        | dark           |
+
+[はじめての Button](/getting-started/first-button)に進み、実際にボタンを作りながら基本的な props を学びましょう。

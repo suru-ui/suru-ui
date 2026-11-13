@@ -1,0 +1,94 @@
+---
+title: 非同期状態の表示
+description: 処理中、無効、進捗中といった状態を、コンポーネントの表示に反映する方法を説明します。
+---
+
+非同期処理では、ユーザーに「処理を受け付けたこと」「まだ完了していないこと」「今は操作できないこと」を伝える必要があります。このガイドでは、Button を例に、状態の設計と表示への反映方法を説明します。
+
+## 無効と処理中 [#disabled-vs-pending]
+
+`disabled` は「現在この操作は実行できない」ことを表します。`pending` は「操作は開始されたが、まだ完了していない」ことを表します。
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveActions() {
+  return (
+    <>
+      <Button disabled>送信できません</Button>
+      <Button pending>送信中</Button>
+    </>
+  );
+}
+```
+
+Button の `pending` は、押下を無効にしつつ、処理中の表示を出します。`disabled` を併用しない限りフォーカスを維持するため、処理が完了したあともキーボード操作の文脈が失われません。
+
+コンポーネントによっては `pending` のような専用の状態を持たない場合もあります。その場合は、`disabled` と `aria-busy` などを組み合わせて、同じ意味を表現します。
+
+## 状態の反映 [#wire-state]
+
+React の `useTransition` を使うと、非同期処理の間だけ保留状態にできます。
+
+```tsx
+import { Button } from "@suru-ui/react";
+import * as React from "react";
+
+export function SaveButton() {
+  const [isPending, startTransition] = React.useTransition();
+
+  function handleSave() {
+    startTransition(async () => {
+      await fetch("/api/save", { method: "POST" });
+    });
+  }
+
+  return (
+    <Button color="blue" pending={isPending} onClick={handleSave}>
+      保存
+    </Button>
+  );
+}
+```
+
+`isPending` をそのままコンポーネントの状態に渡すことで、処理の開始から完了まで表示を切り替えられます。外部の状態管理ライブラリーを使う場合も、同じように処理中の真偽値をコンポーネントへ渡します。
+
+**進捗表示**
+
+処理の進み具合が分かる場合は、進捗率を表示できます。Button では `percentage` に 0〜100 の数値を指定します。
+
+```tsx
+<Button pending percentage={40}>
+  アップロード
+</Button>
+```
+
+進捗率を省略した場合、または負の値を指定した場合は、不定モードのスピナーになります。進捗率を表示するかどうかは、処理の性質に合わせて選びます。数秒で終わる処理では不定のスピナー、時間のかかるアップロードでは進捗率が適しています。
+
+## 二重送信 [#double-submit]
+
+処理中の状態は、見た目のためだけでなく、二重送信を防ぐためにも使います。Button の `pending` は押下を無効にしますが、イベントハンドラー側でも処理中のガードを置くと安全です。前の例の `handleSave` にガードを追加すると、次のようになります。
+
+```tsx
+function handleSave() {
+  if (isPending) {
+    return;
+  }
+
+  startTransition(async () => {
+    await fetch("/api/save", { method: "POST" });
+  });
+}
+```
+
+## フォーカス [#focus]
+
+処理中の状態を表示するときは、見た目だけでなく、フォーカスと読み上げにも配慮します。
+
+- 処理中もフォーカスを維持できるコンポーネントでは、完了後にキーボード操作を続けやすくなります。
+- 処理中であることをスクリーンリーダーに伝えたい場合は、`aria-busy` などを検討します。
+- 処理が完了したら、結果をテキストやライブリージョンで伝えます。
+
+コンポーネントがどの属性を自動で設定するかは、実装によって異なります。必要に応じて属性を追加してください。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[Button のリファレンス](/components/button)

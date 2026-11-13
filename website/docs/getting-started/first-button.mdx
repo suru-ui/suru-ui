@@ -1,0 +1,129 @@
+---
+title: はじめての Button
+description: 保存ツールバーを作りながら、Button の基本的な props とフォームでの使い方を学びます。
+---
+
+このチュートリアルでは、保存とキャンセルの 2 つのボタンを持つツールバーを作ります。完成したコードを動かしながら、Button の基本的な使い方を学びましょう。
+
+## 作るもの [#what-you-will-build]
+
+次のようなツールバーを作ります。
+
+- 「キャンセル」は背景なしの控えめなボタンです。
+- 「保存」は青い塗りつぶしのボタンです。
+- 「保存」を押すとコンソールにメッセージが出力されます。
+
+## ツールバー [#place-buttons]
+
+まず、`src/SaveToolbar.tsx` を作成します。
+
+```tsx src/SaveToolbar.tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveToolbar() {
+  return (
+    <div style={{ display: "flex", gap: "0.5rem" }}>
+      <Button variant="naked">キャンセル</Button>
+      <Button color="blue">保存</Button>
+    </div>
+  );
+}
+```
+
+`Button` の `children` がボタンのラベルになります。`color` で配色を、`variant` で主な外観を指定できます。
+
+- `color` の既定値は `"grey"` です。
+- `variant` の既定値は `"solid"` です。`"naked"` にすると背景を表示しません。
+
+**アプリへの組み込み**
+
+作成したツールバーを `src/App.tsx` から表示します。
+
+```tsx src/App.tsx
+import { SaveToolbar } from "./SaveToolbar";
+
+export default function App() {
+  return <SaveToolbar />;
+}
+```
+
+開発サーバーを起動し、2 つのボタンが横に並んでいることを確認してください。
+
+## クリック処理 [#handle-click]
+
+「保存」を押したときの処理を追加します。
+
+```tsx src/SaveToolbar.tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveToolbar() {
+  function handleSave() {
+    console.log("保存しました");
+  }
+
+  return (
+    <div style={{ display: "flex", gap: "0.5rem" }}>
+      <Button variant="naked">キャンセル</Button>
+      <Button color="blue" onClick={handleSave}>
+        保存
+      </Button>
+    </div>
+  );
+}
+```
+
+`onClick` はネイティブの button 要素と同じように動作します。
+
+## フォーム送信 [#submit-form]
+
+Button が描画する button 要素の `type` は、既定で `"button"` です。フォームを送信するボタンにするには、`type="submit"` を明示します。
+
+```tsx
+import { Button } from "@suru-ui/react";
+import * as React from "react";
+
+export function SaveForm() {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.log("フォームを送信しました");
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Button type="submit" color="blue">
+        保存
+      </Button>
+    </form>
+  );
+}
+```
+
+:::note
+`type` を省略すると `"button"` になるため、フォーム内に置いても意図せず送信されることはありません。送信ボタンとして使う場合だけ `type="submit"` を指定します。
+:::
+
+## 状態 [#try-states]
+
+基本的な props を変えると、見た目と操作を調整できます。
+
+```tsx
+<Button size="sm">小さめ</Button>
+<Button radius="full">丸いボタン</Button>
+<Button disabled>無効</Button>
+<Button outlined color="red">
+  削除
+</Button>
+```
+
+各 props の詳細は[Button のリファレンス](/components/button)を参照してください。
+
+## 次のステップ [#next-steps]
+
+<CardGroup cols={2}>
+  <Card title="コンポーネントの構造" href="/guides/component-anatomy" icon="component">
+    プリセット、パーツ、スロットの関係を学びます。
+  </Card>
+  <Card title="非同期状態の表示" href="/guides/async-state" icon="loader">
+    処理中や無効の状態を、コンポーネントに反映します。
+  </Card>
+</CardGroup>

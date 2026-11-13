@@ -1,0 +1,87 @@
+---
+title: ScrollArea
+description: ScrollArea のスクロール方向、スクロールバーの表示、各パーツの指定方法を説明します。
+---
+
+ScrollArea は、内容をスクロール可能な領域に収めるコンポーネントです。ネイティブのスクロール操作を保ちながら、細いスクロールバーを表示します。長い文章や表、横に広いレイアウトを限られた領域に収めたい場合に使います。
+
+## 使い方 [#basic-usage]
+
+`children` にスクロール領域へ表示する内容を指定します。高さや幅はルート要素の `style` や `className` で指定します。
+
+<Component path="scroll-area/basic" />
+
+スクロール領域には垂直方向のスクロールバーが常に描画されます。内容が収まっている場合は非表示になりますが、`slotProps.scrollbar.keepMounted` で DOM に保持できます。
+
+## 横方向 [#horizontal]
+
+`horizontal` を指定すると、水平方向のスクロールバーも表示されます。内容の幅が領域より広い場合に使います。
+
+<Component path="scroll-area/horizontal" />
+
+垂直方向のスクロールバーは `horizontal` の指定にかかわらず描画されます。
+
+## スクロールバー [#scrollbar]
+
+`alwaysShowScrollbar` を指定すると、スクロール領域をホバーしていないときもスクロールバーを表示します。`slotProps.scrollbar` と `slotProps.horizontalScrollbar` で、それぞれのバーに props を渡せます。
+
+<Component path="scroll-area/always-show" />
+
+```tsx
+<ScrollArea alwaysShowScrollbar slotProps={{ scrollbar: { keepMounted: true } }}>
+  {/* ... */}
+</ScrollArea>
+```
+
+## props [#props]
+
+### 固有 props [#scroll-area-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "スクロール領域に表示する内容です。",
+    },
+    horizontal: {
+      type: "boolean",
+      default: "false",
+      description: "水平方向のスクロールバーを表示するかどうかを指定します。",
+    },
+    slotProps: {
+      type: "ScrollAreaSlotProps",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+    alwaysShowScrollbar: {
+      type: "boolean",
+      default: "false",
+      description: "スクロールバーを常に表示するかどうかを指定します。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| スロット              | 型                                                            | 説明                                                                      |
+| --------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `content`             | `Omit<ScrollAreaContentProps, "children">`                    | 内容を包む要素に渡す props です。                                         |
+| `corner`              | `ScrollAreaCornerProps`                                       | 垂直と水平のスクロールバーが交差する角に渡す props です。                 |
+| `horizontalScrollbar` | `Omit<ScrollAreaScrollbarProps, "children" \| "orientation">` | 水平方向のスクロールバーに渡す props です。                               |
+| `horizontalThumb`     | `ScrollAreaThumbProps`                                        | 水平方向のつまみに渡す props です。                                       |
+| `scrollbar`           | `Omit<ScrollAreaScrollbarProps, "children" \| "orientation">` | 垂直方向のスクロールバーに渡す props です。`keepMounted` を指定できます。 |
+| `thumb`               | `ScrollAreaThumbProps`                                        | 垂直方向のつまみに渡す props です。                                       |
+| `viewport`            | `Omit<ScrollAreaViewportProps, "children">`                   | コンテンツをクリップするビューポートに渡す props です。                   |
+
+### 継承 props [#inherited-props]
+
+ScrollArea は Base UI の Scroll Area を基盤にしています。ルートには `overflowEdgeThreshold` を渡せます。これは端に近づいたと判定する距離です。
+
+ルートは `div` 要素を描画するため、`className`、`style`、`id`、`aria-*`、`data-*` などの属性も渡せます。`className` と `style` には `ScrollArea.State` を受け取る関数を指定できます。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_scroll_area` が付与されます。状態に応じて、`sui_scroll_area-scrolling`、`sui_scroll_area-has_overflow_x`、`sui_scroll_area-has_overflow_y`、`sui_scroll_area-overflow_y_end`、`sui_scroll_area-always_show_scrollbar` などのクラス名が加わります。
+
+内部のパーツには `sui_scroll_area_viewport`、`sui_scroll_area_content`、`sui_scroll_area_scrollbar`、`sui_scroll_area_thumb`、`sui_scroll_area_corner` が付与されます。スクロールバーには `sui_scroll_area_scrollbar-orientation_vertical` などの方向別のクラス名も加わります。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

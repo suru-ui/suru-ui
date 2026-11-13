@@ -1,0 +1,144 @@
+---
+title: Segments
+description: Segments の項目、選択値、外観、制御の方法を説明します。
+---
+
+Segments は、関連する選択肢から 1 つを選ぶセグメントコントロールです。表示期間の切り替えや並び順の選択など、少数の選択肢を常に表示しておきたい場面に適しています。内部的にはタブの仕組みを使っています。
+
+## 使い方 [#basic-usage]
+
+`items` に選択肢を配列で指定します。各項目は値そのもの、または `label` と `value` を持つオブジェクトです。`defaultValue` で初期の選択値を指定します。
+
+<Component path="segments/basic" />
+
+`items` を省略し、`children` に項目を直接渡すこともできます。通常は `items` を使うと、ラベルと選択値の対応が明確になります。
+
+## 外観 [#appearance]
+
+`activeVariant` は選択中の項目の外観です。`solid` は塗りつぶし、`liquid` は薄い塗りつぶし、`naked` は背景なしになります。`color`、`size`、`radius`、`thin` を組み合わせて調整できます。
+
+<Component path="segments/appearance" />
+
+`radius` を省略すると `size` と同じ値になります。`thin` を指定すると上下の余白が半分になり、高さを抑えられます。
+
+## 選択の制御 [#controlled]
+
+`value` を指定すると制御コンポーネントになります。`onValueChange` で新しい値を受け取り、状態を更新します。項目の `disabled` を `true` にすると、その項目だけを選択不可にできます。
+
+<Component path="segments/controlled" />
+
+```tsx
+const [value, setValue] = React.useState("week");
+
+<Segments items={items} value={value} onValueChange={(nextValue) => setValue(String(nextValue))} />;
+```
+
+`orientation="vertical"` を指定すると、項目を縦に並べられます。
+
+## props [#props]
+
+### 固有 props [#segments-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: `React.ReactNode |\n((item, index, items) => React.ReactNode)`,
+      description: "セグメントの内容、または各項目を描画する関数です。通常は items を指定します。",
+    },
+    items: {
+      type: "readonly TItem[]",
+      description:
+        "セグメントに表示する項目です。値、または label と value を持つオブジェクトを指定します。",
+    },
+    slotProps: {
+      type: "SegmentsSlotProps",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    activeVariant: {
+      type: `"solid" | "liquid" | "naked"`,
+      default: `"solid"`,
+      description: "選択中の項目の主な外観を指定します。",
+    },
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "選択中の項目の背景と文字色に使う配色です。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full"`,
+      default: "size と同じ値",
+      description: "セグメントの角丸を指定します。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "セグメントの大きさを指定します。",
+    },
+    thin: {
+      type: "boolean",
+      default: "false",
+      description: "上下の余白を半分にして高さを抑えるかどうかを指定します。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+| スロット    | 型                                               | 説明                                                                              |
+| ----------- | ------------------------------------------------ | --------------------------------------------------------------------------------- |
+| `indicator` | `SegmentsIndicatorProps`                         | 選択中の項目を示すインジケーターに渡す props です。                               |
+| `item`      | `Omit<SegmentsItemProps, "children" \| "value">` | すべての項目に共通して渡す props です。`children` と `value` は上書きされません。 |
+| `list`      | `Omit<SegmentsListProps, "children">`            | 項目を並べるリストに渡す props です。                                             |
+
+### 継承 props [#inherited-props]
+
+Segments は Base UI の Tabs を基盤にしているため、次の props をそのまま渡せます。
+
+<TypeTable
+  type={{
+    value: {
+      type: "SegmentsValue",
+      description: "制御された選択値です。",
+    },
+    defaultValue: {
+      type: "SegmentsValue",
+      description: "初期の選択値です。",
+    },
+    onValueChange: {
+      type: "(value, eventDetails) => void",
+      description: "選択値が変更されたときに呼ばれます。",
+    },
+    orientation: {
+      type: `"horizontal" | "vertical"`,
+      default: `"horizontal"`,
+      description: "セグメントを並べる方向です。",
+    },
+    className: {
+      type: `string |\n((state: Segments.State) => string | undefined)`,
+      description: "追加のクラス名です。状態を受け取る関数も指定できます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Segments.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。状態を受け取る関数も指定できます。",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactNode)`,
+      description: "ルート要素を別の要素に置き換えます。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_segments` が付与されます。props と状態に応じて、`sui_segments-size_md`、`sui_segments-color_blue`、`sui_segments-radius_full`、`sui_segments-active_variant_liquid`、`sui_segments-orientation_vertical`、`sui_segments-thin` などのクラス名が加わります。
+
+内部のパーツには `sui_segments_list`、`sui_segments_item`、`sui_segments_indicator` が付与されます。選択中の項目には `sui_segments_item-active`、無効な項目には `sui_segments_item-disabled` が加わります。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

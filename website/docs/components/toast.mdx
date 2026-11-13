@@ -1,0 +1,227 @@
+---
+title: Toast
+description: Toast コンポーネントの Provider、通知の追加、外観、操作方法を説明します。
+---
+
+Toast は、操作の結果や処理の完了を一時的に通知するコンポーネントです。画面の隅に表示され、一定時間が経過すると自動で閉じます。`Toast.Provider` で通知を管理し、`Toast.useClient` で追加や削除を行います。
+
+## 使い方 [#basic-usage]
+
+`Toast.Provider` でアプリケーションの一部を囲み、`Toast.List` を配置します。通知を追加するコンポーネントでは `Toast.useClient` を呼び、`add` にタイトルと説明を渡します。
+
+<Component path="toast/basic" />
+
+`timeout` は通知が自動で閉じるまでの時間をミリ秒で指定します。`0` を指定すると自動では閉じません。`limit` は同時に表示する通知の最大数です。
+
+## 通知の種類 [#types]
+
+通知オブジェクトの `type` に応じて、既定の配色が決まります。`success` は緑、`info` は青、`warning` は黄色、`error` は赤になります。該当しない場合はグレーで表示されます。
+
+<Component path="toast/types" />
+
+配色は `Toast` の `color` で明示することもできます。`type` は通知の分類として残るため、アイコンや文言の出し分けにも利用できます。
+
+## 操作と外観 [#actions-and-appearance]
+
+通知に操作ボタンを付ける場合は、`actionProps` にボタンの内容とクリック時の処理を指定します。`Toast.List` の `children` に関数を渡すと、各通知を個別にカスタマイズできます。
+
+<Component path="toast/action" />
+
+`close` には閉じるボタンの文言を指定します。省略すると「閉じる」が表示されます。`actionsPosition` と `descriptionPosition` で、操作ボタンと説明文の配置を調整できます。
+
+## props [#props]
+
+### 固有 props [#toast-specific-props]
+
+`Toast` は個々の通知を表示するコンポーネントです。通常は `Toast.List` が通知オブジェクトから自動で組み立てるため、直接使うことは多くありません。
+
+<TypeTable
+  type={{
+    toast: {
+      type: "Toast.ToastObject<TData>",
+      description: "表示する通知オブジェクトです。必須の props です。",
+    },
+    title: {
+      type: "React.ReactNode",
+      description: "通知の見出しです。通知オブジェクトに title がある場合はそちらが優先されます。",
+    },
+    description: {
+      type: "React.ReactNode",
+      description:
+        "通知の説明文です。通知オブジェクトに description がある場合はそちらが優先されます。",
+    },
+    action: {
+      type: "React.ReactNode",
+      description:
+        "通知の操作ボタンに表示する内容です。actionProps がある場合はそちらが優先されます。",
+    },
+    close: {
+      type: "React.ReactNode",
+      default: `"閉じる"`,
+      description: "通知を閉じるボタンに表示する内容です。",
+    },
+    slotProps: {
+      type: "ToastSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### Toast.Provider の props [#toast-provider-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "通知を利用するコンポーネントと Toast.List を含めます。",
+    },
+    timeout: {
+      type: "number",
+      default: "5000",
+      description: "通知が自動で閉じるまでの時間をミリ秒で指定します。0 の場合は自動で閉じません。",
+    },
+    limit: {
+      type: "number",
+      default: "3",
+      description: "同時に表示する通知の最大数です。",
+    },
+    toastManager: {
+      type: "IToastManager<TData>",
+      description:
+        "Provider の外から通知を操作するマネージャーです。createToastManager で作成します。",
+    },
+  }}
+/>
+
+### Toast.List の props [#toast-list-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: `React.ReactNode |\n((toast: Toast.ToastObject, index: number) => React.ReactNode)`,
+      description:
+        "通知一覧の内容、または各通知を描画する関数です。省略すると既定の Toast が並びます。",
+    },
+    slotProps: {
+      type: "ToastListSlotProps",
+      default: "{}",
+      description: "ビューポートに props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: "type に応じた色",
+      description: "通知の配色です。省略すると type から色が決まります。",
+    },
+    variant: {
+      type: `"muted" | "naked" | "liquid"`,
+      default: `"muted"`,
+      description: "通知の主な外観です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "通知の大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "size と同じ値",
+      description: "通知の角丸です。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "通知の枠線を表示するかどうかです。",
+    },
+    actionsPosition: {
+      type: `"bottom" | "side"`,
+      default: `"side"`,
+      description: "操作ボタンの配置です。",
+    },
+    descriptionPosition: {
+      type: `"bottom" | "side-start" | "side-end"`,
+      default: `"bottom"`,
+      description: "見出しに対する説明文の配置です。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    content: {
+      type: "object",
+      description: "通知の内容をまとめる要素に渡す props です。",
+    },
+    title: {
+      type: "object",
+      description: "通知の見出しに渡す props です。",
+    },
+    description: {
+      type: "object",
+      description: "通知の説明文に渡す props です。",
+    },
+    actions: {
+      type: "object",
+      description: "操作ボタンをまとめる要素に渡す props です。",
+    },
+    action: {
+      type: "object",
+      description: "操作ボタンに渡す props です。",
+    },
+    close: {
+      type: "object",
+      description: "閉じるボタンに渡す props です。",
+    },
+  }}
+/>
+
+### Toast.useClient [#toast-use-client]
+
+`Toast.useClient` は、通知の一覧と操作関数を返します。
+
+<TypeTable
+  type={{
+    toasts: {
+      type: "Toast.ToastObject<TData>[]",
+      description: "現在表示されている通知の一覧です。",
+    },
+    add: {
+      type: "(options: ToastAddOptions) => string",
+      description:
+        "通知を追加し、その ID を返します。title、description、type、timeout、actionProps などを指定できます。",
+    },
+    close: {
+      type: "(toastId?: string) => void",
+      description: "指定した通知を閉じます。省略するとすべての通知を閉じます。",
+    },
+    update: {
+      type: "(toastId: string, options: ToastUpdateOptions) => void",
+      description: "表示中の通知を更新します。",
+    },
+    promise: {
+      type: "(promise: Promise<Value>, options: ToastPromiseOptions) => Promise<Value>",
+      description: "Promise の進行に合わせて通知を更新します。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+`Toast` は Base UI の Toast を基盤にしているため、`swipeDirection` でスワイプして閉じる方向を指定できます。既定値は `["down", "right"]` です。`className`、`style`、`aria-*`、`data-*` などの属性もルート要素に渡せます。
+
+## スタイル [#styling-hooks]
+
+通知のルート要素には `sui_toast` が付与されます。状態に応じて `sui_toast-transition_status_starting`、`sui_toast-limited`、`sui_toast-swiping`、`sui_toast-expanded`、`sui_toast-type_success` などのクラス名も加わります。
+
+内容には `sui_toast_content`、見出しには `sui_toast_title`、説明文には `sui_toast_description`、操作ボタンには `sui_toast_action`、閉じるボタンには `sui_toast_close` が付与されます。表示領域は `sui_toast_viewport`、ポータルは `sui_toast_portal` です。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[非同期状態の表示](/guides/async-state)

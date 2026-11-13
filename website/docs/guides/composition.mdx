@@ -1,0 +1,85 @@
+---
+title: 要素とコンポーネントの合成
+description: render props を使って、コンポーネントの見た目を保ちながら別の要素や独自コンポーネントとして描画する方法を説明します。
+---
+
+多くのコンポーネントは、用途に応じた HTML 要素を既定で描画します。`render` prop を使うと、その要素を別の要素や独自コンポーネントに置き換えられます。このガイドでは、Button を例に、セマンティクスを保ったまま見た目を再利用する方法を説明します。
+
+## 要素の置き換え [#render-element]
+
+`render` に React 要素を渡すと、コンポーネントのルート要素がその要素に置き換わります。
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function ReadGuideLink() {
+  return (
+    <Button variant="naked" render={<a href="/getting-started" />} nativeButton={false}>
+      はじめにを読む
+    </Button>
+  );
+}
+```
+
+見た目は Button のまま、実際の要素は `<a>` になります。`nativeButton` は、ルートがネイティブの button 要素かどうかを示す Base UI の prop です。リンクや別の要素に置き換える場合は `false` を指定します。
+
+**独自コンポーネント**
+
+`render` には、独自の React コンポーネントも渡せます。この場合、コンポーネントは受け取った props を下位の DOM 要素に展開し、ref を転送する必要があります。
+
+```tsx
+import { Button } from "@suru-ui/react";
+import * as React from "react";
+
+const FancyLink = React.forwardRef<HTMLAnchorElement, React.ComponentPropsWithoutRef<"a">>(
+  function FancyLink(props, ref) {
+    return <a {...props} ref={ref} data-fancy="true" />;
+  },
+);
+
+export function DocsLink() {
+  return (
+    <Button variant="naked" render={<FancyLink href="/docs" />} nativeButton={false}>
+      ドキュメント
+    </Button>
+  );
+}
+```
+
+`render` に要素を渡した場合、コンポーネント側の props と要素側の props はマージされます。`className` は連結され、`style` とイベントハンドラーは両方が適用されます。独自コンポーネントが props を正しく展開しないと、スタイルやアクセシビリティ属性が失われるため注意してください。
+
+## render 関数 [#render-function]
+
+`render` に関数を渡すと、コンポーネントの状態を引数として受け取れます。状態に応じて属性や内容を変えたい場合に便利です。
+
+```tsx
+import { Button } from "@suru-ui/react";
+
+export function SaveButton({ isPending }: { isPending: boolean }) {
+  return (
+    <Button
+      pending={isPending}
+      render={(props, state) => <button {...props} aria-busy={state.pending} />}
+    >
+      保存
+    </Button>
+  );
+}
+```
+
+render 関数を使う場合は、受け取った props を自分で展開する責任があります。パフォーマンスが重要な場面や、状態に応じて描画内容を大きく変えたい場面に向いています。
+
+## セマンティクス [#semantics]
+
+見た目が同じでも、要素の意味は用途に合わせて選ぶ必要があります。
+
+| 用途                                       | 適した要素 |
+| ------------------------------------------ | ---------- |
+| フォームの送信、ダイアログを開くなどの操作 | button     |
+| 別のページや外部サイトへの移動             | a          |
+
+移動が目的の操作を button で実装すると、キーボード操作やスクリーンリーダーの挙動が期待と異なることがあります。逆に、画面内の操作をリンクで実装すると、ブラウザーの履歴やコンテキストメニューが不自然になります。`render` は、見た目を再利用しながら要素の意味を正しく保つための仕組みです。
+
+アイコンだけのボタンには `aria-label` を指定し、リンクには行き先が分かるテキストを指定してください。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[Button のリファレンス](/components/button)

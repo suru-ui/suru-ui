@@ -1,0 +1,244 @@
+---
+title: Menu
+description: Menu コンポーネントの項目の種類、トリガー、外観、開閉状態、slotProps を説明します。
+---
+
+Menu は、ボタンなどのトリガーから開くメニューを表示するコンポーネントです。`items` に項目の配列を渡すと、通常の操作項目、チェック項目、ラジオ項目、サブメニュー、リンク項目をまとめて組み立てられます。キーボード操作やフォーカス管理は Base UI の Menu が担当します。
+
+## 使い方 [#basic-usage]
+
+`trigger` にメニューを開く要素を、`items` に表示する項目を指定します。項目の `label` には文字列だけでなく、アイコンを含む React ノードも渡せます。
+
+<Component path="menu/basic" />
+
+各項目には `disabled` や `color` を指定できます。`color="red"` は削除など、注意を促したい操作に適しています。区切り線が必要な場合は、項目をグループに分けると自動で挿入されます。
+
+## 項目の種類 [#item-types]
+
+項目オブジェクトの `type` で、表示する項目の種類を切り替えます。`type` を省略すると通常の操作項目になります。チェック項目とラジオ項目は、選択状態を `checked` や `value` で管理します。
+
+<Component path="menu/item-types" />
+
+| `type`            | 主なフィールド                          | 説明                                                         |
+| ----------------- | --------------------------------------- | ------------------------------------------------------------ |
+| `"item"`（省略）  | `label`、`disabled`、`onClick`、`color` | 通常の操作項目です。                                         |
+| `"link"`          | `label`、`href`、`target`               | リンクとして動作する項目です。                               |
+| `"checkbox"`      | `label`、`checked`、`onCheckedChange`   | 選択状態を持つチェック項目です。                             |
+| `"radio-group"`   | `value`、`onValueChange`、`items`       | ラジオ項目をまとめるグループです。                           |
+| `"radio"`         | `label`、`value`                        | ラジオグループ内の項目です。                                 |
+| `"submenu"`       | `label`、`items`                        | 子メニューを開く項目です。                                   |
+| `"group"`（省略） | `label`、`items`                        | 見出し付きのグループです。グループ間には区切り線が入ります。 |
+
+グループの `items` には、通常の項目、リンク項目、チェック項目、ラジオグループ、サブメニューを入れられます。サブメニューの中にも同じ項目オブジェクトを指定できます。
+
+## 外観と無効化 [#appearance]
+
+`size` はメニュー全体と項目の大きさ、`radius` は角丸、`variant` は項目の主な外観を指定します。`outlined` はポップアップの枠線を切り替えます。
+
+<Component path="menu/appearance" />
+
+`disabled` を指定すると、メニュー全体が操作できなくなります。特定の項目だけを無効にする場合は、その項目オブジェクトに `disabled` を指定します。`modal` を `false` にすると、メニューを開いたままページ内の他の要素を操作できます。
+
+## props [#props]
+
+### 固有 props [#menu-specific-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "メニューを開くトリガーです。ボタンやリンクなどの要素を指定します。",
+    },
+    items: {
+      type: "readonly Menu.ItemObject[]",
+      default: "[]",
+      description:
+        "ポップアップに表示する項目の一覧です。グループの配列を指定すると、グループごとに区切って表示します。",
+    },
+    checkboxIndicator: {
+      type: "React.ReactNode",
+      default: "チェックアイコン",
+      description: "チェック項目が選択されているときに表示する内容です。",
+    },
+    radioIndicator: {
+      type: "React.ReactNode",
+      default: "ドットアイコン",
+      description: "ラジオ項目が選択されているときに表示する内容です。",
+    },
+    slotProps: {
+      type: "MenuSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ポップアップと項目の大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg"`,
+      default: "size と同じ値",
+      description: "ポップアップと項目の角丸です。省略すると size の値が使われます。",
+    },
+    variant: {
+      type: `"solid" | "naked" | "liquid"`,
+      default: `"naked"`,
+      description:
+        "項目の主な外観です。solid は塗りつぶし、naked は背景なし、liquid は薄い塗りつぶしです。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "ポップアップに枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Menu は Base UI の Menu を基盤にしています。開閉状態やフォーカスに関する props をそのまま渡せます。`className`、`style`、`render` はポップアップに適用されます。
+
+<TypeTable
+  type={{
+    open: {
+      type: "boolean",
+      description: "開閉状態を制御する場合に指定します。",
+    },
+    defaultOpen: {
+      type: "boolean",
+      default: "false",
+      description: "最初から開いた状態にするかどうかです。",
+    },
+    onOpenChange: {
+      type: `(open: boolean,\neventDetails: Menu.ChangeEventDetails) => void`,
+      description: "開閉状態が変わったときに呼ばれます。",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "開閉のアニメーションが完了したときに呼ばれます。",
+    },
+    modal: {
+      type: "boolean",
+      default: "true",
+      description: "開いている間、ページ全体の操作を制限するかどうかです。",
+    },
+    loopFocus: {
+      type: "boolean",
+      default: "true",
+      description: "キーボードで末尾から先頭へフォーカスを循環させるかどうかです。",
+    },
+    highlightItemOnHover: {
+      type: "boolean",
+      default: "true",
+      description: "ポインターが項目の上に乗ったときにハイライトするかどうかです。",
+    },
+    orientation: {
+      type: `"vertical" | "horizontal"`,
+      default: `"vertical"`,
+      description: "メニューの向きです。矢印キーの動作に影響します。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "メニュー全体を無効にします。",
+    },
+    closeParentOnEsc: {
+      type: "boolean",
+      default: "false",
+      description: "サブメニューで Escape キーを押したときに、親メニューも閉じるかどうかです。",
+    },
+    actionsRef: {
+      type: "React.RefObject<Menu.Actions | null>",
+      description: "close や unmount を命令的に実行するための ref です。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    trigger: {
+      type: "object",
+      description: "トリガーに渡す props です。children は Menu の trigger で指定します。",
+    },
+    portal: {
+      type: "object",
+      description: "ポータルに渡す props です。表示先の container などを指定できます。",
+    },
+    positioner: {
+      type: "object",
+      description:
+        "配置を調整する Positioner に渡す props です。side、align、sideOffset などを指定できます。",
+    },
+    backdrop: {
+      type: "object",
+      description: "Backdrop に渡す props です。",
+    },
+    item: {
+      type: "object",
+      description: "通常の操作項目に渡す props です。",
+    },
+    linkItem: {
+      type: "object",
+      description: "リンク項目に渡す props です。",
+    },
+    checkboxItem: {
+      type: "object",
+      description: "チェック項目に渡す props です。",
+    },
+    checkboxItemIndicator: {
+      type: "object",
+      description: "チェック項目のインジケーターに渡す props です。",
+    },
+    radioGroup: {
+      type: "object",
+      description: "ラジオグループに渡す props です。",
+    },
+    radioItem: {
+      type: "object",
+      description: "ラジオ項目に渡す props です。",
+    },
+    radioItemIndicator: {
+      type: "object",
+      description: "ラジオ項目のインジケーターに渡す props です。",
+    },
+    group: {
+      type: "object",
+      description: "グループに渡す props です。",
+    },
+    groupLabel: {
+      type: "object",
+      description: "グループの見出しに渡す props です。",
+    },
+    separator: {
+      type: "object",
+      description: "グループ間の区切り線に渡す props です。",
+    },
+    submenuRoot: {
+      type: "object",
+      description: "サブメニューのルートに渡す props です。",
+    },
+    submenuTrigger: {
+      type: "object",
+      description: "サブメニューを開く項目に渡す props です。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+トリガーには `sui_menu_trigger`、ポップアップには `sui_menu_popup`、通常の項目には `sui_menu_item` が付与されます。チェック項目は `sui_menu_checkbox_item`、ラジオ項目は `sui_menu_radio_item`、リンク項目は `sui_menu_link_item`、サブメニューを開く項目は `sui_menu_submenu_trigger` になります。
+
+項目は状態に応じて `sui_menu_item-checked`、`sui_menu_item-disabled`、`sui_menu_item-highlighted`、`sui_menu_item-outlined` などのクラス名を持ちます。ポップアップには `sui_menu_popup-size_md`、`sui_menu_popup-radius_md`、`sui_menu_popup-variant_naked`、`sui_menu_popup-open` などが加わります。
+
+グループには `sui_menu_group`、グループの見出しには `sui_menu_group_label`、区切り線には `sui_menu_separator`、インジケーターには `sui_menu_item_indicator` が付与されます。間隔や背景色は `--sui_menu_popup-*` や `--sui_menu_item-*` の CSS 変数で調整できます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[要素とコンポーネントの合成](/guides/composition)、[外観のカスタマイズ](/guides/styling)

@@ -1,0 +1,192 @@
+---
+title: ToggleButton
+description: ToggleButton コンポーネントの props、押下状態、外観、保留表示を説明します。
+---
+
+ToggleButton は、押すたびに押下状態を切り替えるボタンです。書式設定のツールバーや表示の切り替えなど、選択状態を保ちながら操作する場面で使います。押下状態は `pressed` で管理され、見た目も状態に合わせて変わります。
+
+## 使い方 [#basic-usage]
+
+`children` にラベルやアイコンを指定します。アイコンだけのボタンには `squared` と `aria-label` を組み合わせてください。
+
+<Component path="toggle-button/basic" />
+
+初期状態を押下済みにする場合は `defaultPressed` を指定します。押下状態を自分で管理する場合は `pressed` と `onPressedChange` を使います。
+
+```tsx
+const [pressed, setPressed] = useState(false);
+
+<ToggleButton pressed={pressed} onPressedChange={setPressed}>
+  オン
+</ToggleButton>;
+```
+
+## 外観 [#appearance]
+
+`variant` は `liquid` と `naked` から選択できます。押下状態では `variant` に関係なく solid の外観になり、`color` でその配色を指定します。
+
+<Component path="toggle-button/appearance" />
+
+`size` は `xs`、`sm`、`md`、`lg` の 4 段階です。`radius` の既定値は `size` に応じて `sm` または `md` になります。`outlined` を指定すると枠線が付きます。
+
+## 制御と保留 [#controlled-and-pending]
+
+押下状態を外部の状態と同期させる場合は、`pressed` と `onPressedChange` を組み合わせます。
+
+<Component path="toggle-button/controlled" />
+
+`pending` を `true` にすると押下が無効になり、進行状況を示す円形プログレスバーが表示されます。`percentage` に 0〜100 の値を渡すと進捗率を表示できます。
+
+<Component path="toggle-button/pending" />
+
+保留中もフォーカスを維持するため、`disabled` を併用しない限りキーボード操作の文脈が途切れません。
+
+## props [#props]
+
+### 固有 props [#toggle-button-specific-props]
+
+<TypeTable
+  type={{
+    children: {
+      type: "React.ReactNode",
+      description: "トグルボタンの内容です。",
+    },
+    percentage: {
+      type: "number",
+      description:
+        "円形プログレスバーの進捗率を 0〜100 で指定します。省略または負の値の場合は不定モードになります。",
+    },
+    indeterminate: {
+      type: "boolean",
+      description:
+        "円形プログレスバーを不定モードにするかどうかです。省略時は percentage から判定されます。",
+    },
+    slotProps: {
+      type: "ToggleButtonSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "押下状態の配色です。押下状態でないときは grey で表示されます。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"liquid"`,
+      description: "押下状態でないときの主な外観です。",
+    },
+    size: {
+      type: `"xs" | "sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "トグルボタンの大きさです。",
+    },
+    radius: {
+      type: `"none" | "xs" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: "size に応じて sm または md",
+      description:
+        "角丸の大きさです。size が xs または sm のときは sm、md または lg のときは md が既定値になります。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "false",
+      description: "枠線を表示するかどうかです。",
+    },
+    pending: {
+      type: "boolean",
+      default: "false",
+      description: "保留状態にするかどうかです。押下が無効になり、進行状況が表示されます。",
+    },
+    squared: {
+      type: "boolean",
+      default: "false",
+      description: "ボタンを正方形にするかどうかです。アイコンだけのボタンに適しています。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+ToggleButton は Base UI の Toggle を基盤にしているため、押下状態に関する props をそのまま渡せます。主なものは次のとおりです。
+
+<TypeTable
+  type={{
+    pressed: {
+      type: "boolean",
+      description: "押下状態を制御する場合に指定します。",
+    },
+    defaultPressed: {
+      type: "boolean",
+      default: "false",
+      description: "非制御で使うときの初期の押下状態です。",
+    },
+    onPressedChange: {
+      type: `(pressed: boolean,\neventDetails: ToggleButton.ChangeEventDetails) => void`,
+      description: "押下状態が変更されたときに呼び出されます。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "トグルボタンを無効にします。",
+    },
+    value: {
+      type: "string",
+      description: "トグルボタンに関連付ける値です。",
+    },
+    focusableWhenDisabled: {
+      type: "boolean",
+      description:
+        "無効時にもフォーカス可能にするかどうかです。既定では pending が true かつ disabled が false のとき true になります。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    content: {
+      type: "object",
+      description:
+        "ラベルを表示する要素に渡す props です。children は ToggleButton の children で指定します。",
+    },
+    pending: {
+      type: "object",
+      description: "保留表示に渡す props です。overlay と keepMounted を指定できます。",
+    },
+    circularProgress: {
+      type: "object",
+      description:
+        "円形プログレスバーに渡す props です。percentage と indeterminate は ToggleButton 本体で指定します。",
+    },
+    circularProgressTrack: {
+      type: "object",
+      description: "円形プログレスバーの背景の円弧に渡す props です。",
+    },
+    circularProgressFill: {
+      type: "object",
+      description:
+        "進捗を表す円弧に渡す props です。strokeDashoffset や strokeWidth を指定できます。",
+    },
+    circularProgressFillRotation: {
+      type: "object",
+      description:
+        "不定モード時の回転アニメーションに渡す props です。dur や values を指定できます。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ToggleButton は Button のルート要素を共有するため、ルートには `sui_button` が付与されます。props に応じて `sui_button-size_md`、`sui_button-color_blue`、`sui_button-radius_md`、`sui_button-variant_solid`、`sui_button-outlined`、`sui_button-squared`、`sui_button-pending` などのクラス名も加わります。
+
+押下状態は Base UI の Toggle が付与する `data-pressed` 属性で判別できます。内部のパーツには `sui_button_content`、`sui_button_pending`、`sui_button_circular_progress` などが付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[非同期状態の表示](/guides/async-state)

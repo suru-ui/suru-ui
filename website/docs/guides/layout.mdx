@@ -1,0 +1,86 @@
+---
+title: レイアウトとサイズ
+description: コンポーネントの幅、並び方、密度を、レイアウトの要件に合わせて調整する方法を説明します。
+---
+
+コンポーネントの見た目は、ページ全体のレイアウトから切り離して考えると破綻しやすくなります。このガイドでは、Button を例に、幅や並び方、密度をレイアウトに合わせて調整する考え方を説明します。
+
+コード例のアイコンには `lucide-react` を使っています。別のアイコンライブラリでも同じように配置できます。
+
+## 幅 [#width]
+
+Button は `inline-flex` で描画されるため、既定では内容に合わせた幅になります。親要素の幅いっぱいに広げる場合は、`width` を指定します。
+
+```tsx
+<Button color="blue" style={{ width: "100%" }}>
+  保存
+</Button>
+```
+
+複数の要素を横に並べ、1 つだけを残りの幅いっぱいに広げる場合は、flex レイアウトと `flex: 1` を組み合わせます。
+
+```tsx
+import { EllipsisIcon } from "lucide-react";
+import { Button } from "@suru-ui/react";
+
+<div style={{ display: "flex", gap: "0.5rem" }}>
+  <Button color="blue" style={{ flex: 1 }}>
+    保存
+  </Button>
+  <Button squared aria-label="その他の操作">
+    <EllipsisIcon aria-hidden="true" />
+  </Button>
+</div>;
+```
+
+## サイズ [#size]
+
+コンポーネントが `size` を提供している場合は、周囲の情報密度に合わせて選びます。Button では `xs`、`sm`、`md`、`lg` の 4 段階があります。
+
+```tsx
+<Button size="sm">小さめ</Button>
+<Button size="lg">大きめ</Button>
+```
+
+高さを抑えたい場合は、`thin` のような密度のための props を使います。アイコンだけのボタンは `squared` で正方形にすると、高さを揃えやすくなります。
+
+```tsx
+import { Trash2Icon } from "lucide-react";
+import { Button } from "@suru-ui/react";
+
+<>
+  <Button size="sm" thin>
+    閉じる
+  </Button>
+  <Button squared aria-label="削除">
+    <Trash2Icon aria-hidden="true" />
+  </Button>
+</>;
+```
+
+**角丸**
+
+角丸は、ページ全体のデザイン言語に合わせて決めます。コンポーネントが `radius` を提供している場合は、個別の CSS ではなく props で指定します。
+
+```tsx
+<Button radius="full">丸いボタン</Button>
+```
+
+Button の `radius` を省略した場合は、`size` に応じて既定値が決まります。小さいボタンでは小さめの角丸、大きいボタンでは標準的な角丸になり、サイズごとのバランスが保たれます。
+
+## リスト表示 [#item]
+
+メニューやリストの項目のように、ラベルと補助要素を左右に分けて配置したい場合があります。Button では `item` がこの用途を想定したレイアウト用の props です。
+
+```tsx
+<Button item style={{ width: "100%" }}>
+  <span>設定</span>
+  <span aria-hidden="true">›</span>
+</Button>
+```
+
+`item` は左右の余白を狭くし、内容を両端に配置します。通常の操作ボタンに使うと余白が狭く見えることがあるため、リストの中での使用を想定した指定です。
+
+`thin`、`squared`、`item` は Button の例です。すべてのコンポーネントが同じ props を持つわけではありません。レイアウトに影響する props は、各コンポーネントのリファレンスで確認してください。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[Button のリファレンス](/components/button)

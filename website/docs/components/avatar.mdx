@@ -1,0 +1,106 @@
+---
+title: Avatar
+description: Avatar コンポーネントの画像、フォールバック、配色、大きさ、スタイルのフックを説明します。
+---
+
+Avatar は、ユーザーや組織を表す画像を表示するコンポーネントです。画像を読み込めないときは、`children` に指定した文字やアイコンをフォールバックとして表示します。プロフィールやコメント欄など、人物を視覚的に示す場所で使います。
+
+## 使い方 [#basic-usage]
+
+`src` に画像の URL を、`alt` に代替テキストを指定します。`children` は画像を表示できないときのフォールバックになります。`src` を省略すると、最初からフォールバックだけを表示します。
+
+<Component path="avatar/basic" />
+
+フォールバックには、名前の頭文字や短い記号を渡すと読みやすくなります。画像とフォールバックの両方を指定しておくと、読み込み中や失敗時にも表示が崩れません。
+
+```tsx
+<Avatar src="/avatar.png" alt="山田 太郎" size="lg">
+  山
+</Avatar>
+```
+
+## 外観 [#appearance]
+
+`color` でフォールバックの配色を、`size` で大きさを、`radius` で角丸を指定します。`radius="full"` と `radius="circle"` はどちらも丸形になります。
+
+<Component path="avatar/appearance" />
+
+`radius` の既定値は `full` です。四角いアバターにしたい場合は `none` や `sm` などを指定してください。
+
+## props [#props]
+
+### 固有 props [#avatar-specific-props]
+
+<TypeTable
+  type={{
+    alt: {
+      type: "string",
+      description: "画像の代替テキストです。画像を表示するときにだけ使われます。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "画像を表示できないときに代わりに表示する内容です。",
+    },
+    src: {
+      type: "string",
+      description: "表示する画像の URL です。省略するとフォールバックだけを表示します。",
+    },
+    slotProps: {
+      type: "AvatarSlotProps",
+      default: "{}",
+      description: "各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "アバターの配色です。フォールバックの背景色に反映されます。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "アバターの大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" | "full" | "circle"`,
+      default: `"full"`,
+      description: "角丸の大きさです。full と circle は丸形になります。",
+    },
+  }}
+/>
+
+### slotProps [#slot-props]
+
+<TypeTable
+  type={{
+    fallback: {
+      type: "object",
+      description:
+        "フォールバックの要素に渡す props です。children は Avatar の children で指定します。",
+    },
+    image: {
+      type: "object",
+      description: "画像の要素に渡す props です。alt と src は Avatar 本体で指定します。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Avatar は Base UI の Avatar を基盤にしているため、`className`、`style`、`render` などを渡せます。ルート要素は既定で `span` として描画されます。残りの props は Base UI の Avatar から継承します。
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_avatar` が付与されます。props に応じて、`sui_avatar-size_md`、`sui_avatar-color_blue`、`sui_avatar-radius_full`、`sui_avatar-reverse` などのクラス名も加わります。
+
+内部のパーツには `sui_avatar_image` と `sui_avatar_fallback` が付与されます。画像の読み込み状態は `sui_avatar-image_loading_status_loaded` のようなクラス名で確認できます。
+
+`className` や `style` で調整できるほか、CSS 変数を使って大きさや色を上書きできます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[レイアウトとサイズ](/guides/layout)

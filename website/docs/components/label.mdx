@@ -1,0 +1,99 @@
+---
+title: Label
+description: Label コンポーネントの紐付け、色、大きさ、無効状態、スタイルのフックを説明します。
+---
+
+Label は、フォームコントロールに紐付けるラベルを表示するコンポーネントです。`htmlFor` でコントロールの `id` を指定するか、コントロールを子要素として配置すると、クリックやフォーカスの対象がラベルと結び付きます。`Field` を使わずに、入力欄とラベルだけを配置したい場合に適しています。
+
+## 使い方 [#basic-usage]
+
+`htmlFor` に、関連付けるコントロールの `id` を指定します。`Input` 側の `id` と同じ値にしてください。ラベルをクリックすると、対応する入力欄にフォーカスが移ります。
+
+<Component path="label/basic" />
+
+`children` にはラベルとして表示する内容を指定します。必須項目であることを示す `*` などを添える場合は、装飾として `aria-hidden="true"` を指定し、別途 `required` をコントロール側に設定します。
+
+## コントロールを子に置く [#nesting]
+
+ラベルの子要素としてコントロールを配置すると、`htmlFor` と `id` を指定せずに関連付けられます。チェックボックスのように、ラベル全体をクリックできるようにしたい場合に便利です。
+
+<Component path="label/nested" />
+
+入力欄を子に置く場合は、ラベルと入力欄を縦に並べる `style` を指定すると読みやすくなります。チェックボックスと横に並べる場合は、`display: flex` と `alignItems: center` を組み合わせます。
+
+## 外観と無効状態 [#states]
+
+`color` で文字色を、`size` で大きさを指定します。`disabled` はラベル自身の見た目だけを変えるため、関連するコントロールは無効になりません。コントロールを無効にする場合は、コントロール自身の `disabled` を指定してください。
+
+<Component path="label/states" />
+
+`color` は 8 色から選べます。`size` は `sm`、`md`、`lg` の 3 段階です。入力欄と並べるときは、`Input` の `size` と揃えると高さのバランスが取りやすくなります。
+
+## props [#props]
+
+### 固有 props [#label-specific-props]
+
+<TypeTable
+  type={{
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description:
+        "ラベルを無効な見た目にするかどうかです。関連するコントロールは無効になりません。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "ラベルの配色です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "ラベルの大きさです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Label は `label` 要素を描画するため、ネイティブの label 要素が受け付ける属性を渡せます。
+
+<TypeTable
+  type={{
+    htmlFor: {
+      type: "string",
+      description: "関連付けるコントロールの id です。",
+    },
+    children: {
+      type: "React.ReactNode",
+      description: "ラベルとして表示する内容です。",
+    },
+    className: {
+      type: `string |\n((state: Label.State) => string | undefined)`,
+      description: "追加のクラス名です。関数を渡すと状態を受け取れます。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Label.State) => React.CSSProperties)`,
+      description: "インラインスタイルです。関数を渡すと状態を受け取れます。",
+    },
+    render: {
+      type: `React.ReactElement |\n((props, state) => React.ReactElement)`,
+      description: "ルート要素を別の要素に置き換えます。",
+    },
+  }}
+/>
+
+## スタイル [#styling-hooks]
+
+ルート要素には `sui_label` が付与されます。props に応じて `sui_label-size_md`、`sui_label-color_grey`、`sui_label-disabled` などのクラス名も加わります。
+
+`--sui_label-font_size`、`--sui_label-font_weight`、`--sui_label-color` などの CSS 変数で文字組みを調整できます。
+
+関連: [Input](/components/input)、[Field](/components/field)、[外観のカスタマイズ](/guides/styling)

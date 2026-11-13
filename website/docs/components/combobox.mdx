@@ -1,0 +1,306 @@
+---
+title: Combobox
+description: Combobox コンポーネントの props、複数選択、グループ化、非同期検索、外観を説明します。
+---
+
+Combobox は、入力欄で候補を絞り込みながら、定義済みの項目から値を選ぶコンポーネントです。単一選択と複数選択の両方に対応し、候補が多い場面や、入力に合わせて候補を取得する場面で使います。入力欄をポップアップの中に置く配置にも切り替えられます。
+
+## 使い方 [#basic-usage]
+
+`items` に候補の配列を指定し、`placeholder` に入力欄の案内文を渡します。文字を入力すると、既定のフィルターが候補を絞り込みます。
+
+<Component path="combobox/basic" />
+
+候補が 1 件もないときは `empty` の内容が表示されます。`status` は、非同期検索の進行状況などをスクリーンリーダーへ伝えるために使います。
+
+## 複数選択 [#multiple]
+
+`multiple` を指定すると、複数の値を選択できます。選択値はチップとして入力欄に表示され、チップの削除ボタンから選択を解除できます。
+
+<Component path="combobox/multiple" />
+
+`keepFilterOnSelect` を `true` にすると、項目を選んだ後も入力欄の絞り込みを維持し、ポップアップを開いたままにできます。
+
+## グループ化 [#grouping]
+
+`items` に `label` と `items` を持つオブジェクトを並べると、グループごとに見出しと区切り線を付けて表示します。`separator={false}` でグループ末尾の区切り線を消せます。
+
+<Component path="combobox/grouped" />
+
+## 非同期検索 [#async-search]
+
+候補をサーバーから取得する場合は、`filter={null}` で既定の絞り込みを無効にし、`onInputValueChange` で入力値を受け取って `items` を更新します。`status` に検索中やエラーのメッセージを渡すと、状態が読み上げられます。
+
+<Component path="combobox/async-search" />
+
+`itemToStringLabel` は、選択値を入力欄やチップに表示する文字列へ変換します。`isItemEqualToValue` を指定すると、項目の同一性を独自に判定できます。
+
+## props [#props]
+
+### 固有 props [#combobox-specific-props]
+
+<TypeTable
+  type={{
+    items: {
+      type: "readonly TItem[]",
+      description: "候補の一覧です。グループの配列を指定すると、グループごとに区切って表示します。",
+    },
+    label: {
+      type: "React.ReactNode",
+      description: "入力欄またはトリガーの上に表示するラベルです。",
+    },
+    placeholder: {
+      type: "string",
+      description: "値が未選択のときに入力欄へ表示する文字列です。",
+    },
+    empty: {
+      type: "React.ReactNode",
+      default: `"該当なし"`,
+      description: "候補が 1 件もないときに表示する内容です。",
+    },
+    status: {
+      type: "React.ReactNode",
+      description: "検索中やエラーなどの状態を読み上げるための内容です。",
+    },
+    startAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "入力欄の先頭に表示する付属要素です。",
+    },
+    endAddons: {
+      type: "Iterable<React.ReactNode>",
+      default: "[]",
+      description: "入力欄の末尾に表示する付属要素です。",
+    },
+    arrow: {
+      type: "boolean",
+      default: "false",
+      description: "ポップアップに矢印を表示するかどうかです。",
+    },
+    backdrop: {
+      type: "boolean",
+      default: "false",
+      description: "ポップアップの背後に背景を表示するかどうかです。",
+    },
+    inputInPopup: {
+      type: "boolean",
+      default: "false",
+      description: "検索用の入力欄をポップアップの中に置くかどうかです。",
+    },
+    keepFilterOnSelect: {
+      type: "boolean",
+      default: "false",
+      description:
+        "複数選択時に、項目を選んだ後も絞り込みとポップアップの表示を維持するかどうかです。",
+    },
+    separator: {
+      type: "boolean",
+      default: "true",
+      description: "グループの末尾に区切り線を表示するかどうかです。",
+    },
+    itemLabelRenderer: {
+      type: "(item: TItem, context) => React.ReactNode",
+      description: "候補リストの項目に表示するラベルを生成する関数です。",
+    },
+    chipLabelRenderer: {
+      type: "(item: TItem, context) => React.ReactNode",
+      description: "複数選択時にチップへ表示するラベルを生成する関数です。",
+    },
+    slotProps: {
+      type: "ComboboxSlotProps<TItem, TMultiple>",
+      default: "{}",
+      description: "内部の各パーツに個別の props を渡すためのオブジェクトです。",
+    },
+  }}
+/>
+
+### 外観 props [#appearance-props]
+
+<TypeTable
+  type={{
+    color: {
+      type: `"grey" | "blue" | "purple" | "magenta" |\n"red" | "orange" | "yellow" | "green"`,
+      default: `"grey"`,
+      description: "フォーカス時などに枠線へ適用する配色です。",
+    },
+    size: {
+      type: `"sm" | "md" | "lg"`,
+      default: `"md"`,
+      description: "入力欄と候補項目の大きさです。",
+    },
+    radius: {
+      type: `"none" | "sm" | "md" | "lg" |\n"full" | "circle"`,
+      default: "size と同じ値",
+      description: "入力欄を含むグループの角丸です。",
+    },
+    variant: {
+      type: `"naked" | "liquid"`,
+      default: `"naked"`,
+      description: "入力欄の主な外観です。liquid は薄い塗りつぶしになります。",
+    },
+    outlined: {
+      type: "boolean",
+      default: "true",
+      description: "入力欄を含むグループに枠線を表示するかどうかです。",
+    },
+  }}
+/>
+
+### 継承 props [#inherited-props]
+
+Combobox は Base UI の Combobox を基盤にしています。値や開閉状態に関する主な props は次のとおりです。
+
+<TypeTable
+  type={{
+    value: {
+      type: "TItem | TItem[] | null",
+      description: "選択値を制御します。multiple が true のときは配列になります。",
+    },
+    defaultValue: {
+      type: "TItem | TItem[] | null",
+      description: "初期の選択値です。",
+    },
+    onValueChange: {
+      type: "(value: TItem | TItem[] | null,\ndetails: Combobox.ChangeEventDetails) => void",
+      description: "選択値が変わったときに呼ばれるコールバックです。",
+    },
+    multiple: {
+      type: "boolean",
+      default: "false",
+      description: "複数選択を有効にするかどうかです。",
+    },
+    open: {
+      type: "boolean",
+      description: "ポップアップの開閉状態を制御します。",
+    },
+    defaultOpen: {
+      type: "boolean",
+      description: "初期状態でポップアップを開くかどうかです。",
+    },
+    onOpenChange: {
+      type: "(open: boolean,\ndetails: Combobox.ChangeEventDetails) => void",
+      description: "ポップアップの開閉状態が変わったときに呼ばれるコールバックです。",
+    },
+    onOpenChangeComplete: {
+      type: "(open: boolean) => void",
+      description: "開閉のアニメーションが完了したときに呼ばれるコールバックです。",
+    },
+    inputValue: {
+      type: "string",
+      description: "入力欄の値を制御します。",
+    },
+    defaultInputValue: {
+      type: "string",
+      description: "入力欄の初期値です。",
+    },
+    onInputValueChange: {
+      type: "(value: string,\ndetails: Combobox.ChangeEventDetails) => void",
+      description: "入力値が変わったときに呼ばれるコールバックです。",
+    },
+    filter: {
+      type: "Combobox.IFilter | null",
+      description: "候補の絞り込み方法です。null を指定すると既定の絞り込みを無効にします。",
+    },
+    filteredItems: {
+      type: "readonly TItem[]",
+      description: "外部で絞り込んだ候補を渡す場合に指定します。",
+    },
+    itemToStringLabel: {
+      type: "(item: TItem) => string",
+      description: "項目を表示ラベルへ変換する関数です。",
+    },
+    itemToStringValue: {
+      type: "(item: TItem) => string",
+      description: "項目をフォームへ送信する値へ変換する関数です。",
+    },
+    isItemEqualToValue: {
+      type: "(item: TItem, value: TItem) => boolean",
+      description: "項目と選択値が等しいかどうかを判定する関数です。",
+    },
+    disabled: {
+      type: "boolean",
+      default: "false",
+      description: "コンボボックスを無効にします。",
+    },
+    readOnly: {
+      type: "boolean",
+      default: "false",
+      description: "読み取り専用にします。",
+    },
+    required: {
+      type: "boolean",
+      default: "false",
+      description: "フォームで必須項目にするかどうかです。",
+    },
+    autoHighlight: {
+      type: "boolean",
+      description: "最初の候補を自動でハイライトするかどうかです。",
+    },
+    highlightItemOnHover: {
+      type: "boolean",
+      description: "ポインターが候補の上にあるときにハイライトするかどうかです。",
+    },
+    openOnInputClick: {
+      type: "boolean",
+      description: "入力欄のクリックでポップアップを開くかどうかです。",
+    },
+    className: {
+      type: `string |\n((state: Combobox.State) => string | undefined)`,
+      description: "入力グループに追加するクラス名です。",
+    },
+    style: {
+      type: `React.CSSProperties |\n((state: Combobox.State) => React.CSSProperties)`,
+      description: "入力グループに適用するインラインスタイルです。",
+    },
+  }}
+/>
+
+ここに挙げた以外の props は Base UI の Combobox から継承します。
+
+### slotProps [#slot-props]
+
+`slotProps` では、既定のレンダラーが組み立てる各パーツへ props を渡せます。
+
+| キー                | 説明                                                                            |
+| ------------------- | ------------------------------------------------------------------------------- |
+| `addon`             | 入力欄の付属要素です。`children` は `startAddons` と `endAddons` で指定します。 |
+| `arrow`             | ポップアップの矢印です。                                                        |
+| `backdrop`          | ポップアップの背景です。                                                        |
+| `chip`              | 複数選択時のチップです。`value` は選択項目から渡されます。                      |
+| `chipRemove`        | チップの削除ボタンです。                                                        |
+| `chips`             | チップをまとめる要素です。                                                      |
+| `clear`             | 選択値を消去するボタンです。                                                    |
+| `collection`        | グループ内の項目を描画するコレクションです。                                    |
+| `content`           | スクロール領域の内容です。                                                      |
+| `corner`            | スクロール領域の角です。                                                        |
+| `display`           | 入力欄の代わりに選択値を表示する要素です。                                      |
+| `empty`             | 候補がないときの表示です。`children` は `empty` で指定します。                  |
+| `group`             | 候補のグループです。                                                            |
+| `groupLabel`        | グループの見出しです。                                                          |
+| `icon`              | 入力欄の末尾に表示するアイコンです。                                            |
+| `input`             | 検索用の入力欄です。                                                            |
+| `inputGroupInPopup` | ポップアップ内の入力グループです。                                              |
+| `item`              | 候補項目です。                                                                  |
+| `itemIndicator`     | 選択済みの候補に表示するインジケーターです。                                    |
+| `list`              | 候補リストです。                                                                |
+| `popup`             | 候補を表示するポップアップです。                                                |
+| `portal`            | ポップアップを描画するポータルです。                                            |
+| `positioner`        | ポップアップの配置を制御する要素です。                                          |
+| `scrollArea`        | 候補リストのスクロール領域です。                                                |
+| `scrollbar`         | スクロールバーです。                                                            |
+| `separator`         | グループの区切り線です。                                                        |
+| `status`            | 検索状態を読み上げる要素です。                                                  |
+| `thumb`             | スクロールバーのつまみです。                                                    |
+| `trigger`           | 入力欄をポップアップ内に置く場合のトリガーです。                                |
+| `value`             | 選択値の表示です。`children` で独自のレンダラーを指定できます。                 |
+| `viewport`          | スクロール領域のビューポートです。                                              |
+
+## スタイル [#styling-hooks]
+
+入力グループには `sui_combobox` が付与されます。状態に応じて、`sui_combobox-size_md`、`sui_combobox-color_blue`、`sui_combobox-radius_md`、`sui_combobox-variant_liquid`、`sui_combobox-outlined`、`sui_combobox-open`、`sui_combobox-disabled`、`sui_combobox-placeholder` などのクラス名も加わります。
+
+ポップアップには `sui_combobox_popup` が付与され、`sui_combobox_popup-size_*`、`sui_combobox_popup-open`、`sui_combobox_popup-empty`、`sui_combobox_popup-side_*`、`sui_combobox_popup-align_*` などが状態に応じて加わります。
+
+候補項目には `sui_combobox_item` が付与され、`sui_combobox_item-selected`、`sui_combobox_item-highlighted`、`sui_combobox_item-disabled` などの状態クラスも付きます。チップには `sui_combobox_chip` が付与されます。
+
+関連: [コンポーネントの構造](/guides/component-anatomy)、[外観のカスタマイズ](/guides/styling)、[非同期状態の表示](/guides/async-state)
