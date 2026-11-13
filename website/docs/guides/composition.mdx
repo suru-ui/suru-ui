@@ -25,17 +25,15 @@ export function ReadGuideLink() {
 
 **独自コンポーネント**
 
-`render` には、独自の React コンポーネントも渡せます。この場合、コンポーネントは受け取った props を下位の DOM 要素に展開し、ref を転送する必要があります。
+`render` には、独自の React コンポーネントも渡せます。この場合、コンポーネントは受け取った props を下位の DOM 要素に展開してください。React 19 では `ref` が通常の prop として渡されるため、`forwardRef` は不要です。
 
 ```tsx
 import { Button } from "@suru-ui/react";
 import * as React from "react";
 
-const FancyLink = React.forwardRef<HTMLAnchorElement, React.ComponentPropsWithoutRef<"a">>(
-  function FancyLink(props, ref) {
-    return <a {...props} ref={ref} data-fancy="true" />;
-  },
-);
+function FancyLink({ ref, ...props }: React.ComponentProps<"a">) {
+  return <a {...props} ref={ref} data-fancy="true" />;
+}
 
 export function DocsLink() {
   return (
