@@ -1,0 +1,262 @@
+---
+title: デザイントークン
+description: "@suru-ui/theme が提供する CSS カスタムプロパティの種類、命名規則、テーマごとの値の切り替え、上書き方法を説明します。"
+---
+
+`@suru-ui/theme` は、色、余白、文字、角丸などの見た目の値を CSS カスタムプロパティとして提供します。これらをデザイントークンと呼びます。Suru UI のコンポーネントはトークンを参照してスタイルを組み立てるため、トークンを調整すると、アプリケーション全体の一貫性を保ったまま外観を変更できます。
+
+## トークンの読み込み [#load-tokens]
+
+トークンは `@suru-ui/theme/suru.css` に含まれています。アプリケーションのエントリーポイントで CSS を読み込むと、`:root` のカスタムプロパティとして利用できるようになります。
+
+```tsx
+import "@suru-ui/theme/suru.css";
+```
+
+ライトテーマまたはダークテーマだけを使う場合は、`suru-light.css` または `suru-dark.css` を読み込みます。テーマの選択方法は[インストール](/getting-started/installation#color-theme)を参照してください。
+
+## 命名規則 [#naming]
+
+テーマのトークン名は `--sui-` で始まります。色には、色名と段階を組み合わせた名前が付いています。
+
+```css
+var(--sui-blue-60);
+var(--sui-grey-20);
+var(--sui-blue-alpha-60);
+```
+
+セマンティックな色は、色名、配色テンプレート、部分、強調度の順に並びます。
+
+```text
+--sui-{color}-{template}-{part}-{prominence}
+```
+
+たとえば `--sui-blue-solid-canvas-normal` は、青の `solid` テンプレートで、通常状態の背景色です。
+
+| 要素         | 値                                                                      | 説明                     |
+| ------------ | ----------------------------------------------------------------------- | ------------------------ |
+| `color`      | `grey`、`blue`、`purple`、`magenta`、`red`、`orange`、`yellow`、`green` | 色相                     |
+| `template`   | `solid`、`naked`、`liquid`                                              | 配色テンプレート         |
+| `part`       | `canvas`、`border`、`canvas_text`                                       | 背景、枠線、面上の文字   |
+| `prominence` | `normal`、`subtle`、`strong`                                            | 通常、ホバー、アクティブ |
+
+`color` や `variant` などの props には、この色名や配色テンプレートに対応する値を指定します。
+
+## 色のスケール [#color-scales]
+
+色のスケールは、色名と段階を組み合わせたトークンです。
+
+| トークン                     | 例                    | 用途           |
+| ---------------------------- | --------------------- | -------------- |
+| `--sui-{color}-{step}`       | `--sui-blue-60`       | 不透明な色     |
+| `--sui-{color}-alpha-{step}` | `--sui-blue-alpha-60` | alpha 付きの色 |
+
+段階は 5、10、15、20、30、40、50、60、70、80、85、90、95 です。`grey` だけは両端に 0 と 100 も持ちます。数値が小さいほどテーマの背景色に近く、大きいほどコントラストが強くなります。
+
+ライトテーマとダークテーマでは、同じ段階に異なる実際の色が割り当てられます。`--sui-blue-60` のようなトークンを使うと、テーマを切り替えても背景との関係が保たれます。
+
+## 配色テンプレート [#color-templates]
+
+配色テンプレートは、同じ色相を異なる用途で使うための組み合わせです。
+
+| テンプレート | 背景                       | 主な用途                                   |
+| ------------ | -------------------------- | ------------------------------------------ |
+| `solid`      | 不透明な色で塗りつぶす     | 主要な操作など、強いコントラストが必要な面 |
+| `naked`      | 透明。文字と枠線に色を使う | 背景になじませた文字、枠線、ゴースト表示   |
+| `liquid`     | 半透明の色で薄く着色する   | 選択状態やホバーなど、背景を透かしたい面   |
+
+各部分と強調度を組み合わせると、状態ごとの色を参照できます。
+
+```css
+.primary {
+  color: var(--sui-blue-solid-canvas_text-normal);
+  background-color: var(--sui-blue-solid-canvas-normal);
+  border: 1px solid var(--sui-blue-solid-border-normal);
+}
+
+.primary:hover {
+  color: var(--sui-blue-solid-canvas_text-subtle);
+  background-color: var(--sui-blue-solid-canvas-subtle);
+  border-color: var(--sui-blue-solid-border-subtle);
+}
+
+.primary:active {
+  color: var(--sui-blue-solid-canvas_text-strong);
+  background-color: var(--sui-blue-solid-canvas-strong);
+  border-color: var(--sui-blue-solid-border-strong);
+}
+```
+
+`normal` が通常、`subtle` がホバー、`strong` がアクティブに対応します。テーマによって実際の色は変わりますが、状態の関係は同じです。
+
+色付きのドロップシャドウも用意されています。
+
+```css
+var(--sui-drop_shadow-sm);      /* 中立の影 */
+var(--sui-blue-drop_shadow-sm); /* 青い影 */
+```
+
+大きさは `xs`、`sm`、`md`、`lg`、`xl`、`2xl` です。
+
+## 基本トークン [#base-tokens]
+
+配色に依存しない、画面全体で使うトークンです。
+
+| グループ     | トークン                                                                   | 説明                                     |
+| ------------ | -------------------------------------------------------------------------- | ---------------------------------------- |
+| 面           | `--sui-canvas-1`、`--sui-canvas-2`、`--sui-canvas-3`                       | ページ、カード、ポップアップなどの背景   |
+| 文字         | `--sui-canvas_text-1`、`--sui-canvas_text-2`、`--sui-canvas_text-3`        | 面上の文字色。1 が最も強く、3 が最も弱い |
+| 枠線         | `--sui-border-1`、`--sui-border-2`、`--sui-border-3`                       | 区切りや枠線。1 が最も弱く、3 が最も強い |
+| 無効         | `--sui-disabled-*`                                                         | 無効状態の面、文字、枠線                 |
+| ツールチップ | `--sui-tooltip-canvas`、`--sui-tooltip-canvas_text`                        | ツールチップの背景と文字                 |
+| 背景         | `--sui-backdrop-color`、`--sui-backdrop-blur`                              | モーダルなどの背後の色とぼかし           |
+| フォーカス   | `--sui-focusring_color`、`--sui-focusring_width`、`--sui-focusring_offset` | フォーカスリングの色、太さ、間隔         |
+| テーマ       | `--sui-scheme`                                                             | 現在のテーマ。`light` または `dark`      |
+
+`--sui-canvas-1` はページの基本の面です。`--sui-canvas-2` と `--sui-canvas-3` は、カードやポップアップなど、入れ子になった面に使います。明るさの方向はテーマによって変わります。
+
+無効状態には、基本の面と文字に加えて、配色テンプレートごとのトークンがあります。
+
+```css
+var(--sui-disabled-canvas-1);
+var(--sui-disabled-canvas_text-1);
+var(--sui-disabled-solid-canvas);
+var(--sui-disabled-solid-border);
+var(--sui-disabled-solid-canvas_text);
+var(--sui-disabled-naked-canvas);
+var(--sui-disabled-liquid-canvas);
+```
+
+## 寸法 [#dimensions]
+
+余白、大きさ、角丸などの寸法もトークンとして定義されています。
+
+| グループ     | トークン                                                           | 値または例                     |
+| ------------ | ------------------------------------------------------------------ | ------------------------------ |
+| 余白         | `--sui-spacing`、`--sui-space-base`、`--sui-gap-base`              | `--sui-spacing` は `4px`       |
+| 部品の大きさ | `--sui-size-xs`、`--sui-size-sm`、`--sui-size-md`、`--sui-size-lg` | `22px`、`26px`、`32px`、`36px` |
+| コンテナー   | `--sui-container-3xs` から `--sui-container-7xl`                   | 幅や最大幅の基準               |
+| 枠線の太さ   | `--sui-border_width-base`                                          | `1px`                          |
+| 角丸         | `--sui-corner_radius-base`、`--sui-superellipse`                   | `4px`、`1.4`                   |
+| フォント     | `--sui-font-sans`、`--sui-font-mono`                               | フォントファミリー             |
+
+## 文字スタイル [#typography]
+
+文字スタイルは、書体グループ、大きさ、太さ、プロパティーの組み合わせです。
+
+```text
+--sui-text-{family}-{size}-{weight}-{property}
+```
+
+| 要素       | 値                                                          |
+| ---------- | ----------------------------------------------------------- |
+| `family`   | `dns`、`oln`、`std`                                         |
+| `size`     | `sm`、`md`、`lg`、`xl`、`2xl`、`3xl`、`4xl`                 |
+| `weight`   | `n`（400）、`m`（500）、`b`（700）                          |
+| `property` | `font_size`、`font_weight`、`letter_spacing`、`line_height` |
+
+`dns` は太さ `m` を持ちません。書体グループごとに行間と字間の設計が異なります。
+
+```css
+.caption {
+  font-family: var(--sui-font-sans);
+  font-size: var(--sui-text-dns-sm-n-font_size);
+  font-weight: var(--sui-text-dns-sm-n-font_weight);
+  letter-spacing: var(--sui-text-dns-sm-n-letter_spacing);
+  line-height: var(--sui-text-dns-sm-n-line_height);
+}
+```
+
+大きさごとの文字サイズは共通です。
+
+| size  | font_size |
+| ----- | --------- |
+| `sm`  | `12px`    |
+| `md`  | `14px`    |
+| `lg`  | `17px`    |
+| `xl`  | `22px`    |
+| `2xl` | `28px`    |
+| `3xl` | `34px`    |
+| `4xl` | `42px`    |
+
+## 計算用の関数 [#functions]
+
+寸法の計算やテーマに応じた値の切り替えには、CSS のカスタム関数を使えます。
+
+| 関数                             | 結果                                               |
+| -------------------------------- | -------------------------------------------------- |
+| `--sui-rem(n)`                   | `calc(var(--sui-text-std-md-m-font_size) * n)`     |
+| `--sui-space(n)`                 | `calc(var(--sui-space-base) * n)`                  |
+| `--sui-gap(n)`                   | `calc(var(--sui-gap-base) * n)`                    |
+| `--sui-border_width(n)`          | `calc(var(--sui-border_width-base) * n)`           |
+| `--sui-corner_radius(n)`         | `calc(var(--sui-corner_radius-base) * n)`          |
+| `--sui-icon_color(text, canvas)` | 文字色と背景色を混ぜたアイコン用の色               |
+| `--sui-light-dark(light, dark)`  | 現在のテーマに応じて第 1 引数または第 2 引数を返す |
+
+`--sui-rem(n)` は `--sui-text-std-md-m-font_size`（14px）を、`--sui-space(n)` と `--sui-gap(n)` は 4px を、`--sui-border_width(n)` は 1px を `n` 倍した値を返します。次の棒グラフは、各関数に代表的な `n` を渡したときの出力サイズを示したものです。
+
+<Component path="design-tokens/function-scale" />
+
+棒の長さは実際の出力サイズに比例し、各行の右側に px 単位の値を示しています。
+
+```css
+.card {
+  padding: --sui-space(4);
+  gap: --sui-gap(2);
+  border: --sui-border_width(1) solid var(--sui-border-1);
+  border-radius: --sui-corner_radius(2);
+}
+```
+
+これらの関数は CSS の `@function` で定義されています。対応したブラウザーで利用してください。
+
+## テーマごとの値 [#theme-values]
+
+`--sui-scheme` は、現在のテーマを `light` または `dark` として表します。テーマごとに異なる値を使いたい場合は、`--sui-light-dark()` を使うと、テーマの切り替えに追従できます。
+
+```css
+:root {
+  --sui-canvas-1: --sui-light-dark(#fffdf7, #121212);
+  --sui-canvas_text-1: --sui-light-dark(#1c1b1a, #f2f0e5);
+}
+```
+
+`@suru-ui/theme/suru.css` は、システムの設定に追従する `@media (prefers-color-scheme)` と、`data-theme` 属性による手動切り替えの両方に対応しています。
+
+## トークンの上書き [#overrides]
+
+トークンは `sui.tokens` レイヤーで定義されています。レイヤーの外側にあるアプリケーションの CSS は、レイヤー内の宣言より優先されます。同じ名前のカスタムプロパティを定義すると、アプリケーション全体または特定の領域だけ値を変更できます。
+
+```css
+:root {
+  --sui-font-sans: "Inter", "Noto Sans JP", sans-serif;
+  --sui-corner_radius-base: 6px;
+}
+```
+
+特定の領域だけ変える場合は、その領域のセレクターでトークンを上書きします。カスタムプロパティは継承されるため、子孫のコンポーネントにも反映されます。
+
+```css
+.promo {
+  --sui-canvas-1: var(--sui-orange-5);
+  --sui-canvas_text-1: var(--sui-orange-95);
+  background-color: var(--sui-canvas-1);
+  color: var(--sui-canvas_text-1);
+}
+```
+
+セマンティックなトークンを上書きすると、そのトークンを使うコンポーネントの状態変化もまとめて変わります。個別のコンポーネントだけを変えたい場合は、props やコンポーネント変数を優先してください。
+
+## コンポーネント変数との違い [#component-variables]
+
+Suru UI には、テーマのトークンとは別に、コンポーネント単位の CSS 変数もあります。名前の区切り方で見分けられます。
+
+| 名前       | 役割                         | 例                                |
+| ---------- | ---------------------------- | --------------------------------- |
+| `--sui-*`  | テーマのデザイントークン     | `--sui-blue-60`、`--sui-canvas-1` |
+| `--sui_*`  | コンポーネントが公開する変数 | `--sui_button-min_height`         |
+| `--_sui_*` | コンポーネント内部の変数     | `--_sui_button-color`             |
+
+`--sui-*` はこのページで説明しているテーマのトークンです。`--sui_*` はコンポーネントごとに意味が異なるため、各コンポーネントのリファレンスを確認してください。`--_sui_*` は内部実装のための変数であり、直接参照しないでください。
+
+関連: [外観のカスタマイズ](/guides/styling)、[インストール](/getting-started/installation)、[コンポーネントの設計](/explanation/component-design)

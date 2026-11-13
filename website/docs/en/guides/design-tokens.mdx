@@ -1,0 +1,262 @@
+---
+title: Design tokens
+description: "CSS custom properties provided by @suru-ui/theme: their naming conventions, theme-dependent values, and how to override them."
+---
+
+`@suru-ui/theme` provides appearance values such as colors, spacing, typography, and corner radii as CSS custom properties. These are called design tokens. Suru UI components build their styles by referencing tokens, so adjusting tokens lets you change the appearance while keeping the whole application consistent.
+
+## Loading tokens [#load-tokens]
+
+Tokens are included in `@suru-ui/theme/suru.css`. Load the CSS at your application entry point, and the tokens become available as custom properties on `:root`.
+
+```tsx
+import "@suru-ui/theme/suru.css";
+```
+
+If you need only the light or dark theme, load `suru-light.css` or `suru-dark.css` respectively. See [Installation](/getting-started/installation#color-theme) for how to choose a theme.
+
+## Naming [#naming]
+
+Theme token names start with `--sui-`. Color tokens combine a hue and a step.
+
+```css
+var(--sui-blue-60);
+var(--sui-grey-20);
+var(--sui-blue-alpha-60);
+```
+
+Semantic colors combine a hue, a color template, a part, and a prominence.
+
+```text
+--sui-{color}-{template}-{part}-{prominence}
+```
+
+For example, `--sui-blue-solid-canvas-normal` is the background color for the blue `solid` template in its normal state.
+
+| Element      | Values                                                                  | Description                        |
+| ------------ | ----------------------------------------------------------------------- | ---------------------------------- |
+| `color`      | `grey`, `blue`, `purple`, `magenta`, `red`, `orange`, `yellow`, `green` | Hue                                |
+| `template`   | `solid`, `naked`, `liquid`                                              | Color template                     |
+| `part`       | `canvas`, `border`, `canvas_text`                                       | Background, border, text on canvas |
+| `prominence` | `normal`, `subtle`, `strong`                                            | Normal, hover, active              |
+
+Props such as `color` and `variant` accept values that map to these hue names and color templates.
+
+## Color scales [#color-scales]
+
+Color scales combine a hue and a step.
+
+| Token                        | Example               | Use          |
+| ---------------------------- | --------------------- | ------------ |
+| `--sui-{color}-{step}`       | `--sui-blue-60`       | Opaque color |
+| `--sui-{color}-alpha-{step}` | `--sui-blue-alpha-60` | Alpha color  |
+
+The steps are 5, 10, 15, 20, 30, 40, 50, 60, 70, 80, 85, 90, and 95. Only `grey` also has 0 and 100 at the ends. Smaller numbers are closer to the theme background, and larger numbers have stronger contrast.
+
+Light and dark themes assign different actual colors to the same steps. Using a token such as `--sui-blue-60` preserves the relationship with the background when the theme changes.
+
+## Color templates [#color-templates]
+
+Color templates combine a single hue for different purposes.
+
+| Template | Background                              | Typical use                                           |
+| -------- | --------------------------------------- | ----------------------------------------------------- |
+| `solid`  | Filled with an opaque color             | Primary actions and other surfaces needing contrast   |
+| `naked`  | Transparent; text and border colored    | Text, borders, and ghost treatments on any background |
+| `liquid` | Lightly tinted with a translucent color | Selected or hovered surfaces that show the background |
+
+Combining parts and prominences gives you state-specific colors.
+
+```css
+.primary {
+  color: var(--sui-blue-solid-canvas_text-normal);
+  background-color: var(--sui-blue-solid-canvas-normal);
+  border: 1px solid var(--sui-blue-solid-border-normal);
+}
+
+.primary:hover {
+  color: var(--sui-blue-solid-canvas_text-subtle);
+  background-color: var(--sui-blue-solid-canvas-subtle);
+  border-color: var(--sui-blue-solid-border-subtle);
+}
+
+.primary:active {
+  color: var(--sui-blue-solid-canvas_text-strong);
+  background-color: var(--sui-blue-solid-canvas-strong);
+  border-color: var(--sui-blue-solid-border-strong);
+}
+```
+
+`normal` is the normal state, `subtle` is hover, and `strong` is active. The actual colors change with the theme, but the state relationships stay the same.
+
+Colored drop shadows are also available.
+
+```css
+var(--sui-drop_shadow-sm);      /* Neutral shadow */
+var(--sui-blue-drop_shadow-sm); /* Blue shadow */
+```
+
+The sizes are `xs`, `sm`, `md`, `lg`, `xl`, and `2xl`.
+
+## Base tokens [#base-tokens]
+
+These tokens are independent of the color palette and apply across the interface.
+
+| Group    | Tokens                                                                     | Description                                        |
+| -------- | -------------------------------------------------------------------------- | -------------------------------------------------- |
+| Surfaces | `--sui-canvas-1`, `--sui-canvas-2`, `--sui-canvas-3`                       | Backgrounds for pages, cards, popups, and so on    |
+| Text     | `--sui-canvas_text-1`, `--sui-canvas_text-2`, `--sui-canvas_text-3`        | Text colors on surfaces. 1 is strongest, 3 weakest |
+| Borders  | `--sui-border-1`, `--sui-border-2`, `--sui-border-3`                       | Dividers and borders. 1 is weakest, 3 strongest    |
+| Disabled | `--sui-disabled-*`                                                         | Disabled surfaces, text, and borders               |
+| Tooltip  | `--sui-tooltip-canvas`, `--sui-tooltip-canvas_text`                        | Tooltip background and text                        |
+| Backdrop | `--sui-backdrop-color`, `--sui-backdrop-blur`                              | Backdrop color and blur behind modals and so on    |
+| Focus    | `--sui-focusring_color`, `--sui-focusring_width`, `--sui-focusring_offset` | Focus ring color, width, and offset                |
+| Theme    | `--sui-scheme`                                                             | The current theme: `light` or `dark`               |
+
+`--sui-canvas-1` is the base page surface. `--sui-canvas-2` and `--sui-canvas-3` are used for nested surfaces such as cards and popups. The direction of lightness depends on the theme.
+
+Disabled states have tokens for each color template in addition to the base surfaces and text.
+
+```css
+var(--sui-disabled-canvas-1);
+var(--sui-disabled-canvas_text-1);
+var(--sui-disabled-solid-canvas);
+var(--sui-disabled-solid-border);
+var(--sui-disabled-solid-canvas_text);
+var(--sui-disabled-naked-canvas);
+var(--sui-disabled-liquid-canvas);
+```
+
+## Dimensions [#dimensions]
+
+Spacing, sizes, and corner radii are also defined as tokens.
+
+| Group          | Tokens                                                             | Value or example                |
+| -------------- | ------------------------------------------------------------------ | ------------------------------- |
+| Spacing        | `--sui-spacing`, `--sui-space-base`, `--sui-gap-base`              | `--sui-spacing` is `4px`        |
+| Component size | `--sui-size-xs`, `--sui-size-sm`, `--sui-size-md`, `--sui-size-lg` | `22px`, `26px`, `32px`, `36px`  |
+| Containers     | `--sui-container-3xs` through `--sui-container-7xl`                | Bases for widths and max widths |
+| Border width   | `--sui-border_width-base`                                          | `1px`                           |
+| Corner radius  | `--sui-corner_radius-base`, `--sui-superellipse`                   | `4px`, `1.4`                    |
+| Fonts          | `--sui-font-sans`, `--sui-font-mono`                               | Font families                   |
+
+## Text styles [#typography]
+
+Text styles combine a type family, size, weight, and property.
+
+```text
+--sui-text-{family}-{size}-{weight}-{property}
+```
+
+| Element    | Values                                                      |
+| ---------- | ----------------------------------------------------------- |
+| `family`   | `dns`, `oln`, `std`                                         |
+| `size`     | `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`                 |
+| `weight`   | `n` (400), `m` (500), `b` (700)                             |
+| `property` | `font_size`, `font_weight`, `letter_spacing`, `line_height` |
+
+`dns` has no `m` weight. Each type family has its own line-height and letter-spacing design.
+
+```css
+.caption {
+  font-family: var(--sui-font-sans);
+  font-size: var(--sui-text-dns-sm-n-font_size);
+  font-weight: var(--sui-text-dns-sm-n-font_weight);
+  letter-spacing: var(--sui-text-dns-sm-n-letter_spacing);
+  line-height: var(--sui-text-dns-sm-n-line_height);
+}
+```
+
+Font sizes are shared across type families.
+
+| Size  | font_size |
+| ----- | --------- |
+| `sm`  | `12px`    |
+| `md`  | `14px`    |
+| `lg`  | `17px`    |
+| `xl`  | `22px`    |
+| `2xl` | `28px`    |
+| `3xl` | `34px`    |
+| `4xl` | `42px`    |
+
+## Helper functions [#functions]
+
+You can use CSS custom functions to calculate dimensions and switch values with the theme.
+
+| Function                         | Result                                                              |
+| -------------------------------- | ------------------------------------------------------------------- |
+| `--sui-rem(n)`                   | `calc(var(--sui-text-std-md-m-font_size) * n)`                      |
+| `--sui-space(n)`                 | `calc(var(--sui-space-base) * n)`                                   |
+| `--sui-gap(n)`                   | `calc(var(--sui-gap-base) * n)`                                     |
+| `--sui-border_width(n)`          | `calc(var(--sui-border_width-base) * n)`                            |
+| `--sui-corner_radius(n)`         | `calc(var(--sui-corner_radius-base) * n)`                           |
+| `--sui-icon_color(text, canvas)` | An icon color mixing the text color with the background color       |
+| `--sui-light-dark(light, dark)`  | Returns the first or second argument depending on the current theme |
+
+`--sui-rem(n)` multiplies `--sui-text-std-md-m-font_size` (14px) by `n`; `--sui-space(n)` and `--sui-gap(n)` multiply 4px by `n`; and `--sui-border_width(n)` multiplies 1px by `n`. The bar charts below show the output size for representative values of `n`.
+
+<Component path="design-tokens/function-scale" />
+
+Bar lengths are proportional to the actual output size, and the number on the right of each row shows the value in pixels.
+
+```css
+.card {
+  padding: --sui-space(4);
+  gap: --sui-gap(2);
+  border: --sui-border_width(1) solid var(--sui-border-1);
+  border-radius: --sui-corner_radius(2);
+}
+```
+
+These functions are defined with CSS `@function`. Use a browser that supports them.
+
+## Theme-dependent values [#theme-values]
+
+`--sui-scheme` represents the current theme as `light` or `dark`. To use different values per theme, `--sui-light-dark()` follows theme changes.
+
+```css
+:root {
+  --sui-canvas-1: --sui-light-dark(#fffdf7, #121212);
+  --sui-canvas_text-1: --sui-light-dark(#1c1b1a, #f2f0e5);
+}
+```
+
+`@suru-ui/theme/suru.css` supports both `@media (prefers-color-scheme)`, which follows the system setting, and manual switching through the `data-theme` attribute.
+
+## Overriding tokens [#overrides]
+
+Tokens are defined in the `sui.tokens` layer. Application CSS outside the layer takes precedence over declarations inside the layer. Defining a custom property with the same name changes the value across the application or only in a specific region.
+
+```css
+:root {
+  --sui-font-sans: "Inter", "Noto Sans JP", sans-serif;
+  --sui-corner_radius-base: 6px;
+}
+```
+
+To change only a specific region, override tokens on a selector for that region. Custom properties are inherited, so descendant components also pick up the change.
+
+```css
+.promo {
+  --sui-canvas-1: var(--sui-orange-5);
+  --sui-canvas_text-1: var(--sui-orange-95);
+  background-color: var(--sui-canvas-1);
+  color: var(--sui-canvas_text-1);
+}
+```
+
+Overriding a semantic token also changes the state variations of every component that uses it. If you only want to change one component, prefer its props or component variables.
+
+## Component variables [#component-variables]
+
+Suru UI also has per-component CSS variables, separate from theme tokens. The separator tells them apart.
+
+| Name       | Role                             | Example                           |
+| ---------- | -------------------------------- | --------------------------------- |
+| `--sui-*`  | Theme design tokens              | `--sui-blue-60`, `--sui-canvas-1` |
+| `--sui_*`  | Variables exposed by a component | `--sui_button-min_height`         |
+| `--_sui_*` | Internal component variables     | `--_sui_button-color`             |
+
+`--sui-*` are the theme tokens described on this page. `--sui_*` vary by component, so check each component reference. `--_sui_*` are implementation details and should not be referenced directly.
+
+Related: [Styling](/guides/styling), [Installation](/getting-started/installation), [Component design](/explanation/component-design)
